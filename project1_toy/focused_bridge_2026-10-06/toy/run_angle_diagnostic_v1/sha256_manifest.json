@@ -1,0 +1,23 @@
+{
+  "environment.json": "bf071986092a8d82cc38274d3e9abec61114c9b4842615a3591e03d2bf805581",
+  "geometry.csv": "079426f15c1455a937865554f714db144a3483ad34b5b002ac16d6d3d668cb37",
+  "p_0.05\\armijo_trials.csv": "18175b3fbf061f0fc9a2dfddb0e9c34a65173e6727a6617f26535b1570f6cdf2",
+  "p_0.05\\bias_branches.json": "f35072d54a677c97621da5020645c032aa3206e136ac0c2802ea9c3a8b026105",
+  "p_0.05\\final.npz": "db3151df0f6fb4f7c696abf934f878cb2bbafb6fc0db110d1f719c4d257dff74",
+  "p_0.05\\summary.json": "64f799f23896a200933a4910ee73cbd4f5209d0b81840f52c56a9622f6ced011",
+  "p_0.05\\trace.csv": "cab58fc4fe80f3c989fe0837e7c3c48b102408f7b6d536c38d72c413f77f0e0a",
+  "p_0.20\\armijo_trials.csv": "2ea817d5305ecb73cc0bf7db98d4be6b96544d7a0e5994597def59bb06999947",
+  "p_0.20\\bias_branches.json": "d657f824961c26d1070e25647b64c541e11db22ecf7b27f96e4cd3dc2efdf120",
+  "p_0.20\\final.npz": "b5fabccad263bf5dfe9004a59f5d3e4c6e82560db0aaec2ae7af746a88866891",
+  "p_0.20\\summary.json": "9f7a5bff85193d836b9adb7de312bf8b7cadf2ddc9223b4b3ac56fc85c1ce451",
+  "p_0.20\\trace.csv": "ec67230b86adede1c443cefbbc97d0717d8084beee22dc786d2c3c4595db0888",
+  "risks.csv": "12663ca8fc28575c9a63a6e7a7e061fd005cfff6eb51789bb733ddd5c58d89ac",
+  "settings.json": "c093f8fd8bf066ff5c784865151f099a91046e6cf649e77c22a66393c76c8f8b",
+  "source_snapshot\\bridge_math.py": "f605b2a2c1ffb3f345f7199014403e3710ef24820901e75d1f011a3f2af4ecbd",
+  "source_snapshot\\followup_protocol.md": "5e4a408d247b95273e570ae9de2074f127adaeafecf9dd3bf22bb9bfa4bd28ac",
+  "source_snapshot\\run_angle_diagnostic.py": "a6a0925d4d64b6d27ad5eb2eb441185d7ecb129fe914940358f5ec977d73b613",
+  "source_snapshot\\run_bridge.py": "6d916e71744757fe0a70cb3a9423ab61fbacca0e7c926f1c89e5d6382b1a7c57",
+  "source_snapshot\\toy_math_snapshot.py": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c",
+  "summaries.json": "c190f4422bb01a3464f3be44b6f08da24441010f2397cc47b45dd0a4cba525f6",
+  "timings.json": "9f81a84f615147d685fd0198e339f80e8e5e9c46b21674611dc5689acd197ee4"
+}

@@ -1,0 +1,22 @@
+{
+  "key": "liu2025",
+  "arxiv_id": "2505.10465",
+  "accessed_utc": "2026-10-06T00:48:00.366351+00:00",
+  "metadata": {
+    "citation_title": "Superposition Yields Robust Neural Scaling",
+    "citation_author": "Gore, Jeff",
+    "citation_doi": "10.52202/085713-5320",
+    "citation_date": "2025/05/15",
+    "citation_online_date": "2025/11/29",
+    "citation_pdf_url": "https://arxiv.org/pdf/2505.10465",
+    "citation_arxiv_id": "2505.10465",
+    "citation_abstract": "The success of today's large language models (LLMs) depends on the observation that larger models perform better. However, the origin of this neural scaling law, that loss decreases as a power law with model size, remains unclear. We propose that representation superposition, meaning that LLMs represent more features than they have dimensions, can be a key contributor to loss and cause neural scaling. Based on Anthropic's toy model, we use weight decay to control the degree of superposition, allowing us to systematically study how loss scales with model size. When superposition is weak, the loss follows a power law only if data feature frequencies are power-law distributed. In contrast, under strong superposition, the loss generically scales inversely with model dimension across a broad class of frequency distributions, due to geometric overlaps between representation vectors. We confirmed that open-sourced LLMs operate in the strong superposition regime and have loss scaling inversely with model dimension, and that the Chinchilla scaling laws are also consistent with this behavior. Our results identify representation superposition as a central driver of neural scaling laws, providing insights into questions like when neural scaling laws can be improved and when they will break down."
+  },
+  "submission_history": "Submission history From: Yizhou Liu [ view email ] [v1] Thu, 15 May 2025 16:18:13 UTC (2,165 KB) [v2] Sun, 18 May 2025 15:54:08 UTC (2,165 KB) [v3] Thu, 23 Oct 2025 16:06:53 UTC (1,598 KB) [v4] Sat, 29 Nov 2025 21:39:27 UTC (1,598 KB)",
+  "abstract_url": "https://arxiv.org/abs/2505.10465",
+  "pdf_url": "https://arxiv.org/pdf/2505.10465",
+  "pages": 37,
+  "pdf_bytes": 2569878,
+  "pdf_sha256": "162bf1c6bc1454ee58d81f93a96f9aa507a71cad5f2bbe08d883d02c15f7e772",
+  "errors": []
+}

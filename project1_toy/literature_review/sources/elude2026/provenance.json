@@ -1,0 +1,7 @@
+{
+  "key": "elude2026",
+  "url": "https://pure.mpg.de/rest/items/item_3713730_2/component/file_3713731/content",
+  "errors": [
+    "URLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)'))"
+  ]
+}

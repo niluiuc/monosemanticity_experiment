@@ -1,0 +1,26 @@
+{
+  "stage": "A symbolic checks only",
+  "checks": {
+    "opposite_strong_loss": false,
+    "weak_three_active_gain": true,
+    "all_active_loss_difference": true,
+    "three_active_H": true,
+    "H_polynomial": true,
+    "H_derivative_bound_identity": true,
+    "B_lower_bound_identity": true,
+    "weak_branch_boundary_matching": true,
+    "orientation_order_three_active": true,
+    "same_sign_strong_loss": false,
+    "same_sign_mono_difference": true,
+    "mono_local_coefficient": true,
+    "critical_probability_root": true,
+    "threshold_above_quarter": true,
+    "threshold_below_half": true
+  },
+  "all_checks_pass": false,
+  "critical_probability_exact": "3/2 - sqrt(5)/2",
+  "critical_probability_decimal": "0.38196601125010515180",
+  "critical_sparsity_exact": "-1/2 + sqrt(5)/2",
+  "sympy_version": "1.14.0",
+  "global_proof_location": "derivation.md; identities alone do not prove inequalities/coverage"
+}

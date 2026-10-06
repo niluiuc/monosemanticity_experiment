@@ -1,0 +1,1778 @@
+
+
+===== PDF PAGE 1 =====
+arXiv:0903.4579v2  [math.ST]  2 Dec 2009
+1
+Coherence-Based Performance Guarantees for
+Estimating a Sparse Vector Under Random Noise
+Zvika Ben-Haim, Yonina C. Eldar, and Michael Elad
+Abstract— We consider the problem of estimating a deter-
+ministic sparse vector x0 from underdetermined measurements
+Ax0 + w, where w represents white Gaussian noise and A is
+a given deterministic dictionary. We analyze the performance
+of three sparse estimation algorithms: basis pursuit denoising
+(BPDN), orthogonal matching pursuit (OMP), and thresholding.
+These algorithms are shown to achieve near-oracle performance
+with high probability, assuming that x0 is sufﬁciently sparse. Our
+results are non-asymptotic and are based only on the coherence
+of A, so that they are applicable to arbitrary dictionaries.
+Differences in the precise conditions required for the performance
+guarantees of each algorithm are manifested in the observed
+performance at high and low signal-to-noise ratios. This provides
+insight on the advantages and drawbacks of ℓ1 relaxation
+techniques such as BPDN as opposed to greedy approaches such
+as OMP and thresholding.
+EDICS Topics: SSP-PARE, SSP-PERF.
+Index terms: Sparse estimation, basis pursuit, matching
+pursuit, thresholding algorithm, oracle.
+I. INTRODUCTION
+Estimation problems with sparsity constraints have attracted
+considerable attention in recent years because of their poten-
+tial use in numerous signal processing applications, such as
+denoising, compression and sampling. In a typical setup, an
+unknown deterministic parameter x0 ∈Rm is to be estimated
+from measurements b = Ax0 + w, where A ∈Rn×m is
+a deterministic matrix and w is a noise vector. Typically,
+the dictionary A consists of more columns than rows (i.e.,
+m > n), so that without further assumptions, x0 is uniden-
+tiﬁable from b. The impass´e is resolved by assuming that
+the parameter vector is sparse, i.e., that most elements of x0
+are zero. Under the assumption of sparsity, several estimation
+approaches can be used. These include greedy algorithms, such
+as thresholding and orthogonal matching pursuit (OMP) [1],
+and ℓ1 relaxation methods, such as the Dantzig selector [2]
+and basis pursuit denoising (BPDN) [3] (also known as the
+Lasso). A comparative analysis of these techniques is crucial
+for determining the appropriate strategy in a given situation.
+There are two standard approaches to modeling the noise w
+in the sparse estimation problem. The ﬁrst is to assume that
+Z. Ben-Haim and Y. C. Eldar are with the Department of Electrical Engi-
+neering, Technion—Israel Institute of Technology, Haifa 32000, Israel (e-mail:
+{zvikabh@tx, yonina@ee}.technion.ac.il). M. Elad is with the Department of
+Computer Science, Technion—Israel Institute of Technology, Haifa 32000,
+Israel (e-mail: elad@cs.technion.ac.il). Contact information for Z. Ben-Haim:
+phone +972-4-8294700, fax +972-4-8295757. This work was supported in part
+by the Israel Science Foundation under Grants 1081/07 and 599/08, by the
+European Commission in the framework of the FP7 Network of Excellence in
+Wireless COMmunications NEWCOM++ (contract no. 216715), and by the
+Goldstein UAV and Satellite Center.
+w is deterministic and bounded [4]–[6]. This leads to a worst-
+case analysis in which an estimator must perform adequately
+even when the noise maximally damages the measurements.
+The noise in this case is thus called adversarial. By contrast, if
+one assumes that the noise is random, then the analysis aims
+to describe estimator behavior for typical noise values [2], [7],
+[8]. The random noise scenario is the main focus of this paper.
+As one might expect, stronger performance guarantees can be
+obtained in this setting.
+It is common to judge the quality of an estimator by
+comparing its mean-squared error (MSE) with the Cram´er–
+Rao bound (CRB) [9]. In the case of sparse estimation under
+Gaussian noise, it has recently been shown that the unbiased
+CRB is identical (for almost all values of x0) to the MSE of the
+“oracle” estimator, which knows the locations of the nonzero
+elements of x0 [10]. Thus, a gold standard for estimator
+performance is the MSE of the oracle. Indeed, it can be shown
+that ℓ1 relaxation algorithms come close to the oracle when
+the noise is Gaussian. Results of this type are sometimes
+referred to as “oracle inequalities.” Speciﬁcally, Cand`es and
+Tao [2] have shown that, with high probability, the ℓ2 distance
+between x0 and the Dantzig estimate is within a constant times
+log m of the performance of the oracle. Recently, Bickel et
+al. [8] have demonstrated that the performance of BPDN is
+similarly bounded, with high probability, by C log m times the
+oracle performance, for a constant C. However, the constant
+involved in this analysis is considerably larger than that of the
+Dantzig selector. Interestingly, it turns out that the log m gap
+between the oracle and practical estimators is an unavoidable
+consequence of the fact that the nonzero locations in x0 are
+unknown [11].
+The contributions [2], [8] state their results using the
+restricted isometry constants (RICs). These measures of the
+dictionary quality can be efﬁciently approximated in speciﬁc
+cases, e.g., when the dictionary is selected randomly from an
+appropriate ensemble. However, in general it is NP-hard to
+evaluate the RICs for a given matrix A, and they must then
+be bounded by efﬁciently computable properties of A, such
+as the mutual coherence [12]. In this respect, coherence-based
+results are appealing since they can be used with arbitrary
+dictionaries [13], [14].
+In this paper, we seek performance guarantees for sparse
+estimators based directly on the mutual coherence of the ma-
+trix A [15]. While such results are suboptimal when the RICs
+of A are known, the proposed approach yields tighter bounds
+than those obtained by applying coherence bounds to RIC-
+based results. Speciﬁcally, we demonstrate that BPDN, OMP
+and thresholding all achieve performance within a constant
+times log m of the oracle estimator, under suitable conditions.
+
+
+===== PDF PAGE 2 =====
+2
+In the case of BPDN, our result provides a tighter guarantee
+than the coherence-based implications of the work of Bickel
+et al. [8]. To the best of our knowledge, there are no prior
+performance guarantees for greedy approaches such as OMP
+and thresholding when the noise is random.
+It is important to distinguish the present work from Bayesian
+performance analysis, as practiced in [13], [16]–[18], where on
+top of the assumption of stochastic noise, a probabilistic model
+for x0 is also used. Our results hold for any speciﬁc value of x0
+(satisfying appropriate conditions), rather than providing re-
+sults on average over realizations of x0; this necessarily leads
+to weaker guarantees. It also bears repeating that our results
+apply to a ﬁxed, ﬁnite-sized matrix A; this distinguishes our
+work from asymptotic performance guarantees for large m and
+n, such as [19].
+The rest of this paper is organized as follows. We begin
+in Section II by comparing dictionary quality measures and
+reviewing standard estimation techniques. In Section III, we
+analyze the limitations of estimator performance under ad-
+versarial noise. This motivates the introduction of random
+noise, for which substantially better guarantees are obtained
+in Section IV. Finally, the validity of these results is examined
+by simulation in practical estimation scenarios in Section V.
+The following notation is used throughout the paper. Vectors
+and matrices are denoted, respectively, by boldface lowercase
+and boldface uppercase letters. The set of indices of the
+nonzero entries of a vector x is called the support of x and
+denoted supp(x). Given an index set Λ and a matrix A, the
+notation AΛ refers to the submatrix formed from the columns
+of A indexed by Λ. The ℓp norm of a vector x, for 1 ≤p ≤∞,
+is denoted ∥x∥p, while ∥x∥0 denotes the number of nonzero
+elements in x.
+II. PRELIMINARIES
+A. Characterizing the Dictionary
+Let x0 ∈Rm be an unknown deterministic vector, and
+denote its support set by Λ0 = supp(x0). Let s = ∥x0∥0
+be the number of nonzero entries in x0. In our setting, it
+is typically assumed that s is much smaller than m, i.e.,
+that most elements in x0 are zero. Suppose we obtain noisy
+measurements
+b = Ax0 + w
+(1)
+where A ∈Rn×m is a known overcomplete dictionary
+(m > n). We refer to the columns ai of A as the atoms
+of the dictionary, and assume throughout our work that the
+atoms are normalized, ∥ai∥2 = 1. We will consider primarily
+the situation in which the noise w is random, though for
+comparison we will also examine the case of a bounded
+deterministic noise vector; a precise deﬁnition of w is deferred
+to subsequent sections.
+For x0 to be identiﬁable, one must guarantee that different
+values of x0 produce signiﬁcantly different values of b. One
+way to ensure this is to examine all possible subdictionaries, or
+s-element sets of atoms, and verify that the subspaces spanned
+by these subdictionaries differ substantially from one another.
+More speciﬁcally, several methods have been proposed to
+formalize the notion of the suitability of a dictionary for
+sparse estimation. These include the mutual coherence [12],
+the cumulative coherence [7], the exact recovery coefﬁcient
+(ERC) [7], the spark [4], and the RICs [2], [5]. Except for the
+mutual coherence and cumulative coherence, none of these
+measures can be efﬁciently calculated for an arbitrary given
+dictionary A. Since the values of the cumulative and mutual
+coherence are quite close, our focus in this paper will be on
+the mutual coherence µ = µ(A), which is deﬁned as
+µ ≜max
+i̸=j
+aT
+i aj
+ .
+(2)
+While the mutual coherence can be efﬁciently calculated
+directly from (2), it is not immediately clear in what way µ
+is related to the requirement that subdictionaries must span
+different subspaces. Indeed, µ ensures a lack of correlation
+between single atoms, while we require a distinction between
+s-element subdictionaries. To explore this relation, let us recall
+the deﬁnitions of the RICs, which are more directly related to
+the subdictionaries of A. We will then show that the mutual
+coherence can be used to bound the constants involved in the
+RICs, a fact which will also prove useful in our subsequent
+analysis. This strategy is inspired by earlier works, which have
+used the mutual coherence to bound the ERC [7] and the spark
+[4]. Thus, the coherence can be viewed as a tractable proxy for
+more accurate measures of the quality of a dictionary, which
+cannot themselves be calculated efﬁciently.
+By the RICs we refer to two properties describing “good”
+dictionaries, namely, the restricted isometry property (RIP) and
+the restricted orthogonality property (ROP), which we now
+deﬁne. A dictionary A is said to satisfy the RIP [5] of order s
+with parameter δs if, for every index set Λ of size s, we have
+(1 −δs)∥y∥2
+2 ≤∥AΛy∥2
+2 ≤(1 + δs)∥y∥2
+2
+(3)
+for all y ∈Rs. Thus, when δs is small, the RIP ensures that
+any s-atom subdictionary is nearly orthogonal, which in turn
+implies that any two disjoint (s/2)-atom subdictionaries are
+well-separated.
+Similarly, A is said to satisfy the ROP [2] of order (s1, s2)
+with parameter θs1,s2 if, for every pair of disjoint index sets
+Λ1 and Λ2 having cardinalities s1 and s2, respectively, we
+have
+yT
+1 AT
+Λ1AΛ2y2
+ ≤θs1,s2∥y1∥2∥y2∥2
+(4)
+for all y1 ∈Rs1 and for all y2 ∈Rs2. In words, the ROP
+requires any two disjoint subdictionaries containing s1 and
+s2 elements, respectively, to be nearly orthogonal to each
+other. These two properties are therefore closely related to
+the requirement that distinct subdictionaries of A behave
+dissimilarly.
+In recent years, it has been demonstrated that various
+practical estimation techniques successfully approximate x0
+from b, if the constants δs and θs1,s2 are sufﬁciently small
+[2], [5], [20]. This occurs, for example, when the entries
+in A are chosen randomly according to an independent,
+identically distributed Gaussian law, as well as in some speciﬁc
+deterministic dictionary constructions.
+Unfortunately, in the standard estimation setting, one cannot
+design the system matrix A according to these speciﬁc rules.
+In general, if one is given a particular dictionary A, then
+
+
+===== PDF PAGE 3 =====
+3
+there is no known algorithm for efﬁciently determining its
+RICs. Indeed, the very nature of the RICs seems to require
+enumerating over an exponential number of index sets in order
+to ﬁnd the “worst” subdictionary. While the mutual coherence
+µ of (2) tends to be far less accurate in capturing the accuracy
+of a dictionary, it is still useful to be able to say something
+about the RICs based only on µ. Such a result is given in the
+following lemma.
+Lemma 1: For any matrix A, the RIP constant δs of (3)
+and the ROP constant θs1,s2 of (4) satisfy the bounds
+δs ≤(s −1)µ,
+(5)
+θs1,s2 ≤µ√s1s2
+(6)
+where µ is the mutual coherence (2).
+The proof of Lemma 1 can be found in Appendix I. We
+will apply this lemma in Section IV, when examining the
+performance of the Dantzig selector. This tool can also be
+used in conjunction with other results that rely on the RIP
+and ROP.
+B. Estimation Techniques
+To ﬁx notation, we now brieﬂy review several approaches
+for estimating x0 from noisy measurements b given by (1).
+The two main strategies for efﬁciently estimating a sparse
+vector are ℓ1 relaxation and greedy methods. The ﬁrst of
+these involves solving an optimization problem wherein the
+nonconvex constraint ∥x0∥0 = s is relaxed to a constraint
+on the ℓ1 norm of the estimated vector x0. Speciﬁcally, we
+consider the ℓ1-penalty version of BPDN, which estimates x0
+as a solution ˆxBP to the quadratic program
+min
+x
+1
+2∥b −Ax∥2
+2 + γ∥x∥1
+(7)
+for some regularization parameter γ. We refer to the optimiza-
+tion problem (7) as BPDN, although it should be noted that
+some authors reserve this term for the related optimization
+problem
+min
+x ∥x∥1
+s.t. ∥b −Ax∥2
+2 ≤δ
+(8)
+where δ is a given constant.
+Another estimator based on the idea of ℓ1 relaxation is
+the Dantzig selector [2], deﬁned as a solution ˆxDS to the
+optimization problem
+min
+x ∥x∥1
+s.t. ∥AT (b −Ax)∥∞≤τ
+(9)
+where τ is again a user-selected parameter. The Dantzig
+selector, like BPDN, is a convex relaxation method, but rather
+than penalizing the ℓ2 norm of the residual b−Ax, the Dantzig
+selector ensures that the residual is weakly correlated with all
+dictionary atoms.
+Instead of solving an optimization problem, greedy ap-
+proaches estimate the support set Λ0 from the measurements
+b. Once a support set Λ is chosen, the parameter vector x0
+can be estimated using least-squares (LS) to obtain
+bx =
+(
+A†
+Λb
+on the support set Λ,
+0
+elsewhere.
+(10)
+Greedy techniques differ in the method by which the support
+set is selected. The simplest method is known as the threshold-
+ing algorithm. This technique computes the correlation of the
+measured signal b with each of the atoms ai and deﬁnes Λ as
+the set of indices of the s atoms having the highest correlation.
+Subsequently, the LS technique (10) is applied to obtain the
+thresholding estimate bxth.
+A somewhat more sophisticated greedy algorithm is OMP
+[1]. This iterative approach begins by initializing the estimated
+support set Λ0 to the empty set and setting a residual vector r0
+to b. Subsequently, at each iteration i = 1, . . . , s, the algorithm
+ﬁnds the single atom which is most highly correlated with
+ri−1. The index of this atom, say ki, is added to the support
+set, so that Λi = Λi−1 ∪{ki}. The estimate bxi
+OMP at the
+ith iteration is then deﬁned by the LS solution (10) using the
+support set Λi. Next, the residual is updated using the formula
+ri = b −Abxi
+OMP.
+(11)
+The residual thus describes the part of b which has yet to be
+accounted for by the estimate. The counter i is now incre-
+mented, and s iterations are performed, after which the OMP
+estimate bxOMP is deﬁned as the estimate at the ﬁnal iteration,
+bxs
+OMP. A well-known property of OMP is that the algorithm
+never chooses the same atom twice [4]. Consequently, stopping
+after s iterations guarantees that ∥bxOMP∥0 = s.
+Finally, we also mention the so-called oracle estimator,
+which is based both on b and on the true support set Λ0
+of x0; the support set is assumed to have been provided by an
+“oracle”. The oracle estimator ˆxor calculates the LS solution
+(10) for Λ0. In the case of white Gaussian noise, the MSE
+obtained using this technique equals that of the CRB [10].
+Thus, it makes sense to use the oracle estimator as a gold
+standard against which the performance of practical algorithms
+can be compared.
+III. PERFORMANCE UNDER ADVERSARIAL NOISE
+In this section, we brieﬂy discuss the case in which the
+noise w is an unknown deterministic vector which satisﬁes
+∥w∥2 ≤ε. As we will see, performance guarantees in this
+case are rather weak, and indeed no denoising capability can
+be ensured for any known algorithm. In Section IV, we will
+compare this setting with the results which can be obtained
+when w is random.
+Typical “stability” results under adversarial noise guarantee
+that if the mutual coherence µ of A is sufﬁciently small, and if
+x0 is sufﬁciently sparse, then the distance between x0 and its
+estimate is on the order of the noise magnitude. Such results
+can be derived for algorithms including BPDN, OMP, and
+thresholding. Consider, for example, the following theorem,
+which is based on the work of Tropp [7, §IV-C].1
+Theorem 1 (Tropp): Let x0 be an unknown deterministic
+vector with known sparsity ∥x0∥0 = s, and let b = Ax0 +w,
+where ∥w∥2 ≤ε. Suppose the mutual coherence µ of the
+dictionary A satisﬁes s < 1/(3µ). Let ˆxBP denote a solution
+1Tropp considers only the case in which the entries of x0 belong to the set
+{0, ±1}. However, since the analysis performed in [7, §IV-C] can readily be
+applied to the general setting considered here, we omit the proof of Theorem 1.
+
+
+===== PDF PAGE 4 =====
+4
+of BPDN (7) with regularization parameter γ = 2ε. Then, ˆxBP
+is unique, the support of ˆxBP is a subset of the support of x0,
+and
+∥x0 −ˆxBP∥∞<
+
+3 +
+q
+3
+2
+
+ε ≈4.22ε.
+(12)
+Results similar to Theorem 1 have also been obtained [4],
+[5], [14], [20] for the related ℓ1-error estimation approach
+(8), as well as for the OMP algorithm [4]. Furthermore,
+the technique used in the proof for the OMP [4] can also
+be applied to demonstrate a (slightly weaker) performance
+guarantee for the thresholding algorithm.
+In all of the aforementioned results, the only guarantee is
+that the distance between ˆxBP and x0 is on the order of
+the noise power ε. Such results are somewhat disappointing,
+because one would expect the knowledge that x0 is sparse to
+assist in denoising; yet Theorem 1 promises only that the ℓ∞
+distance between ˆxBP and x0 is less than about four times the
+maximum noise level. However, the fact that no denoising has
+occurred is a consequence of the problem setting itself, rather
+than a limitation of the algorithms proposed above. In the
+adversarial case, even the oracle estimator can only guarantee
+an estimation error on the order of ε. This is because w can
+be chosen so that w ∈span(AΛ0), in which case projection
+onto span(AΛ0), as performed by the oracle estimator, does
+not remove any portion of the noise.
+In conclusion, results in this adversarial context must take
+into account values of w which are chosen so as to cause
+maximal damage to the estimation algorithm. In many prac-
+tical situations, such a scenario is overly pessimistic. Thus,
+it is interesting to ask what guarantees can be made about
+the performance of practical estimators under the assumption
+of random (and thus non-adversarial) noise. This scenario is
+considered in the next section.
+IV. PERFORMANCE UNDER RANDOM NOISE
+We now turn to the setting in which the noise w is a
+Gaussian random vector with mean 0 and covariance σ2I. In
+this case, it can be shown [10] that the MSE of any unbiased
+estimator of x0 satisﬁes the Cram´er–Rao bound
+MSE(bx) ≥CRB = σ2 Tr((AT
+Λ0AΛ0)−1)
+(13)
+whenever ∥x0∥0 = s. Interestingly, CRB is also the MSE of
+the oracle estimator [2].
+It follows from the Gershgorin disc theorem [21] that
+all eigenvalues of AT
+Λ0AΛ0 are between 1 −(s −1)µ and
+1 + (s + 1)µ. Therefore, for reasonable sparsity levels,
+Tr((AT
+Λ0AΛ0)−1) is not much larger than s; for example, if
+we assume, as in Theorem 1, that s < 1/(3µ), then CRB
+of (13) is no larger than
+3
+2sσ2. Considering that the mean
+power of w is nσ2, it is evident that the oracle estimator has
+substantially reduced the noise level. In this section, we will
+demonstrate that comparable performance gains are achievable
+using practical methods, which do not have access to the
+oracle.
+A. ℓ1-Relaxation Approaches
+Historically, performance guarantees under random noise
+were ﬁrst obtained for the Dantzig selector (9). The result,
+due to Cand`es and Tao [2], is derived using the RICs (3)–(4).
+Using the bounds of Lemma 1 yields the following coherence-
+based result.
+Theorem 2 (Cand`es and Tao): Let x0 be an unknown de-
+terministic vector such that ∥x0∥0 = s, and let b = Ax0 +w,
+where w ∼N(0, σ2I) is a random noise vector. Assume that
+s < 1 +
+1
+(1 +
+√
+2)µ
+(14)
+and consider the Dantzig selector (9) with parameter
+τ = σ
+p
+2(1 + α) log m
+(15)
+for some constant α > 0. Then, with probability exceeding
+1 −
+1
+mα√π log m,
+(16)
+the Dantzig selector ˆxDS satisﬁes
+∥x0 −ˆxDS∥2
+2 ≤2c2
+1(1 + α)sσ2 log m
+(17)
+where
+c1 =
+4
+1 −
+ (1 +
+√
+2)s −1
+
+µ
+.
+(18)
+This theorem is signiﬁcant because it demonstrates that,
+while ˆxDS does not quite reach the performance of the oracle
+estimator, it does come within a constant factor multiplied by
+log m, with high probability. Interestingly, the log m factor
+is an unavoidable result of the fact that the locations of the
+nonzero elements in x0 are unknown (see [11, §7.4] and the
+references therein).
+It is clearly of interest to determine whether results similar
+to Theorem 2 can be obtained for other sparse estimation
+algorithms [22], [23]. In this context, Bickel et al. [8] have
+recently shown that, with high probability, BPDN also comes
+within a factor of C log m of the oracle performance, for
+a constant C. In fact, their analysis is quite versatile, and
+simultaneously provides a result for both the Dantzig selector
+and BPDN. However, the constant C obtained in this BPDN
+guarantee is always larger than 128, often substantially so;
+this is considerably weaker than the result of Theorem 2.
+Furthermore, while the necessary conditions for the results of
+Bickel et al. are not directly comparable with those of Cand`es
+and Tao, an application of Lemma 1 indicates that coherence-
+based conditions stronger than (14) are required for the results
+of Bickel et al. to hold.
+In the following, we obtain a coherence-based performance
+guarantee for BPDN. In particular, we demonstrate that, for
+an appropriate choice of the regularization parameter γ, the
+squared error of the BPDN estimate is bounded, with high
+probability, by a small constant times sσ2 log(m −s), and
+that this constant is lower than that of Theorem 2. We begin
+by stating the following somewhat more general result, whose
+proof is found in Appendix II.
+Theorem 3: Let x0 be an unknown deterministic vector
+with known sparsity ∥x0∥0 = s, and let b = Ax0 +w, where
+
+
+===== PDF PAGE 5 =====
+5
+w ∼N(0, σ2I) is a random noise vector. Suppose that2
+s < 1
+3µ.
+(19)
+Then, with probability exceeding
+
+1 −(m −s) exp
+
+−γ2
+8σ2
+ 
+1 −e−s/7
+,
+(20)
+the solution ˆxBP of BPDN (7) is unique and satisﬁes
+∥x0 −ˆxBP∥2
+2 ≤
+
+σ
+√
+3 + 3
+2γ
+2
+s.
+(21)
+To compare the results for BPDN and the Dantzig selector,
+we now derive from Theorem 3 a result which holds with a
+probability on the order of (16). Observe that in order for
+(20) to be a high probability, we require exp(−γ2/(8σ2))
+to be substantially smaller than 1/(m −s). This requirement
+can be used to select a value for the regularization parameter
+γ. In particular, one requires γ to be at least on the order
+of
+p
+8σ2 log(m −s). However, γ should not be much larger
+than this value, as this will increase the error bound (21). We
+propose to use
+γ =
+p
+8σ2(1 + α) log(m −s)
+(22)
+for some fairly small α > 0. Substituting this value of γ into
+Theorem 3 yields the following result.
+Corollary 1: Under the conditions of Theorem 3, let ˆxBP
+be a solution of BPDN (7) with γ given by (22). Then, with
+probability exceeding
+
+1 −
+1
+(m −s)α
+ 
+1 −e−s/7
+(23)
+we have
+∥x0−ˆxBP∥2
+2 ≤
+√
+3 + 3
+p
+2(1 + α) log(m −s)
+2
+sσ2. (24)
+Let us examine the probability (23) with which Corollary 1
+holds, to verify that it is indeed roughly equal to (16). The
+expression (23) consists of a product of two terms, both of
+which converge to 1 as the problem dimensions increase. The
+right-hand term may seem odd because it appears to favor
+non-sparse signals; however, this is an artifact of the method
+of proof, which requires a sufﬁcient number of nonzero
+coefﬁcients for large number approximations to hold. This
+right-hand term converges to 1 exponentially and therefore
+typically has a negligible effect on the overall probability of
+success; for example, for s ≥50 this term is larger than 0.999.
+The left-hand term in (23) tends to 1 polynomially as m−s
+increases. This is a slightly lower rate than the probability
+(16) with which the Dantzig selector bound holds; however,
+this difference is compensated for by a correspondingly lower
+multiplicative factor of log(m −s) in the BPDN error bound
+(24), as opposed to the log m factor in the Dantzig selector.
+In any case, for both theorems to hold, m must increase much
+more quickly than s, so that these differences are negligible.
+For large s and m −s, Corollary 1 ensures that, with
+high probability, ∥ˆxBP −x0∥2
+2 is no larger than a constant
+2As in [7], analogous ﬁndings can also be obtained under the weaker
+requirement s < 1/(2µ), but the resulting expressions are somewhat more
+involved.
+multiplied by sσ2 log(m−s). Up to a multiplicative constant,
+this error bound is essentially identical to the result (17)
+for the Dantzig selector. As we have seen, the probabilities
+with which these bounds hold are likewise almost identical.
+However, the constants involved in the BPDN, as demonstrated
+by Corollary 1, are substantially lower than those previously
+known for the Dantzig selector. To see this, consider a situation
+in which s = 1/(4µ). In this case, for large s, the bound (17)
+on the Dantzig selector rapidly converges to
+∥x0 −ˆxDS∥2
+2 ≤203.6(1 + α) · log m · sσ2.
+(25)
+By comparison, the performance of BPDN in the same setting,
+as bounded by Corollary 1, is
+∥x0 −ˆxBP∥2
+2 ≤18(1 + α) · log(m −s) · sσ2
+(26)
+which is over 10 times lower. This improvement is not
+merely a result of the particular choice of s or µ. Indeed,
+the multiplicative factor of 18 which appeared in the BPDN
+bound (26) holds for large s with any value of µ, as long as
+s < 1/(3µ); whereas it can be seen from (17)–(18) that the
+multiplicative factor of the Dantzig selector is always larger
+than 32. Further comparison between these guarantees will be
+presented in Section V.
+B. Greedy Approaches
+The performance guarantees obtained for the ℓ1-relaxation
+techniques required only the assumption that x0 is sufﬁciently
+sparse. By contrast, for greedy algorithms, successful estima-
+tion can only be guaranteed if one further assumes that all
+nonzero components of x0 are somewhat larger than the noise
+level. The reason is that greedy techniques are based on a LS
+solution for an estimated support, an approach whose efﬁcacy
+is poor unless the support is correctly identiﬁed. Indeed,
+when using the LS technique (10), even a single incorrectly
+identiﬁed support element may cause the entire estimate to
+be severely incorrect. To ensure support recovery, all nonzero
+elements must be large enough to overcome the noise.
+To formalize this notion, denote x0 = (x0,1, . . . , x0,m)T
+and deﬁne
+|xmin| = min
+i∈Λ0 |x0,i|,
+|xmax| = max
+i∈Λ0 |x0,i|.
+(27)
+A performance guarantee for both OMP and the thresholding
+algorithm is then given by the following theorem, whose proof
+can be found in Appendix III.
+Theorem 4: Let x0 be an unknown deterministic vector
+with known sparsity ∥x0∥0 = s, and let b = Ax0 +w, where
+w ∼N(0, σ2I) is a random noise vector. Suppose that
+|xmin| −(2s −1)µ|xmin| ≥2σ
+p
+2(1 + α) log m
+(28)
+for some constant α > 0. Then, with probability at least
+1 −
+1
+mαp
+π(1 + α) log m
+,
+(29)
+
+
+===== PDF PAGE 6 =====
+6
+the OMP estimate bxOMP identiﬁes the correct support Λ0 of
+x0 and, furthermore, satisﬁes
+∥bxOMP −x0∥2
+2 ≤
+2(1 + α)
+(1 −(s −1)µ)2 sσ2 log m
+(30a)
+≤8(1 + α)sσ2 log m.
+(30b)
+If the stronger condition
+|xmin| −(2s −1)µ|xmax| ≥2σ
+p
+2(1 + α) log m
+(31)
+holds, then with probability exceeding (29), the thresholding
+algorithm also correctly identiﬁes Λ0 and satisﬁes (30).
+The performance guarantee (30) is better than that provided
+by Theorem 2 and Corollary 1. However, this result comes at
+the expense of requirements on the magnitude of the entries
+of x0. Our analysis thus suggests that greedy approaches may
+outperform ℓ1-based methods when the entries of x0 are large
+compared with the noise, but that the greedy approaches will
+deteriorate when the noise level increases. As we will see in
+Section V, simulations also appear to support this conclusion.
+It is interesting to compare the success conditions (28)
+and (31) of the OMP and thresholding algorithms. For given
+problem dimensions, the OMP algorithm requires |xmin|, the
+smallest nonzero element of x0, to be larger than a constant
+multiple of the noise standard deviation σ. This is required
+in order to ensure that all elements of the support of x0
+will be identiﬁed with high probability. The requirement of
+the thresholding algorithm is stronger, as beﬁts a simpler
+approach: In this case |xmin| must be larger than the noise
+standard deviation plus a constant times |xmax|. In other
+words, one must be able to separate |xmin| from the combined
+effect of noise and interference caused by the other nonzero
+components of x0. This results from the thresholding tech-
+nique, in which the entire support is identiﬁed simultaneously
+from the measurements. By comparison, the iterative approach
+used by OMP identiﬁes and removes the large elements in x0
+ﬁrst, thus facilitating the identiﬁcation of the smaller elements
+in later iterations.
+V. NUMERICAL RESULTS
+In this section, we describe a number of numerical experi-
+ments comparing the performance of various estimators to the
+guarantees of Section IV. Our ﬁrst experiment measured the
+median estimation error, i.e., the median of the ℓ2 distance
+between x0 and its estimate. The median error is intuitively
+appealing as it characterizes the “typical” estimation error, and
+it can be readily bounded by the performance guarantees of
+Section IV.
+Speciﬁcally, we chose the two-ortho dictionary A = [I H],
+where I is the 512 × 512 identity matrix and H is the 512 ×
+512 Hadamard matrix with normalized columns. The RICs of
+this dictionary are unknown, but the coherence can be readily
+calculated and is given by µ = 1/
+√
+512. Consequently, the
+theorems of Section IV can be used to obtain performance
+guarantees for sufﬁciently sparse vectors. In particular, in our
+simulations we chose parameters x0 having a support of size
+s = 7. The smallest nonzero entry in x0 was |xmin| = 0.1
+and the largest entry was |xmax| = 1. Under these conditions,
+applying the theorems of Section IV yields the bounds3
+∥x0 −bxOMP∥2
+2 ≤3.7sσ2 log m
+w.p. 3
+4, if σ ≤0.057;
+∥x0 −ˆxBP∥2
+2 ≤22.1sσ2 log m
+w.p. 1
+2;
+∥x0 −ˆxDS∥2
+2 ≤361.8sσ2 log m
+w.p. 3
+4.
+(32)
+We have thus obtained guarantees for the median estimation
+error of the Dantzig selector, BPDN, and OMP. Under these
+settings, no guarantee can be made for the performance
+of the thresholding algorithm. Indeed, as we will see, for
+some choices of x0 satisfying the above requirements, the
+performance of the thresholding algorithm is not proportional
+to sσ2 log m. To obtain thresholding guarantees, one requires
+a narrower range between |xmin| and |xmax|.
+To measure the actual median error obtained by various
+estimators, 8 different parameter vectors x0 were selected.
+These differed in the distribution of the magnitudes of the
+nonzero components within the range [|xmin|, |xmax|] and in
+the locations of the nonzero elements. For each parameter x0,
+a set of measurement vectors b were obtained from (1) by
+adding white Gaussian noise. The estimation algorithms of
+Section II-B were then applied to each measurement real-
+ization; for the Dantzig selector and BPDN, the parameters
+τ and γ were chosen as the smallest values such that the
+probabilities of success (16) and (23), respectively, would
+exceed 1/2. The median over noise realizations of the distance
+∥x0−bx∥2
+2 was then computed for each estimator. This process
+was repeated for 10 values of the noise variance σ2 in the
+range 10−8 ≤σ2 ≤1. The results are plotted in Fig. 1 as a
+function of σ2.
+It is evident from Fig. 1 that some parameter vectors are
+more difﬁcult to estimate than others. Indeed, there is a large
+variety of parameters x0 satisfying the problem requirements,
+and it is likely that some of them come closer to the theo-
+retical limits than the parameters chosen in our experiment.
+This highlights the importance of performance guarantees in
+ensuring adequate performance for all parameter values. On
+the other hand, it is quite possible that further improvements
+of the constants in the performance bounds are possible. For
+example, the Dantzig selector guarantee, which is obtained by
+applying coherence bounds to RIC-based results [2], is almost
+100 times higher than the worst of the examined parameter
+values. It should also be noted that applying coherence bounds
+to RIC-based BPDN guarantees [8] yields a bound which
+applies to the aforementioned matrix A only when s ≤3,
+and thus cannot be used in the present setting. Therefore, it
+appears that when dealing with dictionaries for which only
+the coherence µ is known, guarantees based directly on µ are
+tighter than RIC-based results.
+In practice, it is more common to measure the MSE of an
+estimator than its median error. Our next goal is to determine
+whether the behavior predicted by our theoretical analysis is
+also manifested in the MSE of the various estimators. To this
+3In the current setting, the results for the Dantzig selector (Theorem 2)
+and OMP (Theorem 4) can only be used to yield guarantees holding with
+probabilities of approximately 3/4 and higher. These are, of course, also
+bounds on the median error.
+
+
+===== PDF PAGE 7 =====
+7
+10
+−8
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+2
+19.4 dB
+Noise Variance
+Median Error
+Bound
+Actual
+Oracle
+(a) Dantzig selector
+10
+−8
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+2
+7.0 dB
+Noise Variance
+Median Error
+Bound
+Actual
+Oracle
+(b) BPDN
+10
+−8
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+2
+13.7 dB
+Noise Variance
+Median Error
+Bound
+Actual
+Oracle
+(c) OMP
+10
+−8
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+−6
+10
+−4
+10
+−2
+10
+0
+10
+2
+Noise Variance
+Median Error
+Actual
+Oracle
+(d) Thresholding
+Fig. 1.
+Median estimation error for practical estimators (solid line) compared with the performance guarantees (dashed line) and the oracle estimator (dotted
+line). The solid lines report performance for 8 different values of the unknown parameter vector x0. For OMP, performance is only guaranteed for σ ≤0.057,
+while for thresholding, nothing can be guaranteed for the given problem dimensions.
+end, we conducted an experiment in which the MSEs of the
+estimators of Section II-B were compared. In this simulation,
+we chose the two-ortho dictionary A = [I H], where I is the
+256 × 256 identity matrix and H is the 256 × 256 Hadamard
+matrix with normalized columns.4 Once again, the RICs of
+this dictionary are unknown. However, the coherence in this
+case is given by µ = 1/16, and consequently, the ℓ1 relaxation
+guarantees of Section IV-A hold for s ≤5.
+We obtained the parameter vector x0 for this experiment
+by selecting a 5-element support at random, choosing the
+nonzero entries from a white Gaussian distribution, and then
+normalizing the resulting vector so that ∥x0∥2 = 1. The
+4Similar experiments were performed on a variety of other dictionaries,
+including an overcomplete DCT [24] and a matrix containing Gaussian
+random entries. The different dictionaries yielded comparable results, which
+are not reported here.
+regularization parameters τ and γ of the Dantzig selector
+and BPDN were chosen as recommended by Theorem 2 and
+Corollary 1, respectively; for both estimators a value of α = 1
+was chosen, so that the guaranteed probability of success for
+the two algorithms has the same order of magnitude. The
+MSE of each estimate was then calculated by averaging over
+repeated realizations of x0 and the noise. The experiment was
+conducted for 10 values of the noise variance σ2 and the results
+are plotted in Fig. 2 as a function of the signal-to-noise ratio
+(SNR), which is deﬁned by
+SNR = ∥x0∥2
+2
+nσ2
+=
+1
+nσ2 .
+(33)
+To compare this plot with the theoretical results of Sec-
+tion IV, observe ﬁrst the situation at high SNR. In this case,
+OMP, BPDN, and the Dantzig selector all achieve performance
+
+
+===== PDF PAGE 8 =====
+8
+10
+0
+10
+2
+10
+4
+10
+6
+10
+8
+10
+−6
+10
+−4
+10
+−2
+10
+0
+SNR
+MSE
+DS
+BPDN
+OMP
+Thresh
+Oracle
+Fig. 2.
+MSE of various estimators as a function of the SNR. The sparsity
+level is s = 5 and the dictionary is a 256 × 512 two-ortho matrix.
+which is proportional to the oracle MSE (or CRB) given by
+(13). Among these, OMP is closest to the CRB, followed
+by BPDN and, ﬁnally, the Dantzig selector. This behavior
+matches the proportionality constants given in the theorems
+of Section IV. Indeed, for small σ, the condition (28) holds
+even for large α, and thus Theorem 4 guarantees that OMP
+will recover the correct support of x0 with high probability,
+explaining the convergence of this estimator to the oracle.
+By contrast, the performance of the thresholding algorithm
+levels off at high SNR; this is again predicted by Theorem 4,
+since, even when σ = 0, the condition (31) does not always
+hold, unless |xmin| is not much smaller than |xmax|. Thus, for
+our choice of x0, Theorem 4 does not guarantee near-oracle
+performance for the thresholding algorithm, even at high SNR.
+With increasing noise, Theorem 4 requires a corresponding
+increase in |xmin| to guarantee the success of the greedy
+algorithms. Consequently, Fig. 2 demonstrates a deterioration
+of these algorithms when the SNR is low. On the other
+hand, the theorems for the relaxation algorithms make no
+such assumptions, and indeed these approaches continue to
+perform well, compared with the oracle estimator, even when
+the noise level is high. In particular, the Dantzig selector
+outperforms the CRB at low SNR; this is because the CRB
+is a bound on unbiased techniques, whereas when the noise
+is large, biased techniques such as an ℓ1 penalty become very
+effective. Robustness to noise is thus an important advantage
+of ℓ1-relaxation techniques.
+It is also interesting to examine the effect of the support
+size s on the performance of the various estimators. To this
+end, 15 support sizes in the range 2 ≤s ≤30 were tested. For
+each value of s, random vectors x0 having s nonzero entries
+were selected as in the previous simulation. The dictionary
+A was the 256 × 512 two-ortho matrix deﬁned above; as in
+the previous experiment, other matrices were also tested and
+provided similar results. The standard deviation of the noise
+for this experiment was σ = 0.01. The results are plotted in
+Fig. 3.
+0
+5
+10
+15
+20
+25
+30
+10
+−4
+10
+−3
+10
+−2
+10
+−1
+Number of nonzero coefficients, s
+MSE
+Dantzig
+BPDN
+OMP
+Thresh
+Oracle
+Fig. 3.
+MSE of various estimators as a function of the support size s. The
+noise standard deviation is σ = 0.01 and the dictionary is a 256 × 512
+two-ortho matrix.
+As mentioned above, the mutual coherence of the dictionary
+A is 1/16, so that the proposed performance guarantees
+apply only when x0 is quite sparse (s ≤5). Nevertheless,
+Fig. 3 demonstrates that the estimation algorithms (with the
+exception of the thresholding approach) exhibit a graceful
+degradation as the support of x0 increases. At ﬁrst sight
+this would appear to mean that the performance guarantees
+provided are overly pessimistic. For example, it is possible
+that the RICs in the present setting, while unknown, are fairly
+low and permit a stronger analysis than that of Section IV. It
+is also quite reasonable to expect, as mentioned above, that
+some improvement in the theoretical guarantees is possible.
+However, it is worth recalling that the performance guarantees
+proposed in this paper apply to all sparse vectors, while
+the numerical results describe the performance averaged over
+different values of x0. Thus it is possible that there exist
+particular parameter values for which the performance is
+considerably poorer than that reported in Fig. 3. Indeed, there
+exist values of A and x0 for which BPDN yields grossly
+incorrect results even when ∥x0∥0 is on the order of 1/µ [13].
+However, identifying such worst-case parameters numerically
+is quite difﬁcult; this is doubtlessly at least part of the reason
+for the apparent pessimism of the performance guarantees.
+VI. CONCLUSION
+The performance of an estimator depends on the problem
+setting under consideration. As we have seen, under the adver-
+sarial noise scenario of Section III, the estimation error of any
+algorithm can be as high as the noise power; in other words,
+the assumption of sparsity has not yielded any denoising
+effect. On the other hand, in the Bayesian regime in which
+both x0 and the noise vector are random, practical estimators
+come close to the performance of the oracle estimator [13].
+In Section IV, we examined a middle ground between these
+two extremes, namely the setting in which x0 is deterministic
+but the noise is random. As we have shown, despite the fact
+
+
+===== PDF PAGE 9 =====
+9
+that less is known about x0 in this case than in the Bayesian
+scenario, a variety of estimation techniques are still guaranteed
+to achieve performance close to that of the oracle estimator.
+Our theoretical and numerical results suggest some conclu-
+sions concerning the choice of an estimator. In particular, at
+high SNR values, it appears that the greedy OMP algorithm
+has an advantage over the other algorithms considered herein.
+In this case the support set of x0 can be recovered accurately
+and OMP thus converges to the oracle estimator; by contrast,
+ℓ1 relaxations have a shrinkage effect which causes a loss
+of accuracy at high SNR. This is of particular interest since
+greedy algorithms are also computationally more efﬁcient
+than relaxation methods. On the other hand, the ℓ1 relaxation
+techniques, and particularly the Dantzig selector, appear to
+be more effective than the greedy algorithms when the noise
+level is signiﬁcant: in this case, shrinkage is a highly effective
+denoising technique. Indeed, as a result of the bias introduced
+by the shrinkage, ℓ1-based approaches can even perform better
+than the oracle estimator and the Cram´er–Rao bound.
+APPENDIX I
+PROOF OF LEMMA 1
+By Gershgorin’s disc theorem [21], all eigenvalues of
+AT
+ΛAΛ are between 1−(s−1)µ and 1+(s−1)µ. Combining
+this with the fact that, for all y,
+λmin(AT
+ΛAΛ)∥y∥2
+2 ≤∥AΛy∥2
+2 ≤λmax(AT
+ΛAΛ)∥y∥2
+2, (34)
+we obtain (5). Next, to demonstrate (6), observe that
+yT
+1 AT
+Λ1AΛ2y2
+ ≤
+yT
+1
+ ·
+AT
+Λ1AΛ2
+ · |y2|
+(35)
+where the absolute value of a matrix or vector is taken
+elementwise. Since AT
+Λ1AΛ2 is a submatrix of AT A which
+does not contain any of the diagonal elements of AT A, it
+follows that each element in AT
+Λ1AΛ2 is smaller in absolute
+value than µ. Thus
+yT
+1 AT
+Λ1AΛ2y2
+ ≤µ
+yT
+1
+
+11T |y2| = µ∥y1∥1∥y2∥1
+(36)
+where
+1 indicates a vector of ones. Using the fact that ∥y∥1 ≤
+√s∥y∥2 for any s-vector y, we obtain
+yT
+1 AT
+Λ1AΛ2y2
+ ≤µ√s1s2∥y1∥2∥y2∥2,
+(37)
+which implies that θs1,s2 satisﬁes (6).
+APPENDIX II
+PROOF OF THEOREM 3
+The proof is based closely on the work of Tropp [7]. From
+the triangle inequality,
+∥x0 −ˆxBP∥2 ≤∥x0 −ˆxor∥2 + ∥ˆxor −ˆxBP∥2
+(38)
+where ˆxor is the oracle estimator. Our goal is to separately
+bound the two terms on the right-hand side of (38). Indeed,
+as we will see, the two constants σ
+√
+3 and 3
+2γ in (21) arise,
+respectively, from the two terms in (38).
+Beginning with the term ∥x0 −ˆxor∥2, let x0,Λ denote the
+s-vector containing the elements of x0 indexed by Λ0, and
+similarly, let ˆxor,Λ denote the corresponding subvector of ˆxor.
+We then have
+x0,Λ −ˆxor,Λ = x0,Λ −A†
+Λ0(Ax0 + w)
+= x0,Λ −A†
+Λ0(AΛ0x0,Λ + w)
+= −A†
+Λ0w,
+(39)
+where we have used the fact that AΛ0 has full column rank,
+which is a consequence [25] of the condition (19). Thus,
+x0,Λ −ˆxor,Λ is a Gaussian random vector with mean 0 and
+covariance σ2A†
+Λ0A†T
+Λ0 = σ2(AT
+Λ0AΛ0)−1.
+For future use, we note that the cross-correlation between
+A†
+Λ0w and (I −AΛ0A†
+Λ0)w is
+E
+n
+A†
+Λ0wwT (I −AΛ0A†
+Λ0)T o
+= σ2A†
+Λ0(I −AΛ0A†
+Λ0)T
+= 0,
+(40)
+where we have used the fact [26, Th. 1.2.1] that for any matrix
+M
+M†M†T MT = (MT M)†MT = M†.
+(41)
+Since w is Gaussian, it follows that A†
+Λ0w and (I −
+AΛ0A†
+Λ0)w are statistically independent. Furthermore, be-
+cause x0,Λ −ˆxor,Λ depends on w only through A†
+Λ0w, we
+conclude that
+x0 −ˆxor is statistically independent of (I −AΛ0A†
+Λ0)w.
+(42)
+We now wish to bound the probability that ∥x0 −ˆxor∥2
+2 >
+3sσ2. Let z be a normalized Gaussian random variable, z ∼
+N(0, Is). Then
+Pr
+
+∥x0 −ˆxor∥2
+2 > 3sσ2	
+= Pr
+σ(AT
+Λ0AΛ0)−1/2z
+
+2
+2 ≥3sσ2
+
+≤Pr
+(AT
+Λ0AΛ0)−1/2
+2
+∥z∥2
+2 ≥3s
+
+(43)
+where ∥M∥denotes the maximum singular value of the matrix
+M. Thus, ∥(AT
+Λ0AΛ0)−1/2∥= 1/smin, where smin is the
+minimum singular value of AΛ0. From the Gershgorin disc
+theorem [21, p. 320], it follows that smin ≥
+p
+1 −(s −1)µ.
+Using (19), this can be simpliﬁed to smin ≥
+p
+2/3, and
+therefore
+(AT
+Λ0AΛ0)−1/2 ≤
+r
+3
+2.
+(44)
+Combining with (43) yields
+Pr
+
+∥x0 −ˆxor∥2
+2 > 3sσ2	
+≤Pr
+
+∥z∥2
+2 ≥2s
+	
+.
+(45)
+Observe that ∥z∥2
+2 is the sum of s independent normalized
+Gaussian random variables. The right-hand side of (45) is
+therefore 1−Fχ2s(2s), where Fχ2s(·) is the cumulative distribu-
+tion function of the χ2 distribution with s degrees of freedom.
+Using the formula [27, §16.3] for Fχ2s(·), we have
+Pr
+
+∥x0 −ˆxor∥2
+2 > 3sσ2	
+≤Q
+  1
+2s, s
+
+(46)
+where Q(a, z) is the regularized Gamma function
+Q(a, z) ≜
+R ∞
+z
+ta−1e−tdt
+R ∞
+0
+ta−1e−tdt.
+(47)
+
+
+===== PDF PAGE 10 =====
+10
+Q
+  1
+2s, s
+
+decays exponentially as s →∞, and it can be seen
+that
+Q
+  1
+2s, s
+
+< e−s/7
+for all s.
+(48)
+We thus conclude that the event
+∥x0 −ˆxor∥2
+2 ≤3sσ2
+(49)
+occurs with probability no smaller than 1 −e−s/7. Note that
+the same technique can be applied to obtain bounds on the
+probability that ∥x0 −ˆxor∥2
+2 > αsσ2, for any α >
+2
+3. The
+only difference will be the rate of exponential decay in (48).
+However, the distance between x0 and ˆxor is usually small
+compared with the distance between ˆxor and ˆxBP, so that such
+an approach does not signiﬁcantly affect the overall result.
+The above calculations provided a bound on the ﬁrst term
+in (38). To address the second term ∥ˆxor −ˆxBP∥2, deﬁne the
+random event
+G : max
+i
+aT
+i (I −AΛ0A†
+Λ0)b
+ ≤1
+2γ
+(50)
+where ai is the ith column of A. It is shown in [7, App. IV-A]
+that
+Pr{G} ≥1 −(m −s) exp
+
+−γ2
+8σ2
+
+.
+(51)
+If G indeed occurs, then the portion of the measurements b
+which do not belong to the range space of AΛ0 are small,
+and consequently it has been shown [7, Cor. 9] that, in this
+case, the solution ˆxBP to (7) is unique, the support of ˆxBP is
+a subset of Λ0, and
+∥ˆxBP −ˆxor∥∞≤3
+2γ.
+(52)
+Since both ˆxBP and ˆxor are nonzero only in Λ0, this implies
+that
+∥ˆxBP −ˆxor∥2 ≤3
+2γ√s.
+(53)
+The event G depends on the random variable w only
+through (I −AΛ0A†
+Λ0)w. Thus, it follows from (42) that G
+is statistically independent of the event (43). The probability
+that both events occur simultaneously is therefore given by the
+product of their respective probabilities. In other words, with
+probability exceeding (20), both (53) and (49) hold. Using (38)
+completes the proof of the theorem.
+APPENDIX III
+PROOF OF THEOREM 4
+The claims concerning both algorithms are closely related.
+To emphasize this similarity, we ﬁrst provide several lemmas
+which will be used to prove both results. These lemmas are
+all based on an analysis of the random event
+B =
+
+max
+1≤i≤m |aT
+i w| < τ
+
+(54)
+where
+τ ≜σ
+p
+2(1 + α) log m
+(55)
+and α > 0. Our proof will be based on demonstrating that
+B occurs with high probability, and that when B does occur,
+both thresholding and OMP achieve near-oracle performance.
+Lemma 2: Suppose that w ∼N(0, σ2I). Then, the event
+B of (54) occurs with a probability of at least (29).
+Proof:
+The random variables {aT
+i w}m
+i=1 are jointly
+Gaussian. Therefore, by ˇSid´ak’s lemma [28, Th. 1]
+Pr{B} = Pr
+
+max
+1≤i≤m |aT
+i w| < τ
+
+≥
+m
+Y
+i=1
+Pr
+
+|aT
+i w| ≤τ
+	
+.
+(56)
+Since ∥ai∥2 = 1, each random variable aT
+i w has mean zero
+and variance σ2. Consequently,
+Pr
+
+|aT
+i w| < τ
+	
+= 1 −2Q
+τ
+σ
+
+(57)
+where Q(x) = (1/
+√
+2π)
+R ∞
+x e−z2/2dz is the Gaussian tail
+probability. Using the bound
+Q(x) ≤
+1
+x
+√
+2πe−x2/2
+(58)
+we obtain from (57)
+Pr
+
+|aT
+i w| < τ
+	
+≥1 −η
+(59)
+where
+η ≜
+r
+2
+π · σ
+τ e−τ 2/2σ2.
+(60)
+When η > 1, the bound (29) is meaningless and the theorem
+holds vacuously. Otherwise, when η ≤1, we have from (56)
+and (59)
+Pr{B} ≥(1 −η)m ≥1 −mη
+(61)
+where the ﬁnal inequality holds for any η ≤1 and m ≥1.
+Substituting the values of η and τ and simplifying, we obtain
+that B holds with a probability no lower than (29), as required.
+The next lemma demonstrates that, under suitable condi-
+tions, correlating b with the dictionary atoms ai is an effective
+method of identifying the atoms participating in the support
+of x0.
+Lemma 3: Let x0 be a vector with support Λ0 = supp(x0)
+of size s = |Λ0|, and let b = Ax0 + w for some noise vector
+w. Deﬁne |xmin| and |xmax| as in (27), and suppose that
+|xmax| −(2s −1)µ|xmax| ≥2τ.
+(62)
+Then, if the event B of (54) holds, we have
+max
+j∈Λ0 |aT
+j b| > max
+j /∈Λ0 |aT
+j b|.
+(63)
+If, rather than (62), the stronger condition
+|xmin| −(2s −1)µ|xmax| ≥2τ
+(64)
+is given, then, under the event B, we have
+min
+j∈Λ0 |aT
+j b| > max
+j /∈Λ0 |aT
+j b|.
+(65)
+Proof:
+The proof is an adaptation of [4, Lemma 5.2].
+Beginning with the term maxj /∈Λ0 |aT
+j b|, we have, under the
+event B,
+max
+j /∈Λ0 |aT
+j b| = max
+j /∈Λ0
+aT
+j w +
+X
+i∈Λ0
+xiaT
+j ai
+
+≤max
+j /∈Λ0 |aT
+j w| + max
+j /∈Λ0
+X
+i∈Λ0
+xiaT
+j ai
+
+< τ + sµ|xmax|.
+(66)
+
+
+===== PDF PAGE 11 =====
+11
+On the other hand, when B holds,
+max
+j∈Λ0 |aT
+j b| = max
+j∈Λ0
+
+xj + aT
+j w +
+X
+i∈Λ0\{j}
+xiaT
+j ai
+
+≥|xmax| −max
+j∈Λ0
+
+aT
+j w +
+X
+i∈Λ0\{j}
+xiaT
+j ai
+
+> |xmax| −τ −(s −1)µ|xmax|
+= |xmax| −(2s −1)µ|xmax| −τ + sµ|xmax|.
+(67)
+Together with (66), this yields
+max
+j∈Λ0 |aT
+j b| > |xmax| −(2s −1)µ|xmax| −2τ + max
+j /∈Λ0 |aT
+j b|.
+(68)
+Thus, under the condition (62), we obtain (63). Similarly, when
+B holds, we have
+min
+j∈Λ0
+aT
+j b
+ = min
+j∈Λ0
+
+xj + aT
+j w +
+X
+i∈Λ0\{j}
+xiaT
+j ai
+
+> |xmin| −τ −(s −1)µ|xmax|
+= |xmin| −(2s −1)µ|xmax| −τ + sµ|xmax|.
+(69)
+Again using (66), we obtain
+min
+j∈Λ0
+aT
+j b
+ > |xmin| −(2s −1)µ|xmax| −2τ + max
+j /∈Λ0 |aT
+j b|.
+(70)
+Consequently, under the assumption (64), we conclude that
+(65) holds, as required.
+The following lemma bounds the performance of the oracle
+estimator under the event B. The usefulness of this lemma
+stems from the fact that, if either OMP or the thresholding
+algorithm correctly identify the support of x0, then their
+estimate is identical to that of the oracle.
+Lemma 4: Let x0 be a vector with support Λ0 = supp(x0),
+and let b = Ax0 + w for some noise vector w. If the event
+B of (54) occurs, then
+∥ˆxor −x0∥2
+2 ≤2sσ2(1 + α) log m
+1
+(1 −(s −1)µ)2 .
+(71)
+Proof: Note that both ˆxor and x0 are supported on Λ0,
+and therefore
+∥ˆxor −x0∥2
+2 = ∥A†
+Λ0b −x0,Λ0∥2
+2
+(72)
+where x0,Λ0 is the subvector of nonzero entries of x0. We thus
+have, under the event B,
+∥ˆxor −x0∥2
+2 = ∥A†
+Λ0AΛ0x0,Λ0 + A†
+Λ0w −x0,Λ0∥2
+2
+= ∥A†
+Λ0w∥2
+2
+=
+(AT
+Λ0AΛ0)−1AT
+Λ0w
+2
+2
+≤
+(AT
+Λ0AΛ0)−12 X
+i∈Λ0
+(aT
+i w)2
+≤
+1
+(1 −(s −1)µ)2 sσ22(1 + α) log m
+(73)
+where, in the last step, we used the deﬁnition (54) of B and the
+fact that ∥AT
+Λ0AΛ0∥≥1 −(s−1)µ, which was demonstrated
+in Appendix II. This completes the proof the lemma.
+We are now ready to prove Theorem 4. The proof for the
+thresholding algorithm is obtained by combining the three
+lemmas presented above. Indeed, Lemma 2 ensures that the
+event B occurs with probability at least as high as the required
+probability of success (29). Whenever B occurs, we have by
+Lemma 3 that the atoms corresponding to Λ0 all have strictly
+higher correlation with b than the off-support atoms, so that
+the thresholding algorithm identiﬁes the correct support Λ0,
+and is thus equivalent to the oracle estimator ˆxor as long as B
+holds. Finally, by Lemma 4, identiﬁcation of the true support
+Λ0 guarantees the required error (30).
+We now prove the OMP performance guarantee. Our aim
+is to show that when B occurs, OMP correctly identiﬁes the
+support of x0; the result then follows by Lemmas 2 and 4.
+To this end we employ the technique used in the proof of
+[4, Th. 5.1]. We begin by examining the ﬁrst iteration of the
+OMP algorithm, in which one identiﬁes the atom ai whose
+correlation with b is maximal. Note that (28) implies (62), and
+therefore, by Lemma 3, the atom having the highest correlation
+with b corresponds to an element in the support Λ0 of x0.
+Consequently, the ﬁrst step of the OMP algorithm correctly
+identiﬁes an element in Λ0.
+The proof now continues by induction. Suppose we are
+currently in the ith iteration of OMP, with 1 < i ≤s, and
+assume that atoms from the correct support were identiﬁed
+in all i −1 previous steps. Referring to the notation used
+in the deﬁnition of OMP in Section II-B, this implies that
+supp(bxi−1
+OMP) = Λi−1 ⊂Λ0. The ith step consists of iden-
+tifying the atom ai which is maximally correlated with the
+residual ri. By the deﬁnition of ri, we have
+ri = A˜xi−1 + w
+(74)
+where ˜xi−1 = x0 −bxi−1
+OMP. Thus supp(˜xi−1) ⊆Λ0, so that
+ri is a noisy measurement of the vector A˜xi−1, which has
+a sparse representation consisting of no more than s atoms.
+Now, since
+∥bxi−1
+OMP∥0 = i −1 < s = ∥x0∥0,
+(75)
+it follows that at least one nonzero entry in ˜xi−1 is equal to
+the corresponding entry in x0. Consequently
+max
+i
+|˜xi−1
+i
+| ≥|xmin|.
+(76)
+Note that the model (74) is precisely of the form (1), with ri
+taking the place of the measurements b and ˜xi−1 taking the
+place of the sparse vector x0. It follows from (76) and (28)
+that this model satisﬁes the requirement (62). Consequently,
+by Lemma 3, we have that under the event B,
+max
+i∈Λ0 |aT
+i ri| > max
+i/∈Λ0 |aT
+i ri|.
+(77)
+Therefore, the ith iteration of OMP will choose an element
+within Λ0 to add to the support. By induction it follows that
+the ﬁrst s steps of OMP all identify elements in Λ0, and since
+OMP never chooses the same element twice, the entire support
+Λ0 will be identiﬁed after s iterations. This completes the
+proof of Theorem 4.
+
+
+===== PDF PAGE 12 =====
+12
+REFERENCES
+[1] Y. C. Pati, R. Rezaiifar, and P. S. Krishnaprasad, “Orthogonal matching
+pursuit: Recursive function approximation with applications to wavelet
+decomposition,” in Proc. 27th Asilomar Conf. Signals, Systems, and
+Computers, Nov. 1993, pp. 40–44.
+[2] E. Candes and T. Tao, “The Dantzig selector: Statistical estimation when
+p is much larger than n,” Ann. Statist., vol. 35, no. 6, pp. 2313–2351,
+2007, with discussion.
+[3] S. S. Chen, D. L. Donoho, and M. A. Saunders, “Atomic decomposition
+by basis pursuit,” SIAM J. Sci. Comput., vol. 20, pp. 33–61, 1998.
+[4] D. L. Donoho, M. Elad, and V. N. Temlyakov, “Stable recovery of sparse
+overcomplete representations in the presence of noise,” IEEE Trans. Inf.
+Theory, vol. 52, no. 1, pp. 6–18, 2006.
+[5] E. J. Cand`es, J. K. Romberg, and T. Tao, “Stable signal recovery from
+incomplete and inaccurate measurements,” Comm. Pure Appl. Math.,
+vol. LIX, pp. 1207–1223, 2006.
+[6] J. J. Fuchs, “Recovery of exact sparse representations in the presence of
+bounded noise,” IEEE Trans. Inf. Theory, vol. 51, no. 10, pp. 3601–3608,
+2005.
+[7] J. A. Tropp, “Just relax: Convex programming methods for identifying
+sparse signals in noise,” IEEE Trans. Inf. Theory, vol. 52, no. 3, pp.
+1030–1051, 2006.
+[8] P. J. Bickel, Y. Ritov, and A. Tsybakov, “Simultaneous analysis of Lasso
+and Dantzig selector,” Ann. Statist., vol. 37, no. 4, pp. 1705–1732, 2009.
+[9] S. M. Kay, Fundamentals of Statistical Signal Processing: Estimation
+Theory.
+Englewood Cliffs, NJ: Prentice Hall, 1993.
+[10] Z.
+Ben-Haim
+and
+Y.
+C.
+Eldar,
+“The
+Cram´er–Rao
+bound
+for
+sparse estimation,” IEEE Trans. Signal Process., submitted. [Online].
+Available: http://arxiv.org/abs/0905.4378
+[11] E. J. Cand`es, “Modern statistical estimation via oracle inequalities,” Acta
+Numerica, pp. 1–69, 2006.
+[12] D. Donoho and X. Huo, “Uncertainty principles and ideal atomic
+decomposition,” IEEE Trans. Inf. Theory, vol. 47, no. 7, pp. 2845–2862.
+[13] E. J. Cand`es and Y. Plan, “Near-ideal model selection by ℓ1 minimiza-
+tion,” Ann. Statist., vol. 37, no. 5A, pp. 2145–2177, Oct. 2009.
+[14] T. Cai, L. Wang, and G. Xu, “Stable recovery of sparse signals and an
+oracle inequality,” U. Penn., Tech. Rep., 2009. [Online]. Available: http:
+//www-stat.wharton.upenn.edu/∼tcai/paper/Stable-Recovery-MIP.pdf
+[15] Z. Ben-Haim, Y. C. Eldar, and M. Elad, “Coherence-based near-oracle
+performance guarantees for sparse estimation under Gaussian noise,”
+in Proc. Int. Conf. Acoustics, Speech, and Signal Processing (ICASSP
+2010), Dallas, TX, Mar. 2010, submitted.
+[16] K. Schnass and P. Vandergheynst, “Average performance analysis for
+thresholding,” IEEE Signal Process. Lett., vol. 14, no. 11, pp. 828–831,
+Nov. 2007.
+[17] J. A. Tropp, “Norms of random submatrices and sparse approximation,”
+C. R. Acad. Sci. Paris, Ser. I, vol. 346, no. 23-24, pp. 1271–1274, 2008.
+[18] Y. C. Eldar and H. Rauhut, “Average case analysis of multichannel
+sparse recovery using convex relaxation,” IEEE Trans. Inf. Theory, to
+appear. [Online]. Available: http://arxiv.org/abs/0904.0494
+[19] M. J. Wainwright, “Sharp thresholds for noisy and high-dimensional re-
+covery of sparsity using ℓ1-constrained quadratic programming (Lasso),”
+IEEE Trans. Inf. Theory, vol. 55, no. 5, pp. 2183–2202, May 2009.
+[20] E. J. Cand`es, “The restricted isometry property and its implications
+for compressed sensing,” Compte Rendus de l’Academie des Sciences,
+Paris, Serie I, vol. 346, pp. 589–592, 2008. [Online]. Available:
+http://www.acm.caltech.edu/∼emmanuel/papers/RIP.pdf
+[21] G. H. Golub and C. F. Van Loan, Matrix Computations, 3rd ed.
+Baltimore, MD: Johns Hopkins University Press, 1996.
+[22] B. Efron, T. Hastie, and R. Tibshirani, “Discussion: The Dantzig
+selector: Statistical estimation when p is much larger than n,” Ann.
+Statist., vol. 35, no. 6, pp. 2358–2364, 2007.
+[23] E. Candes and T. Tao, “Rejoinder: The Dantzig selector: Statistical
+estimation when p is much larger than n,” Ann. Statist., vol. 35, no. 6,
+pp. 2392–2404, 2007.
+[24] M. Elad and M. Aharon, “Image denoising via sparse and redundant
+representations over learned dictionaries,” IEEE Trans. Image Process.,
+vol. 15, no. 12, pp. 3736–3745, Dec. 2006.
+[25] D. L. Donoho and M. Elad, “Optimally sparse representation in general
+(nonorthogonal) dictionaries via ℓ1 minimization,” Proc. Nat. Acad. Sci.
+USA, vol. 100, no. 5, pp. 2197–2202, March 4, 2003.
+[26] S. L. Campbell and C. D. Meyer, Jr., Generalized Inverses of Linear
+Transformations.
+London, UK: Pitman, 1979.
+[27] A. Stuart and J. K. Ord, Kendall’s Advanced Theory of Statistics, 6th ed.
+London: Edward Arnold, 1994, vol. 1.
+[28] Z. ˇSid´ak, “Rectangular conﬁdence regions for the means of multivariate
+normal distributions,” J. Amer. Statist. Assoc., vol. 62, no. 318, pp. 626–
+633, Jun. 1967.

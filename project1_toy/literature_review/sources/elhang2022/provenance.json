@@ -1,0 +1,21 @@
+{
+  "key": "elhang2022",
+  "arxiv_id": "2209.10652",
+  "accessed_utc": "2026-10-06T00:47:42.833126+00:00",
+  "metadata": {
+    "citation_title": "Toy Models of Superposition",
+    "citation_author": "Olah, Christopher",
+    "citation_date": "2022/09/21",
+    "citation_online_date": "2022/09/21",
+    "citation_pdf_url": "https://arxiv.org/pdf/2209.10652",
+    "citation_arxiv_id": "2209.10652",
+    "citation_abstract": "Neural networks often pack many unrelated concepts into a single neuron - a puzzling phenomenon known as 'polysemanticity' which makes interpretability much more challenging. This paper provides a toy model where polysemanticity can be fully understood, arising as a result of models storing additional sparse features in \"superposition.\" We demonstrate the existence of a phase change, a surprising connection to the geometry of uniform polytopes, and evidence of a link to adversarial examples. We also discuss potential implications for mechanistic interpretability."
+  },
+  "submission_history": "Submission history From: Samuel McCandlish [ view email ] [v1] Wed, 21 Sep 2022 20:49:26 UTC (4,804 KB)",
+  "abstract_url": "https://arxiv.org/abs/2209.10652",
+  "pdf_url": "https://arxiv.org/pdf/2209.10652",
+  "pages": 62,
+  "pdf_bytes": 4919189,
+  "pdf_sha256": "0acd3e05e40c1b703be3aed15c8cdbd5713a1840df9738b495d2bde2e8eb1e3a",
+  "errors": []
+}

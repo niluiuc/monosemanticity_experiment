@@ -1,0 +1,15 @@
+{
+  "failure": null,
+  "final_step": 4000,
+  "final_loss": 0.020420631416609443,
+  "minimum_recorded_loss": 0.0201986845650564,
+  "window_mean_loss_change": 3.126306472055196e-06,
+  "convergence_diagnostic_pass": true,
+  "final_tangent_gradient_norm": 0.02457912472563944,
+  "final_bias_gradient_norm": 4.681804129521263e-09,
+  "seconds": 1.6173901001457125,
+  "bias_optimal_loss": 0.020420631416609433,
+  "bias_optimization_gap": 1.0408340855860843e-17,
+  "loss_minus_grid_diagnostic_best": 0.002677643702029133,
+  "bias_reoptimized_minus_grid_best": 0.0026776437020291227
+}

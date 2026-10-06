@@ -1,0 +1,21 @@
+{
+  "key": "pertl2025",
+  "arxiv_id": "2509.00928",
+  "accessed_utc": "2026-10-06T00:56:10.224156+00:00",
+  "metadata": {
+    "citation_title": "Superposition in Graph Neural Networks",
+    "citation_author": "Li\u00f2, Pietro",
+    "citation_date": "2025/08/31",
+    "citation_online_date": "2026/01/15",
+    "citation_pdf_url": "https://arxiv.org/pdf/2509.00928",
+    "citation_arxiv_id": "2509.00928",
+    "citation_abstract": "Interpreting graph neural networks (GNNs) is difficult because message passing mixes signals and internal channels rarely align with human concepts. We study superposition, the sharing of directions by multiple features, directly in the latent space of GNNs. Using controlled experiments with unambiguous graph concepts, we extract features as (i) class-conditional centroids at the graph level and (ii) linear-probe directions at the node level, and then analyze their geometry with simple basis-invariant diagnostics. Across GCN/GIN/GAT we find: increasing width produces a phase pattern in overlap; topology imprints overlap onto node-level features that pooling partially remixes into task-aligned graph axes; sharper pooling increases axis alignment and reduces channel sharing; and shallow models can settle into metastable low-rank embeddings. These results connect representational geometry with concrete design choices (width, pooling, and final-layer activations) and suggest practical approaches for more interpretable GNNs."
+  },
+  "submission_history": "Submission history From: Han Xuanyuan [ view email ] [v1] Sun, 31 Aug 2025 16:43:29 UTC (911 KB) [v2] Thu, 15 Jan 2026 21:25:52 UTC (914 KB)",
+  "abstract_url": "https://arxiv.org/abs/2509.00928",
+  "pdf_url": "https://arxiv.org/pdf/2509.00928",
+  "pages": 20,
+  "pdf_bytes": 1410343,
+  "pdf_sha256": "874ab6ffbc6b45f91c0d100af7900ab8f1c9dd994b7c0df9d2385d02669834f5",
+  "errors": []
+}

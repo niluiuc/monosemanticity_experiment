@@ -1,0 +1,59 @@
+{
+  "files": [
+    {
+      "path": "conditional_error_summary.csv",
+      "bytes": 2291,
+      "sha256": "81fc2d1b0f9a2c75f827265494b1c6b1745c8ae2d151dd0456cdc2788553526a"
+    },
+    {
+      "path": "geometry_review.json",
+      "bytes": 4397,
+      "sha256": "44e522a8b439a2f1102297882dc3464ce2fd9c3c9591487d3bcbbdc8202ccabd"
+    },
+    {
+      "path": "plot_results.py",
+      "bytes": 14146,
+      "sha256": "50c64b1912781374704ed6617d0cb0e210b284a15bf076d95c08d0a46130ba4f"
+    },
+    {
+      "path": "plots/all_learned_gram_matrices.png",
+      "bytes": 202383,
+      "sha256": "bce63af7099edc41103e8db7e01522994308c0112156a02132e13731d7feccff"
+    },
+    {
+      "path": "plots/bound_vs_exact.png",
+      "bytes": 84426,
+      "sha256": "8c0a03b6744788c541547305bcd1394d928d940956ce3e6c84a0c876382e60a4"
+    },
+    {
+      "path": "plots/exact_vs_measured.png",
+      "bytes": 110200,
+      "sha256": "046c75a990e1a25759d0ed44f278cd985e12e81d76baafe94a73d274bcc352a9"
+    },
+    {
+      "path": "plots/fixed_pair_phase_diagram.png",
+      "bytes": 147912,
+      "sha256": "3b46877e9ba425f0841c06a573878aa74f5ff375fa8e9e2f36aeb8adc4af38ac"
+    },
+    {
+      "path": "plots/learned_vs_mono_risk.png",
+      "bytes": 282075,
+      "sha256": "fd3ad84eac219736fee6f16494d94ae0a1c2d085b3241d15bbb7944711d6c6d6"
+    },
+    {
+      "path": "plots/training_losses.png",
+      "bytes": 170781,
+      "sha256": "b52ee085146622497f8a26912be316be8e34af5c498716f406f6af453644ee56"
+    },
+    {
+      "path": "review.md",
+      "bytes": 5965,
+      "sha256": "ab9e0ba79676f48652efa36f317f3d10fd2564ff7ada1d1975ada521f73ca6b3"
+    },
+    {
+      "path": "review_saved_run.py",
+      "bytes": 9341,
+      "sha256": "c565fb1e7da9bc966d24f5c520601baf05e24274c92364fcf05cc7b620d75b8d"
+    }
+  ]
+}

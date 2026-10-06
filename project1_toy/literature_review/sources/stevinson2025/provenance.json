@@ -1,0 +1,21 @@
+{
+  "key": "stevinson2025",
+  "arxiv_id": "2510.11709",
+  "accessed_utc": "2026-10-06T00:51:54.156897+00:00",
+  "metadata": {
+    "citation_title": "Adversarial Attacks Leverage Interference Between Features in Superposition",
+    "citation_author": "Birdal, Tolga",
+    "citation_date": "2025/10/13",
+    "citation_online_date": "2026/06/15",
+    "citation_pdf_url": "https://arxiv.org/pdf/2510.11709",
+    "citation_arxiv_id": "2510.11709",
+    "citation_abstract": "Why do adversarial examples exist, and why do they transfer between models? Existing explanations appeal to high-dimensional geometry, non-robust patterns in the input, and decision boundary structure, but none provides a representation-level mechanism that explains why specific perturbations succeed and why attacks transfer between models. In this paper, we show that adversarial vulnerability can stem from efficient information encoding in neural networks. Specifically, vulnerability can arise from superposition - the phenomenon where networks represent more concepts than they have dimensions, forcing non-orthogonal representation and thus interference. This interference causes perturbations targeting one representation to affect others, creating vulnerabilities determined by interference patterns. In synthetic settings with precisely controlled superposition, we establish that superposition suffices to create adversarial vulnerability. The resulting attacks are predictable: PGD-discovered perturbations align with theoretically optimal perturbations derived from the interference geometry. Models trained on similar data develop similar interference patterns, explaining attack transferability. We then show that successful attacks on image classifiers exhibit the structure predicted by our proposed mechanism. These findings reveal that adversarial vulnerability can be a byproduct of networks' representational compression, complementing existing explanations based on data properties or architectural factors."
+  },
+  "submission_history": "Submission history From: Edward Stevinson [ view email ] [v1] Mon, 13 Oct 2025 17:59:02 UTC (10,881 KB) [v2] Mon, 15 Jun 2026 20:10:10 UTC (10,960 KB)",
+  "abstract_url": "https://arxiv.org/abs/2510.11709",
+  "pdf_url": "https://arxiv.org/pdf/2510.11709",
+  "pages": 25,
+  "pdf_bytes": 13958569,
+  "pdf_sha256": "050db783eba0198aeb67201456e693c0e5ca263de17a84d56361d04a77c09692",
+  "errors": []
+}

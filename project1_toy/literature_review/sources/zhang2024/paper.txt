@@ -1,0 +1,2134 @@
+
+
+===== PDF PAGE 1 =====
+BEYOND INTERPRETABILITY: THE GAINS OF FEATURE
+MONOSEMANTICITY ON MODEL ROBUSTNESS
+Qi Zhang1∗
+Yifei Wang2∗
+Jingyi Cui1
+Xiang Pan3
+Qi Lei3
+Stefanie Jegelka4,5
+Yisen Wang1†
+1 Peking University
+2 MIT CSAIL
+3 New York University
+4 TUM CIT, MCML, MDSI
+5 MIT EECS, CSAIL
+ABSTRACT
+Deep learning models often suffer from a lack of interpretability due to poly-
+semanticity, where individual neurons are activated by multiple unrelated se-
+mantics, resulting in unclear attributions of model behavior. Recent advances
+in monosemanticity, where neurons correspond to consistent and distinct seman-
+tics, have significantly improved interpretability but are commonly believed to
+compromise accuracy. In this work, we challenge the prevailing belief of the
+accuracy-interpretability tradeoff, showing that monosemantic features not only
+enhance interpretability but also bring concrete gains in model performance.
+Across multiple robust learning scenarios—including input and label noise, few-
+shot learning, and out-of-domain generalization—our results show that models
+leveraging monosemantic features significantly outperform those relying on pol-
+ysemantic features. Furthermore, we provide empirical and theoretical under-
+standings on the robustness gains of feature monosemanticity. Our preliminary
+analysis suggests that monosemanticity, by promoting better separation of fea-
+ture representations, leads to more robust decision boundaries. This diverse
+evidence highlights the generality of monosemanticity in improving model ro-
+bustness. As a first step in this new direction, we embark on exploring the
+learning benefits of monosemanticity beyond interpretability, supporting the long-
+standing hypothesis of linking interpretability and robustness. Code is available at
+https://github.com/PKU-ML/Beyond_Interpretability.
+1
+INTRODUCTION
+A long-standing problem of deep learning is the so-called “black-box” nature. People find that an
+important factor for its lack of interpretability is feature polysemanticity, where a single neuron (a
+dimension of feature maps) is activated by multiple irrelevant semantics (Arora et al., 2018; Olah
+et al., 2020), preventing clear attributions of neural behaviors. Following this understanding, recent
+research has made breakthroughs towards attaining monosemanticity, i.e., neurons corresponding
+to consistent semantics (monosemantic), which dramatically improves model interpretability; see a
+comparison in Figure 1(a). They achieve this through architectural designs (Elhage et al., 2022a; Wang
+et al., 2024) or post-training explanation modules (Cunningham et al., 2024), and have successfully
+scaled to visual backbones (e.g., ResNet) and large language models (LLMs, e.g., Claude, GPT, and
+Gemma), discovering many intriguing phenomena and applications (Templeton, 2024; Gao et al.,
+2024; Lieberum et al., 2024; Wang et al., 2024).
+However, these works on monosemanticity suggest an inevitable “accuracy-interpretability” tradeoff:
+monosemantic features, although more interpretable, come at the sacrifice of expressive power and
+underperform polysemantic features at prediction accuracy. This widely accepted belief (Huben
+et al., 2023; Elhage et al., 2022b) limits the applications of monosemanticity techniques to only
+interepretability-related domains. In this paper, we aim to push this boundary one step forward by
+∗Equal Contribution.
+†Corresponding Author: Yisen Wang (yisen.wang@pku.edu.cn).
+1
+arXiv:2410.21331v1  [cs.LG]  27 Oct 2024
+
+
+===== PDF PAGE 2 =====
+demonstrating that monosemanticity can also bring significant gains on practical model performance
+beyond interpretability.
+In particular, we discover a widely appearing phenomenon, that monosemantic features are much
+more robust compared to polysemantic features, across multiple scenarios related to “robustness”.
+One such scenario is learning with noise. Real-world data are often imperfect with low-quality input
+and mislabeling, manifested in the form of various data noises and distribution shifts. We find that
+under either input or label noises, learning a classifier upon (pretrained) monosemantic features can
+attain much higher accuracy (e.g., +13.7% top-1 accuracy under 90% label noise) than polysemantic
+features, as shown in Figure 1(b). This feature-centric result also offers a new perspective to noisy
+learning where existing studies primarily focus on robust learning objectives (Wang et al., 2019a;
+Song et al., 2020).
+The second secenario is few-shot finetuning for downstream classification. Today’s large visual
+backbones often need to be finetuned on a small amount of downstream labeled data, where models
+easily overfit and deteriorate. We find that monosemantic finetuning, i.e., preserving the monose-
+manticity of representations during finetuning (with a technique from Wang et al. (2024)), can attain
+much higher accuracy under few-shot data compared to vanilla polysemantic finetuning (e.g., +3.9%
+top-1 accuracy with 10% samples). The same method also works for finetuning with noisy data or
+training from scratch.
+With these benefits in mind, we further explore a third scenario, LLM finetuning, which receives
+wide applications these days (Minaee et al., 2024). Pretrained LLMs need to be carefully finetuned
+on small-scale language data for different purposes, e.g., instruction following and certain abilities
+(e.g., reasoning), while avoiding conflicting and forgetting. Since LLMs do not have a natural repre-
+sentation space like visual models, we devise a simple sparse variant of LoRA, named MonoLoRA,
+to encourage the monosemanticity of the updates of all features. We show preliminary evidence
+that when finetuning an aligned LLM (Llama-2-7b-chat) on SST-2 (a classification task) and Dolly
+(instruction following task), MonoLoRA better preserves model alignment while improving task
+performance.
+At last, we attempt to offer a deeper understanding of the robustness gains of monosemanticity.
+Empirically, we compare the salient features of different classifiers, observing that the more robust
+classifiers tend to depend on more monosemantic features. Theoretically, as a preliminary step,
+we compare polysemantic and monosemantic features under a toy model proposed in Elhage et al.
+(2022b). The theory suggests that because monosemantic features have better separation of features,
+they are less prone to overfitting to noise, leading to more robust decision boundaries compared to
+polysemantic features.
+In summary, this work challenges the common “accuracy-interpretability” tradeoff by demonstrating
+the potential of feature monosemanticity to bring clear gains in model accuracy. These gains manifest
+themselves in various aspects of “learning robustness” that we can think of: input noise, label noise,
+out-of-domain data, few-shot image data, and few-shot language data. The diverse set of evidence
+strongly indicates that feature monosemanticity provides a general sense of robustness compared to
+polysemantic features, echoing with the long-lasting hypothesis on the relationship between better
+feature interpretability and better robustness (e.g., human decisions are both interpretable and robust)
+(Bengio et al., 2013; 2019). As a first step in this direction, we believe that it will embark on
+more intriguing discoveries and understandings on the learning benefits of monosemanticity beyond
+interpretability.
+2
+PRELIMINARY & RELATED WORK
+Polysemanticity and Superposition Hypothesis. Across various domains, many previous studies
+(Nguyen et al., 2016; Mu & Andreas, 2020; Olah et al., 2020) have consistently observed that a feature
+dimension in the neural networks is usually activated with multiple unrelated semantics. Researchers
+define this phenomenon as the feature polysemanticity. In contrast, when each dimension is activated
+with a single latent natural concept, the features are denoted as monosemantic features. A popular
+explanation of the feature polysemanticity is the superposition hypothesis (Arora et al., 2018; Olah
+et al., 2020), which states that each polysemantic dimension is an approximately linear combination
+of multiple natural concepts. To verify that, Elhage et al. (2022b) propose a toy model that obtains
+polysemantic features with the superposition hypothesis. Comparing polysemantic and monosemantic
+features, there exists a common belief that monosemantic features exhibit better interpretability at the
+cost of downstream performance (Cunningham et al., 2024; Elhage et al., 2022b). However, in this
+2
+
+
+===== PDF PAGE 3 =====
+A Polysemantic 
+Dimension
+Activated Samples
+A Monosemantic 
+Dimension
+Activated Samples
+(a) Illustration of Activated Samples on A Polysemantic (Left) and
+A Monomsemantic (Right) Dimension
+Clean
+Label Noise
+Input Noise
+20
+30
+40
+50
+60
+70
+Validation Accuracy
+66.8
+34.4
+28.7
+66.2
+45.9
+30.6
+66.7
+48.1
+33.3
+Poly (CL)
+Mono (SAE)
+Mono (NCL)
+(b) Test Accuracy (%) of Classifiers Learned
+upon Polysemantic and Monosemantic Fea-
+tures on Different Scenarios
+Figure 1: A comparison between polysemantic (CL) and monosemantic features (NCL, SAE)
+pretrained on ImageNet-100. We consider noisy labels (90 % noise rate) and Gaussian input noise
+(0.6 stdev); see more details in Appendix A.4.
+paper, we challenge this trade-off, finding that monosemantic features also show superiority when the
+performance is evaluated on robustness tasks.
+Methods to Attain Feature Monosemanticity. To enhance the feature interpretability, researchers
+propose several methods to obtain monosemantic features. For example, Variational Autoencoder
+(VAE) (Kingma, 2013) and its variants (Higgins et al., 2017; Chen et al., 2018) have been used to
+find the disentangled features with monosemantcity. However, the performance of these methods in
+real-world tasks like image classification and natural language understanding is quite unsatisfactory.
+Recently, researchers have tried to attain monosemanticity with minimal influence on performance.
+The approaches can be majorly divided into two categories (Bereska & Gavves, 2024): intrinsic and
+post-hoc methods. The intrinsic methods, represented by non-negative contrastive learning (Wang
+et al., 2024), focus on adjusting the pretraining algorithms. While the post-hoc methods apply down-
+stream modifications on learned features. For example, the sparse autoencoder, which reconstructs the
+features from a sparse bottleneck layer, has recently shown impressive monosemanticity in various
+models (Ng et al., 2011; Gao et al., 2024). We note that previous works mainly focus on enhancing
+feature interpretability with monosemanticity. However, in this paper, we explore the relationship
+between monosemanticity and another crucial property of features: robustness.
+Robustness Learning. In the development of deep learning models, robustness is a critical measure
+for evaluating the quality of features (Wang et al., 2021; Xu et al., 2021; Muhammad & Bae, 2022).
+The evaluation of robustness involves various task scenarios. Common conditions include assessing
+the robustness of features against noisy labels (Song et al., 2022), distribution shifts (Yang et al.,
+2024), overfitting (Ying, 2019), etc. In this paper, we analyze the robustness from a new perspective,
+i.e., we evaluate the influence of monosemanticity in different robustness tasks. For learning with
+noisy labels, we apply the symmetric label noise to the training samples, i.e., with a probability η
+(noise rate), the labels of samples are uniformly flipped to the other classes. For robustness against
+distribution shifts, we apply various shifts, such as Gaussian noise, uniform noise, and real-world
+distribution shifts (Wang et al., 2019a; Geirhos et al., 2018) to the validation samples. For robustness
+against overfitting, we finetune the vision and language models with fewer samples and evaluate the
+validation performance.
+3
+THE ROBUSTNESS GAINS OF MONOSEMANTICITY
+In this section, we compare polysemantic with monosemantic features across three different robust
+learning scenarios commonly encoutered in the foundation model regime: first, noisy linear probing
+on pretrained features (either polysemantic or monosemantic); second, noisy and few-shot finetuning
+from pretrained weights; third, finetuning LLMs on small-scale supervised data.
+3
+
+
+===== PDF PAGE 4 =====
+Table 1: Linear probing accuracy and gain (%) of polysemantic and monosemantic representations
+on ImageNet-100 and CIFAR-100 under different rates (%) of label noise (0 (clean label) to 90).
+Dataset (%)
+Features
+0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+Poly (CL)
+54.5
+53.4
+52.8
+52.1
+51.2
+49.9
+49.5
+48.0
+45.0
+35.7
+Mono (SAE)
+54.4
+53.9
+53.4
+52.9
+51.9
+51.3
+50.5
+49.7
+47.1
+39.1
+-0.1
++0.5
++0.6
++0.8
++0.7
++1.4
++1.0
++1.7
++2.1
++3.4
+Mono (NCL)
+52.8
+53.9
+53.5
+52.6
+52.6
+52.3
+51.4
+49.5
+48.0
+44.9
+CIFAR-100
+-1.7
++0.5
++0.7
++0.5
++1.4
++2.4
++1.9
++1.5
++3.0
++9.2
+Poly (CL)
+66.8
+63.1
+61.8
+60.1
+58.8
+56.4
+54.9
+53.1
+48.9
+34.4
+Mono (SAE)
+66.2
+65.3
+62.3
+60.5
+59.8
+59.7
+58.5
+55.9
+54.3
+45.9
+-0.4
++2.2
++0.5
++0.4
++1.0
++3.3
++3.6
++2.8
++5.4
++11.5
+Mono (NCL)
+66.7
+65.4
+64.4
+63.9
+62.4
+62.3
+60.6
+59.8
+57.6
+48.1
+ImageNet-100
+-0.1
++2.3
++2.6
++3.8
++3.6
++5.9
++5.7
++6.7
++8.7
++13.7
+3.1
+MONOSEMANTIC FEATURES ARE ROBUST UNDER LINEAR PROBING
+Foundation models typically have two training phases: 1) self-supervised learning (SSL) on massive
+unlabeled data, and 2) supervised finetuning on small human-labeled data (classification, instruction
+following, or specific tasks). In fact, since SSL-pretrained features contain rich semantics, learning
+a simpler linear classifier on top, known as linear probing (LP), can often attain competitive
+performance to fully supervised ones (Chen et al., 2020). Therefore, we start with this simplest setting
+for comparing the robustness of polysemantic and monosemantic pretrained features. Specifically,
+we consider a standard linear probing setting, where we first pretrain features on unlabeled data and
+then learn a linear classifier on top with noisy labeled data.
+3.1.1
+METHODS FOR FEATURE MONOSEMANTICITY
+Among existing interpretability research, there are two categories of methods to attain monoseman-
+ticity: 1) intrinsic methods, where pretrained features are intrinsically monosemantic; 2) post-hoc
+methods, where we apply additional techniques to decode (polysemantic) pretrained features to
+monomsemantic ones. Here, we consider two representative methods for each paradigm.
+Intrinsic Monosemanticity with NCL. Many previous works have tried to train interpretable features
+by adding sparsity regularization (Tibshirani, 1996) or identifiability constraints (Zhang et al., 2024b);
+but they hardly scale to large-scale data with competitve performance. A recent work, NCL (non-
+negative contrastive learning) (Wang et al., 2024), as a modern counterpart to NMF (non-negative
+matrix factorization) (Lee & Seung, 1999), attains high sparsity and monosemanticity while having
+minimal influence on final performance. Specifically, NCL adopts the following InfoNCE loss (Oord
+et al., 2018) with non-negative feature outputs:
+LNCL(f) = −Ex,x+ log
+exp(f+(x)⊤f+(x+))
+exp(f+(x)⊤f+(x+)) +
+1
+M
+PM
+i=1 exp(f+(x)⊤f+(x−
+i )
+,
+(1)
+where (x, x+), (x, x−) are the positive and negative pairs in contrastive learning, f+(x) = σ(f(x)),
+σ is an activation function and f is the original neural network. With the non-negative constraints,
+the activations of learned representations become sparse and each dimension is almost only activated
+with samples from the same class (Wang et al., 2024).
+Post-hoc Monosemanticity with SAE. Another approach is to apply downstream modification on
+pretrained neural networks. Sparse autoencoders (SAEs) (Ng et al., 2011) find wide success in
+attaining monosemanticity in language models (Templeton, 2024; Gao et al., 2024; Lieberum et al.,
+2024). SAEs reconstruct the original outputs of pretrained networks from a sparse bottleneck layer.
+To be specific, the encoder and decoder are defined as:
+z(x) = topK((Wenc(f(x) −bpre) + benc),
+ˆf(x) = Wdecz(x) + bpre.
+(2)
+where f(x) is the representation of input x; Wenc, Wdec, bpre and benc are the parameters of SAE;
+topK is a sparse activation function proposed by Gao et al. (2024) that only preserves the top K
+elements; and the SAE training loss is the reconstruction MSE LSAE = Ex∥ˆ
+f(x) −f(x)∥2. As a
+result, the sparse latent feature z(x) has much better monosemanticity than the original feature f(x).
+4
+
+
+===== PDF PAGE 5 =====
+0.0
+0.2
+0.4
+0.6
+Gaussian Noise Strength
+20
+30
+40
+50
+60
+70
+Validation Accuracy
+66.8
+58.9
+42.7
+28.7
+66.2
+58.9
+43.3
+30.6
+66.7
+61.2
+46.5
+33.3
+Poly (CL)
+Mono (SAE)
+Mono (NCL)
+(a) Gaussian Input Noise
+0.0
+0.2
+0.4
+0.6
+Uniform Noise Strength
+60
+61
+62
+63
+64
+65
+66
+67
+68
+Validation Accuracy
+66.8
+65.5
+63.5
+60.6
+66.2
+65.3
+63.7
+61.0
+66.7
+66.0
+64.5
+61.8
+Poly (CL)
+Mono (SAE)
+Mono (NCL)
+(b) Uniform Input Noise
+Sketch
+Stylized
+Dataset
+16
+18
+20
+22
+24
+26
+Validation Accuracy
+23.6
+16.5
+24.5
+17.2
+25.2
+18.5
+Poly (CL)
+Mono (SAE)
+Mono (NCL)
+(c) Real-world Distribution Shift
+Figure 2: The evaluation of robustness against input distribution shifts on ImageNet-100. Monose-
+mantic representations (SAE,NCL) exhibit improvements in the robustness against different kinds of
+distribution shifts.
+3.1.2
+EXPERIMENTS
+Setup. For the baseline, we pretrain a ResNet-18 (He et al., 2016) backbone with the widely-used
+contrastive framework SimCLR (Chen et al., 2020) on CIFAR-100 and ImageNet-100. In comparison,
+we use Non-negative Contrastive Learning (Wang et al., 2024) and Sparse Autoencoder (Gao et al.,
+2024) to represent two primary strategies for obtaining monosemantic features, i.e., improve the
+pretraining algorithm and apply downstream modification. For Non-negative Contrastive Learning
+(NCL), we follow the default SimCLR settings, with the addition of a non-negative constraint using
+the ReLU function. For the Sparse Autoencoder (SAE), we apply it following the pretrained backbone
+as Equation (2), and then we train the linear classifier on the frozen latent representation of SAE.
+More details can be found in Appendix A.1.
+Robustness Against Label Noise. When evaluating the robustness against label noise, we train a
+linear classifier following the frozen pretrained encoders, where the labels are uniformly flipped to
+the other classes with a probability η (noise rate). As shown in Table 1, when the linear classifiers are
+trained on the samples with clean labels, monosemantic and polysemantic features exhibit comparable
+performance. However, in the presence of label noise, both NCL and SAE significantly outperform
+across various datasets. Especially, when the noise rates are aggressive, the improvements are
+substantial, with NCL showing a 13.7% improvement on ImageNet-100 and a 9.2% improvement
+on CIFAR-10 under 90% noisy labels. The results are consistent with the results in toy models and
+further verify that monosemnatic features obtain stronger robustness against label noise.
+Robustness Against Distribution Shifts. For evaluating the resilience of features to distribution
+shifts, we evaluate three types of shifts, including random input noise, random Gaussian noise, and
+real-world distribution shifts (Wang et al., 2019a; Geirhos et al., 2018) on ImageNet-100 datasets.
+The models and classifiers are trained on the clean ImageNet-100 dataset while their classification
+performance is evaluated with noisy samples. As shown in Figure 2(a), 2(b), and 2(c), both the
+pretraining constraints and downstream modifications that enhance feature monosemanticity improve
+classification accuracy under noisy samples, and the benefits rise with the increase of noise strength.
+The results suggest that the monosemantic features can also enhance the robustness against various
+noises applied in inputs.
+3.2
+MONOSEMANTIC FEATURES ARE ROBUST UNDER FEW-SHOT AND NOISY FINETUNING
+In practice, fully finetuning a large pretrained model on downstream labeled data can often achieve
+better performance than linear probing, but it also easily overfits if there are only a few amount of
+labeled data. Here, we compare standard finetuning (polysemantic) to monosemantic finetuning.
+3.2.1
+METHODS FOR MONOSEMANTIC FINETUNING
+Standard Finetuning. For the baseline, we consider a common finetuning setting, i.e., we pretrain
+the encoders with contrastive learning on unlabeled ImageNet-100 and then learn a linear classifier on
+labeled Imagenet-100 with the cross-entropy loss: LCE(f) = Ex,y log
+exp(f(x)⊤wy)
+PC
+c=1 exp(f(x)⊤wc), where f is
+the encoder network and wc is the linear classifier weight of the related label. Unlike linear probing,
+we train classifiers on the pretrained representations without clipping the gradient of encoders.
+5
+
+
+===== PDF PAGE 6 =====
+10
+20
+50
+100
+Percentage of Training Samples (%)
+80
+82
+84
+86
+88
+90
+92
+94
+Training Accuracy
+88.4
+89.6
+89.6
+90.5
+83.5
+86.1
+88.5
+89.3
+Poly (CE)
+Mono (NCE)
+(a) Training Accuracy of Few-shot
+Finetuning
+10
+20
+50
+100
+Percentage of Training Samples (%)
+40
+45
+50
+55
+60
+65
+70
+75
+80
+Validation Accuracy
+49.0
+60.6
+72.3
+75.7
+52.9
+62.7
+74.0
+76.0
+Poly (CE)
+Mono (NCE)
+(b) Validation Accuracy of Few-
+shot Finetuning
+0
+20
+40
+60
+80
+Noise Rate
+20
+30
+40
+50
+60
+70
+Validation Accuracy
+75.5 73.3
+68.8
+64.6
+61.9 59.8
+52.8
+49.3
+32.6
+16.0
+76.0
+73.5
+70.7 69.7 67.6
+63.9
+57.9
+54.4
+45.7
+27.9
+Poly (CE)
+Mono (NCE)
+(c) Noisy Label Finetuning
+Figure 3: The robustness of the models finetuned with polysemanticity (CE) and monosemanticity
+(NCE) under different noises on ImageNet-100. Attaining monosemanticity during the finetuning
+process enhances the robustness across various tasks.
+Non-negative Tuning. According to NCL (Wang et al., 2024), replacing the original cross-entropy
+(CE) loss used in the supervised learning process with the non-negative cross-entropy (NCE) loss will
+maintain monosemanticity during supervised learning. Thus, we use it as a monosemantic finetuning
+strategy. To be specific, NCE applies non-negative transformation to the representations f(x), i.e.,
+LNCE(f) = Ex,y log
+exp(f+(x)⊤wy)
+PC
+c=1 exp(f+(x)⊤wc)
+,
+(3)
+where f+(x) = σ(f(x)) with a non-negative activation function, e.g., ReLU. By respectively
+finetuning contrastive pretrained models with CE and NCE objectives, we compare the robustness of
+polysemantic and monosemantic features across two different tasks: few-shot finetuning and noisy
+label finetuning.
+3.2.2
+EXPERIMENTS
+Few-shot Finetuning. As the finetuning process usually involves fewer training samples, a crucial
+challenge for feature robustness is preventing overfitting on small training datasets. To evaluate the
+performance of polysemantic and monosemantic features during few-shot finetuning, we respectively
+use 10%, 20%, 50% and the entire training set of ImageNet-100 to finetune the pretrained repre-
+sentations with CE and NCE objectives. As shown in Figure 3(a), 3(b), the monosemantic features
+exhibit lower training accuracy but higher validation accuracy in few-shot finetuning, and the
+advantages grow when the training set becomes smaller, which implies that the monosemanticity
+helps representations to be less likely to overfit the training set in the downstream task.
+Noisy-label Finetuning. We also evaluate robustness against label noise in finetuning tasks on
+ImageNet-100. During the finetuning process, the labels of training samples are uniformly flipped to
+the other classes with a probability η (noise rate). As shown in Figure 3(c), non-negative finetuning
+leads to significant gains under label noise that keep growing with the increase of the noise rate.
+Notably, monosemantic features exhibit at most 11.9% improvement under large noise rate.
+These empirical results indicate that maintaining feature monosemanticity during the finetuning
+process can bring better learning robustness against overfitting and label noise.
+3.3
+MONOSEMANTIC LORA FOR LARGE LANGUAGE MODELS
+In Section 3.2.2, we show that maintaining feature monosemanticity during supervised finetuning
+can be much more resistant to overfitting. This favorable property suggests that monosemanticity
+can also benefit LLM finetuning of widely applications today. Existing LLM training has two
+stages: 1) pretraining on large-scale unlabeled data, and 2) supervised finetuning (or post-training)
+on small-scale data. Since LLMs are very large and labeled data are small, overfitting becomes a
+severe issue in LLM finetuning (VM et al., 2024; Zhang et al., 2024a). Given that LLMs, unlike
+supervised classifiers, do not have a natural representation space and they are more prone to overfit
+due to the large model size, we extend LoRA, a standard efficient finetuning method, to have a more
+monosemantic update per layer by prompting sparsity in its update.
+6
+
+
+===== PDF PAGE 7 =====
+3.3.1
+METHODS FOR MONOSEMANTIC LLM FINETUNING
+Low-rank Adaptation (LoRA). LoRA (low-rank adaptation) is a de facto method for finetuning
+LLM weights a lower cost by factorizing it into low-rank weights. Specifically, for each LLM weight
+W0 ∈Rd×k, we can reparameterize the fine-tuned weight as ∆W = AB, where A ∈Rd×r, B ∈
+Rr×k are two low-rank matrices (with r ≪min(d, k)) actually being learned during finetuning.
+After finetuning, the updated output of the linear layer with weight W becomes
+y = WLoRAx = (W0 + ∆W)x = W0x + ∆Wx = W0x + ABx.
+(4)
+The LoRA weights can be used separately or merged back to model weights.
+Monosemantic LoRA. Inspired by non-negative finetuning (Section 3.2.1), we add non-negative
+constraints inside LoRA modules to better promote feature monosemanticity:
+y = WMonoLoRAx = W0x + ∆W(x) = W0x + σ(Aσ(Bσ(x))),
+(5)
+where σ is the non-negative transformation (ReLU by default). Compared to Equation 4, the
+MonoLoRA update encourages the low-rank weights to yield sparse updates that help prevent
+overfitting.
+3.3.2
+EXPERIMENTS
+When evaluating, we consider a common scenario related to robustness in large language model
+fine-tuning. Specifically, during the fine-tuning process, the large language models often compromise
+the already learned alignment, which leads to a security risk (Qi et al., 2023). In practice, we use
+the Llama-2-7B-Chat (Touvron et al., 2023) as the aligned model and further finetune it with SST2
+(Socher et al., 2013) and Dolly (Conover et al., 2023) datasets as downstream tasks. To evaluate the
+security and alignment performance, we use the ShieldGemma-9B (Zeng et al., 2024) and Beavertails-
+7B (Ji et al., 2024) models to evaluate the alignment of model responses based on the response on
+Beavertails datasets (Ji et al., 2024). More details can be found in Appendix A.3.
+Table 2: Evaluation of LoRA and MonoLoRA with Llama-2-7B-Chat on SST2 and Dolly. SST2 is
+evaluated by accuracy and Dolly is evaluated by RougeL. Alignment and Beavertails scores are the
+lower the better.
+Dataset
+Model
+ShieldGemma Alignment Scores (↓)
+Alignment
+Sparsity
+Task
+Sparsity
+Beavertails
+(↓)
+Task Perf.
+(↑)
+Danger.
+Harass.
+Hate.
+Sex.
+Avg
+SST2
+Base
+7.66
+2.88
+6.14
+2.64
+4.83
+-
+-
+20.90
+88.65
+LoRA
+8.48
+6.91
+9.43
+6.77
+7.90
+0
+0
+20.60
+92.78
+MonoLoRA
+5.37
+2.23
+4.63
+1.88
+3.53
+45.54
+36.71
+20.00
+94.84
+Dolly
+Base
+7.66
+2.88
+6.14
+2.64
+4.83
+-
+-
+20.90
+10.21
+LoRA
+10.54
+3.53
+7.53
+2.86
+6.12
+0
+0
+23.80
+14.08
+MonoLoRA
+10.49
+3.56
+7.40
+2.70
+6.04
+38.69
+40.00
+22.60
+14.48
+As shown in Table 2, the alignment of the monosemantic LoRA models is more resilient to overfitting
+than that of normal LoRAs and in the meantime, they can achieve comparable fine-tuning task
+performance. We evaluate the sparsity (zero value ratio) of the intermediate activations of the LoRA
+and MonoLoRA models, which is the intrinsic sparsity of the LoRA module. The results suggest that
+the monosemanticity at neuron levels can also improve the robustness of LLMs against overfitting
+when finetuned with small-scale data.
+4
+UNDERSTANDING THE ROBUSTNESS GAINS OF MONOSEMANTICITY
+In Section 3, we provide a comprehensive evaluation of the robustness gains of feature monoseman-
+ticity across multiple scenarios. Yet, we do not have a fully clear understanding of why monosemantic
+features are more robust. As a preliminary step to demystify this phenomenon, in this section, we
+investigate the influence of monosemanticity on learned classifiers from both empirical (Section 4.1)
+and theoretical (Sections 4.2 & 4.3) perspectives. For simplicity, we focus on the label noise scenario.
+4.1
+NOISY CLASSIFIERS PREFER MONOSEMANTIC FEATURES IN PRACTICE
+To further understand the robustness improvements brought by monosemanticity, we investigate
+the difference in the salient features of the robust and non-robust classifiers under noisy conditions.
+7
+
+
+===== PDF PAGE 8 =====
+(a) The most salient feature of the
+lowest-accuracy class is polyse-
+mantic.
+(b) The most salient feature of the
+highest-accuracy class is monose-
+mantic.
+CIFAR-100
+ImageNet-100
+Method
+0
+5
+10
+15
+20
+Monosemanticity Score of 
+ the Most Salient Feature
+9.40
+16.32
+14.90
+22.48
+Wrongly Classified Samples
+Correctly Classified Samples
+(c) Correctly classified samples have
+more monosemantic features.
+Figure 4: Influence of feature monosemanticity on classification performance, where the classifier is
+applied after a frozen contrastive encoder and trained with 90% noisy labels. (a), (b) respectively
+draw the activated samples on the dimensions with the largest clssifier weight of the lowest-accuracy
+and highest-accuracy classes on ImageNet-100. (c) demonstrates the monosemanticity scores (Wang
+et al., 2024) of wrongly and correctly classified samples.
+Taking the linear classifier trained on ImageNet-100 with 90% noisy labels (Section 3.1)) as an
+example, we start with respectively visualizing the dominant features for classes with the highest
+and lowest accuracy. For each class, we find the feature dimension with the largest classifier weight
+for the ground-truth label and visualize the top-activated samples along the dimension. As shown in
+Figure 4(a), 4(b), we observe a clear difference: samples activated in the dimension related to the
+lowest accuracy class (jeans) belong to different classes while samples activated in the dimension
+related to the highest accuracy class (boathouse) share the same label, i.e., the classifier with higher
+performance under label noise relies on a more monosemantic dimension.
+We then validate this observation with the semantic consistency (Wang et al., 2024) as the quantitative
+monosemanticity score. The semantic consistency calculates the proportion of activated samples
+that belong to their most frequent class along a dimension. With a larger semantic consistency, the
+dimension is more likely to be activated by the samples from the same class, i.e., the feature is more
+monosemantic. To compare the robust and non-robust classifiers, we respectively draw the samples
+that are wrongly and correctly classified by the classifiers learned on ImageNet-100 with 90% noisy
+labels. For the embedding of each sample, we draw the dimension with the largest activation value
+and calculate the semantic consistency.
+As shown in Figure 4(c), we observe that the semantic consistency of the most salient features
+in correctly classified samples is much higher than that of misclassified samples. The results
+further indicate that the classifiers with superior performance under noise tend to depend on
+monosemantic features.
+4.2
+REPLICATING MONOSEMANTICITY GAINS WITH THE SUPERPOSITION MODEL
+To further establish a theoretical understanding of the benefits brought by monosemanticity, we
+introduce a toy model proposed by (Elhage et al., 2022b) for the simplicity of analysis. The toy model
+constructs polysemantic representations with the superposition hypothesis (Arora et al., 2018), a
+widely-used explanation of feature polysemanticity. The hypothesis states that a polysemantic feature
+is an approximately linear combination of multiple latent semantics while a monosemantic feature is
+the reconstruction of a single natural concept. With the hypothesis, the toy model enables researchers
+to replicate the polysemanticity phenomenon and theoretically analyze the properties of polysemantic
+and monosemantic features, e.g., occurrence conditions, learning dynamics, and geometric structures
+(Lecomte et al., 2024; Marshall & Kirchner, 2024; Chen et al., 2023). In this section, we start by
+introducing the setups and observing the robustness of different features on the toy model.
+Toy Model Setups. In practice, we follow the settings proposed by Elhage et al. (2022b) and evaluate
+the robustness of polysemantic features on the toy model. Specifically, we assume each sample x
+has n dimensions and each dimension represents a natural concept. As the features in real-world
+datasets are usually sparsely activated (Olshausen & Field, 1997), we assume each dimension of a
+8
+
+
+===== PDF PAGE 9 =====
+(a) Polysemantic dimensions correspond to multiple latent semantics.
+Clean
+Label Noise
+Input Noise
+0.20
+0.25
+0.30
+0.35
+0.40
+0.45
+0.50
+0.55
+0.60
+Validation Accuracy
+0.50
+0.31
+0.28
+0.58
+0.26
+0.25
+Mono
+Poly
+(b) Polysemantic features have worse
+performance under noisy data.
+Figure 5: The comparison between polysemantic and monosemantic features on the toy model
+introduced by Elhage et al. (2022b) (n = 40, m = 20, S = 0.2). (a) demonstrates the Parameters
+(W ⊤W) of monosemantic (Left) and polysemantic features (Right) on the Toy Model. (b) evaluates
+the classification performance of features against different noises. The label noise denotes applying
+90% noisy labels to the training samples and input noise denotes applying Gaussian noise to the
+validation samples.
+sample x has an associated sparsity S and let xi = 0 with probability S. If not zero, we let each
+dimension be uniformly distributed between [0, 1]. When evaluating the performance, we consider
+the classification tasks of natural concepts, i.e., the labels satisfy that y(x) = arg max
+i
+xi.
+For the encoding network, we consider a linear model h = W ⊤Wx, where W ∈Rm×n, with m < n,
+i.e., the hidden dimension is smaller than the input dimension. In practice, we use the reconstruction
+of x as the training objective and obtain two kinds of learned features. As shown in Figure 5(a),
+when the superposition does not occur, we observe that W ⊤W is diagonal and has only m non-zero
+elements, which means the model only captures m concepts and each dimension is monosemantic. In
+contrast, when superposition happens, features obtain more concepts than the model dimensions and
+different concepts are projected into the same dimension.
+Noisy learning settings. To evaluate the robustness of features, we respectively add noise to the
+labels and samples. For training with noisy labels, we denote the noise rate as η, where each label y
+is uniformly switched to one of the other n −1 labels with probability η. In experiments, we selected
+an aggressive noise rate (90%). With labeled samples, we train a linear classifier following the frozen
+features and evaluate the classification accuracy on a validation dataset without noisy labels. For
+noisy sample validation, we train a linear classifier on the clean dataset and add the Gaussian noise to
+the validation set samples.
+Empirical Results. As shown in Figure 5(b), in the absence of noise, polysemantic features exhibit
+better performance, which is expected as the superposition enables features to capture more concepts.
+However, when there exists noise in the labels and samples, the situation changes significantly. The
+feature without superposition shows improvements over that with superposition under both label
+noise and input noise. The empirical results replicate the phenomenon where the monosemantic
+features are more robust than polysemantic features.
+4.3
+THEORETICAL ANALYSES WITH THE SUPERPOSITION MODEL
+After replicating the robustness gains of monosemanticity on the toy model, we then establish a
+theoretical comparison between polysemantic and monosemantic features. For ease of theoretical
+analysis, we consider a binary classification case in the toy model (n = 2, m = 1, S = 0.2). To be
+specific, a sample x has two latent features x1, x2, and the model parameter W ∈R1×2. When we
+obtain the monosemantic features, the model output is νmono := x1. In contrast, when obtaining
+polysemantic features, the model keeps more natural concepts than the representation dimension.
+According to Elhage et al. (2022b), one common geometric structure of polysemantic features is
+antipodal pairs formed by two concepts. Therefore, we assume the learned polysemantic feature to
+be νpoly := x1 −x2.
+For conciseness of expressions, we introduce the following notations on mean and variance for a given
+feature representation ν. For a clean distribution without label noise, we denote the conditional means
+9
+
+
+===== PDF PAGE 10 =====
+and variances by µi(ν) := E(ν|y = i), σ2
+i (ν) := E((ν −µ0(ν))2|y = i), i = 0, 1. For distinction,
+for a noisy distribution, we use ˜µ and ˜σ. Borrowing the concept from linear discriminant analysis
+(LDA) (Fisher, 1936), we deem that a good linearly discriminative representation should have a
+large distance between different classes whereas maintaining the intra-class variance as small as
+possible, i.e. maximize ∆µ(ν) = |µ0(ν) −µ1(ν)| whereas minimizing σ2
+0(ν) and σ2
+1(ν). Therefore,
+to quantitatively compare polysemantic and monosemantic representations, we use the criterion
+J(ν) = ∆µ(ν)/(σ0(ν)σ1(ν)). A larger value of J(ν) indicates better linear separability.
+Theorem 4.1 (Conditional means and variances of monosemantic & polysemantic features). Let
+νmono = x1 and νpoly = x1 −x2. For conditional means, we have µ0(νpoly) < µ0(νmono)
+and µ1(νpoly) < µ1(νmono), yet ∆µ(νpoly) > ∆µ(νmono). For conditional variances, we have
+σ2
+1(νpoly) = σ2
+1(νmono) and σ2
+0(νpoly) > σ2
+0(νmono). Overall, we have J(νpoly) > J(νmono).
+According to the LDA criterion, the polysemantic feature with a larger J(ν) is more linearly separable.
+Intuitively, because the polysemantic embedding encodes information of both x1 and x2, it can do
+better classification w.r.t. the labels depending on both features. However, when there exits label
+noise, we observe a different situation.
+Theorem 4.2 (Influence of label noise on linear seprarability). We denote the linear separability
+criterion under noise as ˜J(ν) = ∆˜µ(ν)/( ˜σ0(ν)˜σ1(ν)). For noise rate η ∈[0, 0.5),
+˜J(νpoly)
+J(νpoly) ≤
+˜J(νmono)
+J(νmono) ≤1.
+(6)
+Meanwhile, we obtain ˜J(νpoly) ≤˜J(νmono) when η ∈[0.25, 0.5).
+As shown in Theorem 4.2, with the increase of noise rate, the linear separability (J(ν)) of both
+polysemantic and monosemantic features becomes worse. However, J(νmono) decreases more slowly.
+As a result, when the noise rate is aggressive enough (η ≥0.25), the monosemantic feature exhibits
+better linear seperability than the polysemantic one. Moreover, in Appendix B.3, we show that input
+noise has a similar influence on linear separability. The theoretical results reveal that the linear
+separability of monosemantic features is more robust than polysemantic ones, which leads to better
+performance in tasks under noise.
+5
+CONCLUDING REMARKS
+Recent work has made significant strides in enhancing model interpretability by promoting feature
+monosemanticity through various techniques. However, a prevailing belief in the literature posits an
+accuracy-interpretability tradeoff, suggesting that achieving monosemantic features for better inter-
+pretability necessarily compromises prediction accuracy. In this study, we have challenged this notion
+by demonstrating the advantages of monosemanticity beyond interpretability alone. Specifically,
+we found that monosemantic features are significantly more robust to various types of distribution
+shifts, including input noise, label noise, and real-world out-of-domain inputs. Additionally, we have
+shown that maintaining feature monosemanticity during fine-tuning serves as an effective regularizer,
+reducing model overfitting in few-shot settings, noisy environments, and during large language
+model (LLM) fine-tuning. We also provide an in-depth analysis of the benefits of monosemantic
+features from both theoretical and empirical aspects. These diverse sources of learning robustness
+collectively indicate that monosemantic features have a general sense of robustness, resonating with
+its benefits in interpretability. Therefore, rather than viewing monosemanticity as a necessary cost for
+interpretability, we advocate for embracing and exploring the multiple learning advantages it offers.
+We believe our work, as a pioneering effort in this direction, will inspire future research to investigate
+these possibilities further.
+REPRODUCIBILITY STATEMENT
+To ensure the reproducibility of our results, we elaborate on the details of our experiments and
+theoretical analysis in the main paper and the appendix. In Section 3.1, 3.2, 3.3 of the main paper, we
+respectively introduce the methods for capturing polysemantic and monosemantic features in linear
+probing, finetuning vision models and finetuning LLMs. Furthermore, in Appendix A, we introduce
+the hyperparameters and implementation details of adopted methods, and the detailed settings of
+the robustness evaluation, including input and label noise, few-shot learning, and out-of-domain
+10
+
+
+===== PDF PAGE 11 =====
+generalization. For theoretical results, we introduce the toy models we used in Section 4.3 of the
+main paper and provide detailed proofs and explanations for the theoretical comparison in Appendix
+B.
+ACKNOWLEDGEMENT
+This research was funded in part by NSF Award CCF-2112665 (TILOS AI Institute), and an Alexander
+von Humboldt Professorship.
+REFERENCES
+Sanjeev Arora, Yuanzhi Li, Yingyu Liang, Tengyu Ma, and Andrej Risteski. Linear algebraic structure
+of word senses, with applications to polysemy. Transactions of the Association for Computational
+Linguistics, 6:483–495, 2018.
+Yoshua Bengio, Aaron Courville, and Pascal Vincent. Representation learning: A review and new
+perspectives. IEEE transactions on pattern analysis and machine intelligence, 35(8):1798–1828,
+2013.
+Yoshua Bengio, Tristan Deleu, Nasim Rahaman, Rosemary Ke, S´ebastien Lachapelle, Olexa Bilaniuk,
+Anirudh Goyal, and Christopher Pal. A meta-transfer objective for learning to disentangle causal
+mechanisms. arXiv preprint arXiv:1901.10912, 2019.
+Leonard Bereska and Efstratios Gavves. Mechanistic interpretability for ai safety–a review. arXiv
+preprint arXiv:2404.14082, 2024.
+Pengfei Chen, Ben Ben Liao, Guangyong Chen, and Shengyu Zhang. Understanding and utilizing
+deep neural networks trained with noisy labels. In ICML, 2019.
+Ricky TQ Chen, Xuechen Li, Roger B Grosse, and David K Duvenaud. Isolating sources of
+disentanglement in variational autoencoders. In NeurIPS, 2018.
+Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton. A simple framework for
+contrastive learning of visual representations. In ICML, 2020.
+Zhongtian Chen, Edmund Lau, Jake Mendel, Susan Wei, and Daniel Murfet. Dynamical versus
+bayesian phase transitions in a toy model of superposition. arXiv preprint arXiv:2310.06301, 2023.
+Mike Conover, Matt Hayes, Ankit Mathur, Jianwei Xie, Jun Wan, Sam Shah, Ali Ghodsi, Patrick
+Wendell, Matei Zaharia, and Reynold Xin. Free dolly: Introducing the world’s first truly open
+instruction-tuned llm. Company Blog of Databricks, 2023.
+Hoagy Cunningham, Aidan Ewart, Logan Riggs, Robert Huben, and Lee Sharkey. Sparse autoen-
+coders find highly interpretable features in language models. ICLR, 2024.
+Nelson Elhage, Tristan Hume, Catherine Olsson, Neel Nanda, Tom Henighan, Scott Johnston, Sheer
+ElShowk, Nicholas Joseph, Nova DasSarma, Ben Mann, Danny Hernandez, Amanda Askell, Kamal
+Ndousse, Andy Jones, Dawn Drain, Anna Chen, Yuntao Bai, Deep Ganguli, Liane Lovitt, Zac
+Hatfield-Dodds, Jackson Kernion, Tom Conerly, Shauna Kravec, Stanislav Fort, Saurav Kadavath,
+Josh Jacobson, Eli Tran-Johnson, Jared Kaplan, Jack Clark, Tom Brown, Sam McCandlish, Dario
+Amodei, and Christopher Olah. Softmax linear units. Transformer Circuits Thread, 2022a.
+Nelson Elhage, Tristan Hume, Catherine Olsson, Nicholas Schiefer, Tom Henighan, Shauna Kravec,
+Zac Hatfield-Dodds, Robert Lasenby, Dawn Drain, Carol Chen, et al. Toy models of superposition.
+arXiv preprint arXiv:2209.10652, 2022b.
+Ronald A Fisher. The use of multiple measurements in taxonomic problems. Annals of eugenics, 7
+(2):179–188, 1936.
+Leo Gao, Tom Dupr´e la Tour, Henk Tillman, Gabriel Goh, Rajan Troll, Alec Radford, Ilya
+Sutskever, Jan Leike, and Jeffrey Wu. Scaling and evaluating sparse autoencoders. arXiv preprint
+arXiv:2406.04093, 2024.
+11
+
+
+===== PDF PAGE 12 =====
+Robert Geirhos, Patricia Rubisch, Claudio Michaelis, Matthias Bethge, Felix A Wichmann, and
+Wieland Brendel. Imagenet-trained cnns are biased towards texture; increasing shape bias improves
+accuracy and robustness. arXiv preprint arXiv:1811.12231, 2018.
+Aritra Ghosh, Himanshu Kumar, and P Shanti Sastry. Robust loss functions under label noise for
+deep neural networks. In AAAI, 2017.
+Bo Han, Quanming Yao, Xingrui Yu, Gang Niu, Miao Xu, Weihua Hu, Ivor Tsang, and Masashi
+Sugiyama. Co-teaching: Robust training of deep neural networks with extremely noisy labels. In
+NeurIPS, 2018.
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image
+recognition. In CVPR, 2016.
+Irina Higgins, Loic Matthey, Arka Pal, Christopher P Burgess, Xavier Glorot, Matthew M Botvinick,
+Shakir Mohamed, and Alexander Lerchner. beta-vae: Learning basic visual concepts with a
+constrained variational framework. In ICLR, 2017.
+Robert Huben, Hoagy Cunningham, Logan Riggs Smith, Aidan Ewart, and Lee Sharkey. Sparse
+autoencoders find highly interpretable features in language models. In ICLR, 2023.
+Jiaming Ji, Mickel Liu, Josef Dai, Xuehai Pan, Chi Zhang, Ce Bian, Boyuan Chen, Ruiyang Sun,
+Yizhou Wang, and Yaodong Yang. Beavertails: Towards improved safety alignment of llm via a
+human-preference dataset. In NeurIPS, 2024.
+Diederik P Kingma. Auto-encoding variational bayes. arXiv preprint arXiv:1312.6114, 2013.
+Victor Lecomte, Kushal Thaman, Rylan Schaeffer, Naomi Bashkansky, Trevor Chow, and Sanmi
+Koyejo. What causes polysemanticity? an alternative origin story of mixed selectivity from
+incidental causes. In ICLR 2024 Workshop on Representational Alignment, 2024.
+Daniel D Lee and H Sebastian Seung. Learning the parts of objects by non-negative matrix factoriza-
+tion. Nature, 401(6755):788–791, 1999. doi: 10.1038/44565.
+Tom Lieberum, Senthooran Rajamanoharan, Arthur Conmy, Lewis Smith, Nicolas Sonnerat, Vikrant
+Varma, J´anos Kram´ar, Anca Dragan, Rohin Shah, and Neel Nanda. Gemma scope: Open sparse
+autoencoders everywhere all at once on gemma 2. arXiv preprint arXiv:2408.05147, 2024.
+Xingjun Ma, Yisen Wang, Michael E Houle, Shuo Zhou, Sarah Erfani, Shutao Xia, Sudanthi
+Wijewickrema, and James Bailey. Dimensionality-driven learning with noisy labels. In ICML,
+2018.
+Xingjun Ma, Hanxun Huang, Yisen Wang, Simone Romano, Sarah Erfani, and James Bailey. Nor-
+malized loss functions for deep learning with noisy labels. In ICML, 2020.
+Simon C Marshall and Jan H Kirchner. Understanding polysemanticity in neural networks through
+coding theory. arXiv preprint arXiv:2401.17975, 2024.
+Shervin Minaee, Tomas Mikolov, Narjes Nikzad, Meysam Chenaghlu, Richard Socher, Xavier
+Amatriain, and Jianfeng Gao. Large language models: A survey. arXiv preprint arXiv:2402.06196,
+2024.
+Jesse Mu and Jacob Andreas. Compositional explanations of neurons. In NeurIPS, 2020.
+Awais Muhammad and Sung-Ho Bae. A survey on efficient methods for adversarial robustness. IEEE
+Access, 10:118815–118830, 2022.
+Andrew Ng et al. Sparse autoencoder. CS294A Lecture notes, 72(2011):1–19, 2011.
+Anh Nguyen, Jason Yosinski, and Jeff Clune. Multifaceted feature visualization: Uncovering
+the different types of features learned by each neuron in deep neural networks. arXiv preprint
+arXiv:1602.03616, 2016.
+Chris Olah, Nick Cammarata, Ludwig Schubert, Gabriel Goh, Michael Petrov, and Shan Carter.
+Zoom in: An introduction to circuits. Distill, 5(3):e00024–001, 2020.
+12
+
+
+===== PDF PAGE 13 =====
+Bruno A Olshausen and David J Field. Sparse coding with an overcomplete basis set: A strategy
+employed by v1? Vision research, 37(23):3311–3325, 1997.
+Aaron van den Oord, Yazhe Li, and Oriol Vinyals. Representation learning with contrastive predictive
+coding. arXiv preprint arXiv:1807.03748, 2018.
+Xiangyu Qi, Yi Zeng, Tinghao Xie, Pin-Yu Chen, Ruoxi Jia, Prateek Mittal, and Peter Henderson.
+Fine-tuning aligned language models compromises safety, even when users do not intend to! arXiv
+preprint arXiv:2310.03693, 2023.
+Scott Reed, Honglak Lee, Dragomir Anguelov, Christian Szegedy, Dumitru Erhan, and Andrew
+Rabinovich. Training deep neural networks on noisy labels with bootstrapping. arXiv preprint
+arXiv:1412.6596, 2014.
+Richard Socher, Alex Perelygin, Jean Wu, Jason Chuang, Christopher D. Manning, Andrew Ng, and
+Christopher Potts. Recursive deep models for semantic compositionality over a sentiment treebank.
+In EMNLP, 2013.
+Hwanjun Song, Minseok Kim, Dongmin Park, Yooju Shin, and Jae-Gil Lee. Learning from noisy
+labels with deep neural networks: A survey. arXiv preprint arXiv: 2007.08199, 2020.
+Hwanjun Song, Minseok Kim, Dongmin Park, Yooju Shin, and Jae-Gil Lee. Learning from noisy
+labels with deep neural networks: A survey. IEEE transactions on neural networks and learning
+systems, 34(11):8135–8153, 2022.
+Adly Templeton. Scaling monosemanticity: Extracting interpretable features from claude 3 sonnet.
+Anthropic, 2024.
+Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical
+Society Series B: Statistical Methodology, 58(1):267–288, 1996.
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay
+Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale, et al. Llama 2: Open foundation
+and fine-tuned chat models. arXiv preprint arXiv:2307.09288, 2023.
+Brendan Van Rooyen, Aditya Menon, and Robert C Williamson. Learning with symmetric label
+noise: The importance of being unhinged. In NeurIPS, 2015.
+Kushala VM, Harikrishna Warrier, Yogesh Gupta, et al. Fine tuning llm for enterprise: Practical
+guidelines and recommendations. arXiv preprint arXiv:2404.10779, 2024.
+Haohan Wang, Songwei Ge, Zachary Lipton, and Eric P Xing. Learning robust global representations
+by penalizing local predictive power. In NeurIPS, 2019a.
+Xuezhi Wang, Haohan Wang, and Diyi Yang. Measure and improve robustness in nlp models: A
+survey. arXiv preprint arXiv:2112.08313, 2021.
+Yifei Wang, Qi Zhang, Yaoyu Guo, and Yisen Wang. Non-negative contrastive learning. arXiv
+preprint arXiv:2403.12459, 2024.
+Yisen Wang, Xingjun Ma, Zaiyi Chen, Yuan Luo, Jinfeng Yi, and James Bailey. Symmetric cross
+entropy for robust learning with noisy labels. In ICCV, 2019b.
+Jiarong Xu, Junru Chen, Siqi You, Zhiqing Xiao, Yang Yang, and Jiangang Lu. Robustness of deep
+learning models on graphs: A survey. AI Open, 2:69–78, 2021.
+Jingkang Yang, Kaiyang Zhou, Yixuan Li, and Ziwei Liu. Generalized out-of-distribution detection:
+A survey. International Journal of Computer Vision, pp. 1–28, 2024.
+Xue Ying. An overview of overfitting and its solutions. In Journal of physics: Conference series,
+volume 1168, pp. 022022. IOP Publishing, 2019.
+Wenjun Zeng, Yuchi Liu, Ryan Mullins, Ludovic Peran, Joe Fernandez, Hamza Harkous, Karthik
+Narasimhan, Drew Proud, Piyush Kumar, Bhaktipriya Radharapu, et al. Shieldgemma: Generative
+ai content moderation based on gemma. arXiv preprint arXiv:2407.21772, 2024.
+Biao Zhang, Zhongtao Liu, Colin Cherry, and Orhan Firat. When scaling meets llm finetuning: The
+effect of data, model and finetuning method. arXiv preprint arXiv:2402.17193, 2024a.
+Qi Zhang, Yifei Wang, and Yisen Wang. Identifiable contrastive learning with automatic feature
+importance discovery. In NeurIPS, 2024b.
+13
+
+
+===== PDF PAGE 14 =====
+A
+EXPERIMENT DETAILS
+A.1
+EXPERIMENT DETAILS FOR NOISY LINEAR PROBING
+During the pretraining process, we utilize ResNet-18 (He et al., 2016) as the backbone and train the
+models on CIFAR-100 and ImageNet-100. We pretrain the model for 200 epochs. The projector is a
+two-layer MLP with a hidden dimension 16384 and an output dimension 2048. We train the models
+with batch size 256 and weight decay 0.0001. When implementing NCL and SAE, we follow the
+default settings of SimCLR. For NCL, we adopt ReLU as the activation function σ. For SAE, the
+encoder and decoder are linear layers with 2048 input and output dimensions, and the number of
+activated features in the hidden layer is 256.
+During the linear evaluation, we train a classifier following the frozen backbone pretrained by different
+methods for 50 epochs. For noisy label probing, we apply symmetric label noise when training the
+linear classifiers, i.e., the labels are uniformly flipped to the other classes with the noisy rate. And for
+random input noise, we train the linear classifiers on clean datasets, while applying different scales of
+uniform noise and Gaussian noise to the validation sample. For real-world out-of-domain distribution
+shifts, we use ImageNet-sketch and ImageNet-stylized datasets (Geirhos et al., 2018; Wang et al.,
+2019a). As we pretrain the network on ImageNet-100, we select the samples of the corresponding
+100 classes from these out-of-distribution datasets and evaluate the accuracy.
+A.2
+EXPERIMENT DETAILS FOR FEW-SHOT AND NOISY FINETUNING FROM PRERTRAINED
+FEATURES
+During the pretraining process, we utilize ResNet-18 (He et al., 2016) as the backbone and train the
+models on ImageNet-100. We pretrain the model for 200 epochs. We use a projector which is a
+two-layer MLP with hidden dimension 16384 and output dimension 2048. We pretrain the models
+with batch size 256 and weight decay 0.0001. During the finetuning process, we train a classifier
+following the backbone for 100 epochs respectively with standard and non-negative tuning, following
+the default settings of finetuning. When implementing the non-negative tuning, we select the ReLU
+function as the non-negative operator. For few-shot finetuning, we respectively random draw 10%,
+20%, 50%, and 100$ training samples from the original ImageNet-100 training set. For noisy label
+fine-tuning, we still apply symmetric label noise with different noise rates to the training samples.
+A.3
+EXPERIMENT DETAILS FOR MONOSEMANTIC LLM FINETUNING
+Hyper-parameters We finetune the Llama-2-7b-Chat model in SST2 with 20 epochs, batch size 16
+and learning rate 1e-4. we Lora with rank r = 8, scaling factor α = 4, and dropout rate 0.1 as default.
+For Dolly, we finetune it 1 epoch (by common practice), with batch size 4. The LoRA module is
+added to every query and value mapping module in the base model. For finetuning we use 5000
+samples from the dataset. For inference, we use 1000 samples.
+Prompt Template
+Listing 1: SST-2 Prompt
+Below is an instruction that describes a task.
+Write a response that appropriately completes the request.
+### Instruction:
+Analyze the sentiment of the input, and respond only ’positive’ or ’negative’.
+### Input:
+{sentence}
+### Response:
+Listing 2: ShieldGemma Guideline
+\"No Dangerous Content\": The prompt shall not contain or seek generation of content that harming oneself
+and/or others (e.g., accessing or building firearms and explosive devices, promotion of terrorism,
+instructions for suicide).
+\"No Harassment\": The prompt shall not contain or seek generation of content that is malicious,
+intimidating, bullying, or abusive content targeting another individual (e.g., physical threats, denial
+of tragic events, disparaging victims of violence).
+\"No Hate Speech\": The prompt shall not contain or seek generation of content that targeting identity and
+/or protected attributes (e.g., racial slurs, promotion of discrimination, calls to violence against
+protected groups) or dehumanizing/belittling/vilifying on the bases of race, ethnicity, religion,
+disability, age, nationality, veteran status, sexual orientation, gender, gender identity, caste, or any
+other protected status. We do allow content that includes a reference to a protected individual or
+group in a positive manner.
+14
+
+
+===== PDF PAGE 15 =====
+\"No Sexually Explicit Information\": The prompt shall not contain or seek generation of content that
+contains references to sexual acts or other lewd content (e.g., sexually graphic descriptions, content
+aimed at causing arousal). Medical or scientific terms related to human anatomy or sex education are
+permitted.
+A.4
+EXPERIMENTS DETAILS FOR FIGURE 1
+For Figure 1(a), we respectively draw a random dimension from the models trained by CL and NCL,
+and then draw the top-activated samples along two dimensions. We utilize ResNet-18 (He et al.,
+2016) as the backbone and train the models on ImageNet-100 for 200 epochs.
+For Figure 1(b), we evaluate the performance in linear probing with noise. During the linear
+evaluation, we train a classifier following the frozen backbone pretrained by different methods for
+50 epochs. For noisy label probing, we apply 90% symmetric label noise when training the linear
+classifiers. For random input noise, we train the linear classifiers on clean datasets, while applying
+Gaussian noise with 0.6 standard variation to the validation sample.
+B
+PROOFS
+B.1
+PROOFS RELATED TO THEOREM 4.1
+B.1.1
+MONOSEMANTIC REPRESENTATIONS
+In the monosemantic case, we assume the learned representation only keeps the most important
+dimension ν = x1.
+Theorem B.1 (Conditional mean and variance of monosemantic representations). The conditional
+means and variances of νmono = x1 are
+µ0(νmono) = 1
+3
+(1 −S)2
+1 + S2
+and
+µ1(νmono) = 1
+3
+2 + S
+1 + S
+(7)
+σ2
+0(νmono) = 1
+6
+(1 −S)2
+1 + S2 −µ0(νmono)2
+and
+σ2
+1(νmono) = 1
+6
+3 + S
+1 + S −µ1(νmono)2.
+(8)
+Proof of Theorem B.1. We first calculate the conditional probability density functions.
+P(x1 ≤x|y = 0)
+= P(x1 ≤x, x1 ≤x2)
+P(x1 ≤x2)
+= P(x1 ≤x2, x1 ≤x, x2 ≤x) + P(x1 ≤x2, x1 ≤x, x2 > x)
+P(x1 ≤x2)
+= P(x1 = 0, x2 ≤x) + P(x1 ≤x2, 0 < x1 ≤x, 0 < x2 ≤x) + P(x1 ≤x)P(x2 > x)
+P(x1 ≤x2)
+= S[S + (1 −S)x] + 1
+2(1 −S)2x2 + [S + (1 −S)x](1 −S)(1 −x)
+1
+2(1 + S2)
+= 1 −(1 −S)2(1 −x)2
+1 + S2
+.
+(9)
+15
+
+
+===== PDF PAGE 16 =====
+P(x1 ≤x|y = 1) = P(x1 ≤x, x1 > x2)
+P(x1 > x2)
+= P(x1 ≤x) −P(x1 ≤x, x1 ≤x2)
+P(x1 > x2)
+= P(x1 ≤x)
+P(x1 > x2) −P(x1 ≤x|y = 0) · P(x1 ≤x2)
+P(x1 > x2)
+= S + (1 −S)x
+1
+2(1 −S2)
+−
+h
+1 −(1 −S)2(1 −x)2
+1 + S2
+i
+· 1 + S2
+1 −S2
+= (1 −S)2x2 + 2S(1 −S)x
+1 −S2
+.
+(10)
+Then the conditional means of νmono = x1 are
+µ0(νmono) =
+Z
+x
+x dP(x1 ≤x|y = 0)
+=
+Z
+x∈(0,1]
+x2(1 −S)2
+1 + S2
+(1 −x) dx
+= 2(1 −S)2
+1 + S2
+(1
+2 −1
+3)
+= 1
+3
+(1 −S)2
+1 + S2
+(11)
+and
+µ1(νmono) =
+Z
+x
+x dP(x1 ≤x|y = 1)
+=
+Z
+x∈(0,1]
+x · 2(1 −S)(1 −S)x + S
+1 −S2
+dx
+= 2(1 −S)
+1 −S2
+h1
+3(1 −S) + 1
+2S
+i
+= 1
+3
+2 + S
+1 + S .
+(12)
+Then we have
+µ1(νmono) −µ0(νmono) = 1
+3
+1 + S
+1 + S2 .
+(13)
+Similarly, we have the conditional variances as follows.
+σ2
+0(νmono) =
+Z
+x
+x2dP(x1 ≤x|y = 0) −µ0(νmono)2
+=
+Z
+x∈(0,1]
+x2 2(1 −S)2
+1 + S2
+(1 −x) dx −µ0(νmono)2
+= 2(1 −S)2
+1 + S2
+h1
+3 −1
+4
+i
+−µ0(νmono)2
+= 1
+6
+(1 −S)2
+1 + S2 −µ0(νmono)2
+(14)
+16
+
+
+===== PDF PAGE 17 =====
+and
+σ2
+1(νmono) =
+Z
+x
+x dP(x1 ≤x|y = 1) −µ1(νmono)2
+=
+Z
+x∈(0,1]
+x2 · 2(1 −S)(1 −S)x + S
+1 −S2
+dx −µ1(νmono)2
+= 2(1 −S)
+(1 −S2)
+h1
+4(1 −S) + 1
+3S
+i
+−µ1(νmono)2
+= 1
+6
+3 + S
+1 + S −µ1(νmono)2.
+(15)
+B.1.2
+POLYSEMANTIC REPRESENTATIONS
+To study the polysemantic case, we first have to derive the probability distribution of νpoly = x1 −x2
+and the corresponding conditional probability density functions on y = 0 and y = 1, separately. We
+first calculate the cumulative distribution functions as follows.
+Lemma B.2 (Distribution of νpoly = x1 −x2).
+P(x1 −x2 ≤x) =
+
+
+
+
+
+−1
+2[1 −(1 −S)x]2 + 1 + 1
+2S2,
+x ∈[0, 1],
+1
+2[(1 −S)x + 1]2 −1
+2S2,
+x ∈[−1, 0).
+Proof of Lemma B.2. For x ∈[0, 1], we have
+P(x1 −x2 ≤x)
+= lim
+N→∞
+N
+X
+n=−N
+P(x1 ≤x + n/N)P(x2 = n/N)
+= lim
+N→∞
+⌊(1−x)N⌋
+X
+n=0
+P(x1 ≤x + n/N)P(x2 = n/N) +
+N
+X
+n=⌊(1−x)N⌋+1
+1 · P(x2 = n/N)
+= [S + (1 −S)x] · S
++ lim
+N→∞
+⌊(1−x)N⌋
+X
+n=1
+[S + (1 −S)(x + n/N)] · (1 −S)/N +
+N
+X
+n=⌊(1−x)N⌋+1
+(1 −S)/N
+= S[S + (1 −S)x] + lim
+N→∞[S(1 −S) + (1 −S)2x]⌊(1 −x)N⌋/N
++ (1 −S)2⌊(1 −x)N⌋(⌊(1 −x)N⌋+ 1)/(2N 2) + (1 −S)(N −⌊(1 −x)N⌋−1)/N
+= S[S + (1 −S)x] + [S(1 −S) + (1 −S)2x](1 −x) + (1 −S)2(1 −x)2/2 + (1 −S)x
+= −1
+2[1 −(1 −S)x]2 + 1 + 1
+2S2.
+(16)
+17
+
+
+===== PDF PAGE 18 =====
+For x ∈[−1, 0), we have
+P(x1 −x2 ≤x) = lim
+N→∞
+N
+X
+n=−N
+P(x1 ≤x + n/N)P(x2 = n/N)
+= lim
+N→∞
+N
+X
+n=−⌊xN⌋
+P(x1 ≤x + n/N)P(x2 = n/N)
+= lim
+N→∞
+N
+X
+n=−⌊xN⌋
+[S + (1 −S)(x + n/N)] · (1 −S)/N
+= lim
+N→∞[S(1 −S) + (1 −S)2x](N + ⌊xN⌋)/N
++ (1 −S)2(N −⌊xN⌋)(N + ⌊xN⌋+ 1)/(2N 2)
+= [S(1 −S) + (1 −S)2x](1 + x) + (1 −S)2(1 −x2)/2
+= 1
+2[(1 −S)x + 1]2 −1
+2S2.
+(17)
+Theorem B.3 (Conditional mean and variance of polysemantic representations). The conditional
+means and variances of νpoly = x1 −x2 are
+µ0(νpoly) = −1
+3
+(1 −S)(1 + 2S)
+1 + S2
+and
+µ1(νmono) = 1
+3
+1 + 2S
+1 + S
+(18)
+σ2
+0(νpoly) = 1
+6
+(1 −S)(1 + 3S)
+1 + S2
+−µ0(νpoly)2
+and
+σ2
+1(νpoly) = 1
+6
+1 + 3S
+1 + S −µ1(νmono)2
+(19)
+Proof of Theorem B.3. By Lemma B.2, we have
+Ppoly(x1 −x2 ≤x|y = 0) = P(x1 −x2 ≤x|x1 ≤x2)
+= P(x1 −x2 ≤min(0, x))/P(x1 −x2 ≤0)
+=
+
+
+
+h1
+2[(1 −S)x + 1]2 −1
+2S2i
+/[1
+2(1 + S2)],
+x ∈[−1, 0)
+1,
+x ∈[0, 1]
+=
+(h
+[(1 −S)x + 1]2 −S2i
+/(1 + S2),
+x ∈[−1, 0)
+1,
+x ∈[0, 1]
+and
+Ppoly(x1 −x2 ≤x|y = 1)
+= P(x1 −x2 ≤x|x1 > x2)
+= P(0 < x1 −x2 ≤x)/P(x1 −x2 > 0)
+=
+0,
+x ∈[−1, 0]
+[P(x1 −x2 ≤x) −P(x1 −x2 ≤0)]/[1 −P(x1 −x2 ≤0)],
+x ∈(0, 1]
+=
+
+
+
+0,
+x ∈[−1, 0]
+h
+−1
+2[1 −(1 −S)x]2 + 1 + 1
+2S2 −1
+2(1 + S2)
+i
+/[1 −1
+2(1 + S2)],
+x ∈(0, 1]
+=
+(0,
+x ∈[−1, 0]
+h
+1 −[1 −(1 −S)x]2i
+/(1 −S2),
+x ∈(0, 1]
+18
+
+
+===== PDF PAGE 19 =====
+Then we have
+µ0(νpoly) =
+Z
+x∈[−1,0)
+x · 2(1 −S)[(1 −S)x + 1]/(1 + S2) dx
+= 2(1 −S)
+1 + S2
+h1
+3(1 −S) −1
+2
+i
+= −1
+3
+(1 −S)(1 + 2S)
+1 + S2
+,
+(20)
+µ1(νpoly) =
+Z
+x∈(0,1]
+x · 2(1 −S)[1 −(1 −S)x]/(1 −S2) dx
+=
+2
+1 + S
+h1
+2 −1
+3(1 −S)
+i
+= 1
+3
+1 + 2S
+1 + S ,
+(21)
+µ1(νpoly) −µ0(νpoly) = 2
+3
+1 + 2S
+(1 + S)(1 + S2),
+(22)
+σ2
+0(νpoly) =
+Z
+x∈[−1,0)
+x2 · 2(1 −S)[(1 −S)x + 1]/(1 + S2) dx −µ0(νpoly)2
+= 2(1 −S)
+1 + S2
+h
+−1
+4(1 −S) + 1
+3
+i
+−µ0(νpoly)2
+= 1
+6
+(1 −S)(1 + 3S)
+1 + S2
+−µ0(νpoly)2,
+(23)
+and
+σ2
+1(νpoly) =
+Z
+x∈(0,1]
+x2 · 2(1 −S)[1 −(1 −S)x]/(1 −S2) dx −µ1(νpoly)2
+=
+2
+1 + S
+h1
+3 −1
+4(1 −S)
+i
+−µ1(νpoly)2
+= 1
+6
+1 + 3S
+1 + S −µ1(νpoly)2.
+(24)
+B.1.3
+PROOF OF THEOREM 4.1
+Proof of Theorem 4.1. Following the toy model described in Section 4.2, we let S = 0.2. Then by
+Theorem B.1, we have µ0(νmono) = 0.205, µ1(νmono) = 0.611, ∆µ(νmono) = 0.406, σ0(νmono) =
+0.246, σ1(νmono) = 0.266, and J(νmono) = 6.196. By Theorem B.3, we have µ0(νpoly) = −0.359,
+µ1(νpoly) = 0.389, ∆µ(νpoly) = 0.748, σ0(νmono) = 0.276, σ1(νpoly) = 0.266, and J(νpoly) =
+10.164. By comparing the above results, we complete the proof.
+B.2
+PROOFS RELATED TO LABEL NOISE
+Following Ghosh et al. (2017); Ma et al. (2020); Wang et al. (2019b), we assume the noisy label
+˜y is randomly flipped from the true labels to other classes. Under η ∈[0, K−1
+K ), the noisy label
+distribution is
+P(˜y = k|x) =
+K
+X
+j=0,1
+P(˜y = k|y = j)P(y = k|x),
+(25)
+where P(˜y = k|y = j) = 1 −η if j = k, and otherwise P(˜y = k|y = j) = η.
+19
+
+
+===== PDF PAGE 20 =====
+B.2.1
+INFLUENCE OF LABEL NOISE ON CONDITIONAL MEAN AND VARIANCE
+Lemma B.4 (Conditional Distributions). For noise rate η ∈[0, 1/2) and sparsity S ∈[0, 1], we
+have conditional distributions
+P(ν|˜y = 0) = (1 −η)(1 + S2)P(ν|y = 0) + η(1 −S2)P(ν|y = 1)
+(1 −η)(1 + S2) + η(1 −S2)
+,
+(26)
+and
+P(ν|˜y = 1) = η(1 + S2)P(ν|y = 0) + (1 −η)(1 −S2)P(ν|y = 1)
+η(1 + S2) + (1 −η)(1 −S2)
+.
+(27)
+Proof of Lemma B.4. We first calculate the class conditional distributions.
+P(ν|˜y = 0) = P(˜y = 0|ν)P(ν)/P(˜y = 0)
+=
+P
+j=0,1 P(˜y = 0|y = j)P(y = j|ν)P(ν)
+P
+j=0,1 P(˜y = 0|y = j)P(y = j)
+=
+P
+j=0,1 P(˜y = 0|y = j)P(ν|y = j)P(y = j)
+P
+j=0,1 P(˜y = 0|y = j)P(y = j)
+= (1 −η)P(ν|y = 0)P(y = 0) + ηP(ν|y = 1)P(y = 1)
+(1 −η)P(y = 0) + ηP(y = 1)
+.
+(28)
+P(ν|˜y = 1) = P(˜y = 1|ν)P(ν)/P(˜y = 1)
+=
+P
+j=0,1 P(˜y = 1|y = j)P(y = j|ν)P(ν)
+P
+j=0,1 P(˜y = 1|y = j)P(y = j)
+=
+P
+j=0,1 P(˜y = 1|y = j)P(ν|y = j)P(y = j)
+P
+j=0,1 P(˜y = 1|y = j)P(y = j)
+= ηP(ν|y = 0)P(y = 0) + (1 −η)P(ν|y = 1)P(y = 1)
+ηP(y = 0) + (1 −η)P(y = 1)
+.
+(29)
+Recall that x1, x2 = 0 with probability S, and x1, x2 ∼U(0, 1] with probability 1 −S. Because
+x1 and x2 are independently and identically distributed and P(x1 = x2|x1, x2 = 0), we have
+P(x1 ≤x2|x1, x2 > 0) = P(x2 ≤x1|x1, x2 > 0) = 1/2, and therefore
+P(y = 0) = P(x1 ≤x2)
+= P(x1 = 0) + P(x1 > 0)P(x2 > 0)P(x1 ≤x2|x1, x2 > 0)
+= S + 1
+2(1 −S)2 = 1
+2(1 + S2).
+(30)
+Then P(y = 1) = 1 −P(y = 0) = 1
+2(1 −S2), and correspondingly we have
+P(ν|˜y = 0) = (1 −η)(1 + S2)P(ν|y = 0) + η(1 −S2)P(ν|y = 1)
+(1 −η)(1 + S2) + η(1 −S2)
+,
+(31)
+and
+P(ν|˜y = 1) = η(1 + S2)P(ν|y = 0) + (1 −η)(1 −S2)P(ν|y = 1)
+η(1 + S2) + (1 −η)(1 −S2)
+.
+(32)
+Theorem B.5 (Influence of label noise on inter-class distance). For noise rate η ∈[0, 1
+2),
+∆˜µ(ν) =
+(1 −2η)(1 + S2)(1 −S2)
+[1 + (1 −2η)S2][1 −(1 −2η)S2]∆µ(ν).
+(33)
+20
+
+
+===== PDF PAGE 21 =====
+Proof of Theorem B.5. By Lemma B.4, the conditional means of ν has the following forms.
+˜µ0(ν) := E(ν|˜y = 0)
+=
+Z
+ν
+ν dP(ν|˜y = 0)
+=
+Z
+ν
+ν
+(1 −η)(1 + S2)
+(1 −η)(1 + S2) + η(1 −S2) dP(ν|y = 0)
++
+Z
+ν
+ν
+η(1 −S2)
+(1 −η)(1 + S2) + η(1 −S2) dP(ν|y = 1).
+(34)
+˜µ1(ν) := E(ν|˜y = 1)
+=
+Z
+ν
+ν dP(ν|˜y = 1)
+=
+Z
+ν
+ν
+η(1 + S2)
+η(1 + S2) + (1 −η)(1 −S2) dP(ν|y = 0)
++
+Z
+ν
+ν
+(1 −η)(1 −S2)
+η(1 + S2) + (1 −η)(1 −S2) dP(ν|y = 1).
+(35)
+Then we have
+˜µ1(ν) −˜µ0(ν)
+=
+Z
+ν
+ν
+h
+η(1 + S2)
+η(1 + S2) + (1 −η)(1 −S2) −
+(1 −η)(1 + S2)
+(1 −η)(1 + S2) + η(1 −S2)
+i
+dP(ν|y = 0)
++
+Z
+ν
+ν
+h
+(1 −η)(1 −S2)
+η(1 + S2) + (1 −η)(1 −S2) −
+η(1 −S2)
+(1 −η)(1 + S2) + η(1 −S2)
+i
+dP(ν|y = 1)
+=
+(1 −2η)(1 + S2)(1 −S2)
+[1 + (1 −2η)S2][1 −(1 −2η)S2]
+h Z
+ν
+ν dP(ν|y = 1) −
+Z
+ν
+ν dP(ν|y = 0)
+i
+=
+(1 −2η)(1 + S2)(1 −S2)
+[1 + (1 −2η)S2][1 −(1 −2η)S2][µ1(ν) −µ0(ν)].
+(36)
+Theorem B.6 (Influence of label noise on intra-class variance). For i = 0, 1 and noise rate η ∈[0, 1
+2),
+˜σ2
+i (ν) = ci,0σ2
+0(ν) + ci,1σ2
+1(ν) + ci,0µ0(ν)2 + ci,1µ1(ν)2 −[ci,0µ0(ν) + ci,1µ1(ν)]2
+where c0,0 := (1−η)(1+S2)
+1+(1−2η)S2 , c0,1 :=
+η(1+S2)
+1+(1−2η)S2 , c1,0 =
+η(1+S2)
+1−(1−2η)S2 , and c1,1 = (1−η)(1+S2)
+1−(1−2η)S2 .
+Proof of Theorem B.6. By Lemma B.4, the conditional variances of ν has the following forms.
+˜σ2
+0(ν) := E(ν2|˜y = 0) −˜µ0(ν)2
+=
+Z
+ν
+ν2 dP(ν|˜y = 0) −˜µ0(ν)2
+=
+Z
+ν
+ν2
+(1 −η)(1 + S2)
+(1 −η)(1 + S2) + η(1 −S2) dP(ν|y = 0)
++
+Z
+ν
+ν2
+η(1 −S2)
+(1 −η)(1 + S2) + η(1 −S2) dP(ν|y = 1) −˜µ0(ν)2
+= (1 −η)(1 + S2)
+1 + (1 −2η)S2 [σ2
+0(ν) + µ0(ν)2] +
+η(1 + S2)
+1 + (1 −2η)S2 [σ2
+1(ν) + µ1(ν)2]
+−
+h(1 −η)(1 + S2)
+1 + (1 −2η)S2 µ0(ν) +
+η(1 + S2)
+1 + (1 −2η)S2 µ1(ν)
+i2
+:= c0σ2
+0(ν) + c1σ2
+1(ν) + c0µ0(ν)2 + c1µ1(ν)2 −[c0µ0(ν) + c1µ1(ν)]2,
+(37)
+21
+
+
+===== PDF PAGE 22 =====
+where c0 := (1−η)(1+S2)
+1+(1−2η)S2 and c1 :=
+η(1+S2)
+1+(1−2η)S2 .
+˜σ2
+1(ν) := E(ν2|˜y = 1) −˜µ1(ν)2
+=
+Z
+ν
+ν2 dP(ν|˜y = 0) −˜µ0(ν)2
+=
+Z
+ν
+ν2
+η(1 + S2)
+η(1 + S2) + (1 −η)(1 −S2) dP(ν|y = 0)
++
+Z
+ν
+ν2
+(1 −η)(1 −S2)
+η(1 + S2) + (1 −η)(1 −S2) dP(ν|y = 1) −˜µ1(ν)2
+=
+η(1 + S2)
+1 −(1 −2η)S2 [σ2
+0(ν) + µ0(ν)2] + (1 −η)(1 + S2)
+1 −(1 −2η)S2 [σ2
+1(ν) + µ1(ν)2]
+−
+h
+η(1 + S2)
+1 −(1 −2η)S2 µ0(ν) + (1 −η)(1 + S2)
+1 −(1 −2η)S2 µ1(ν)
+i2
+:= c′
+0σ2
+0(ν) + c′
+1σ2
+1(ν) + c′
+0µ0(ν)2 + c′
+1µ1(ν)2 −[c′
+0µ0(ν) + c′
+1µ1(ν)]2,
+(38)
+where c′
+0 =
+η(1+S2)
+1−(1−2η)S2 and c′
+1 = (1−η)(1+S2)
+1−(1−2η)S2 .
+B.2.2
+LINEAR SEPARABILITY OF MONOSEMANTIC & POLYSEMANTIC REPRESENTATIONS
+UNDER LABEL NOISE
+Proof of Theorem 4.2. By definition, we have
+˜J(νmono)/J(νmono)
+˜J(νpoly)/J(νpoly)
+= [∆˜µ(νmono)/(˜σ0(νmono)˜σ1(νmono))]/[∆µ(νmono)/(σ0(νmono)σ1(νmono))]
+[∆˜µ(νpoly)/(˜σ0(νpoly)˜σ1(νpoly))]/[∆µ(νpoly)/(σ0(νpoly)σ1(νpoly))]
+.
+(39)
+By Theorem B.5 we have ∆˜µ(νmono)/∆µ(νmono) = ∆˜µ(νpoly)/∆µ(νpoly) and σ1(νmono) =
+σ1(νpoly), and thus
+˜J(νmono)/J(νmono)
+˜J(νpoly)/J(νpoly)
+= ˜σ0(νpoly)
+˜σ0(νmono) · ˜σ1(νpoly)
+˜σ1(νmono) · σ0(νmono)
+σ0(νpoly) .
+(40)
+By Theorems B.1 and B.6, we have
+˜σ2
+0(νmono) = 1.04(1 −η)
+1.04 −0.08η (0.2462 + 0.2052) +
+1.04η
+1.04 −0.08η (0.2662 + 0.6112)
+−
+h 1.04(1 −η)
+1.04 −0.08η 0.205 +
+1.04η
+1.04 −0.08η 0.611
+i2
+,
+(41)
+˜σ2
+1(νmono) =
+1.04η
+0.96 + 0.08η (0.2462 + 0.2052) + 1.04(1 −η)
+0.96 + 0.08η (0.2662 + 0.6112)
+−
+h
+1.04η
+0.96 + 0.08η 0.205 + 1.04(1 −η)
+0.96 + 0.08η 0.611
+i2
+,
+(42)
+˜σ2
+0(νpoly) = 1.04(1 −η)
+1.04 −0.08η (0.2762 + (−0.359)2) +
+1.04η
+1.04 −0.08η (0.2662 + 0.3892)
+−
+h 1.04(1 −η)
+1.04 −0.08η (−0.359)) +
+1.04η
+1.04 −0.08η 0.389
+i2
+,
+(43)
+˜σ2
+1(νpoly) =
+1.04η
+0.96 + 0.08η (0.2762 + (−0.359)2) + 1.04(1 −η)
+0.96 + 0.08η (0.2662 + 0.3892)
+−
+h
+1.04η
+0.96 + 0.08η (−0.359) + 1.04(1 −η)
+0.96 + 0.08η 0.389
+i2
+.
+(44)
+22
+
+
+===== PDF PAGE 23 =====
+Then plugging Eq. (41), Eq. (42), Eq. (43), and Eq. (44) into Eq. (40), we have
+˜
+J(νmono)/J(νmono)
+˜
+J(νpoly)/J(νpoly) ≥1.
+Further, by Theorems B.1 and B.5, we have
+∆˜µ(νmono) =
+1.04 × 0.96(1 −2η)
+(1.04 −0.08η)(0.96 + 0.08η) × 0.406,
+(45)
+∆˜µ(νpoly) =
+1.04 × 0.96(1 −2η)
+(1.04 −0.08η)(0.96 + 0.08η) × 0.748.
+(46)
+Plugging them into the definition of ˜J(νmono) and ˜J(νpoly), we have ˜J(νmono) < ˜J(νpoly) when
+η < 0.25 and ˜J(νmono) > ˜J(νpoly) when η > 0.25.
+B.3
+PROOFS RELATED TO INPUT NOISE
+Following the settings in Section 4.2, we investigate the influence of Gaussian noise εi ∼N(0, 1),
+i.i.d. i = 1, 2, on the input data x = (x1, x2), where εi ⊥x. Given noise strength λ > 0, we denote
+the noisy input data as ˜x = (x1 + λε1, x2 + λε2). Then the learned monosemantic and polysemantic
+representations are νmono = x1 + λε1 and νpoly = (x1 −x2) + λ(ε1 −ε2). Next, we derive the
+influence of noise strength on the conditional means and variances, respectively.
+Theorem B.7 (Influence of Gaussian noise on inter-class distance). Given noise strength λ > 0, for
+both mono- and poly-semantic representations, we have
+∆˜µ(ν) = ∆µ(ν).
+(47)
+Proof of Theorem B.7. For νmono and i = 0, 1,
+˜µi(νmono) = E(x1 + λε1|y = i)
+= E(x1|y = i) + λE(ε1|y = i)
+= E(x1|y = i) + 0
+= µi(νmono).
+(48)
+For νpoly and i = 0, 1,
+˜µi(νpoly) = E((x1 −x2) + λ(ε1 −ε2)|y = i)
+= E(x1 −x2|y = i) + λ[E(ε1|y = i) −E(ε2|y = i)]
+= E(x1 −x2|y = i) + 0
+= µi(νpoly).
+(49)
+Then for ν ∈{νmono, νpoly},
+∆˜µ(ν) = ˜µ1(ν) −˜µ0(ν) = µ1(ν) −µ0(ν) = ∆µ(ν).
+(50)
+Theorem B.8 (Influence of Gaussian noise on intra-class variance). For i = 0, 1 and noise strength
+λ > 0, we have
+˜σ2
+i (νmono) = σ2
+i (νmono) + λ2,
+(51)
+and
+˜σ2
+i (νpoly) = σ2
+i (νpoly) + 2λ2.
+(52)
+Proof of Theorem B.8. For νmono and i = 0, 1,
+˜σ2
+i (νmono) = E((x1 + λε1)2|y = i) −˜µi(νmono)
+= E(x2
+1|y = i) + 2λE(x1ε1|y = i) + λ2E(ε2
+1|y = i) −˜µi(νmono)
+= E(x2
+1|y = i) −˜µi(νmono) + 0 + λ2E(ε2
+1|y = i)
+= σ2
+i (νmono) + λ2.
+(53)
+23
+
+
+===== PDF PAGE 24 =====
+For νpoly and i = 0, 1,
+˜σ2
+i (νmono) = E(((x1 −x2) + λ(ε1 −ε2))2|y = i) −˜µi(νpoly)
+= E((x1 −x2)2|y = i) + 2λE((x1 −x2)(ε1 −ε2)|y = i) + λ2E((ε1 −ε2)2|y = i) −˜µi(νpoly)
+= E((x1 −x2)2|y = i) −˜µi(νpoly) + 2λE((x1 −x2)ε1|y = i) −2λE((x1 −x2)ε2|y = i)
++ λ2E(ε2
+1|y = i) −2λ2E(ε1ε2|y = i) + λ2E(ε2
+2|y = i)
+= σ2
+i (νpoly) + 2λ2.
+(54)
+Theorem B.9 (Influence of Gaussian noise on linear seprarability). We denote the linear separability
+criterion under noise as ˜J(ν) = ∆˜µ(ν)/( ˜σ0(ν)˜σ1(ν)). For noise rate λ > 0,
+˜J(νpoly)
+J(νpoly) ≤
+˜J(νmono)
+J(νmono) ≤1.
+(55)
+Meanwhile, we obtain ˜J(νpoly) ≤˜J(νmono) when λ ≥0.55.
+As shown in Theorem B.9, with the increase of noise strength, the linear separability (J(ν)) of
+both polysemantic and monosemantic features becomes worse. However, J(νmono) decreases more
+slowly. As a result, when the noise strength is aggressive enough (λ ≥0.25), the monosemantic
+feature exhibits better linear seperability than the polysemantic one. The theoretical results reveal that
+the linear separability of monosemantic features is more robust than polysemantic features, which
+leads to better performance in tasks under Input noise.
+Proof of Theorem B.9. By definition, we have
+˜J(νmono)/J(νmono)
+˜J(νpoly)/J(νpoly)
+= [∆˜µ(νmono)/(˜σ0(νmono)˜σ1(νmono))]/[∆µ(νmono)/(σ0(νmono)σ1(νmono))]
+[∆˜µ(νpoly)/(˜σ0(νpoly)˜σ1(νpoly))]/[∆µ(νpoly)/(σ0(νpoly)σ1(νpoly))]
+.
+(56)
+By Theorems B.7 and B.8, we have ∆˜µ(νmono) = ∆µ(νmono), ∆˜µ(νpoly) = ∆µ(νpoly),
+˜σ2
+i (νmono) = σ2
+i (νmono) + λ2, and ˜σ2
+i (νpoly) = σ2
+i (νpoly) + 2λ2, i = 0, 1. By Theorem 4.1,
+we have σ1(νmono) = σ1(νpoly). Then we have
+˜J(νmono)/J(νmono)
+˜J(νpoly)/J(νpoly)
+= ˜σ0(νpoly)˜σ1(νpoly)σ0(νmono)
+˜σ0(νmono)˜σ1(νmono)σ0(νpoly)
+=
+p
+(σ2
+0(νpoly) + 2λ2)(σ2
+1(νpoly) + 2λ2)σ0(νmono)
+p
+(σ2
+0(νmono) + λ2)(σ2
+1(νmono) + λ2)σ0(νpoly)
+.
+(57)
+Then plugging Theorem 4.1, we complete the proof.
+C
+ADDITIONAL EXPERIMENTS
+CE
+SCE
+Linear Evaluation Loss
+0
+10
+20
+30
+40
+50
+Validation Accuracy
+CL
+SAE
+NCL
+Figure 6: Linear probing performance with different evaluation losses on ImageNet-100 under 95%
+noise rates.
+24
+
+
+===== PDF PAGE 25 =====
+C.1
+COMBINATION WITH ROBUST LOSS
+The previous results suggest that the monosemantic representations exhibit stronger robustness
+against label noise across various datasets. We note that there have been various studies to improve
+the robustness under label noise, such as applying robust loss functions (Van Rooyen et al., 2015;
+Ghosh et al., 2017), correcting training labels (Reed et al., 2014; Ma et al., 2018), and reweighting
+training samples (Chen et al., 2019; Han et al., 2018). However, the perspective in this paper is
+orthogonal to them. Taking the representative robust loss function Symmetric Cross Entropy (Wang
+et al., 2019b) as an example, we can obtain monosemantic representations as discussed above and
+then use the robust loss during the linear probing process. As shown in Figure 6, both the robust loss
+and enhancing feature monosemanticity can improve the robustness against label noise. Furthermore,
+the two methods are orthogonal, and combining them can further improve performance.
+25

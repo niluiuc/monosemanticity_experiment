@@ -1,0 +1,1142 @@
+
+
+===== PDF PAGE 1 =====
+Understanding polysemanticity in neural networks
+through coding theory
+Simon C. Marshall∗
+LIACS, Leiden University
+Jan H. Kirchner
+OpenAI†
+Abstract
+Despite substantial efforts, neural network interpretability remains an elusive goal,
+with previous research failing to provide succinct explanations of most single
+neurons’ impact on the network output. This limitation is due to the polysemantic
+nature of most neurons, whereby a given neuron is involved in multiple unrelated
+network states, complicating the interpretation of that neuron. In this paper, we
+apply tools developed in neuroscience and information theory to propose both a
+novel practical approach to network interpretability and theoretical insights into
+polysemanticity and the density of codes. We infer levels of redundancy in the
+network’s code by inspecting the eigenspectrum of the activation’s covariance
+matrix. Furthermore, we show how random projections can reveal whether a
+network exhibits a smooth or non-differentiable code and hence how interpretable
+the code is. This same framework explains the advantages of polysemantic neurons
+to learning performance and explains trends found in recent results by Elhage et
+al. (2022). Our approach advances the pursuit of interpretability in neural networks,
+providing insights into their underlying structure and suggesting new avenues for
+circuit-level interpretability.
+1
+Introduction
+As the capabilities of deep neural networks increase, the need for interpretability to understand
+failure modes, fix bugs, and establish accountability becomes increasingly apparent.10,28,35 Given an
+explanation of the internal structure of a deep neural network, we might be able to infer the logic
+that leads to a given output and correct this logic to conform with our preferences for the model’s
+behaviour. The methods for achieving interpretability overlap with those of other areas of deep
+learning research. For example, more interpretable networks tend to be more robust to adversarial
+attacks,36,14 while more robust networks tend to be more interpretable.13,2 Modularity and continual
+learning are also related to interpretability, as methods that promote specialization among weights or
+neurons can make the network easier to understand.22,26,37
+Despite the rapid development of interpretability techniques, key challenges remain. Techniques
+need to be sufficiently robust to scale to large models,33,35 withstand rigorous evaluation,21,19 and
+work reliably across domains.9 One particular challenge for interpretability is the phenomenon of
+polysemanticity, whereby neurons are activated by multiple unrelated features.15,31 Polysemanticity
+poses a challenge for interpretability based on individual neurons,6 which will necessarily be incorrect
+or incomplete. One explanation for why polysemanticity is near ubiquitous is the superposition
+hypothesis which posits that neural networks overload individual neurons with multiple roles in order
+to leverage the maximum available network capacity.32,12 A deep understanding of these phenomena
+will be important for advancing interpretability research.
+∗s.c.marshall@liacs.leidenuniv.nl
+†Work done outside of OpenAI.
+arXiv:2401.17975v1  [cs.LG]  31 Jan 2024
+
+
+===== PDF PAGE 2 =====
+a
+b
+input
+... ... ... ... ...
+polysemantic
+... ... ... ... ...
+superposition
+monosemantic
+c
+#dimensions
+per feature
+0
+1
+empirical
+(Elhage et al.)
+optimal (ours)
+10
+sparsity (1/(1-S))
+1
+Figure 1: Network capacity of deep artificial neural networks. a. Schematic of deep artificial
+neural network (ANN) receiving a set of input signals (left; orange) and processing the signal
+through consecutive layers of neurons (right; shades of gray) connected in an all-to-all fashion.
+b. Schematic of different possible coding schemes within a layer of the ANN. Monosemantic
+coding (left): one-to-one identification between inputs and neuron activations (highlighted in orange)
+without overlap. Polysemantic coding (middle): One-to-one identification between inputs and neuron
+activations with overlap. Superposition coding (right): One-to-many identification between inputs
+and neuron activations. Note that the third scenario is a sub-type of the second scenario. c. Number
+of dimensions needed in a neural network’s hidden layer per input feature as a function of varying
+feature sparsity(gray) compared to our theoretical prediction of optimal encoding (green). Data
+extracted from ref. [12]. Dashed horizontal lines indicate "sticky" regions12 where the network code
+deviates from optimal.
+In parallel with developments in interpretability research, information theory has emerged as a
+promising approach for analyzing neural networks. A landmark study in this field proposed to
+analyze deep neural networks by studying the plane formed by the amount of mutual information
+between hidden activations and the network’s input and output variables.41 Applying this perspective
+to network activations during training provides deep insight into the trade-offs and learning dynamics
+that shape emerging representations.38 Intriguingly, this work suggests that many aspects of deep
+neural networks can be explained solely by optimality considerations and without reference to the
+details of training,41,20 suggesting a possible top-down approach to studying network interpretability.
+Building on these previous works, in this paper, we propose a novel approach to interpretability by
+analyzing the eigenspectrum of neural networks from a coding perspective. We leverage the decay
+rate of the eigenspectrum of the activation covariance matrix to infer the amount of redundancy in the
+neural network’s code. This approach offers insights into the code’s high-level properties, including
+its channel capacity and information flow. We demonstrate how random projections can be employed
+to determine whether a network exhibits a smooth or non-differentiable phase transition, further
+enhancing our understanding of the network’s structure and behaviour. Our approach has the potential
+to inform the design of more interpretable and robust neural networks, ultimately leading to more
+transparent and reliable deep learning models.
+2
+Results
+Polysemanticity and superposition as the default for efficient encoding of information. When
+presented with an appropriately formatted input, the hidden layers of a deep neural network activate
+based on the characteristics of the input and based on the connectivity of neurons within that
+network (Fig. 1a). Individual neurons in the network will activate very selectively to a few inputs
+(monosemantic coding) or will activate broadly to multiple inputs (polysemantic/superposition
+coding) depending on the learned code (Fig. 1b). While these phenomena traditionally are studied
+at the single-neuron level,11 we regard them as properties of the network code. Viewed from this
+perspective, it is immediately apparent that a network that needs to encode a number of features larger
+than the number of neurons per layer will benefit from utilizing a superposition code (Fig. 1b).
+To investigate whether neural networks can indeed learn to leverage an approximately optimal
+encoding of its input, we reanalyze a result from a recent study on toy models of superposition.12
+In this setting, a deep neural network learns to encode and decode inputs, x, with varying sparsity,
+S. By computing the information capacity of a neural network and comparing it to the information
+2
+
+
+===== PDF PAGE 3 =====
+network
+ capacity (%)
+# layers
+1
+10
+d=5%
+d=10%
+d=15%
+100
+0
+network
+ capacity (%)
+# layers
+1
+10
+100
+0
+mono-
+semantic
+code
+dropout
+poly-
+semantic
+code
+super-
+position
+code
+a
+b
+c
+Figure 2: Redundancy in channel code enables noise robustness. a. Illustration of the effect of
+dropout on the three types of code introduced in Figure 1. While dropout corrupts information in the
+monosemantic (top, circle) and superposition (bottom, star) codes, a polysemantic code can recover
+from dropout. b., c. Network capacity as a function of network for different levels of dropout α for
+monosemantic (b, circle), superposition (b, star) and polysemantic code (c, square).
+content of a sparse input, we can calculate the compression rate, R, that could be achieved by an
+optimal code,
+R = 1 −S + 1
+H (−S log(S) −(1 −S) log(1 −S)),
+(1)
+where H = ⟨log px⟩is the information content (entropy) of a single random input, x (see Supplemen-
+tary Note for detailed derivation). For sufficiently large H, e.g. 16 or 32 bits, R can be approximated
+as R = 1 −S. Intriguingly, this analytic result provides a good fit to the simulation data (Fig.1c),
+with the deviations from the optimal being due to “sticky" encoding regimes where the toy model
+learns a highly robust but suboptimal encoding.12
+Might an optimal code be a more interpretable code? The hardness of average case decoding of neural
+network codes is unknown, but results for specific tasks indicate the problem might be difficult.17
+Indeed, for some tasks, we demonstrate that the optimal code resists polynomial time decoders almost
+always (see Supplementary Note). Given that optimal polysemantic codes reuse the same neuron for
+many concepts and deciding properties of highly convoluted functions is generally hard, we might
+expect networks that learn a nearly optimal code to be very difficult to interpret.
+Robust encoding implies reduced channel capacity. While the code learned by networks might be
+very difficult to interpret in general due to its high information content, in practice, neural networks
+do not solely maximize information density. In the face of noise and other perturbations, neural
+networks must be robust by introducing redundancies and other error-correcting steps into the code.
+To illustrate the effect of noise, we consider dropout,39 a common form of regularisation in neural
+networks (Fig. 2a). Dropout is itself a noise source: as information passes through layers, a fraction,
+D ∈[0, 1], of the total number of neurons is erased. A naïve dense code (such as that from the
+previous subsection) with no redundancies would immediately lose a fraction D of information
+encoded across neurons in the first dropout layer and then a fraction D again in the subsequent
+dropout layers, giving an effective information capacity of ˜Cdropout ∼C(1 −D)N, after N dropout
+layers, where C is the capacity of the noiseless channel (Fig. 2b).
+However, by utilizing a redundant encoding, it is possible to introduce an error-correcting component
+into the code, which is resistant to some noise sources. When error-correction is present, the neural
+network can reliably transmit the entire channel capacity of a layer with dropout through every layer
+of the network (Fig. 2c, see Supplementary Note for detailed derivation),
+Cdropout ∼C(1 −D).
+(2)
+We verified that a neural network trained as an autoencoder could indeed learn error-correction by
+measuring the mutual information between the input and the hidden layers3 and observing that after
+3
+
+
+===== PDF PAGE 4 =====
+natural
+images
+hidden
+activations
+a
+principal component #
+eigenvalue squared (norm.)
+b
+depth 1
+depth 8
+...
+depth 2
+depth 7
+regression
+eigenvector #1
+eigenvector #3
+eigenvector #100
+c
+= -1.15
+= -1.02
+= -1.01
+= -0.89
+= -0.84
+= -0.73
+= -1.17
+= -1.5
+max
+min
+principal
+component #
+eigenvalue squared (norm.)
+non-
+redundant
+code
+= 0
+redundant
+code
+= -∞
+8
+depth
+1
+exponent
+-0.8
+-1.6
+d
+Figure 3: The code shapes hidden activation eigenspectrum. a. Left: Schematic illustrating
+input to (natural images from the CIFAR dataset) and hidden activations of an Autoencoder-ResNet
+(see Methods for details). Right: Idealized eigenspectrum for hidden activations implementing a
+maximally redundant (top) or maximally non-redundant (bottom) code. b. Log-log plot of eigenvalues
+as a function of principal components for hidden activations from different network depths (shades
+of grey and legend in bottom right). Dashed line indicates the power law fit obtained from Huber
+regression (see Methods). Large deviations from the power law distribution exist for later layers,
+hence power law fits represent approximations. Note that the later eigenspectra resemble the predicted
+spectrum of a linear code (compare a), where the code words are simple linear combinations. c.
+Estimated power law exponent α as a function of network depth. Dashed line marks α = −1. d.
+Sample of different eigenvectors (rows) displayed as filters of the ResNet.
+training, the network does not experience exponential decay of information (see Supplementary Note
+for details).
+Thus, when a neural network is exposed to moderate noise, we expect the code to become more
+redundant, distributing the representation of inputs across multiple activation patterns. While this
+distribution of representations across neurons discourages a monosemantic code (Fig. 2a), it is unclear
+whether it might facilitate the holistic interpretation of activations across a given layer.
+Codes produce eigenspectra with varying speeds of decay. We next turned to probe the high-level
+properties of a neural network’s code. A natural approach that was recently proposed in the study
+of coding properties of biological systems40,23 is to investigate the eigenspectrum of the activation
+covariance matrix. The shape of the eigenspectrum can reflect the properties of the network’s code.
+In particular, a largely redundant code has an eigenspectrum with a steep decay since only a small
+subset of possible configurations is actually relevant to the network’s code (Fig. 3a). In contrast,
+a maximally non-redundant code will exhibit a more gradual decay in the eigenspectrum since it
+exploits the entire space of possible configurations (Fig. 3a). In practice, eigenspectra tend not to
+match either extreme and instead decay according to a power law with parameter α. Applying this
+approach to deep neural networks, we find the same power law decay but with varying values of α.
+By using this encoding, the effective channel capacity becomes approximately.
+Cα ≈C −|α|m log(m/e),
+(3)
+where m is the width of the given layer and C is the channel capacity using the optimal dense
+encoding (see Supplementary Note for detailed derivation).
+When visualizing the eigenspectrum of the hidden activations of a trained Autoencoder-ResNet trained
+on the ImageNet dataset without dropout (Fig. 3a), we find that the decay of the eigenspectrum
+changes non-monotonically over the depth of the network (Fig. 3b). The eigenspectrum initially
+decays with a power law exponent just below −1, which is consistent with the observation that the
+spectrum of natural images decays with that same exponent.40 The eigenspectrum decay then slows
+down, with the power law exponent increasing above −1 for the intermediate layers of the network,
+4
+
+
+===== PDF PAGE 5 =====
+time
+a
+moving
+dot
+time (a.u.)
+b
+action
+10
+104
+depth 1
+depth 8
+...
+depth 2
+depth 7
+c
+x
+y
+= 6.1k
+= 6.1k
+= 8k
+= 8.1k
+= 2.2k
+= 2.8k
+= 0.1k
+= 0.1k
+power law
+exponent
+-0.8
+-1.6
+action
+1
+104
+8
+depth
+1
+d
+Figure 4: Random projections of hidden activations exhibit varying amount of smoothness. a.
+Simple moving dot stimulus generated from the sin and cos function (top), converted into a stack
+of frames (middle), and passed into the network to yield hidden activations (bottom). b. Sample
+of random projections of hidden activations produced from the moving dot stimulus. Color of box
+indicates layer of the network, and color of the random projection indicates time. Inset text shows
+average activation. c. Average action of random projections as a function of network depth. Average
+computed over 1000 random projections (see Methods). d. Average action of random projections as
+a function of the estimated power law exponent α.
+before eventually decaying rapidly with a power law exponent ≤−1 for the final layers (Fig. 3c).
+Consistent with results from neuroscience,40 the corresponding eigenfilters vary from coarse global
+filters for the first eigenvectors to intricate filters sensitive to local variations for later eigenvectors.
+We note that the recovered eigenvectors resemble previously described Gabor receptive fields24 as
+well as curve detectors8 (Fig. 3d).
+In summary, the eigenspectrum of a trained Autoencoder-ResNet reveals that the trained network
+learns a code that is neither highly redundant nor one that maximizes capacity. Instead, we find that
+the neural code exhibits some redundancy, particularly towards early and late layers, while employing
+less redundant codes in intermediate layers.
+Random projections reflect smoothness of code. What can we say about the neural network code
+beyond general statements regarding its redundancy? We hypothesized that an input that is encoded
+with more redundancy might be easier to decode with linear probes.1 To this end, we projected
+the m hidden activations produced by a moving dot stimulus with n frames (Fig. 4a), A ∈Rn×m,
+onto a randomly chosen basis of vectors with normalized variance, r ∈Rm×3, ri ∼N(0, 1
+mI).
+These random projections, z = Ar, have the useful property that their average action, ⟨E[z]⟩=
+1
+2
+R
+|| ˙z(t)||2dt, is proportional to the decay factor α,
+⟨E[z]⟩=
+m
+X
+k=1
+λk ∼1
+2ζ(−α),
+(4)
+where λi are the eigenvalues of the hidden activations and ζ is the Riemann zeta function restricted
+to the real numbers, ζ(s) = P∞
+k=1
+1
+ks .
+When displaying the random projections as curves, we indeed observed that while early layers
+produce highly discontinuous projections, later layers of the network recover some of the smooth
+structure of the input (Fig. 4b). In particular, we noticed that the transition between discontinuous
+and locally smooth occurs as the decay factor α falls below −1 (Fig. 4c). From eq. 4, we see that in
+this regime, the expected action of the curve is finite, while in the regime α > −1, the action of the
+curve grows without bound.
+The slow decay of eigenspectra in artificial neural networks stands in stark contrast to the eigenspectra
+in the visual cortex of the mouse40 and the macaque.23 In this biological network, the power law
+exponent α is consistently below −1, constraining the network to use a continuous and differential
+code of the input. Instead, the artificial neural network resembles the much smaller zebrafish43 with a
+slowly decaying eigenspectrum with α ≈−0.7.
+5
+
+
+===== PDF PAGE 6 =====
+principal component #
+eigenvalue squared
+(norm.)
+depth 2
+depth 4
+depth 6
+depth 8
+dropout 10%
+dropout 80%
+Figure 5: Higher noise induces more robust codes. Log-log plot of eigenvalues as a function of
+principal components for hidden activations for two different networks with different dropout rates.
+The increase in non-linearity indicates a learnt code which is more robust to noise (which dropout
+introduces).
+Taken together, we found that the speed of decay of the eigenspectrum determines the statistical
+properties of random projections of stimuli. A fast decay (α ≤−1) is common in larger mammals40,23
+and results in continuous and differentiable projections. A slow decay (α > −1) is more prominent in
+small artificial neural networks and in the zebrafish43 and implies discontinuous random projections.
+Deviations from power law distribution In the final layers of figure 3 we can see that the eigen-
+spectrum in some cases systematically deviates from the power law. These deviations stem from
+transitions from the ‘biological power-law’ case to the optimal ‘redundant code’ case (the step func-
+tion in Fig. 3a), which helps protect the information from loss. To test this hypothesis we investigate
+the effect of higher and lower levels of dropout noise on the power spectrum (Fig. 5).
+In early layers, both the high and low dropout cases are well described by a simple power-law. In
+contrast, intermediate and late layers exhibit increasingly pronounced step-like spectra, especially in
+the higher-dropout layer. These properties indicate a large linear redundancy in the code, which is a
+characteristic signature of error-correcting codes.
+Identifying the exact error-correcting code is beyond the scope of this paper, but we note that the
+non-linear decay is not a sharp step function, as would be the case with a linear error-correcting code.
+While this decay is consistent with a suboptimal encoding, we hypothesise that instead, the learnt
+code is not entirely linear. Consistently, the dropoff becomes more pronounced in later layers of the
+network, likely because linear error correction early in the network is both challenging (there are
+fewer layers to arrange the information into a code) and less necessary (as the image already contains
+many redundancies, minimising damage done by losing a couple of pixels).
+Dropout incentivizes fast decay of eigenspectrum. As a network’s code depends on the amount of
+noise present (Fig. 2), it is natural to ask how the learned code changes as the dropout rate increases.
+We systematically varied the amount of dropout the network experiences (Fig. 6a) and observed that
+higher dropout generally produce lower power law exponents (Fig. 6b). Interestingly, already for a
+dropout rate of 20%, the power law exponent remains very close to −1, as in the visual cortex of the
+mouse40 and the macaque.23 Consistent with our observation in networks without dropout (Fig. 4),
+networks with lower power law exponent also tend to produce random projections with lower average
+action (Fig. 6c).
+To test whether networks with higher dropout might encode more robust representations of their
+input throughout their layers, we computed the variance of the input explained by random projections
+from different layers of the network (see Methods). We found that the explained variance increases
+with both dropout rate and network depth (Fig. 6d). Consistently, we found that trajectories with low
+average action tend to explain a higher fraction of input variance (Fig. 6e).
+These findings suggest that introducing dropout during training can reliably produce networks with a
+faster-decaying eigenspectrum. Random projections from these networks exhibit low average action
+and tend to resemble robustly and linearly encode some global features of the input.
+Efficient codes provide a framework for understanding language model interpretability. The
+success of deep learning models in natural language processing, particularly the transformer archi-
+tecture,42 provides a range of new challenges and opportunities for interpretability research.11,12,6
+A prominent challenge is the unprecedented size of large language models,7 which makes the use
+of interpretability methods that rely on human annotation of individual components infeasible. A
+6
+
+
+===== PDF PAGE 7 =====
+... ... ... ... ...
+dropout  0%
+... ... ... ... ...
+dropout  40%
+... ... ... ... ...
+dropout  80%
+a
+8
+depth
+1
+b
+power law
+exponent
+-0.8
+-1.6
+action
+1
+104
+8
+depth
+1
+d
+0
+25%
+explained
+variance
+of input
+c
+action
+1
+104
+explained
+variance
+of input
+15
+35
+e
+8
+depth
+1
+dropout
+0
+80
+Figure 6: Dropout during training leads to rapidly decaying eigenspectra and smooth random
+projections. a. Schematic illustrating dropout across all layers with different strengths (0% top,
+40% middle, 80% bottom). b. Estimated power law exponent α as a function of network depth for
+different levels of dropout (shades of green). c. Average action of random projections as a function
+of network depth for different levels of dropout. d. Average percentage of input variance explained
+by random projections as a function of network depth for different layers of dropout. Inset shows
+three examples of random projections. e. Average percentage of input variance explained by random
+projections as a function of the average action of the random projection.
+recent study proposes a GPT-assisted method for generating single neuron explanations in a scalable
+fashion.6 While the proposed method manages to provide explanations with predictive power for
+thousands of neurons, the approach is limited to cases without polysemanticity and superposition,
+which our work suggests is a small fraction. To investigate whether our approach of interpreting
+random projections might be applicable to this setting, we turned to analyze the eigenspectrum of a
+large language model.34
+We calculated the power law exponent α as a function of network depth. We observed that the power
+law exponent consistently remains above the critical value (α ≥−1, Fig. 7a), indicating unbounded
+variance of random projections. This observation is consistent with the highly nonlinear nature of
+natural language.27
+To investigate whether a lower power law exponent might nonetheless translate into more expressive
+random projections, we compute the explanation score (see Methods) for the activation of single
+neurons and random projections across different layers of the network (Fig. 7b,c). Interestingly,
+we found that the average explanation score changes non-monotonically, starting at comparatively
+high values in the first layers, decreasing up until two-thirds of the network depth, and eventually
+increasing again. The explanation score for random projections is the inverse of the score for single
+neurons, with our method performing well in the layers in which the single-neuron method performs
+a
+depth
+5
+40
+-0.45
+-0.6
+power law
+exponent
+b
+0
+0.1
+depth
+5
+40
+explanation
+score
+single neuron
+(Bills et al.)
+random projection
+(ours)
+0
+100
+-30
+30
+token #
+projected
+activity
+donations
+donations
+donations
+donations
+volunteers
+participate
+participate
+c
+Figure 7: Codes in large language models. a. Estimated power law exponent α as a function
+of network depth of a large language model.34 Error bars indicate 95% confidence interval. b.
+Explanation score6 as a function of network depth for explanations for the activation of single neurons
+(gray) or random projections (green). Data extracted from ref. [6]. Error bars indicate 95% confidence
+interval. c. Illustrative example of a low-action random projection from layer 3.
+7
+
+
+===== PDF PAGE 8 =====
+poorly. We hypothesize that the random projection and single neuron approach may complement
+each other. By using both in tandem, we might obtain a more complete picture of coding in neural
+networks, bringing us close to the goal of understanding the outputs of large models.
+3
+Discussion
+In this study, we explored the properties of neural network codes and their implications for inter-
+pretability, leveraging concepts from information theory and neuroscience. Our analysis revealed
+that the eigenspectrum of the activation covariance matrix provides insights into the redundancy of a
+network’s code and its capacity for error-correction. Our results demonstrated that networks with
+higher dropout levels tend to employ codes with faster-decaying eigenspectra, yield smoother random
+projections, and better explanations of input variance. Furthermore, we found that our approach to
+interpreting random projections might complement existing single-neuron interpretability methods,
+particularly in the context of large language models. Overall, our findings provide a top-down per-
+spective on neural network interpretability, advancing our understanding of the underlying structure
+of these models and suggesting new avenues for future research.
+A fascinating aspect studying eigenspectrum decay in artificial neural networks is the potential
+connection to neuroscience.40,23,43 In the same way that sufficiently large animals exhibit a neural
+code that optimally trades coding capacity and robustness to perturbations,40,23 we hypothesize that
+sufficiently large artificial neural networks might learn to strike the same balance. Indeed, a recent
+study indicates that networks with a fast eigenspectrum decay are more robust to adversarial examples
+and investigates which aspects of training and network architecture result in a more optimal decay.16
+A systematic study of how the eigenspectrum decay changes as a function of network size might
+reveal important information on whether we can expect large language models7 to have smooth
+random projection.
+An important direction for future research is to investigate the role of nonlinearities in the network
+code. Considering that neural networks were initially developed for nonlinear signal processing,25
+it is moderately surprising that modern networks allow linear read-out from their hidden layers.1,4
+Several factors incentivize linearity in hidden layers, such as the linear structure of the residual
+stream18,11 and the training objective of supervised learning which incentivizes linear separability of
+concepts.5 Conversely, linear codes can have comparable performance to nonlinear codes;29 hence
+they are not disadvantaged under optimization pressure. However, the exact reasons for which linear
+structure networks converge to30 is an important open question into which our current work might
+provide insight.
+Overall, our efficient channel coding framework provides a top-down perspective on interpretability
+in neural networks and offers a promising direction for future research in understanding deep learning
+models’ underlying structure and behavior.
+4
+Methods
+Statistics. We perform a Principal Component Analysis on the activations of the ReLu units of a
+given layer. To reduce the computational capacity required by very high-dimensional data, we apply a
+subsampling method by selecting every s-th component, where s is computed such that the resulting
+dimension is less than 8000. We employ a randomized SVD solver for PCA fitting and restrict the
+number of components to a maximum of 1000.
+After fitting the PCA model, we perform a Huber regression analysis of the explained variance of the
+PCA components to estimate each layer’s power-law exponent (α). The Huber regression is used
+due to its robustness to outliers. Specifically, we fit the Huber regression model on the logarithm of
+the PCA components’ indices (from 10 to 50) and the logarithm of their corresponding explained
+variances.
+We use a recently published method for automated interpretability in language models,6 which aims
+to explain the activation patterns of individual neurons in a large language model (GPT-2 XL) with a
+larger language model (GPT-4). We use GPT-4 to generate explanations of random projections of the
+activations of all neurons in a given layer of GPT-2. The value of these explanations is then assessed
+8
+
+
+===== PDF PAGE 9 =====
+by a third model (GPT-3.5), which predicts the activation of the explained neuron on a held-out test
+set. The correlation between the expected and the real output is then the explanation score.
+Model training. We studied the eigenspectrum of a ResNet-based Variational Autoencoder (ResNet-
+VAE) activations for image generation tasks. The ResNet-VAE model is built upon the ResNet-18
+architecture pretrained on ImageNet. We remove the final fully connected layer from the ResNet
+architecture and replace it with two sets of linear layers to encode latent variables mu and logvar.
+The model employs two fully connected hidden layers with 1024 units each, followed by the latent
+embedding layer with 256 dimensions. A dropout rate of 0.2 is applied during training to promote
+regularization.
+The model is trained on the CIFAR-10 dataset, which consists of 50,000 train and 10,000 test instances
+of 32x32 pixel images belonging to 10 different classes. The images are resized to 224x224 pixels
+and normalized before being fed into the network. We use the Adam optimizer with a learning rate
+of 1e-3 to optimize the network parameters. The training process consists of 20 epochs, with a
+batch size of 50. The model performance is measured by a custom loss function that combines Mean
+Squared Error (MSE) and Kullback-Leibler Divergence (KLD).
+In addition to the ResNet-VAE model, we studied the GPT-2 XL model34 through the PyTorch Hub
+library. We computed explanation scores with the code published by Bills et al. (ref.,6 but computed
+simulation scores with text-davinci-003 rather than GPT-4, since token logprobs are not available
+through the API at the time of this study.
+Code availability. After publication code will be publically available as a GitHub repository; at this
+time, all experiments are available in the supplementary material.
+References
+[1]
+Guillaume Alain and Yoshua Bengio. “Understanding intermediate layers using linear classifier
+probes”. In: arXiv preprint arXiv:1610.01644 (2016).
+[2]
+Maximilian Augustin, Alexander Meinke, and Matthias Hein. “Adversarial robustness on
+in-and out-distribution improves explainability”. In: Computer Vision–ECCV 2020: 16th
+European Conference, Glasgow, UK, August 23–28, 2020, Proceedings, Part XXVI 16. Springer.
+2020, pp. 228–245.
+[3]
+Mohamed Ishmael Belghazi et al. “Mine: mutual information neural estimation”. In: arXiv
+preprint arXiv:1801.04062 (2018).
+[4]
+Nora Belrose et al. “Eliciting Latent Predictions from Transformers with the Tuned Lens”. In:
+arXiv preprint arXiv:2303.08112 (2023).
+[5]
+Yoshua Bengio, Aaron Courville, and Pascal Vincent. “Representation learning: A review and
+new perspectives”. In: IEEE transactions on pattern analysis and machine intelligence 35.8
+(2013), pp. 1798–1828.
+[6]
+Steven Bills et al. Language models can explain neurons in language models. https://
+openaipublic.blob.core.windows.net/neuron-explainer/paper/index.html.
+2023.
+[7]
+Tom Brown et al. “Language models are few-shot learners”. In: Advances in neural information
+processing systems 33 (2020), pp. 1877–1901.
+[8]
+Nick Cammarata et al. “Thread: Circuits”. In: Distill (2020). https://distill.pub/2020/circuits.
+DOI: 10.23915/distill.00024.
+[9]
+Frances Ding, Jean-Stanislas Denain, and Jacob Steinhardt. “Grounding representation simi-
+larity through statistical testing”. In: Advances in Neural Information Processing Systems 34
+(2021), pp. 1556–1568.
+[10]
+Finale Doshi-Velez and Been Kim. “Towards a rigorous science of interpretable machine
+learning”. In: arXiv preprint arXiv:1702.08608 (2017).
+[11]
+N Elhage et al. “A mathematical framework for transformer circuits”. In: Transformer Circuits
+Thread (2021).
+[12]
+Nelson Elhage et al. “Toy Models of Superposition”. In: arXiv preprint arXiv:2209.10652
+(2022).
+[13]
+Logan Engstrom et al. “Adversarial robustness as a prior for learned representations”. In: arXiv
+preprint arXiv:1906.00945 (2019).
+9
+
+
+===== PDF PAGE 10 =====
+[14]
+Chris Finlay and Adam M Oberman. “Scaleable input gradient regularization for adversarial
+robustness”. In: arXiv preprint arXiv:1905.11468 (2019).
+[15]
+Ruth Fong and Andrea Vedaldi. “Net2vec: Quantifying and explaining how concepts are
+encoded by filters in deep neural networks”. In: Proceedings of the IEEE conference on
+computer vision and pattern recognition. 2018, pp. 8730–8738.
+[16]
+Arna Ghosh et al. “Investigating power laws in deep representation learning”. In: arXiv preprint
+arXiv:2202.05808 (2022).
+[17]
+Shafi Goldwasser et al. “Planting undetectable backdoors in machine learning models”. In:
+2022 IEEE 63rd Annual Symposium on Foundations of Computer Science (FOCS). IEEE.
+2022, pp. 931–942.
+[18]
+Kaiming He et al. “Deep residual learning for image recognition”. In: Proceedings of the IEEE
+conference on computer vision and pattern recognition. 2016, pp. 770–778.
+[19]
+Lars Holmberg. “Towards Benchmarking Explainable Artificial Intelligence Methods”. In:
+arXiv preprint arXiv:2208.12120 (2022).
+[20]
+Shao-Lun Huang et al. “An information theoretic interpretation to deep neural networks”. In:
+2019 IEEE international symposium on information theory (ISIT). IEEE. 2019, pp. 1984–1988.
+[21]
+Evan Hubinger. Automating auditing: An ambitious concrete technical research proposal.
+2021.
+[22]
+James Kirkpatrick et al. “Overcoming catastrophic forgetting in neural networks”. In: Proceed-
+ings of the national academy of sciences 114.13 (2017), pp. 3521–3526.
+[23]
+Nathan CL Kong et al. “Increasing neural network robustness improves match to macaque
+V1 eigenspectrum, spatial frequency preference and predictivity”. In: PLOS Computational
+Biology 18.1 (2022), e1009739.
+[24]
+Norbert Kruger et al. “Deep hierarchies in the primate visual cortex: What can we learn for
+computer vision?” In: IEEE transactions on pattern analysis and machine intelligence 35.8
+(2012), pp. 1847–1871.
+[25]
+Alan Lapedes and Robert Farber. Nonlinear signal processing using neural networks: Predic-
+tion and system modelling. Tech. rep. 1987.
+[26]
+Zhizhong Li and Derek Hoiem. “Learning without forgetting”. In: IEEE transactions on
+pattern analysis and machine intelligence 40.12 (2017), pp. 2935–2947.
+[27]
+Tal Linzen. “Issues in evaluating semantic spaces using word analogies”. In: Proceedings
+of the 1st Workshop on Evaluating Vector-Space Representations for NLP. Berlin, Germany:
+Association for Computational Linguistics, Aug. 2016, pp. 13–18. DOI: 10.18653/v1/W16-
+2503. URL: https://aclanthology.org/W16-2503.
+[28]
+Zachary C Lipton. “The mythos of model interpretability: In machine learning, the concept of
+interpretability is both important and slippery.” In: Queue 16.3 (2018), pp. 31–57.
+[29]
+David JC MacKay and Radford M Neal. “Near Shannon limit performance of low density
+parity check codes”. In: Electronics letters 33.6 (1997), pp. 457–458.
+[30]
+Ari Morcos, Maithra Raghu, and Samy Bengio. “Insights on representational similarity in
+neural networks with canonical correlation”. In: Advances in Neural Information Processing
+Systems 31 (2018).
+[31]
+Jesse Mu and Jacob Andreas. “Compositional explanations of neurons”. In: Advances in
+Neural Information Processing Systems 33 (2020), pp. 17153–17163.
+[32]
+Chris Olah et al. “Zoom in: An introduction to circuits”. In: Distill 5.3 (2020), e00024–001.
+[33]
+Mensah Kwabena Patrick et al. “Capsule networks–a survey”. In: Journal of King Saud
+University-computer and information sciences 34.1 (2022), pp. 1295–1310.
+[34]
+Alec Radford et al. “Language models are unsupervised multitask learners”. In: OpenAI blog
+1.8 (2019), p. 9.
+[35]
+Tilman Räukur et al. “Toward transparent ai: A survey on interpreting the inner structures of
+deep neural networks”. In: arXiv preprint arXiv:2207.13243 (2022).
+[36]
+Andrew Ross and Finale Doshi-Velez. “Improving the adversarial robustness and interpretabil-
+ity of deep neural networks by regularizing their input gradients”. In: Proceedings of the AAAI
+Conference on Artificial Intelligence. Vol. 32. 1. 2018.
+[37]
+Andrei A Rusu et al. “Progressive neural networks”. In: arXiv preprint arXiv:1606.04671
+(2016).
+10
+
+
+===== PDF PAGE 11 =====
+[38]
+Ravid Shwartz-Ziv and Naftali Tishby. “Opening the black box of deep neural networks via
+information”. In: arXiv preprint arXiv:1703.00810 (2017).
+[39]
+Nitish Srivastava et al. “Dropout: a simple way to prevent neural networks from overfitting”.
+In: The journal of machine learning research 15.1 (2014), pp. 1929–1958.
+[40]
+Carsen Stringer et al. “High-dimensional geometry of population responses in visual cortex”.
+In: Nature 571.7765 (2019), pp. 361–365.
+[41]
+Naftali Tishby and Noga Zaslavsky. “Deep learning and the information bottleneck principle”.
+In: 2015 ieee information theory workshop (itw). IEEE. 2015, pp. 1–5.
+[42]
+Ashish Vaswani et al. “Attention is all you need”. In: Advances in neural information process-
+ing systems 30 (2017).
+[43]
+Zezhen Wang et al. “The scale-invariant covariance spectrum of brain-wide activity”. In:
+bioRxiv (2023), pp. 2023–02.
+11
+
+
+===== PDF PAGE 12 =====
+Understanding Polysemanticity and Improved Interpretability
+in Neural Networks with Coding Theory - Supplementary
+Material
+1
+Experimental details
+A zip file is provided in this supplementary material with the exact files used to create the results showcased in
+this experiment. We also provide brief descriptions of each file here to allow those looking to recreate our work
+or to find specific experiment details quicker access. After the anonymous peer review process is over these will
+be provided on a public github linked in the main text.
+ResNetVAE/modules.py This code defines a neural network model called ResNet_VAE that is capable of
+encoding and decoding image data using a variational autoencoder architecture. The model uses a pre-trained
+ResNet18 model for encoding, and includes several fully connected layers and convolutional layers for decoding.
+The model is capable of generating a reconstructed image from an input image, as well as outputting a latent
+representation of the input image that can be used for further downstream analysis.
+ResNetVAE/ResNetVAE_cifar10.py The ResNetVAE_cifar10.py script contains the code to train a variant
+of the Variational AutoEncoder using the ResNet architecture as an encoder to encode an image into its latent
+representation. The script uses the CIFAR10 dataset to train the model and record the loss metrics throughout
+the training process. The code handles saving and loading of model and optimizer states, and uses weights and
+biases for logging and visualization. Finally, the trained models are stored in local disk space as well. The script
+has an adjustable dropout probability and can be trained for an adjustable number of epochs.
+ResNetVAE/make_plots.py This code is used to analyze the properties of a ResNet-VAE neural network
+model trained on the CIFAR-10 dataset. The code first loads the model and uses hooks to extract activations
+at specified layers. The activations are then used to perform PCA analysis and the variance explained by each
+component is plotted. The code then generates activations for a set of dot images and project them onto a low-
+dimensional space obtained through a random projection matrix. The energy of the projection and the correlation
+between inputs and the projection are computed and plotted. Finally, the code computes a decay coefficient for
+each layer of the model and plots it against the energy of the projection and the correlation between inputs and
+the projection. The results are saved to disk as figures.
+ResNetVAE/helpers.py This code contains several utility functions for computer vision and machine learning
+tasks. It includes a function to generate a sequence of dot images moving in a circular path, and preprocesses the
+images using the default transform for CIFAR images. Another function computes the total energy of a set of
+points in n-dimensional space by calculating the squared magnitude of the differences between successive points.
+Additionally, there is a function that returns a dictionary of random projection matrices with specified dimensions
+for different layers in a neural network. These functions can be used to generate image data, calculate energy,
+and create random projection matrices for machine learning tasks.
+automated-interpretability/neuron-explainer/generate_trajectory.py This code generates random tra-
+jectories for a pre-trained language model. It captures activations of certain layers during a forward pass and
+computes the total energy of a set of points in n-dimensional space. It then finds the minimum trajectory and
+project it to a 1D plot. The process is repeated multiple times to visualize different trajectories in each iteration.
+The final result is a set of PDF files and NPY files showing the 1D projections of different minimum trajectories.
+The generated plots can be used to gain insights into how the language model processes various sequences of text
+inputs.
+automated-interpretability/neuron-explainer/generate_explanations.py This script generates explana-
+tions for the neuron activation patterns of a pre-trained GPT-2 XL language model using a calibrated simulator.
+1
+arXiv:2401.17975v1  [cs.LG]  31 Jan 2024
+
+
+===== PDF PAGE 13 =====
+Figure 1: MINE is deployed to estimate the continuous mutual information between the input and a given layer of
+a neural network. One neural network is trained in the presence of dropout to preserve a subset of the information
+in the input while the other isn’t. This demonstrates that in some settings a neural network is capable of learning
+an error correcting scheme, the random model provides a demonstration of what happens to information in this
+scenario that isn’t intentionally preserved
+The explanations are generated for the top 10 activation patterns of each layer in the neural network based on
+their mean maximum activation value compared to all activation patterns. The TokenActivationPairExplainer
+is used to generate explanations for the neuron activations, followed by simulating and scoring the explanation
+using an UncalibratedNeuronSimulator. The generated explanations and scores are saved for later use.
+Estimate-MI-of-NN-Layers.py This script trains a very deep neural network on a simple task (preserv-
+ing information) in a regime where error correction is needed to preserve any information. The results of this
+program are shown in figure 1
+2
+Theorems and Proofs
+We provide formal statements and proofs behind the results claimed in the main text.
+2.1
+Optimal sparse input ratio
+This subsection derives the predicted optimal ratio # dimensions-per-feature to sparsity.
+First, we formally define the sparse input distribution. It is based on a uniform random distribution with S
+features set to 0.
+2
+
+
+===== PDF PAGE 14 =====
+Definition 1 (Sparsification). Let S-sparsification be a process that takes a vector random variable v and returns a random
+variable v′ with each element of v′ independently set to 0 with probability S. If X is any distribution with i.i.d. elements
+then the S-sparsification of X is the distribution of X after S-sparsification, denote it as XS
+The entropy of such a distribution is
+Lemma 2 (Entropy of sparse distribution). Let X be some distribution. If XS is the distribution after S-sparsification
+then the entropy of XS is:
+H(XS) = −nS log(S) −n(1 −S) log(1 −S) + n(1 −S)Helem(X)
+Where Helem(X) is the elementwise entropy of X
+Proof. Express the joint entropy as the sum of the individual entropies (chain rule of entropy)
+H(XS) = H(XS
+0 , XS
+1 , . . . , XS
+n ) =
+X
+i
+(HS
+i |XS
+0 , . . . , XS
+i−1, XS
+i+1, . . . XS)
+as elements are i.i.d. (a condition of sparsification).
+H(XS) =
+X
+i
+(HS
+i ) = nH(XS
+0 )
+W.L.O.G. we have set all entropies equal to that of the first element of the vector.
+If we assume smoothness of X the probability that any un-sparcified element of a vector is exactly 0 is van-
+ishingly small P(X0 = 0) ≈0, allowing us to assume that if XS
+0 is 0, it has been set this way by sparsification.
+This implies that a single element of the sparcified vector has the distribution:
+P(XS
+0 = Y ) =
+(
+(1 −S)P(XS
+0 = Y ),
+if Y̸ = 0
+S,
+if Y = 0
+Directly calculating the entropy of this distribution:
+H(XS
+0 ) = −
+X
+XS
+0
+P(XS
+0 ) log
+ P(XS
+0 )
+
+= −
+X
+XS
+0̸ =0
+P(XS
+0 ) log
+ P(XS
+0 )
+
++ P(XS
+0 = 0) log
+ P(XS
+0 = 0)
+
+H(XS
+0 ) ≈−
+X
+XS
+0̸ =0
+(1 −S)P(X0) log((1 −S)P(X0)) −S log(S)
+H(XS
+0 ) ≈−(1 −S)
+X
+XS
+0̸ =0
+P(X0) log(P(X0)) −(1 −S)
+X
+XS
+0̸ =0
+P(X0) log(1 −S) −S log(S)
+H(XS
+0 ) ≈−(1 −S)H(X0) −(1 −S) log(1 −S) −S log(S)
+Which proves the result of the lemma.
+The above statement is approximate, taking the assumption that P(X0 = 0) is arbitrarily small. This can be
+turned into a strongly rigorous statement by taking smoothness or other assumptions which amount to bounding
+P(X0 = 0) < ε. In this case the stated entropy result is within additive ϵ. For the case we are interested in (Elhage
+et al.) X is a uniform distribution of high precision floats, making P(X0 = 0) ≈0 sufficiently accurate.
+The stated ratio simply follows from this lemma by assuming the precision (and hence entropy) of the internal
+state/hidden layer/linear algebra is equal to that of the unsparcified input distribution, X: Helem. The channel
+capacity of m hidden units is m × Helem. The ratio, m : n, is found by divding one by the other.
+3
+
+
+===== PDF PAGE 15 =====
+2.2
+Hardness of decoding a certain problem
+As codes become more efficient (approach the Shannon limit given the entropy) it seems likely that they become
+less interpretable. To provide weight to this conjecture we outline a learning problem such that any attempt at
+decoding 1 the optimal code in the final layer in polynomial time must fail, assuming cryptographic primitives.
+The existence of such a task is relatively trivial, we can see that a neural network is capable of learning to
+implement a discrete exponential, an function which is easy one-way but complicated to find the inverse of. If
+any algorithm were able to decode the input from a given output we would be able to use the same algorithm to
+find the inverse, i.e. to solve the discrete logarithm problem. The optimality of code constraint forces the model
+to keep only the bits it needs for the problem, leaving just the exponential and no “leaks" as to what the input was.
+Formally the problem gives 3 values as input: a prime, p, a primitive element, g of Z∗
+p = {1, . . . , p −1}, and
+x ∈Z∗
+p. The tasks is then to output gx(modp). This is an easy function to implement and very likely learnable up
+to large p, g, and x (only existence, not learnability, is strictly needed to show the result). It is now obvious how
+any algorithm that could take the output of this circuit and calculate x could solve DLP.
+DLP is thought to be average-case hard for chosen groups (chosen p), restricting our problem case to these
+instances completes our result. Many other cryptographic one-way functions could be used in the place of DLP
+here, strengthening this result to rely on any one of a number of possible assumed hardness results. Indeed, given
+a public-private key encryption scheme which is average case hard for every bit of the input, we can modify the
+learning problem such that the neural network implements the public key encryption, again any decoder that
+breaks even a single bit of the encrypted activations in polynomial time could be used to recover the original
+message without access to the private key.
+2.3
+Channel capacity of a dropout layer
+This subsection proves the channel capacity result claimed in the main text, namely that a neural network with
+n dropout layers, with dropout rate D has a channel capacity of Cdropout ∼C(1 −D), where C is the capacity
+of the dropout-less layer.
+Theorem 3. The channel capacity of m independent neurons, each with capacity Cbase when subject to an uncorrelated
+dropout layer with rate D is bounded by:
+(1 −ε) × (1 −D) × Cbase × m ≤Cm
+dropout ≤(1 −D) × Cbase × m,
+where ε = −log
+ 1 −2−Cbase
+tends to zero asymptotically for large Cbase (high precision).
+Proof. We first note that Cm
+dropout is equivalent to m×C1
+dropout due to the chain rule of entropy and the independence
+of channels.
+We then establish the lower and upper bounds separately for C1
+dropout, both rely on the similarity of this channel
+to the standard erasure channel.
+Lower bound(proof by construction) Create a uniform distribution on all but the 0 symbol, call this X. The
+entropy of this distribution is equal to the full uniform distribution sans 1 state:
+H(X) = log
+
+2C1
+base −1
+
+= log
+
+1 −2−C1
+base
+
++ C1
+base
+Let Y be the distribution given by putting X through the dropout layer. The mutual information between
+the two is:
+I(X; Y ) = H(X) −H(X|Y ) = H(X) −
+X
+P(Y = y)H(X|Y = y)
+If y = 0, H(X|Y = y) = H(X) as dropout applies to all inputs equally and the 0 symbol in X has no
+probability mass, if y̸ = 0 then y = x and H(X|Y = y) = 0. Thus:
+I(X; Y ) = H(X) −H(X|Y ) = H(X) −P(Y = 0)H(X) = (1 −D)H(X)
+1i.e. to take the code of an input and resolve the original input, or what information about the input has been conserved
+4
+
+
+===== PDF PAGE 16 =====
+Implying the lower bound on the channel capacity
+C1
+dropout ≥(1 −D) × (log
+
+1 −2−C1
+base
+
++ C1
+base)
+Upper bound(proof by contradiction) Assume toward contradiction that C1
+dropout = (1 −D)C1
+base + ε for
+some fixed ε > 0. Let the n-bit erasure channel be the extension of the binary erasure channel to an input of n
+bits, i.e. on input x ∈X = {0, 1}n the channel produces output y ∈Y = {0, 1}n + e, where e is an error symbol,
+with probability:
+P(Y = y|X = x) =
+(
+α,
+y = e
+1 −α,
+y = x
+The proof of the channel capacity of this channel is a trivial extension of the binary case: I(X; Y ) = H(X) +
+H(X|Y ) = H(X) −P P(Y = y)H(X|Y = y) = (1 −α)H(X)
+Which is maximized when X is uniform, giving a capacity of (1 −α)n = (1 −α)Cbase.
+However, given access to a n-bit erasure channel with α = D we can recreate a dropout channel by setting
+all e symbols to 0. If The channel capacity of our dropout layer was as assumed we could use the encoding
+procedure for the dropout layer, pass it through the n-bit erasure channel, perform the e = 0 operation and
+achieve the dropout layer capacity. As ε > 0 this implies it is possible to transmit more information than the
+channel capacity through the erasure channel, causing a contradiction.
+2.4
+Information loss from power law distribution
+The entropy of a distribution with variance following power law distribution is highly limited, constraining
+the channel capacity (C = H(X) −H(X|Y ) < H(X)). This section calculates how much information is not
+transmitted by the power law distribution compared to a uniform (flat distribution).
+Theorem 4. The entropy of a distribution of m neurons to precision n following a power law distribution with exponent
+α, X, is upper bounded by:
+H(X) ⪅mn −αm log(m/e)
+if the distributions of each number follow a normal distribution.
+Proof. W.L.O.G. Assume the variances, σi, are normalised such that σ1 = 1. The power law distribution then
+implies σi = iα
+Entropy is upper bounded by the case where all m channels are independent:
+H(X) ≤
+m
+X
+i
+H(Xi)
+Assuming the first element optimally uses every bit it would uniformly distribute over all values, the subsequent
+variances would take up a smaller and smaller section (as the variance must decrease, the entropy implied by each
+variance is approximately:
+H(Xi) ≈log(2nσi)
+(1)
+Substituting in variance gives:
+H(X) ≤
+m
+X
+i
+log(2nσi) =
+m
+X
+i
+log(2niα) = mn −α log
+ m
+Y
+i
+i
+!
+Applying Stirlings lemma gives the final result:
+H(X) ⪅mn −αm log(m/e)
+5
+
+
+===== PDF PAGE 17 =====
+Considering the Gaussian distribution has the highest entropy for a given variance the choice to assume a
+normal distribution in the previous answer may appear strange. Normal was chosen so that the first variance
+could be assumed to be an optimally dense code, if Gaussian is chosen edge effects (i.e. running out of numbers
+for a true Gaussian) must be considered, making it unclear what the initial value of σ0 is. However, a reader that
+wishes to use a Gaussian may simply modify the above proof to replace the entropy in the equation 1 with that
+of a Gaussian. Any reasonable values of the variance result in an additive term of at most m
+2 log(2πe), making the
+normal approximation close to the Gaussian.
+2.5
+Connection between power law exponent and energy of a random projection
+This section connects the action with the power series decay parameters, α.,
+We’re given a vector of hidden activations, A ∈Rm, centered around zero, A ∼N(0, Σ), and random
+projections, r ∈Rm×3 centered at 0 with normalised variance ri ∼N(0, 1
+mI). Expand definition of the action:
+⟨E[z]⟩= 1
+2⟨||Ar||2⟩= 1
+2⟨rT AT Ar⟩.
+The action is a scalar, thus it is equal to its trace, applying the cyclic and linear properties of the trace we rearrange
+and pull the expected value into the trace (the trace trick):
+⟨E[z]⟩= 1
+2⟨tr(rT r)⟩tr(⟨AT A⟩) = 1
+2tr(Σ)
+As the trace is equal to the sum of the eigenvalues, and the eigenspectrum of Σ is the set of variances, we
+rewrite the expected action as a sum over the power law,
+⟨E[z]⟩= 1
+2
+X
+i
+λi = 1
+2
+X
+i
+iα ≈1
+2
+∞
+X
+i=1
+iα = 1
+2
+∞
+X
+i=1
+1
+i−α = 1
+2ζ(−α).
+As the later terms of the sum rapidly approach zero, we can approximate the sum with the infinite series. Rewriting
+the expression in terms of −α then results in the connection with the ζ function,
+⟨E[z]⟩≈1
+2
+∞
+X
+i=1
+iα = 1
+2
+∞
+X
+i=1
+1
+i−α = 1
+2ζ(−α).
+6

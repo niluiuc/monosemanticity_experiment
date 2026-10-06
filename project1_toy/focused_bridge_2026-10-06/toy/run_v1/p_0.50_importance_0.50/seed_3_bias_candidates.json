@@ -1,0 +1,184 @@
+[
+  {
+    "finite_candidates": [
+      -1.0,
+      -0.9999999999999998,
+      -0.0,
+      7.401486830834377e-17,
+      2.0762699089123233e-16
+    ],
+    "candidate_losses": [
+      0.5,
+      0.4999999999999999,
+      1.232595164407831e-32,
+      4.451038093694945e-33,
+      2.3103193480715277e-32
+    ],
+    "tied_finite_minimizers": [
+      -0.0,
+      7.401486830834377e-17,
+      2.0762699089123233e-16
+    ],
+    "tie_tolerance": 1e-12,
+    "all_off_plateau_tied": false,
+    "all_off_plateau_upper": -1.0,
+    "all_off_plateau_loss": 0.5,
+    "intervals": [
+      {
+        "lower": -Infinity,
+        "upper": -1.0,
+        "active": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "quadratic_A": 0.0,
+        "linear_half_B": 0.0,
+        "stationary": null
+      },
+      {
+        "lower": -1.0,
+        "upper": -0.9999999999999998,
+        "active": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "quadratic_A": 0.25,
+        "linear_half_B": 0.0,
+        "stationary": -0.0
+      },
+      {
+        "lower": -0.9999999999999998,
+        "upper": -0.0,
+        "active": [
+          false,
+          false,
+          true,
+          true
+        ],
+        "quadratic_A": 0.5,
+        "linear_half_B": -5.551115123125783e-17,
+        "stationary": 1.1102230246251565e-16
+      },
+      {
+        "lower": -0.0,
+        "upper": 2.0762699089123233e-16,
+        "active": [
+          true,
+          false,
+          true,
+          true
+        ],
+        "quadratic_A": 0.75,
+        "linear_half_B": -5.551115123125783e-17,
+        "stationary": 7.401486830834377e-17
+      },
+      {
+        "lower": 2.0762699089123233e-16,
+        "upper": Infinity,
+        "active": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 1.0,
+        "linear_half_B": -1.074178989540659e-16,
+        "stationary": 1.074178989540659e-16
+      }
+    ]
+  },
+  {
+    "finite_candidates": [
+      -4.310896734654787e-32,
+      -0.0,
+      2.0762699089123228e-16,
+      2.0762699089123233e-16,
+      0.5000000000000001
+    ],
+    "candidate_losses": [
+      0.5,
+      0.5,
+      0.4999999999999999,
+      0.4999999999999999,
+      0.25
+    ],
+    "tied_finite_minimizers": [
+      0.5000000000000001
+    ],
+    "tie_tolerance": 1e-12,
+    "all_off_plateau_tied": false,
+    "all_off_plateau_upper": -4.310896734654787e-32,
+    "all_off_plateau_loss": 0.5,
+    "intervals": [
+      {
+        "lower": -Infinity,
+        "upper": -4.310896734654787e-32,
+        "active": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "quadratic_A": 0.0,
+        "linear_half_B": 0.0,
+        "stationary": null
+      },
+      {
+        "lower": -4.310896734654787e-32,
+        "upper": -0.0,
+        "active": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "quadratic_A": 0.25,
+        "linear_half_B": -0.25,
+        "stationary": 1.0
+      },
+      {
+        "lower": -0.0,
+        "upper": 2.0762699089123228e-16,
+        "active": [
+          true,
+          true,
+          false,
+          false
+        ],
+        "quadratic_A": 0.5,
+        "linear_half_B": -0.25,
+        "stationary": 0.5
+      },
+      {
+        "lower": 2.0762699089123228e-16,
+        "upper": 2.0762699089123233e-16,
+        "active": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "quadratic_A": 0.75,
+        "linear_half_B": -0.5,
+        "stationary": 0.6666666666666666
+      },
+      {
+        "lower": 2.0762699089123233e-16,
+        "upper": Infinity,
+        "active": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 1.0,
+        "linear_half_B": -0.5000000000000001,
+        "stationary": 0.5000000000000001
+      }
+    ]
+  }
+]

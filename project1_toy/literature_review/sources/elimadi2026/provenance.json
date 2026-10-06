@@ -1,0 +1,21 @@
+{
+  "key": "elimadi2026",
+  "arxiv_id": "2608.22155",
+  "accessed_utc": "2026-10-06T00:48:08.105028+00:00",
+  "metadata": {
+    "citation_title": "Why Does Robustness Reduce Superposition?",
+    "citation_author": "Elimadi, Adam",
+    "citation_date": "2026/08/23",
+    "citation_online_date": "2026/08/23",
+    "citation_pdf_url": "https://arxiv.org/pdf/2608.22155",
+    "citation_arxiv_id": "2608.22155",
+    "citation_abstract": "The study of adversarial examples and their origins remains an open area of research. Mechanistic interpretability, and superposition in particular, offers new avenues for approaching this problem. Gorton & Lewis (2025) demonstrate that adversarial examples arise from superposition and show empirically that adversarial training reduces superposition, yet provide no mechanistic account of why this occurs. We present an empirical explanation inspired by the feature taxonomy of Ilyas et al. (2019), tracing the following chain of causalities: adversarial training abandons non-robust features, leading to fewer total features to represent, resulting in less superposition."
+  },
+  "submission_history": "Submission history From: Adam Elimadi [ view email ] [v1] Sun, 23 Aug 2026 00:53:42 UTC (262 KB)",
+  "abstract_url": "https://arxiv.org/abs/2608.22155",
+  "pdf_url": "https://arxiv.org/pdf/2608.22155",
+  "pages": 9,
+  "pdf_bytes": 518310,
+  "pdf_sha256": "a4ef9adff7c1bd85296a3e67b0da46c22ee350201f3df88ab735970d77c6970e",
+  "errors": []
+}

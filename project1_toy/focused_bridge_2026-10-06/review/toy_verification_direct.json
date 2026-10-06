@@ -1,0 +1,45 @@
+{
+  "hashes_checked": 163,
+  "cases": 6,
+  "models": 96,
+  "training_records": 36,
+  "risk_records": 960,
+  "max_positive_noise_risk_discrepancy": 6.661338147750939e-16,
+  "max_fixed_geometry_bias_loss_discrepancy": 2.7755575615628914e-17,
+  "max_clean_loss_discrepancy": 5.551115123125783e-17,
+  "max_energy_discrepancy": 4.440892098500626e-16,
+  "max_independent_decoder_mse_quadrature_discrepancy": 7.771561172376096e-14,
+  "zero_noise_arithmetic_disagreements": [],
+  "direct_float64_decoder_zero_noise_disagreements": [
+    {
+      "case": "p_0.50_importance_0.50",
+      "model": "trained_final",
+      "seed": "1",
+      "max_feature_error_difference": 0.25,
+      "saved_weighted_error": 0.125,
+      "direct_float64_weighted_error": 0.25
+    },
+    {
+      "case": "p_0.50_importance_0.50",
+      "model": "trained_final",
+      "seed": "4",
+      "max_feature_error_difference": 0.25,
+      "saved_weighted_error": 0.125,
+      "direct_float64_weighted_error": 0.25
+    },
+    {
+      "case": "p_0.50_importance_0.50",
+      "model": "trained_bias_reoptimized",
+      "seed": "4",
+      "max_feature_error_difference": 0.25,
+      "saved_weighted_error": 0.125,
+      "direct_float64_weighted_error": 0.25
+    }
+  ],
+  "training_replay_max_difference": null,
+  "loss_stability_failures": 9,
+  "numerical_training_failures": 0,
+  "errors": [],
+  "seconds": 0.25601199991069734,
+  "interpretation": "Zero-noise disagreements are reported, not repaired by changing raw predictions. This audit does not prove global geometry optimality."
+}

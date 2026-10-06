@@ -1,0 +1,16 @@
+{
+  "B": -3.901767322435373,
+  "U": 1.353553390593274,
+  "sd": 0.22961005941905388,
+  "curvature_bound": 5.474954724638925,
+  "excluded_lower_halfline_loss_bound": 0.499999999999,
+  "upper_halfline_loss_lower_bound": 0.8286091129464898,
+  "initial_feasible_upper": 0.26284186686001537,
+  "lower_halfline_cannot_beat_feasible_upper": true,
+  "upper_halfline_cannot_beat_feasible_upper": true,
+  "local_minimizer_status": {
+    "success": true,
+    "message": "Solution found.",
+    "nfev": 12
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "hash_mismatches": [],
+  "hashed_files": 163,
+  "max_reconstruction_loss_recompute_error": 0.0,
+  "max_final_checkpoint_W_error": 0.0,
+  "maximum_encoder_energy_deviation": 4.440892098500626e-16,
+  "rounding_sensitive_rows": [
+    {
+      "case": "p_0.50_importance_0.50",
+      "seed": 1,
+      "direct_float64_relu_weighted_error": 0.25,
+      "algebraic_threshold_weighted_error": 0.125,
+      "maximum_per_feature_difference": 0.25
+    },
+    {
+      "case": "p_0.50_importance_0.50",
+      "seed": 4,
+      "direct_float64_relu_weighted_error": 0.25,
+      "algebraic_threshold_weighted_error": 0.125,
+      "maximum_per_feature_difference": 0.25
+    }
+  ]
+}

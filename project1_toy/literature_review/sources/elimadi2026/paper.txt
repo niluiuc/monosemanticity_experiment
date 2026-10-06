@@ -1,0 +1,438 @@
+
+
+===== PDF PAGE 1 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+Why Does Robustness Reduce Superposition?
+Adam Elimadi
+Independent Researcher
+elimadadam@gmail.com
+Abstract
+The study of adversarial examples and their origins remains an open area
+of research. Mechanistic interpretability, and superposition in particular,
+offers new avenues for approaching this problem. Gorton & Lewis (2025)
+demonstrate that adversarial examples arise from superposition and show
+empirically that adversarial training reduces superposition, yet provide
+no mechanistic account of why this occurs. We present an empirical expla-
+nation inspired by the feature taxonomy of Ilyas et al. (2019), tracing the
+following chain of causalities: adversarial training abandons non-robust
+features →fewer total features to represent →less superposition.
+1
+Introduction
+Explaining the existence of adversarial examples has been an open problem since Good-
+fellow et al. (2015) first showed that imperceptible perturbations reliably fool otherwise
+accurate models. Ilyas et al. (2019) offered an influential account: models rely on non-robust
+features, patterns that are predictive on clean data but do not survive small perturbations.
+This explains classification behavior, but says nothing about how those features are rep-
+resented internally. Gorton & Lewis (2025) supplied that missing piece by connecting
+adversarial vulnerability to superposition — the packing of more features into a representa-
+tion than it has dimensions to hold cleanly (Elhage et al., 2022) — showing that adversarial
+examples exploit superposed representations, and that adversarial training empirically
+reduces superposition. What their result does not explain is the mechanism: why training
+against perturbations should change how many features a model chooses to represent at all.
+This paper supplies that mechanism. Using the same toy-model setup as Gorton & Lewis
+(2025), we show that adversarially trained models represent systematically fewer features
+than standardly trained ones, and that the discarded features are exactly the ones Ilyas et al.
+(2019)’s taxonomy would classify as non-robust. We establish this first indirectly, through
+interference geometry and represented feature count, and then directly, using a synthetic
+dataset in which each feature’s robust/non-robust identity is assigned in advance, rather
+than inferred from model behavior after training.
+Our contributions are three-fold:
+• We show that adversarially trained models consistently drop more features than
+standardly trained models, across our sparsity sweep.
+• We show that dropped features carry higher average interference than retained
+features, and that retained features cluster near antipodal interference (≈−1), the
+configuration that minimizes cross-feature interference.
+• Using a synthetic dataset with a known ground-truth partition, we show that the
+dropped features correspond exactly to the non-robust feature set.
+1
+arXiv:2608.22155v1  [cs.LG]  23 Aug 2026
+
+
+===== PDF PAGE 2 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+2
+Background
+2.1
+Superposition
+Superposition occurs when a model encodes more features than there are neurons (Elhage
+et al., 2022). We control it by intervening on sparsity when training toy models, following
+the setup of Elhage et al. (2022). Sparsity is governed by a threshold S ∈[0, 1], which
+determines the activity of each component of the input x ∈Rm:
+[x]i =
+xi
+if xi > S
+0
+otherwise
+A feature xi is therefore active with probability p(A) = 1 −S.
+2.2
+Interference
+Elhage et al. (2022) define interference as the geometry of features in activation space,
+measured by the degree of non-orthogonality between feature directions. For two feature
+directions W:,i, W:,j ∈Rn, they are orthogonal when W⊤
+:,i W:,j = 0, and exhibit interference
+when W⊤
+:,i W:,j̸ = 0. The more strictly positive this inner product, the more likely spurious
+activations are to corrupt the reconstruction of feature i, constituting harmful interference.
+2.3
+Adversarial Examples
+An adversarial example is a perturbation of x ∈Rm, imperceptible to humans, that maxi-
+mizes the MSE loss within an ℓ2 ball of radius ε:
+xadv = x + arg max
+∥δ∥2≤ε
+L(x + ε · ∇xL)
+(1)
+Following Gorton & Lewis (2025), a small noise term is added to x prior to attack generation
+to avoid gradient masking, after which a one-step ℓ2 gradient attack is applied. The concept
+builds on foundational work in adversarial robustness (Goodfellow et al., 2015).
+3
+Setup
+3.1
+Toy Models
+We adopt the simplified toy model of Elhage et al. (2022) as employed by Gorton & Lewis
+(2025). Let W ∈Rn×m, with n = 20 and m = 100. Given inputs x ∼D, D ⊂Rm,
+hidden representations are computed as h = Wx ∈Rn and features are reconstructed via
+ˆx = ReLU(W⊤h + b). The training objective is L = ∥x −ˆx∥2
+2. Higher sparsity leads the
+model to represent more features and, consequently, to exhibit more superposition.
+3.2
+Measuring Superposition
+Elhage et al. (2022) quantify superposition as n/∥W∥F, the number of dimensions per
+feature. We adapt this by taking the squared Frobenius norm per dimension, obtaining a
+quantity proportional to the total energy distributed across hidden dimensions:
+Φ = ∥W∥2
+F/n
+(2)
+Φ increases monotonically with superposition and sparsity.
+3.3
+Representational Power
+We define representational power as the squared Frobenius norm of W, measuring the total
+energy distributed across all feature directions W:,i:
+P = ∥W∥2
+F
+(3)
+2
+
+
+===== PDF PAGE 3 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+Note that Φ = P/n, so representational power and superposition are proportional given
+fixed n.
+3.4
+Feature Representation Threshold
+To determine which features are represented and which are dropped, we measure the
+norm ∥W:,i∥2 of each feature column following Elhage et al. (2022), applying the threshold
+τ = 0.01:
+∥W:,i∥2
+< τ ⇒feature i is dropped
+≥τ ⇒feature i is represented
+(4)
+3.5
+Measuring Interference
+Let G = WW⊤∈Rn×n be the Gram matrix of W. The interference matrix is obtained by
+zeroing the diagonal, retaining only pairwise cross-feature terms:
+I = G −diag(G)
+(5)
+The per-feature total interference is obtained by summing I along each row:
+ιi =
+n
+∑
+j=1
+Iij
+(6)
+Given the binary mask induced by Eq. (4), the mean total interference of kept and dropped
+features is then computed separately as:
+¯ιkept =
+1
+|K| ∑
+i:mi=1
+ιi,
+¯ιdropped =
+1
+|D| ∑
+i:mi=0
+ιi
+(7)
+3.6
+Adversarial Training Protocol
+Following Gorton & Lewis (2025) and the adversarial training framework of Madry et al.
+(2019), models are trained over a sweep of sparsity levels on a mixture of clean and adver-
+sarial examples:
+Ladv = α · L(x) + (1 −α) · L(xadv)
+(8)
+We set α = 0.5 to balance clean and robust accuracy and prevent collapse in either regime.
+Attacks are generated via Eq. (1) with ε = 0.1
+B ∑x∈B ∥x∥2, where B denotes the training batch
+of size B. Models are trained for 150,000 steps at a learning rate of 10−3.
+3.7
+Sparsity Sweep
+To cleanly isolate our theory empirically, we exclude both extremes of the sparsity range.
+At S ≤0.7, models drop most features regardless of training regime, as sparsity is too low
+to motivate superposition and interference is easily avoided. At S ≥0.98, both models
+represent all features at negligible interference cost. We focus on the ℓ2 threat model, a stan-
+dard adversarial threat model studied extensively in prior work (Carlini & Wagner, 2017).
+We therefore sweep over S = {0.78, 0.80, 0.88, 0.90}, the range in which the adversarially
+trained model consistently drops more features than the standard model — an effect we
+attribute to the presence of distinct feature classes, rather than to the routine optimization of
+feature benefit against interference cost.
+4
+Representational Power and Feature Dropping
+We train two models over S — one under the adversarial training protocol (Eq. (8)) and one
+under standard training — with x ∼U([0, 1]m).
+3
+
+
+===== PDF PAGE 4 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+4.1
+Replication
+We first reproduce the core finding of Gorton & Lewis (2025) within our experimental range
+before proceeding to explain it. Measuring Φ (Eq. (2)) under both training regimes across S,
+we observe that adversarially trained models consistently exhibit lower superposition than
+their standardly trained counterparts, with the gap widening as sparsity increases.
+4.2
+Representational Power and Feature Dropping
+We measure representational power (Eq. (3)) across S for each training regime, and, to
+investigate why the adversarially trained model exhibits lower representational power, we
+compute ∥W:,i∥2 for all i. Applying Eq. (4), we find that adversarially trained models drop
+more features than standardly trained models across all S ∈S.
+(a) Superposition Φ (Eq. (2)) across S for both
+training regimes. Adversarial training consis-
+tently reduces superposition, reproducing the
+finding of Gorton & Lewis (2025) within our spar-
+sity range.
+(b) Representational power P (Eq. (3)) across
+S for both training regimes. The adversarially
+trained model consistently exhibits lower rep-
+resentational power, with the gap widening as
+sparsity increases.
+Figure 1: Superposition and representational power fall together as adversarial training
+discards features.
+4.3
+Feature Dropping and Interference
+We examine the dropped features through the lens of interference. Normalizing W and
+computing the interference matrix (Eq. (5)), we calculate each column’s total interference
+with the rest, then average across retained and dropped groups separately. We find that
+dropped features either exhibit higher interference than retained ones, or — when both
+groups are negative — the adversarial model preferentially retains those closest to −1.
+4
+
+
+===== PDF PAGE 5 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+(a) Number of features dropped at each S ∈S
+under adversarial and standard training. The
+adversarially trained model drops more features
+at every sparsity level.
+(b) Mean interference of kept versus dropped
+features across S for the adversarially trained
+model. Dropped features consistently exhibit
+higher or less-negative mean interference than
+retained features.
+Figure 2: Adversarial training drops more features than standard training, and the dropped
+features are the ones with the most costly interference geometry.
+These results establish that adversarially trained models reduce superposition by dropping
+more features than their standardly trained counterparts, and that the dropped features are
+those the model identifies as geometrically costly. The preference for retaining features with
+interference nearest to −1 is particularly telling: a value of −1 corresponds to antipodal
+feature directions, the configuration that maximally suppresses cross-feature activation.
+This aligns with Elhage et al. (2022), who observe that models preferentially pack features
+into opposing directions to minimize spurious reconstruction. A key question remains: do
+the dropped features correspond to the robust or non-robust classes of Ilyas et al. (2019) and
+Li & Li (2025)?
+5
+Robust and Non-Robust Feature Recovery
+5.1
+Structured Data Construction
+To answer this question, Section 4 must be reproduced under a data distribution where the
+ground-truth identity of robust and non-robust features is known a priori. We therefore
+construct a synthetic dataset that operationalizes the feature taxonomy of Ilyas et al. (2019)
+and Li & Li (2025) under the constraints of our toy model setting.
+Robust features are broadly characterized as high-signal directions that encode stable, gener-
+alizable patterns, whereas non-robust features are low-amplitude, high-frequency directions
+that are predictive under clean inputs but easily disrupted by adversarial perturbations.
+More precisely, Ilyas et al. (2019) show that models depend substantially on non-robust
+features for classification, yet those features cease to correlate with the correct label after an
+attack. Li & Li (2025) further characterize this taxonomy by establishing that robust features
+carry greater signal amplitude than non-robust ones, while non-robust features are denser
+across the feature space.
+We note, however, that our setting differs substantially from the classification context
+in which this taxonomy was originally defined. Our experiments are conducted on toy
+models optimizing a reconstruction loss (MSE), which bears structural similarities to linear
+regression but falls well short of the complexity of classification over real-world data with
+semantic labels. The instantiation of robust and non-robust features below is therefore
+necessarily an approximation made under these constraints.
+5
+
+
+===== PDF PAGE 6 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+We instantiate this taxonomy as follows. Let x ∼U([0, 1]m) with the sparsity mask of
+Section 2.1 applied. A uniformly random permutation π of {1, . . . , m} partitions the
+feature indices into a robust set R = {π(1), . . . , π(nr)} and a non-robust set N
+=
+{π(nr + 1), . . . , π(m)}, with |R| = nr and |N | = m −nr. Each partition is then amplitude-
+scaled according to:
+x:,i ←
+ar · x:,i
+i ∈R
+anr · x:,i
+i ∈N
+(9)
+with ar = 6.0 and anr = 0.2. Robust features thus carry high amplitude — strong, stable
+signal — while non-robust features carry low amplitude, making them more susceptible
+to erasure under ℓ2 perturbations. The partition (R, N ) is retained at generation time and
+serves as the ground truth against which the model’s dropped feature indices are evaluated.
+The full data generation procedure is given in Appendix A.
+To remain consistent with the definition of Li & Li (2025), we set |N | > |R|, making
+non-robust features denser than robust ones. We note that models can be sensitive to the
+amplitude ratio between robust and non-robust features; the specific values (ar = 6.0,
+anr = 0.2) were chosen to reflect the signal-to-noise distinction while maintaining numerical
+stability during training.
+5.2
+Results
+Training on data generated via Eq. (9), we obtain the same findings as in Section 4. The
+structured data, however, yields a substantially cleaner pattern: the adversarially trained
+model drops exactly |N | = 70 features at every S ∈S, regardless of sparsity level. Notably,
+at S ∈{0.88, 0.90}, the standardly trained model drops no features at all — yet the adver-
+sarially trained model still drops exactly |N | — indicating that, despite the model having
+enough sparsity to represent all features, adversarial training remains highly sensitive to
+non-robust features. This sensitivity being sparsity-invariant suggests that those features
+directly interfere with the model’s ultimate goal:
+min
+θ
+Ex∼D[L(xadv; θ)]
+Figure 3: Left: Features dropped at each S ∈S under structured data. The adversarially
+trained model drops exactly |N | = 70 at every sparsity level. Right: Mean interference of
+kept versus dropped features across S for the adversarially trained model under structured
+data. Dropped features carry positive net interference; kept features carry negative net
+interference.
+In order to determine whether the dropped features are primarily the non-robust ones, we
+map the ground truth indices of non-robust features retrieved at data creation time and
+compare them to the indices of the dropped features retrieved at the end of training. We find
+6
+
+
+===== PDF PAGE 7 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+that they correspond exactly to N at every S ∈S, confirming that the adversarial model
+explicitly targets the non-robust feature set.
+Figure 4: Ground truth partition (R, N ) versus model-dropped indices across S. For each
+sparsity level, the top row shows the ground truth and the bottom row shows the adversarial
+model output. Identical patterns confirm that the adversarial model precisely targets N at
+every sparsity level.
+5.3
+Theoretical Intuition
+Our empirical findings raise a natural question: why do adversarially trained models
+systematically drop non-robust features? We offer a theoretical explanation grounded in
+the properties of non-robust features under adversarial attack. The argument is conceptual
+rather than a formal derivation, but it provides intuition for the observed behavior.
+Let D = {(x, y)} with y = x, parameters θ, loss L, and adversarial examples xadv generated
+via an ℓ2-bounded attack. We conceptualize adversarial training’s primary objective as:
+min
+θ
+E(x,y)∼D[L(xadv, y; θ)]
+(10)
+Building on Ilyas et al. (2019), we define a feature i as non-robust if it is highly sensitive to
+adversarial perturbations such that xadv,i̸ ≈xi, breaking the correspondence with its target
+yi = xi. Denote the set of non-robust features N ⊂[m].
+We hypothesize that features in N interfere with the adversarial training objective via two
+complementary mechanisms:
+Direct loss inflation.
+Since L = ∥y −ˆx∥2
+2 = ∑i(yi −ˆxi)2 and y is fixed under attack, each
+flipped feature i ∈N contributes a non-zero penalty term to the loss. Even a single flipped
+feature increases L, and the effect compounds: inputs with more non-robust features incur
+proportionally higher loss. Let k denote the number of non-robust features flipped per
+7
+
+
+===== PDF PAGE 8 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+adversarial example. This gives:
+Ladv(xadv, k=0) < Ladv(xadv, k=1) < · · · < Ladv(xadv, k=|N |)
+(11)
+Dropping all features in N eliminates these penalty contributions entirely and gives
+P(Nflipped | xadv) = 0, thus enabling the model to minimize Eq. (8) freely.
+Costly interference.
+Non-robust features exhibit costly feature geometry, as evidenced
+by their mean total interference lying in the range [0, 2) compared to retained features
+clustering near −1. This costly geometry induces spurious cross-feature activations that
+corrupt the reconstruction and further inflate L.
+Together, these two mechanisms explain why adversarially trained models prune non-
+robust features: they are the primary obstacle to minimizing the adversarial objective, and
+removing them reduces superposition while improving robustness.
+6
+Discussion
+We have established a clean causal chain explaining why adversarial training reduces super-
+position: adversarially trained models drop more features than standard models, leaving
+fewer features to encode in the same dimensional space, and thus reducing superposition.
+We further demonstrated that the dropped features correspond precisely to non-robust
+features as defined by Ilyas et al. (2019).
+These results answer our core question but raise new ones. First, why do adversarially
+trained models preserve the geometry of remaining features, keeping interference values
+largely intact (Gorton & Lewis, 2025)? Second, why does adversarial training preferentially
+align features in opposite directions, enabling antipodal superposition? Understanding
+these emergent behaviors would deepen our mechanistic account of adversarial robustness.
+Our findings remain constrained by the toy model setting. The natural next step is validating
+our theory on real-world models using mechanistic tools like sparse autoencoders (SAEs),
+moving beyond controlled toy settings.
+Recent work at the intersection of robustness and interpretability suggests a promising
+research direction. We are particularly interested in two questions: First, does superposition
+reduction in real adversarial models translate to meaningfully improved interpretability?
+Second, can we intentionally leverage the robust/non-robust feature trade-off to reduce
+polysemanticity in a controlled manner, without sacrificing critical representations?
+Acknowledgments
+Claude (Anthropic) was used to assist with LATEX formatting and editorial refinements. All
+scientific content, experimental design, results, and writing are the author’s own.
+References
+Nicholas Carlini and David Wagner. Towards evaluating the robustness of neural networks.
+In IEEE Symposium on Security and Privacy (SP), 2017.
+Nelson Elhage, Tristan Hume, Catherine Olsson, Nicholas Schiefer, Tom Henighan, Shauna
+Kravec, Zac Hatfield-Dodds, Robert Lasenby, Dawn Drain, Carol Chen, Roger Grosse,
+Sam McCandlish, Jared Kaplan, Dario Amodei, Martin Wattenberg, and Christopher Olah.
+Toy models of superposition. arXiv preprint arXiv:2209.10652, 2022.
+Ian J. Goodfellow, Jonathon Shlens, and Christian Szegedy. Explaining and harnessing
+adversarial examples. In International Conference on Learning Representations (ICLR), 2015.
+Lawrence Gorton and Oliver Lewis. Adversarial examples are not bugs, they are superposi-
+tion. arXiv preprint arXiv:2508.17456, 2025.
+8
+
+
+===== PDF PAGE 9 =====
+Accepted at the COLM 2026 Workshop on AI Interpretability (AIW)
+Andrew Ilyas, Shibani Santurkar, Dimitris Tsipras, Logan Engstrom, Brandon Tran, and
+Aleksander Madry. Adversarial examples are not bugs, they are features. In Advances in
+Neural Information Processing Systems, volume 32, 2019.
+Binghui Li and Yuanzhi Li. Adversarial training can provably improve robustness: The-
+oretical analysis of feature learning process under structured data.
+arXiv preprint
+arXiv:2410.08503, 2025.
+Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian
+Vladu. Towards deep learning models resistant to adversarial attacks. In International
+Conference on Learning Representations (ICLR), 2019.
+A
+Data Generation Code
+The full procedure used to construct the structured robust/non-robust dataset of Section 5.1
+is given below.
+Listing 1: Structured data generation with ground-truth robust/non-robust partition.
+1
+def create_data(sparsity, num_samples, n_features=100, n_robust=30):
+2
+values = torch.rand(num_samples, n_features)
+3
+mask = values > sparsity
+4
+x = values * mask.float()
+5
+pi = torch.randperm(n_features)
+6
+robust_idx = pi[:n_robust]
+7
+non_robust_idx = pi[n_robust:]
+8
+x[:, robust_idx] *= 6.0
+9
+x[:, non_robust_idx] *= 0.2
+10
+return x, x.clone(), robust_idx, non_robust_idx
+9

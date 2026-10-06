@@ -1,0 +1,38 @@
+{
+  "p": 0.05,
+  "importance": [
+    1.0,
+    0.5
+  ],
+  "stop_reason": "angle_gradient_tolerance",
+  "accepted_updates": 1279,
+  "recorded_iterates": 1280,
+  "initial_loss": 0.020477362204724407,
+  "initial_gradient": -0.024872047244094492,
+  "final_theta": -0.5745808452382377,
+  "final_loss": 0.017742880541346515,
+  "final_gradient": -9.977720302756232e-09,
+  "seconds": 1.827832399867475,
+  "previous_grid_minimum_loss": 0.01774298771458031,
+  "final_minus_previous_grid_minimum": -1.0717323379455523e-07,
+  "ambiguous_or_near_kink_iterations": [],
+  "active_mask_change_iterations": [
+    13
+  ],
+  "finite_difference_checks": [
+    {
+      "point": "start",
+      "theta": -0.7853981633974483,
+      "analytic": -0.024872047244094492,
+      "central_difference": -0.024872047241220052,
+      "absolute_discrepancy": 2.8744402691405213e-12
+    },
+    {
+      "point": "final",
+      "theta": -0.5745808452382377,
+      "analytic": -9.977720302756232e-09,
+      "central_difference": -9.97465998686664e-09,
+      "absolute_discrepancy": 3.060315889591436e-12
+    }
+  ]
+}

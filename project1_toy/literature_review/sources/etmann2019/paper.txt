@@ -1,0 +1,1370 @@
+
+
+===== PDF PAGE 1 =====
+On the Connection Between Adversarial Robustness and Saliency Map
+Interpretability
+Christian Etmann * 1 2 Sebastian Lunz * 3 Peter Maass 1 Carola-Bibiane Sch¨onlieb 3
+Abstract
+Recent studies on the adversarial vulnerability of
+neural networks have shown that models trained
+to be more robust to adversarial attacks exhibit
+more interpretable saliency maps than their non-
+robust counterparts. We aim to quantify this be-
+havior by considering the alignment between in-
+put image and saliency map. We hypothesize that
+as the distance to the decision boundary grows,
+so does the alignment. This connection is strictly
+true in the case of linear models. We conﬁrm
+these theoretical ﬁndings with experiments based
+on models trained with a local Lipschitz regular-
+ization and identify where the non-linear nature
+of neural networks weakens the relation.
+1. Introduction
+Despite impressive results in a variety of classiﬁcation tasks
+(LeCun et al., 2015), even highly accurate neural network
+classiﬁers are plagued by a vulnerability to so-called adver-
+sarial perturbations (Szegedy et al., 2014). These adver-
+sarial perturbations are small, often visually imperceptible
+perturbations to the network’s input, which however result
+in the network’s classiﬁcation decision being changed. Such
+vulnerabilities may pose a threat to real-world deployments
+of automated recognition systems, especially in security-
+critical applications such as autonomous driving or banking.
+This has sparked a large number of publications related to
+both the creation of adversarial attacks (Goodfellow et al.,
+2014; Kurakin et al., 2016; Moosavi-Dezfooli et al., 2016)
+as well as defenses against these (see (Schott et al., 2018) for
+an overview). Apart from the application-focused viewpoint,
+the observed adversarial vulnerability offers non-obvious
+*Equal contribution
+1Center for Industrial Mathematics,
+University of Bremen, Bremen, Germany
+2Work done at
+DAMTP, Cambridge.
+3DAMTP, University of Cambridge,
+Cambridge, United Kingdom.
+Correspondence to:
+Chris-
+tian Etmann <cetmann@math.uni-bremen.de>, Sebastian Lunz
+<lunz@math.cam.ac.uk>.
+Accepted at the 36 th International Conference on Machine Learn-
+ing, 2019.
+Code available at github.com/cetmann/robustness-
+interpretability
+Figure 1. An image of a dog (left), the saliency maps of a highly
+non-adversarially-robust neural network (middle) and of a more
+robust network (right). We observe that the robust network gives a
+much clearer indication of what the classiﬁer deems to be discrim-
+inative features. Details about saliency and the robustiﬁcation are
+given in section 4. Most ﬁgures are best viewed on a screen.
+insights into the inner workings of neural networks. One
+particular method of defense is adversarial training (Madry
+et al., 2018), which aims to minimize a modiﬁed training
+objective. While this method – like all known approaches
+of defense – decreases the accuracy of the classiﬁer, it is
+also successful in increasing the robustness to adversarial
+attacks, i.e. the perturbations need to be larger on average
+in order to change the classiﬁcation decision.
+(Tsipras et al., 2019) also notice that networks that are ro-
+bustiﬁed in this way show interesting phenomena, which so
+far could not be explained. Neural networks usually exhibit
+very unstructured saliency maps (gradients of a classiﬁer
+score with respect to the network’s input (Simonyan et al.,
+2013)) which barely relate to the input image. On the other
+hand, saliency maps of robustiﬁed classiﬁers tend to be far
+more interpretable, in that structures in the input image also
+emerge in the corresponding saliency map, as exempliﬁed
+in Figure 1. (Tsipras et al., 2019) describe this as an ’unex-
+pected beneﬁt’ of adversarial robustness. In order to obtain a
+semantically meaningful visualization of the network’s clas-
+siﬁcation decision in non-robustiﬁed networks, the saliency
+map has to be aggregated over many different points in the
+vicinity of the input image. This can be achieved either
+via averaging saliency maps of noisy versions of the image
+(Smilkov et al., 2017) or by integrating along a path (Sun-
+dararajan et al., 2017). Other approaches typically employ
+modiﬁed backpropagation schemes in order to highlight the
+discriminative portions of the image. Examples of this in-
+clude guided backpropagation (Springenberg et al., 2015)
+arXiv:1905.04172v1  [stat.ML]  10 May 2019
+
+
+===== PDF PAGE 2 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+and deep Taylor decomposition (Montavon et al., 2017).
+In this paper, we show that the interpretability of the saliency
+maps of a robustiﬁed neural network is not only a side-effect
+of adversarial training, but a general property enjoyed by
+networks with a high degree of robustness to adversarial
+perturbations. We ﬁrst demonstrate this principle for the
+case of a linear, binary classiﬁer and show that the ’inter-
+pretability’ is due to the image vector and the respective
+image gradient aligning. For the more general, non-linear
+case we empirically show that while this relationship is true
+on average, the linear theory and the non-linear reality do
+not always agree. We empirically demonstrate that the more
+linear the model is, the stronger the connection between
+robustness and alignment becomes.
+2. Adversarial Robustness and Saliency Maps
+Since adversarial perturbations are small perturbations that
+change the predicted class of a neural network, it makes
+sense to deﬁne the robustness towards adversarial perturba-
+tions via the distance of the unperturbed image to its nearest
+perturbed image, such that the classiﬁcation is changed.
+Deﬁnition 1. Let F : X →C (with C ﬁnite) be a classiﬁer
+over the normed vector space (X, ∥· ∥). We call
+ρ(x) = inf
+e∈X{∥e∥: F(x + e)̸ = F(x)}
+(1)
+the (adversarial) robustness of F in the point x. We call
+Ex∼D [ρ(x)] the (adversarial) robustness of F over the dis-
+tribution D.
+Put differently, the robustness of a classiﬁer in a point is
+nothing but the distance to its closest decision boundary.
+Margin classiﬁers like support vector machines (Cortes &
+Vapnik, 1995) seek to keep this distance large for the training
+set, usually in order to avoid overﬁtting. (Sokoli´c et al.,
+2017) and (Elsayed et al., 2018) also apply this principle
+to neural networks via regularization schemes. We point
+out that our deﬁnition of adversarial robustness does not
+depend on the ground truth class label and – given feasible
+computability – can approximately be calculated even on
+unlabelled data.
+In the following, we will always assume X to be a real,
+ﬁnite-dimensional vector space with the Euclidean norm.
+The proofs for the following theoretical statements are found
+in the appendix.
+2.1. A Motivating Toy Example
+We consider the toy case of a linear binary classiﬁer
+F(x) = sgn(Ψz(x)) with the so-called score function
+Ψz(x) = ⟨x, z⟩and ﬁxed z̸ = 0, where ⟨·, ·⟩denotes the
+standard inner product on Rm. A straightforward calcula-
+tion (see appendix) shows that the adversarial robustness of
+F is given by
+ρ(x) = |⟨x, z⟩|
+∥z∥
+= |⟨x, ∇Ψz(x)⟩|
+∥∇Ψz(x)∥.
+(2)
+Unless stated otherwise, we will always denote with ∇the
+gradient with respect to x. Note that ρ(x) = ∥x∥· | cos(δ)|,
+where δ is the angle between the vectors x and ∇Ψz(x).
+This implies that ρ(x) grows with the alignment of x and z
+and is maximized if and only if x and z are collinear.
+This motivates the following deﬁnition.
+Deﬁnition 2 (Alignment). Let the binary classiﬁer
+F : X →{−1, 1}
+be deﬁned a.e. by F(x) = sgn(Ψ(x)), where Ψ : X →R
+is differentiable in x. We then call ∇Ψ the saliency map of
+F with respect to Ψ in x and
+α(x) := |⟨x, ∇Ψ(x)⟩|
+∥∇Ψ(x)∥,
+(3)
+the alignment with respect to Ψ in x.
+The alignment is a measure of how similar the input image
+x and the saliency map ∇Ψ(x) are. If ∥x∥= 1, and x and
+∇Ψ(x) are zero-centered, this coincides with the absolute
+value of their Pearson correlation. For a linear binary classi-
+ﬁer, the alignment trivially increases with the robustness of
+the classiﬁer.
+Generalizing from the linear to the afﬁne case leads to a clas-
+siﬁer of the form F(x) = sgn(⟨x, z⟩+b), whose robustness
+in x is
+ρ(x) = |⟨x, z⟩+ b|
+∥z∥
+.
+In this case the robustness and alignment do not coincide
+anymore. In order to connect these two diverging concepts,
+we offer two alternative viewpoints. On the one hand, we
+can trivially bound the robustness via the triangle inequality
+ρ(x) ≤α(x) + |b|
+∥z∥.
+(4)
+This is particularly meaningful if |b|/∥z∥is small in compar-
+ison to α(x). Alternatively, one can connect the robustness
+to the alignment at a different point ξ = x+
+b
+∥z∥
+z
+∥z∥, leading
+to the relation
+ρ(x) = α(ξ).
+(5)
+In the afﬁne case this approach simply amounts to a shift of
+the data that is uniform over all data points x. We will see
+how these two viewpoints lead to different bounds in the
+non-linear case later.
+
+
+===== PDF PAGE 3 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+2.2. The General Case
+We now consider the general, n-class case.
+Deﬁnition 3 (Alignment, Multi-Class Case). Let
+Ψ = (Ψ1, . . . , Ψn) : X →Rn
+be differentiable in x. Then for an n-class classiﬁer deﬁned
+a.e. by
+F(x) = arg max
+i
+Ψi(x),
+(6)
+we call ∇ΨF (x) the saliency map of F. We further call
+α(x) := |⟨x, ∇ΨF (x)(x)⟩|
+∥∇ΨF (x)(x)∥,
+(7)
+the alignment with respect to Ψ in x.
+2.2.1. LINEARIZED ROBUSTNESS
+In general the distance to the decision boundary ρ(x) can
+be unfeasible to compute. However, for classiﬁers built on
+locally afﬁne score functions – such as most neural networks
+using ReLU or leaky ReLU activations – ρ(x) can easily be
+computed, provided the locally afﬁne region is sufﬁciently
+large. To quantify this, deﬁne the radius of the locally afﬁne
+component of F around x as
+l(x) = sup{r | ∀i : Ψi afﬁne in Br(x)},
+where Br(x) is the open ball of radius r around x with
+respect to the Euclidean metric.
+Lemma 1. Let F be a classiﬁer with locally afﬁne score
+function Ψ. Assume l(x) ≥ρ(x). Then
+ρ(x) = min
+j̸=i∗
+Ψi∗(x) −Ψj(x)
+∥∇Ψi∗(x) −∇Ψj(x)∥,
+(8)
+for i∗:= F(x) the predicted class at x.
+Similar identities were previously also independently de-
+rived in (Elsayed et al., 2018) and (Jakubovitz & Giryes,
+2018).
+Note that while nearly all state-of-the art classiﬁcation net-
+works are piecewise afﬁne, the condition l(x) ≥ρ(x) is
+typically violated in practice. However, the lemma can still
+hold approximately as long as the linear approximation to
+the network’s score functions is sufﬁciently good in the rel-
+evant neighbourhood of x. This motivates the deﬁnition of
+the linearized (adversarial) robustness ˜ρ.
+Deﬁnition 4 (Linearized Robustness). Let Ψ(x) be the dif-
+ferentiable score vector for the classiﬁer F in x. We call
+˜ρ(x) := min
+j̸=i∗
+Ψi∗(x) −Ψj(x)
+∥∇Ψi∗(x) −∇Ψj(x)∥,
+(9)
+the linearized robustness in x, where i∗:= F(x) is the
+predicted class at point x.
+We later show that the two notions lead to very similar
+results, even if the condition l(x) ≥ρ(x) is violated.
+2.2.2. REDUCING THE MULTI-CLASS CASE
+In this section, we introduce a toolset which helps bridge
+the gap between the alignment and the linearized robustness
+of a multi-class classiﬁer. In the following, for ﬁxed x, let
+i∗:= F(x) and j∗be the minimizer in (9). We can assign
+F in x a binarized classiﬁer F †
+x with
+F †
+x(y) := sgn
+ Ψ†
+x(y)
+
+,
+(10)
+where Ψ†
+x(y) := Ψi∗(y)−Ψj∗(y). Its linearized robustness
+in y = x is the same as for F. The binarized saliency map,
+∇Ψ†
+x(x) = ∇yΨ†
+x(y)|y=x and the respective alignment,
+α†(x) = |⟨x, ∇(Ψi∗−Ψj∗)(x)⟩|
+∥∇(Ψi∗−Ψj∗)(x)∥,
+(11)
+which we call binarized alignment, offer an alternative,
+natural perspective of the above considerations. This is
+because for classiﬁers as deﬁned in (6), the actual score
+values do not necessarily carry any information about the
+classiﬁcation decision, whereas the score differences do.
+While, roughly speaking, ∇Ψi∗tells us what F ’thinks’
+makes x a member of its predicted class, ∇Ψ†
+x(x) carries
+information what sets x apart from its closest neighboring
+class (according to linearization).
+In the special case of a linear, multi-class classiﬁer, we have
+ρ(x) = ˜ρ(x) = α†(x)
+and in the linear, binary case Ψ(x) = (⟨x, z⟩, −⟨x, z⟩), even
+α(x) = α†(x).
+3. Decompositions and Bounds for Neural
+Networks
+3.1. Homogeneous Decomposition
+In the previous chapter we have seen that in the case of
+binary classiﬁers, the robustness and binarized alignment
+coincide for linear score functions. However, requiring Ψ to
+be linear is a stronger assumption than necessary to deduce
+the result: It is in fact sufﬁcient for Ψ to be positive one-
+homogeneous. Any such function satisﬁes Ψ(ax) = aΨ(x)
+for all a > 0 and x.
+Lemma 2 (Linearized Robustness of Homogeneous Clas-
+siﬁers).
+Consider a classiﬁer F
+with positive one-
+homogeneous score functions. Then
+˜ρ(x) = α†(x).
+(12)
+
+
+===== PDF PAGE 4 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+In particular, most feedforward neural networks with
+(leaky) ReLU activations without biases are positive one-
+homogeneous. This observation motivates to split up any
+classiﬁer built on neural networks into a homogeneous term
+and the corresponding remainder, leading to the following
+decomposition result.
+Theorem 1 (Homogeneous Decomposition of Neural Net-
+works). Let Ψi
+Θ,b be any logit of a neural network with
+ReLU activations (of class N in the appendix). Denote by
+Θ the linear ﬁlters and by b the bias terms of the network.
+Then
+Ψi
+Θ,b(x) = ⟨x, ∇xΨi
+Θ,b(x)⟩+ ⟨b, ∇bΨi
+Θ,b(x)⟩
+= ⟨x, ∇xΨi
+Θ,b(x)⟩+
+X
+k
+bk∂bkΨi
+Θ,b(x). (13)
+Note that the above vector b includes the running averages
+of the means for batch normalization. For ReLU networks,
+the remainder term βi(x) := ⟨b, ∇bΨi
+Θ,b(x)⟩is locally con-
+stant, because it changes only when x enters another locally
+linear region. For ease of notation, we will now drop the
+subscripts Θ and b.
+3.2. Pointwise Bounds
+In section 2.1, we introduced two different viewpoints for
+afﬁne linear, binary classiﬁers which connect the robustness
+to the alignment. In a similar vein to inequality (4) and
+equality (5), upper bounds to the linearized robustness de-
+pending on the alignment can be given for neural networks.
+In the following, we will write v := v/∥v∥for v̸ = 0.
+Again, in the following we ﬁx x and write i∗= F(x) and
+j∗for the minimizer in j from equation (9).
+Theorem 2. Let g
+:=
+∇Ψi∗(x).
+Furthermore, let
+g† := ∇(Ψi∗−Ψj∗)(x) and β† := βi∗(x)−βj∗(x). Then
+˜ρ(x) ≤α†(x) + |β†|
+∥g†∥
+(14)
+≤α(x) + ∥x∥· ∥g† −g∥+ |β†|
+∥g†∥.
+(15)
+Distances on the unit sphere (such as ∥g† −g∥) can be
+converted to angles through the law of cosines. For the
+above inequalities to be reasonably tight, the angle between
+g and g† needs to be small and |β†|/∥g†∥needs to be small
+in comparison to α†(x). In this case, the alignment should
+roughly increase with the linearized robustness.
+Theorem 3. Let ξ := x +
+β†
+∥g†∥
+g†
+∥g†∥and γ := ∇Ψi∗(ξ),
+with g† and β† deﬁned as in the previous theorem. Then
+˜ρ(x) ≤|⟨ξ, γ⟩|
+∥γ∥
++ ∥ξ∥· ∥g† −γ∥,
+(16)
+and if additionally F(x) = F(ξ), then
+˜ρ(x) ≤α(ξ) + ∥ξ∥· ∥g† −γ∥.
+Depending on the sign of β†, the shifted image ξ can either
+be understood as a gradient ascent or descent iterate for
+maximizing/minimizing Ψi∗−Ψj∗. This theorem assimi-
+lates β†(x) into x, providing an upper bound to ˜ρ(x) that
+depends on α(ξ). The sensibility of this hinges on ξ being
+reasonably close to x and γ having a low angle with g†.
+If the error terms in inequalities (14), (15) and (16) are
+small, these inequalities thus provide a simple illustration
+why more robust networks yield more interpretable saliency
+maps.
+Nevertheless, the right-hand side may be much larger than
+˜ρ(x), if the inner product between an image and its respec-
+tive saliency map are almost orthogonal. This is because the
+Cauchy-Schwarz inequality (see the proofs in the appendix)
+provides a large upper bound in this case. The inequalities
+rather serve as an explanation of how the various terms of
+alignment may deviate from the linearized robustness in the
+case of a neural network.
+3.3. Alignment and Interpretability
+The above considerations demonstrate how an increase in
+robustness may induce an increase in the alignment between
+an input image and its respective saliency map. The ini-
+tial observation – which was previously described as an
+increase in interpretability – may thus be ascribed to this
+phenomenon. This is especially true in the case of nat-
+ural images, as exempliﬁed in Figure 1. There, what a
+human observer would deem an increase in interpretability,
+expresses itself as discriminative portions of the original
+image reappearing in the saliency map, which naturally
+implies a stronger alignment. The concepts of alignment
+and interpretability should however not be conﬂated com-
+pletely: In the case of quasi-binary image data like MNIST,
+0-regions of the image render the inner product in equa-
+tion (7) invariant with respect to the saliency map in this
+region, even if the saliency map e.g. assigns relevance to
+the absence of a feature in this region. Note however that
+the saliency map in this region still inﬂuences the alignment
+term through the division by its norm. Additionally, the
+alignment is also not invariant to the images’ representation
+(color space, shifts, normalization etc.). Still, for most types
+of image data an increase in alignment in discriminative
+regions should coincide with an increase in interpretability.
+4. Experiments
+In order to validate our hypothesis, we trained several mod-
+els of different adversarial robustness on both MNIST (Le-
+Cun et al., 1990) and ImageNet (Deng et al., 2009) using
+double backpropagation (Drucker & Le Cun, 1992). For a
+neural network fθ with a softmax output layer, this amounts
+
+
+===== PDF PAGE 5 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+50
+100
+150
+200
+250
+300
+350
+400
+100
+200
+300
+400
+M [ρ(x)]
+M [α(x)]
+Gradient Attack
+Projected Gradient Descent
+Carlini-Wagner
+Linearized Robustness
+Figure 2. The median alignment increases with the median robust-
+ness of the model on ImageNet. Furthermore, the more elaborate
+attacks consistently ﬁnd smaller adversarial perturbations than the
+simple gradient attack. The linearized robustness estimator pro-
+vides a rather realistic estimation of the algorithmically calculated
+robustness.
+to minimizing the modiﬁed loss
+1
+N
+N
+X
+i=1
+h
+L(fθ(x(i)), y(i)) + λ · ∥∇L(fθ(x(i)), y(i))∥2i
+(17)
+over the parameters θ = (Θ, b). Here, {(x(i), y(i))}i=1,...,N
+is the training set and L denotes the negative log-likelihood
+error function. The hyperparameter λ ≥0 determines the
+strength of the regularization. Note that this penalizes the
+local Lipschitz constant of the loss. As (Simon-Gabriel
+et al., 2018) demonstrate, double backpropagation makes
+neural networks more resilient to adversarial attacks. By
+varying λ, we can easily create models of different adversar-
+ial robustness for the same dataset, whose properties we can
+then compare. (Anil et al., 2018) previously noted that Lip-
+schitz constrained networks exhibit interpretable saliency
+maps (without an explanation), which can be regarded as a
+side-effect of the increase in adversarial robustness.
+For the MNIST experiments, we trained each of our 16 mod-
+els on an NVIDIA 1080Ti GPU with a batch size of 100
+for 200 epochs, covering the regularization hyperparameter
+range from 10 to 180,000, before the models start to degen-
+erate. The used architecture is found in the appendix.
+For the experiments on ImageNet, we ﬁne-tuned the pre-
+trained ResNet50 model from (He et al., 2016) over 35
+epochs on 2 NVIDIA P100 GPUs with a total batch size of
+32. We used stochastic gradient descent with a learning rate
+of 0.0001 and momentum of 0.99. The learning rate was di-
+vided by 10 whenever the error stopped improving. For the
+regularization parameter, we chose λ = 104, 104.5, . . . , 107.
+The experiments were implemented in Tensorﬂow (Abadi
+et al., 2015).
+1.5
+2
+2.5
+3
+2.5
+3
+3.5
+4
+4.5
+M [ρ(x)]
+M [α(x)]
+Gradient Attack
+Projected Gradient Descent
+Carlini-Wagner
+Linearized Robustness
+Figure 3. Similar to Figure 2, the median alignment increases with
+the median robustness of the model on MNIST. Towards the end,
+some saturation effects are visible.
+4.1. Robustness and Alignment
+For checking the relation between the alignment and ro-
+bustness of a neural network, we created 1000 adver-
+sarial examples per model on the respective validation
+set.
+This was realized using the python library Fool-
+box (Rauber et al., 2017), which offers pre-deﬁned ad-
+versarial attacks, three of which we used in this paper:
+The GradientAttack performs a line search for the
+closest adversarial example along the direction of the
+loss gradient.
+L2BasicInterativeAttack imple-
+ments the projected gradient descent attack from (Ku-
+rakin et al., 2016) for the Euclidean metric.
+Similarly,
+CarliniWagnerL2Attack (CW-attack) is the attack
+introduced in (Carlini & Wagner, 2017) suited for ﬁnding
+the closest adversarial example in Euclidean metric. Addi-
+tionally, we calculated the linearized robustness ˜ρ(x), which
+entails calculating n gradients per image for an n-class prob-
+lem.
+In Figures 2 and 3, we investigate how the median align-
+ment depends on the medians of the different conceptions
+of robustness. We opted in favor of the median (M) instead
+of the arithmetic mean due to its increased robustness to
+outliers, which occurred especially when using the gradient
+attack. In the case of ImageNet (Figure 2), an increase in
+median alignment with the median robustness is clearly vis-
+ible for all three estimates of the robustness. On the other
+hand, the alignment for the MNIST data increases with the
+robustness as well, but seems to saturate at some point. We
+will offer an explanation for this phenomenon later.
+We now consider the pointwise connection between ro-
+bustness and alignment. In Figure 4 the two variables are
+highly-correlated for a model trained on MNIST, pointing
+towards the fact that the network behaves very similarly to
+a positive one-homogeneous function. There is however no
+
+
+===== PDF PAGE 6 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+0
+500
+1,000
+1,500
+2,000
+2,500
+0
+500
+1,000
+1,500
+2,000
+2,500
+˜ρ(x)
+α(x)
+0
+1
+2
+3
+4
+5
+0
+2
+4
+6
+˜ρ(x)
+α(x)
+Figure 4. The pointwise relationship between ˜ρ(x) and α(x), ex-
+empliﬁed on a model trained on ImageNet (left) and MNIST (right).
+While the two properties are well-correlated on MNIST (ﬁtting the
+’averaged’ view from Figure 3), there is no visible correlation in
+the case of ImageNet.
+0
+500
+1,000
+1,500
+2,000
+2,500
+0
+500
+1,000
+1,500
+2,000
+2,500
+3,000
+˜ρ(x)
+ρ(x)
+0
+1
+2
+3
+4
+5
+0
+1
+2
+3
+4
+˜ρ(x)
+ρ(x)
+Figure 5. The pointwise relationship between ˜ρ(x) and ρ(x), each
+calculated for 1000 validation points on a model trained on Im-
+ageNet (left) and MNIST (right). ρ(x) was approximately cal-
+culated using the CW-attack. In both cases, the correlation is
+high.
+visible correlation between them on the ImageNet model,
+which is a consistent behavior throughout the whole ex-
+periment cohort. We will later analyse the source of this
+behavior. The increase in median alignment for ImageNet,
+M [α(x)] = M [|⟨x, g⟩|], can still be explained by a statis-
+tical argument: If M [⟨x, g⟩] = 0, as approximately true in
+our ImageNet model, then M [α(x)] is the median absolute
+deviation of ⟨x, g⟩. In other words, the graph for ImageNet
+in Figure 4 depicts the dispersion of ⟨x, g⟩. The above ob-
+servations also hold well for the binarized alignment.
+In Figure 5 a tight correlation between ˜ρ(x) and ρ(x) be-
+comes evident. Here, the latter has been calculated using
+the CW-attack. The linearized robustness model ˜ρ is hence
+an adequate approximation of the actual robustness ρ, even
+for the highly non-linear neural network models used on
+ImageNet. Finally note that all used attacks lead to the same
+general behavior of all quantities investigated (see Figures
+2 and 3).
+4.2. Explaining the Observations
+In the last section, we observed some commonalities be-
+tween the experiments on ImageNet and MNIST, but also
+some very different behaviors. In particular, two aspects
+stand out: Why does the median alignment steadily increase
+for the observed ImageNet experiments, whereas on MNIST
+this stagnates at some point (Figures 2 and 3)? Furthermore,
+why are ˜ρ(x) and α(x) so highly-correlated on MNIST but
+almost uncorrelated on ImageNet (Figure 4)? We turn to
+Theorems 2 and 3 for answers.
+Theorem 2 states that
+˜ρ(x) ≤α†(x) + |β†|
+∥g†∥,
+(18)
+where β† is the locally constant term and g† is the saliency
+map of the binarized classiﬁer and v = v/∥v∥for v̸ = 0.
+In Figure 6, we check how strongly the right-hand side of
+inequality (18) is dominated by α†(x), i.e. how large the
+inﬂuence of the locally linear term is in comparison to the
+locally constant term. For ImageNet, this ratio increases
+from below 0.55 to almost 0.85, pointing towards a model
+increasingly governed by its linearized part. On MNIST, this
+ratio strongly decreases over the robustness’s range. Note
+however that in the weakly regularized MNIST models,
+the right hand side is extremely dominated by the median
+alignment in the ﬁrst place.
+A similar analysis can be performed for the second inequal-
+ity from Theorem 2,
+˜ρ(x) ≤α(x) + ∥x∥· ∥g† −g∥+ |β†|
+∥g†∥,
+(19)
+which additionally makes a step from binarized alignment
+to (conventional) alignment.
+This leads to an additional error term, making the bound
+signiﬁcantly less tight than in the previous case. In particu-
+lar, the proportion of the alignment α on the right-hand side
+diminishes, conﬁrming our prediction from section 3.2. Nev-
+ertheless, the qualitative behaviors is similar to the previous
+case, with the α(x) taking up an increasing fraction of the
+right-hand with increasing robustness. For MNIST data, the
+ratio varies little compared to the ratio from the last inequal-
+ity. This indicates that the remainder term ∥g† −g∥does
+not change too strongly over the set of MNIST experiments
+compared to α(x). We thus deduce that the qualitative rela-
+tionship between robustness and alignment is fully governed
+by the error term introduced in (18), i.e. the locally constant
+term of the logit.
+We now do the same for the inequality in Theorem 3, which
+states that
+˜ρ(x) ≤|⟨ξ, γ⟩|
+∥γ∥
++ ∥ξ∥· ∥g† −γ∥
+(20)
+for ξ = x +
+b†
+∥g†∥
+g†
+∥g†∥and γ = ∇ΨF (x)(ξ), which gets rid
+of the additive term |β†|/∥g†∥from (18). Again, in the case
+of ImageNet |⟨ξ, γ⟩| grows more quickly in comparison to
+∥g† −γ∥, the distance of the normalized gradients, whereas
+
+
+===== PDF PAGE 7 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+50
+100
+150
+200
+250
+300
+0.55
+0.6
+0.65
+0.7
+0.75
+0.8
+0.85
+M [˜ρ(x)]
+M
+h
+α†(x)
+|β†|/∥g†∥
+i
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+2.4
+2.6
+2.8
+3
+0
+20
+40
+60
+80
+100
+M [˜ρ(x)]
+M
+h
+α†(x)
+|β†|/∥g†∥
+i
+Figure 6. Comparing the size of the summands of inequality (18)
+for the various experiments. In the case of ImageNet (left), α†(x)
+takes up an increasing fraction of the right-hand side of the inequal-
+ity. For MNIST (right), this portion tends to strongly decrease with
+the robustness. Note however that in this case, α†(x) starts out
+vastly dominating the right-hand side.
+50
+100
+150
+200
+250
+300
+0.2
+0.4
+0.6
+0.8
+1
+1.2
+1.4
+·10−2
+M [˜ρ(x)]
+M
+h
+α(x)
+|β†|/∥g†∥+∥x∥·∥g†−g∥
+i
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+2.4
+2.6
+2.8
+3
+0.45
+0.5
+0.55
+0.6
+M [˜ρ(x)]
+M
+h
+α(x)
+|β†|/∥g†∥+∥x∥·∥g†−g∥
+i
+Figure 7. Comparing the size of the summands of inequality (19)
+for the various experiments. For the ImageNet experiments (left),
+the portion of α(x) of the right-hand side of the inequality in-
+creases roughly 7-fold. For MNIST (right), this portion stays
+roughly constant compared to the variation from Figure 6.
+50
+100
+150
+200
+250
+300
+2
+2.2
+2.4
+2.6
+2.8
+3
+3.2
+·10−5
+M [˜ρ(x)]
+M
+h
+|⟨ξ,γ⟩|
+∥γ∥·∥ξ∥·∥g†−γ∥
+i
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+2.4
+2.6
+2.8
+3
+0.24
+0.26
+0.28
+0.3
+M [˜ρ(x)]
+M
+h
+|⟨ξ,γ⟩|
+∥γ∥·∥ξ∥·∥g†−γ∥
+i
+Figure 8. Comparing the size of the summands of inequality (20)
+for the various experiments. In the case of ImageNet (left), the
+alignment in ξ takes up an increasingly large portion of the right-
+hand side of the inequality. For MNIST (right), this portion stays
+roughly constant.
+their ratio is approximately constant for MNIST data.
+To conclude, we have seen that the upper bounds from The-
+orems 2 and 3 provide valuable information in which ways
+both the experiments on ImageNet and MNIST are inﬂu-
+enced by the respective terms. In the case of ImageNet, we
+consistently see the alignment terms growing more quickly
+than the other terms. This might indicate that the growth
+in alignment stems not only from the growth in the robust-
+ness alone, but also from the model becoming increasingly
+similar to our idealized toy example. In other words, not
+only does the robustness make the alignment grow, but the
+connection between these two properties becomes stronger
+in the case of ImageNet. This is in agreement with the seem-
+ingly superlinear growth of the median alignment in Figure
+2.
+It is not surprising that a classiﬁer for a problem as complex
+as ImageNet is highly non-linear, which makes the (point-
+wise) connection between alignment and robustness rather
+loose. We hence conjecture that the imposed regularization
+increasingly restricts the models to be more linear, thereby
+making them more similar to our initial toy example.
+For MNIST, the regularization seems to have the opposite
+effect: As seen in Figure 6, the binarized alignment ini-
+tially dwarfs the correction term |β†|/∥g†∥introduced by
+the locally constant portion of the binarized logit Ψ†
+x(x).
+As the network becomes more robust, Ψ†
+x(x) is apparently
+not dominated by the linear terms anymore, while the inﬂu-
+ence of the locally constant terms (i.e. β†) increases. This
+hypothesis seems sensible, considering MNIST is a very
+simple problem which we tackled with a comparatively shal-
+low network. This can be expected to yield a model with a
+low degree of non-linearity. The penalization of the local
+Lipschitz constant here seems to have the effect of requiring
+larger locally constant terms |β†|, in contrast to the models
+trained on ImageNet.
+We check the validity of these claims by tracking the median
+size of |⟨x, g†⟩| against the median size of |Ψ†
+x(x)| in Figure
+9. On MNIST, M
+
+|⟨x, g†⟩|
+
+starts out at approximately
+40% of M
+
+|Ψ†
+x(x)|
+
+and at the end rises to almost 100%.
+Note that this does not indicate that βi is typically close to
+0 for all i, just that β† is, compared to ⟨x, g†⟩.
+On MNIST, this ratio is close to 1 up until M [˜ρ(x)] ≈2.4,
+when it suddenly and quickly falls below 0.5. This drop
+is consistent with what we see in Figure 3: At around the
+same point this drop occurs, the alignment starts to saturate.
+While an increase in the model’s median robustness should
+imply an increase in the model’s median alignment, the
+deviation from linearity weakens the connection between
+robustness and alignment, such that the two effects roughly
+cancel out.
+In Figure 10, we provide examples for the different gradient
+
+
+===== PDF PAGE 8 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+50
+100
+150
+200
+250
+300
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+M [˜ρ(x)]
+M[|⟨x,g†⟩|]
+M[|Ψ†(x)|]
+1.2
+1.4
+1.6
+1.8
+2
+2.2
+2.4
+2.6
+2.8
+3
+0.5
+0.6
+0.7
+0.8
+0.9
+1
+M [˜ρ(x)]
+M[|⟨x,g†⟩|]
+M[|Ψ†(x)|]
+Figure 9. On the ImageNet experiments, the linear term |⟨x, g†⟩|
+takes up an increasing portion of the binarized score Ψ†(x). In
+the case of MNIST, Ψ†(x) is completely dominated by the linear
+term, before its inﬂuence decreases sharply at M [˜ρ(x)] ≈2.4.
+concepts we introduced in Theorems 2 and 3, both for the
+most robust and non-robust network from our experiment
+cohort.
+5. Conclusion and Outlook
+In this paper, we investigated the connection between a
+neural network’s robustness to adversarial attacks and the
+interpretability of the resulting saliency maps. Motivated
+by the binary, linear case, we deﬁned the alignment α as a
+measure of how much a saliency map matches its respective
+image. We hypothesized that the perceived increase in
+interpretability is due to a higher alignment and tested this
+hypothesis on models trained on MNIST and ImageNet.
+While on average, the proposed relation holds well, the
+connection is much less pronounced for individual points,
+especially on ImageNet. Using some upper bounds for the
+robustness of a neural network, which we derived using
+a decomposition theorem, we arrived at the conclusion
+that the strength of this connection is strongly linked with
+how similar to a linear model the neural network is locally.
+As ImageNet is a comparatively complex problem, any
+sufﬁciently accurate model is bound to be very non-linear,
+which explains the difference to MNIST.
+While this paper shows the general link between robustness
+and alignment, there are still some open questions. Since
+we only used one speciﬁc robustiﬁcation method, further
+experiments should determine the inﬂuence of this method.
+One could explore, whether a different choice of norm
+leads to different observations. Another future direction of
+research could be to investigate the degree of (non-)linearity
+and its connection to this topic. While Theorems 2 and
+3 illustrate how the pointwise linearized robustness and
+alignment may diverge, depending on terms like g, g†, γ
+and β†, a more in-depth look should focus on why and when
+these terms have a certain relationship to each other.
+From a methodological standpoint, the discovered connec-
+tion may also serve as an inspiration for new adversarial
+defenses, where not only the robustness but also the align-
+ment is taken into account. One way of increasing the
+alignment directly would be through the penalty term
+λ
+ ∥x∥2∥∇Ψi(x)∥2 −⟨x, ∇Ψi(x)⟩2
+,
+which is bounded from below by 0 via the Cauchy-Schwarz
+inequality. Any robustifying effects of the increased align-
+ment may however be confounded with the Lipschitz-
+penalty that the ﬁrst summand effectively introduces, which
+necessitates a careful experimental evaluation.
+∇Ψi∗(x)
+∇Ψi∗(ξ)
+∇Ψj∗(x)
+∇(Ψi∗−Ψj∗)(x)
+Figure 10. Selected examples from the ImageNet validation set
+of the different gradients and their respective alignments with x,
+respectively ξ. The odd rows are generated with the most robust
+ImageNet classiﬁer, whereas the even rows are generated by the
+least robust classiﬁer. The gradient images are individually scaled
+to ﬁt the color range [0, 255].
+
+
+===== PDF PAGE 9 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+Acknowledgements
+CE and PM acknowledge funding by the Deutsche
+Forschungsgemeinschaft
+(DFG)
+-
+Projektnummer
+281474342: ’RTG π3 - Parameter Identiﬁcation - Analysis,
+Algorithms, Applications’. The work by SL was supported
+by the EPSRC grant EP/L016516/1 for the University of
+Cambridge Centre for Doctoral Training, the Cambridge
+Centre for Analysis and by the Cantab Capital Institute
+for the Mathematics of Information. CBS acknowledges
+support from the Leverhulme Trust projects on Breaking
+the non-convexity barrier and on Unveiling the Invisi-
+ble, the Philip Leverhulme Prize, the EPSRC grant Nr.
+EP/M00483X/1, the EPSRC Centre Nr. EP/N014588/1, the
+European Union Horizon 2020 research and innovation
+programmes under the Marie Skodowska-Curie grant
+agreement No 777826 NoMADS and No 691070 CHiPS,
+the Cantab Capital Institute for the Mathematics of
+Information and the Alan Turing Institute. We gratefully
+acknowledge the support of NVIDIA Corporation with the
+donation of a Quadro P6000 and a Titan Xp GPUs used for
+this research.
+References
+Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z.,
+Citro, C., Corrado, G. S., Davis, A., Dean, J., Devin, M.,
+Ghemawat, S., Goodfellow, I., Harp, A., Irving, G., Isard,
+M., Jia, Y., Jozefowicz, R., Kaiser, L., Kudlur, M., Lev-
+enberg, J., Man´e, D., Monga, R., Moore, S., Murray, D.,
+Olah, C., Schuster, M., Shlens, J., Steiner, B., Sutskever,
+I., Talwar, K., Tucker, P., Vanhoucke, V., Vasudevan,
+V., Vi´egas, F., Vinyals, O., Warden, P., Wattenberg, M.,
+Wicke, M., Yu, Y., and Zheng, X. TensorFlow: Large-
+scale machine learning on heterogeneous systems, 2015.
+URL https://www.tensorflow.org/. Software
+available from tensorﬂow.org.
+Anil, C., Lucas, J., and Grosse, R. Sorting out lipschitz func-
+tion approximation. arXiv preprint arXiv:1811.05381,
+2018.
+Carlini, N. and Wagner, D. A.
+Towards evaluating the
+robustness of neural networks. In 2017 IEEE Symposium
+on Security and Privacy, SP 2017, San Jose, CA, USA,
+May 22-26, 2017, pp. 39–57, 2017.
+Cortes, C. and Vapnik, V. Support-vector networks. Ma-
+chine learning, 20(3):273–297, 1995.
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei,
+L. Imagenet: A large-scale hierarchical image database.
+In Computer Vision and Pattern Recognition, 2009. CVPR
+2009. IEEE Conference on, pp. 248–255. Ieee, 2009.
+Drucker, H. and Le Cun, Y. Improving generalization perfor-
+mance using double backpropagation. IEEE Transactions
+on Neural Networks, 3(6):991–997, 1992.
+Elsayed, G. F., Krishnan, D., Mobahi, H., Regan, K., and
+Bengio, S. Large margin deep networks for classiﬁca-
+tion. 2018. URL https://arxiv.org/pdf/1803.
+05598.pdf.
+Goodfellow, I., Shlens, J., and Szegedy, C. Explaining and
+harnessing adversarial examples. arXiv 1412.6572, 2014.
+He, K., Zhang, X., Ren, S., and Sun, J. Deep residual learn-
+ing for image recognition. In Proceedings of the IEEE
+conference on computer vision and pattern recognition,
+pp. 770–778, 2016.
+Jakubovitz, D. and Giryes, R. Improving dnn robustness
+to adversarial attacks using jacobian regularization. In
+The European Conference on Computer Vision (ECCV),
+September 2018.
+Kurakin, A., Goodfellow, I., and Bengio, S.
+Adversar-
+ial examples in the physical world.
+arXiv preprint
+arXiv:1607.02533, 2016.
+LeCun, Y., Boser, B. E., Denker, J. S., Henderson, D.,
+Howard, R. E., Hubbard, W. E., and Jackel, L. D. Hand-
+written digit recognition with a back-propagation network.
+In Advances in neural information processing systems,
+pp. 396–404, 1990.
+LeCun, Y., Bengio, Y., and Hinton, G. Deep learning. Na-
+ture, 521(7553):436, 2015.
+Madry, A., Makelov, A., Schmidt, L., Tsipras, D., and
+Vladu, A. Towards deep learning models resistant to
+adversarial attacks. 2018.
+Montavon, G., Lapuschkin, S., Binder, A., Samek, W., and
+M¨uller, K.-R. Explaining nonlinear classiﬁcation deci-
+sions with deep taylor decomposition. Pattern Recogni-
+tion, 65:211–222, 2017.
+Moosavi-Dezfooli, S.-M., Fawzi, A., and Frossard, P. Deep-
+fool: a simple and accurate method to fool deep neu-
+ral networks. In Proceedings of the IEEE Conference
+on Computer Vision and Pattern Recognition, pp. 2574–
+2582, 2016.
+Rauber, J., Brendel, W., and Bethge, M. Foolbox v0. 8.0: A
+python toolbox to benchmark the robustness of machine
+learning models. arXiv preprint arXiv:1707.04131, 2017.
+Schott, L., Rauber, J., Brendel, W., and Bethge, M. Ro-
+bust perception through analysis by synthesis. CoRR,
+abs/1805.09190, 2018. URL http://arxiv.org/
+abs/1805.09190.
+
+
+===== PDF PAGE 10 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+Simon-Gabriel, C.-J., Ollivier, Y., Sch¨olkopf, B., Bottou, L.,
+and Lopez-Paz, D. Adversarial vulnerability of neural
+networks increases with input dimension. arXiv preprint
+arXiv:1802.01421, 2018.
+Simonyan, K., Vedaldi, A., and Zisserman, A. Deep in-
+side convolutional networks: Visualising image clas-
+siﬁcation models and saliency maps.
+arXiv preprint
+arXiv:1312.6034, 2013.
+Smilkov, D., Thorat, N., Kim, B., Vi´egas, F., and Watten-
+berg, M. Smoothgrad: Removing noise by adding noise.
+arXiv preprint arXiv:1706.03825, 2017.
+Sokoli´c, J., Giryes, R., Sapiro, G., and Rodrigues, M. R.
+Robust large margin deep neural networks. IEEE Trans-
+actions on Signal Processing, 65(16):4265–4280, 2017.
+Springenberg, J., Dosovitskiy, A., Brox, T., and Ried-
+miller, M.
+Striving for simplicity: The all convolu-
+tional net.
+In ICLR (workshop track), 2015.
+URL
+http://lmb.informatik.uni-freiburg.
+de/Publications/2015/DB15a.
+Sundararajan, M., Taly, A., and Yan, Q. Axiomatic attribu-
+tion for deep networks. arXiv preprint arXiv:1703.01365,
+2017.
+Szegedy, C., Zaremba, W., Sutskever, I., Bruna, J., Erhan,
+D., Goodfellow, I. J., and Fergus, R. Intriguing properties
+of neural networks. 2014.
+Tsipras, D., Santurkar, S., Engstrom, L., Turner, A., and
+Madry, A. Robustness may be at odds with accuracy. In
+International Conference on Learning Representations,
+2019. URL https://openreview.net/forum?
+id=SyxAb30cY7.
+
+
+===== PDF PAGE 11 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+Appendix
+Proof of Equation (3):
+Note that
+F(x + e)̸ = F(x)
+⇔⟨x + e, z⟩⟨x, z⟩< 0
+⇔⟨e, z⟩> |⟨x, z⟩|.
+The left-hand side is clearly maximized for e = ∥e∥z
+∥z∥,
+leading to
+∥e∥∥z∥> |⟨x, z⟩|.
+This proves the claim by taking the inﬁmum over ∥e∥.
+Lemma 1. Let F be a classiﬁer with locally afﬁne score
+function Ψ. Assume l(x) ≥ρ(x). Then
+ρ(x) = min
+j̸=i∗
+Ψi∗(x) −Ψj(x)
+∥∇Ψi∗(x) −∇Ψj(x)∥,
+(8)
+for i∗:= F(x) the predicted class at x.
+Proof. As l(x) ≥ρ(x), we can take the inﬁmum in (1) over
+all perturbations in the local afﬁne component, i.e. e with
+∥e∥≤l(x) only. This allows us to reformulate
+F(x + e)̸ = F(x)
+⇔∃j̸ = i∗: Ψj(x + e) > Ψi∗(x + e)
+⇔∃j̸ = i∗: ⟨∇Ψj(x) −∇Ψi∗(x), e⟩> Ψi∗(x) −Ψj(x).
+The inﬁmum over ∥e∥is achieved by choosing e as a mul-
+tiple of ∇Ψj(x) −∇Ψi∗(x). A direct computation then
+ﬁnishes the proof.
+Proofs of Homogenization results
+Lemma 3 (Euler’s Homogeneous Function Theorem). Let
+f : Rm →R be a positive one-homogeneous function that
+is continuously differentiable on Rm\{0}. Then
+f(x) = ⟨∇f(x), x⟩
+Proof. First note that
+∂if(ax) = lim
+t→0
+f(ax + tei) −f(ax)
+t
+= lim
+t→0
+f(ax + atei) −f(ax)
+at
+= ∂if(x).
+Hence
+f(x) =
+Z 1
+0
+⟨∇f(tx), x⟩dt = ⟨∇f(x), x⟩
+Lemma 2 (Linearized Robustness of Homogeneous Clas-
+siﬁers).
+Consider a classiﬁer F
+with positive one-
+homogeneous score functions. Then
+˜ρ(x) = α†(x).
+(12)
+Proof. Direct consequence of 3.
+Deﬁnition 5 (Neural Networks). Deﬁne the class of neural
+networks N to be any network built on learnable afﬁne
+transforms (convolutional layers, dense layers) with linear
+weights Θ and biases b and ReLU or leaky ReLU activations.
+The network can include arbitrary skip-connections, batch-
+normalization layers and max or average pooling layers
+of arbitrary window size. This in particular includes many
+state-of-the-art classiﬁcation networks.
+Lemma 4 (Homogeneous Networks). For ﬁxed x, consider
+the logit Ψi
+Θ,b(x) of a network ΨΘ,b ∈N, where Θ denotes
+the linear weights and b the bias vector of the network. Then
+the function
+f : y 7→Ψi
+Θ,b ∥y∥
+∥x∥(y),
+f is positive one-homogeneous and f(x) = Ψi
+Θ,b(x).
+Proof. Consider ﬁrst a network consisting of a single
+layer with linear transform A and bias b with ReLU non-
+linearity. The associated network function is hence given by
+ΨA,b(x) = (Ax + b)+. For this network, we compute for x
+ﬁxed and any y and a > 0 as
+f(ay) =
+
+A(ay) + b∥ay∥
+∥x∥
+
++
+=
+
+a · Ay + a · b∥y∥
+∥x∥
+
++
+= af(y).
+A single layer is hence positive one-homogeneous.
+A
+function consisting of compositions of positive one-
+homogeneous functions is positive one-homogeneous itself
+as well, the function f associated to a network consisting
+of afﬁne transforms and ReLU activations is positive one-
+homogeneous. All of the operations skip-connections, batch-
+normalization layers and max or average pooling are posi-
+tive one-homogeneous as well, thus proving the claim.
+Theorem 1 (Homogeneous Decomposition of Neural Net-
+works). Let Ψi
+Θ,b be any logit of a neural network with
+ReLU activations (of class N in the appendix). Denote by
+Θ the linear ﬁlters and by b the bias terms of the network.
+Then
+Ψi
+Θ,b(x) = ⟨x, ∇xΨi
+Θ,b(x)⟩+ ⟨b, ∇bΨi
+Θ,b(x)⟩
+= ⟨x, ∇xΨi
+Θ,b(x)⟩+
+X
+k
+bk∂bkΨi
+Θ,b(x). (13)
+
+
+===== PDF PAGE 12 =====
+On the Connection Between Adversarial Robustness and Saliency Map Interpretability
+Proof. Let f be the functions associated with the network
+Ψi
+Θ,b as in Lemma 4. Then by Lemma 3 we can compute
+the value of f at the point x via
+f(x) = ⟨x, ∇yf(y)|y=x⟩.
+Note that by construction f(x) = Ψi
+Θ,b(x). We compute
+the gradient of f at the point x explicitly as
+∇yf(y)|y=x = ∇xΨi
+Θ,b(x) +
+x
+∥x∥2 ⟨b, ∇bΨi
+Θ,b(x)⟩.
+Combining these results shows
+f(x) = ⟨x, ∇xΨi
+Θ,b(x) +
+x
+∥x∥2 ⟨b, ∇bΨi
+Θ,b(x)⟩⟩
+= ⟨x, ∇xΨi
+Θ,b(x)⟩+ ⟨b, ∇bΨi
+Θ,b(x)⟩.
+Recall the notation i∗= F(x) and j∗for the minimizer in
+j in (9).
+Theorem 2. Let g
+:=
+∇Ψi∗(x).
+Furthermore, let
+g† := ∇(Ψi∗−Ψj∗)(x) and β† := βi∗(x)−βj∗(x). Then
+˜ρ(x) ≤α†(x) + |β†|
+∥g†∥
+(14)
+≤α(x) + ∥x∥· ∥g† −g∥+ |β†|
+∥g†∥.
+(15)
+Proof. We have
+˜ρ(x) =
+Ψi∗(x) −Ψj∗(x)
+∥∇Ψi∗(x) −∇Ψj∗(x)∥
+= ⟨x, ∇Ψi∗(x) −∇Ψj∗(x)⟩+ βi∗(x) −βj∗(x)
+∥∇Ψi∗(x) −∇Ψj∗(x)∥
+=
+⟨x, g†⟩+ β†
+∥g†∥
+ ≤α†(x) + |b†|
+∥g†∥,
+using the decomposition theorem and the triangle inequality.
+Further,
+α†(x) + |b†|
+∥g†∥
+=
+⟨x, g†⟩
+ + |b†|
+∥g†∥
+=
+⟨x, g† −g + g⟩
+ + |b†|
+∥g†∥
+≤|⟨x, g⟩| +
+⟨x, g† −g⟩
+ + |b†|
+∥g†∥
+≤α(x) + ∥x∥· ∥g† −g∥+ |b†|
+∥g†∥,
+using the Cauchy-Schwarz inequality.
+Theorem 3. Let ξ := x +
+β†
+∥g†∥
+g†
+∥g†∥and γ := ∇Ψi∗(ξ),
+with g† and β† deﬁned as in the previous theorem. Then
+˜ρ(x) ≤|⟨ξ, γ⟩|
+∥γ∥
++ ∥ξ∥· ∥g† −γ∥,
+(16)
+and if additionally F(x) = F(ξ), then
+˜ρ(x) ≤α(ξ) + ∥ξ∥· ∥g† −γ∥.
+Proof. We have
+˜ρ(x) =
+⟨x, g†⟩+ β†⟨
+g†
+∥g†∥2 , g†⟩
+∥g†∥
+=
+⟨x +
+β†
+∥g†∥
+g†
+∥g†∥, g†⟩
+∥g†∥
+= ⟨ξ, g†⟩= ⟨ξ, g† −g + g⟩
+≤|⟨ξ, γ⟩| + ∥ξ∥· ∥g† −γ∥,
+using the Cauchy-Schwarz inequality in the same way as in
+the last theorem.
+MNIST Model Architecture
+Here we describe the architecture that was used for the
+MNIST models.
+Conv2D (3 × 3, ’same’), 32 feature maps, ReLU
+Max Pooling (factor 2)
+Conv2D (3 × 3, ’same’), 64 feature maps, ReLU
+Max Pooling (factor 2)
+Conv2D (3 × 3, ’same’), 128 feature maps, ReLU
+Max Pooling (factor 2)
+Dense Layer (128 neurons), ReLU
+Dropout (0.5)
+Softmax

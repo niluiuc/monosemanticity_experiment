@@ -1,0 +1,972 @@
+
+
+===== PDF PAGE 1 =====
+arXiv:math/0503066v2  [math.NA]  7 Dec 2005
+Stable Signal Recovery from
+Incomplete and Inaccurate Measurements
+Emmanuel Candes†, Justin Romberg†, and Terence Tao♯
+† Applied and Computational Mathematics, Caltech, Pasadena, CA 91125
+♯Department of Mathematics, University of California, Los Angeles, CA 90095
+February, 2005; Revised June 2005
+Abstract
+Suppose we wish to recover a vector x0 ∈Rm (e.g. a digital signal or image) from
+incomplete and contaminated observations y = Ax0 + e; A is a n by m matrix with far
+fewer rows than columns (n ≪m) and e is an error term. Is it possible to recover x0
+accurately based on the data y?
+To recover x0, we consider the solution x♯to the ℓ1-regularization problem
+min ∥x∥ℓ1
+subject to
+∥Ax −y∥ℓ2 ≤ǫ,
+where ǫ is the size of the error term e. We show that if A obeys a uniform uncertainty
+principle (with unit-normed columns) and if the vector x0 is suﬃciently sparse, then
+the solution is within the noise level
+∥x♯−x0∥ℓ2 ≤C · ǫ.
+As a ﬁrst example, suppose that A is a Gaussian random matrix, then stable recovery
+occurs for almost all such A’s provided that the number of nonzeros of x0 is of about the
+same order as the number of observations. As a second instance, suppose one observes
+few Fourier samples of x0, then stable recovery occurs for almost any set of n coeﬃcients
+provided that the number of nonzeros is of the order of n/[log m]6.
+In the case where the error term vanishes, the recovery is of course exact, and this
+work actually provides novel insights on the exact recovery phenomenon discussed in
+earlier papers. The methodology also explains why one can also very nearly recover
+approximately sparse signals.
+Keywords. ℓ1-minimization, basis pursuit, restricted orthonormality, sparsity, singular
+values of random matrices.
+Acknowledgments. E. C. is partially supported by a National Science Foundation grant
+DMS 01-40698 (FRG) and by an Alfred P. Sloan Fellowship. J. R. is supported by National
+Science Foundation grants DMS 01-40698 and ITR ACI-0204932. T. T. is supported in part
+by grants from the Packard Foundation.
+1
+
+
+===== PDF PAGE 2 =====
+1
+Introduction
+1.1
+Exact recovery of sparse signals
+Recent papers [2–5,10] have developed a series of powerful results about the exact recovery
+of a ﬁnite signal x0 ∈Rm from a very limited number of observations. As a representative
+result from this literature, consider the problem of recovering an unknown sparse signal
+x0(t) ∈Rm; that is, a signal x0 whose support T0 = {t : x0(t)̸ = 0} is assumed to have
+small cardinality. All we know about x0 are n linear measurements of the form
+yk = ⟨x0, ak⟩
+k = 1, . . . , n
+or
+y = Ax0,
+where the ak ∈Rm are known test signals. Of special interest is the vastly underdetermined
+case, n ≪m, where there are many more unknowns than observations. At ﬁrst glance, this
+may seem impossible. However, it turns out that one can actually recover x0 exactly by
+solving the convex program1
+(P1)
+min ∥x∥ℓ1
+subject to
+Ax = y,
+(1)
+provided that the matrix A ∈Rn×m obeys a uniform uncertainty principle.
+The uniform uncertainty principle, introduced in [5] and reﬁned in [4], essentially states that
+the n × m measurement matrix A obeys a “restricted isometry hypothesis.” To introduce
+this notion, let AT , T ⊂{1, . . . , m} be the n × |T| submatrix obtained by extracting the
+columns of A corresponding to the indices in T. Then [4] deﬁnes the S-restricted isometry
+constant δS of A which is the smallest quantity such that
+(1 −δS) ∥c∥2
+ℓ2 ≤∥AT c∥2
+ℓ2 ≤(1 + δS) ∥c∥2
+ℓ2
+(2)
+for all subsets T with |T| ≤S and coeﬃcient sequences (cj)j∈T . This property essentially
+requires that every set of columns with cardinality less than S approximately behaves like
+an orthonormal system. It was shown (also in [4]) that if S veriﬁes
+δS + δ2S + δ3S < 1,
+(3)
+then solving (P1) recovers any sparse signal x0 with support size obeying |T0| ≤S.
+1.2
+Stable recovery from imperfect measurements
+This paper develops results for the “imperfect” (and far more realistic) scenarios where the
+measurements are noisy and the signal is not exactly sparse. Everyone would agree that
+in most practical situations, we cannot assume that Ax0 is known with arbitrary precision.
+More appropriately, we will assume instead that one is given “noisy” data y = Ax0+e, where
+e is some unknown perturbation bounded by a known amount ∥e∥ℓ2 ≤ǫ. To be broadly
+applicable, our recovery procedure must be stable: small changes in the observations should
+result in small changes in the recovery. This wish, however, may be quite hopeless. How can
+we possibly hope to recover our signal when not only the available information is severely
+incomplete but in addition, the few available observations are also inaccurate?
+1(P1) can even be recast as a linear program [6].
+2
+
+
+===== PDF PAGE 3 =====
+Consider nevertheless (as in [12] for example) the convex program searching, among all
+signals consistent with the data y, for that with minimum ℓ1-norm
+(P2)
+min ∥x∥ℓ1
+subject to
+∥Ax −y∥ℓ2 ≤ǫ.
+(4)
+The ﬁrst result of this paper shows that contrary to the belief expressed above, the solution
+to (P2) recovers an unknown sparse object with an error at most proportional to the noise
+level. Our condition for stable recovery again involves the restricted isometry constants.
+Theorem 1 Let S be such that δ3S + 3δ4S < 2. Then for any signal x0 supported on T0
+with |T0| ≤S and any perturbation e with ∥e∥ℓ2 ≤ǫ, the solution x♯to (P2) obeys
+∥x♯−x0∥ℓ2 ≤CS · ǫ,
+(5)
+where the constant CS may only depend on δ4S. For reasonable values of δ4S, CS is well
+behaved; e.g. CS ≈8.82 for δ4S = 1/5 and CS ≈10.47 for δ4S = 1/4.
+It is interesting to note that for S obeying the condition of the theorem, the reconstruction
+from noiseless data is exact. It is quite possible that for some matrices A, this condition
+tolerates larger values of S than (3).
+We would like to oﬀer two comments. First, the matrix A is rectangular with many more
+columns than rows. As such, most of its singular values are zero. As emphasized earlier,
+the fact that the severely ill-posed matrix inversion keeps the perturbation from “blowing
+up” is rather remarkable and perhaps unexpected.
+Second, no recovery method can perform fundamentally better for arbitrary perturbations
+of size ǫ. To see why this is true, suppose one had available an oracle letting us know, in
+advance, the support T0 of x0. With this additional information, the problem is well-posed
+and one could reconstruct x0 by the method of Least-Squares for example,
+ˆx =
+(
+(A∗
+T0AT0)−1A∗
+T0y
+on T0
+0
+elsewhere.
+In the absence of any other information, one could easily argue that no method would
+exhibit a fundamentally better performance. Now of course, ˆx −x0 = 0 on the complement
+of T0 while on T0
+ˆx −x0 = (A∗
+T0AT0)−1A∗
+T0e,
+and since by hypothesis, the eigenvalues of A∗
+T0AT0 are well-behaved2
+∥ˆx −x0∥ℓ2 ≈∥A∗
+T0e∥ℓ2 ≈ǫ,
+at least for perturbations concentrated in the row space of AT0.
+In short, obtaining a
+reconstruction with an error term whose size is guaranteed to be proportional to the noise
+level is the best one can hope for.
+Remarkably, not only can we recover sparse input vectors but one can also stably recover
+approximately sparse vectors, as we have the following companion theorem.
+2Observe the role played by the singular values of AT0 in the analysis of the oracle error.
+3
+
+
+===== PDF PAGE 4 =====
+Theorem 2 Suppose that x0 is an arbitrary vector in Rm and let x0,S be the truncated
+vector corresponding to the S largest values of x0 (in absolute value). Under the hypothesis
+of Theorem 1, the solution x♯to (P2) obeys
+∥x♯−x0∥ℓ2 ≤C1,S · ǫ + C2,S · ∥x0 −x0,S∥ℓ1
+√
+S
+.
+(6)
+For reasonable values of δ4S the constants in (5) are well behaved; e.g. C1,S ≈12.04 and
+C1,S ≈8.77 for δ4S = 1/5.
+Roughly speaking, the theorem says that minimizing ℓ1 stably recovers the S-largest entries
+of an m-dimensional unknown vector x from n measurements only.
+We now specialize this result to a commonly discussed model in mathematical signal pro-
+cessing, namely, the class of compressible signals. We say that x0 is compressible if its
+entries obey a power law
+|x0|(k) ≤Cr · k−r,
+(7)
+where |x0|(k) is the kth largest value of x0 (|x0|(1) ≥|x0|(2) ≥. . . ≥|x0|(m)), r > 1, and
+Cr is a constant which depends only on r. Such a model is appropriate for the wavelet
+coeﬃcients of a piecewise smooth signal, for example. If x0 obeys (7), then
+∥x0 −x0,S∥ℓ1
+√
+S
+≤C′
+r · S−r+1/2.
+Observe now that in this case
+∥x0 −x0,S∥ℓ2 ≤C′′
+r · S−r+1/2,
+and for generic elements obeying (7), there are no fundamentally better estimates available.
+Hence, we see that with n measurements only, we achieve an approximation error which is
+almost as good as that one would obtain by knowing everything about the signal x0 and
+selecting its S-largest entries.
+As a last remark, we would like to point out that in the noiseless case, Theorem 2 improves
+upon an earlier result from Cand`es and Tao, see also [8]; it is sharper in the sense that 1)
+this is a deterministic statement and there is no probability of failure, 2) it is universal in
+that it holds for all signals, 3) it gives upper estimates with better bounds and constants,
+and 4) it holds for a wider range of values of S.
+1.3
+Examples
+It is of course of interest to know which matrices obey the uniform uncertainty principle
+with good isometry constants. Using tools from random matrix theory, [3,5,10] give several
+examples of matrices such that (3) holds for S on the order of n to within log factors.
+Examples include (proofs and additional discussion can be found in [5]):
+• Random matrices with i.i.d. entries. Suppose the entries of A are i.i.d. Gaussian with
+mean zero and variance 1/n, then [5, 10, 17] show that the condition for Theorem 1
+holds with overwhelming probability when
+S ≤C · n/ log(m/n).
+4
+
+
+===== PDF PAGE 5 =====
+In fact, [4] gives numerical values for the constant C as a function of the ratio n/m.
+The same conclusion applies to binary matrices with independent entries taking values
+±1/√n with equal probability.
+• Fourier ensemble.
+Suppose now that A is obtained by selecting n rows from the
+m × m discrete Fourier transform and renormalizing the columns so that they are
+unit-normed. If the rows are selected at random, the condition for Theorem 1 holds
+with overwhelming probability for S ≤C · n/(log m)6 [5]. (For simplicity, we have
+assumed that A takes on real-valued entries although our theory clearly accommodates
+complex-valued matrices so that our discussion holds for both complex and real-valued
+Fourier transforms.)
+This case is of special interest as reconstructing a digital signal or image from incom-
+plete Fourier data is an important inverse problem with applications in biomedical
+imaging (MRI and tomography), Astrophysics (interferometric imaging), and geo-
+physical exploration.
+• General orthogonal measurement ensembles. Suppose A is obtained by selecting n
+rows from an m by m orthonormal matrix U and renormalizing the columns so that
+they are unit-normed. Then [5] shows that if the rows are selected at random, the
+condition for Theorem 1 holds with overwhelming probability provided
+S ≤C · 1
+µ2 ·
+n
+(log m)6 ,
+(8)
+where µ := √m maxi,j |Ui,j|. Observe that for the Fourier matrix, µ = 1, and thus
+(8) is an extension of the Fourier ensemble.
+This fact is of signiﬁcant practical relevance because in many situations, signals of
+interest may not be sparse in the time domain but rather may be (approximately)
+decomposed as a sparse superposition of waveforms in a ﬁxed orthonormal basis Ψ;
+e.g. in a nice wavelet basis. Suppose that we use as test signals a set of n vectors taken
+from a second orthonormal basis Φ. We then solve (P1) in the coeﬃcient domain
+(P ′
+1)
+min ∥α∥ℓ1
+subject to
+Aα = y,
+where A is obtained by extracting n rows from the orthonormal matrix U = ΦΨ∗. The
+recovery condition then depends on the mutual coherence µ between the measurement
+basis Φ and the sparsity basis Ψ which measures the similarity between Φ and Ψ;
+µ(Φ, Ψ) = √m max |⟨φk, ψj⟩|, φk ∈Φ, ψj ∈Ψ.
+1.4
+Prior work and innovations
+The problem of recovering a sparse vector by minimizing ℓ1 under linear equality constraints
+has recently received much attention, mostly in the context of Basis Pursuit, where the goal
+is to uncover sparse signal decompositions in overcomplete dictionaries. We refer the reader
+to [11,13] and the references therein for a full discussion.
+We would especially like to note two works by Donoho, Elad, and Temlyakov [12], and Tropp
+[18] that also study the recovery of sparse signals from noisy observations by solving (P2)
+(and other closely related optimization programs), and give conditions for stable recovery.
+In [12], the sparsity constraint on the underlying signal x0 depends on the magnitude of
+5
+
+
+===== PDF PAGE 6 =====
+the maximum entry of the Gram matrix M(A) = maxi,j:i̸=j |(A∗A)|i,j.
+Stable recovery
+occurs when the number of nonzeros is at most (M−1 + 1)/4. For instance, when A is a
+Fourier ensemble and n is on the order of m, we will have M at least of the order 1/√n
+(with high probability), meaning that stable recovery is known to occur when the number
+of nonzeros is about at most O(√n). In contrast, the condition for Theorem 1 will hold
+when this number is about n/(log m)6, due to the range of support sizes for which the
+uniform uncertainty principle holds. In [18], a more general condition for stable recovery
+is derived. For the measurement ensembles listed in the previous section, however, the
+sparsity required is still on the order of √n in the situation where n is comparable to m. In
+other words, whereas these results require at least O(√m) observations per unknown, our
+results show that—ignoring log-like factors—only O(1) are, in general, suﬃcient.
+More closely related is the very recent work of Donoho [9] who shows a version of (5) in
+the case where A ∈Rn×m is a Gaussian matrix with n proportional to m, with unspeciﬁed
+constants for both the support size and that appearing in (5). Our main claim is on a
+very diﬀerent level since it is (1) deterministic (it can of course be specialized to random
+matrices), and (2) widely applicable since it extends to any matrix obeying the condition
+δ3S +3δ4S < 2. In addition, the argument underlying Theorem 1 is short and simple, giving
+precise and sharper numerical values. Finally, we would like to point out connections with
+fascinating ongoing work which develops fast randomized algorithms for sparse Fourier
+transforms [14, 19].
+Suppose x0 is a ﬁxed vector with |T0| nonzero terms, for example.
+Then [14] shows that it is possible to randomly sample the frequency domain |T0|poly(log m)
+times (poly(log m) denotes a polynomial term in log m), and reconstruct x0 from these
+frequency data with positive probability. We do not know whether these algorithms are
+stable in the sense described in this paper, and whether they can be modiﬁed to be universal,
+i.e. reconstruct all signals of small support.
+2
+Proofs
+2.1
+Proof of Theorem 1: sparse case
+The proof of the theorem makes use of two geometrical special facts about the solution x♯
+to (P2).
+1. Tube constraint. First, Ax♯is within 2ǫ of the “noise free” observations Ax0 thanks
+to the triangle inequality
+∥Ax♯−Ax0∥ℓ2 ≤∥Ax♯−y∥ℓ2 + ∥Ax0 −y∥ℓ2 ≤2ǫ.
+(9)
+Geometrically, this says that x♯is known to be in a cylinder around the n-dimensional
+plane Ax0.
+2. Cone constraint. Since x0 is feasible, we must have ∥x♯∥ℓ1 ≤∥x0∥ℓ1. Decompose x♯
+as x♯= x0 + h. As observed in [13]
+∥x0∥ℓ1 −∥hT0∥ℓ1 + ∥hT c
+0 ∥ℓ1 ≤∥x0 + h∥ℓ1 ≤∥x0∥ℓ1,
+where T0 is the support of x0, and hT0(t) = h(t) for t ∈T0 and zero elsewhere
+(similarly for hT c
+0 ). Hence, h obeys the cone constraint
+∥hT c
+0 ∥ℓ1 ≤∥hT0∥ℓ1
+(10)
+6
+
+
+===== PDF PAGE 7 =====
+Figure 1: Geometry in R2. Here, the point x0 is a vertex of the ℓ1 ball and the shaded area
+represents the set of points obeying both the tube and the cone constraints. By showing that every
+vector in the cone of descent at x0 is approximately orthogonal to the nullspace of A, we will ensure
+that x♯is not too far from x0.
+which expresses the geometric idea that h must lie in the cone of descent of the
+ℓ1-norm at x0.
+Figure 1 illustrates both these geometrical constraints. Stability follows from the fact that
+the intersection between (9) (∥Ah∥ℓ2 ≤2ǫ) and (10) is a set with small radius. The reason
+why this holds is because every vector h in the ℓ1-cone (10) is approximately orthogonal
+to the nullspace of A. We shall prove that ∥Ah∥ℓ2 ≈∥h∥ℓ2 and together with (9), this
+establishes the theorem.
+We begin by dividing T c
+0 into subsets of size M (we will choose M later) and enumerate T c
+0
+as n1, n2, . . . , nN−|T0| in decreasing order of magnitude of hT c
+0 . Set Tj = {nℓ, (j−1)M +1 ≤
+ℓ≤jM}. That is, T1 contains the indices of the M largest coeﬃcients of hT c
+0 , T2 contains
+the indices of the next M largest coeﬃcients, and so on.
+With this decomposition, the ℓ2-norm of h is concentrated on T01 = T0 ∪T1. Indeed, the
+kth largest value of hT c
+0 obeys
+|hT c
+0 |(k) ≤∥hT c
+0 ∥ℓ1/k
+and, therefore,
+∥hT c
+01∥2
+ℓ2 ≤∥hT c
+0 ∥2
+ℓ1
+m
+X
+k=M+1
+1/k2 ≤∥hT c
+0 ∥2
+ℓ1/M.
+Further, the ℓ1-cone constraint gives
+∥hT c
+01∥2
+ℓ2 ≤∥hT0∥2
+ℓ1/M ≤∥hT0∥2
+ℓ2 · |T0|/M
+7
+
+
+===== PDF PAGE 8 =====
+and thus
+∥h∥2
+ℓ2 = ∥hT01∥2
+ℓ2 + ∥hT c
+01∥2
+ℓ2 ≤(1 + |T0|/M) · ∥hT01∥2
+ℓ2.
+(11)
+Observe now that
+∥Ah∥ℓ2 = ∥AT01hT01 +
+X
+j≥2
+ATjhTj∥ℓ2
+≥
+∥AT01hT01∥ℓ2 −∥
+X
+j≥2
+ATjhTj∥ℓ2
+≥
+∥AT01hT01∥ℓ2 −
+X
+j≥2
+∥ATjhTj∥ℓ2
+≥
+q
+1 −δM+|T0| ∥hT01∥ℓ2 −
+p
+1 + δM
+X
+j≥2
+∥hTj∥ℓ2.
+Set ρ = |T0|/M. As we shall see later,
+X
+j≥2
+∥hTj∥ℓ2 ≤√ρ · ∥hT0∥ℓ2
+(12)
+which gives
+∥Ah∥ℓ2 ≥C|T0|,M · ∥hT01∥ℓ2,
+C|T0|,M :=
+q
+1 −δM+|T0| −√ρ
+p
+1 + δM.
+(13)
+It then follows from (11) and ∥Ah∥ℓ2 ≤2ǫ that
+∥h∥ℓ2 ≤
+p
+1 + ρ · ∥hT01∥ℓ2 ≤
+√1 + ρ
+C|T0|,M
+· ∥Ah∥ℓ2 ≤2√1 + ρ
+C|T0|,M
+· ǫ,
+(14)
+provided that the denominator is of course positive.
+We may specialize (14) and take M = 3|T0|. The denominator is positive if δ3|T0|+3δ4|T0| < 2
+(this is true if δ4|T0| < 1/2, say) which proves the theorem. Note that if δ4S is a little smaller,
+the constant in (5) is not large. For δ4S ≤1/5, CS ≈8.82, while for δ4S ≤1/4, CS ≈10.47
+as claimed.
+It remains to argue about (12).
+Observe that by construction, the magnitude of each
+coeﬃcient in Tj+1 is less than the average of the magnitudes in Tj:
+|hTj+1(t)| ≤∥hTj∥ℓ1/M.
+Then
+∥hTj+1∥2
+ℓ2 ≤∥hTj∥2
+ℓ1/M
+and (12) follows from
+X
+j≥2
+∥hTj∥ℓ2 ≤
+X
+j≥1
+∥hTj∥ℓ1/
+√
+M ≤∥hT0∥ℓ1/
+√
+M ≤
+p
+|T0|/M · ∥hT0∥ℓ2.
+8
+
+
+===== PDF PAGE 9 =====
+2.2
+Proof of Theorem 2: general case
+Suppose now that x0 is arbitrary. We let T0 be the indices of the largest |T0| coeﬃcients
+of x0 (the value |T0| will be decided later) and just as before, we divide up T c
+0 into sets
+T1, . . . , TJ of equal size |Tj| = M, j ≥1, by decreasing order of magnitude. The cone
+constraint (10) may not hold but a variation does. Indeed, x = x0 + h is feasible and,
+therefore,
+∥x0,T0∥ℓ1 −∥hT0∥ℓ1 −∥x0,T c
+0 ∥ℓ1 + ∥hT c
+0 ∥ℓ1 ≤∥x0,T0 + hT0∥ℓ1 + ∥x0,T c
+0 + hT c
+0 ∥ℓ1 ≤∥x0∥ℓ1,
+which gives
+∥hT c
+0 ∥ℓ1 ≤∥hT0∥ℓ1 + 2∥x0,T c
+0 ∥ℓ1.
+(15)
+The rest of the argument now proceeds essentially as before. First, h is in the some sense
+concentrated on T01 = T0 ∪T1 since with the same notations
+∥hT c
+01∥ℓ2 ≤∥hT0∥ℓ1 + 2∥x0,T c
+0 ∥ℓ1
+√
+M
+≤√ρ ·
+ 
+∥hT0∥ℓ2 + 2∥x0,T c
+0 ∥ℓ1
+p
+|T0|
+!
+,
+which in turn implies
+∥h∥ℓ2 ≤(1 + √ρ)∥hT01∥ℓ2 + 2√ρ · η,
+η := ∥x0,T c
+0 ∥ℓ1/
+p
+|T0|.
+(16)
+Better estimates via Pythagoras’ formula are of course possible (see (11)) but we ignore
+such reﬁnements in order to keep the argument as simple as possible. Second, the same
+reasoning as before gives
+X
+j≥2
+∥hTj∥ℓ2 ≤∥hT c
+01∥ℓ1
+√
+M
+≤√ρ · (∥hT0∥ℓ2 + 2η)
+and thus
+∥Ah∥ℓ2 ≥C|T0|,M · ∥hT01∥ℓ2 −2√ρ
+p
+1 + δM · η,
+where C|T0|,M is the same as in (13). Since ∥Ah∥≤2ǫ, we again conclude that
+∥hT01∥ℓ2 ≤
+2
+C|T0|,M
+· (ǫ + √ρ
+p
+1 + δM η),
+(note that the constant in front of the ǫ factor is the same as in the truly sparse case) and
+the claim (6) follows from (16). Specializing the bound to M = 3|T0| and assuming that
+δS ≤1/5 gives the numerical values reported in the statement of the theorem.
+3
+Numerical Examples
+This section illustrates the eﬀectiveness of the recovery by means of a few simple numerical
+experiments. Our simulations demonstrate that in practice, the constants in (5) and (6)
+seem to be quite low.
+9
+
+
+===== PDF PAGE 10 =====
+Our ﬁrst series of experiments is summarized in Tables 1 and 2. In each experiment, a length
+1024 signal was measured with the same 300 × 1024 Gaussian measurement ensemble. The
+measurements were then corrupted by additive white Gaussian noise: yk = ⟨x0, ak⟩+ ek
+with ek ∼N(0, σ2) for various noise levels σ. The squared norm of the error ∥e∥2
+ℓ2 is a
+chi-square random variable with mean σ2n and standard deviation σ2√
+2n; owing to well
+known concentration inequalities, the probability that ∥e∥2
+ℓ2 exceeds its mean plus two or
+three standard deviations is small. We then solve (P2) with
+ǫ2 = σ2(n + λ
+√
+2n)
+(17)
+and select λ = 2 although other choices are of course possible.
+Table 1 charts the results for sparse signals with 50 nonzero components. Ten signals were
+generated by choosing 50 indices uniformly at random, and then selecting either −1 or 1 at
+each location with equal probability. An example of such a signal is shown in Figure 2(a).
+Previous experiments [3] have demonstrated that we were empirically able to recover such
+signals perfectly from 300 noiseless Gaussian measurements, which is indeed the case for
+each of the 10 signals considered here. The average value of the recovery error (taken over
+the 10 signals) is recorded in the bottom row of Table 1. In this situation, the constant in
+(5) appears to be less than 2.
+Table 2 charts the results for 10 compressible signals whose components are all non-zero,
+but decay as in (7). The signals were generated by taking a ﬁxed sequence
+xsort(t) = (5.819) · t−10/9,
+(18)
+randomly permuting it, and multiplying by a random sign sequence (the constant in (18)
+was chosen so that the norm of the compressible signals is the same —
+√
+50 — as the
+sparse signals in the previous set of experiments). An example of such a signal is shown in
+Figure 2(c). Again, 10 such signals were generated, and the average recovery error recorded
+in the bottom row of Table 2.
+For small values of σ, the recovery error is dominated by the approximation error — the
+second term on the right hand side of (6). As a reference, the 50 term nonlinear approxi-
+mation errors of these compressible signals is around 0.47; at low signal-to-noise ratios our
+recovery error is about 1.5 times this quantity. As the noise power gets large, the recovery
+error becomes less than ǫ, just as in the sparse case.
+Finally, we apply our recovery procedure to realistic imagery.
+Photograph-like images,
+such as the 256 × 256 pixel Boats image shown in Figure 3(a), have wavelet coeﬃcient
+sequences that are compressible (see [7]). The image is a 65536 dimensional vector, making
+the standard Gaussian ensemble too unwieldy3. Instead, we make 25000 measurements
+of the image using a scrambled real Fourier ensemble; that is, the test functions ak(t) are
+real-valued sines and cosines (with randomly selected frequencies) which are temporally
+scrambled by randomly permuting the m time points. In other words, this ensemble is
+obtained from the (real-valued) Fourier ensemble by a random permutation of the columns.
+For our purposes here, the test functions behave like a Gaussian ensemble in the sense that
+from n measurements, one can recover signals with about n/5 nonzero components exactly
+from noiseless data. There is a computational advantage as well, since we can apply A and
+3Storing a double precision 25000 × 65536 matrix would use around 13.1 gigabytes of memory, about the
+capacity of three standard DVDs.
+10
+
+
+===== PDF PAGE 11 =====
+its adjoint AT to an arbitrary vector by means of an m point FFT. To recover the wavelet
+coeﬃcients of the object, we simply solve
+(P ′
+2)
+min ∥α∥ℓ1
+subject to
+∥AW ∗α −y∥ℓ2 ≤ǫ,
+where A is the scrambled Fourier ensemble, and W is the discrete Daubechies-8 orthogonal
+wavelet transform.
+We will attempt to recover the image from measurements perturbed in two diﬀerent man-
+ners. First, as in the 1D experiments, the measurements were corrupted by additive white
+Gaussian noise with σ = 5·10−4 so that σ·√n = .0791. As shown in Figure 4, the noise level
+is signiﬁcant; the signal-to-noise ratio is ∥Ax0∥ℓ2/∥e∥ℓ2 = 4.5. With ǫ = .0798 as in (17),
+the recovery error is ∥α♯−α0∥ℓ2 = 0.1303 (the original image has unit norm). For compari-
+son, the 5000 term nonlinear approximation error for the image is ∥α0,5000 −α0∥ℓ2 = 0.050.
+Hence the recovery error is very close to the sum of the approximation error and the size
+of the perturbation.
+Another type of perturbation of practical interest is round-oﬀor quantization error. In
+general, the measurements cannot be taken with arbitrary precision, either because of limi-
+tations inherent to the measuring device, or that we wish to communicate them using some
+small number of bits. Unlike additive white Gaussian noise, round-oﬀerror is deterministic
+and signal dependent—a situation our methodology deals with easily.
+The round-oﬀerror experiment was conducted as follows.
+Using the same scrambled
+Fourier ensemble, we take 25000 measurements of Boats, and round (quantize) them to
+one digit (we restrict the values of the measurements to be one of ten preset values, equally
+spaced). The measurement error is shown in Figure 4(c), and the signal-to-noise ratio is
+∥Ax0∥ℓ2/∥e∥ℓ2 = 4.3. To choose ǫ, we use a rough model for the size of the perturbation.
+To a ﬁrst approximation, the round-oﬀerror for each measurement behaves like a uniformly
+distributed random variable on (−q/2, q/2), where q is the distance between quantization
+levels. Under this assumption, the size of the perturbation ∥e∥2
+ℓ2 would behave like a sum
+of squares of uniform random variables
+Y =
+n
+X
+k=1
+X2
+k,
+Xk ∼Uniform
+
+−q
+2, q
+2
+
+.
+Here, mean(Y ) = nq2/12 and std(Y ) = √nq2/[6
+√
+5]. Again, Y is no larger than mean(Y )+
+λ std(Y ) with high probability, and we select
+ǫ2 = nq2/12 + λ√nq2/[6
+√
+5],
+where as before, λ = 2. The results are summarized in the second column of Table 3. As
+in the previous case, the recovery error is very close to the sum of the approximation and
+measurement errors. Also note that despite the crude nature of the perturbation model,
+an accurate value of ǫ is chosen.
+Although the errors in the recovery experiments summarized in the third row of Table 3
+are as we hoped, the recovered images tend to contain visually displeasing high frequency
+oscillatory artifacts. To address this problem, we can solve a slightly diﬀerent optimization
+problem to recover the image from the same corrupted measurements. In place of (P ′
+2), we
+solve
+(TV )
+min ∥x∥TV
+subject to
+∥Ax −y∥ℓ2 ≤ǫ
+11
+
+
+===== PDF PAGE 12 =====
+Table 1: Recovery results for sparse 1D signals. Gaussian white noise of variance σ2 was added to
+each of the n = 300 measurements, and (P2) was solved with ǫ chosen such that ∥e∥2 ≤ǫ with high
+probability (see (17)).
+σ
+0.01
+0.02
+0.05
+0.1
+0.2
+0.5
+ǫ
+0.19
+0.37
+0.93
+1.87
+3.74
+9.34
+∥x♯−x0∥2
+0.25
+0.49
+1.33
+2.55
+4.67
+6.61
+Table 2: Recovery results for compressible 1D signals. Gaussian white noise of variance σ2 was
+added to each measurement, and (P2) was solved with ǫ as in (17).
+σ
+0.01
+0.02
+0.05
+0.1
+0.2
+0.5
+ǫ
+0.19
+0.37
+0.93
+1.87
+3.74
+9.34
+∥x♯−x0∥2
+0.69
+0.76
+1.03
+1.36
+2.03
+3.20
+where
+∥x∥TV =
+X
+i,j
+q
+(xi+1,j −xi,j)2 + (xi,j+1 −xi,j)2 =
+X
+i,j
+|(∇x)i,j|
+is the total variation [16] of the image x: the sum of the magnitudes of the (discretized) gra-
+dient. By substituting (TV ) for (P ′
+2), we are essentially changing our model for photograph-
+like images. Instead of looking for an image with a sparse wavelet transform that explains
+the observations, program (TV ) searches for an image with a sparse gradient (i.e. without
+spurious high frequency oscillations). In fact, it is shown in [3] that just as signals which are
+exactly sparse can be recovered perfectly from a small number of measurements by solving
+(P2) with ǫ = 0, signals with gradients which are exactly sparse can be recovered by solving
+(TV ) (again with ǫ = 0).
+Figure 3(b) and (c) and the fourth row of Table 3 show the (TV ) recovery results. The
+reconstructions have smaller error and do not contain visually displeasing artifacts.
+Table 3: Image recovery results. Measurements of the Boats image were corrupted in two diﬀerent
+ways: by adding white noise (left column) with σ = 5 · 10−4 and by rounding oﬀto one digit (right
+column). In each case, the image was recovered in two diﬀerent ways: by solving (P ′
+2) (third row)
+and solving (T V ) (fourth row). The (T V ) images are shown in Figure 3.
+White noise
+Round-oﬀ
+∥e∥ℓ2
+0.0789
+0.0824
+ǫ
+0.0798
+0.0827
+∥α♯−α0∥ℓ2
+0.1303
+0.1323
+∥α♯
+TV −α0∥ℓ2
+0.0837
+0.0843
+12
+
+
+===== PDF PAGE 13 =====
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+−1
+−0.8
+−0.6
+−0.4
+−0.2
+0
+0.2
+0.4
+0.6
+0.8
+1
+(a)
+(b)
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+−6
+−5
+−4
+−3
+−2
+−1
+0
+1
+2
+100
+200
+300
+400
+500
+600
+700
+800
+900
+1000
+−6
+−5
+−4
+−3
+−2
+−1
+0
+1
+2
+(c)
+(d)
+Figure 2: (a) Example of a sparse signal used in the 1D experiments.
+There are 50 non-zero
+coeﬃcients taking values ±1. (b) Sparse signal recovered from noisy measurements with σ = 0.05.
+(c) Example of a compressible signal used in the 1D experiments. (d) Compressible signal recovered
+from noisy measurements with σ = 0.05.
+(a)
+(b)
+(c)
+Figure 3: (a) Original 256×256 Boats image. (b) Recovery via (T V ) from n = 25000 measurements
+corrupted with Gaussian noise. (c) Recovery via (T V ) from n = 25000 measurements corrupted
+by round-oﬀerror. In both cases, the reconstruction error is less than the sum of the nonlinear
+approximation and measurement errors.
+13
+
+
+===== PDF PAGE 14 =====
+0
+0.5
+1
+1.5
+2
+2.5
+x 10
+4
+−0.01
+−0.008
+−0.006
+−0.004
+−0.002
+0
+0.002
+0.004
+0.006
+0.008
+0.01
+0
+0.5
+1
+1.5
+2
+2.5
+x 10
+4
+−0.01
+−0.008
+−0.006
+−0.004
+−0.002
+0
+0.002
+0.004
+0.006
+0.008
+0.01
+0
+0.5
+1
+1.5
+2
+2.5
+x 10
+4
+−0.01
+−0.008
+−0.006
+−0.004
+−0.002
+0
+0.002
+0.004
+0.006
+0.008
+0.01
+(a)
+(b)
+(c)
+Figure 4: (a) Noiseless measurements Ax0 of the Boats image. (b) Gaussian measurement error
+with σ = 5 · 10−4 in the recovery experiment summarized in the left column of Table 3. The signal-
+to-noise ratio is ∥Ax0∥ℓ2/∥e∥ℓ2 = 4.5. (c) Round-oﬀerror in the recovery experiment summarized
+in the right column of Table 3. The signal-to-noise ratio is ∥Ax0∥ℓ2/∥e∥ℓ2 = 4.3.
+4
+Discussion
+The convex programs (P2) and (TV ) are simple instances of a class of problems known as
+second-order cone programs (SOCP’s). As an example, one can recast (TV ) as
+min
+X
+i,j
+ui,j
+subject to
+−ui,j ≤∥Gi,jx∥ℓ2 ≤ui,j, ∥Ax −b∥ℓ2 ≤ǫ,
+(19)
+where Gi,jx = (xi+1,j −xi,j, xi,j+1 −xi,j) [15]. SOCP’s can nowadays be solved eﬃciently
+by interior-point methods [1] and, hence, our approach is computationally tractable.
+From a certain viewpoint, recovering via (P2) is using a priori information about the nature
+of the underlying image, i.e.
+that it is sparse in some known orthobasis, to overcome
+the shortage of data. In practice, we could of course use far more sophisticated models
+to perform the recovery.
+Obvious extensions include looking for signals that are sparse
+in overcomplete wavelet or curvelet bases, or for images that have certain geometrical
+structure. The numerical experiments in Section 3 show how changing the model can result
+in a higher quality recovery from the same set of measurements.
+References
+[1] S. Boyd and L. Vandenberghe. Convex Optimization. Cambridge University Press,
+2004.
+[2] E. J. Cand`es and J. Romberg. Quantitative robust uncertainty principles and optimally
+sparse decompositions. submitted to Foundations of Comput. Math., November 2004.
+Available on the ArXiv preprint server:math.CA/0411273.
+[3] E. J. Cand`es, J. Romberg, and T. Tao. Robust uncertainty principles: Exact signal re-
+construction from highly incomplete frequency information. submitted to IEEE Trans.
+Inform. Theory, June 2004. Available on theArXiV preprint server: math.GM/0409186.
+[4] E. J. Cand`es and T. Tao. Decoding by linear programming. submitted to IEEE Trans.
+Inform. Theory, December 2004.
+14
+
+
+===== PDF PAGE 15 =====
+[5] E. J. Cand`es and T. Tao. Near-optimal signal recovery from random projections and
+universal encoding strategies. submitted to IEEE Trans. Inform. Theory, November
+2004. Available on the ArXiV preprint server: math.CA/0410542.
+[6] S. S. Chen, D. L. Donoho, and M. A. Saunders. Atomic decomposition by basis pursuit.
+SIAM J. Sci. Comput., 20:33–61, 1999.
+[7] R. A. DeVore, B. Jawerth, and B. J. Lucier.
+Image compression through wavelet
+transform coding. IEEE Trans. Inform. Theory, 38(2):719–746, March 1992.
+[8] D. L. Donoho. Compressed sensing. submitted to IEEE Trans. Inform. Theory, Septem-
+ber 2004.
+[9] D. L. Donoho. For most large undetermined systems of linear equations the minimal
+ℓ1-norm near-solution is also the sparsest near-solution. Manuscript, September 2004.
+[10] D. L. Donoho. For most large undetermined systems of linear equations the minimal
+ℓ1-norm solution is also the sparsest solution. Manuscript, September 2004.
+[11] D. L. Donoho and M. Elad.
+Optimally sparse representation in general (non-
+orthogonal) dictionaries via ℓ1 minimization. Proc. Natl. Acad. Sci. USA, 100:2197–
+2202, 2003.
+[12] D. L. Donoho, M. Elad, and V. Temlyakov. Stable recovery of sparse overcomplete
+representations in the presence of noise. submitted to IEEE Trans. Inform. Theory,
+February 2004.
+[13] D. L. Donoho and X. Huo. Uncertainty principles and ideal atomic decomposition.
+IEEE Trans. Inform. Theory, 47:2845–2862, 2001.
+[14] A. C. Gilbert, S. Muthukrishnan, and M. Strauss. Beating the b2 bottleneck in esti-
+mating b-term Fourier representations. Manuscript, May 2004.
+[15] D. Goldfarb and W. Yin. Second-order cone programming based methods for total
+variation image restoration. Technical report, Columbia University, 2004. Submitted
+to SIAM J. on Scientiﬁc Computing.
+[16] L. I. Rudin, S. Osher, and E. Fatemi. Nonlinear total variation noise removal algorithm.
+Physica D, 60:259–68, 1992.
+[17] S. J. Szarek. Condition numbers of random matrices. J. Complexity, 7:131–149, 1991.
+[18] J. Tropp. Just relax: Convex programming methods for identifying sparse signals in
+noise. submitted to IEEE Trans. Inform. Theory, 2005.
+[19] J. Zou, A. C. Gilbert, M. J. Strauss, and I. Daubechies. Theoretical and experimental
+analysis of a randomized algorithm for sparse Fourier transform analysis. Preprint,
+November 2004. Available on the ArXiV preprint server: math.NA/0411102.
+15

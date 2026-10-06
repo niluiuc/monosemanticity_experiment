@@ -1,0 +1,22 @@
+{
+  "key": "fletcher2008",
+  "arxiv_id": "0804.1839",
+  "accessed_utc": "2026-10-06T00:51:54.160911+00:00",
+  "metadata": {
+    "citation_title": "Necessary and Sufficient Conditions on Sparsity Pattern Recovery",
+    "citation_author": "Goyal, Vivek K.",
+    "citation_doi": "10.1109/TIT.2009.2032726",
+    "citation_date": "2008/04/11",
+    "citation_online_date": "2008/04/11",
+    "citation_pdf_url": "https://arxiv.org/pdf/0804.1839",
+    "citation_arxiv_id": "0804.1839",
+    "citation_abstract": " The problem of detecting the sparsity pattern of a k-sparse vector in R^n from m random noisy measurements is of interest in many areas such as system identification, denoising, pattern recognition, and compressed sensing. This paper addresses the scaling of the number of measurements m, with signal dimension n and sparsity-level nonzeros k, for asymptotically-reliable detection. We show a necessary condition for perfect recovery at any given SNR for all algorithms, regardless of complexity, is m = Omega(k log(n-k)) measurements. Conversely, it is shown that this scaling of Omega(k log(n-k)) measurements is sufficient for a remarkably simple ``maximum correlation'' estimator. Hence this scaling is optimal and does not require more sophisticated techniques such as lasso or matching pursuit. The constants for both the necessary and sufficient conditions are precisely defined in terms of the minimum-to-average ratio of the nonzero components and the SNR. The necessary condition improves upon previous results for maximum likelihood estimation. For lasso, it also provides a necessary condition at any SNR and for low SNR improves upon previous work. The sufficient condition provides the first asymptotically-reliable detection guarantee at finite SNR."
+  },
+  "submission_history": "Submission history From: Alyson Fletcher [ view email ] [v1] Fri, 11 Apr 2008 07:16:32 UTC (36 KB)",
+  "abstract_url": "https://arxiv.org/abs/0804.1839",
+  "pdf_url": "https://arxiv.org/pdf/0804.1839",
+  "pages": 16,
+  "pdf_bytes": 224587,
+  "pdf_sha256": "5d2556233d82e5da9949136ee91b673c7dc9d2c64f9e36f5e04d30a7ebc3884c",
+  "errors": []
+}

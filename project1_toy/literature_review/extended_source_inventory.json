@@ -1,0 +1,265 @@
+[
+  {
+    "key": "fletcher2008",
+    "arxiv_id": "0804.1839",
+    "accessed_utc": "2026-10-06T00:51:54.160911+00:00",
+    "metadata": {
+      "citation_title": "Necessary and Sufficient Conditions on Sparsity Pattern Recovery",
+      "citation_author": "Goyal, Vivek K.",
+      "citation_doi": "10.1109/TIT.2009.2032726",
+      "citation_date": "2008/04/11",
+      "citation_online_date": "2008/04/11",
+      "citation_pdf_url": "https://arxiv.org/pdf/0804.1839",
+      "citation_arxiv_id": "0804.1839",
+      "citation_abstract": " The problem of detecting the sparsity pattern of a k-sparse vector in R^n from m random noisy measurements is of interest in many areas such as system identification, denoising, pattern recognition, and compressed sensing. This paper addresses the scaling of the number of measurements m, with signal dimension n and sparsity-level nonzeros k, for asymptotically-reliable detection. We show a necessary condition for perfect recovery at any given SNR for all algorithms, regardless of complexity, is m = Omega(k log(n-k)) measurements. Conversely, it is shown that this scaling of Omega(k log(n-k)) measurements is sufficient for a remarkably simple ``maximum correlation'' estimator. Hence this scaling is optimal and does not require more sophisticated techniques such as lasso or matching pursuit. The constants for both the necessary and sufficient conditions are precisely defined in terms of the minimum-to-average ratio of the nonzero components and the SNR. The necessary condition improves upon previous results for maximum likelihood estimation. For lasso, it also provides a necessary condition at any SNR and for low SNR improves upon previous work. The sufficient condition provides the first asymptotically-reliable detection guarantee at finite SNR."
+    },
+    "submission_history": "Submission history From: Alyson Fletcher [ view email ] [v1] Fri, 11 Apr 2008 07:16:32 UTC (36 KB)",
+    "abstract_url": "https://arxiv.org/abs/0804.1839",
+    "pdf_url": "https://arxiv.org/pdf/0804.1839",
+    "pages": 16,
+    "pdf_bytes": 224587,
+    "pdf_sha256": "5d2556233d82e5da9949136ee91b673c7dc9d2c64f9e36f5e04d30a7ebc3884c",
+    "errors": []
+  },
+  {
+    "key": "mencattini2026",
+    "arxiv_id": "2605.14694",
+    "accessed_utc": "2026-10-06T00:51:54.158904+00:00",
+    "metadata": {
+      "citation_title": "The Rate-Distortion-Polysemanticity Tradeoff in SAEs",
+      "citation_author": "Locatello, Francesco",
+      "citation_date": "2026/05/14",
+      "citation_online_date": "2026/05/14",
+      "citation_pdf_url": "https://arxiv.org/pdf/2605.14694",
+      "citation_arxiv_id": "2605.14694",
+      "citation_abstract": "Sparse Autoencoders (SAEs) that can accurately reconstruct their input (minimizing distortion) by making efficient use of few features (minimizing the rate) often fail to learn monosemantic representations (highly interpretable), limiting their usefulness for mechanistic interpretability. In this paper, we characterise this tension in learning faithful, efficient, and interpretable explanations, introducing the Rate-Distortion-Polysemanticity tradeoff in SAEs. Under toy-modeling assumptions, we theoretically and empirically show that restricting the SAE to be monosemantic necessarily comes with an increase in rate and distortion. Assuming a generative model behind the input observations, we further demonstrate that the degree of polysemanticity of optimal SAEs is determined by the training data distribution, especially by the probability of features to co-occur. Finally, we extend the analysis to real-world settings by deriving necessary conditions that a polysemanticity measure should satisfy when the data-generating process is unknown, and we benchmark existing proxy metrics on SAEs trained on Large Language Models. Taken together, our findings show that polysemanticity is a data problem that should be accounted for when addressing it at the architectural and optimization level."
+    },
+    "submission_history": "Submission history From: Francesco Montagna [ view email ] [v1] Thu, 14 May 2026 11:10:52 UTC (396 KB)",
+    "abstract_url": "https://arxiv.org/abs/2605.14694",
+    "pdf_url": "https://arxiv.org/pdf/2605.14694",
+    "pages": 22,
+    "pdf_bytes": 1016601,
+    "pdf_sha256": "b79d5773e29a4b8e08dd20ed18b3d7fa08c485ca09825c19f32923422a27dece",
+    "errors": []
+  },
+  {
+    "key": "wainwright2007",
+    "arxiv_id": "math/0702301",
+    "accessed_utc": "2026-10-06T00:51:55.766601+00:00",
+    "metadata": {
+      "citation_title": "Information-theoretic limits on sparsity recovery in the high-dimensional and noisy setting",
+      "citation_author": "Wainwright, Martin J.",
+      "citation_date": "2007/02/11",
+      "citation_online_date": "2007/02/20",
+      "citation_pdf_url": "https://arxiv.org/pdf/math/0702301",
+      "citation_arxiv_id": "math/0702301",
+      "citation_abstract": " The problem of recovering the sparsity pattern of a fixed but unknown vector $\\beta^* \\in \\real^p based on a set of $n$ noisy observations arises in a variety of settings, including subset selection in regression, graphical model selection, signal denoising, compressive sensing, and constructive approximation. Of interest are conditions on the model dimension $p$, the sparsity index $s$ (number of non-zero entries in $\\beta^*$), and the number of observations $n$ that are necessary and/or sufficient to ensure asymptotically perfect recovery of the sparsity pattern. This paper focuses on the information-theoretic limits of sparsity recovery: in particular, for a noisy linear observation model based on measurement vectors drawn from the standard Gaussian ensemble, we derive both a set of sufficient conditions for asymptotically perfect recovery using the optimal decoder, as well as a set of necessary conditions that any decoder, regardless of its computational complexity, must satisfy for perfect recovery. This analysis of optimal decoding limits complements our previous work (ARXIV: math.ST/0605740) on sharp thresholds for sparsity recovery using the Lasso ($\\ell_1$-constrained quadratic programming) with Gaussian measurement ensembles."
+    },
+    "submission_history": "Submission history From: Martin Wainwright [ view email ] [v1] Sun, 11 Feb 2007 08:06:44 UTC (27 KB) [v2] Tue, 20 Feb 2007 06:47:11 UTC (27 KB)",
+    "abstract_url": "https://arxiv.org/abs/math/0702301",
+    "pdf_url": "https://arxiv.org/pdf/math/0702301",
+    "pages": 16,
+    "pdf_bytes": 201812,
+    "pdf_sha256": "d102257bf09627556031822b6ca712b587ce157ef6bfa86db7b63bb2f9f6dcf1",
+    "errors": []
+  },
+  {
+    "key": "ilyas2019",
+    "arxiv_id": "1905.02175",
+    "accessed_utc": "2026-10-06T00:51:57.115105+00:00",
+    "metadata": {
+      "citation_title": "Adversarial Examples Are Not Bugs, They Are Features",
+      "citation_author": "Madry, Aleksander",
+      "citation_date": "2019/05/06",
+      "citation_online_date": "2019/08/12",
+      "citation_pdf_url": "https://arxiv.org/pdf/1905.02175",
+      "citation_arxiv_id": "1905.02175",
+      "citation_abstract": "Adversarial examples have attracted significant attention in machine learning, but the reasons for their existence and pervasiveness remain unclear. We demonstrate that adversarial examples can be directly attributed to the presence of non-robust features: features derived from patterns in the data distribution that are highly predictive, yet brittle and incomprehensible to humans. After capturing these features within a theoretical framework, we establish their widespread existence in standard datasets. Finally, we present a simple setting where we can rigorously tie the phenomena we observe in practice to a misalignment between the (human-specified) notion of robustness and the inherent geometry of the data."
+    },
+    "submission_history": "Submission history From: Dimitris Tsipras [ view email ] [v1] Mon, 6 May 2019 17:45:05 UTC (1,701 KB) [v2] Tue, 7 May 2019 02:01:14 UTC (1,772 KB) [v3] Wed, 19 Jun 2019 00:25:20 UTC (1,785 KB) [v4] Mon, 12 Aug 2019 14:36:10 UTC (1,787 KB)",
+    "abstract_url": "https://arxiv.org/abs/1905.02175",
+    "pdf_url": "https://arxiv.org/pdf/1905.02175",
+    "pages": 37,
+    "pdf_bytes": 2593952,
+    "pdf_sha256": "81c3715d1e256579071591f3bc61f55d63b32a33dcc981026209d14d32990f32",
+    "errors": []
+  },
+  {
+    "key": "trades2019",
+    "arxiv_id": "1901.08573",
+    "accessed_utc": "2026-10-06T00:52:06.523411+00:00",
+    "metadata": {
+      "citation_title": "Theoretically Principled Trade-off between Robustness and Accuracy",
+      "citation_author": "Jordan, Michael I.",
+      "citation_date": "2019/01/24",
+      "citation_online_date": "2019/06/24",
+      "citation_pdf_url": "https://arxiv.org/pdf/1901.08573",
+      "citation_arxiv_id": "1901.08573",
+      "citation_abstract": "We identify a trade-off between robustness and accuracy that serves as a guiding principle in the design of defenses against adversarial examples. Although this problem has been widely studied empirically, much remains unknown concerning the theory underlying this trade-off. In this work, we decompose the prediction error for adversarial examples (robust error) as the sum of the natural (classification) error and boundary error, and provide a differentiable upper bound using the theory of classification-calibrated loss, which is shown to be the tightest possible upper bound uniform over all probability distributions and measurable predictors. Inspired by our theoretical analysis, we also design a new defense method, TRADES, to trade adversarial robustness off against accuracy. Our proposed algorithm performs well experimentally in real-world datasets. The methodology is the foundation of our entry to the NeurIPS 2018 Adversarial Vision Challenge in which we won the 1st place out of ~2,000 submissions, surpassing the runner-up approach by $11.41\\%$ in terms of mean $\\ell_2$ perturbation distance."
+    },
+    "submission_history": "Submission history From: Hongyang Zhang [ view email ] [v1] Thu, 24 Jan 2019 18:43:57 UTC (1,310 KB) [v2] Thu, 23 May 2019 22:04:23 UTC (1,312 KB) [v3] Mon, 24 Jun 2019 07:04:11 UTC (1,313 KB)",
+    "abstract_url": "https://arxiv.org/abs/1901.08573",
+    "pdf_url": "https://arxiv.org/pdf/1901.08573",
+    "pages": 31,
+    "pdf_bytes": 2079794,
+    "pdf_sha256": "1495f72c8b0af0276a7459f75200288ea376bea11b4e0f997ef1eda6dea174a7",
+    "errors": []
+  },
+  {
+    "key": "stevinson2025",
+    "arxiv_id": "2510.11709",
+    "accessed_utc": "2026-10-06T00:51:54.156897+00:00",
+    "metadata": {
+      "citation_title": "Adversarial Attacks Leverage Interference Between Features in Superposition",
+      "citation_author": "Birdal, Tolga",
+      "citation_date": "2025/10/13",
+      "citation_online_date": "2026/06/15",
+      "citation_pdf_url": "https://arxiv.org/pdf/2510.11709",
+      "citation_arxiv_id": "2510.11709",
+      "citation_abstract": "Why do adversarial examples exist, and why do they transfer between models? Existing explanations appeal to high-dimensional geometry, non-robust patterns in the input, and decision boundary structure, but none provides a representation-level mechanism that explains why specific perturbations succeed and why attacks transfer between models. In this paper, we show that adversarial vulnerability can stem from efficient information encoding in neural networks. Specifically, vulnerability can arise from superposition - the phenomenon where networks represent more concepts than they have dimensions, forcing non-orthogonal representation and thus interference. This interference causes perturbations targeting one representation to affect others, creating vulnerabilities determined by interference patterns. In synthetic settings with precisely controlled superposition, we establish that superposition suffices to create adversarial vulnerability. The resulting attacks are predictable: PGD-discovered perturbations align with theoretically optimal perturbations derived from the interference geometry. Models trained on similar data develop similar interference patterns, explaining attack transferability. We then show that successful attacks on image classifiers exhibit the structure predicted by our proposed mechanism. These findings reveal that adversarial vulnerability can be a byproduct of networks' representational compression, complementing existing explanations based on data properties or architectural factors."
+    },
+    "submission_history": "Submission history From: Edward Stevinson [ view email ] [v1] Mon, 13 Oct 2025 17:59:02 UTC (10,881 KB) [v2] Mon, 15 Jun 2026 20:10:10 UTC (10,960 KB)",
+    "abstract_url": "https://arxiv.org/abs/2510.11709",
+    "pdf_url": "https://arxiv.org/pdf/2510.11709",
+    "pages": 25,
+    "pdf_bytes": 13958569,
+    "pdf_sha256": "050db783eba0198aeb67201456e693c0e5ca263de17a84d56361d04a77c09692",
+    "errors": []
+  },
+  {
+    "key": "tsipras2018",
+    "arxiv_id": "1805.12152",
+    "accessed_utc": "2026-10-06T00:51:56.437965+00:00",
+    "metadata": {
+      "citation_title": "Robustness May Be at Odds with Accuracy",
+      "citation_author": "Madry, Aleksander",
+      "citation_date": "2018/05/30",
+      "citation_online_date": "2019/09/09",
+      "citation_pdf_url": "https://arxiv.org/pdf/1805.12152",
+      "citation_arxiv_id": "1805.12152",
+      "citation_abstract": "We show that there may exist an inherent tension between the goal of adversarial robustness and that of standard generalization. Specifically, training robust models may not only be more resource-consuming, but also lead to a reduction of standard accuracy. We demonstrate that this trade-off between the standard accuracy of a model and its robustness to adversarial perturbations provably exists in a fairly simple and natural setting. These findings also corroborate a similar phenomenon observed empirically in more complex settings. Further, we argue that this phenomenon is a consequence of robust classifiers learning fundamentally different feature representations than standard classifiers. These differences, in particular, seem to result in unexpected benefits: the representations learned by robust models tend to align better with salient data characteristics and human perception."
+    },
+    "submission_history": "Submission history From: Dimitris Tsipras [ view email ] [v1] Wed, 30 May 2018 18:00:32 UTC (5,744 KB) [v2] Mon, 4 Jun 2018 03:35:11 UTC (6,529 KB) [v3] Thu, 11 Oct 2018 05:09:19 UTC (6,577 KB) [v4] Fri, 30 Aug 2019 22:57:22 UTC (5,228 KB) [v5] Mon, 9 Sep 2019 08:09:25 UTC (5,228 KB)",
+    "abstract_url": "https://arxiv.org/abs/1805.12152",
+    "pdf_url": "https://arxiv.org/pdf/1805.12152",
+    "pages": 24,
+    "pdf_bytes": 6191702,
+    "pdf_sha256": "22b3b7dce21af1fd789c252e8d8249e0b564b2640ddcccbf1ac9e82d6cc10ddd",
+    "errors": []
+  },
+  {
+    "key": "schmidt2018",
+    "arxiv_id": "1804.11285",
+    "accessed_utc": "2026-10-06T00:52:20.014966+00:00",
+    "metadata": {
+      "citation_title": "Adversarially Robust Generalization Requires More Data",
+      "citation_author": "M\u0105dry, Aleksander",
+      "citation_date": "2018/04/30",
+      "citation_online_date": "2018/05/02",
+      "citation_pdf_url": "https://arxiv.org/pdf/1804.11285",
+      "citation_arxiv_id": "1804.11285",
+      "citation_abstract": "Machine learning models are often susceptible to adversarial perturbations of their inputs. Even small perturbations can cause state-of-the-art classifiers with high \"standard\" accuracy to produce an incorrect prediction with high confidence. To better understand this phenomenon, we study adversarially robust learning from the viewpoint of generalization. We show that already in a simple natural data model, the sample complexity of robust learning can be significantly larger than that of \"standard\" learning. This gap is information theoretic and holds irrespective of the training algorithm or the model family. We complement our theoretical results with experiments on popular image classification datasets and show that a similar gap exists here as well. We postulate that the difficulty of training robust classifiers stems, at least partially, from this inherently larger sample complexity."
+    },
+    "submission_history": "Submission history From: Ludwig Schmidt [ view email ] [v1] Mon, 30 Apr 2018 15:55:59 UTC (677 KB) [v2] Wed, 2 May 2018 05:24:33 UTC (114 KB)",
+    "abstract_url": "https://arxiv.org/abs/1804.11285",
+    "pdf_url": "https://arxiv.org/pdf/1804.11285",
+    "pages": 39,
+    "pdf_bytes": 893685,
+    "pdf_sha256": "26c02d0a11422f391ef113fb79ce95495ec304dd9d24c7577506bb7b52db5ffa",
+    "errors": []
+  },
+  {
+    "key": "candes2005",
+    "arxiv_id": "math/0503066",
+    "accessed_utc": "2026-10-06T00:52:21.048162+00:00",
+    "metadata": {
+      "citation_title": "Stable Signal Recovery from Incomplete and Inaccurate Measurements",
+      "citation_author": "Tao, Terence",
+      "citation_date": "2005/03/03",
+      "citation_online_date": "2005/12/07",
+      "citation_pdf_url": "https://arxiv.org/pdf/math/0503066",
+      "citation_arxiv_id": "math/0503066",
+      "citation_abstract": " Suppose we wish to recover an n-dimensional real-valued vector x_0 (e.g. a digital signal or image) from incomplete and contaminated observations y = A x_0 + e; A is a n by m matrix with far fewer rows than columns (n << m) and e is an error term. Is it possible to recover x_0 accurately based on the data y? To recover x_0, we consider the solution x* to the l1-regularization problem min \\|x\\|_1 subject to \\|Ax-y\\|_2 <= epsilon, where epsilon is the size of the error term e. We show that if A obeys a uniform uncertainty principle (with unit-normed columns) and if the vector x_0 is sufficiently sparse, then the solution is within the noise level \\|x* - x_0\\|_2 \\le C epsilon. As a first example, suppose that A is a Gaussian random matrix, then stable recovery occurs for almost all such A's provided that the number of nonzeros of x_0 is of about the same order as the number of observations. Second, suppose one observes few Fourier samples of x_0, then stable recovery occurs for almost any set of p coefficients provided that the number of nonzeros is of the order of n/[\\log m]^6. In the case where the error term vanishes, the recovery is of course exact, and this work actually provides novel insights on the exact recovery phenomenon discussed in earlier papers. The methodology also explains why one can also very nearly recover approximately sparse signals."
+    },
+    "submission_history": "Submission history From: Emmanuel Candes [ view email ] [v1] Thu, 3 Mar 2005 19:36:54 UTC (34 KB) [v2] Wed, 7 Dec 2005 17:50:55 UTC (289 KB)",
+    "abstract_url": "https://arxiv.org/abs/math/0503066",
+    "pdf_url": "https://arxiv.org/pdf/math/0503066",
+    "pages": 15,
+    "pdf_bytes": 473886,
+    "pdf_sha256": "8d58bc40026054dfc5ec3137e338bfab2904f434a1e07cfc822d8bc2a1bcadcf",
+    "errors": []
+  },
+  {
+    "key": "papyan2016",
+    "arxiv_id": "1607.08194",
+    "accessed_utc": "2026-10-06T00:52:22.361868+00:00",
+    "metadata": {
+      "citation_title": "Convolutional Neural Networks Analyzed via Convolutional Sparse Coding",
+      "citation_author": "Elad, Michael",
+      "citation_date": "2016/07/27",
+      "citation_online_date": "2016/10/10",
+      "citation_pdf_url": "https://arxiv.org/pdf/1607.08194",
+      "citation_arxiv_id": "1607.08194",
+      "citation_abstract": "Convolutional neural networks (CNN) have led to many state-of-the-art results spanning through various fields. However, a clear and profound theoretical understanding of the forward pass, the core algorithm of CNN, is still lacking. In parallel, within the wide field of sparse approximation, Convolutional Sparse Coding (CSC) has gained increasing attention in recent years. A theoretical study of this model was recently conducted, establishing it as a reliable and stable alternative to the commonly practiced patch-based processing. Herein, we propose a novel multi-layer model, ML-CSC, in which signals are assumed to emerge from a cascade of CSC layers. This is shown to be tightly connected to CNN, so much so that the forward pass of the CNN is in fact the thresholding pursuit serving the ML-CSC model. This connection brings a fresh view to CNN, as we are able to attribute to this architecture theoretical claims such as uniqueness of the representations throughout the network, and their stable estimation, all guaranteed under simple local sparsity conditions. Lastly, identifying the weaknesses in the above pursuit scheme, we propose an alternative to the forward pass, which is connected to deconvolutional, recurrent and residual networks, and has better theoretical guarantees."
+    },
+    "submission_history": "Submission history From: Vardan Papyan [ view email ] [v1] Wed, 27 Jul 2016 17:44:05 UTC (1,191 KB) [v2] Sat, 30 Jul 2016 18:58:02 UTC (605 KB) [v3] Thu, 6 Oct 2016 21:14:01 UTC (2,275 KB) [v4] Mon, 10 Oct 2016 22:37:55 UTC (2,275 KB)",
+    "abstract_url": "https://arxiv.org/abs/1607.08194",
+    "pdf_url": "https://arxiv.org/pdf/1607.08194",
+    "pages": 50,
+    "pdf_bytes": 2444905,
+    "pdf_sha256": "605187bf888eba330f28c3e50d25aeffe37689c5b535b6842d5b6e55c4066ecb",
+    "errors": []
+  },
+  {
+    "key": "etmann2019",
+    "arxiv_id": "1905.04172",
+    "accessed_utc": "2026-10-06T00:52:20.820737+00:00",
+    "metadata": {
+      "citation_title": "On the Connection Between Adversarial Robustness and Saliency Map Interpretability",
+      "citation_author": "Sch\u00f6nlieb, Carola-Bibiane",
+      "citation_date": "2019/05/10",
+      "citation_online_date": "2019/05/10",
+      "citation_pdf_url": "https://arxiv.org/pdf/1905.04172",
+      "citation_arxiv_id": "1905.04172",
+      "citation_abstract": "Recent studies on the adversarial vulnerability of neural networks have shown that models trained to be more robust to adversarial attacks exhibit more interpretable saliency maps than their non-robust counterparts. We aim to quantify this behavior by considering the alignment between input image and saliency map. We hypothesize that as the distance to the decision boundary grows,so does the alignment. This connection is strictly true in the case of linear models. We confirm these theoretical findings with experiments based on models trained with a local Lipschitz regularization and identify where the non-linear nature of neural networks weakens the relation."
+    },
+    "submission_history": "Submission history From: Christian Etmann [ view email ] [v1] Fri, 10 May 2019 13:45:21 UTC (7,847 KB)",
+    "abstract_url": "https://arxiv.org/abs/1905.04172",
+    "pdf_url": "https://arxiv.org/pdf/1905.04172",
+    "pages": 12,
+    "pdf_bytes": 7367582,
+    "pdf_sha256": "687a77f4b1d66072f284f9802e3df990bdebc97ca9374870b779b6a71cfd5a56",
+    "errors": []
+  },
+  {
+    "key": "cdma1999",
+    "url": "https://people.eecs.berkeley.edu/~ananth/1999-2001/Pramod/OptimalSeqsIT99.pdf",
+    "resolved_url": "https://people.eecs.berkeley.edu/~ananth/1999-2001/Pramod/OptimalSeqsIT99.pdf",
+    "pages": 16,
+    "pdf_sha256": "0f6f5308e9b22a566c015c650f68d75b205190df4eb7c99357745ff5fbac82d7",
+    "errors": []
+  },
+  {
+    "key": "donoho2006",
+    "url": "https://elad.cs.technion.ac.il/wp-content/uploads/2018/02/23_Stability_IEEE_TIT.pdf",
+    "resolved_url": "https://elad.cs.technion.ac.il/wp-content/uploads/2018/02/23_Stability_IEEE_TIT.pdf",
+    "pages": 13,
+    "pdf_sha256": "d96cb7c80d51306237acdf4593225a0b995d3300521a2abc7a168582b47ef76f",
+    "errors": []
+  },
+  {
+    "key": "zhang_iclr2025",
+    "url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/11822e84689e631615199db3b75cd0e4-Paper-Conference.pdf",
+    "resolved_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/11822e84689e631615199db3b75cd0e4-Paper-Conference.pdf",
+    "pages": 33,
+    "pdf_sha256": "7cb8a5cfd134ade81e8c05e544c93ca92cc44e48b99174a6f3279d952dff1868",
+    "errors": []
+  },
+  {
+    "key": "elude2026",
+    "url": "https://pure.mpg.de/rest/items/item_3713730_2/component/file_3713731/content",
+    "errors": [
+      "URLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)'))"
+    ]
+  }
+]

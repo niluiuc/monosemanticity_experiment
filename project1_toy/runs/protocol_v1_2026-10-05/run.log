@@ -1,0 +1,28 @@
+2026-10-05 18:12:24,581 INFO Output directory: D:\Study\PHD UIUC\LLM project\algoverse\project1_toy\runs\protocol_v1_2026-10-05
+2026-10-05 18:12:24,598 INFO Pre-run mathematical checks passed
+2026-10-05 18:12:25,193 INFO Solved-pair simulations complete
+2026-10-05 18:12:25,194 INFO Training p0.05_seed0: 4000 fixed steps
+2026-10-05 18:12:26,235 INFO p0.05_seed0: final reconstruction 0.109264; mono 0.190000; convergence diagnostic True
+2026-10-05 18:12:26,236 INFO Training p0.05_seed1: 4000 fixed steps
+2026-10-05 18:12:27,250 INFO p0.05_seed1: final reconstruction 0.109229; mono 0.190000; convergence diagnostic True
+2026-10-05 18:12:27,250 INFO Training p0.05_seed2: 4000 fixed steps
+2026-10-05 18:12:28,299 INFO p0.05_seed2: final reconstruction 0.109217; mono 0.190000; convergence diagnostic True
+2026-10-05 18:12:28,300 INFO Training p0.15_seed0: 4000 fixed steps
+2026-10-05 18:12:29,372 INFO p0.15_seed0: final reconstruction 0.367426; mono 0.510000; convergence diagnostic False
+2026-10-05 18:12:29,373 INFO Training p0.15_seed1: 4000 fixed steps
+2026-10-05 18:12:30,436 INFO p0.15_seed1: final reconstruction 0.366872; mono 0.510000; convergence diagnostic True
+2026-10-05 18:12:30,436 INFO Training p0.15_seed2: 4000 fixed steps
+2026-10-05 18:12:31,436 INFO p0.15_seed2: final reconstruction 0.366879; mono 0.510000; convergence diagnostic True
+2026-10-05 18:12:31,438 INFO Training p0.30_seed0: 4000 fixed steps
+2026-10-05 18:12:32,491 INFO p0.30_seed0: final reconstruction 0.759645; mono 0.840000; convergence diagnostic False
+2026-10-05 18:12:32,491 INFO Training p0.30_seed1: 4000 fixed steps
+2026-10-05 18:12:33,539 INFO p0.30_seed1: final reconstruction 0.755567; mono 0.840000; convergence diagnostic True
+2026-10-05 18:12:33,540 INFO Training p0.30_seed2: 4000 fixed steps
+2026-10-05 18:12:34,530 INFO p0.30_seed2: final reconstruction 0.755501; mono 0.840000; convergence diagnostic False
+2026-10-05 18:12:34,530 INFO Training p0.50_seed0: 4000 fixed steps
+2026-10-05 18:12:35,599 INFO p0.50_seed0: final reconstruction 0.981213; mono 1.000000; convergence diagnostic False
+2026-10-05 18:12:35,599 INFO Training p0.50_seed1: 4000 fixed steps
+2026-10-05 18:12:36,680 INFO p0.50_seed1: final reconstruction 0.980741; mono 1.000000; convergence diagnostic False
+2026-10-05 18:12:36,682 INFO Training p0.50_seed2: 4000 fixed steps
+2026-10-05 18:12:37,748 INFO p0.50_seed2: final reconstruction 0.979962; mono 1.000000; convergence diagnostic False
+2026-10-05 18:12:42,145 INFO Finished all prespecified settings. Status: completed

@@ -1,0 +1,30 @@
+{
+  "n": 2,
+  "m": 1,
+  "encoder_energy": 1.0,
+  "p": [
+    0.05,
+    0.2
+  ],
+  "importance": [
+    1.0,
+    0.5
+  ],
+  "theta_start": -0.7853981633974483,
+  "initial_trial_step": 0.1,
+  "maximum_halvings": 30,
+  "armijo_coefficient": 0.0001,
+  "gradient_tolerance": 1e-08,
+  "maximum_iterations": 4000,
+  "sigmas": [
+    0.0,
+    0.05,
+    0.15,
+    0.3,
+    0.6
+  ],
+  "noise": "Gaussian code noise h+sigma*epsilon, epsilon N(0,1)",
+  "purpose": "local solver diagnostic; no global-optimality claim",
+  "bias_tie_policy": "retain all numerical ties; smallest finite tied bias chosen",
+  "gradient": "weighted tied W gradient contracted with (-sin(theta),cos(theta)); envelope only on differentiable minimizing branches"
+}

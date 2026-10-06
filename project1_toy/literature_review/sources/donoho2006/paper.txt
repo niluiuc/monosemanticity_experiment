@@ -1,0 +1,1748 @@
+
+
+===== PDF PAGE 1 =====
+6
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+Stable Recovery of Sparse Overcomplete
+Representations in the Presence of Noise
+David L. Donoho, Member, IEEE, Michael Elad, and Vladimir N. Temlyakov
+Abstract—Overcomplete representations are attracting interest
+in signal processing theory, particularly due to their potential to
+generate sparse representations of signals. However, in general, the
+problem of ﬁnding sparse representations must be unstable in the
+presence of noise. This paper establishes the possibility of stable
+recovery under a combination of sufﬁcient sparsity and favorable
+structure of the overcomplete system. Considering an ideal under-
+lying signal that has a sufﬁciently sparse representation, it is as-
+sumed that only a noisy version of it can be observed. Assuming
+further that the overcomplete system is incoherent, it is shown that
+the optimally sparse approximation to the noisy data differs from
+the optimally sparse decomposition of the ideal noiseless signal by
+at most a constant multiple of the noise level. As this optimal-spar-
+sity method requires heavy (combinatorial) computational effort,
+approximation algorithms are considered. It is shown that similar
+stability is also available using the basis and the matching pursuit
+algorithms. Furthermore, it is shown that these methods result in
+sparse approximation of the noisy data that contains only terms
+also appearing in the unique sparsest representation of the ideal
+noiseless sparse signal.
+Index Terms—Basis pursuit, greedy approximation, incoherent
+dictionary, Kruskal rank, matching pursuit, overcomplete repre-
+sentation, sparse representation, stability, stepwise regression, su-
+perresolution.
+I. INTRODUCTION
+A. Overcomplete Representation
+R
+ESEARCHERS spanning a diverse range of viewpoints
+have recently advocated the use of overcomplete signal
+representations [27], [30], [1], [5], [4], [33], [37], [35]. Gen-
+erally speaking, they suppose we have a signal vector
+,
+and a collection of vectors
+, with
+such vectors, so that the collection forms “more than a basis”;
+since [27] such collections are usually called dictionaries, and
+their elements are called atoms. We want a representation for
+our signal
+as a linear combination of atoms in this
+dictionary.
+Such representations differ from the more traditional basis
+representation because they offer a wider range of generating
+Manuscript received February 29, 2004; revised September 12, 2005. This
+work was supported in part by the National Science Foundation under Grants
+DMS 00-77261, 01-40698 (FRG), 02-00187, ANI-008584 (ITR) and by
+DARPA ACMP, and ONR-MURI
+D. L. Donoho is with the Department of Statistics, Stanford University, Stan-
+ford, CA 94305-9025 USA (e-mail: donoho@stanford.edu).
+M. Elad is with the Department of Computer Science, Technion–Israel Insti-
+tute of Technology, Technion City, Haifa 32000, Israel (e-mail: elad@cs.tech-
+nion.ac.il).
+V. N. Temlyakov is with the Department of Mathematics, University of South
+Carolina, Columbia, SC 29208 USA (e-mail: temlyak@math.sc.edu).
+Communicated by G. Battail, Associate Editor At Large.
+Digital Object Identiﬁer 10.1109/TIT.2005.860430
+elements; potentially, this wider range allows more ﬂexibility in
+signal representation, and more effectiveness at tasks like signal
+extraction and data compression. Proposals for overcomplete
+representations have included multiscale Gabor functions [27],
+[30], systems deﬁned by algebraic codes [33], amalgams of
+wavelets and sinusoids [3], [4], [14], libraries of windowed
+cosines with a range of different widths and locations [5],
+[42], multiscale windowed ridgelets [32], systems generated at
+random [11], and amalgams of wavelets and linelike generating
+elements [22].
+A number of interesting arguments, both heuristic and
+theoretical, have been advanced to support the beneﬁts of over-
+completeness; in theoretical neuroscience it has been argued
+that overcomplete representations are probably necessary for
+use in biological settings in the mammalian visual system [28];
+in approximation theory, there are persuasive examples where
+approximation from overcomplete systems outperforms any
+known basis [2]; in signal processing, it has been reported that
+decomposition into separate transforms gives improved com-
+pression [1], [8] and improved equalization [6]; and in image
+processing, it has been shown that one can separate images into
+disjoint signal types using such decompositions [31], [32], [22].
+At the same time, there is an apparent obstacle to overcom-
+plete representations, based on elementary linear algebra. We
+can think of the atoms in our dictionary as columns in a matrix
+, so that
+is
+by
+and
+. A representation of
+can be thought of as a vector
+satisfying
+. How-
+ever, linear algebra tells us that because
+, the problem of
+representation is underdetermined. Hence, as is widely taught
+in elementary courses, there is no unique solution to the rep-
+resentation problem, and far more disturbingly, if the data are
+even slightly inaccurate, some familiar algorithms will be stag-
+geringly unstable. That this can be a real issue was shown by
+Wohlberg [43] who considered a dictionary of sinusoids with
+frequencies spaced ﬁner than the usual discrete Fourier frequen-
+cies, and documented the extreme ill-posedness that can result.
+In this paper, we consider the impact of sparsity constraints
+on this situation, and study algorithms which can in certain
+circumstances generate sparse representations in an overcom-
+plete dictionary. We derive rigorous bounds showing that, when
+the dictionary
+has a property of mutual incoherence (deﬁned
+below), and when it offers a sufﬁciently sparse representation
+for the ideal noiseless signal, the algorithms are locally stable,
+i.e., under addition of small amounts of noise, the algorithms re-
+cover the ideal sparse representation with an error that grows at
+most proportionally to the noise level. Some of the algorithms
+are even globally stable, i.e., they recover the ideal noiseless re-
+construction with an error at worst proportional to noise level
+0018-9448/$20.00 © 2006 IEEE
+
+
+===== PDF PAGE 2 =====
+DONOHO et al.: STABLE RECOVERY OF SPARSE OVERCOMPLETE REPRESENTATIONS IN THE PRESENCE OF NOISE
+7
+even under the addition of arbitrary amounts of noise. Under
+sufﬁcient sparsity the constants of proportionality are very rea-
+sonable.
+In short, we show that, although the problem of recovering the
+underlying overcomplete representation is admittedly very ill-
+posed in general, when the underlying representation is sparse,
+and the dictionary is incoherent, the ill-posedness can disappear.
+B. Sparse Representation
+To ﬁx ideas, consider the problem of ﬁnding the sparsest rep-
+resentation possible in an overcomplete dictionary
+. As a mea-
+sure of sparsity of a vector
+, we take the so-called
+norm
+, which is simply the number of nonzero elements in
+.
+The sparsest representation is then the solution to the optimiza-
+tion problem
+subject to
+(1.1)
+As stated, this seems to be a general combinatorial opti-
+mization problem, requiring that one enumerate all possible
+-element collections of columns of
+, for
+,
+looking for the smallest collection permitting representation
+of the signal. Such an algorithm would cost at least
+ﬂops to carry out in general, and at least
+even when a
+sparse
+-element representation existed. We therefore turn to
+approximations/relaxations of
+.
+Orthogonal Greedy Algorithm. One heuristic approach
+builds up
+-element approximate representations a step at a
+time, adding to an existing
+-element approximation a
+new term chosen in a greedy fashion to minimize the resulting
+error (over all possible choices of the single additional
+term). When stopped after
+stages, one gets a sparse
+approximate representation. In more detail, the procedure starts
+from an initial residual
+and a current decomposition
+; then for
+it augments the decomposition
+and updates the residual
+step-
+wise, always maintaining
+. We suppose that the
+dictionary has normalized atoms, so that each
+. At
+the
+th stage, the algorithm selects an atom to be added to the
+decomposition based on correlation with the current residual
+it builds a decomposition consisting of the atoms selected
+through that stage
+(1.2)
+where the coefﬁcients
+are ﬁtted by least squares to mini-
+mize
+; and it subtracts this model from , obtaining
+a new residual
+which can be input to the next stage of the algorithm. At that
+point, the basic iteration is repeated. The algorithm can be
+stopped when the residual norm is below some predetermined
+threshold, or based on the number of atoms used.
+In the setting of statistical modeling, greedy stepwise least
+squares is called forward stepwise regression, and has been
+widely practiced since the 1960s [7], [20]. When used in the
+signal processing setting, this goes by the name of matching
+pursuit (MP) [27]; actually we have described a variant called
+orthogonal matching pursuit (OMP) [29]. Following [9], we
+call this the orthogonal greedy algorithm (OGA).
+Convex Relaxation. A more formal approach convexiﬁes
+by replacing the
+-norm with an
+-norm
+subject to
+(1.3)
+This can be cast as a linear programming (LP) problem, for
+which solutions are available even in large-scale problems,
+owing to modern interior-point linear programming methods.
+This approach to overcomplete signal representation was called
+basis-pursuit (BP) in [4], which observed that it sometimes
+gave highly sparse solutions to problems known to have such
+sparse solutions, and showed that it could, in speciﬁc cases,
+outperform the greedy pursuit approach in generating sparse
+solutions.
+Formal Justiﬁcation. The key point about both OGA and BP
+is that they are much more practical than the direct solution of
+. Perhaps surprisingly, these approaches can, with certain
+conditions, correctly solve
+. Thus, practical methods can
+solve problems that otherwise on the surface seem computa-
+tionally intractable. Previous work [9], [17], [39], [38], [15],
+[13], [14], [11], [19] established that both OGA and BP ap-
+proaches can be successful for signals having sparse representa-
+tions; under appropriate conditions on
+and , these algorithms
+produce the globally optimal solution of
+. The concept of
+mutual coherence of the dictionary
+plays a major role in these
+results. It is deﬁned, assuming that the columns of
+are normal-
+ized to unit
+-norm, in terms of the Gram matrix
+.
+With
+denoting entries of this matrix, the mutual coher-
+ence is
+(1.4)
+A dictionary is incoherent if
+is small. There are overcom-
+plete systems with
+and
+[33]. The results
+in [13], [14], [11], [19] showed that, if there exists a represen-
+tation
+with sparsity
+, and
+does not ex-
+ceed a threshold
+deﬁned by
+alone (we consider
+), then a) this is the unique sparsest representation, and
+b) these algorithms would ﬁnd it. If, for example,
+,
+this result promises, for large
+, an ideal form of atomic decom-
+position even of fairly complex objects. In such cases, provided
+the object
+is made from
+atoms in the dictionary, this
+sparse decomposition can be uniquely recovered.
+C. Presence of Noise
+In most practical situations it is not sensible to assume that
+the available data
+obey precise equality
+with a sparse
+representation
+. A more plausible scenario assumes sparse ap-
+proximate representation: that there is an ideal noiseless signal
+
+
+===== PDF PAGE 3 =====
+8
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+with a sparse representation,
+with
+small, but that we can observe only a noisy version
+,
+where
+.
+Noise-Aware Variant of
+. We can adapt to this noisy set-
+ting by modifying
+to include a noise allowance
+subject to
+(1.5)
+Note that
+. Also, if we apply this with
+, the problem has a sparse solution; in fact, the solution
+obeys
+, or more formally, since
+is a feasible
+solution of
+(1.6)
+In our notations,
+of an optimization problem stands for its
+value at the solution. Note that
+rarely has a unique so-
+lution, since once the sparsest solution is found, many feasible
+variants of it sharing the same support can be built.
+Noise-Aware Variant of OGA. Just as with
+de-
+mands exorbitant computational efforts in general, and so again
+we may resort to heuristics and relaxations. On the one hand,
+OGA can be employed for approximating the solution of (1.5);
+the stepwise procedure can simply be stopped when the repre-
+sentation error gets below .
+Noise-Aware Variant of
+. On the other hand, we can
+pursue a strategy of convexiﬁcation, replacing the
+-norm in
+(1.5) by an
+-norm
+subject to
+(1.7)
+This can be cast as a convex quadratic program which can
+be solved by many standard approaches, including iteratively
+reweighted least squares (IRLS) [23], interior-point algorithms
+[4], and active-set methods. It is also closely related to basis
+pursuit denoising (BPDN) [4], and to the LASSO technique
+employed in statistical regression to avoid overﬁtting when
+combining predictors [34]. Both those proposals amount to
+solving a corresponding convex optimization in Lagrangian
+form
+(1.8)
+for appropriate
+the solutions of
+and
+are the same. Solving (1.8) with ﬁxed
+leads to
+different results—see [40] for an analysis of this option.
+We note that instead of
+, one can use
+-norm with
+in order to better imitate
+while losing convexity. This is
+the spirit behind the FOCUSS method [18].
+D. Stability Properties
+In this paper, we develop several results exhibiting stable re-
+covery of sparse representations in the presence of noise. We
+now brieﬂy sketch their statements.
+First, we show that when sufﬁcient sparsity is present, where
+“sufﬁcient” is deﬁned relative to the degree of mutual incoher-
+ence, solving
+enables stable recovery. We suppose that
+we have a possibly overcomplete system
+with mutual coher-
+ence
+. Suppose that we have a noisy signal
+and
+that the ideal noiseless signal
+has a sparse representation
+with at most
+nonzeros. We have that the noise is bounded,
+. Then if
+, it follows that the
+solution
+of
+obeys
+(1.9)
+with the stability coefﬁcient
+.
+The proportionality constant
+(which we also call the stability
+coefﬁcient) can be quite moderate given sufﬁcient sparsity. In
+words, provided the underlying object is sparsely represented
+and the noise level is known, recovery by explicitly imposing
+sparsity yields an approximation to the ideal sparse decomposi-
+tion of the noiseless signal in which the error is at worst propor-
+tional to the input noise level.
+Next, we develop a parallel result for
+minimization.
+Making parallel assumptions, tightened so that the ideal
+noiseless signal
+has a sparse representation
+with
+, we show that the solution
+of
+obeys
+(1.10)
+where the stability coefﬁcient
+In words,
+-based reconstruction in incoherent overcomplete
+systems has an error which is at worst proportional to the input
+noise level. The sparsity requirement is twice as stringent for the
+-based result as for the
+-based result.
+By comparison, OGA obeys a local stability result. Again
+suppose a possibly overcomplete system with
+, and
+an ideal noiseless signal
+having a representation with at most
+atoms. Suppose that the smallest among the
+nonzeros in
+the representation of
+has amplitude
+. Assume that we know
+the noise level
+and run the OGA just until the
+representation error
+. Call the result of this greedy algorithm
+. Set
+Then if the noise is sufﬁciently weak
+(1.11)
+the recovered representation
+obeys
+(1.12)
+This is a local stability result because for large values of
+the condition (1.11) will necessarily fail.
+Note the parallel nature of the bounds and the conclusions.
+Three quite different algorithms all obey stability results in
+which having
+a fraction of
+is the key assumption.
+E. Support Properties
+A different fundamental question about efforts to obtain
+sparse representation is: do we actually recover the correct
+sparsity pattern? Our stability results do not address this ques-
+tion, since it is possible for a nonsparse representation to be
+close to a sparse representation in an
+sense.
+The question is fundamental and broadly signiﬁcant.
+Throughout science and technology, it is habitual to ﬁt sparse
+models to noisy data, and then simply assume that terms
+appearing in such ﬁtted models are dependable features.
+
+
+===== PDF PAGE 4 =====
+DONOHO et al.: STABLE RECOVERY OF SPARSE OVERCOMPLETE REPRESENTATIONS IN THE PRESENCE OF NOISE
+9
+In this paper, we are able to shed some light on this situation.
+Our results show that, under appropriate conditions, the empir-
+ical representation
+is not only at least as sparse as the ideal
+sparse representation but it only contains atoms also appearing
+in the ideal sparse representation. Since that ideal sparse repre-
+sentation is, by our other results, unique and well-deﬁned, these
+insights endow the empirical support of
+with a, perhaps sur-
+prising, signiﬁcance.
+Our ﬁrst result concerns solution of
+with
+Here,
+, and so we are solving the
+min-
+imization problem using an exaggeration of the noise level. It
+shows, with
+and
+, that the solu-
+tion
+has its support contained in the support of
+. Here
+for
+for high
+values of
+, so ordinarily it requires considerable overstatement
+of the noise level to achieve this level of conservatism. However,
+it does provide the very interesting epistemological beneﬁt that
+the atoms appearing in the representation have more than inci-
+dental meaning.
+Our second result is obtained in the course of analyzing OGA;
+it shows that, under condition (1.11) and
+, the ideal
+noiseless representation is unique, and the support of
+is
+contained in the support of
+.
+F. Contents
+The next sections supply the analysis behind the stability
+bounds just quoted, and a discussion of support properties. The
+ﬁnal section extends this work in various directions.
+•
+Numerical Results. We study the actual stability and sup-
+port recovery behavior of the
+and OGA on synthetic ex-
+amples, ﬁnding typical behavior far more favorable than
+our theoretical bounds.
+•
+Superresolution. We situate our work with respect to the
+problem of superresolution, in which astronomers, seis-
+mologists, spectroscopists, and others attempt to “deblur”
+sparse spike trains.
+•
+Geometry. We develop a geometric viewpoint explaining
+why stability can sometimes be expected for the
+penal-
+ization scheme, under conditions of sufﬁcient sparsity.
+We have recently learned that in parallel to our efforts, there
+are two similar contributions, handling stability and support re-
+covery for the basis pursuit. J. A. Tropp has been working in-
+dependently on some of the same problems [40], and so has J.
+J. Fuchs [16]. After some recent discussions with these authors
+and a careful study of these works we ﬁnd that their methods
+and results have a rather different ﬂavor, ensuring that the three
+separate works are of interest in studying sparse approximation
+under noise.
+II. STABILITY USING
+Suppose again the existence of an ideal noiseless signal
+and noisy observations
+with
+.
+Consider applying
+with
+to obtain a sparse approx-
+imation to
+. The following establishes the stability estimate
+mentioned in the introduction.
+Theorem 2.1: Let the dictionary
+have mutual coherence
+. Suppose the noiseless signal
+, where
+satisﬁes
+(2.1)
+Then
+a)
+is the unique sparsest such representation of
+; and
+b) the reconstruction
+from applying
+to the noisy
+data
+approximates
+(2.2)
+Claim a) actually follows from known results; e.g., see [13],
+[14] for the two-ortho case, and [11], [19] for general dictio-
+naries. Claim b) requires the following.
+Lemma 2.2: Let
+, and let
+. Every
+submatrix formed by concatenating
+columns from
+has the
+th singular value bounded below by
+.
+Proof: This is equivalent to the claim that
+(2.3)
+where
+is the concatenation of
+columns from
+and
+is
+any vector in
+. Assume without loss of generality these are
+the ﬁrst
+columns. Let
+be the corresponding Gram
+matrix, and write
+(2.4)
+Now
+Using this inequality in the identity (2.4) gives (2.3).
+Apply this to
+, with
+, and we have
+Also, note that, if
+, then
+is a linear combination of
+at most
+columns of
+. Thus,
+can be written as a
+linear combination of at most
+columns from
+. Applying
+Lemma 2.2, or, more properly, the inequality (2.3), gives the
+result.
+III. STABILITY USING
+As in the Introduction, we are given a signal
+,
+where
+is an additive noise, known to satisfy
+. We
+apply
+to this signal (necessarily with
+); i.e., we
+solve (1.7) and obtain a solution
+. We study its deviation
+from the ideal representation
+.
+
+
+===== PDF PAGE 5 =====
+10
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+A. Stability Result
+Theorem 3.1: Let the overcomplete system
+have mutual
+coherence
+. If some representation of the noiseless signal
+satisﬁes
+(3.1)
+then the deviation of the
+representation from
+, as-
+suming
+, can be bounded by
+(3.2)
+Proof: The stability bound can be posed as the solution to
+an optimization problem of the form
+subject to
+subject to
+(3.3)
+Put in words, we consider all representation vectors
+of
+bounded support, and all possible realizations of bounded
+noise, and we ask for the largest error between the ideal sparse
+decomposition and its reconstruction from noisy data. Deﬁning
+, and similarly
+, we can rewrite the
+above problem as
+subject to
+subject to
+(3.4)
+We develop an upper bound on
+(3.4) in a sequence of re-
+laxations, each one expanding the feasible set and increasing
+the maximal value. To begin, note that if
+is the minimizer of
+under these constraints, then relaxing the constraints
+to all
+satisfying
+expands the feasible set.
+However, this is true only if
+since otherwise
+is not
+a feasible solution. Thus, we consider
+(3.5)
+We now expand this set by exploiting the relation
+where
+is the support of the nonzeros in
+with complement
+, and we used
+. Therefore,
+we get a further increase in value by replacing the feasible set
+in (3.5) with
+#
+(3.6)
+Writing this out yields a new optimization problem with still
+larger value
+subject to
+#
+(3.7)
+We next simplify our analysis by eliminating the noise vector ,
+using
+(3.8)
+Expanding the feasible set of (3.7) using this observation gives
+subject to
+#
+(3.9)
+where we introduced
+.
+The constraint
+is not posed in terms of the abso-
+lute values in the vector
+, complicating the analysis; we now
+relax this constraint using incoherence of
+. Again, the Gram
+matrix is
+, and the mutual coherence is the maximal
+off-diagonal amplitude:
+. For a vector
+, let
+be vector containing absolute values from
+; simi-
+larly for matrices. Also, let
+be the the
+-by-
+matrix of all
+ones. The constraint
+can be relaxed
+(3.10)
+Using this,
+(3.9) is bounded above by the value
+subject to
+#
+(3.11)
+This problem is invariant under permutations of the entries in
+which preserve membership in
+and
+. It is also invariant
+under relabeling of coordinates. So assume that all nonzeros in
+are concentrated in the initial slots of the vector, i.e., that
+.
+Putting
+where
+gives the ﬁrst
+entries in
+, and
+the remaining
+entries of
+, we obviously have
+(3.12)
+The
+norm on
+dominates the
+norm and is dominated by
+times the
+norm. Thus,
+(3.13)
+We deﬁne
+(3.14)
+Returning to the problem given in (3.11), and using our
+notations, we obtain a further reduction, from an opti-
+
+
+===== PDF PAGE 6 =====
+DONOHO et al.: STABLE RECOVERY OF SPARSE OVERCOMPLETE REPRESENTATIONS IN THE PRESENCE OF NOISE
+11
+mization problem on
+to an optimization problem on
+subject to
+(3.15)
+We further deﬁne
+, where
+and rewrite (3.15)
+as
+subject to
+(3.16)
+Deﬁne
+. Then
+over the
+region (3.16). Setting
+, the ﬁrst constraint
+deﬁning that region takes the form
+(3.17)
+Since
+, the sparsity requirement (3.1) leads to
+(3.18)
+Hence,
+(3.19)
+as stated by (3.2) with the choice
+.
+The requirement (3.18) puts a restriction on
+and
+, being
+free parameters of the problem. Using
+leads to the
+sparsity requirement in (3.1), since
+.
+B. Interpretation and Comments
+Theorem 3.1 prompts several remarks.
+•
+Setting
+puts us in the noiseless case
+. In that setting, Theorem 3.1 tells us that if
+, there will be zero error in ﬁnding the
+unique sparsest representation—i.e., solving the
+opti-
+mization problem
+solves the
+problem
+.
+As the
+problem is convex and the
+problem combi-
+natorial in general, this is by itself signiﬁcant. The same
+general phenomenon described has been observed before
+in [13], [14], [11], [19]. The sharpest results, in [11], [19],
+established that this phenomenon occurs for any sparsity
+smaller than
+, which means that the new
+result is slack by a factor of
+in the
+case. Perhaps
+a tighter inequality could be achieved with more care.
+•
+If the signal is not noisy (i.e.,
+) but nevertheless
+is employed with
+, an approximate solution is
+assured, with a bound on the deviation of the approximate
+representation from the ideal noiseless representation. So
+in “needlessly” going from
+to
+we tolerate
+errors in the decomposition, but the errors are controlled.
+•
+In practice, if the signal is noisy (i.e.,
+) and we set
+as if there were no noise, some degree of stability
+is still obtained! However, our results do not cover this
+case, and further work is required to establish this kind of
+stability.
+IV. SUPPORT RECOVERY WITH
+So far, we have concentrated on the recovery of
+. We now
+consider whether we can correctly recover the support of
+.
+Our approach applies
+with a specially chosen
+.
+Theorem 4.1: Suppose that
+where
+and
+. Let
+and suppose
+. Set
+(4.1)
+Solve
+with exaggerated noise level
+. Then
+.
+As an example, if
+, exaggerating the noise level by a
+factor
+leads to partial support recovery. This pro-
+nounced inﬂation of the noise level might cause (in an extreme
+case) a zero solution. Still, from the following proof it seems
+that
+dependence is intrinsic to the problem.
+Proof: For later use, we let
+be the smallest
+th
+singular value of any submatrix
+of
+containing
+columns
+from
+. By our assumptions and Lemma 2.2
+(4.2)
+We need notation for the convex functional
+and
+for the quadratic functional
+.
+Now let
+be the support of the ideal noiseless representation
+, and consider the support-constrained optimization problem
+where feasible vectors
+must be supported in
+. Let
+be a solution of this problem. We claim that, in fact,
+is ac-
+tually the solution of the support-unconstrained problem
+,
+i.e.,
+. Observe, ﬁrst of all, that unless
+, there is
+nothing to prove. Now consider perturbations
+of
+i.e., rep-
+resentations of the form
+, for
+small. We will
+show that a perturbation which does not increase the
+objec-
+tive, deﬁnitely violates the constraint. Formally
+for all sufﬁciently small
+(4.3)
+implies
+for all sufﬁciently small
+(4.4)
+It follows that
+is locally optimal for
+. By convexity,
+this local condition implies global optimality; and global opti-
+mality implies that the solution has support
+as claimed.
+We now note that, for
+(4.5)
+where
+and
+, while for
+sufﬁciently small positive
+(4.6)
+
+
+===== PDF PAGE 7 =====
+12
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+where
+for
+, and
+otherwise, and we
+used the identity
+, valid for
+. Let
+and
+denote the terms of order
+in (4.5) and (4.7);
+we plan to show that
+(4.7)
+this will show that (4.3) implies (4.4).
+We ﬁrst work out the consequence of
+solving
+.
+Since
+, there is a nonempty subspace of vectors sup-
+ported in
+; (4.5) and (4.7) show that
+and
+are both dif-
+ferentiable at
+. The fact that
+solves the constrained op-
+timization problem
+, implies (by classical constrained
+optimization/Lagrange multiplier ideas) that for some
+at
+This implies that for vectors
+supported in
+we must have
+, or
+(4.8)
+We introduce the notation
+for inner product in
+for inner product restricted to coordinates in
+, and
+for
+inner product restricted to coordinates in
+. We introduce the
+notation
+for the
+norm restricted to
+, etc. To illus-
+trate the notation, we have that, if
+is a vector supported in
+. Then (4.8) says that, for all
+(4.9)
+We now show that
+is the unique global optimum of
+—i.e., the original problem, without the support con-
+straint. We write
+then from (4.9)
+while
+Hence,
+implies
+and also
+Hence, (4.7) follows from
+(4.10)
+Later we will show that
+(4.11)
+Thus, (4.10) follows from
+(4.12)
+Recalling (4.9), and choosing
+, shows that
+Using
+and the deﬁnition (4.2) of
+and so
+(4.13)
+In short, for (4.12) and hence (4.10) to follow, we should re-
+quire
+(4.14)
+which can be rearranged to
+(4.15)
+This holds because our deﬁnition of
+makes this an equality.
+It only remains to demonstrate (4.11). Write
+,
+where
+is the component of
+not in the span of
+,
+which has norm
+, while
+is the component of
+in the span
+of the
+, with norm
+. Hence,
+and
+(4.16)
+where
+are entries of the Gram matrix
+(known to be in the range
+) and
+is the submatrix of
+with columns from
+only. The deﬁnition of
+yields
+and since
+, (4.16) gives
+giving (4.11).
+V. LOCAL STABILITY OF THE OGA
+Observe that both
+and
+refer to global optimiza-
+tion problems, while the OGA described in the Introduction is
+based on greedy stagewise approximation. Paralleling this dis-
+tinction, the stability result we now develop for OGA is a local
+one, valid only for sufﬁciently small
+, depending on
+the representation coefﬁcients.
+For ease of exposition, we shall hereafter assume that the
+order of the columns
+in the overcomplete system
+matrix
+has been chosen so that in the ideal noiseless signal
+, the ﬁrst
+entries in
+are the nonzero entries, and
+that these are ordered
+(5.1)
+
+
+===== PDF PAGE 8 =====
+DONOHO et al.: STABLE RECOVERY OF SPARSE OVERCOMPLETE REPRESENTATIONS IN THE PRESENCE OF NOISE
+13
+Theorem 5.1: Suppose the ideal noiseless signal
+has a
+representation
+satisfying1
+(5.2)
+Denote by
+the result of greedy stepwise least-squares
+ﬁtting applied on the noisy signal , which stops as soon as the
+representation error
+. Then
+a)
+has the correct sparsity pattern
+(5.3)
+b)
+approximates the ideal noiseless representa-
+tion
+(5.4)
+Note that the argument assumes the noise level
+is known,
+to enable the stopping rule in the algorithm. This parallels the
+assumption
+, which we relaxed in Theorems 2.1 and 3.1
+by using
+.
+The general idea—that the support properties of
+and
+are the same—seems worthy of its own study. In the
+Technical Report [12] on which this paper is based, we call this
+the trapping property, and develop it further.
+We break our analysis in two stages, considering claims (5.3)
+and (5.4) in turn.
+A. Getting the “Correct” Support
+Lemma 5.2: Suppose that we have a signal
+satisfying
+where
+admits sparse synthesis
+using at
+most
+atoms, where
+(5.5)
+and where
+. Then the ﬁrst step of the greedy algorithm
+selects an atom index from among the
+nonzeros in
+.
+Proof: The greedy algorithm operates by projecting
+onto
+each atom
+in turn, selecting an atom index where the projec-
+tion magnitude is largest. The lemma will follow from
+(5.6)
+We now develop a lower bound on the left-hand side and an
+upper bound on the right-hand side which guarantees this. As-
+suming that the largest amplitude entry in
+occurs in slot
+,
+the left-hand side of (5.6) is bounded below by
+(5.7)
+1This inequality is equivalent to the one posed in (1.11).
+We used
+for all
+for
+and the ordering of the
+. The right-hand side of (5.6) can
+be bounded above by the same approach, leading to, for
+(5.8)
+Imposing (5.5) and using the two bounds (5.7) and (5.8), we see
+that
+(5.9)
+Relation (5.6) follows; the greedy algorithm therefore chooses
+at Stage 1 one of the nonzeros in the ideal representation of the
+noiseless signal.
+To continue to later stages, we need the following.
+Lemma 5.3: Let
+and
+with
+. Let
+be a set of
+indices in
+being
+the number of columns in
+. Let
+be a vector of
+coefﬁcients
+with
+nonzeros located at the indices in
+. Deﬁne a new signal
+by subtracting
+atoms with nonzero coefﬁcients in
+Similarly, deﬁne
+Then
+•
+if
+, where
+has a
+unique sparsest representation
+made of at most
+atoms; these are all atoms originally appearing in the
+representation of
+;
+•
+the new signal
+can be viewed as a superposition of
+and noise
+, with noise level
+.
+Proof: Deﬁne the vector
+Then clearly
+. Also,
+. Since
+then
+we conclude that
+is the unique sparsest representation of
+.
+Moreover
+Hence we have established the two claims.
+The impact of the preceding two lemmas is that selection of
+a term, followed by the formation of the residual signal, leads
+us to a situation like before, where the ideal noiseless signal has
+no more atoms than before, and the noise level is the same.
+
+
+===== PDF PAGE 9 =====
+14
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+We wish to repeatedly apply these lemmas. Starting with
+, we will get an
+and an
+; we then hope to apply the
+observations again, getting
+and
+, etc. If we are allowed
+to continue invoking these lemmas for
+steps, we produce in
+this way series
+, and
+. Naturally, the sets
+are nested.
+Note, however, that a series of conditions must be satisﬁed
+for the repeated use of the ﬁrst lemma. At the
+th iteration, we
+need the following analog of (5.5):
+(5.10)
+This will follow from our original assumption (5.2) and the fact
+that if
+differs from
+in at most
+places, and
+is ordered
+as in (5.1), then
+The above, along with the ordering assumption on the coefﬁ-
+cients in
+, show that
+for
+, and
+so the sequence of conditions (5.10) is implied by the ﬁnal one
+at
+, which is a consequence of (5.2). Hence, assumption
+(5.2) allows us to repeatedly apply Lemmas 5.2 and 5.3, and
+conclude that atom indices selected at stages
+obey
+: only correct atoms are selected.
+In fact, we can say much more. The coefﬁcient sequence
+generated at stage
+solves the least-squares problem
+(5.11)
+This ensures that the signal
+is actually orthogonal to each
+atom selected at stages
+. Hence, OGA is forced to select
+from among the atom indices in
+always one of the
+previously unselected ones. It therefore by stage
+selects all
+atom indices in
+. Now by assumption, the residual at
+that stage has
+norm
+. Hence, the stopping criterion must
+be reached by stage
+. At the same time, by inspecting (5.9) we
+see that at stages
+, each selected term
+. This
+implies that the stopping criterion cannot be met before stage
+, as
+. Thus, we have proved the
+following.
+Lemma 5.4: OGA stops after precisely
+steps.
+This, in turn, proves Claim a) of the theorem, (5.3).
+B. Stability Result
+Now we turn to Claim b) of Theorem 5.1. We may partition
+, where
+denotes the ﬁrst
+columns in
+and
+the remainder. The OGA solves (5.11) with
+,
+or
+(5.12)
+where
+denotes the Moore–Penrose generalized inverse of
+. Recall that the signal has a representation
+with
+. Thus, using the formula above we have
+(5.13)
+We may partition
+where
+contains the ﬁrst
+entries of
+, and similarly
+. We obtain
+(5.14)
+The vector
+represents reconstruction error, and we have
+the error bound
+(5.15)
+where we bounded the norm of
+in terms
+, the smallest
+singular value of
+. Lemma 2.2 gives
+.
+Expression (5.4) follows.
+C. Relation to
+-Term Approximation
+There has recently been a great deal of interest in the greedy
+algorithm as a method to generate near-best
+-term approxi-
+mations. Relevant literature includes [17], [35], [36], [38], [39].
+The questions asked in this literature concern the quality of
+-term approximations
+, where
+, to
+approximate a general object
+. More speciﬁcally, let
+be the
+-term approximation to a vector
+by the orthogonal
+greedy algorithm run through
+steps, and
+be the optimal
+-term approximation, obtained by
+The central question is to compare the approximation errors of
+the two approaches
+In this direction, the ﬁrst result was provided by Gilbert et al.
+[17]
+This was then improved by Tropp to [39]
+These results show that, at least in its initial stages, the greedy
+algorithm performs quite well compared to the optimal algo-
+rithm.
+The results we developed in this section have only indirect
+connection to this problem. Note that all our estimates concern
+errors such as
+on the representation scale, rather
+than errors such as
+, that are measured on the re-
+construction scale. Nevertheless, in an incoherent dictionary, the
+two are connected for small
+. It follows that the ideas in this
+paper are very similar to ideas underlying the
+-term approxi-
+mation results cited above.
+VI. EXCESSIVE PESSIMISM?
+The conditions for stability developed here are unduly restric-
+tive. We used worst case reasoning exclusively, deriving condi-
+tions which must apply to every dictionary, every sparse repre-
+sentation, and every bounded noise vector. The bounds we have
+proven are consequently very loose and do not describe typical
+behavior; the sparsity conditions we have posed are much too
+strict. To illustrate this, we conducted numerous experiments to
+
+
+===== PDF PAGE 10 =====
+DONOHO et al.: STABLE RECOVERY OF SPARSE OVERCOMPLETE REPRESENTATIONS IN THE PRESENCE OF NOISE
+15
+Fig. 1.
+`
+method,  = : Representation error k   ^
+k
+versus noise
+level . Solid lines depict the bound from Theorem 3.1. Different panels display
+results with support sizes N = 1; 2; 3.
+study the stability of various algorithms in concrete cases. We
+present several representative results in this section.
+We worked with a dictionary
+, concatenating two
+orthonormal bases—the standard and Hadamard bases for sig-
+nals of length
+each, yielding
+. We used
+randomly generated ideal representations
+satisfying the con-
+ditions of Theorem 3.1; since
+, we use
+. The nonzero entries of
+were located in
+uniform random positions, and the values of those entries were
+drawn from a normal distribution with zero mean and unit vari-
+ance. The ideal noiseless signal
+was normalized to
+have a unit
+-norm, so as to guarantee ﬁxed signal-to-noise
+ratio (SNR) in our experiments. The signal
+was contami-
+nated with zero-mean white Gaussian noise
+, rescaled to en-
+force a speciﬁed noise level
+, obtaining
+.
+The noise power values tested are
+. We
+performed 1000 trials at each combination of
+and —all to-
+gether, 30 000 such realizations were generated, and to each we
+applied both
+and OGA.
+A. Experiments With
+Penalization
+We solved
+numerically; thus, we assume the noise
+level
+is known and this knowledge is exploited in the recovery
+process. We used the IRLS algorithm [23] with a line search for
+the proper Lagrange multiplier. For each trial we calculated i)
+the representation error
+, for comparison to the-
+oretical bounds; ii) the denoising effect
+, for
+comparison to the input noise power; and iii) the support match,
+measured as the relative energy in
+on the true support of
+.
+This measure is robust against disagreements over the deﬁnition
+of “zero” entries in a numerical solution.
+Fig. 1 presents the representation error results. For every
+value, the results are presented by plotting the tenths (11 points,
+starting from the minimum, and jumping by 100 sorted experi-
+ments’ result, till the maximum). The results show a consistent
+stability with linearly growing error as a function of the noise
+level. The bounds of Theorem 3.1 are shown as solid lines, and
+the input noise amplitude is indicated by a dotted line. As ex-
+pected, there is a large gap between the bound and the actual
+results. Accumulated marks near the axis imply that most of the
+experiments show stronger stability.
+Fig. 2.
+` method,  = : Signal error k   ^
+k as a function of the
+noise level . Dotted lines indicate input noise level.
+Fig. 3.
+` method,  = : Support recovery success in percent.
+Fig. 2 presents the signal error results, showing the effect of
+denoising achieved. The results, organized similar to the ones in
+Fig. 1, show a very effective denoising.
+Fig. 3 presents results on support recovery. The vertical axes
+describe the range [75, 100]%. As can be seen,
+has nearly
+perfect success in recovering the support. Our tests probe the
+region beyond the range covered by Theorem 4.1. We have used
+, rather than
+, and
+for
+, respectively.
+B. Experiments With Greedy Optimization
+We now compare reconstruction errors for OGA with the
+above results, and with the bounds in Theorem 5.1 (inequality
+(5.4)). Paralleling the experiment for
+with
+, we dis-
+play theoretical bounds and empirical errors in Fig. 4. Evidently,
+OGA behaves stably with results somewhat weaker than those
+obtained by the
+penalization. Again, the upper bounds pro-
+vided in Theorem 5.1 are seen to be exactly that—overestimates
+of the reconstruction error. Note that in this experiment we have
+used
+, totally disregarding the condition as posed in
+(5.2), tying the allowed sparsity to the coefﬁcients’ amplitude.
+Yet, the results show stability.
+Fig. 5 shows the denoising effect, and as can be seen, the
+results resemble those found in the representation errors. Fig. 6
+presents the support recovery success rates. Those are weaker
+than in the
+case; as the noise strengthens, we violate the
+condition (5.2), and eventually see breakdown in the support
+recovery.
+
+
+===== PDF PAGE 11 =====
+16
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+Fig. 4.
+OGA: Representation error k   ^
+k versus noise level . Solid
+lines depict bounds in Theorem 5.1.
+Fig. 5.
+OGA: Signal error k  ^
+k versus noise level . Dotted lines
+depict input noise level. Different panels display results for support sizes N =
+1; 2; 3.
+Fig. 6.
+OGA: Support recovery success in percent.
+C. Geometric Heuristics
+As indicated above, our very general reasoning is to blame
+for the looseness of our theoretical bounds; by developing
+bounds valid for a wide range of dictionaries and a wide range
+of sparsely represented signals, we are forced to consider the
+behavior for the worst possible combination of dictionary,
+signal, and noise.
+We might get tighter results, by developing tools adapted to
+each speciﬁc
+combination. Unfortunately, the closer we
+get to case-by-case analysis, the more difﬁcult it becomes to get
+an intellectually digestible overview of the situation. At least for
+minimization, it seems clear to the authors that, even at values
+Fig. 7.
+Geometry favorable to unique ` decomposition. Intersection of A
+with B (R ) in a unique point. This point is the unique solution ^
+.
+far greater than those covered in Theorem 3.1 the following
+will generally be true.
+•
+A sparse vector
+generating
+will be the
+unique solution of
+and
+•
+the solution of
+based on noisy data
+with
+noise level
+will stably recover
+.
+It is less clear to us that we can expect the solution to the
+problem to agree with the solution to the
+problem with the
+same degree of generality.
+Some insight may be gleaned by considering the geometry
+of minimal
+decomposition; see Fig. 7 below. The minimal
+decomposition in an overcomplete system is the point in the
+subspace
+having the smallest
+norm.
+Denote this norm by
+. Alternatively, if we con-
+sider the collection of balls
+in
+, it is the “ﬁrst point in
+” to “meet” the family of balls
+as
+grows from
+to
+. When this meeting occurs, if it is in
+a unique point, then the
+decomposition is unique. Now note
+that if
+has few nonzeros, then it sits in a low-dimensional
+face of
+. Denote by
+the smallest dimensional face
+of
+containing
+in its interior.
+Fig. 7 shows clearly a situation where
+is transversal to
+—the two subspaces meet nicely in a single point. More
+than this: all the faces of
+touching
+intersect
+tranversally. Now the cleanness of these intersections imply that
+is the unique
+minimizer in
+.
+A key observation is that the faces of the ball
+run
+through a ﬁnite list of speciﬁc orientations. If we take a generic
+, there would never be a fortuitous alignment of any subspace
+with any of the low-dimensional faces of
+; hence,
+transversal intersections should be generic, and we can expect
+to have unique
+minimizers except when
+and
+demand nonuniqueness.
+What about stability? A geometric explanation of stability for
+is illustrated in Fig. 8. Because of
+must belong to the cone
+with vertex at
+consisting of all
+points
+such that for small
+.
+On the other hand, because of
+must
+
+
+===== PDF PAGE 12 =====
+DONOHO et al.: STABLE RECOVERY OF SPARSE OVERCOMPLETE REPRESENTATIONS IN THE PRESENCE OF NOISE
+17
+Fig. 8.
+Geometry favorable to stable ` decomposition. Intersection of A
+with B (R ) in a tubular wedge. ^
+must lie in wedge. Small size of the
+wedge indicates stability.
+belong to the cylinder
+consisting of all vectors
+obeying
+. In short, for a cone
+and a cylinder
+, we have
+Roughly speaking, the size of this intersection is controlled by
+the angle between
+and
+. That this angle can be positive
+we know already; because that is the content of the transversality
+we have already discussed.
+There is an analytical framework to quantify the above
+heuristic notions. There is a stability estimate adapted to a
+speciﬁc
+pair
+where
+Equivalently
+where
+denotes the tangent cone to
+at
+, i.e., the col-
+lection of vectors
+such that
+for all sufﬁciently
+small
+.
+This last display makes the point that we are trying to op-
+timize a ratio of quadratic forms subject to membership in a
+cone. This makes us say that
+is akin to the secant of the angle
+between
+and
+. Unfortunately, to our knowledge, the
+problem of ﬁnding the angle between a cone and a subspace
+does not have a convenient computational solution. Hence, al-
+though the bound depends intimately on
+and
+, we know of
+no way to easily compute this dependence at the moment.
+D. Domain of Applicability
+An apparent application of the results of this paper concerns
+the problem of resolving a spectrum at a resolution ﬁner than the
+usual Rayleigh spacing. As a simple model, we could consider
+the complex-valued dictionary with atoms
+Here , an integer
+is the superresolution factor, and the im-
+plicit constant of proportionality is chosen to enforce the nor-
+malization
+. In this overcomplete system, the fre-
+quencies are spaced
+apart, which is
+times as closely as
+the usual spacing
+of the Fourier frequencies, hence, the term
+superresolution. If we simply chose
+, we would have an
+orthogonal dictionary. If we choose
+, we get an overcom-
+plete system with
+. It would be very attractive to be able
+to solve this problem, getting ﬁner frequency resolution out of
+a given signal length. However, Wohlberg [43] showed that in
+general this problem will lead to extreme ill-posedness, even
+under sparsity constraints.
+We remark that, while superresolution is an attractive and im-
+portant problem, this is not the setting we envisioned for ap-
+plying our results. In the superresolving case, with
+, the
+dictionary has mutual coherence
+, which
+tends to
+as
+increases. This is quite large, and the dic-
+tionary is coherent rather than incoherent. It yields the sparsity
+threshold
+which allows to disentangle at
+most two atoms, at any
+!
+The kind of situation we have in mind for applying our results
+is quite different; we are interested in cases where the mutual
+incoherence is comparable, for large
+, to some power
+, so
+that, at least for large
+, there is the potential to disentangle
+fairly complex superpositions of many atoms. Previous work
+has given several examples of this type of situation: random
+dictionaries [11], Grassmannian frames [33], and dictionaries
+for
+voxel data made of digital points, lines, and planes
+[11].
+For those interested in supperresolution, we remark that, in
+our opinion, the analysis in [43] adopts a framework which is
+unduly pessimistic. The careful theoretical work on superreso-
+lution [10] explains that stable superresolution is possible using
+sparsity; however, the notion of sparsity needs to be adapted to
+the setting. Speciﬁcally, it becomes important to deﬁne sparsity
+in terms of “number of nonzeros per Rayleigh interval” rather
+than simply “number of nonzeros.” When this deﬁnitional con-
+vention is adopted, it is possible to prove that sufﬁcient sparsity
+again enables superresolution, in agreement with a considerable
+body of empirical work, also cited in [10].
+ACKNOWLEDGMENT
+The authors would like to thank Matthew Ahlert and Inam Ur
+Rahman for help in preparing the ﬁgures.
+REFERENCES
+[1] A. P. Berg and W. B. Mikhael, “A survey of mixed transform techniques
+for speech and image coding,” in Proc. 1999 IEEE Int. Symp. Circuits
+and Systems, vol. 4, Orlando, FL, Jun. 1999, pp. 106–109.
+[2] E. J. Candès and D. L. Donoho, “New tight frames of curvelets and
+the problem of approximating piecewise C
+images with piecewise C
+edges,” Commun. Pure Appl. Math., vol. 57, pp. 219–266, Feb. 2004.
+
+
+===== PDF PAGE 13 =====
+18
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 52, NO. 1, JANUARY 2006
+[3] S. S. Chen, “Basis Pursuit,” Ph.D. dissertation, Stanford Univ., Stanford,
+CA, Nov. 1995.
+[4] S. S. Chen, D. L. Donoho, and M. A. Saunders, “Atomic decomposition
+by basis pursuit,” SIAM Rev., vol. 43, no. 1, pp. 129–159, 2001.
+[5] R. Coifman, Y. Meyer, and V. Wickerhauser, “Adapted wave form anal-
+ysis, wavelet-packets and applications,” in Proc. 2nd Int. Conf. Indus-
+trial and Applied Mathematics (ICIAM 91), Philadelphia, PA, 1992, pp.
+41–50.
+[6] S. F. Cotter and B. D. Rao, “Sparse channel estimation via matching
+pursuit with application to equalization,” IEEE Trans. Commun., vol.
+50, no. 3, pp. 374–377, Mar. 2002.
+[7] C. Daniel and F. S. Wood, Fitting Equations to Data: Computer Analysis
+of Multifactor Data, 2nd ed.
+New York: Wiley, 1980.
+[8] V. E. DeBrunner, L. X. Chen, and H. J. Li, “Lapped multiple basis algo-
+rithms for still image compression without blocking effect,” IEEE Trans.
+Image Process., vol. 6, pp. 1316–1322, Sep. 1997.
+[9] R. A. DeVore and V. N. Temlyakov, “Some remarks on greedy algo-
+rithms,” Adv. Comput. Math., vol. 12, pp. 213–227, 1996.
+[10] D. L. Donoho, “Superresolution via sparsity constraints,” SIAM J. Math.
+Anal., vol. 23, pp. 1309–1331, 1992.
+[11] D. L. Donoho and M. Elad, “Optimally sparse representation in general
+(nonorthogonal) dictionaries via ` minimization,” in Proc. Nat. Acad.
+Sci., vol. 100, 2003, pp. 2197–2202.
+[12] D. L. Donoho, M. Elad, and V. Temlyakov, “Stable Recovery of
+Sparse Overcomplete Representations in the Presence of Noise,” Dep.
+Statistics, Stanford Univ., http://www-stat.stanford.edu/~donoho/Re-
+ports/2004/StableSparse.pdf, Tech. Rep., 2004.
+[13] D. L. Donoho and X. Huo, “Uncertainty principles and ideal atomic de-
+composition,” IEEE Trans. Inf. Theory, vol. 47, no. 7, pp. 2845–2862,
+Nov. 2001.
+[14] M. Elad and A. M. Bruckstein, “A generalized uncertainty principle and
+sparse representation in pairs of <
+bases,” IEEE Trans. Inf. Theory,
+vol. 48, no. 9, pp. 2558–2567, Sep. 2002.
+[15] J. J. Fuchs, “On sparse representations in arbitrary redundant bases,”
+IEEE Trans. Inf. Theory, vol. 50, no. 6, pp. 1341–1344, Jun. 2004.
+[16]
+, “Recovery of exact sparse representations in the presence of
+bounded noise,” IEEE Trans. Inf. Theory, submitted for publication.
+[17] A. C. Gilbert, S. Muthukrishnan, and M. J. Strauss, “Approximation of
+functions over redundant dictionaries using coherence,” in Proc. 14th
+Annu. ACM-SIAM Symp. Discrete Algorithms, Baltimore, MD, 2003, pp.
+243–252.
+[18] I. F. Gorodnitsky and B. D. Rao, “Sparse signal reconstruction from lim-
+ited data using FOCUSS: A re-weighted norm minimization algorithm,”
+IEEE Trans. Signal Process., vol. 45, no. 3, pp. 600–616, Mar. 1997.
+[19] R. Gribonval and M. Nielsen, “Sparse representations in unions of
+bases,” IEEE Trans. Inf. Theory, vol. 49, no. 12, pp. 3320–3325, Dec.
+2003.
+[20] T. Hastie, R. Tibshirani, and J. H. Friedman, Elements of Statistical
+Learning.
+New York: Springer-Verlag, 2001.
+[21] R. A. Horn and C. R. Johnson, Matrix Analysis.
+New York: Cambridge
+Univ. Press, 1985.
+[22] X.
+Huo,
+Sparse
+Image
+Representation
+via
+Combined
+Trans-
+forms.
+Stanford, CA: Stanford Univ., Nov., 1999.
+[23] L. A. Karlovitz, “Construction of nearest points in the ` ; p even and `
+norms,” J. Approx.Theory, vol. 3, pp. 123–127, 1970.
+[24] J. B. Kruskal, “Three-way arrays: Rank and uniqueness of trilinear de-
+compositions, with application to arithmetic complexity and statistics,”
+Linear Alg. Its Applic., vol. 18, no. 2, pp. 95–138, 1977.
+[25] T. G. Kolda, “Orthogonal tensor decompositions,” SIAM J. Matrix Anal.
+Its Applic., vol. 23, no. 1, pp. 243–255, 2001.
+[26] X. Liu and N. D. Sidiropoulos, “Cramer-Rao lower bounds for low-
+rank decomposition of multidimensional arrays,” IEEE Trans. Signal
+Process., vol. 49, no. 9, pp. 2074–2086, Sep. 2001.
+[27] S. Mallat and Z. Zhang, “Matching pursuit in a time-frequency dictio-
+nary,” IEEE Trans. Signal Process., vol. 41, no. 12, pp. 3397–3415, Dec.
+1993.
+[28] B. A. Olshausen and D. J. Field, “Sparse coding with an overcomplete
+basis set: A strategy employed by V1?,” Vision Res., vol. 37, pp.
+311–325, 1997.
+[29] Y. C. Pati, R. Rezaiifar, and P. S. Krishnaprasad, “Orthogonal matching
+pursuit: Recursive function approximation with applications to wavelet
+decomposition,” in Proc. 27th Annu. Asilomar Conf. Signals, Systems,
+and Computers, Paciﬁc Grove, CA, Nov. 1993, pp. 40–44.
+[30] S. Qian and D. Chen, “Signal representation using adaptive normalized
+Gaussian functions,” Signal Process., vol. 36, pp. 1–11, 1994.
+[31] J.-L. Starck, M. Elad, and D. L. Donoho, “Image decomposition: Sepa-
+ration of texture from piecewise smooth content,” presented at the SPIE
+Meeting, San-Diego, CA, Aug. 2003.
+[32] J.-L. Starck, E. Candès, and D. L. Donoho, “The curvelet transform
+for image denoising,” IEEE Trans. Image Process., vol. 11, no. 6, pp.
+131–141, Jun. 2002.
+[33] T. Strohmer and R. Heath Jr, “Grassmannian frames with applications
+to coding and communications,” Appl. Comp. Harm. Anal., vol. 14, pp.
+257–275, May 2003.
+[34] R. Tibshirani, “Regression shrinkage and selection via the lasso,” J. Roy.
+Statist. Soc. B., vol. 58, no. 1, pp. 267–288, 1996.
+[35] V. N. Temlyakov, “Greedy algorithms and m-term approximation,” J.
+Approx. Theory, vol. 98, pp. 117–145, 1999.
+[36] V. N. Temlyakov, “Weak greedy algorithms,” Adv. Comput. Math., vol.
+5, pp. 173–187, 2000.
+[37]
+, “Greedy algorithms with regard to multivariate systems with spe-
+cial structure,” Constr. Approx., vol. 16, pp. 399–425, 2000.
+[38]
+, “Nonlinear methods of approximation,” Found. Comput. Math.,
+vol. 3, pp. 33–107, 2003.
+[39] J. A. Tropp, “Greed is good: Algorithmic results for sparse approx-
+imation,” IEEE Trans. Inf. Theory, vol. 50, no. 10, pp. 2231–2242,
+Oct. 2004.
+[40]
+, “Just relax: Convex programming methods for subset selection
+and sparse approximation,” IEEE Trans. Inf. Theory, submitted for pub-
+lication.
+[41] R. Venkataramani and Y. Bresler, “Optimal sub-nyquist nonuniform
+sampling and reconstruction of multiband signals,” IEEE Trans. Signal
+Process., vol. 49, no. 10, pp. 2301–2313, Oct. 2001.
+[42] M. V. Wickerhauser, Adapted Wavelet Analysis From Theory to Soft-
+ware.
+Wellesley, MA: A K Peters Ltd., 1994.
+[43] B. Wohlberg, “Noise sensitivity of sparse signal representations: Re-
+construction error bounds for the inverse problem,” IEEE Trans. Signal
+Process., vol. 51, no. 12, pp. 3053–3060, Dec. 2003.

@@ -1,0 +1,21 @@
+{
+  "key": "jermyn2022",
+  "arxiv_id": "2211.09169",
+  "accessed_utc": "2026-10-06T00:47:42.832125+00:00",
+  "metadata": {
+    "citation_title": "Engineering Monosemanticity in Toy Models",
+    "citation_author": "Hubinger, Evan",
+    "citation_date": "2022/11/16",
+    "citation_online_date": "2022/11/16",
+    "citation_pdf_url": "https://arxiv.org/pdf/2211.09169",
+    "citation_arxiv_id": "2211.09169",
+    "citation_abstract": "In some neural networks, individual neurons correspond to natural ``features'' in the input. Such \\emph{monosemantic} neurons are of great help in interpretability studies, as they can be cleanly understood. In this work we report preliminary attempts to engineer monosemanticity in toy models. We find that models can be made more monosemantic without increasing the loss by just changing which local minimum the training process finds. More monosemantic loss minima have moderate negative biases, and we are able to use this fact to engineer highly monosemantic models. We are able to mechanistically interpret these models, including the residual polysemantic neurons, and uncover a simple yet surprising algorithm. Finally, we find that providing models with more neurons per layer makes the models more monosemantic, albeit at increased computational cost. These findings point to a number of new questions and avenues for engineering monosemanticity, which we intend to study these in future work."
+  },
+  "submission_history": "Submission history From: Adam Jermyn [ view email ] [v1] Wed, 16 Nov 2022 19:32:43 UTC (4,563 KB)",
+  "abstract_url": "https://arxiv.org/abs/2211.09169",
+  "pdf_url": "https://arxiv.org/pdf/2211.09169",
+  "pages": 31,
+  "pdf_bytes": 5061904,
+  "pdf_sha256": "86e3d0ea5d38a828999c97c7efb6e07f5ca1fd07a7725ee8a9279fa9eb4c3543",
+  "errors": []
+}

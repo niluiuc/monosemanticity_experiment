@@ -1,0 +1,78 @@
+{
+  "source_mapping_checks": "passed",
+  "fresh_reproduction_except_runtime": "identical",
+  "independent_series_recurrence_checks": "passed",
+  "CDF_state_reference_checks": [
+    {
+      "bits": [
+        0,
+        0
+      ],
+      "feature": 0,
+      "CDF_reference": "0.0274813156494308901971382751451"
+    },
+    {
+      "bits": [
+        0,
+        0
+      ],
+      "feature": 1,
+      "CDF_reference": "0.00218213746089083109440338810987"
+    },
+    {
+      "bits": [
+        0,
+        1
+      ],
+      "feature": 0,
+      "CDF_reference": "0.0000954434614961575705404647659756"
+    },
+    {
+      "bits": [
+        0,
+        1
+      ],
+      "feature": 1,
+      "CDF_reference": "0.850585333888897680158458254039"
+    },
+    {
+      "bits": [
+        1,
+        0
+      ],
+      "feature": 0,
+      "CDF_reference": "0.189728857831311512571590386009"
+    },
+    {
+      "bits": [
+        1,
+        0
+      ],
+      "feature": 1,
+      "CDF_reference": "0.00000000808684597769884225079561669358"
+    },
+    {
+      "bits": [
+        1,
+        1
+      ],
+      "feature": 0,
+      "CDF_reference": "0.82451612432445828427943419309"
+    },
+    {
+      "bits": [
+        1,
+        1
+      ],
+      "feature": 1,
+      "CDF_reference": "0.999937730449823380798323062073"
+    }
+  ],
+  "reference_precision_digits": 100,
+  "difference_reference": "-0.0144745067127706407821331925471",
+  "clean_super_error": "11/400",
+  "clean_difference": "1/400",
+  "infinite_noise_difference": "9/40",
+  "all_checks_pass": true,
+  "scope": "Exactly the already declared p=1/20, sigma=3/10, selected geometry; no root searches or new settings."
+}

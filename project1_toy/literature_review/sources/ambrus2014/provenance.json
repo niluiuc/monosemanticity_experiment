@@ -1,0 +1,21 @@
+{
+  "key": "ambrus2014",
+  "arxiv_id": "1403.7382",
+  "accessed_utc": "2026-10-06T00:53:39.936207+00:00",
+  "metadata": {
+    "citation_title": "A short proof for the characterisation of tight frames",
+    "citation_author": "Ambrus, Gergely",
+    "citation_date": "2014/03/28",
+    "citation_online_date": "2014/03/28",
+    "citation_pdf_url": "https://arxiv.org/pdf/1403.7382",
+    "citation_arxiv_id": "1403.7382",
+    "citation_abstract": "With the aid of utilising tensor products, we give a simplified proof to the fundamental theorem of Benedetto and Fickus about the existence and characterisation of finite, normalised tight frames. We also establish unit-norm tensor resolutions for symmetric, positive semi-definite matrices."
+  },
+  "submission_history": "Submission history From: Gergely Ambrus [ view email ] [v1] Fri, 28 Mar 2014 14:10:30 UTC (7 KB)",
+  "abstract_url": "https://arxiv.org/abs/1403.7382",
+  "pdf_url": "https://arxiv.org/pdf/1403.7382",
+  "pages": 6,
+  "pdf_bytes": 108240,
+  "pdf_sha256": "1cf1cd1f78e41a33ea71eb8d848b4dd4945f7f3621754480a4e5d495fec67c3d",
+  "errors": []
+}

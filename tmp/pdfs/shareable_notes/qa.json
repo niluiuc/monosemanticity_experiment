@@ -1,0 +1,14 @@
+{
+  "pages": 25,
+  "math_expressions_preserved": 278,
+  "figures_preserved": [
+    "geometry.png",
+    "conditional_distributions.png",
+    "paper_J.png"
+  ],
+  "bounds_issues": [],
+  "short_pages_to_review": [],
+  "pdf": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\output\\pdf\\Monosemanticity_Robustness_Research_Notes.pdf",
+  "tex": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\output\\overleaf\\monosemanticity_notes\\main.tex",
+  "overleaf_zip": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\output\\overleaf\\Monosemanticity_Robustness_Overleaf.zip"
+}

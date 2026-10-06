@@ -1,0 +1,359 @@
+x
+This website requires javascript to properly function. Consider activating javascript to get access to all site functionality.
+LESSWRONG
+LW
+Login
+SONI: Selective Orthogonalisation via Noise Injection — LessWrong
+Interpretability (ML & AI)
+Logic & Mathematics
+AI
+Frontpage
+29
+SONI: Selective Orthogonalisation via Noise
+Injection
+by
+Jasper Chong
+25th Jul 2026
+14
+min read
+0
+29
+This project was completed as a capstone for
+TARA
+. All code is available in
+github
+.
+TL;DR
+The Problem:
+Neural networks use superposition to pack many concepts into small latent spaces by making feature vectors
+almost-orthogonal
+. This entanglement makes models opaque and breaks safety interventions (e.g. concept erasure, activation steering) which rely on clean, isolated concept directions.
+The Gap:
+Full orthogonalisation (via sparsity penalties) destroys model capacity, while Sparse Autoencoders (SAEs) only
+view
+the features without changing the underlying model geometry. We need a way to selectively orthogonalise specific directions.
+The Solution:
+We introduce SONI (Selective Orthogonalisation via Noise Injection), a fine-tuning regime that uses targeted noise injection to selectively orthogonalise a chosen direction in the latent space. This requires no loss function modifications and preserves overall model performance.
+The Results:
+We demonstrate on Anthropic's Toy Models of Superposition (TMS) that this method significantly increases the orthogonality of all other features relative to a target feature across varying dimensionalities, without completely forcing perfect orthogonality. While limited by co-activation failure rates at lower sparsities, in sparse regimes it provides a geometric guarantee that could make downstream safety interventions significantly more reliable.
+Introduction
+Superposition is a structural property of neural networks where many more concepts are represented than there are dimensions in the latent space. The model achieves this by compressing concepts into
+almost-orthogonal
+feature vectors. While this allows for efficient, dense representations, it creates a fundamental barrier for AI safety.
+When concepts are entangled via superposition, the internal representations of the model become opaque and difficult to control. Many critical mechanistic interpretability and alignment methods—such as concept erasure, activation steering, and causal tracing—implicitly rely on the assumption that feature directions can be cleanly separated. If a safety-critical concept like "deception" or "bioweapons knowledge" is entangled with mundane features, attempts to steer or erase it will have unpredictable, collateral side effects. Therefore, resolving superposition is not just an interpretability convenience, but a prerequisite for verifiable alignment.
+Existing solutions fall short of providing a practical model-level fix. Training with sparsity penalties induces full orthogonality across the entire latent space, but this destroys model capacity and prohibitively harms performance. Sparse autoencoders (SAEs) are expensive techniques for viewing entangled representations in more orthogonal forms and are well documented for use in interpretability and steering interventions, but they act as post-hoc viewing lenses; they do not modify the entangled geometry of the model itself.
+We need a middle ground: the ability to selectively orthogonalise
+particular safety-critical directions
+in a model's latent space, without destroying the dense representations everywhere else.
+When working with models such as Large Language Models (LLMs), feature directions are not easily accessible during training, and modifying the loss function with custom structural penalties is generally intractable. A solution must not require internal architectural modifications or loss function changes.
+We propose SONI (Selective Orthogonalisation via Noise Injection), a fine-tuning technique for selective orthogonalisation of the latent space through noise addition, fundamentally altering the geometry of the model. We find this technique to work effectively in toy models of varying dimensionalities. While we have not yet applied it to LLMs or verified its impact on downstream interpretability or steering tasks, the technique is supported in toy models both empirically and theoretically.
+Method
+We aim to use targeted noise injection during fine-tuning to encourage orthogonality of all feature vectors with respect to a target feature vector
+. Completing this procedure requires two main components: a noise addition regime, and a toy model to test it on.
+Noise Addition
+Initial experiments into uniform noise addition in the latent space motivated this work, and found that the magnitude of uniform noise addition could control the "degree of superposition" in a latent space. This experiment incorporated various types of noise (additive, multiplicative, rotational) and found that additive noise had comparable effectiveness in superposition controlling to perhaps more theoretical appealing formulations like rotational noise, at a fraction of the computational cost.
+For targeted noise injection, we add noise only in the direction of our target feature vector
+, requiring only a univariate
+. We use directional noise addition rather than isotropic primarily for more desirable backpropogation (
+Appendix A
+), and for minimising unneeded variance. The backpropogation of directional noise addition is more desirable as it is proved in
+Appendix A
+to apply a
+purely rotational force
+to the feature vectors. Rather than scaling the magnitudes of the vectors up or down, the noise pushes non-orthogonal features around the latent space.
+For a target vector
+(with corresponding unit vector
+), we seek to penalise non-orthogonality. A natural metric to consider when determining the penalty to assign to some vector
+is the cosine similarity defined through the euclidean inner product:
+where
+when
+and
+are perfectly orthogonal, and
+and when they are perfectly aligned.
+occurs when
+and
+are aligned but point in seperate directions. A common form of superposition are so-called
+antipodal pairs
+, where differing features (often corresponding to opposite semantic meanings) form in the same axis in different directions.
+We do not wish for an antipodal pair to occur with our target
+as they can interfere with downstream tasks such as concept erasure.
+Therefore, we wish to construct a function
+that takes in our cosine similarity
+and returns a proportion of noise to inject. Avoiding penalties to orthogonal vectors and the target vector itself necessitates
+and
+. As we want vectors
+to be
+pushed
+towards
+, we set maximums at
+and
+with linear ramps between these points.
+We finally set variable
+-neighbourhoods around the minimums, intending to prevent vector oscillation. The proposed function is hence a piecewise linear function (visualised in
+Figure 1
+):
+Figure 1
+: The piecewise linear noise function
+for targeted orthogonalisation. The function peaks at maximum noise (
+) for highly aligned vectors (
+) and anti-aligned vectors (
+), whilst applying zero noise to vectors that are already perfectly orthogonal (
+) or perfectly aligned with the target (
+).
+This function (also written as
+) connects our key points where
+is the 0 region around
+, and
+is the size of the 0 valued region left of
+. Our choices of
+and
+(though
+performs identically) is justified in
+Balancing
+and
+.
+This then makes our noise addition for a latent vector
+:
+We derive that this regime encourages rotation of
+during backpropogation in
+Appendix A
+.
+Toy Model
+To evaluate the efficacy of this noise addition regime, we train Anthropic's Toy Models of Superposition (TMS) model. This model is chosen as a simplification of the latent space of an LLM or other large models, while still displaying superposition.
+This model is a tied-weight autoencoder, where:
+for our weight matrix
+, input
+, latent vector
+, and reconstructed input
+.
+Each value in
+is uniformly distributed between 0 and 1 with probability
+, with the alternative probability
+for the value being
+. The probability
+is called our
+sparsity
+, as larger
+corresponds to more
+values in
+.
+To train the model on our data, we use the loss:
+where
+is a weighting of
+feature importance
+, and element
+of the feature importance vector
+.
+Despite no explicit regularisations, we find that learnt features (column vectors of
+) have magnitudes
+, and unlearnt features have magnitudes
+for sufficiently long training due to implicit regularisation.
+We first train this model as done in the TMS paper, and then select a feature vector as our target to orthogonalise all others against during a fine-tuning step. The feature vector is extracted from
+, though using a difference-of-means probe performs identically.
+Overall
+From the following, our overall method is then to:
+1. Train the base TMS model at some set parameters.
+2. Select a feature vector to orthogonalise. The feature vector is selected as one that is already highly non-orthogonal (indicated by the gramm matrix not being clear in the rows and columns corresponding to that index).
+3. Fine tune the model with some set parameters with noise addition
+4. Evaluate the fine-tuned model using metrics described below.
+Experimental Setup
+The following is an example instantiation of the above problem setting and method.
+m=2, n=5 Toy Model
+We consider a toy model with an input dim of
+and a latent dim of
+. The parameters
+and
+, along with sparsity
+and importance
+are taken directly from the TMS paper.
+This paper uses a fixed learning rate of
+for training (not necessarily fine-tuning) in all experiments. Other training parameters such as the batch size of
+and number of training steps
+were found to work empirically, noting that steps was increased until training loss flattens for implicit regularisation.
+Figure 2
+displays how the feature vectors form a clean pentagon following training. Lower feature indices correspond to higher feature importance. The 3rd index (purple) was selected for orthogonalisation, with the noise direction
+as the unit vector of feature vector 3. Noise parameter sigma
+(justified in
+Balancing
+and
+) was used along the default
+parameters in fine tuning (all other fine tuning parameters were identical to the initial training parameters).
+Figure 2:
+Vector plot of the 2D latent space before and after fine-tuning. Left (Original): Features arrange in a pentagon due to superposition. Right (Fine-tuned): The target Feature 3 (purple) becomes perfectly orthogonal to surviving features. Features 2 and 4 collapse to reallocate geometric capacity.
+The results of fine tuning were understood through qualitative and quantitive plots. A nice result of
+is that the feature vectors can be cleanly displayed in 2D. The visual impact of orthogonalisation is clear in
+Figure 2
+, where features 2 and 4 collapse to allow 3 to exist orthogonal to all other vectors. While this visualisation is intuitive, its requirement for a 2D latent space is limiting. The clipped gramm matrix shown in
+Figure 3
+is an alternate for any dimensions, where square
+represents the inner product between feature vector
+and
+. As feature vector magnitudes are
+when activated and
+otherwise, dark squares along the diagonal represent features that are learnt. Off diagonal squares represent orthogonality between the relevant indices, where light squares indicate high orthogonality. The clipped gramm matrix has the original plot with high non-orthogonality, while the fine tuned one shows a latent space where 1 feature is entirely orthogonal to others, from the clear rows and columns about square
+.
+Figure 3:
+Gramm matrices displaying feature orthogonality before and after fine-tuning. Dark diagonal squares indicate learned features. The light rows and columns for index 3 in the fine-tuned matrix show that Feature 3 has become completely orthogonal to all other features.
+The max cosine similarity measures the largest
+between the target feature and all other feature vectors (with norm
+), while the squared similarity sum represents the sum of all
+values. The first of these metrics measures the worst case non-orthogonality, while the second measures the overall non-orthogonality with all vectors.
+The training and test errors are both observed to understand the tradeoff to model performance when orthogonalising (this tradeoff is found to be minimal in all cases).
+Target direction preservation is monitored to ensure the failure mode of the target vector moving is not realised. Explicitly, this metric measures the cosine similarity between the current target vector, and the original one against which noise is added. The failure mode of representation collapse is caught through monitoring of the target vector norm
+.
+Comprehensively, these metrics allow us to measure how effective the intervention is, while catching any failure modes. The plots for these metrics over fine-tuning can be seen
+in
+Figure 4
+.
+Figure 4:
+Evaluation metrics during fine-tuning. The max cosine similarity drops near zero, indicating successful orthogonalisation, while the target vector norm remains stable, avoiding representation collapse. Training and test error see minimal degradation.
+Results and Discussion
+Overall, we find that we can get the desired result of orthogonalising the latent space, with important caveats.
+Balancing
+and
+We find that we can get the desired orthogonalising when we have an appropriate environment (in terms of sparsity, etc.), but getting the optimal solution requires a tradeoff between our two fine orthogonality parameters,
+and
+to balance our level of orthogonality, and the target vector norm. These parameters are particularly important, as they are within our control when training any model.
+We find that changing
+(the
+insensitive region around
+) has close to no impact on the target vector norm, but decreasing it does lower the max cosine similarity. As our goal is to minimise max cosine similarity without changing the target vector norm, we set
+to its minimum value of 0 always.
+Investigating
+at a fixed
+on an
+model in
+Figure 5
+we see a flat U-shaped curve of max cosine similarity against
+. We also find test error and target vector norm to monotonically degrade as
+increases. The monotonic degradation motivates us to find the smallest
+at the base of the U-shaped max cosine sim curve. We find a
+to satisfy these constraints and perform well across a range of dimensionalities.
+We find the target vector to not move under any of these circumstances.
+Figure 5:
+The impact of varying the noise parameter
+on max cosine similarity (orthogonality) and test error for a model with
+. We observe a flat, U-shaped curve for orthogonality, while test error monotonically degrades with higher noise. A value of
+offers an optimal trade-off.
+Changing Dimensionality
+We find that we are able to achieve the desired orthogonalisation at any dimensionalities (
+Figure 6
+), given appropriate choice of hyperparameters.
+Training steps need to be increased due to the larger model, and sparsity and importance need to be increased equivalently to the input dimension
+.
+Sparsity is increased such that the expected number of activations per input vector remains the same (generally
+) regardless of
+. Importance is increased such that the last value in the importance vector
+is approximately equivalent regardless of
+, but the choice of importance is found to be less critical, as long as it produces superposition.
+We find that we are able to keep the fine tuning params proportionally equivalent, using half of the training learning rate and number of steps. Noise values of
+and
+are found to perform well across dimensions. We do not see that batch size needs to be altered.
+Higher dimensional vectors are on average more orthogonal with each other by default, so less fine tuning progress needs to be made.
+Figure 6:
+Results scaling across dimensionalities. Columns represent different network sizes (from left to right: n=20, n=400, n=1600). Top row: Evaluation metrics during fine-tuning. Bottom row: Gramm matrices post fine-tuning, demonstrating successful orthogonalisation of the target feature at all tested scales.
+Impact of Sparsity
+Sparsity and importance are the most critical in defining the dynamics of the latent space, as they directly impact the loss and input data. The choice of importance in our regime is not important as long as it produces superposition, but sparsity has additional impact that arises in our regime.
+These parameters are out of our control when it comes to LLMs, so it is critical to understand the limitations of our approach in terms of these parameters.
+Sparsity is the most important parameter in terms of modelling the space. Critically, sparsity controls our "co-activation" rate, which leads to the failure modes of target vector movement and norm collapse. When we define sparsity in terms of expected number of activations per input vector
+and our input dimension
+:
+we can derive (
+Appendix B
+) that the probability of co-activation with our target feature is largely independent of
+.
+The co-activation failure mode doesn't occur at lower dimensionalities (small
+), as lower sparsity in these cases collapses superposition before it causes co-activation failure. While coactivation rate is largely independent of
+, sparsity required for superposition is not.
+Therefore, our sparsity sweep shown in
+Figure 7
+at
+is indicative of the effects of altering sparsity at higher dimensionalities. We find that for expected activations per input vector
+we are no longer able to orthogonalise effectively due to co-activations. The inability of this fine-tuning method to work for
+is important when considering generalisation to non-toy models.
+Figure 7:
+Metrics across different expected activations per input (
+) for a model with
+. For
+, the target feature collapses and max cosine similarity degrades, demonstrating the co-activation failure mode.
+Discussion
+While SONI demonstrates that targeted geometric alterations are possible without loss function modifications, significant hurdles remain before this can be safely applied to real-world models.
+The most critical limitation is the co-activation failure mode. As demonstrated in fig:sparsity_metrics, the method fails when the expected number of features active per input exceeds approximately 1. It is important to note that this limitation arises specifically from the co-activation of
+inputs
+(the underlying data concepts), rather than the co-activation of multiple neurons or latent dimensions. While concepts in realistic models like LLMs frequently co-activate (e.g., a single sentence naturally contains concepts for grammar, spatial relations, and distinct entities simultaneously), further research is required to determine if this constitutes the "right type" of co-activation that triggers the failure mode observed in our toy models. If the target feature does frequently co-activate in the relevant manner with other features, the noise injected into the target direction will repeatedly disrupt their reconstruction, leading to no meaningful orthogonalisation.
+Furthermore, generalising this technique to LLMs poses significant practical and verification challenges. Because feature directions in LLMs are not easily accessible —often requiring probing to identify — it is inherently difficult to verify whether the technique has successfully altered the geometry of the latent space. Without an established verification method, measuring the success of the intervention is challenging. We also have not yet empirically verified whether this orthogonalisation translates to improvements in downstream safety tasks like concept erasure or activation steering. Finally, noise injection during fine-tuning with large batch sizes may be prohibitively computationally expensive.
+Future work should evaluate SONI on a small transformer model using probe-identified feature directions to validate if the method still works, as well as evaluating the practical impact on safety intervention benchmarks.
+Conclusion
+We introduced SONI, a novel fine-tuning regime that selectively orthogonalises a target feature direction in a neural network's latent space through targeted noise injection, avoiding changes to the model's loss function.
+Using Anthropic's Toy Models of Superposition model, we theoretically derived and empirically demonstrated that this noise regime applies a purely rotational force. The rotational force pushes vectors to be orthogonal to the target while maintaining performance, and without issues of magnitude scaling / collapse.
+This work represents a practical step towards directly and meaningfully modifying model geometry. While our approach highlights challenges with feature co-activation, it establishes a principled method for intervening on latent spaces. Crucially, it explores a middle ground between full superposition and complete orthogonalisation methods like Sparse Autoencoders (SAEs). Even if these co-activation barriers persist in LLMs, our findings demonstrate the practical limits of resolving superposition — moving us from just understanding entangled representations towards possessing the tools to actively govern them.
+Appendix
+Appendix A: Gradient Calculations
+We start with our output
+, and consider the gradient of our loss
+with respect to
+:
+where
+is our importance vector, and
+is the hadamard product (elementwise multiplication). Defining our
+:
+where
+is the elementwise indicator function. As
+:
+by the multivariate chain rule. Given
+:
+and
+Aside: as
+:
+Importantly, we want to show that this gradient is orthogonal to
+, so consider:
+Therefore, the gradient is orthogonal to h, and as
+where f' is a scalar, hence
+. From before:
+By demonstrating that
+, we show that the gradient update introduced by our noise injection acts entirely orthogonally to the feature vector itself.
+Crucially, this proves that the noise regime applies a
+purely rotational force
+to the feature vectors during backpropagation. Rather than scaling the magnitudes of the vectors up or down—which would indiscriminately penalise the model and destroy its learned representations—the noise gently pushes non-orthogonal features
+around
+the latent space. The model is forced to reallocate its limited geometric capacity by changing the
+angles
+between features to avoid the noise penalty, thereby inducing orthogonality while preserving the feature magnitudes necessary for model performance.
+Appendix B: Co-activation Probability
+We show that when we define sparsity
+in terms of expected number of activations per input vector
+and our input dimension
+as follows:
+we derive that the probability of coactivation with our target feature is largely independent of
+. For an input vector
+where
+refers to the probability of feature
+of
+activating. Let
+refer to our target feature:
+by de-morgans laws:
+and then using independence and the fact that the
+s are identically distributed:
+where
+, and by the definition of sparsity:
+and plotting this function shows how it is essentially constant with
+for sufficiently large
+. From here it is easy to show that the limit as
+is:
+giving us our approximate n-independent
+.
+0
+Comments
+0
+Interpretability (ML & AI)
+Logic & Mathematics
+AI
+Frontpage
+29
+New Comment
+Submit
+Moderation Log
+More from
+Jasper Chong
+View more
+Curated and popular this week

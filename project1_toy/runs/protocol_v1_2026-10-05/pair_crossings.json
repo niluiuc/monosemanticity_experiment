@@ -1,0 +1,14 @@
+[
+  {
+    "p": 0.2,
+    "pair_amplitude": 0.7071067811865475,
+    "crossing_sigma": 0.2799389129382439,
+    "method": "root of exact risks, not a fitted boundary"
+  },
+  {
+    "p": 0.2,
+    "pair_amplitude": 1.0,
+    "crossing_sigma": 0.6583495015623347,
+    "method": "root of exact risks, not a fitted boundary"
+  }
+]

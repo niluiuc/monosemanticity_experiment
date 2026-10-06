@@ -1,0 +1,1348 @@
+
+
+===== PDF PAGE 1 =====
+How Many Features Can a Language Model Store
+Under the Linear Representation Hypothesis?
+Nikhil Garg
+Jon Kleinberg
+Kenny Peng
+Cornell University
+Abstract
+We introduce a mathematical framework for the linear representation hypothesis (LRH),
+which asserts that intermediate layers of language models store features linearly. We separate
+the hypothesis into two claims: linear representation (features are linearly embedded in
+neuron activations) and linear accessibility (features can be linearly decoded).
+We then
+ask: How many neurons d suffice to both linearly represent and linearly access m features?
+Classical results in compressed sensing imply that for k-sparse inputs, d = O(k log(m/k))
+suffices if we allow non-linear decoding algorithms (Candes and Tao, 2006; Cand`es et al.,
+2006; Donoho, 2006).
+However, the additional requirement of linear decoding takes the
+problem out of the classical compressed sensing, into linear compressed sensing.
+Our main theoretical result establishes nearly-matching upper and lower bounds for linear
+compressed sensing. We prove that d = Ωϵ( k2
+log k log(m/k)) is required while d = Oϵ(k2 log m)
+suffices. The lower bound establishes a quantitative gap between classical and linear com-
+pressed setting, illustrating how linear accessibility is a meaningfully stronger hypothesis
+than linear representation alone. The upper bound confirms that neurons can store an expo-
+nential number of features under the LRH, giving theoretical evidence for the “superposition
+hypothesis” (Elhage et al., 2022).
+The upper bound proof uses standard random constructions of matrices with approx-
+imately orthogonal columns.
+The lower bound proof uses rank bounds for near-identity
+matrices (Alon, 2003) together with Tur´an’s theorem (bounding the number of edges in
+clique-free graphs). We also show how our results do and do not constrain the geometry of
+feature representations and extend our results to allow decoders with an activation function
+and bias.
+1
+Introduction
+Towards understanding how language models work, a single principle has been remarkably useful:
+the Linear Representation Hypothesis (LRH) states that intermediate layers of language models
+store features linearly.
+The observance of linear structure dates back to early work on word embeddings (Mikolov
+et al., 2013a,b; Arora et al., 2018). Alain and Bengio (2016) demonstrated empirically that in
+deeper layers of vision models, features (e.g., the presence of cats or dogs) could increasingly
+be extracted using linear classifiers trained on activations, suggesting that deep neural networks
+work to arrange features linearly. Since then, work has shown that a wide range of features can
+be accessed using these “linear probes,” such as sentiment and game state (Nanda et al., 2023;
+Li et al., 2025). Leveraging the idea that features are stored as directions in activation space,
+a line of work has demonstrated the ability to steer language model behavior by manipulating
+1
+arXiv:2602.11246v1  [cs.LG]  11 Feb 2026
+
+
+===== PDF PAGE 2 =====
+activations along certain directions (Panickssery et al., 2023; Zou et al., 2023; Turner et al.,
+2023; Wang et al., 2025; Chen et al., 2025). Moreover, the assumption of an underlying linear
+structure has motivated the use of sparse autoencoders to automatically extract features from
+language models. Strikingly, these features appear to be highly-interpretable while capturing
+much of the original information (Cunningham et al., 2023; Gao et al., 2024; Movva et al.,
+2025).
+These linearly-represented features have formed the foundation for interpretable and
+causal explanations for how language models perform certain computations, like writing poems
+or answering basic questions (Lindsey et al., 2025).
+Given the tremendous amount of activity that revolves around the LRH, recent efforts have
+aimed to give a formal account of the hypothesis and to derive and test implications (Elhage
+et al., 2022; Park et al., 2023; Costa et al., 2025).
+In particular, it has been hypothesized
+that linear representation allows for superposition, where d neurons can store m ≫d features
+(Elhage et al., 2022).
+Given the vast number of relevant concepts needed to generate text,
+such a capability appears to be necessary given the performance of language models. While
+results such as the Johnson-Lindenstrauss lemma (Johnson et al., 1984) and from compressed
+sensing (Candes and Tao, 2006; Cand`es et al., 2006; Donoho, 2006) are suggestive, and empirical
+evidence exists in toy settings (Elhage et al., 2022), current theoretical accounts do not clearly
+establish bounds on the amount of possibe superposition under the LRH.
+In the present work, we aim to give a mathematical framework capable of addressing the
+following fundamental question (stated informally here):
+(*) Under the linear representation hypothesis, how many features can one layer of
+d neurons store?
+More concretely, an intermediate layer of a language model embeds an input as a d-dimensional
+vector (the activations of the d neurons). Then how many features can this vector store, and
+under what conditions?
+The present work illustrates one reason why there is a lack of clarity surrounding this basic
+question: different formulations of the LRH imply different answers to the question. In particu-
+lar, we show a quantitative gap in the answer to (*) depending on if the LRH states that features
+are represented linearly or are also accessible linearly. These statements have often been treated
+as equivalent: for example, Elhage et al. (2022) write that
+Linear representations make features “linearly accessible.” A typical neural network
+layer is a linear function followed by a non-linearity. If a feature in the previous
+layer is represented linearly, a neuron in the next layer can “select it” and have it
+consistently excite or inhibit that neuron. If a feature were represented non-linearly,
+the model would not be able to do this in a single step.
+Both linear representation and accessibility play an important role in work surrounding the
+LRH. Linear representation implies that model behavior can be altered by modifying activation
+space along linear directions. On the other hand, linear accessibility implies that features can
+be extracted using linear probes, and as Elhage et al. (2022) note above, accessibility allows the
+next layer of a model to efficiently use a feature. Furthermore, both linear representation and
+accessibility are implicit in the design of sparse autoencoders used in practice, which utilize both
+linear encoding and decoding.
+One key implication of the present work is that there is a meaningful way in which linear
+representation does not imply linear accessibility. We now describe our mathematical frame-
+2
+
+
+===== PDF PAGE 3 =====
+work and results, illustrating this conceptual difference, and then showing how they lead to a
+quantitative difference.
+1.1
+Mathematical Framework
+In this section, we introduce a mathematical framework that allows us to formally study impli-
+cations of the linear representation hypothesis. In particular, the framework allows us to cleanly
+understand the difference between (linear) representation and (linear) accessibility, while also
+allowing us to formally quantify what it means for superposition to occur (for neuron activations
+to store more features than there are neurons).
+The theoretical results, stated in Section 1.2, are self-contained. However, the framework
+here provides the more general context establishing the relationship between our mathematical
+results and the emerging scientific theory of language models.
+Activations and features.
+We will assume that inputs comes from some set L, which we call
+a language (i.e., sequences of tokens). We let f : L →Rd give the activations of d neurons in
+an intermediate layer. We let a feature be a function zi : L →R. For example, a feature can
+capture if the text is a question, if it has positive sentiment, if it is about dogs, or if it should
+be continued with a number. Importantly, we think of the value of a feature zi(ℓ) as depending
+only on the input text; in other words, features can exist independently of any language model.
+Feature accessibility.
+A feature zi is (ϵ, S)-recovered by a probe gi : Rd →R if
+|gi(f(ℓ)) −zi(ℓ)| < ϵ
+(1)
+for all ℓ∈S. Intuitively, this means that the value of a feature can be accessed from a text’s
+activations f(ℓ), at least up to some approximation error.
+The Linear Representation Hypothesis.
+We now formalize how the LRH places further
+restrictions on the above framework.
+Linear representation for a set of features z1, · · · , zm : L →R implies that there exists a
+set of representation vectors a1, · · · , am ∈Rd, such that
+f(ℓ) =
+m
+X
+i=1
+zi(ℓ)ai.
+(2)
+Equivalently, there exists A ∈Rd×m such that
+f(ℓ) = Az(ℓ),
+(3)
+where z(ℓ) = [z1(ℓ), z2(ℓ), · · · , zm(ℓ)] ∈Rm. We refer to z(ℓ) as a text ℓ’s feature repre-
+sentation. Under linear representation, activations are a function only of an input’s feature
+representation.
+Linear accessibility places a restriction on the probes gi (in contrast to linear representa-
+tion, which restricts f). Formally, under linear accessibility, we require the probe gi to satisfy
+gi(x) = ⟨bi, x⟩for some probe vector (or linear probe) bi ∈Rd. Therefore, a feature zi is
+(ϵ, S)-linearly recovered by a linear probe bi if
+|⟨bi, f(ℓ)⟩−zi(ℓ)| < ϵ
+(4)
+3
+
+
+===== PDF PAGE 4 =====
+for all ℓ∈S. Then if all features z1, · · · , zm can be (ϵ, S)-linearly recovered, this implies that
+there exists B ∈Rd×m such that
+BT f(ℓ) −z(ℓ)
+
+∞< ϵ
+(5)
+for all ℓ∈S.
+Superposition.
+We can now see how this framework allows us to formally reason about (*),
+or about how much superposition can occur under the LRH. In particular, we are interested in
+understanding how many features m can be stored using activations in Rd (of d neurons) under
+the hypotheses of linear representation and linear recovery.
+First note that under the linear representation, activations of an input text are a function only
+of its feature representation. Therefore, we can redefine activations to be given by f : Rm →Rd.
+Under this definition, we restate linear representation to say that
+f(z) = Az
+(6)
+for z ∈Rm, A ∈Rd×m.
+Now, assuming linear representation, we can ask two questions:
+Q1. (General accessibility.) For a fixed m, how many dimensions d are required for there to
+exist A ∈Rd×m and g : Rd →Rm such that
+∥g(Az) −z∥∞< ϵ
+(7)
+for all z ∈S.
+Q2. (Linear accessibility.) For a fixed m, how many dimensions d are required for there to
+exist A, B ∈Rd×m such that
+BT Az −z
+
+∞< ϵ
+(8)
+for all z ∈S.
+In both settings, we will generally assume S to be the set of k-sparse vectors (i.e., having at
+most k non-zero entries), and answer in terms of m, k, ϵ. In other words, we study settings where
+only a small number of features tend to be “active” for any particular input (intuitively, this
+is matches our intuition about language—that any given piece of text only expresses a small
+fraction of possible concepts).
+A key result we show is that there is a quantitative gap in the answer to (1) and (2). In
+other words, there is a meaningful sense in which linear representation does not imply linear
+accessibility. In both settings, superposition can occur: an exponential number of features can
+be represented and accessed. However, we will show that the amount of tolerated sparsity differs
+significantly.
+1.2
+Results
+We now state theoretical results that resolve the questions Q1 and Q2 posed above. First, we
+will show how classical results in compressed sensing resolve the general accessibility setting
+(Theorem 1). Then, we will show that the additional restriction to linear probes brings us into
+the different setting of linear compressed setting. The primary contributions of the present work
+are nearly-matching upper and lower bounds in the linear setting (Theorem 2 and Theorem 3).
+4
+
+
+===== PDF PAGE 5 =====
+Past Results: Compressed Sensing.
+Let us recall a classical result in compressed sensing
+(Candes and Tao, 2006; Cand`es et al., 2006; Donoho, 2006), which exactly deals with the setting
+in which features are represented linearly but accessed non-linearly, answering Q1.
+Theorem 1 (Compressed Sensing). There exists a matrix A ∈Rd×m with d = O
+ k log m
+k
+
+such
+that for all k-sparse z ∈Rm,
+g(x) := argminz′∈Rm:x=Az′
+z′
+1
+(9)
+satisfies
+g(Az) = z.
+(10)
+This shows that when
+d = O
+
+k log m
+k
+
+,
+(11)
+k-sparse z in Rm can be linearly embedded in Rd in a way such that z can be exactly recovered
+from the embedding using ℓ1-minimization (basis pursuit). However, basis pursuit is non-linear.
+We are interested in the case when features can be extracted linearly, which we discuss next.
+Our Results: Linear Compressed Sensing.
+The requirement that the recovery function
+be linear takes us out of classical compressed sensing settings, which generally allows arbitrary
+(efficient) algorithms to perform recovery. The assumption of linear recovery (the setting of Q2)
+brings us into the regime of what could be called linear compressed sensing.
+Let d(m, k, ϵ) be the smallest choice of d such that there exists A, B ∈Rd×m such that
+BT Az −z
+
+∞< ϵ
+(12)
+for all k-sparse z ∈[−1, 1]m. (Here, any bounded interval would suffice.)
+Our main results provide nearly-matching upper and lower bounds on d(m, k, ϵ).
+Theorem 2 (Upper Bound).
+d(m, k, ϵ) = Oϵ
+ k2 log m
+
+.
+(13)
+This upper bound demonstrates that embeddings can in fact store an exponential number
+of features relative to embedding dimension.
+Theorem 3 (Lower Bound). For ϵ > k3/2√
+5
+√m ,
+d(m, k, ϵ) = Ωϵ
+ k2
+log k log m
+k
+
+.
+(14)
+(Here, the restriction ϵ > k3/2√
+5
+√m
+is not very consequential, since we are generally interested
+in the regime where k = O(log m).)
+The lower bound establishes a quantitative gap between compressed sensing and linear com-
+pressed sensing. In particular, while d must be essentially quadratic in k in linear compressed
+sensing, it need only be linear in k in classical compressed sensing.
+5
+
+
+===== PDF PAGE 6 =====
+Further results.
+There has also been general interest in the “geometry” of features stored
+in language models (Park et al., 2023). For example, it is sometimes stated that (unrelated)
+features are represented as orthogonal directions under the LRH (Hindupur et al., 2025). In
+Section 4, we show what our theoretical results imply (and do not imply) about feature geometry.
+In particular, Proposition 9 shows that the lower bound in Theorem 3 can be achieved even
+for non-intuitive arrangements of feature directions: features can be represented and probed
+by approximately orthogonal directions, while different features can be represented by highly-
+correlated directions and also probed by highly-correlated directions. These results highlight
+the distinction between representation and probe vectors (also addressing uncertainty about
+whether encoder and decoder weights in sparse autoencoders correspond to a feature’s “true”
+direction), and how the major requirement for linear feature representation and accessibility is
+that a feature’s representation vector must be approximately orthogonal to other features’ probe
+vectors (not other features’ representation vectors). In Proposition 11, we then show how bounds
+on the magnitude of feature vectors limit the amount of “unusualness” in feature geometry.
+In Section 5, we then show that the lower bound in Theorem 3 also applies to more general
+settings. In particular, in Theorem 12 we show that the bound applies in a setting where features
+are binary and the task is to linearly classify inputs according to each feature. As a corollary,
+the result implies that adding a bias and non-linear activation function to a linear probe does
+not significantly increase the number of features a model can store.
+1.3
+Intuition and Proof Techniques
+We begin by developing some geometric intuition for the problem. Let a1, · · · , am ∈Rd be the
+columns of A ∈Rd×m and b1, · · · , bm ∈Rd be the columns of B ∈Rd×m. For each i ∈[m], we
+recall that ai is feature i’s representation vector and bi is feature i’s probe vector. Now let
+ˆz = BT Az. We are interested in when
+∥ˆz −z∥∞< ϵ ⇐⇒|ˆzi −zi| < ϵ,
+∀i ∈[m].
+(15)
+Note that
+ˆzi = ⟨bi, Az⟩=
+m
+X
+j=1
+zj⟨bi, aj⟩.
+(16)
+Therefore, the value ⟨bi, aj⟩tells us how much the probe bi for the i-th feature responds to
+presence of the j-th feature. If |⟨bi, aj⟩| is large for i̸ = j, that means that a text that contains
+feature j will contribute to the measurement of feature i. In this case, we say that feature
+j interferes with the measurement of feature i.
+If ⟨bi, aj⟩> 0, this is positive interference
+(presence of feature j will lead to inflated measurement of feature i). If ⟨bi, aj⟩< 0, this is
+negative interference (presence of feature j will lead to deflated measurement of feature i).
+Roughly speaking, for (15) to hold, there must be low interference; equivalently, BT A must
+be small off-diagonal. A general step in our analysis is to consider how k-sparsity limits the
+amount by which interference across multiple features can compound.
+Upper bound sketch.
+We can give a fairly straightforward construction to establish the
+upper bound. In particular, we can give a construction where A = B. Then it suffices to find a
+matrix A such that ⟨ai, ai⟩= 1 and such that ⟨ai, aj⟩< ϵ
+k. Leveraging the k-sparsity of z, this
+would show that the total interference for any feature is bounded by k · ϵ
+k = ϵ. We can then use
+standard constructions of incoherent matrices (i.e., matrices with approximately-orthonormal
+columns), such as appropriately-scaled random Gaussian matrices, to obtain the desired bound.
+6
+
+
+===== PDF PAGE 7 =====
+Initial attempt at lower bound.
+To prove the lower bound, a natural first inclination is
+to show that among a sufficiently large set of directions in Rd, there must exist correlated
+directions. In particular, it is possible to show that for d small relative to m, there exists i ∈[m]
+and k choices of j such that |⟨ai, aj⟩| > ϵ
+k and such that ⟨ai, aj⟩have the same sign (and thus
+compound in interference). However, this approach does not generally work when A̸ = B, since
+we do not strictly require representation directions of different features (or probe directions of
+different features) to be orthogonal. For i̸ = j, it is only necessary for the inner product of
+feature i’s representation vector to be orthogonal to feature j’s probe vector. This means that
+there may exist “good” sets of representation directions and probe directions among which many
+are pairwise correlated.
+In fact, in Section 4, we show that there are constructions with B̸ = A where probe directions
+are highly correlated with each other and representation directions are also highly correlated
+with each other. So while showing the existence of correlated vectors gives a lower bound in the
+case A = B, it does not suffice in general.
+Lower bound sketch.
+It would suffice to show that if ⟨bi, ai⟩is near 1 (as is required if
+BT Aei ≈ei) and d is small, then there must exist many pairs i̸ = j such that |⟨bi, aj⟩| is large.
+In particular, we would like to find a feature i such that there are k choices of j such that
+|⟨bi, aj⟩| > ϵ
+k and such that the interference is all in the same direction. To do this, it suffices to
+find 2k such vectors aj with |⟨bi, aj⟩| > ϵ
+k (by the pigeonhole principle).
+We employ a few ideas. The first is to use a result of Alon (2003), which demonstrates that
+low-rank matrices that are 1 on the diagonal must have a large off-diagonal entry. (This result
+also notably provides a near-optimal lower bound on the Johnson-Lindenstrauss Lemma.) In
+particular, we know that BT A has rank at most d, and we can minimally scale rows to allow
+diagonal entries to be 1. Note, however, that applying the result to BT A itself does not suffice
+since this only guarantees the existence of a single interfering pair of features.
+Therefore, the second main idea is to apply the result instead to large principal submatrices
+of BT A, which demonstrates that any submatrix of BT A must have a large off-diagonal entry.
+Equivalently, among any large subset R ⊆[m], there must exist a pair i, j ∈R with i̸ = j such
+that ⟨bi, aj⟩is large.
+Finally, we consider a graph reduction and apply Tur´an’s theorem. Consider a graph G
+with vertices [m] and such that there is an edge between i and j if and only if |⟨bi, aj⟩| > ϵ
+k or
+|⟨bj, ai⟩| > ϵ
+k. Then G has no independent set of size r. Then we can apply Tur´an’s theorem
+(which gives an upper bound on the number of edges in a graph without an r-clique) on G,
+hence providing a lower bound on the number of edges in G, which in turns gives a lower bound
+on the number of pairs of interfering features. Then we can use the pigeonhole principle to show
+that there must exist some probe vector that has large interference with many representation
+vectors, as desired.
+1.4
+Contributions: Implications for the Linear Representation Hypothesis
+and the Theory of Language Models
+While linear representations have long been a central character in the empirical study of language
+models (Mikolov et al., 2013a; Alain and Bengio, 2016), it has been unclear whether the LRH
+can provide a theoretical basis by which to study language models.
+Here, we explore this
+possibility by providing mathematical foundations for the linear representation hypothesis. The
+framework we introduce provides definitional clarity on the LRH, cleanly distinguishing the
+7
+
+
+===== PDF PAGE 8 =====
+acat =
+
+1
+2,
+√
+3
+2
+
+ahappy = (1, 0)
+bcat =
+
+0,
+2
+√
+3
+
+bhappy =
+
+1, −1
+√
+3
+
+Figure 1:
+Representation vectors acat, ahappy and probe vectors bcat, bhappy that yield perfect linear
+recovery of the cat and happy features. Notice that while the representation vectors are not orthog-
+onal, the probe vectors are able perfectly extract features since the cat probe is orthogonal to the
+happy representation and the happy probe is orthogonal to the cat representation. Indeed, observe that
+bcat(zcatacat + zhappyahappy) = zcat⟨bcat, acat⟩+ zhappy⟨bcat, ahappy⟩= zcat · 1 + zhappy · 0.
+distinct assumptions of linear representation and linear accessibility, and allowing us to formally
+consider the amount of superposition (i.e., the number of features stored relative to the number
+of neurons) possible under the LRH.
+The framework allows us to then derive theoretical implications of the linear representation
+hypothesis. Mathematically, we establish a quantitative gap between compressed sensing and
+linear compressed sensing. Our main results demonstrate dependencies between superposition
+(the number of features stored relative to the number of neurons), sparsity (the number of
+features active per input), accessibility (the precision by which the next layer can access fea-
+tures stored in the previous layer), and feature geometry (the arrangement of linear directions
+corresponding to features).
+A primary implication of our work is that linear representations—in addition to being con-
+ceptually elegant and highly-compatible with neural network operations—can be remarkably
+expressive. Under reasonable regimes of sparsity, a single layer of a language model can store an
+exponential number of features relative to neurons, such that subsequent layers can easily access
+these features. This amount of expressivity suggests the possibility that the LRH can serve as
+a serious foundation for deeper theoretical understand of language models.
+2
+Upper Bound Proof
+In this section, we prove Theorem 2.
+In particular, we establish that there exists a matrix
+A ∈Rd×m with d = Oϵ(k2 log m), such that
+AT Az −z
+
+∞< ϵ
+(17)
+for all k-sparse z ∈[−1, 1]m.
+Intuitively, we want to find A such that AT A is close to the identity matrix—i.e., that A is
+approximately orthonormal. The following definition will be useful.
+8
+
+
+===== PDF PAGE 9 =====
+Definition 4 (µ-incoherence). Say that a matrix C with columns c1, · · · , cm is µ-incoherent if
+⟨ci, ci⟩= 1
+(18)
+for all i ∈[m], and
+|⟨ci, cj⟩| < µ
+(19)
+for all i̸ = j.
+We can then show the following (standard) result, which demonstrates that random matrices
+are incoherent. (Equivalently, it shows that we can select an exponential number of approxi-
+mately orthogonal directions.) We give a proof in the case of an appropriately scaled matrix of
+independent Rademachers, but the result also holds, for example, for i.i.d. Gaussian entries.
+Lemma 5 (Incoherence of Random Matrices). Let C ∈Rd×m be a matrix with i.i.d. scaled
+Rademacher entries ± 1
+√
+d. For
+d = O
+ 
+log m + log 1
+δ
+µ2
+!
+,
+(20)
+C is µ-incoherent with probability at least 1 −δ.
+Proof. First observe that |⟨ci, ci⟩| = Pd
+i=1
+1
+d = 1. Next, observe that
+|⟨ci, cj⟩| = 1
+d
+d
+X
+ℓ=1
+Xℓ,
+(21)
+where Xi ∈{−1, 1} are i.i.d.. Then note that
+Pr[|⟨ci, cj⟩| > µ] = Pr
+"
+d
+X
+ℓ=1
+Xℓ
+ ≥µd
+#
+≤2 exp
+
+−dµ2
+2
+
+,
+(22)
+where we apply Hoeffding’s inequality. Applying a union bound, ⟨ci, cj⟩< µ for all i̸ = j with
+probability at least
+1 −
+m
+2
+
+2 exp
+
+−dµ2
+2
+
+≥1 −m2 exp
+
+−dµ2
+2
+
+.
+(23)
+Taking d =
+2
+µ2 (2 log m −log δ), we have m2 exp
+
+−dµ2
+2
+
+≤δ, as desired.
+In particular, the result guarantees the existence of a µ-incoherent matrix with d = O(log m
+µ2 ).
+Proof of Theorem 2.
+Let ˆz = AT Az and suppose that A is µ-incoherent. Then if z ∈[−1, 1]m
+has support T with |T| ≤k, we have that
+ˆzi =
+*
+ai,
+m
+X
+j=1
+zjaj
++
+= zi⟨ai, ai⟩+
+X
+j∈T\{i}
+zj⟨ai, aj⟩
+(24)
+= zi +
+X
+j∈T\{i}
+zj⟨ai, aj⟩.
+(25)
+9
+
+
+===== PDF PAGE 10 =====
+Therefore,
+|ˆzi −zi| <
+X
+j∈T\{i}
+|zj⟨ai, aj⟩| < kµ,
+(26)
+where in the last inequality, we used that A is µ-incoherent, |T| ≤k, and zj ∈[−1, 1]. This
+implies that ∥ˆz −z∥∞< kµ. Taking µ = ϵ
+k and applying Lemma 5, we have
+d(m, k, ϵ) = O
+k2 log m
+ϵ2
+
+,
+(27)
+as desired.
+Remark 6. The construction we have provided has B = A, meaning that features are represented
+with and probed with vectors in the same direction. In fact, as we show in Section 4, there exist
+constructions where a feature’s representation and probe vectors are themselves approximately
+orthogonal, while all feature directions are highly correlated and all probe directions are also
+highly correlated.
+The observation here also implies that attempts to show lower bounds by proving that suf-
+ficiently large sets of vectors must contain a pair of correlated vectors does not succeed, since
+collections of “good” representation and probe directions can in general contain many highly
+correlated directions.
+3
+Lower Bound Proof
+In this section, we prove Theorem 3. In particular, we establish that for ϵ > k3/2√
+5
+√m , if there exists
+A, B ∈Rd×m such that
+BT Az −z
+
+∞< ϵ for all k-sparse z ∈[−1, 1]m, then d = Ωϵ( k2
+log k log m
+k ).
+Preliminary observations.
+Consider A, B ∈Rd×m such that
+BT Az −z
+
+∞< ϵ for all
+k-sparse z ∈[−1, 1]m. Taking z = ei, this implies that
+|(BT Aei)i −1| < ϵ =⇒⟨bi, ai⟩∈1 ± ϵ.
+(28)
+for all i ∈[m]. Furthermore, taking z = P
+j∈T ej where T ⊆[m] \ {i}, |T| ≤k implies that
+|(BT Az)i −0| < ϵ =⇒|⟨bi,
+X
+j∈T
+aj⟩| < ϵ.
+(29)
+To prove Theorem 3, our approach will be to show that if A, B ∈Rd×m satisfy (28) with
+d < Oϵ( k2
+log k log m
+k ), then we can find a contradiction to (29).
+Finding many features with correlated interference.
+It would suffice to find i ∈[m] and
+a set T ∗⊆[m] \ {i} such that |T ∗| ≥2k and
+|⟨bi, aj⟩| > ϵ
+k
+(30)
+for all j ∈T. This would imply (by the pigeonhole principle) the existence of a subset T ⊆T ∗
+with |T| = k such that |⟨bi, aj⟩| > ϵ
+k for all j ∈T and such that |⟨bi, aj⟩| has the same sign for
+all j ∈T. In this case,
+|⟨bi,
+X
+j∈T
+aj⟩| =
+X
+j∈T
+|⟨bi, aj⟩| > k · ϵ
+k = ϵ,
+(31)
+10
+
+
+===== PDF PAGE 11 =====
+providing the needed contradiction. The remainder of the proof consists of showing that when
+d < Oϵ( k2
+log k log m
+k ), there must exist such i, T ∗.
+Bounding the rank of matrices with small off-diagonals.
+Note that the matrix BT A
+has entries (BT A)ij = ⟨bi, aj⟩.
+Also, rank(BT A) ≤d.
+Our aim is to show that when d is
+small relative to m, under the assumption of (28), there must exist a row of BT A that has 2k
+off-diagonal entries with absolute value at least ϵ
+k. At a high level, the idea we pursue is that
+matrices that are near-zero off-diagonal (and large on the diagonal) must have large rank.
+We begin by stating a result given by Alon (2003). The result shows that any square matrix
+that is one on the diagonal and bounded off-diagonal must have large rank. Of course, if the
+off-diagonal is 0, the matrix is the identity and thus has full rank. The result shows that we can
+bound the rank from below given small perturbations.
+Lemma 7 (Alon (2003), Theorem 9.3). Suppose
+1
+√n < ϵ < 1
+2. Then let D ∈Rn×n such that
+Dii = 1 for all i ∈[n] and |Dij| < ϵ for all i̸ = j. Then
+rank(D) ≥Ω
+ 
+1
+ϵ2 log(1
+ϵ) log n
+!
+.
+(32)
+It is useful to state a corollary, which generalizes the result to the setting where diagonal
+entries are bounded away from 0.
+Corollary 8. Let γ ∈(0, 1] and
+γ
+√n < ϵ < γ
+2. Then let C ∈Rn×n such that Cii ≥γ for all
+i ∈[n] and |Cij| < ϵ for all i̸ = j. Then
+rank(C) ≥Ω
+
+γ2
+ϵ2 log(γ
+ϵ ) log n
+
+.
+(33)
+Proof. Let D be the matrix obtained by scaling each entry in the i-th row of C by
+1
+Cii . Then
+rank(C) = rank(D). Then Dii = 1 for all i ∈[m] and |Dij| = |Cij|
+Cii ≤ϵ
+γ for all i̸ = j. Then the
+result follows by applying Lemma 7 with ϵ = ϵ
+γ .
+Now notice that |(BT A)ii| > 1 −ϵ for all i ∈[m] (by (28)).
+Therefore, we can apply
+Corollary 8 to BT A, taking γ = 1 −ϵ. However, applying Corollary 8 directly like this does not
+provide the result we desire, since it only shows the existence of a single large off-diagonal entry
+in BT A. (A sufficiently large such entry would also contradict (29), but applying Corollary 8 in
+this way would only imply a Ωϵ(log m) lower bound, losing dependence on k.)
+Applying Corollary 8 to submatrices.
+Instead, our approach is to apply Corollary 8 to all
+principal submatrices of C = BT A of a certain size. For a set R ⊆[m], let CR ∈R|R|×|R| denote
+the submatrix given by taking the rows and columns of C in R. Then CR also has diagonal
+entries at least γ = 1 −ϵ, and rank(CR) ≤rank(C) ≤d.
+Setting r =
+m
+4k+1, Corollary 8 implies that there exists a constant α > 0 such that if |R| = r
+and
+rank(CR) < α (1 −ϵ)2 log r
+( ϵ
+k)2 log(k(1−ϵ)
+ϵ
+)
+,
+(34)
+11
+
+
+===== PDF PAGE 12 =====
+then CR has an off-diagonal entry with absolute value at least ϵ
+k. (Also note that ϵ > k3/2√
+5
+√m , =⇒
+ϵ
+k >
+1
+√
+m
+4k+1 =
+1
+√r for k ≥1, satisfying the assumption in Corollary 8.) Equivalently, for any
+set |R| ⊆[m], there exist i, j ∈R with i̸ = j such that |Cij| > ϵ
+k. In other words, among any r
+features, there must exist an interfering pair.
+Graph reduction and Tur´an’s theorem.
+We would now like to show that the presence
+of a large off-diagonal entry in any submatrix implies the existence of a row with many large
+off-diagonal entries. Consider the undirected graph G = ([m], E) such that (i, j) ∈E for i̸ = j
+if and only if |⟨bi, aj⟩| > ϵ
+k or |⟨bj, ai⟩| > ϵ
+k. Then we know from above that if
+d ≤α (1 −ϵ)2 log r
+( ϵ
+k)2 log(k(1−ϵ)
+ϵ
+)
+,
+(35)
+then for every R ⊆[m] with |R| = r, there exists i, j ∈R with i̸ = j such that (i, j) ∈E.
+In other words, G has no independent set of size r, or equivalently, G has no clique of size r.
+Recall that Tur´an’s theorem shows that a graph with m edges without an r-clique has at most
+(1 −
+1
+r−1)m2
+2 < (1 −1
+r)m2
+2 edges. This implies that G has at least
+m
+2
+
+−
+
+1 −1
+r
+ m2
+2 = m2
+2r −m
+2
+(36)
+edges.
+Now note that every edge in G implies at least one off-diagonal entry in BT A with
+absolute value at least ϵ
+k. This implies the existence of a row with at least m
+2r −1
+2 off-diagonal
+entries with absolute value at least ϵ
+k (by the pigeonhole principle). Setting r =
+m
+4k+1 implies a
+row in BT A with 2k entries with absolute values at least ϵ
+k, providing the desired contradiction.
+Therefore, we must have that
+d > α
+log
+m
+4k+1
+(
+ϵ
+(1−ϵ)k)2 log (1−ϵ)k
+ϵ
+= Ωϵ
+ k2
+log k log m
+k
+
+,
+(37)
+as desired.
+4
+The geometry of feature directions
+One benefit of the linear representation hypothesis is that it provides a geometric conception of
+how language models represent concepts. In particular, features are thought of as directions in
+activation space. This allows us to state geometric relationships between different features. For
+example, it is often suggested that unrelated features are represented by orthogonal directions.
+In this section, we establish what is implied and not implied about the geometry of feature
+vectors under our theoretical framework.
+Proposition 9 demonstrates two unintuitive facts. First, a feature can be represented and
+accessed by different vectors; in fact, a feature’s representation and probe directions can be
+almost perfectly orthogonal. Second, different features can have representation vectors that are
+almost perfectly in the same direction; likewise, different features can have probe vectors that
+are almost perfectly in the same direction.
+Proposition 11 then establishes that this unusual behavior can be eliminated if we further
+restrict the norms of both the representation and probe vectors. In particular, if we bound
+12
+
+
+===== PDF PAGE 13 =====
+the norm of probe and representation vectors to be near 1, probe and representation directions
+must be closely aligned, and different features must represented and probed by approximately
+orthogonal directions.
+Proposition 9. Consider constants ϵ, δ ∈(0, 1).
+Then for d = Oϵ,δ(k2 log m), there exists
+A, B ∈Rd×m such that
+BT Az −z
+
+∞< ϵ
+(38)
+for all k-sparse z ∈[−1, 1]m, and where
+(i) |⟨ai
+∥ai∥,
+bi
+∥bi∥⟩| < δ + o(1) for all i ∈[m],
+(ii) ⟨ai
+∥ai∥,
+aj
+∥aj∥⟩> 1 −δ −o(1) for all i̸ = j,
+(iii) ⟨bi
+∥bi∥,
+bj
+∥bj∥⟩> 1 −δ −o(1) for all i̸ = j.
+Proof. We give a construction. Let c1, c2, · · · , cm, a∗, b∗be the columns of a µ-incoherent matrix
+Rd×m+2. Then set
+ai = ci + λa∗
+(39)
+bi = ci + λb∗
+(40)
+for λ =
+q
+1
+δ −1. We begin by showing that for an appropriately chosen µ,
+BT Az −z
+
+∞< ϵ
+for all k-sparse z ∈[−1, 1]m. Now let ˆz = BT Az for any z ∈[−1, 1]m with support T. Then
+ˆzi =
+*
+bi,
+m
+X
+j=1
+zjaj
++
+= zi⟨bi, ai⟩+
+X
+j∈T\{i}
+zj⟨bi, aj⟩.
+(41)
+Therefore,
+|ˆzi −zi| ≤|zi(⟨bi, ai⟩−1)| +
+X
+j∈T\{i}
+|zj⟨bi, aj⟩|
+(42)
+≤|zi(⟨bi, ai⟩−1)| +
+X
+j∈T\{i}
+|⟨bi, aj⟩|,
+(43)
+where the last inequality follows from observing that zj ∈[−1, 1] for all j ∈[m]. Now observe
+that
+|zi(⟨bi, ai⟩−1)| = |zi||⟨ci + λb∗, ci + λa∗⟩−1|
+(44)
+≤|zi| (|⟨ci, λa∗⟩| + |⟨λb∗, ci⟩| + |⟨λb∗, λa∗⟩|)
+(45)
+= |zi|(2λ + λ2)µ
+(46)
+< |zi|(1 + λ)2µ,
+(47)
+where (45) follows because |⟨ci, ci⟩| = 1 and (46) follows from µ-incoherence. Similarly,
+|⟨bi, aj⟩| = |⟨ci + λb∗, ci + λa∗⟩|
+(48)
+= |⟨ci, cj⟩| + |⟨ci, λa∗⟩| + |⟨λb∗, ci⟩| + |⟨λb∗, λa∗⟩|
+(49)
+≤(1 + 2λ + λ2)µ = (1 + λ)2µ.
+(50)
+13
+
+
+===== PDF PAGE 14 =====
+This implies that
+|zi(⟨bi, ai⟩−1)| +
+X
+j∈T\{i}
+|⟨bi, aj⟩| < k(1 + λ)2µ,
+(51)
+where we use the fact that if |zi| > 0, then |T \ {i}| ≤k −1. Therefore, it suffices to take
+µ =
+ϵ
+k(1+λ2) to ensure that ∥ˆz −z∥∞< ϵ. From Lemma 5, there exists a µ-incoherent matrix in
+Rd×m+2 for
+d = O
+k2(1 + λ)4
+ϵ2
+log(m + 2)
+
+= O
+k2(1 + λ)4
+ϵ2
+log m
+
+= Oϵ,δ(k2 log m).
+(52)
+Establishing (i).
+We now show that the construction satisfies (i). Observe that for all i ∈[m],
+
+ ai
+∥ai∥, bi
+∥bi∥
+ = |⟨ci + λa∗, ci + λb∗⟩|
+∥ai∥∥bi∥
+(53)
+≤|⟨ci, ci⟩| + |⟨ci, λb∗⟩| + |⟨λa∗, ci⟩| + |⟨λa∗, λb∗⟩|
+∥ai∥∥bi∥
+(54)
+≤1 + (2λ + λ2)µ
+∥ai∥∥bi∥
+=
+1 + (2λ+λ2)ϵ
+k(1+λ2)
+∥ai∥∥bi∥
+= 1 + o(1)
+∥ai∥∥bi∥.
+(55)
+Note that
+⟨ai, ai⟩= ⟨ci + λa∗, ci + λa∗⟩
+(56)
+= ⟨ci, ci⟩+ 2⟨ci, λa∗⟩+ ⟨λa∗, λa∗⟩
+(57)
+≤1 + λ2 −2λµ = 1 + λ2 −
+2λϵ
+k(1 + λ2) = 1 + λ2 −o(1).
+(58)
+Therefore, ∥ai∥≤
+p
+1 + λ2 −o(1). Analogously, ∥bi∥≤
+p
+1 + λ2 −o(1). So we have, plugging
+into (55),
+ ai
+∥ai∥, bi
+∥bi∥
+
+≤
+1 + o(1)
+1 + λ2 −o(1) =
+1
+1 + λ2 + o(1) = δ + o(1),
+(59)
+where we recall that we set λ =
+q
+1
+δ −1.
+Establishing (ii,iii).
+We now show that the construction satisfies (ii). (iii) follows analo-
+gously. For all i̸ = j,
+
+ ai
+∥ai∥, aj
+∥aj∥
+ = |⟨ci + λa∗, cj + λa∗⟩|
+∥ai∥∥aj∥
+(60)
+= ⟨ci, cj⟩+ ⟨ci, λa∗⟩+ ⟨λa∗, cj⟩+ ⟨λa∗, λa∗⟩
+∥ai∥∥aj∥
+(61)
+≥λ2 −(1 + 2λ)µ
+1 + λ2 + o(1)
+(62)
+=
+λ2 −o(1)
+1 + λ2 + o(1) = 1 −
+1
+1 + λ2 −o(1) = 1 −δ −o(1),
+(63)
+where we again recall that where we recall that λ =
+q
+1
+δ −1.
+14
+
+
+===== PDF PAGE 15 =====
+Remark 10. In practice, different representation and probe vectors are seen in different decoder
+and encoder weights in SAEs, respectively (e.g., (Templeton et al., 2024; Paulo and Belrose,
+2025)).
+This had led to some confusion about which sets of weights are the “true” feature
+vectors. Proposition 9 illustrates that under the LRH, features have both a representation vector
+and a probe direction, and that these directions can be distinct.
+We now show how the “unusual” behavior in Proposition 9 is controlled by the norm of the
+representation and probe vectors.
+Proposition 11. Consider any constants ϵ > 0, γ ≥1. Then if ∥ai∥, ∥bi∥≤γ for all i ∈[m]
+and
+BT Az −z
+
+∞< ϵ
+(64)
+for all k-sparse z ∈[−1, 1]m, it holds that
+(i) ⟨ai
+∥ai∥,
+bi
+∥bi∥⟩≥1−ϵ
+γ2 for all i ∈[m],
+(ii) ⟨ai
+∥ai∥,
+aj
+∥aj∥⟩≤ϵγ2
+1−ϵ +
+q
+1 −(1−ϵ)2
+γ4
+for all i̸ = j,
+(iii) ⟨bi
+∥bi∥,
+bj
+∥bj∥⟩≤ϵγ2
+1−ϵ +
+q
+1 −(1−ϵ)2
+γ4
+for all i̸ = j.
+Proof. We must have that ⟨ai, bi⟩≥1 −ϵ since
+BT Aei −ei
+
+∞≤ϵ. It follows directly that
+⟨ai, bi⟩> 1 −ϵ =⇒
+ ai
+∥ai∥, bi
+∥bi∥
+
+≥1 −ϵ
+γ2 ,
+(65)
+establishing (i).
+We now show (ii). By Cauchy-Schwarz, ∥ai∥∥bi∥≥⟨ai, bi⟩> 1 −ϵ for all i ∈[m]. So since
+∥ai∥, ∥bi∥≤λ for all i ∈[m], we have that ∥ai∥, ∥bi∥≥1−ϵ
+γ2 for all i ∈[m]. Therefore, we have
+that
+
+ bi
+∥bi∥, aj
+∥aj∥
+ ≤|⟨bi, aj⟩| γ2
+1 −ϵ < ϵγ2
+1 −ϵ.
+(66)
+Let ˜ai denote
+ai
+∥ai∥and ˜bi denote
+bi
+∥bi∥for all i ∈[m]. Then write
+˜ai = αi ˜bi + ˜ai⊥
+(67)
+˜aj = αj ˜bi + ˜aj⊥,
+(68)
+where αi = ⟨˜ai, ˜bi⟩,αj = ⟨˜aj, ˜bj⟩, and ˜ai⊥, ˜aj⊥⊥˜bi. Then
+⟨˜ai, ˜aj⟩= αiαj + ⟨˜ai⊥, ˜aj⊥⟩.
+(69)
+By Cauchy-Schwarz,
+|⟨˜ai⊥, ˜aj⊥⟩| ≤∥˜ai⊥∥
+ ˜aj⊥
+ =
+q
+(1 −α2
+i )(1 −α2
+j).
+(70)
+Therefore,
+|⟨˜ai, ˜aj⟩| ≤|αi||αj| +
+q
+(1 −α2
+i )(1 −α2
+j).
+(71)
+15
+
+
+===== PDF PAGE 16 =====
+We have that 1 ≥αi > 1−ϵ
+γ2 and 0 < αj < ϵγ2
+1−ϵ. Therefore,
+|⟨˜ai, ˜aj⟩| ≤ϵγ2
+1 −ϵ +
+s
+1 −(1 −ϵ)2
+γ4
+,
+(72)
+as desired. (iii) follows analogously.
+In particular, taking ϵ →0, γ = 1 in Proposition 11, we get that
+(i) ⟨ai
+∥ai∥,
+bi
+∥bi∥⟩→1 for all i ∈[m],
+(ii) ⟨ai
+∥ai∥,
+aj
+∥aj∥⟩→0 for all i̸ = j,
+(iii) ⟨bi
+∥bi∥,
+bj
+∥bj∥⟩→0 for all i̸ = j.
+This shows that when representation and probe vectors are restricted to have unit norm, the
+clean behavior of equal representation and probe directions emerges (meaning that each feature
+is given by a single direction), and that different features have orthogonal directions.
+5
+Activation functions and binary classification
+In this section, we establish a generalization of our lower bound, which simultaneous resolves
+two additional questions: (1) What happens when we add an activation function or bias? (2)
+What about when features only take on binary values (as may be the case for many common
+features)?
+In particular, we are curious how bounds may change if we allow g(x) = ReLU(Wx + b),
+since individual layers in a neural network consist of a linear transformation plus a non-linear
+activation. We are also interested in the setting in which z ∈{0, 1}m (i.e., features are binary).
+Here, we prove that when feature representations are restricted to the Boolean cube {0, 1}m,
+Ω(k2 log(m/k)) embedding dimensions are required to linearly separate embeddings with and
+without a feature. A corollary is that adding a bias and monotonic activation function does not
+increase the asymptotic capacity of embeddings.
+Theorem 12. Suppose that there exist A, B ∈Rd×m and t ∈Rm such that for all i ∈[m] and
+k-sparse z ∈{0, 1}m,
+(BT Az)i > ti
+(73)
+if and only if zi = 1. Then for k < √m,
+d = Ω
+ k2
+log k log m
+k
+
+.
+(74)
+It’s worth noting here that taking ϵ < 1
+2 in Theorem 2 provides a nearly-matching upper
+bound of Ω(k2 log m), since ϵ < 1
+2 implies that (BT Az)i < 1
+2 when zi = 0 and (BT Az)i > 1
+2 when
+zi = 1. Similarly, Theorem 12 implies Theorem 3 in the case ϵ < 1
+2. However, the lower bound
+in Theorem 3 does not directly imply Theorem 12 since we do not require that
+BT Az −z
+
+∞
+is small here, but rather that Az linearly separates positive and negative examples for each
+feature. That being said, the proof is very similar to that of Theorem 3, relying on the same
+overall strategy.
+16
+
+
+===== PDF PAGE 17 =====
+Proof. Suppose that there existed A, B ∈Rd×m and t ∈Rm such that for all i ∈[m] and k-
+sparse z ∈{0, 1}m, (BT Az)i > ti if and only if zi = 1. Then notice that we could scale the i-th
+column of B and γi by any constant positive factor to get another solution. In particular, we
+can obtain a solution where BT A is 1 on the diagonal. Therefore, it suffices to show that for
+d ≤O( k2
+log k log m
+k ), there does not exist B, A, t satisfying (73) and such that (BT A)ii = 1 for all
+i ∈[m].
+Then we have that ti ≤1, since (BT Aei) > ti Then, along the lines of the proof of Theorem 3,
+it suffices to find i ∈[m] and T ∗⊆[m] \ {i} with |T ∗| = 2k and
+|⟨bi, aj⟩| > 1
+k
+(75)
+for all j ∈T ∗. Indeed, this would imply the existence of a pair i ∈[m], T ⊆[m] \ {i} (with
+|T| = k), such that
+(BT Az)i > k · 1
+k = 1 ≥ti,
+(76)
+giving a contradiction.
+We will again apply Lemma 7 to submatrices of C of size r. Indeed, Lemma 7 implies that
+there exists a constant α > 0 such that if |R| = r and
+rank(CR) < α
+log r
+( 1
+k)2 log k = α k2
+log k log r,
+(77)
+then CR has an off-diagonal entry with absolute value at least 1
+k. Then we can proceed as in the
+proof of Theorem 3, taking r =
+m
+4k+1 and applying Tur´an’s theorem.
+The following corollary makes the simple observation that if a feature cannot be linearly
+separated, then it also cannot be separated by adding a bias and monotonic activation function.
+Corollary 13. Suppose that there exist A, W ∈Rd×m, b ∈Rm, and a monotonically increasing
+activation function σ : R →R such that for all i ∈[m], k-sparse z ∈{0, 1}m, and x = Az,
+σ(W T x + b) > 0
+(78)
+if and only if zi = 1. (Here, σ is applied component-wise.) Then for k < √m,
+d = Ω
+ k2
+log k log m
+k
+
+.
+(79)
+Proof. Consider any i ∈[m] and z ∈{0, 1}m such that zi = 1 and z′ such that z′
+i = 0. Then
+σ(W T Az + b) > σ(W T Az′ + b). This implies that (W T Az)i > (W T Az′)i. Therefore, there exists
+a threshold ti such that for all z ∈{0, 1}m, (W T Az)i > ti if and only if zi = 1. The result
+follows by applying Theorem 12.
+The proof establishes that probes of the form gi(x) = ReLU(W T x + b) implies the existence
+of a linear probe. In particular, this further establishes that for ϵ < 1
+2, the bound in Theorem 3
+cannot be lowered asymptotically by expanding the class of probes to allow a bias and activation
+function.
+17
+
+
+===== PDF PAGE 18 =====
+6
+Discussion
+The linear representation hypothesis is a common intuition arising from the empirical study
+of language models. However, in part due to a lack of formalization and definitional clarity,
+it has played less of a role in the theoretical study of language models. In this direction, we
+introduced a mathematical framework in which we can cleanly state two distinct pieces of the
+linear representation hypothesis. First, that in intermediate layers of language models, features
+are represented linearly. Second, that these features can then be accessed linearly. We can then
+formally establish the number of features d neurons can linearly represent such that they can
+be accessed linearly. We show a quantitative gap between what can be achieved with linear and
+non-linear decoding. Importantly, even when assuming both linear representation and linear
+accessibility (moving us beyond the classical compressed sensing setting), the LRH allows for an
+exponential number of features to be stored relative to the number of neurons. This suggests
+that, while conceptually simple, the LRH may be expressive enough to explain rich and complex
+behavior in language models.
+Our work suggests a number of interesting further directions. First, while we assume linear
+representation and then establish results for non-linear and linear accessibility, it is interesting to
+consider when linear accessibility is possible under non-linear representation. Indeed, this would
+help establish if previous layers can arrange features in more subtle ways while still allowing
+efficient access by later layers. Similarly, analysis of more sophisticated decoders (like two-layer
+neural networks) would be interesting. More generally, other works have proposed alternate
+representation hypotheses (Engels et al., 2024; Csord´as et al., 2024; Kantamneni and Tegmark,
+2025). Formalizing these hypotheses and understanding their representational capacity could
+establish further insight into the plausibility of these hypotheses in comparison to the LRH.
+Furthermore, formalization of how multiple layers can leverage linear representations would
+be interesting. In particular, while we show that an exponential number of features can be
+represented and accessed linearly, the next layer of a neural network (say with d2 neurons)
+consists only of d2 linear probes, suggesting that each additional layer does more than extracting
+individual features.
+While the present work has established how a single layer can linearly
+represent many features in a way that a subsequent layer can easily retrieve, there remains
+much to be understood in terms of how this capability can enable multiple layers to work in
+tandem to achieve the remarkable phenomena we have observed.
+Overall, our work lays out mathematical foundations for the linear representation hypothesis
+as a basis for the theoretical study of language models.
+Acknowledgments.
+We thank Sophie Greenwood, Rajiv Movva, Kevin Ren, and Divya Shan-
+mugam for helpful discussion and feedback.
+References
+G. Alain and Y. Bengio. Understanding intermediate layers using linear classifier probes. arXiv
+preprint arXiv:1610.01644, 2016.
+N. Alon. Problems and results in extremal combinatorics—i. Discrete Mathematics, 273(1-3):
+31–53, 2003.
+S. Arora, Y. Li, Y. Liang, T. Ma, and A. Risteski. Linear algebraic structure of word senses,
+18
+
+
+===== PDF PAGE 19 =====
+with applications to polysemy. Transactions of the Association for Computational Linguistics,
+6:483–495, 2018.
+E. J. Candes and T. Tao. Near-optimal signal recovery from random projections: Universal
+encoding strategies? IEEE transactions on information theory, 52(12):5406–5425, 2006.
+E. J. Cand`es, J. Romberg, and T. Tao.
+Robust uncertainty principles: Exact signal recon-
+struction from highly incomplete frequency information. IEEE Transactions on information
+theory, 52(2):489–509, 2006.
+R. Chen, A. Arditi, H. Sleight, O. Evans, and J. Lindsey. Persona vectors: Monitoring and
+controlling character traits in language models. arXiv preprint arXiv:2507.21509, 2025.
+V. Costa, T. Fel, E. S. Lubana, B. Tolooshams, and D. Ba. From flat to hierarchical: Extracting
+sparse representations with matching pursuit. arXiv preprint arXiv:2506.03093, 2025.
+R. Csord´as, C. Potts, C. D. Manning, and A. Geiger. Recurrent neural networks learn to store
+and generate sequences using non-linear representations. arXiv preprint arXiv:2408.10920,
+2024.
+H. Cunningham, A. Ewart, L. Riggs, R. Huben, and L. Sharkey. Sparse autoencoders find highly
+interpretable features in language models. arXiv preprint arXiv:2309.08600, 2023.
+D. L. Donoho. Compressed sensing. IEEE Transactions on information theory, 52(4):1289–1306,
+2006.
+N. Elhage, T. Hume, C. Olsson, N. Schiefer, T. Henighan, S. Kravec, Z. Hatfield-Dodds,
+R. Lasenby, D. Drain, C. Chen, et al.
+Toy models of superposition.
+arXiv preprint
+arXiv:2209.10652, 2022.
+J. Engels, E. J. Michaud, I. Liao, W. Gurnee, and M. Tegmark. Not all language model features
+are one-dimensionally linear. arXiv preprint arXiv:2405.14860, 2024.
+L. Gao, T. D. la Tour, H. Tillman, G. Goh, R. Troll, A. Radford, I. Sutskever, J. Leike, and
+J. Wu. Scaling and evaluating sparse autoencoders. arXiv preprint arXiv:2406.04093, 2024.
+S. S. R. Hindupur, E. S. Lubana, T. Fel, and D. Ba. Projecting assumptions: The duality
+between sparse autoencoders and concept geometry. arXiv preprint arXiv:2503.01822, 2025.
+W. B. Johnson, J. Lindenstrauss, et al. Extensions of lipschitz mappings into a hilbert space.
+Contemporary mathematics, 26(189-206):1, 1984.
+S. Kantamneni and M. Tegmark. Language models use trigonometry to do addition. arXiv
+preprint arXiv:2502.00873, 2025.
+B. Z. Li, Z. C. Guo, and J. Andreas. (how) do language models track state?
+arXiv preprint
+arXiv:2503.02854, 2025.
+J. Lindsey, W. Gurnee, E. Ameisen, B. Chen, A. Pearce, N. L. Turner, C. Citro, D. Abra-
+hams, S. Carter, B. Hosmer, J. Marcus, M. Sklar, A. Templeton, T. Bricken, C. McDougall,
+H. Cunningham, T. Henighan, A. Jermyn, A. Jones, A. Persic, Z. Qi, T. B. Thompson,
+S. Zimmerman, K. Rivoire, T. Conerly, C. Olah, and J. Batson. On the biology of a large
+19
+
+
+===== PDF PAGE 20 =====
+language model. Transformer Circuits Thread, 2025. URL https://transformer-circuits.
+pub/2025/attribution-graphs/biology.html.
+T. Mikolov, I. Sutskever, K. Chen, G. S. Corrado, and J. Dean. Distributed representations
+of words and phrases and their compositionality. Advances in neural information processing
+systems, 26, 2013a.
+T. Mikolov, W.-t. Yih, and G. Zweig. Linguistic regularities in continuous space word represen-
+tations. In Proceedings of the 2013 conference of the north american chapter of the association
+for computational linguistics: Human language technologies, pages 746–751, 2013b.
+R. Movva, K. Peng, N. Garg, J. Kleinberg, and E. Pierson. Sparse autoencoders for hypothesis
+generation. arXiv preprint arXiv:2502.04382, 2025.
+N. Nanda, A. Lee, and M. Wattenberg. Emergent linear representations in world models of
+self-supervised sequence models. arXiv preprint arXiv:2309.00941, 2023.
+N. Panickssery, N. Gabrieli, J. Schulz, M. Tong, E. Hubinger, and A. M. Turner. Steering llama
+2 via contrastive activation addition. arXiv preprint arXiv:2312.06681, 2023.
+K. Park, Y. J. Choe, and V. Veitch. The linear representation hypothesis and the geometry of
+large language models. arXiv preprint arXiv:2311.03658, 2023.
+G. Paulo and N. Belrose. Sparse autoencoders trained on the same data learn different features.
+arXiv preprint arXiv:2501.16615, 2025.
+A. Templeton, T. Conerly, J. Marcus, J. Lindsey, T. Bricken, B. Chen, A. Pearce, C. Citro,
+E. Ameisen, A. Jones, et al. Scaling monosemanticity: Extracting interpretable features from
+claude 3 sonnet. transformer circuits thread, 2024.
+A. M. Turner, L. Thiergart, G. Leech, D. Udell, J. J. Vazquez, U. Mini, and M. MacDiarmid.
+Steering language models with activation engineering. arXiv preprint arXiv:2308.10248, 2023.
+M. Wang, T. D. la Tour, O. Watkins, A. Makelov, R. A. Chi, S. Miserendino, J. Heidecke,
+T. Patwardhan, and D. Mossing. Persona features control emergent misalignment. arXiv
+preprint arXiv:2506.19823, 2025.
+A. Zou, L. Phan, S. Chen, J. Campbell, P. Guo, R. Ren, A. Pan, X. Yin, M. Mazeika, A.-K.
+Dombrowski, et al. Representation engineering: A top-down approach to ai transparency.
+arXiv preprint arXiv:2310.01405, 2023.
+20

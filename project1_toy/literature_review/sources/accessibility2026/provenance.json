@@ -1,0 +1,21 @@
+{
+  "key": "accessibility2026",
+  "arxiv_id": "2609.09556",
+  "accessed_utc": "2026-10-06T00:54:38.342769+00:00",
+  "metadata": {
+    "citation_title": "High-probability guarantees for linear accessibility in feature superposition",
+    "citation_author": "Vompa, Enrico",
+    "citation_date": "2026/09/09",
+    "citation_online_date": "2026/09/25",
+    "citation_pdf_url": "https://arxiv.org/pdf/2609.09556",
+    "citation_arxiv_id": "2609.09556",
+    "citation_abstract": "Neural networks can leverage feature superposition to encode more concepts than dimensions, but cross-feature interference constrains the linear accessibility of simultaneously active features. By framing linear accessibility as a compressed sensing problem, we derive high-probability bounds for fixed supports under subgaussian noise, proving the sufficient dimension scales linearly ($d=O_{\\varepsilon}(k \\log m)$) rather than prior worst-case quadratic limits. We characterize the asymmetry between active and inactive interference and the trade-off between interference and observation-noise budgets. We then validate these bounds across system parameters through Gaussian-tail approximations. We also introduce IHT-SAE, which uses learned iterative refinement to improve feature recovery beyond the limits of linear availability. These results quantify the geometric constraints of the linear representation hypothesis, providing a framework for evaluating sparse autoencoders, compositional generalization, and neural interpretability."
+  },
+  "submission_history": "Submission history From: Enrico Vompa [ view email ] [v1] Wed, 9 Sep 2026 00:26:35 UTC (2,626 KB) [v2] Thu, 17 Sep 2026 21:15:17 UTC (2,671 KB) [v3] Fri, 25 Sep 2026 13:27:30 UTC (2,851 KB)",
+  "abstract_url": "https://arxiv.org/abs/2609.09556",
+  "pdf_url": "https://arxiv.org/pdf/2609.09556",
+  "pages": 21,
+  "pdf_bytes": 3928738,
+  "pdf_sha256": "9713acf552f4d63f3b40bf06f4139519b6eccc58380b0593a24d73a03294eda0",
+  "errors": []
+}

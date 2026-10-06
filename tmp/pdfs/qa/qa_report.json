@@ -1,0 +1,14 @@
+{
+  "volume1": {
+    "pages": 35,
+    "bounds_issues": [],
+    "short_pages_to_review": [],
+    "output": "Monosemanticity_Robustness_Lecture_Course.pdf"
+  },
+  "volume2": {
+    "pages": 41,
+    "bounds_issues": [],
+    "short_pages_to_review": [],
+    "output": "Superposition_Recursive_Training_Derivations.pdf"
+  }
+}

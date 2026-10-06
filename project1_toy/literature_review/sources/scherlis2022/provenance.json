@@ -1,0 +1,21 @@
+{
+  "key": "scherlis2022",
+  "arxiv_id": "2210.01892",
+  "accessed_utc": "2026-10-06T00:47:42.830924+00:00",
+  "metadata": {
+    "citation_title": "Polysemanticity and Capacity in Neural Networks",
+    "citation_author": "Shlegeris, Buck",
+    "citation_date": "2022/10/04",
+    "citation_online_date": "2025/03/25",
+    "citation_pdf_url": "https://arxiv.org/pdf/2210.01892",
+    "citation_arxiv_id": "2210.01892",
+    "citation_abstract": "Individual neurons in neural networks often represent a mixture of unrelated features. This phenomenon, called polysemanticity, can make interpreting neural networks more difficult and so we aim to understand its causes. We propose doing so through the lens of feature \\emph{capacity}, which is the fractional dimension each feature consumes in the embedding space. We show that in a toy model the optimal capacity allocation tends to monosemantically represent the most important features, polysemantically represent less important features (in proportion to their impact on the loss), and entirely ignore the least important features. Polysemanticity is more prevalent when the inputs have higher kurtosis or sparsity and more prevalent in some architectures than others. Given an optimal allocation of capacity, we go on to study the geometry of the embedding space. We find a block-semi-orthogonal structure, with differing block sizes in different models, highlighting the impact of model architecture on the interpretability of its neurons."
+  },
+  "submission_history": "Submission history From: Adam Scherlis [ view email ] [v1] Tue, 4 Oct 2022 20:28:43 UTC (2,391 KB) [v2] Fri, 23 Dec 2022 15:58:50 UTC (2,391 KB) [v3] Wed, 12 Jul 2023 01:02:19 UTC (2,813 KB) [v4] Tue, 25 Mar 2025 05:19:03 UTC (2,813 KB)",
+  "abstract_url": "https://arxiv.org/abs/2210.01892",
+  "pdf_url": "https://arxiv.org/pdf/2210.01892",
+  "pages": 23,
+  "pdf_bytes": 3166657,
+  "pdf_sha256": "822a1fa71da778b778c599e21af70b79a9fe3432787d12cf6cd53758243f7142",
+  "errors": []
+}

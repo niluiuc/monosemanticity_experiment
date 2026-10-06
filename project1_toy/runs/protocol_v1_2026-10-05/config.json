@@ -1,0 +1,64 @@
+{
+  "protocol_version": "project1-toy-v1",
+  "pair": {
+    "probabilities": [
+      0.05,
+      0.2,
+      0.5
+    ],
+    "sigmas": [
+      0.0,
+      0.05,
+      0.3,
+      0.8
+    ],
+    "samples": 100000,
+    "seed_base": 510000,
+    "amplitudes": [
+      0.7071067811865475,
+      1.0
+    ]
+  },
+  "trained": {
+    "n": 8,
+    "m": 4,
+    "encoder_energy": 4.0,
+    "probabilities": [
+      0.05,
+      0.15,
+      0.3,
+      0.5
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "sigmas": [
+      0.0,
+      0.05,
+      0.15,
+      0.3,
+      0.6
+    ],
+    "steps": 4000,
+    "learning_rate": 0.01,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-08,
+    "samples": 50000,
+    "test_seed_base": 610000,
+    "convergence_window": 100,
+    "convergence_absolute_tolerance": 1e-05,
+    "weak_column_relative_cutoff": 0.01
+  },
+  "checks": {
+    "seed": 20261005,
+    "gradient_epsilon": 1e-06,
+    "gradient_relative_tolerance": 1e-05,
+    "exact_identity_tolerance": 1e-12,
+    "bound_tolerance": 1e-10,
+    "familywise_alpha": 0.001,
+    "comparison_cap": 5000
+  }
+}

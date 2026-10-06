@@ -1,0 +1,21 @@
+{
+  "key": "tsipras2018",
+  "arxiv_id": "1805.12152",
+  "accessed_utc": "2026-10-06T00:51:56.437965+00:00",
+  "metadata": {
+    "citation_title": "Robustness May Be at Odds with Accuracy",
+    "citation_author": "Madry, Aleksander",
+    "citation_date": "2018/05/30",
+    "citation_online_date": "2019/09/09",
+    "citation_pdf_url": "https://arxiv.org/pdf/1805.12152",
+    "citation_arxiv_id": "1805.12152",
+    "citation_abstract": "We show that there may exist an inherent tension between the goal of adversarial robustness and that of standard generalization. Specifically, training robust models may not only be more resource-consuming, but also lead to a reduction of standard accuracy. We demonstrate that this trade-off between the standard accuracy of a model and its robustness to adversarial perturbations provably exists in a fairly simple and natural setting. These findings also corroborate a similar phenomenon observed empirically in more complex settings. Further, we argue that this phenomenon is a consequence of robust classifiers learning fundamentally different feature representations than standard classifiers. These differences, in particular, seem to result in unexpected benefits: the representations learned by robust models tend to align better with salient data characteristics and human perception."
+  },
+  "submission_history": "Submission history From: Dimitris Tsipras [ view email ] [v1] Wed, 30 May 2018 18:00:32 UTC (5,744 KB) [v2] Mon, 4 Jun 2018 03:35:11 UTC (6,529 KB) [v3] Thu, 11 Oct 2018 05:09:19 UTC (6,577 KB) [v4] Fri, 30 Aug 2019 22:57:22 UTC (5,228 KB) [v5] Mon, 9 Sep 2019 08:09:25 UTC (5,228 KB)",
+  "abstract_url": "https://arxiv.org/abs/1805.12152",
+  "pdf_url": "https://arxiv.org/pdf/1805.12152",
+  "pages": 24,
+  "pdf_bytes": 6191702,
+  "pdf_sha256": "22b3b7dce21af1fd789c252e8d8249e0b564b2640ddcccbf1ac9e82d6cc10ddd",
+  "errors": []
+}

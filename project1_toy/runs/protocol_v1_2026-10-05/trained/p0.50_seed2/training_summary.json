@@ -1,0 +1,15 @@
+{
+  "p": 0.5,
+  "initialization_seed": 2,
+  "test_seed": 613002,
+  "final_loss": 0.9799618173412348,
+  "minimum_recorded_loss": 0.9797420202417091,
+  "window_mean_loss_change": 0.00035019061905861015,
+  "convergence_diagnostic_pass": false,
+  "final_tangent_gradient_norm": 0.05709182234489368,
+  "final_bias_gradient_norm": 0.0008372549703389491,
+  "encoder_energy": 4.0,
+  "weak_columns": 0,
+  "exact_zero_columns": 0,
+  "mono_clean_reconstruction_mse": 1.0
+}

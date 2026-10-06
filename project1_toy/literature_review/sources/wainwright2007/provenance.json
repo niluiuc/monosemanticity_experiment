@@ -1,0 +1,21 @@
+{
+  "key": "wainwright2007",
+  "arxiv_id": "math/0702301",
+  "accessed_utc": "2026-10-06T00:51:55.766601+00:00",
+  "metadata": {
+    "citation_title": "Information-theoretic limits on sparsity recovery in the high-dimensional and noisy setting",
+    "citation_author": "Wainwright, Martin J.",
+    "citation_date": "2007/02/11",
+    "citation_online_date": "2007/02/20",
+    "citation_pdf_url": "https://arxiv.org/pdf/math/0702301",
+    "citation_arxiv_id": "math/0702301",
+    "citation_abstract": " The problem of recovering the sparsity pattern of a fixed but unknown vector $\\beta^* \\in \\real^p based on a set of $n$ noisy observations arises in a variety of settings, including subset selection in regression, graphical model selection, signal denoising, compressive sensing, and constructive approximation. Of interest are conditions on the model dimension $p$, the sparsity index $s$ (number of non-zero entries in $\\beta^*$), and the number of observations $n$ that are necessary and/or sufficient to ensure asymptotically perfect recovery of the sparsity pattern. This paper focuses on the information-theoretic limits of sparsity recovery: in particular, for a noisy linear observation model based on measurement vectors drawn from the standard Gaussian ensemble, we derive both a set of sufficient conditions for asymptotically perfect recovery using the optimal decoder, as well as a set of necessary conditions that any decoder, regardless of its computational complexity, must satisfy for perfect recovery. This analysis of optimal decoding limits complements our previous work (ARXIV: math.ST/0605740) on sharp thresholds for sparsity recovery using the Lasso ($\\ell_1$-constrained quadratic programming) with Gaussian measurement ensembles."
+  },
+  "submission_history": "Submission history From: Martin Wainwright [ view email ] [v1] Sun, 11 Feb 2007 08:06:44 UTC (27 KB) [v2] Tue, 20 Feb 2007 06:47:11 UTC (27 KB)",
+  "abstract_url": "https://arxiv.org/abs/math/0702301",
+  "pdf_url": "https://arxiv.org/pdf/math/0702301",
+  "pages": 16,
+  "pdf_bytes": 201812,
+  "pdf_sha256": "d102257bf09627556031822b6ca712b587ce157ef6bfa86db7b63bb2f9f6dcf1",
+  "errors": []
+}

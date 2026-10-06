@@ -1,0 +1,14 @@
+{
+  "cases": 2,
+  "hashes_checked": 21,
+  "iterates_checked": 1959,
+  "risk_rows_checked": 60,
+  "max_bias_loss_discrepancy": 6.938893903907228e-18,
+  "max_angle_gradient_discrepancy": 4.163336342344337e-17,
+  "max_objective_discrepancy": 2.7755575615628914e-17,
+  "max_positive_armijo_excess": 0.0,
+  "max_risk_discrepancy": 2.7755575615628914e-16,
+  "max_energy_discrepancy": 2.220446049250313e-16,
+  "errors": [],
+  "scope": "Two prescribed starting geometries; no global optimization or new cases inferred."
+}

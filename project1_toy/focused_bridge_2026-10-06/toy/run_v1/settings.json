@@ -1,0 +1,56 @@
+{
+  "n": 2,
+  "m": 1,
+  "encoder_energy": 1.0,
+  "activation_rates": [
+    0.05,
+    0.2,
+    0.5
+  ],
+  "importance_vectors": [
+    [
+      1.0,
+      1.0
+    ],
+    [
+      1.0,
+      0.5
+    ]
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "steps": 4000,
+  "learning_rate": 0.01,
+  "adam_beta1": 0.9,
+  "adam_beta2": 0.999,
+  "adam_epsilon": 1e-08,
+  "convergence_window": 100,
+  "convergence_absolute_tolerance": 1e-05,
+  "sigmas": [
+    0.0,
+    0.05,
+    0.15,
+    0.3,
+    0.6
+  ],
+  "angle_grid_count": 361,
+  "angle_grid_lower": -1.5707963267948966,
+  "angle_grid_upper": 1.5707963267948966,
+  "extra_exact_angles": [
+    -0.7853981633974483,
+    0.7853981633974483
+  ],
+  "objective": "sum of importance-weighted population reconstruction MSE",
+  "noise": "Gaussian code noise h + sigma*epsilon, epsilon N(0,1)",
+  "decoder_decision": "strict reconstructed >0.5, equivalent preactivation >0.5",
+  "midpoint_decision": "strict G_i b > sum_{j!=i} G_ij*p + G_ii/2",
+  "bias_tie_policy": "retain all candidates within 1e-12 absolute-scaled loss; choose smallest finite tied candidate",
+  "seed_selection": "all prescribed final iterates; no selected checkpoint or retry",
+  "scope": "numerical grid diagnostic, not globally proved geometry optimum"
+}

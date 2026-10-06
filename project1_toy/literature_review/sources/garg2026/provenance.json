@@ -1,0 +1,21 @@
+{
+  "key": "garg2026",
+  "arxiv_id": "2602.11246",
+  "accessed_utc": "2026-10-06T00:56:10.224156+00:00",
+  "metadata": {
+    "citation_title": "How Many Features Can a Language Model Store Under the Linear Representation Hypothesis?",
+    "citation_author": "Peng, Kenny",
+    "citation_date": "2026/02/11",
+    "citation_online_date": "2026/02/11",
+    "citation_pdf_url": "https://arxiv.org/pdf/2602.11246",
+    "citation_arxiv_id": "2602.11246",
+    "citation_abstract": "We introduce a mathematical framework for the linear representation hypothesis (LRH), which asserts that intermediate layers of language models store features linearly. We separate the hypothesis into two claims: linear representation (features are linearly embedded in neuron activations) and linear accessibility (features can be linearly decoded). We then ask: How many neurons $d$ suffice to both linearly represent and linearly access $m$ features? Classical results in compressed sensing imply that for $k$-sparse inputs, $d = O(k\\log (m/k))$ suffices if we allow non-linear decoding algorithms (Candes and Tao, 2006; Candes et al., 2006; Donoho, 2006). However, the additional requirement of linear decoding takes the problem out of the classical compressed sensing, into linear compressed sensing. Our main theoretical result establishes nearly-matching upper and lower bounds for linear compressed sensing. We prove that $d = \\Omega_\\epsilon(\\frac{k^2}{\\log k}\\log (m/k))$ is required while $d = O_\\epsilon(k^2\\log m)$ suffices. The lower bound establishes a quantitative gap between classical and linear compressed setting, illustrating how linear accessibility is a meaningfully stronger hypothesis than linear representation alone. The upper bound confirms that neurons can store an exponential number of features under the LRH, giving theoretical evidence for the \"superposition hypothesis\" (Elhage et al., 2022). The upper bound proof uses standard random constructions of matrices with approximately orthogonal columns. The lower bound proof uses rank bounds for near-identity matrices (Alon, 2003) together with Tur\\'an's theorem (bounding the number of edges in clique-free graphs). We also show how our results do and do not constrain the geometry of feature representations and extend our results to allow decoders with an activation function and bias."
+  },
+  "submission_history": "Submission history From: Kenny Peng [ view email ] [v1] Wed, 11 Feb 2026 17:49:32 UTC (20 KB)",
+  "abstract_url": "https://arxiv.org/abs/2602.11246",
+  "pdf_url": "https://arxiv.org/pdf/2602.11246",
+  "pages": 20,
+  "pdf_bytes": 411772,
+  "pdf_sha256": "48862585bc9f333ea63921d4dacd5556152cfefc8746bd592c869f31f875c000",
+  "errors": []
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "finite_candidates": [
+      -0.5856070803102177,
+      -0.09299016241076091,
+      -0.0,
+      0.44046758575967376,
+      0.4926169178994568
+    ],
+    "candidate_losses": [
+      0.5,
+      0.31435939800046164,
+      0.24859708434317004,
+      0.10308831376445336,
+      0.10512797839642242
+    ],
+    "tied_finite_minimizers": [
+      0.44046758575967376
+    ],
+    "tie_tolerance": 1e-12,
+    "all_off_plateau_tied": false,
+    "all_off_plateau_upper": -0.5856070803102177,
+    "all_off_plateau_loss": 0.5,
+    "intervals": [
+      {
+        "lower": -Infinity,
+        "upper": -0.5856070803102177,
+        "active": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "quadratic_A": 0.0,
+        "linear_half_B": 0.0,
+        "stationary": null
+      },
+      {
+        "lower": -0.5856070803102177,
+        "upper": -0.09299016241076091,
+        "active": [
+          false,
+          false,
+          true,
+          false
+        ],
+        "quadratic_A": 0.25,
+        "linear_half_B": -0.10359822992244558,
+        "stationary": 0.4143929196897823
+      },
+      {
+        "lower": -0.09299016241076091,
+        "upper": -0.0,
+        "active": [
+          false,
+          false,
+          true,
+          true
+        ],
+        "quadratic_A": 0.5,
+        "linear_half_B": -0.3303506893197553,
+        "stationary": 0.6607013786395106
+      },
+      {
+        "lower": -0.0,
+        "upper": 0.4926169178994568,
+        "active": [
+          true,
+          false,
+          true,
+          true
+        ],
+        "quadratic_A": 0.75,
+        "linear_half_B": -0.3303506893197553,
+        "stationary": 0.44046758575967376
+      },
+      {
+        "lower": 0.4926169178994568,
+        "upper": Infinity,
+        "active": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 1.0,
+        "linear_half_B": -0.4535049187946195,
+        "stationary": 0.4535049187946195
+      }
+    ]
+  },
+  {
+    "finite_candidates": [
+      -0.41439291968978265,
+      -0.0,
+      0.07822399820967413,
+      0.4926169178994568,
+      0.5391119991048371
+    ],
+    "candidate_losses": [
+      0.5,
+      0.33573391312736434,
+      0.3158891464744384,
+      0.1485635626538493,
+      0.14640177007755434
+    ],
+    "tied_finite_minimizers": [
+      0.5391119991048371
+    ],
+    "tie_tolerance": 1e-12,
+    "all_off_plateau_tied": false,
+    "all_off_plateau_upper": -0.41439291968978265,
+    "all_off_plateau_loss": 0.5,
+    "intervals": [
+      {
+        "lower": -Infinity,
+        "upper": -0.41439291968978265,
+        "active": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "quadratic_A": 0.0,
+        "linear_half_B": 0.0,
+        "stationary": null
+      },
+      {
+        "lower": -0.41439291968978265,
+        "upper": -0.0,
+        "active": [
+          false,
+          true,
+          false,
+          false
+        ],
+        "quadratic_A": 0.25,
+        "linear_half_B": -0.14640177007755434,
+        "stationary": 0.5856070803102174
+      },
+      {
+        "lower": -0.0,
+        "upper": 0.07822399820967413,
+        "active": [
+          true,
+          true,
+          false,
+          false
+        ],
+        "quadratic_A": 0.5,
+        "linear_half_B": -0.14640177007755434,
+        "stationary": 0.2928035401551087
+      },
+      {
+        "lower": 0.07822399820967413,
+        "upper": 0.4926169178994568,
+        "active": [
+          true,
+          true,
+          false,
+          true
+        ],
+        "quadratic_A": 0.75,
+        "linear_half_B": -0.4159577696299729,
+        "stationary": 0.5546103595066305
+      },
+      {
+        "lower": 0.4926169178994568,
+        "upper": Infinity,
+        "active": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 1.0,
+        "linear_half_B": -0.5391119991048371,
+        "stationary": 0.5391119991048371
+      }
+    ]
+  }
+]

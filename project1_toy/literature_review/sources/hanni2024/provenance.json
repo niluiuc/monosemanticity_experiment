@@ -1,0 +1,21 @@
+{
+  "key": "hanni2024",
+  "arxiv_id": "2408.05451",
+  "accessed_utc": "2026-10-06T00:47:56.172356+00:00",
+  "metadata": {
+    "citation_title": "Mathematical Models of Computation in Superposition",
+    "citation_author": "Chan, Lawrence",
+    "citation_date": "2024/08/10",
+    "citation_online_date": "2024/08/10",
+    "citation_pdf_url": "https://arxiv.org/pdf/2408.05451",
+    "citation_arxiv_id": "2408.05451",
+    "citation_abstract": "Superposition -- when a neural network represents more ``features'' than it has dimensions -- seems to pose a serious challenge to mechanistically interpreting current AI systems. Existing theory work studies \\emph{representational} superposition, where superposition is only used when passing information through bottlenecks. In this work, we present mathematical models of \\emph{computation} in superposition, where superposition is actively helpful for efficiently accomplishing the task. We first construct a task of efficiently emulating a circuit that takes the AND of the $\\binom{m}{2}$ pairs of each of $m$ features. We construct a 1-layer MLP that uses superposition to perform this task up to $\\varepsilon$-error, where the network only requires $\\tilde{O}(m^{\\frac{2}{3}})$ neurons, even when the input features are \\emph{themselves in superposition}. We generalize this construction to arbitrary sparse boolean circuits of low depth, and then construct ``error correction'' layers that allow deep fully-connected networks of width $d$ to emulate circuits of width $\\tilde{O}(d^{1.5})$ and \\emph{any} polynomial depth. We conclude by providing some potential applications of our work for interpreting neural networks that implement computation in superposition."
+  },
+  "submission_history": "Submission history From: Lawrence Chan [ view email ] [v1] Sat, 10 Aug 2024 06:11:48 UTC (1,188 KB)",
+  "abstract_url": "https://arxiv.org/abs/2408.05451",
+  "pdf_url": "https://arxiv.org/pdf/2408.05451",
+  "pages": 28,
+  "pdf_bytes": 1335316,
+  "pdf_sha256": "6e3b008aefc463581d155145c09b2d3b2c26dcd1c591c7b1e9e68772ac42f14d",
+  "errors": []
+}

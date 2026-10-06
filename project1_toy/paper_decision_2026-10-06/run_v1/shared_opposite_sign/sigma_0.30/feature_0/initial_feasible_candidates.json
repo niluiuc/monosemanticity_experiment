@@ -1,0 +1,26 @@
+[
+  {
+    "source": "clean_bias",
+    "beta": 0.21548220313557545,
+    "loss": 0.09212955846267468,
+    "gradient": 0.04752609114853601
+  },
+  {
+    "source": "lower_boundary",
+    "beta": -5.179519707633906,
+    "loss": 0.5,
+    "gradient": -1.577830293383196e-55
+  },
+  {
+    "source": "upper_boundary",
+    "beta": 1.353553390593274,
+    "loss": 1.3312612028558777,
+    "gradient": 2.207112041860648
+  },
+  {
+    "source": "bounded local feasible incumbent, not a global proof",
+    "beta": 0.18365827923926803,
+    "loss": 0.09137730246341322,
+    "gradient": 2.8682537733804025e-09
+  }
+]

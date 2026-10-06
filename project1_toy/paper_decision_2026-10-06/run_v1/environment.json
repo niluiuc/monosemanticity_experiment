@@ -1,0 +1,8 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Users\\indra\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+  "numpy": "2.3.5",
+  "scipy": "1.18.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "senior_review": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\project1_toy\\paper_decision_2026-10-06\\professor_decision.md"
+}

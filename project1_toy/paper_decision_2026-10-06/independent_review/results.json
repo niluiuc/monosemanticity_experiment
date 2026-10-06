@@ -1,0 +1,426 @@
+{
+  "status": "passed",
+  "raw_hashes_verified": 85,
+  "checked_feature_risks": 36,
+  "max_mse_discrepancy": 1.942890293094024e-16,
+  "max_omitted_tail_bound": 3.912180648847452e-31,
+  "interpretation": "Same-MSE reversal survives symmetric oracle bias calibration in this fixed dense toy. Numerical global gaps are floating checks, not exact interval certificates.",
+  "risk_checks": [
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.0,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.03303721745056053,
+      "saved": 0.03303721745056055,
+      "discrepancy": 2.0816681711721685e-17,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.0,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.21338834764831843,
+      "saved": 0.21338834764831843,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.0,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.03303721745056053,
+      "saved": 0.03303721745056055,
+      "discrepancy": 2.0816681711721685e-17,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.0,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.21338834764831843,
+      "saved": 0.21338834764831843,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.3,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.09212955846267461,
+      "saved": 0.09212955846267468,
+      "discrepancy": 6.938893903907228e-17,
+      "quadrature_error_estimate": 2.3171972043098938e-14,
+      "omitted_tail_bound": 9.744897950375111e-32
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.3,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.226553260219781,
+      "saved": 0.22655326021978103,
+      "discrepancy": 2.7755575615628914e-17,
+      "quadrature_error_estimate": 7.770509838403019e-14,
+      "omitted_tail_bound": 2.9921239120978566e-32
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.3,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.09137730246341332,
+      "saved": 0.09137730246341336,
+      "discrepancy": 4.163336342344337e-17,
+      "quadrature_error_estimate": 1.9029833257203706e-14,
+      "omitted_tail_bound": 9.701951064065354e-32
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.3,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.22655321120737515,
+      "saved": 0.22655321120737515,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 7.776588755792783e-14,
+      "omitted_tail_bound": 2.991650574309971e-32
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.6,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.24985852901192682,
+      "saved": 0.24985852901192676,
+      "discrepancy": 5.551115123125783e-17,
+      "quadrature_error_estimate": 3.8519116462746026e-14,
+      "omitted_tail_bound": 3.36520691335845e-31
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.6,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.2631352799559156,
+      "saved": 0.2631352799559157,
+      "discrepancy": 5.551115123125783e-17,
+      "quadrature_error_estimate": 1.641238495739382e-14,
+      "omitted_tail_bound": 7.09394601118612e-32
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.6,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.22829286684498543,
+      "saved": 0.22829286684498537,
+      "discrepancy": 5.551115123125783e-17,
+      "quadrature_error_estimate": 5.6358226173729244e-14,
+      "omitted_tail_bound": 3.3402132712510652e-31
+    },
+    {
+      "label": "shared_same_sign",
+      "sigma": 0.6,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.26284186685901545,
+      "saved": 0.26284186685901545,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 1.5915517628331276e-14,
+      "omitted_tail_bound": 7.0543359345934e-32
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.0,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.03303721745056054,
+      "saved": 0.03303721745056054,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.0,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.21338834764831843,
+      "saved": 0.21338834764831843,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.0,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.03303721745056054,
+      "saved": 0.03303721745056054,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.0,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.21338834764831843,
+      "saved": 0.21338834764831843,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.3,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.09212955846267462,
+      "saved": 0.09212955846267468,
+      "discrepancy": 5.551115123125783e-17,
+      "quadrature_error_estimate": 2.3171507222487285e-14,
+      "omitted_tail_bound": 9.744897950375111e-32
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.3,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.22655326021978106,
+      "saved": 0.2265532602197811,
+      "discrepancy": 2.7755575615628914e-17,
+      "quadrature_error_estimate": 7.770510449530517e-14,
+      "omitted_tail_bound": 2.992123912097856e-32
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.3,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.09137730246341333,
+      "saved": 0.09137730246341322,
+      "discrepancy": 1.1102230246251565e-16,
+      "quadrature_error_estimate": 1.9029944179377307e-14,
+      "omitted_tail_bound": 9.701951067411193e-32
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.3,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.2265532112073752,
+      "saved": 0.22655321120737515,
+      "discrepancy": 5.551115123125783e-17,
+      "quadrature_error_estimate": 7.776618882821727e-14,
+      "omitted_tail_bound": 2.991650559511377e-32
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.6,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.24985852901192687,
+      "saved": 0.24985852901192668,
+      "discrepancy": 1.942890293094024e-16,
+      "quadrature_error_estimate": 3.851921643910358e-14,
+      "omitted_tail_bound": 3.36520691335845e-31
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.6,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.2631352799559157,
+      "saved": 0.2631352799559157,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 1.641246724289618e-14,
+      "omitted_tail_bound": 7.093946011186121e-32
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.6,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.22829286684498545,
+      "saved": 0.22829286684498545,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 5.636000243046823e-14,
+      "omitted_tail_bound": 3.340213268835172e-31
+    },
+    {
+      "label": "shared_opposite_sign",
+      "sigma": 0.6,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.26284186685901545,
+      "saved": 0.2628418668590154,
+      "discrepancy": 5.551115123125783e-17,
+      "quadrature_error_estimate": 1.591558396424863e-14,
+      "omitted_tail_bound": 7.054335949011954e-32
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.0,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.0,
+      "saved": 0.0,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.0,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.25,
+      "saved": 0.25,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.0,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.0,
+      "saved": 0.0,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.0,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.25,
+      "saved": 0.25,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.3,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.0674638806021609,
+      "saved": 0.06746388060216083,
+      "discrepancy": 6.938893903907228e-17,
+      "quadrature_error_estimate": 2.6298390321392193e-14,
+      "omitted_tail_bound": 1.1112813206176869e-31
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.3,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.25,
+      "saved": 0.25,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.3,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.06250541096332801,
+      "saved": 0.06250541096332787,
+      "discrepancy": 1.3877787807814457e-16,
+      "quadrature_error_estimate": 5.498633798804442e-14,
+      "omitted_tail_bound": 1.1058322031676247e-31
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.3,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.25,
+      "saved": 0.25,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.6,
+      "decoder": "frozen",
+      "feature": 0,
+      "quadrature": 0.2554497710894761,
+      "saved": 0.255449771089476,
+      "discrepancy": 1.1102230246251565e-16,
+      "quadrature_error_estimate": 5.046216373366018e-14,
+      "omitted_tail_bound": 3.912180648847452e-31
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.6,
+      "decoder": "frozen",
+      "feature": 1,
+      "quadrature": 0.25,
+      "saved": 0.25,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.6,
+      "decoder": "calibrated",
+      "feature": 0,
+      "quadrature": 0.21709280699917596,
+      "saved": 0.21709280699917588,
+      "discrepancy": 8.326672684688674e-17,
+      "quadrature_error_estimate": 5.241135897103466e-14,
+      "omitted_tail_bound": 3.8980807750355843e-31
+    },
+    {
+      "label": "mono_retain_0",
+      "sigma": 0.6,
+      "decoder": "calibrated",
+      "feature": 1,
+      "quadrature": 0.25,
+      "saved": 0.25,
+      "discrepancy": 0.0,
+      "quadrature_error_estimate": 0.0,
+      "omitted_tail_bound": 0.0
+    }
+  ],
+  "differences": [
+    {
+      "sigma": 0.0,
+      "calibrated_sharing_minus_mono": -0.0035744349011210264,
+      "numerical_gap_lower": -0.0035744349011210264,
+      "numerical_gap_upper": -0.0035744349011210264
+    },
+    {
+      "sigma": 0.3,
+      "calibrated_sharing_minus_mono": 0.005425102707460661,
+      "numerical_gap_lower": 0.005425091284607053,
+      "numerical_gap_upper": 0.0054251096956468015
+    },
+    {
+      "sigma": 0.6,
+      "calibrated_sharing_minus_mono": 0.024041926704824967,
+      "numerical_gap_lower": 0.02404191316021509,
+      "numerical_gap_upper": 0.024041936637088035
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "key": "elude2026_arxiv",
+  "arxiv_id": "2605.31304",
+  "accessed_utc": "2026-10-06T01:00:38.153386+00:00",
+  "metadata": {
+    "citation_title": "Interpretability Without Tradeoffs: Disentangling Polysemanticity At Equal Predictive Performance",
+    "citation_author": "Hesse, Robin",
+    "citation_date": "2026/05/29",
+    "citation_online_date": "2026/05/29",
+    "citation_pdf_url": "https://arxiv.org/pdf/2605.31304",
+    "citation_arxiv_id": "2605.31304",
+    "citation_abstract": "Deep neural networks (DNNs) are widely used, but interpreting what they actually learn remains difficult. A major obstacle is that individual neurons often encode multiple unrelated concepts, obscuring the decision process of the network. While prior work, such as sparse autoencoders, can separate these mixed signals into more meaningful, \"monosemantic\" features, this typically requires altering the model in ways that can degrade downstream performance. To overcome this, we introduce ELUDe (explicit, lossless, unsupervised disentanglement), a method for improving the interpretability of DNNs while preserving their functional equivalence. ELUDe breaks latent representations into clear, inspectable sub-units that behave like interpretable features, while guaranteeing that the model's outputs remain exactly the same. It requires no explicit training, no labels, and can be applied to pretrained models. ELUDe works by reorganizing how information flows between layers, re-routing concept-specific contributions while preserving the original computation by construction. Across several vision models, including DINOv2 and supervised ViT-B/16, ELUDe improves interpretability, keeps downstream accuracy unchanged, runs efficiently, and supports practical uses such as steering model representations. In short, ELUDe offers interpretability (almost) without a tradeoff: clearer, scalable, and actionable model insights with no loss in performance."
+  },
+  "submission_history": "Submission history From: Do\u011fukan Ba\u011fc\u0131 [ view email ] [v1] Fri, 29 May 2026 13:39:09 UTC (11,044 KB)",
+  "abstract_url": "https://arxiv.org/abs/2605.31304",
+  "pdf_url": "https://arxiv.org/pdf/2605.31304",
+  "pages": 28,
+  "pdf_bytes": 12019451,
+  "pdf_sha256": "c637912014ade99dbb8d2a21187beda01f96ad4b62e4b81126af3e7cc26e5221",
+  "errors": []
+}

@@ -1,0 +1,50 @@
+{
+  "hashes_checked": 48,
+  "global_selection_checks": [
+    {
+      "p": "1/20",
+      "independent_subset_branches": 225,
+      "distinct_candidates": 33,
+      "same_exact_optimum": true,
+      "root_polynomial": "t**3 + 740*t**2/19 - 3*t - 6839/380"
+    },
+    {
+      "p": "1/5",
+      "independent_subset_branches": 225,
+      "distinct_candidates": 30,
+      "same_exact_optimum": true,
+      "root_polynomial": "t**3 + 35*t**2/4 - 3*t - 59/20"
+    },
+    {
+      "p": "7/20",
+      "independent_subset_branches": 225,
+      "distinct_candidates": 21,
+      "same_exact_optimum": true,
+      "root_polynomial": "t**3 + 451*t**2/182 - 3*t - 29/182"
+    },
+    {
+      "p": "3/8",
+      "independent_subset_branches": 225,
+      "distinct_candidates": 21,
+      "same_exact_optimum": true,
+      "root_polynomial": "t**3 + 21*t**2/10 - 3*t - 1/30"
+    },
+    {
+      "p": "2/5",
+      "mono_theorem_selection": "verified"
+    }
+  ],
+  "primary_risk_rows": 150,
+  "display_formula_values": 1200,
+  "numerical_crossings_checked": 6,
+  "max_bias_loss_difference": 5.551115123125783e-17,
+  "max_risk_difference": 5.551115123125783e-17,
+  "max_mse_quadrature_difference": 1.3877787807814457e-16,
+  "max_energy_difference": 2.220446049250313e-16,
+  "max_display_difference": 1.3877787807814457e-16,
+  "max_crossing_residual": 2.3189783426857957e-14,
+  "max_mse_omitted_tail_bound": 3.892109174002349e-31,
+  "checker_repair": "Initial unbounded quadrature missed Gaussian body at distant ReLU cuts; failed outputs/source retained. Central-body integral with bounded tails substituted only in independent verification.",
+  "all_checks_passed": true,
+  "limits": "Different branch construction and scalar risk evaluation share the reviewed exact root backend and SciPy CDF library. Checks do not establish all noise crossings, novelty or variable-load transfer."
+}

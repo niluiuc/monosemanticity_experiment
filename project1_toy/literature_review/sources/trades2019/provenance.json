@@ -1,0 +1,21 @@
+{
+  "key": "trades2019",
+  "arxiv_id": "1901.08573",
+  "accessed_utc": "2026-10-06T00:52:06.523411+00:00",
+  "metadata": {
+    "citation_title": "Theoretically Principled Trade-off between Robustness and Accuracy",
+    "citation_author": "Jordan, Michael I.",
+    "citation_date": "2019/01/24",
+    "citation_online_date": "2019/06/24",
+    "citation_pdf_url": "https://arxiv.org/pdf/1901.08573",
+    "citation_arxiv_id": "1901.08573",
+    "citation_abstract": "We identify a trade-off between robustness and accuracy that serves as a guiding principle in the design of defenses against adversarial examples. Although this problem has been widely studied empirically, much remains unknown concerning the theory underlying this trade-off. In this work, we decompose the prediction error for adversarial examples (robust error) as the sum of the natural (classification) error and boundary error, and provide a differentiable upper bound using the theory of classification-calibrated loss, which is shown to be the tightest possible upper bound uniform over all probability distributions and measurable predictors. Inspired by our theoretical analysis, we also design a new defense method, TRADES, to trade adversarial robustness off against accuracy. Our proposed algorithm performs well experimentally in real-world datasets. The methodology is the foundation of our entry to the NeurIPS 2018 Adversarial Vision Challenge in which we won the 1st place out of ~2,000 submissions, surpassing the runner-up approach by $11.41\\%$ in terms of mean $\\ell_2$ perturbation distance."
+  },
+  "submission_history": "Submission history From: Hongyang Zhang [ view email ] [v1] Thu, 24 Jan 2019 18:43:57 UTC (1,310 KB) [v2] Thu, 23 May 2019 22:04:23 UTC (1,312 KB) [v3] Mon, 24 Jun 2019 07:04:11 UTC (1,313 KB)",
+  "abstract_url": "https://arxiv.org/abs/1901.08573",
+  "pdf_url": "https://arxiv.org/pdf/1901.08573",
+  "pages": 31,
+  "pdf_bytes": 2079794,
+  "pdf_sha256": "1495f72c8b0af0276a7459f75200288ea376bea11b4e0f997ef1eda6dea174a7",
+  "errors": []
+}

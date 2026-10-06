@@ -1,0 +1,408 @@
+[
+  {
+    "action": "expand",
+    "node": 0,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 0
+  },
+  {
+    "action": "expand",
+    "node": 1,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 1
+  },
+  {
+    "action": "expand",
+    "node": 2,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 2
+  },
+  {
+    "action": "expand",
+    "node": 3,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 3
+  },
+  {
+    "action": "expand",
+    "node": 4,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 4
+  },
+  {
+    "action": "expand",
+    "node": 5,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 5
+  },
+  {
+    "action": "expand",
+    "node": 6,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 6
+  },
+  {
+    "action": "expand",
+    "node": 7,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 7
+  },
+  {
+    "action": "expand",
+    "node": 8,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 8
+  },
+  {
+    "action": "expand",
+    "node": 9,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 9
+  },
+  {
+    "action": "expand",
+    "node": 10,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 10
+  },
+  {
+    "action": "expand",
+    "node": 11,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 11
+  },
+  {
+    "action": "expand",
+    "node": 12,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 12
+  },
+  {
+    "action": "expand",
+    "node": 13,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 13
+  },
+  {
+    "action": "expand",
+    "node": 14,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 14
+  },
+  {
+    "action": "expand",
+    "node": 29,
+    "lower_bound": 0.0,
+    "best_upper": 0.21709280700017589,
+    "expansions": 15
+  },
+  {
+    "action": "expand",
+    "node": 28,
+    "lower_bound": 0.01995462927398365,
+    "best_upper": 0.21709280700017589,
+    "expansions": 16
+  },
+  {
+    "action": "expand",
+    "node": 31,
+    "lower_bound": 0.16145787134266945,
+    "best_upper": 0.21709280700017589,
+    "expansions": 17
+  },
+  {
+    "action": "expand",
+    "node": 34,
+    "lower_bound": 0.16565453202485772,
+    "best_upper": 0.21709280700017589,
+    "expansions": 18
+  },
+  {
+    "action": "expand",
+    "node": 27,
+    "lower_bound": 0.1719862571087366,
+    "best_upper": 0.21709280700017589,
+    "expansions": 19
+  },
+  {
+    "action": "expand",
+    "node": 30,
+    "lower_bound": 0.19694614222469675,
+    "best_upper": 0.21709280700017589,
+    "expansions": 20
+  },
+  {
+    "action": "expand",
+    "node": 35,
+    "lower_bound": 0.20343785212614043,
+    "best_upper": 0.21709280700017589,
+    "expansions": 21
+  },
+  {
+    "action": "expand",
+    "node": 38,
+    "lower_bound": 0.20396478085976488,
+    "best_upper": 0.21709280700017589,
+    "expansions": 22
+  },
+  {
+    "action": "expand",
+    "node": 32,
+    "lower_bound": 0.20889805650764873,
+    "best_upper": 0.21709280700017589,
+    "expansions": 23
+  },
+  {
+    "action": "expand",
+    "node": 33,
+    "lower_bound": 0.2091134994606694,
+    "best_upper": 0.21709280700017589,
+    "expansions": 24
+  },
+  {
+    "action": "expand",
+    "node": 43,
+    "lower_bound": 0.21371288255343826,
+    "best_upper": 0.21709280700017589,
+    "expansions": 25
+  },
+  {
+    "action": "expand",
+    "node": 46,
+    "lower_bound": 0.21377882216669825,
+    "best_upper": 0.21709280700017589,
+    "expansions": 26
+  },
+  {
+    "action": "expand",
+    "node": 36,
+    "lower_bound": 0.21473701831204486,
+    "best_upper": 0.21709280700017589,
+    "expansions": 27
+  },
+  {
+    "action": "expand",
+    "node": 37,
+    "lower_bound": 0.2153029508030663,
+    "best_upper": 0.21709280700017589,
+    "expansions": 28
+  },
+  {
+    "action": "expand",
+    "node": 51,
+    "lower_bound": 0.21625338998047927,
+    "best_upper": 0.21709280700017589,
+    "expansions": 29
+  },
+  {
+    "action": "expand",
+    "node": 54,
+    "lower_bound": 0.21626163473127286,
+    "best_upper": 0.21709280700017589,
+    "expansions": 30
+  },
+  {
+    "action": "expand",
+    "node": 44,
+    "lower_bound": 0.21642261962360534,
+    "best_upper": 0.21709280700017589,
+    "expansions": 31
+  },
+  {
+    "action": "expand",
+    "node": 45,
+    "lower_bound": 0.2167203475642806,
+    "best_upper": 0.21709280700017589,
+    "expansions": 32
+  },
+  {
+    "action": "expand",
+    "node": 59,
+    "lower_bound": 0.216884945055765,
+    "best_upper": 0.21709280700017589,
+    "expansions": 33
+  },
+  {
+    "action": "expand",
+    "node": 62,
+    "lower_bound": 0.21688597572147467,
+    "best_upper": 0.21709280700017589,
+    "expansions": 34
+  },
+  {
+    "action": "expand",
+    "node": 52,
+    "lower_bound": 0.2168889812141807,
+    "best_upper": 0.21709280700017589,
+    "expansions": 35
+  },
+  {
+    "action": "expand",
+    "node": 60,
+    "lower_bound": 0.21702463673428918,
+    "best_upper": 0.21709280700017589,
+    "expansions": 36
+  },
+  {
+    "action": "expand",
+    "node": 53,
+    "lower_bound": 0.21703830978441357,
+    "best_upper": 0.21709280700017589,
+    "expansions": 37
+  },
+  {
+    "action": "expand",
+    "node": 67,
+    "lower_bound": 0.2170423850461463,
+    "best_upper": 0.21709280700017589,
+    "expansions": 38
+  },
+  {
+    "action": "expand",
+    "node": 70,
+    "lower_bound": 0.21704251388160592,
+    "best_upper": 0.21709280700017589,
+    "expansions": 39
+  },
+  {
+    "action": "expand",
+    "node": 68,
+    "lower_bound": 0.21706790736829557,
+    "best_upper": 0.21709280700017589,
+    "expansions": 40
+  },
+  {
+    "action": "expand",
+    "node": 77,
+    "lower_bound": 0.2170816888096692,
+    "best_upper": 0.21709280700017589,
+    "expansions": 41
+  },
+  {
+    "action": "expand",
+    "node": 80,
+    "lower_bound": 0.21708170491417192,
+    "best_upper": 0.21709280700017589,
+    "expansions": 42
+  },
+  {
+    "action": "expand",
+    "node": 78,
+    "lower_bound": 0.21708339377835378,
+    "best_upper": 0.21709280700017589,
+    "expansions": 43
+  },
+  {
+    "action": "expand",
+    "node": 84,
+    "lower_bound": 0.21708959920047838,
+    "best_upper": 0.21709280700017589,
+    "expansions": 44
+  },
+  {
+    "action": "expand",
+    "node": 83,
+    "lower_bound": 0.21708960121161416,
+    "best_upper": 0.21709280700017589,
+    "expansions": 45
+  },
+  {
+    "action": "expand",
+    "node": 86,
+    "lower_bound": 0.21709150972604163,
+    "best_upper": 0.21709280700017589,
+    "expansions": 46
+  },
+  {
+    "action": "expand",
+    "node": 89,
+    "lower_bound": 0.2170920553088662,
+    "best_upper": 0.21709280700017589,
+    "expansions": 47
+  },
+  {
+    "action": "expand",
+    "node": 92,
+    "lower_bound": 0.21709205556025823,
+    "best_upper": 0.21709280700017589,
+    "expansions": 48
+  },
+  {
+    "action": "expand",
+    "node": 91,
+    "lower_bound": 0.21709231768403023,
+    "best_upper": 0.21709280700017589,
+    "expansions": 49
+  },
+  {
+    "action": "expand",
+    "node": 98,
+    "lower_bound": 0.2170926272075114,
+    "best_upper": 0.21709280700017589,
+    "expansions": 50
+  },
+  {
+    "action": "expand",
+    "node": 97,
+    "lower_bound": 0.21709262723894288,
+    "best_upper": 0.21709280700017589,
+    "expansions": 51
+  },
+  {
+    "action": "expand",
+    "node": 95,
+    "lower_bound": 0.21709266922601128,
+    "best_upper": 0.21709280700017589,
+    "expansions": 52
+  },
+  {
+    "action": "expand",
+    "node": 102,
+    "lower_bound": 0.2170927584063256,
+    "best_upper": 0.21709280700017589,
+    "expansions": 53
+  },
+  {
+    "action": "expand",
+    "node": 101,
+    "lower_bound": 0.21709275841025408,
+    "best_upper": 0.21709280700017589,
+    "expansions": 54
+  },
+  {
+    "action": "expand",
+    "node": 104,
+    "lower_bound": 0.21709278064162757,
+    "best_upper": 0.21709280700017589,
+    "expansions": 55
+  },
+  {
+    "action": "expand",
+    "node": 107,
+    "lower_bound": 0.2170927967665734,
+    "best_upper": 0.21709280700017589,
+    "expansions": 56
+  },
+  {
+    "action": "expand",
+    "node": 110,
+    "lower_bound": 0.21709279676706442,
+    "best_upper": 0.21709280700017589,
+    "expansions": 57
+  }
+]

@@ -1,0 +1,1 @@
+\frac{292032 e \left(e - 1\right) \left(65501 e^{2} - 65501 e - 13156\right)}{15341 \left(e - 13\right)^{2} \left(e + 12\right)^{2}}

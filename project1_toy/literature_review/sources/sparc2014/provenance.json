@@ -1,0 +1,22 @@
+{
+  "key": "sparc2014",
+  "arxiv_id": "1403.8024",
+  "accessed_utc": "2026-10-06T00:48:13.471358+00:00",
+  "metadata": {
+    "citation_title": "Replica Analysis and Approximate Message Passing Decoder for Superposition Codes",
+    "citation_author": "Krzakala, Florent",
+    "citation_doi": "10.1109/ISIT.2014.6875082",
+    "citation_date": "2014/03/31",
+    "citation_online_date": "2014/04/17",
+    "citation_pdf_url": "https://arxiv.org/pdf/1403.8024",
+    "citation_arxiv_id": "1403.8024",
+    "citation_abstract": "Superposition codes are efficient for the Additive White Gaussian Noise channel. We provide here a replica analysis of the performances of these codes for large signals. We also consider a Bayesian Approximate Message Passing decoder based on a belief-propagation approach, and discuss its performance using the density evolution technic. Our main findings are 1) for the sizes we can access, the message-passing decoder outperforms other decoders studied in the literature 2) its performance is limited by a sharp phase transition and 3) while these codes reach capacity as $B$ (a crucial parameter in the code) increases, the performance of the message passing decoder worsen as the phase transition goes to lower rates."
+  },
+  "submission_history": "Submission history From: Jean Barbier [ view email ] [v1] Mon, 31 Mar 2014 14:46:10 UTC (219 KB) [v2] Thu, 17 Apr 2014 13:45:09 UTC (219 KB)",
+  "abstract_url": "https://arxiv.org/abs/1403.8024",
+  "pdf_url": "https://arxiv.org/pdf/1403.8024",
+  "pages": 5,
+  "pdf_bytes": 529619,
+  "pdf_sha256": "5029516cfe97f062c5c97d730a028b07528a6880c6feaaaf5421ce7df9053fb7",
+  "errors": []
+}

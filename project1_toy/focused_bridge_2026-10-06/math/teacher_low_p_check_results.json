@@ -1,0 +1,42 @@
+{
+  "method": "Independent nonempty active-subset branch construction; reviewed shared exact root-isolation backend.",
+  "joint_subset_branches": 225,
+  "distinct_feasible_candidate_points": 30,
+  "nonseparated_other_candidates": 0,
+  "certified_root_polynomial": "t**3 + 35*t**2/4 - 3*t - 59/20",
+  "root_interval": [
+    "-130331548418656817/294807568487749959",
+    "-237502363382885504/537225983336660561"
+  ],
+  "loss_interval": [
+    "122346329558681403813795354257761215428889027550826204950527658003143480220543840052361295286241906248378456961585801104804883907283112018236787/1573544085240953038894715740992771576505860072548552061453504804622868647570797341652232477101430289300519529846188983399158254526564256643575000",
+    "183519494338022105720693031386641824857402644437482819221516134446871818727472666528106395139162499844725737585304717680055904912061795166984238/2360316127861429558342073611489157342713475724452085783481463173062902500520855799149080559682724724128673159254252785485180722692542189662598625"
+  ],
+  "loss_approx": "0.077752082516294294514",
+  "active_subsets": [
+    [
+      true,
+      false,
+      true,
+      true
+    ],
+    [
+      true,
+      true,
+      false,
+      false
+    ]
+  ],
+  "all_off_lower_bound": "1/10",
+  "infinity_optimal_loss": "4/25",
+  "weaker_feature_max_reconstruction_strictly_below_half": true,
+  "strong_feature_threshold_gap_signs": [
+    -1,
+    -1,
+    1,
+    1
+  ],
+  "clean_weighted_detection_error": "1/10",
+  "clean_selected_mono_weighted_detection_error": "1/10",
+  "symbolic_derivative_and_bias_formula_checks": "passed"
+}

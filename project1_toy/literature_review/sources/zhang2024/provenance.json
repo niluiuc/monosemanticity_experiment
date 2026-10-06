@@ -1,0 +1,21 @@
+{
+  "key": "zhang2024",
+  "arxiv_id": "2410.21331",
+  "accessed_utc": "2026-10-06T00:47:57.602196+00:00",
+  "metadata": {
+    "citation_title": "Beyond Interpretability: The Gains of Feature Monosemanticity on Model Robustness",
+    "citation_author": "Wang, Yisen",
+    "citation_date": "2024/10/27",
+    "citation_online_date": "2024/10/27",
+    "citation_pdf_url": "https://arxiv.org/pdf/2410.21331",
+    "citation_arxiv_id": "2410.21331",
+    "citation_abstract": "Deep learning models often suffer from a lack of interpretability due to polysemanticity, where individual neurons are activated by multiple unrelated semantics, resulting in unclear attributions of model behavior. Recent advances in monosemanticity, where neurons correspond to consistent and distinct semantics, have significantly improved interpretability but are commonly believed to compromise accuracy. In this work, we challenge the prevailing belief of the accuracy-interpretability tradeoff, showing that monosemantic features not only enhance interpretability but also bring concrete gains in model performance. Across multiple robust learning scenarios-including input and label noise, few-shot learning, and out-of-domain generalization-our results show that models leveraging monosemantic features significantly outperform those relying on polysemantic features. Furthermore, we provide empirical and theoretical understandings on the robustness gains of feature monosemanticity. Our preliminary analysis suggests that monosemanticity, by promoting better separation of feature representations, leads to more robust decision boundaries. This diverse evidence highlights the generality of monosemanticity in improving model robustness. As a first step in this new direction, we embark on exploring the learning benefits of monosemanticity beyond interpretability, supporting the long-standing hypothesis of linking interpretability and robustness. Code is available at \\url{https://github.com/PKU-ML/Beyond_Interpretability}."
+  },
+  "submission_history": "Submission history From: Qi Zhang [ view email ] [v1] Sun, 27 Oct 2024 18:03:20 UTC (2,171 KB)",
+  "abstract_url": "https://arxiv.org/abs/2410.21331",
+  "pdf_url": "https://arxiv.org/pdf/2410.21331",
+  "pages": 25,
+  "pdf_bytes": 1467677,
+  "pdf_sha256": "b7978830351aed5cfb4b8bde9dfa9c566f72f33aeb0d44d7ab27360a0e892ada",
+  "errors": []
+}

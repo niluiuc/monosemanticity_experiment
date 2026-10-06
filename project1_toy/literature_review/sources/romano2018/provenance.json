@@ -1,0 +1,21 @@
+{
+  "key": "romano2018",
+  "arxiv_id": "1805.11596",
+  "accessed_utc": "2026-10-06T01:00:38.150390+00:00",
+  "metadata": {
+    "citation_title": "Adversarial Noise Attacks of Deep Learning Architectures -- Stability Analysis via Sparse Modeled Signals",
+    "citation_author": "Elad, Michael",
+    "citation_date": "2018/05/29",
+    "citation_online_date": "2019/08/05",
+    "citation_pdf_url": "https://arxiv.org/pdf/1805.11596",
+    "citation_arxiv_id": "1805.11596",
+    "citation_abstract": "Despite their impressive performance, deep convolutional neural networks (CNNs) have been shown to be sensitive to small adversarial perturbations. These nuisances, which one can barely notice, are powerful enough to fool sophisticated and well performing classifiers, leading to ridiculous misclassification results. In this paper we analyze the stability of state-of-the-art deep-learning classification machines to adversarial perturbations, where we assume that the signals belong to the (possibly multi-layer) sparse representation model. We start with convolutional sparsity and then proceed to its multi-layered version, which is tightly connected to CNNs. Our analysis links between the stability of the classification to noise and the underlying structure of the signal, quantified by the sparsity of its representation under a fixed dictionary. In addition, we offer similar stability theorems for two practical pursuit algorithms, which are posed as two different deep-learning architectures - the layered Thresholding and the layered Basis Pursuit. Our analysis establishes the better robustness of the later to adversarial attacks. We corroborate these theoretical results by numerical experiments on three datasets: MNIST, CIFAR-10 and CIFAR-100."
+  },
+  "submission_history": "Submission history From: Yaniv Romano [ view email ] [v1] Tue, 29 May 2018 17:25:11 UTC (210 KB) [v2] Thu, 22 Nov 2018 06:01:52 UTC (469 KB) [v3] Mon, 5 Aug 2019 20:40:54 UTC (754 KB)",
+  "abstract_url": "https://arxiv.org/abs/1805.11596",
+  "pdf_url": "https://arxiv.org/pdf/1805.11596",
+  "pages": 15,
+  "pdf_bytes": 834046,
+  "pdf_sha256": "f0404c56fccf8dc0ef686509b9e28ac0d1a835883e3881200a9811d69ee0464a",
+  "errors": []
+}

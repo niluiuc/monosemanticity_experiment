@@ -1,0 +1,21 @@
+{
+  "key": "survey2026",
+  "arxiv_id": "2609.06862",
+  "accessed_utc": "2026-10-06T00:53:33.574357+00:00",
+  "metadata": {
+    "citation_title": "Feature Superposition in Neural Networks: From Theory to Practice",
+    "citation_author": "Hern\u00e1ndez-Lobato, Jos\u00e9 Miguel",
+    "citation_date": "2026/09/06",
+    "citation_online_date": "2026/09/06",
+    "citation_pdf_url": "https://arxiv.org/pdf/2609.06862",
+    "citation_arxiv_id": "2609.06862",
+    "citation_abstract": "Superposition refers to neural networks representing more features than they have dimensions. It offers a possible explanation for polysemantic neurons and motivates methods for recovering interpretable features from neural activations. Theoretical models typically start with a given set of input features and assumptions about how their values vary across inputs, then study how a network encodes those values in a lower-dimensional hidden representation. Empirical work, by contrast, seeks to identify the features encoded in trained networks and determine their role in computation. In this survey, we review the geometry, learning, and computation of superposed representations, explaining how feature statistics and decoder choice affect the conclusions. To connect these theoretical accounts with evidence from trained networks, we compare practical methods for recovering and analyzing features and examine what their evaluations establish. Since accurate activation reconstruction alone does not establish feature identity or causal use, we discuss the methods' documented failures and applications in light of the evidence available for these different claims. Finally, we assess previously stated open problems and identify remaining theoretical and empirical questions about superposition in trained networks. We hope our work can pave the way for a deeper understanding of superposition and more reliable methods for interpreting neural networks."
+  },
+  "submission_history": "Submission history From: Ethan Shi [ view email ] [v1] Sun, 6 Sep 2026 22:24:25 UTC (182 KB)",
+  "abstract_url": "https://arxiv.org/abs/2609.06862",
+  "pdf_url": "https://arxiv.org/pdf/2609.06862",
+  "pages": 96,
+  "pdf_bytes": 592239,
+  "pdf_sha256": "f9134d355948117dc707be920be0ca75a702cffa8575a884413f49eaac4ba1bf",
+  "errors": []
+}

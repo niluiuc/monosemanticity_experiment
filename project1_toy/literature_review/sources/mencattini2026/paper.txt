@@ -1,0 +1,1781 @@
+
+
+===== PDF PAGE 1 =====
+The Rate-Distortion-Polysemanticity Tradeoff in SAEs
+Tommaso Mencattini∗
+EPFL
+tommaso.mencattini@epfl.ch
+Francesco Montagna∗
+Institute of Science and Technology Austria
+francesco.montagna@ist.ac.at
+Francesco Locatello
+Institute of Science and Technology Austria
+Abstract
+Sparse Autoencoders (SAEs) that can accurately reconstruct their input (minimiz-
+ing distortion) by making efficient use of few features (minimizing the rate) often
+fail to learn monosemantic representations (highly interpretable), limiting their use-
+fulness for mechanistic interpretability. In this paper, we characterise this tension
+in learning faithful, efficient, and interpretable explanations, introducing the Rate-
+Distortion-Polysemanticity tradeoff in SAEs. Under toy-modeling assumptions,
+we theoretically and empirically show that restricting the SAE to be monosemantic
+necessarily comes with an increase in rate and distortion. Assuming a generative
+model behind the input observations, we further demonstrate that the degree of
+polysemanticity of optimal SAEs is determined by the training data distribution, es-
+pecially by the probability of features to co-occur. Finally, we extend the analysis to
+real-world settings by deriving necessary conditions that a polysemanticity measure
+should satisfy when the data-generating process is unknown, and we benchmark
+existing proxy metrics on SAEs trained on Large Language Models. Taken together,
+our findings show that polysemanticity is a data problem that should be accounted
+for when addressing it at the architectural and optimization level.
+ R
+ D
+infeasible
+polysemantic
+monosemantic
+x
+send
+ˆx
+Monosemantic
+R : = R0,   D : = D0
+Encoder
+Decoder
+x
+send
+ˆx
+Polysemantic
+R ≪R0,   D = D0
+Encoder
+Decoder
+x
+send
+ˆx
+Polysemantic
+R = R0,   D ≪D0
+Encoder
+Decoder
+Figure 1: The rate-distortion-polysemanticity tradeoff. Enforcing monosemanticity on a SAE lifts the
+achievable rate-distortion frontier.
+1
+Introduction
+Sparse autoencoders have become a standard tool for explaining neural activations in terms of
+a dictionary of learned features (Cunningham et al., 2023; Bricken et al., 2023). A useful SAE
+explanation should satisfy three desiderata: it should be faithful, so that reconstruction of the input
+∗Equal contribution. Order based on seniority.
+Preprint.
+arXiv:2605.14694v1  [cs.LG]  14 May 2026
+
+
+===== PDF PAGE 2 =====
+is accurate; short, so that few learned features suffice for a good reconstruction; and interpretable, so
+that each of these features corresponds to a single concept, rather than to many unrelated ones. Current
+SAE evaluation captures only the first two desiderata, via sparsity and mean-squared error (Gao et al.,
+2024). The third, interpretability, is left implicit: as a result, SAEs that are optimal in sparsity and
+reconstruction are routinely polysemantic, learning features that mix multiple underlying concepts
+rather than cleanly aligning with one (Chanin et al., 2024, 2025; Chanin and Garriga-Alonso, 2025).
+The clash between faithfulness, shortness, and monosemanticity becomes familiar under an
+information-theoretic lens. Viewing an SAE as a communicator of explanations (Ayonrinde et al.,
+2024) means we identify sparsity with rate and reconstruction error with distortion (Shannon, 1959;
+Alemi et al., 2018) and SAEs’ training is a rate-distortion problem. Unfortunately, reasoning in terms
+of rate and distortion is known to be insufficient to analyse additional qualitative properties of how
+good reconstruction is achieved. Blau and Michaeli (2019) made the point in lossy image compression,
+where low rate and low distortion admit perceptually poor outputs, and similar arguments exist for rep-
+resentation learning (Tschannen et al., 2018). For SAEs, we desire that good reconstruction is achieved
+with an efficient use of interpretable features, rather than with their sacrifice; this motivates the intro-
+duction of polysemanticity as an explicit additional property of the SAE, next to rate and distortion.
+To formalize the interplay between rate, distortion, and polysemanticity in SAEs we posit a data-
+generating process (DGP) with ground-truth concept directions, a standard approach in theoretical
+SAE works (Chanin et al., 2024, 2025; Ayonrinde et al., 2024; Chanin and Garriga-Alonso, 2025,
+2026; Rajendran et al., 2024); under this generative hypothesis, we can formalize a measure of
+polysemanticity, comparing learned features and groundtruth concepts. Once this structure is in place,
+a clear pattern emerges (Figure 1): polysemanticity is a predictable property of the optimal SAE,
+driven by the probability of co-occurring concepts in the DGP. When concepts frequently co-occur,
+a width- and rate-constrained SAE reduces distortion by representing them jointly. This is the rate-
+distortion-polysemanticity (RDP) tradeoff. Our theoretical conclusions has real-world consequences:
+had we access to the DGP, a reliable polysemanticity measure would exhibit an RDP tradeoff. Then,
+even when the DGP is unknown, our findings give a theoretically grounded criterion for what a
+valid polysemanticity metric must look like, and let us choose between real-world interpretability
+metrics when they disagree. We apply this criterion to open-source SAEs (Karvonen et al., 2025): no
+widely-used metric clearly passes, but the criterion still lets us rank candidates and rule out the ones
+that cannot be tracking polysemanticity at all. Surprisingly, the most expensive metrics, such as the
+LLM-based AutoInterp (Paulo et al., 2025), perform worse than far simpler baselines. Overall, this
+reframes the emergence of polysemanticity as the interaction between architectures, optimization, and
+the likelihood of co-occurring events in the data. To sum up, this paper tackles the following problem:
+Problem definition.
+We study the RDP tradeoff by quantifying the cost that monoseman-
+ticity imposes on rate and distortion, and show that polysemanticity is a predictable optimal
+response to the co-occurrence pattern of concepts in the data-generating process.
+Contributions. (i) We formalize the rate-distortion-polysemanticity tradeoff and prove that tighten-
+ing the polysemanticity budget worsens the achievable rate or distortion. (ii) We construct a tractable
+toy model in which the probability of co-occurrence of features in the data-generating process pre-
+dictably determines optimal polysemanticity. (iii) We derive necessary monotonicity conditions for
+any real-world polysemanticity proxy and use them to evaluate proxies on Gemma and GPT-2 SAEs.
+The practical takeaway: reducing polysemanticity requires architectures and optimization strategies
+aware of the risk that co-occurrences in the training distribution imposes on interpretability.
+2
+Background
+In this section, we define main concepts to develop our theory. First, we introduce sparse autoencoders
+and their information theory interpretation. Second, we introduce the DGP and define polysemanticity
+and the Rate-Distortion-Polysemanticity function. Throughout, we denote matrices with uppercase
+letters X, vectors with lowercase, bold letters x, and scalar with lowercase letters x. Extensive discus-
+sion of related works in information theory, machine learning, and SAEs can be found in Appendix C.
+2
+
+
+===== PDF PAGE 3 =====
+v1
+v2
+d1
+d2
+1.00
+0.00
+0.00
+1.00
+Perfect
+Monosemantic
+P = 0.000
+v1
+v2
+d1
+d2
+1.00
+0.00
+-0.50
+0.87
+Slight
+Polysemanticity
+P = 0.125
+v1
+v2
+d1
+d2
+0.87
+0.50
+0.26
+0.97
+Moderate
+Polysemanticity
+P = 0.158
+v1
+v2
+d1
+d2
+-0.50
+0.87
+0.87
+0.50
+Strong
+Polysemanticity
+P = 0.250
+v1
+v2
+d1
+d2
+0.71
+0.71
+-0.71
+0.71
+Full
+Polysemanticity
+P = 0.500
+True feature
+d1
+d2
+Figure 2: Five representative values of the polysemanticity metric P (Definition 1). The first line
+illustrates the cosine similarity matrix between ground truth (vi) and dictionary’s (di) features.
+2.1
+SAEs as compressed explanations: from reconstruction to rate-distortion
+Sparse autoencoders were designed to map neural network activations from a small, polysemantic
+basis to a large, sparse, and approximately monosemantic one (Bricken et al., 2023; Cunningham
+et al., 2023). In practice, a SAE maps an activation x ∈Rd to a sparse latent code z ∈Rm and
+reconstructs x from that code. With encoder and decoder weights Wenc, Wdec ∈Rm×d, biases
+benc, bdec, a sparsifying nonlinearity σ (e.g. ReLU or TopK), and an optional sparsity regularizer S
+(commonly the ℓ1 norm), the SAE is trained to solve
+arg min
+θ∈Θ
+E
+
+∥x −ˆxθ∥2
+2 + λ S(zθ(x))
+
+s.t.
+zθ(x) = σ(Wencx + benc),
+ˆxθ = W ⊤
+deczθ(x) + bdec,
+(1)
+where θ = (Wenc, Wdec, benc, bdec) ∈Θ collects all SAE parameters. Henceforth, the decoder is
+referred as dictionary and its columns as atoms.
+The task of learning good parameters θ is usually described as a sparse coding or reconstruction prob-
+lem (Gao et al., 2024; Hindupur et al., 2025; O’Neill et al., 2025). We adopt instead a communication
+view,. Consider a sender and a receiver who have agreed in advance on the SAE parameters θ. To
+transmit an activation x, the sender computes the sparse code zθ(x) and transmits only the code; the
+receiver applies the decoder to recover ˆxθ ≈x. The rate is the cost of transmitting the code and
+the distortion is the reconstruction error; the parameters θ are shared infrastructure and do not count
+toward the rate. This perspective places our setup in Shannon’s classical rate-distortion framework
+(Shannon, 1959),
+R(D0) =
+inf
+p(ˆx|x): E[d(x,ˆx)]≤D0 I(x; ˆx),
+(2)
+which gives the smallest rate needed to stay below a distortion budget D0. For SAEs, the natural
+analogues of communication cost and fidelity are the number of active latents and the mean squared
+reconstruction error, yielding the SAE rate-distortion frontier
+R⋆(D0) := inf
+θ∈Θ{R(θ) : D(θ) ≤D0}
+s.t.
+R(θ) := E[∥zθ(x)∥0],
+D(θ) := E[∥x −ˆxθ∥2
+2],
+(3)
+where R(θ) measures how short (efficient) the explanation is, and D(θ) how faithful it is. In the next
+section, we argue why this novel two-axis picture is still insufficient, and we define a measure of
+polysemanticity to solve this problem.
+2.2
+A semantic reference frame and the RDP objective
+The rate-distortion view is still incomplete for interpretability: an SAE can attain low rate and
+low distortion while learning heavily mixed features (Chanin et al., 2024, 2025), and conversely
+3
+
+
+===== PDF PAGE 4 =====
+100
+101
+102
+103
+step
+0.000
+0.025
+0.050
+0.075
+0.100
+ D
+monosemantic
+100
+101
+102
+103
+step
+0.02
+0.04
+0.06
+ P
+step
+true features
+atom 1
+atom 2
+atom 3
+Figure 3: Training dynamics of a width-3 Top-2 SAE on a DGP with four orthogonal concepts
+vi ∈R2 fired uniformly at probability p = 0.2. During the optimization, the dictionary rotates from
+a nearly monosemantic initialization to a polysemantic configuration in order to minimize distortion.
+monosemantic SAEs achieve suboptimal rate-distortion values (Chanin and Garriga-Alonso, 2025).
+This mirrors the failure mode identified by Tschannen et al. (2018); Blau and Michaeli (2019), where
+the rate-distortion curve is opaque to qualitatively important properties (e.g., representation usefulness
+or perceptual quality) that must be explicitly modeled as an additional axis. Our main claim is that
+SAEs have the same structural problem, with polysemanticity as the missing axis. Making this
+coordinate measurable, however, requires a semantic reference: polysemanticity is not a function of
+the SAE alone, but of the alignment between its atoms and the underlying concepts. To formalize this
+notion, we therefore introduce a data-generating process (DGP).
+Data Generating Process.
+Let V = (v1, . . . , vn) ∈Rd×n be ground-truth concept directions,
+and let c = (c1, . . . , cn) ∈{0, 1}n ∼pc indicate which concepts are active. We assume
+x =
+n
+X
+ℓ=1
+cℓvℓ=
+X
+ℓ∈S
+vℓ,
+S = {ℓ: cℓ= 1},
+(4)
+where S collects the indices of the concepts active in x generation, and D = (V, pc) collects
+all parameters of the DGP. This DGP is a closed-form instantiation of the Linear Representation
+Hypothesis (Elhage et al., 2022; Park et al., 2024), under which an LLM represents concepts as
+(nearly) orthogonal directions in activation space and only a small subset fires on any given token.
+Now that we have fixed the semantic reference (DGP), we can define polysemanticity.
+Definition 1 (Polysemanticity). Let V ∈Rd×n collect n ground-truth concept directions. Consider
+m SAE’s feature rows ˆv1, . . . , ˆvm. Let C ∈Rm×n be the matrix of cosine similarities ciℓ=
+cos(ˆvi, vℓ). The polysemanticity of the dictionary (ˆvi)m
+i=1 is:
+P(C) := 1
+m
+m
+X
+i=1
+
+1 −max
+ℓ
+c2
+iℓ
+
+∈[0, 1].
+(5)
+Intuitively, P(C) measures the average “spread” of each feature row across the ground-truth concepts:
+it vanishes exactly when every nonzero row is aligned, up to sign, with a single concept, and grows
+as rows become mixtures of several concepts. Figure 2 illustrates five representative values of P on a
+2 × 2 dictionary. We can now state the paper’s central object.
+Definition 2 (Rate-distortion-polysemanticity function). Fix the data generating process D and let
+Θ denote a class of SAEs with rate, distortion, and polysemanticity functionals R(θ), D(θ), and
+P(θ). For a distortion budget D0 ≥0 and a polysemanticity budget P0 ≥0, the rate-distortion-
+polysemanticity function is the smallest rate achievable while simultaneously meeting both budgets,
+R⋆(D0, P0) := inf
+θ∈Θ
+
+R(θ) : D(θ) ≤D0, P(θ) ≤P0
+	
+.
+(6)
+Intuitively, the RDP function is the best (smallest) achievable rate by an SAE that is required to meet
+distortion and polysemanticity constraints.
+4
+
+
+===== PDF PAGE 5 =====
+Equipped with this third axis, we can finally ask what ordinary SAE evaluation cannot: how much
+extra rate or distortion must be paid to enforce semantic purity? Figure 3 illustrates this with a small
+example: the toy SAE rotates away from its monosemantic initialization, with distortion dropping
+past anything a monosemantic dictionary can reach at the same rate. The gap between the two curves
+is the price monosemanticity would cost. In other words, the optimal SAE is polysemantic by design,
+not by accident. What determines how large this price is? Section 3 shows it is the interplay between
+the rate budget and the concept co-occurrence pattern in the DGP.
+3
+A Toy Model of Polysemanticity
+In this section, we give an informal, narrative account of why this gap exists and which properties
+of the DGP control its size. A rigorous treatment is deferred to Section E. The decisive quantity
+is the co-occurrence pattern of concepts: when concepts fire together often enough, the SAE can
+lower distortion by bundling them into polysemantic features that monosemantic dictionaries cannot
+represent under rate constraints. Figure 4 previews the three claims we will make: tightening any one
+of the three budgets (rate, distortion, polysemanticity) forces the other two up, and the R–D frontier
+at fixed P0 takes the staircase shape that the analysis predicts under aligned-atoms assumptions.
+The rest of the section walks through these claims: that the trade-off must exist (Section 3.1), and
+can be quantified in terms of additional cost (call it premium) in rate or distortion imposed by
+monosemanticity (Section 3.2), and that the premium is governed by the probability of co-occurrence
+of concepts in the DGP (Section 3.3).
+Throughout the section, we work under four simplifying assumptions, whose full statement and scope
+are discussed in detail in Section E.1: intuitively, they reduce the class of SAEs we studied to a
+realistic yet analytically tractable family. The most consequential requirement is orthogonality of the
+ground-truth concept directions (Assumption 1), ⟨vi, vℓ⟩= δiℓ: under orthogonality, observing x is
+equivalent to observing the set S = {ℓ: cℓ= 1} of active concepts (see Equation (4)), so the law
+px reduces to the co-occurrence of concepts described by the probability pS, which is the object our
+analysis will track. We also set benc = bdec = 0 (Assumption 2) and, for fully monosemantic SAEs,
+take Wenc = W ⊤
+dec (Assumption 3); the latter is without loss of generality under Definition 1 (proven
+in Proposition 1 in the appendix). Finally, we impose that encoder and decoder rows are zero/one
+combinations of true concepts (Assumption 4), so that each SAE reconstructing x with xθ can be
+thought of as a map S 7→ˆSθ, where
+ˆxθ =
+X
+ℓ∈ˆSθ
+vℓ.
+(7)
+This last assumption is a genuine simplification rather than without loss of generality; it makes
+the problem of studying the tradeoff combinatorial and hence tractable. These assumptions are
+simplifications, not claims about real activations: their role is to isolate the response of an optimal
+SAE to the co-occurrence pmf pS from geometric and optimization complications. The conclusions
+we draw are about the principles co-occurrence imposes on optimal codes, not about the exact closed
+forms holding in real SAEs.
+We now develop our three main claims in order. The next subsection establishes the trade-off
+qualitatively, as a structural property of Definition 2 that requires none of the above assumptions; the
+full formal statement and proof are in Section E.
+3.1
+The RDP trade-off cannot be optimized away
+Our first claim is qualitative: the three budgets in Definition 2 cannot be jointly tightened for free.
+This follows from the definition of R⋆(D0, P0) as an infimum over a nested family of feasible sets,
+and does not rely on any of the assumptions stated above.
+Theorem 1 (Monotonicity of the RDP frontier, informal). Fix a DGP and an SAE class Θ. Then
+R⋆(D0, P0) and its distortion dual D⋆(R0, P0) are nonincreasing in P0. Intuitively: if we want
+better monosemanticity,
+(i) but we are not willing to pay the price via worse reconstruction (distortion budget D0), then we
+have to raise the required rate, i.e., use features less sparsely;
+5
+
+
+===== PDF PAGE 6 =====
+(ii) but we are not willing to pay the price using more features for reconstruction (rate budget R0),
+then we have to raise the distortion.
+The formal statement is presented in Theorem 3 with a rigorous proof.
+
+Tightening monosemanticity is never a free lunch. An SAE that matches a polysemantic
+baseline on reconstruction while being strictly more monosemantic must pay for it on
+the rate axis, and vice versa. This is what Figure 4 reports empirically: in each panel,
+moving the third budget down lifts the Pareto frontier in the remaining two.
+The monotonicity is qualitative and tells us nothing about how big the premium is. For a narrow SAE
+on a DGP with heavy co-occurrence, it can be large; for other DGPs, it can be zero. Quantifying it
+requires more structure.
+Next, we turn the qualitative monotonicity statement into a quantitative lower bound. In the main text,
+we study the minimum rate increase to achieve better monosemanticity. The companion distortion
+tax has a similar characterization.
+3.2
+Quantifying the premium: the rate tax
+To quantify the premium, we use the closed-form reconstruction identity available under Assumption 1
+and Assumption 4: given a DGP with concepts c activating with probability pc, for any monosemantic
+SAE θ that can reconstructs a set I ⊆{1, . . . , n} of groundtruth concepts, Proposition 2 gives
+D(θ) + R(θ) = Epc∥c∥0.
+Distortion and rate are coupled by a conservation law: on the monosemantic class, every unit of
+rate reduces distortion by exactly one unit, and every concept omitted from the represented set
+costs its marginal probability in distortion. This has a concrete consequence for the rate tax that
+monosemanticity imposes. (We show the result under Assumption 1 and 4.)
+Theorem 2 (Rate tax, informal). Fix a class Θ of TopK-SAEs with rate budget K = k. Let D∞
+be the best distortion achievable at rate ≤k by an arbitrarily polysemantic SAE θ∗. Assume θ∗
+is actually polysemantic (mixes concepts). Then, if there is a monosemantic SAE θ with distortion
+≤D∞, it has a rate larger than k. More precisely:
+R(θ) ≥Epc∥c∥0 −δ > k,
+where δ is the upper bound of the distortion that can be achieved by a monosemantic SAE that is still
+better than D∞.
+In Section E.2 we formalize the statement (Theorem 4) and present a rigorous proof.
+Let D∞be the optimal distortion achieved without polysemanticity constraints yet under a rate budget.
+Vice versa, let δ ≤D∞be achieved requiring strict monosemanticity, but no rate constraint—δ is
+the worse degradation a monosemantic SAE can achieve while still being better than D∞. Then,
+the lower bound is a function of the DGP alone through (i) the expected sparsity Epc∥c∥0 and
+(ii) the attainable monosemantic distortion levels δ. Concretely, the more mass pc places on large
+co-occurring sets, the larger Epc∥c∥0, and the larger the rate tax imposed by monosemanticity.
+
+Whenever the optimal SAE at a given rate is polysemantic, any monosemantic SAE
+that reconstructs at least as well must be strictly less efficient. The DGP determines by
+how much: the gap is tight to the co-occurrence structure encoded in Epc∥c∥0 and the
+monosemantic distortion levels δ.
+The dual statement is that, at fixed rate, a monosemantic SAE incurs a strictly larger distortion. Both
+taxes share the same driver, the conservation law D + R = E∥c∥0 on the monosemantic class, and
+together explain the staircase shape of the R versus D frontier at P0 = 0 visible in the rightmost panel
+of Figure 4: the feasible monosemantic (R, D) pairs are a discrete set indexed by which concepts are
+omitted, so the frontier is a staircase rather than a line. The exact staircase is described by Theorem 5.
+6
+
+
+===== PDF PAGE 7 =====
+0.0
+0.1
+0.2
+0.3
+ D
+0.00
+0.15
+0.30
+ P
+2
+4
+6
+ R
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+ D
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+0.35
+0.40
+ P
+R 
+ 2
+R 
+ 3
+R 
+ 4
+R 
+ 5
+R 
+ 7
+1
+2
+3
+4
+5
+6
+7
+8
+ R
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+0.35
+0.40
+ P
+D 
+ 0.03
+D 
+ 0.05
+D 
+ 0.10
+D 
+ 0.20
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+ D
+1
+2
+3
+4
+5
+6
+7
+8
+ R
+P 
+ 0.010
+P 
+ 0.050
+P 
+ 0.100
+P 
+ 0.300
+(a)
+(b)
+(c)
+(d)
+Figure 4: Empirical RDP frontier for TopK SAEs on a synthetic DGP (n = 20 concepts in R6,
+∼0.6 features active per sample; sweep over rate k ∈{1, . . . , 8}, monosemanticity penalty λ ∈
+{0, . . . , 100}, 7 seeds). Left: full (P, D, R) surface. Center-left. P vs D Pareto front at rate bounds
+k ≤k0: with a tighter rate, monosemanticity (P ↓) is improved at the price of worse distortion.
+Center-right. P vs R frontiers at distortion budgets D ≤D0: monosemanticity (P ↓) is improved
+at the price of worse rate. Right. R vs D frontier at polysemanticity budgets P ≤P0: asking for
+better monosemanticity shifts the Pareto front to the right (worse rate and distortion).
+The taxes tell us the premium is nonzero, but not why. The next subsection identifies the mechanism:
+writing the SAE loss in closed form as a function of pS (probability of co-occurring concepts) reveals
+optimal polysemanticity as a response to joint occurrence of concepts.
+3.3
+Co-occurrence of concepts drives optimal polysemanticity
+The previous two subsections establish that a premium exists and bound it from below. They do
+not yet explain why polysemanticity is the mechanism that a rate-constrained SAE uses to reduce
+distortion. The answer comes from writing the reconstruction loss in closed form as a function of the
+probability of co-occurrence of concepts in the DGP distribution.
+Lemma 1 (Closed-form SAE loss). Let Assumptions 1, 2, 3, 4 satisfied. Then, the mean squared
+reconstruction error of a TopK SAE θ is:
+L(θ, K) = EpS
+
+|S| + | ˆSθ| −2 |S ∩ˆSθ|
+
+.
+The quantity inside the expectation is the symmetric difference |S △ˆSθ|. Loss is minimized by
+choosing, for each source event S weighted by pS, a reconstruction ˆSθ that overlaps S as much as
+possible under the width and rate constraints. Because, under a narrow SAE assumption K, the
+number of active features, is smaller than the number of concepts in the DGP, no deterministic rule
+can match ˆSθ = S on every event; the SAE must commit to a small family of events it can reconstruct
+and pay the symmetric-difference cost on the events it does not match.
+
+An observation x(S) is an observation of a co-occurrence event S. The optimal SAE
+reconstructs the co-occurrence events with the largest pS, and pays symmetric-difference
+distortion on the rest. The DGP, through pS, directly picks which features the SAE will
+learn.
+This is the mechanism behind the premium of the previous subsection. When the DGP concentrates
+mass on events in which a pair of concepts vi, vj fires jointly, a single polysemantic atom writing
+vi + vj matches every such event at unit rate cost; two monosemantic atoms for the same pair cost
+two units of rate, or one unit of distortion if one is dropped. The inequality between these options is
+an inequality between probabilities in pS.
+A three-concept example.
+To make this precise, we illustrate the case n = 3, m = 2, K ∈{1, 2}
+in closed form (worked out in detail in Section E.3). A monosemantic SAE θjk
+M represents two of the
+three concepts; hedged codes θij,k
+H
+replace one monosemantic atom dedicated to vj with a joint atom
+7
+
+
+===== PDF PAGE 8 =====
+writing vi + vj; feature-splitting codes θij,i
+S
+combine a joint atom with a fallback atom for one of its
+components. Applying Lemma 1 we can compute the close form loss of any monosemanitic, hedged,
+and feature-splitting SAE: this gives explicit inequalities in the probability mass function entries of
+pS, which characterize when a polysemantic SAE beats its monosemantic competitor. For K = 2,
+for instance,
+L(θjk
+M) −L(θij,k
+H ) > 0 ⇐⇒pij + pijk > pj + pjk,
+L(θjk
+M) −L(θij,j
+S
+) > 0 ⇐⇒pij > pk + pik + pjk
+and analogous inequalities hold for K = 1; the full set is in Section E.3.
+
+A polysemantic atom writing vi + vj, whether by hedging or by splitting, is optimal
+exactly when the co-occurrence probabilities pij and pijk dominate the marginals of the
+concepts it would otherwise displace. Polysemanticity is an optimal response to joint
+occurrence, not a pathology of the optimizer.
+Two consequences are worth emphasizing. First, the driver is joint occurrence, not correlation:
+the inequalities involve raw probabilities pij, pijk, not centered quantities. A counterexample in
+Section E.3 exhibits hedging under zero correlation and no hedging under strong correlation, so
+previous correlation-based accounts (Chanin et al., 2025) are at best a proxy. Second, both hedging
+and feature splitting emerge in narrow SAEs under the same mechanism, rather than splitting being a
+wide-SAE-only phenomenon: both reduce symmetric-difference distortion under a rate cap, and the
+inequalities that certify them are of the same type.
+The three-concept case is tight enough to enumerate all competitor codes in closed form; larger
+n rapidly becomes combinatorial, and the general characterization of which joint atoms enter the
+optimum is the content of Theorem 5 together with its polysemantic generalization sketched in
+Section E.3. The empirical sweep of Figure 4 corroborates the qualitative predictions at n = 20:
+the R versus D frontier at P0 = 0 is a staircase, tightening rate raises the monosemanticity floor
+(center-left panel), and the premium grows with the mass pS places on multi-concept events.
+Takeaway.
+Under the assumptions listed above, the RDP trade-off is a structural property
+of optimal SAEs, not an optimization artifact. Its size at a given rate is a function of the
+co-occurrence pmf pS. Reducing polysemanticity without raising rate or distortion therefore
+requires changing the training distribution, not the architecture or the optimizer.
+4
+Interpretability in The Wild: a Meta-Analysis of SAE’s Metrics
+Our theory so far rests on a data-generating process, which is unrealistic in practical SAE use cases:
+the ground-truth concepts V are unobservable, and P(θ) of Definition 1 cannot be computed. As
+interpretability is the main reason practitioners train SAEs, the community has responded with
+proxies, scalar functionals of an SAE intended to track interpretability without ground-truth concepts
+(Karvonen et al., 2025; Minegishi et al., 2025). These proxies routinely disagree, and there is no
+principled way to choose among them. We argue that the RDP theory supplies one: any genuine
+proxy for P must respect the same tradeoff, a meta-metric consistency criterion.
+The criterion follows directly from Theorem 3. If a candidate proxy ˆP : Θ →R≥0 were faithful
+to P, Theorem 3 would force the minimum of ˆP under a joint rate-distortion budget to decrease as
+either budget is relaxed. We instantiate this criterion in the two following tests, which only require
+access to a finite sweep of N SAEs, {(Ri, Di, ˆPi)}N
+i=1, rather than to the true DGP D. The first test
+is local: it inspects every pair of SAEs in the sweep in which one has a tighter budget than the other,
+and checks whether the proxy orders them in the direction Theorem 3 predicts.
+Definition 3 (RDP monotonicity-violation rate). Call a pair (i, j) dominated when Ri ≤Rj, Di ≤
+Dj, and (Ri, Di)̸ = (Rj, Dj), namely when SAE i sits under a tighter joint budget than j. Then V ( ˆP)
+is the fraction of dominated pairs on which the proxy is inverted: V ( ˆP) := |D|−1 P
+(i,j)∈D 1{ ˆPi <
+ˆPj} ∈[0, 1].
+8
+
+
+===== PDF PAGE 9 =====
+A faithful proxy has V = 0; V = 1
+2 is the random baseline; V > 1
+2 means the proxy systematically
+moves opposite to the RDP-predicted direction. The second test is global: rather than inspecting
+individual pairs, it measures whether proxy values decrease monotonically as rate and distortion
+budgets relax across the whole sweep.
+Definition 4 (RDP rank correlation). The sign-flipped Spearman correlation between the joint budget
+rank and the proxy value: ρ( ˆP) := −corrSp
+ rank(Ri) + rank(Di), ˆPi
+
+∈[−1, 1].
+0.0
+0.5
+1.0
+ V(ˆP)
+1 −AutoInterp
+1 −Unlearning
+1 −Disentanglement
+1 −SCR
+1 −TPP
+1 −Isolation
+1 −Absorption
+Splitting
+1 −Sparse Probing
+TopK Gemma
+0.0
+0.5
+1.0
+ V(ˆP)
+ReLU Gemma
+−0.5
+0.0
+0.5
+ (ˆP)
+TopK Gemma
+−0.5
+0.0
+0.5
+ (ˆP)
+ReLU Gemma
+Figure 5: V (left, lower is better; dashed line = random baseline V = 1
+2) and ρ (right, higher is better)
+for the nine SAEBench proxies on TopK and ReLU Gemma.
+A faithful proxy has ρ near +1; ρ ≈0 signals no trend; ρ < 0 signals global inversion. We report
+both because they diagnose different failure modes: V catches pair-level reversals that a monotone
+trend can mask, ρ catches global flatness that a few correctly-ordered pairs can mask.
+We apply the audit to TopK and ReLU SAEs on Gemma activations, evaluated under the SAEBench
+metrics of Karvonen et al. (2025). The SAEs and their SAEBench scores are obtained directly from
+Karvonen et al. (2025) rather than retrained by us. Figure 5 summarizes the results, which separate
+the metrics into three regimes on TopK Gemma. A first group is anti-correlated with the RDP
+direction: AutoInterp (V = 0.89, ρ = −0.68) and Unlearning (V = 0.76, ρ = −0.54) respond
+to budget tightening in the wrong direction, and on ReLU Gemma the pattern extends to every
+SAEBench metric except Splitting. Strikingly, AutoInterp, by far the most expensive metric in the
+suite, relying on an LLM-as-judge, is the most severely misaligned. A second group, Isolation, TPP,
+and Absorption, is effectively uncorrelated, hovering near the random baseline. Only Sparse Probing
+(V = 0.35, ρ = +0.19) and Splitting (V = 0.44, ρ = +0.21) show weak agreement with the RDP
+direction, and neither strongly. No widely-adopted SAE metric clearly tracks the RDP-predicted
+direction, suggesting that measuring polysemanticity in real-world SAEs may require metrics built
+on semantically controlled data rather than on downstream probes or LLM-based judgments. Full
+numbers and per-proxy scatter plots are provided in the appendix (Figure 6, Figure 7, Table 2).
+Takeaway.
+In practice, proxy metrics for polysemanticity do not faithfully track the RDP
+trade-off, making progress difficult to quantitatively assess. Surprisingly, expressive metrics
+like AutoInterp are most misaligned, suggesting they may be unreliable measures of polyse-
+manticity. We speculate that semantically controlling the training data may be a viable way
+forward to quantify improvements in interpretability.
+5
+Conclusion
+Under toy model assumptions, we demonstrate that polysemanticity is a response of the SAE to
+exploit co-occurrence of concepts in the training distribution in order to minimize the reconstruction
+error under sparsity constraints. Given an appropriate measure of polysemanticity, we qualitatively
+and quantitatively characterize this Rate-Distortion-Polysemanticity tradeoff. Finally, we argue that
+in real-world settings, when polysemanticity is tracked without ground-truth concepts, a good proxy
+must exhibit the tradeoff. This gives a necessary condition that we use to evaluate widely adopted
+measures of polysemanticity, which we show to be mostly insufficient in this respect. Our takeaway
+9
+
+
+===== PDF PAGE 10 =====
+is that, for the goals of mechanistic interpretability, reducing polysemanticity requires synergy
+between architectures, optimization strategies, and data, the latter being underexplored until now.
+6
+Acknowledgments
+FM is funded by the Chan Zuckerberg Initiative. TM is financed from the project “Building Energy
+Systems on causal reasoning (BOSS)“, funded within the “Technologies and Innovations for the
+Climate-Neutral City” (TIKS) Programme of the Austrian Research Promotion Agency (FFG).
+References
+Alexander A. Alemi, Ben Poole, Ian Fischer, Joshua V. Dillon, Rif A. Saurous, and Kevin Murphy.
+Fixing a broken elbo. Proceedings of the 35th International Conference on Machine Learning,
+pages 159–168, 2018.
+Kola Ayonrinde, Michael T. Pearce, and Lee Sharkey. Interpretability as compression: Reconsidering
+sae explanations of neural activations with mdl-saes. arXiv preprint arXiv:2410.11179, 2024.
+Yochai Blau and Tomer Michaeli. Rethinking lossy compression: The rate-distortion-perception
+tradeoff. In Proceedings of the 36th International Conference on Machine Learning, pages
+675–685, 2019.
+Trenton Bricken, Adly Templeton, Joshua Batson, Brian Chen, Adam Jermyn, Tom Conerly,
+Nicholas Turner, Cem Anil, Chris Denison, Amanda Askell, et al. Towards monosemantic-
+ity: Decomposing language models with dictionary learning. Transformer Circuits Thread, 2023.
+https://transformer-circuits.pub/2023/monosemantic-features/index.html.
+Christopher P. Burgess, Irina Higgins, Arka Pal, Loic Matthey, Nick Watters, Guillaume Desjardins,
+and Alexander Lerchner. Understanding disentangling in β-vae, 2018. URL https://arxiv.
+org/abs/1804.03599.
+Bart Bussmann, Patrick Leask, and Neel Nanda. Batchtopk sparse autoencoders, 2024. URL
+https://arxiv.org/abs/2412.06410.
+Bart Bussmann, Noa Nabeshima, Adam Karvonen, and Neel Nanda. Learning multi-level features
+with matryoshka sparse autoencoders, 2025. URL https://arxiv.org/abs/2503.17547.
+David Chanin and Adrià Garriga-Alonso. Sparse but wrong: Incorrect L0 leads to incorrect features
+in sparse autoencoders. arXiv preprint arXiv:2508.16560, 2025.
+David Chanin and Adrià Garriga-Alonso. SynthSAEBench: Evaluating sparse autoencoders on
+scalable realistic synthetic data. arXiv preprint arXiv:2602.14687, 2026.
+David Chanin, James Wilken-Smith, Tomáš Dulka, Hardik Bhatnagar, and Joseph Bloom. A is
+for absorption: Studying feature splitting and absorption in sparse autoencoders. arXiv preprint
+arXiv:2409.14507, 2024.
+David Chanin, Tomáš Dulka, and Adria Garriga-Alonso. Feature hedging: Correlated features break
+narrow sparse autoencoders. arXiv preprint arXiv:2505.11756, 2025.
+Thomas M. Cover and Joy A. Thomas. Elements of Information Theory 2nd Edition (Wiley Series in
+Telecommunications and Signal Processing). Wiley-Interscience, July 2006. ISBN 0471241954.
+Hoagy Cunningham, Aidan Ewart, Logan Riggs Smith, Robert Huben, and Lee Sharkey. Sparse au-
+toencoders find highly interpretable features in language models. arXiv preprint arXiv:2309.08600,
+2023.
+Nelson Elhage, Tristan Hume, Catherine Olsson, Nicholas Schiefer, Tom Henighan, Shauna Kravec,
+Zac Hatfield-Dodds, Robert Lasenby, Dawn Drain, Carol Chen, Roger Grosse, Sam McCandlish,
+Jared Kaplan, Dario Amodei, Martin Wattenberg, and Christopher Olah. Toy models of superposi-
+tion. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/2022/toy_
+model/index.html, arXiv:2209.10652.
+10
+
+
+===== PDF PAGE 11 =====
+Leo Gao, Tom Dupré la Tour, Henk Tillman, Gabriel Goh, Rajan Troll, Alec Radford, Ilya
+Sutskever, Jan Leike, and Jeffrey Wu. Scaling and evaluating sparse autoencoders. arXiv preprint
+arXiv:2406.04093, 2024.
+Sai Sumedh R. Hindupur, Ekdeep Singh Lubana, Thomas Fel, and Demba Ba. Projecting assumptions:
+The duality between sparse autoencoders and concept geometry, 2025. URL https://arxiv.
+org/abs/2503.01822.
+Adam Karvonen, Can Rager, Johnny Lin, Curt Tigges, Joseph Bloom, David Chanin, Yeu-Tong Lau,
+Eoin Farrell, Callum McDougall, Kola Ayonrinde, et al. Saebench: A comprehensive benchmark
+for sparse autoencoders in language model interpretability. arXiv preprint arXiv:2503.09532, 2025.
+Gouki Minegishi, Hiroki Furuta, Yusuke Iwasawa, and Yutaka Matsuo.
+Rethinking evalua-
+tion of sparse autoencoders through the representation of polysemous words. arXiv preprint
+arXiv:2501.06254, 2025.
+Chris Olah, Nick Cammarata, Ludwig Schubert, Gabriel Goh, Michael Petrov, and Shan Carter.
+Zoom in:
+An introduction to circuits.
+Distill, 2020.
+doi:
+10.23915/distill.00024.001.
+https://distill.pub/2020/circuits/zoom-in.
+Charles O’Neill, Alim Gumran, and David Klindt. Compute optimal inference and provable amorti-
+sation gap in sparse autoencoders, 2025. URL https://arxiv.org/abs/2411.13117.
+Kiho Park, Yo Joong Choe, and Victor Veitch. The linear representation hypothesis and the geometry
+of large language models. In Proceedings of the 41st International Conference on Machine
+Learning, 2024.
+Gonçalo Paulo, Alex Mallen, Caden Juang, and Nora Belrose. Automatically interpreting millions of
+features in large language models, 2025. URL https://arxiv.org/abs/2410.13928.
+Senthooran Rajamanoharan, Arthur Conmy, Lewis Smith, Tom Lieberum, Vikrant Varma, János
+Kramár, Rohin Shah, and Neel Nanda. Improving dictionary learning with gated sparse autoen-
+coders, 2024a. URL https://arxiv.org/abs/2404.16014.
+Senthooran Rajamanoharan, Tom Lieberum, Nicolas Sonnerat, Arthur Conmy, Vikrant Varma, János
+Kramár, and Neel Nanda. Jumping ahead: Improving reconstruction fidelity with jumprelu sparse
+autoencoders, 2024b. URL https://arxiv.org/abs/2407.14435.
+Goutham Rajendran, Simon Buchholz, Bryon Aragam, Bernhard Schölkopf, and Pradeep Ravikumar.
+From causal to concept-based representation learning. In A. Globerson, L. Mackey, D. Bel-
+grave, A. Fan, U. Paquet, J. Tomczak, and C. Zhang, editors, Advances in Neural Information
+Processing Systems, volume 37, pages 101250–101296. Curran Associates, Inc., 2024. doi:
+10.52202/079017-3211.
+URL https://proceedings.neurips.cc/paper_files/paper/
+2024/file/b76a9959151d377ddd2c77a275a97475-Paper-Conference.pdf.
+Adam Scherlis, Kshitij Sachan, Adam S. Jermyn, Joe Benton, and Buck Shlegeris. Polysemanticity
+and capacity in neural networks. arXiv preprint arXiv:2210.01892, 2022.
+Claude E. Shannon. Coding theorems for a discrete source with a fidelity criterion. IRE National
+Convention Record, 7:142–163, 1959.
+James V. Stone. Information Theory: A Tutorial Introduction. Sebtel Press, 2013. ISBN 978-
+0956372857.
+Michael Tschannen, Olivier Bachem, and Mario Lucic. Recent advances in autoencoder-based
+representation learning. arXiv preprint arXiv:1812.05069, 2018.
+11
+
+
+===== PDF PAGE 12 =====
+A
+Notation
+Symbol
+Meaning
+Dimensions
+d
+dimension of the ambient activation space
+m
+SAE width (number of latent coordinates)
+n
+number of ground-truth concepts in the DGP
+K
+TopK sparsity budget, when applicable
+Sparse autoencoder
+x ∈Rd
+input activation
+ˆx ∈Rd
+SAE reconstruction of x
+a(x) ∈Rm
+preactivation
+z(x) ∈Rm
+latent code (message)
+Wenc, Wdec ∈Rm×d
+encoder / decoder weight matrices
+benc ∈Rm, bdec ∈Rd
+encoder / decoder biases
+σ
+nonlinear sparsifying function, e.g. ReLU or TopK
+θ = (Wenc, Wdec, benc, bdec)
+parameter tuple of an SAE
+Θ
+class of SAEs under consideration
+Data generating process
+V = (v1, . . . , vn) ∈Rd×n
+matrix of ground-truth concept directions
+vℓ∈Rd
+ℓ-th ground-truth concept direction
+c ∈{0, 1}n
+binary indicator vector of active concepts
+cℓ∈{0, 1}
+indicator that concept ℓis active
+pc
+joint pmf of the concept vector c
+S = {ℓ: cℓ= 1}
+index set of active concepts for a sample
+pS
+pmf of co-occurring concept events
+ˆSθ ⊆{1, . . . , n}
+set of concepts reconstructed by the SAE
+Rate, distortion, polysemanticity
+I(x; ˆx)
+mutual information between source and reconstruction
+d(·, ·)
+distortion measure in the classical Shannon setup
+R(θ) = E[∥zθ(x)∥0]
+rate of an SAE (expected ℓ0 of the code)
+D(θ) = E[∥x −ˆxθ∥2
+2]
+distortion of an SAE (MSE)
+R⋆(D0)
+rate-distortion function of the class Θ
+Cenc = cos(WencV ⊤)
+encoder / ground-truth cosine-similarity table
+Cdec = cos(WdecV ⊤)
+decoder / ground-truth cosine-similarity table
+P(C)
+row-wise max-alignment polysemanticity of a cosine table
+Pjoint(θ) = P(Cenc) + P(Cdec)
+joint encoder-decoder polysemanticity
+R⋆(D0, P0)
+rate-distortion-polysemanticity (RDP) function
+D⋆(R0, P0)
+distortion dual of the RDP function
+Table 1: Notation used throughout the paper.
+B
+Limitations
+A key limitation of our analysis is that the strongest results are obtained under a stylized toy
+model: orthogonal ground-truth concepts, binary/aligned atoms, zero biases, and other tractability
+assumptions that isolate co-occurrence effects from geometry and optimization. Accordingly, our
+theorems identify principles governing optimal codes under a known DGP, not exact characterizations
+of real SAEs trained on neural activations. In realistic settings, the ground-truth concepts and co-
+occurrence law are unobserved, so polysemanticity cannot be measured directly and must be inferred
+through proxies. This means our metric analysis delivers necessary consistency conditions for such
+proxies, but not a sufficient validation that any given proxy truly captures polysemanticity in the
+wild. More broadly, our empirical audit should be read as evidence of misalignment in current
+evaluations, rather than as a definitive measurement of interpretability itself. Future work should
+relax the toy assumptions, test the theory under richer generative structures, and develop benchmarks
+with semantically controlled data that permit stronger empirical validation.
+12
+
+
+===== PDF PAGE 13 =====
+C
+Related Works
+Rate-Distortion Theory.
+Our work is grounded in rate-distortion theory, originally developed in
+information theory and later revisited in machine learning. Classical rate-distortion theory defines the
+minimum price (rate) one must pay to represent a signal within a prescribed distortion budget (Cover
+and Thomas, 2006; Stone, 2013; Shannon, 1959). In machine learning, this framework has been
+studied extensively through autoencoders, most prominently variational autoencoders, where the rate
+measures how much information the latent z preserves about the input x, and the distortion measures
+reconstruction error (Alemi et al., 2018; Burgess et al., 2018). However, Tschannen et al. (2018); Blau
+and Michaeli (2019) show that this two-axis view is incomplete whenever an additional qualitative
+property, such as perceptual quality in image compression or representation usefulness in downstream
+tasks. The same limitation of the rate-distortion theory reappears in mechanistic interpretability:
+Ayonrinde et al. (2024) and Chanin and Garriga-Alonso (2025) argue that the sparsity-reconstruction
+trade-off, used to describe SAEs (Gao et al., 2024; Rajamanoharan et al., 2024b), is insufficient, since
+it fails to capture interpretability and would judge monosemantic SAEs as inferior, yet what exactly is
+missing remains unspecified. Our work formalizes polysemanticity as that missing axis and develops
+a precise rate-distortion-polysemanticity theory for SAEs.
+Polysemanticity, Superposition and LRH in neural networks.
+The second core theme of our
+paper is polysemanticity (Olah et al., 2020). A standard explanation for why neurons turn polyseman-
+tic, responding to multiple distinct concepts, is superposition: when many sparse features must be
+packed into a limited-dimensional activation space, they share directions, so mixed neurons emerge
+from capacity pressure rather than optimization accident (Elhage et al., 2022; Scherlis et al., 2022),
+with monosemantic neurons reserved for the most important concepts. Both notions should be distin-
+guished from the Linear Representation Hypothesis (LRH), which posits that concepts are encoded
+as approximately linear directions in activation space, without itself implying monosemanticity or
+superposition (Park et al., 2024). Whereas prior work treats polysemanticity in LMs as a qualitative
+phenomenon, we turn it into a measurable quantity by defining an exact metric for its instantiation in
+SAEs in light of the data generating process.
+Structural Analysis of Sparse Autoencoders.
+Sparse autoencoders were introduced precisely in
+response to the polysemantic frame described above: if concepts are represented as linear directions,
+but individual neurons are polysemantic, then an overcomplete learned dictionary may recover a more
+monosemantic feature basis (Bricken et al., 2023; Cunningham et al., 2023). A growing body of work,
+however, has shown that SAEs do not reliably achieve this ideal. Chanin et al. (2024) and Ayonrinde
+et al. (2024) show that SAEs can improve sparsity by turning otherwise monosemantic features into
+structurally degenerate ones, through mechanisms such as feature absorption and splitting, and Chanin
+et al. (2025) show that similar non-monosemantic solutions can also be favored to reduce distortion,
+not only rate (feature hedging). A parallel line of work aims to fix these failures through architectural
+or training-procedure modifications (Gao et al., 2024; Bussmann et al., 2024, 2025; Rajamanoharan
+et al., 2024a,b), but such interventions treat polysemanticity as an optimization byproduct to be
+engineered away, not as a more fundamental data problem. Our work is instead the first to give a
+systematic account of the joint relation between rate, distortion, and polysemanticity by treating
+polysemanticity as a measurable property of the SAE hypothesis space. This is a genuinely distinct
+axis: the closest existing measurements, such as MCC in O’Neill et al. (2025) and Chanin and Garriga-
+Alonso (2026), evaluate the overall quality of the recovered dictionary rather than polysemanticity
+itself, an SAE could be perfectly monosemantic yet highly redundant, with many atoms aligned to
+the same concept direction, and still receive a poor MCC score. In isolating polysemanticity from
+dictionary quality, we also take a different stance from prior work: we characterize polysemanticity
+as a data problem, not only an optimization one.
+D
+Computational resources
+The synthetic experiments (Figure 4) were run on a single NVIDIA L40S GPU (48 GB GDDR6,
+Ada Lovelace). The real-world analysis (Section 4) applies deterministic statistics to pre-computed
+SAEBench outputs and requires no training; its compute cost is negligible.
+13
+
+
+===== PDF PAGE 14 =====
+Proxy ˆP
+TopK Gemma
+ReLU Gemma
+V ( ˆP) ↓
+ρ( ˆP) ↑
+V ( ˆP) ↓
+ρ( ˆP) ↑
+AutoInterp
+0.886
+−0.68
+0.993
+−0.63
+Unlearning
+0.762
+−0.54
+0.788
+−0.43
+Disentanglement
+0.733
+−0.00
+0.857
+−0.49
+SCR
+0.614
+−0.15
+0.855
+−0.40
+TPP
+0.525
++0.13
+0.862
+−0.49
+Isolation
+0.520
++0.11
+0.778
+−0.39
+Absorption
+0.480
++0.18
+0.766
+−0.23
+Splitting
+0.441
++0.21
+0.411
+-0.11
+Sparse Probing
+0.351
++0.19
+0.709
+−0.30
+Table 2: Audit of SAEBench polysemanticity proxies (Karvonen et al., 2025) against the RDP
+monotonicity criterion. V ( ˆP) is the envelope-violation rate (lower is better; V = 1
+2 is the random
+baseline, V >
+1
+2 is anti-correlated with the RDP-predicted direction); ρ( ˆP) is the sign-flipped
+Spearman rank correlation between the joint rate–distortion budget rank and the proxy value (higher
+is better). Rows are sorted by V on TopK Gemma (worst at top). Only Splitting and Sparse Probing
+satisfy V < 1
+2 and ρ > 0 on TopK Gemma.
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+ R
+0.125
+0.150
+0.175
+0.200
+0.225
+0.250
+0.275
+0.300
+0.325
+ P (1 −AutoInterp)
+0.0400
+0.0425
+0.0450
+0.0475
+0.0500
+0.0525
+0.0550
+0.0575
+0.0600
+ P (1 −Sparse Probing)
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+ P (1 −Absorption)
+1.0
+1.2
+1.4
+1.6
+1.8
+2.0
+2.2
+2.4
+2.6
+ P (Splitting)
+0.25
+0.30
+0.35
+0.40
+0.45
+ P (1 −Isolation)
+0.30
+0.35
+0.40
+0.45
+0.50
+0.55
+0.60
+0.65
+0.70
+ P (1 −Disentanglement)
+0.80
+0.85
+0.90
+0.95
+ P (1 −TPP)
+0.75
+0.80
+0.85
+0.90
+0.95
+ P (1 −SCR)
+0.825
+0.850
+0.875
+0.900
+0.925
+0.950
+0.975
+ P (1 −Unlearning)
+Figure 6: Rate–distortion scatter for TopK SAEs trained on Gemma activations, with each panel
+colored by one of the nine SAEBench polysemanticity proxies of Karvonen et al. (2025).
+14
+
+
+===== PDF PAGE 15 =====
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+10−1
+ D (1 −ℓ2 ratio)
+102
+103
+104
+ R
+0.150
+0.175
+0.200
+0.225
+0.250
+0.275
+0.300
+0.325
+ P (1 −AutoInterp)
+0.04
+0.05
+0.06
+0.07
+0.08
+0.09
+ P (1 −Sparse Probing)
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+ P (1 −Absorption)
+1.1
+1.2
+1.3
+1.4
+1.5
+1.6
+1.7
+1.8
+ P (Splitting)
+0.25
+0.30
+0.35
+0.40
+0.45
+ P (1 −Isolation)
+0.30
+0.35
+0.40
+0.45
+0.50
+0.55
+0.60
+0.65
+0.70
+ P (1 −Disentanglement)
+0.9800
+0.9825
+0.9850
+0.9875
+0.9900
+0.9925
+0.9950
+0.9975
+1.0000
+ P (1 −TPP)
+0.80
+0.85
+0.90
+0.95
+1.00
+ P (1 −SCR)
+0.80
+0.85
+0.90
+0.95
+ P (1 −Unlearning)
+Figure 7: Rate–distortion scatter for ReLU SAEs trained on Gemma activations, colored by each of
+the nine SAEBench polysemanticity proxies.
+E
+A toy model of Rate-Distortion-Polysemanticity tradeoff phenomena:
+formal treatment
+E.1
+Setting
+As we aim to study the RDP tradeoff from a theoretical perspective, we state some simplifying
+assumptions on thedata-generatingg process and the SAE architecture that make the problem ap-
+proachable in closed analytical form. In the text, we specify when each of these assumptions is used,
+rather then imposing them in general.
+Assumption 1 (Orthogonal true factors). We assume
+⟨vi, vℓ⟩= δiℓ.
+Under this orthogonality assumption, the map S 7→x(S) = P
+ℓ∈S vℓis injective. Indeed,
+1{ℓ∈S} = ⟨x(S), vℓ⟩.
+Hence observing x is equivalent to observing the source event S, and the law px may be studied
+directly through the pmf pS of co-occurring concepts: from now on we will reason in terms of pS to
+explain how the parametrization of an SAE is driven by the co-occurrence of concepts in x samples.
+Assumption 2 (Zero bias terms). We assume benc = bdec = 0.
+Assumption 3 (Tied monosemantic SAE). For monosemantic SAEs, we assume tied encoders and
+decoders, i.e.
+Wenc = W T
+dec.
+(8)
+15
+
+
+===== PDF PAGE 16 =====
+Under our definition of polysemanticity of Equation (5), this assumption is not restrictive: in
+Section E.4 we show that monosemanticity is in fact equivalent to tiedness in the sense of Equation (8).
+This is unrealistic in real networks: concepts are not binary, features are noisy, and directions need
+not be orthogonal. We keep the assumption because it isolates the role of the joint probability mass
+function from geometric complications.
+Assumption 4 (Aligned and binary atoms). The encoder Wenc and decoder Wdec rows are linear
+combinations of true concepts vℓwith unit weights. So, for each observation
+x =
+X
+ℓ∈S
+vℓ,
+where S is the index of the groundtruth active concepts, the SAE defines a map S 7→ˆSθ ⊂{1, ..., n}
+and the reconstructed observation is
+ˆxθ =
+X
+ℓ∈ˆSθ
+vℓ.
+(9)
+This is more restrictive than a general SAE. However, note that without loss of generality we can
+already assume that each reconstruction has the form:
+ˆxθ =
+X
+ℓ∈ˆSθ
+ˆαθ,ℓvℓ,
+ˆαθ,ℓ∈R.
+(10)
+Indeed, under Assumption 1, every reconstruction admits a unique orthogonal decomposition
+ˆxθ =
+n
+X
+ℓ=1
+ˆαθ,ℓvℓ+ r⊥,
+r⊥⊥span{v1, . . . , vn}.
+Since each ground-truth sample satisfies x ∈span{v1, . . . , vn}, we have
+∥x −ˆxθ∥2
+2 =
+x −
+n
+X
+ℓ=1
+ˆαθ,ℓvℓ
+
+2
+2
++ ∥r⊥∥2
+2.
+Hence the orthogonal residual r⊥can only increase distortion. Therefore, for distortion-minimization,
+one may restrict without loss of generality to reconstructions lying in span{v1, . . . , vn}. Assump-
+tion 4 only imposes the further simplifying restriction ˆαθ,ℓ∈{0, 1}.
+Summary.
+Assumptions Assumption 1 and Assumption 2 are the main simplifying assumptions.
+Assumption 3 is without loss of generality, and made explicit only for clarity. Assumption 4 is
+an additional tractability assumption that simplifies the theoretical analysis; the main qualitative
+conclusions extend beyond it.
+E.2
+A toy model of the rate-distortion-polysemanticity tradeoff
+The goal of this section is to theoretically and empirically demonstrate that (i) there is a tension
+between efficiency, reconstruction accuracy, and interpretability, meaning that they can not be jointly
+optimized. We call this the rate-distortion-polysemanticity tradeoff; (ii) the RDP tradeoff is not an
+optimization or architectural artifact: polysemanticity emerges to exploit (reducing distortion and
+rate) the properties of the DGP, namely co-occurrences of features that can not be compactly captured
+by monosemantic features.
+Firstly, we characterize the general property of the rate-distortion-polysemanticity trade-off. The next
+result is completely general and does not use Assumptions 1-4.
+Theorem 3 (Basic monotonicity of the RDP frontier, formalization of Theorem 1). Fix a data-
+generating process pc and a class Θ of SAEs. Then:
+(i) for every fixed P0, the map D0 7→R⋆
+p(D0, P0) is nonincreasing;
+(ii) for every fixed D0, the map P0 7→R⋆
+p(D0, P0) is nonincreasing;
+(iii) for every fixed R0, the map P0 7→D⋆
+p(R0, P0) is nonincreasing.
+In particular, for every D0 and R0,
+R⋆
+p(D0, ∞) ≤R⋆
+p(D0, 0),
+D⋆
+p(R0, ∞) ≤D⋆
+p(R0, 0).
+16
+
+
+===== PDF PAGE 17 =====
+Intuition.
+The first part, is an instance of the usual RD tradeoff common in information theory. The
+second and third points are novel. Part (ii) shows that, fixed the distortion, better monosemeanticity
+can be achieved only at the expense of the rate. Complementary to this, part (iii) demonstrates that at
+a fixed rate R, monosemanticity can only be achieved degrading the reconstruction. These results
+support the qualitative claim that optimizing reconstruction under rate constraints does not lead to
+interpretable SAE features.
+
+The RDP tradeoff implies that, by necessity, better monosemanticity must enforce worse
+reconstruction or efficiency of the code.
+Proof. For fixed P0, if D1 ≤D2, then
+{θ ∈Θ : D(θ) ≤D1, P(θ) ≤P0} ⊆{θ ∈Θ : D(θ) ≤D2, P(θ) ≤P0}.
+Taking the infimum of R(θ) over the larger feasible set can only decrease the value, so
+R⋆
+p(D2, P0) ≤R⋆
+p(D1, P0).
+This proves (i).
+Similarly, for fixed D0, if P1 ≤P2, then
+{θ ∈Θ : D(θ) ≤D0, P(θ) ≤P1} ⊆{θ ∈Θ : D(θ) ≤D0, P(θ) ≤P2},
+hence
+R⋆
+p(D0, P2) ≤R⋆
+p(D0, P1).
+This proves (ii).
+Finally, for fixed R0, if P1 ≤P2, then
+{θ ∈Θ : R(θ) ≤R0, P(θ) ≤P1} ⊆{θ ∈Θ : R(θ) ≤R0, P(θ) ≤P2},
+so
+D⋆
+p(R0, P2) ≤D⋆
+p(R0, P1).
+This proves (iii). The final inequalities are the special case 0 ≤∞.
+Theorem 3 is tells us that we can not have efficiency together with good reconstruction and inter-
+pretability. The statement, however, is only qualitative. If we allow ourselves more strict modeling
+assumptions, then we can quantify how worse (less efficient) our rate should be to enforce monose-
+manticity together with good reconstruction.
+Theorem 4 (Rate tax for monosemanticity, formalization of Theorem 2). Fix a DGP with concepts
+c ∼pc satisfying Assumption 1, and a class Θ of width-m SAEs satisfying Assumption 4. Let
+D∞:= D⋆
+p(R ≤k, P = ∞) the optimal distortion achieved by an unrestricted (potentially)
+polysemantic SAE, and define
+ΘM(D∞) := {θ ∈Θ : θ monosemantic and D(θ) ≤D∞}.
+Assume that:
+(i) ΘM(D∞)̸ = ∅, with δ := maxθ∈ΘM(D∞) D(θ).
+(ii) for every monosemantic SAE θ, R(θ) ≤k =⇒D(θ) > D∞.
+Then every monosemantic θ ∈ΘM(D∞) satisfies
+R(θ) ≥Epc∥c∥0 −δ > k,
+with the first inequality strict if and only if D(θ) < δ.
+Intuition.
+We consider the optimal SAE of size m for reconstructing data from a DGP, given a rate
+budget k. If the optimal SAE can only be polysemantic, the theorem says the following:
+17
+
+
+===== PDF PAGE 18 =====
+
+If there is a monosemantic SAE that can achieve equal or better reconstruction on the
+same DGP, by necessity, it must be strictly less efficient, i.e. it must increase its rate.
+Moreover, given pc, we can quantify a lower bound of how bigger the rate needs to be.
+Proof. By Proposition 2, each θ ∈ΘM satisfies:
+D(θ) + R(θ) = Epc||c||0.
+(11)
+Hence, under monosemanticity constraints, minimizing the rate is equivalent to maximizing the
+attainable distortion subject to the strict cap D(θ) ≤D∞. Under Assumption 4, we can show that
+ΘM is a finite set. Moreover, given assumption (i), it is non-empty. Then, we can take the maximum
+over the set, such that δ = maxθ∈ΘM(D∞) D(θ) is well defined. Then, from Equation (11), δ
+minimizes the rate attainable by a monosemantic solution and that is still better than the polysemantic
+optimum. It follows that:
+R(θ) ≥Epc||c||0 −δ,
+θ ∈ΘM.
+It remains to prove that this lower bound is strictly larger than k. Suppose instead that E||c||0−δ ≤k.
+Then, there would exist a perfectly monosemantic SAE θ ∈ΘM with
+D(θ) ≤D∞
+and
+R(θ) ≤k.
+This contradicts the assumption (i). Therefore Epc||c||0 −δ > k.
+E.3
+Co-occurrence of events drives polysemanticity
+In the previous section, we formalize the existence of the RDP tradeoff from a qualitative (Theorem 3)
+and quantitative (Theorem 4) point of view. However, it is still unclear why monosemanticity
+necessarily degrades efficiency or reconstruction. Previous works analyse hedging and feature
+splitting phenomena, and provide empirical evidence that they are driven by positive correlation of
+events (i.e., concepts occurring together in a probabilistically dependent way). In this section we
+show that the assumptions of a data generating process behind the data allows to theoretically support
+these empirical claims. In particular, given Lemma 1 we can write the loss function of a TopK-SAE
+minimizing mean-squared error in closed form as a function of the probability of random events in
+the data generating process. This is exploited in the next example, which theoretically characterizes
+how polysemanticity emerges to minimize the loss (reconstruction error) under sparsity constraints.
+Example 1. Consider a data generating process x = P3
+ℓ=1 cℓvℓ, with parameters
+pS = P({cℓ= 1 : ℓ∈S} and {cℓ= 0 : ℓ̸ ∈S}), S ⊆{1, 2, 3}.
+Hence, we consider with three orthogonal ground-truth concepts, and each event S describes their
+co-occurrence in x(S). To be in the narrow regime, we consider SAE with a dictionary size m = 2.
+To upperbound the rate, we assume TopK activation with K ∈{1, 2}. In particular
+(i) A monosemantic SAE θij
+M consists of two monosemantic atoms which write vi when ci = 1, and
+vj when cj = 1.
+(ii) An hedged SAE θij,k
+H
+consists of two atoms, one writing vi + vj when ci = 1 ∧cj = 1, and a
+monosemantic atom writing vk when ck = 1.
+(iii) A feature splitting SAE θij,i
+S
+consists of a first atom writing vi + vj when ci = 1 ∧cj = 1 and a
+second atom writing vi when ci = 1 ∧cj = 0.
+Let L(θ) be the mean squared reconstruction error achieved by an SAE θ. For a polysemantic solution
+θP to be better than a monosemantic θM, we need to find the set of DGP parameters c ∼pc such that
+L(θM) −L(θP ) > 0.
+Consider Assumptions 1-4 satisfied. Then, by Lemma 1, we can compute the mean squared recon-
+struction error in closed form, which allows verifying when hedging and splitting phenomena are
+convenient with respect to monosemantic SAEs.
+18
+
+
+===== PDF PAGE 19 =====
+K=2.
+Consider the case where the best monosemantic SAE encodes features vj, vk, j̸ = k. Then,
+we can provide necessary and sufficient conditions for hedging and splitting to occur, comparing
+the distortion achieved by hedged and feature-splitted SAEs. Given K = 2 in TopK activations, the
+following hold:
+L(θjk
+M) −L(θij,k
+H ) > 0 ⇐⇒pij + pijk > pj + pjk.
+L(θjk
+M) −L(θjk,i
+H ) > 0 ⇐⇒pi + pijk > pj + pk
+L(θjk
+M) −L(θij,i
+S ) > 0 ⇐⇒pi + pij > pj + pk + 2pjk
+L(θjk
+M) −L(θij,j
+S
+) > 0 ⇐⇒pij > pk + pik + pjk
+Clearly, given that indices are silent, all the above similarly holds if we swap j and k. The remaining
+hedged and splitted solutions that we do not explicitly compare are never better than the monosemantic
+ones.
+
+A polysemantic atom writing vi + vj (either via hedging or splitting) is convenient
+when the probabilities pij and pijk of co-occurrence of vi and vj in the data generating
+process are big with respect to the probability of other co-occurring concepts.
+This is the single most imporant outcome of the section, which generalizes to arbitrary size DGP and
+narrow SAEs: polysemantically merging features is convenient whenever they sufficiently co-occur in
+the groundtruth data generating process.
+K=1.
+We now consider K = 1 upperbounding the rate via TopK activations. Similarly to the above
+case, we assume that the best monosemantic SAE encodes features vj, vk, j̸ = k. Then, we can
+characterize the sufficient and necessary conditions for hedging or splitting to occur, specifying when
+L(θij
+M) −L(θ) > 0 for a polysemantic solution θ.
+L(θjk
+M) −L(θij,k
+H ) > 0 ⇐⇒pij + pijk > pj
+L(θjk
+M) −L(θjk,i
+H ) > 0 ⇐⇒pi + pjk + pijk > pj + pk
+L(θjk
+M) −L(θij,i
+S ) > 0 ⇐⇒pi + pij + pijk > pj + pk + pjk
+L(θjk
+M) −L(θij,j
+S
+) > 0 ⇐⇒pij + pijk > pk + pik
+L(θjk
+M) −L(θjk,j
+S
+) > 0 ⇐⇒pjk + pijk > pk + pik
+As for K = 2, merging vi and vj in one atom writing vi +vj when both concepts occur is convenient
+when pij + pijk probability of co-occurrence is high enough. A similar reasoning shows that merging
+vj, vk is convenient when they co-occurr frequently enough.
+Intuition.
+The example above tells that, for the three variable setting we considered, we can provide
+a closed-form characterization of when polysemanticity arise. In particular:
+
+Polysemanticity predictably arise to exploit co-occurrences between features that can
+not be captured by monosemantic SAEs, in order to comply to rate constraints (as, e.g.,
+in TopK-SAEs; ReLU-SAEs) while minimizing the distortion.
+This is a key, novel message of our paper. Previous work, only empirically showed the emergence
+of polysemantic phenomena (splitting and hedging), and explained them via correlation. Instead,
+we move from an empirical to a theoretical characterization, and show that polysemanticity is the
+result of co-occurrence of features, rather than correlation: in other words, we only care that the
+probability P(ci = 1, cj = 1) is high, rather than about positive correlation of ci, cj. The theoretical
+characterization is the result of a formalization of a data generating process, which is implicit in all
+toy models in the literature, yet never formalzied and hence exploited. Moreover, previous works
+were limited in their conclusion: they showed that splitting and hedging where the result exclusively
+19
+
+
+===== PDF PAGE 20 =====
+the result of the rate constraints (splitting) or the need of minimizing distortion (hedging), and that
+splitting phenomena where limited to wide SAE. Our theoretical results suggest something different:
+• Both splitting and hedging can emerge in narrow SAE.
+• Both splitting and hedging are the result of the joint need of minimizing the distortion under
+rate constraints.
+E.4
+Tiedness of monosemantic SAEs is without loss of generality
+The next proposition shows that, in the present orthogonal toy model, every deterministic perfectly
+monosemantic SAE is weakly dominated by a tied one, so that Assumption 3 of Wenc = W ⊤
+dec in
+monosemantic SAEs is without loss of generality.
+Proposition 1 (Tiedness is without loss of generality at P(θ) = 0). Let Assumption 1 (orthogonality)
+and Assumption 4 (SAE atoms are binary combinations of groundtruth concepts) satisfied. Let θ be
+a deterministic width-m SAE with P(θ) = 0. Then there exists a tied deterministic width-m SAE ˜θ
+such that
+P(˜θ) = 0,
+R(˜θ) ≤R(θ),
+D(˜θ) ≤D(θ).
+Consequently, the infimum in R⋆(D0, 0) may be restricted, without loss of optimality, to tied monose-
+mantic SAEs.
+Proof. Since P(θ) = 0 and Assumption 4 holds, each nonzero latent of θ reconstructs exactly
+one ground-truth concept. Therefore, for each latent r ∈{1, . . . , m}, there is a unique index
+ℓ(r) ∈{1, . . . , n} such that latent r, when active, contributes the vector vℓ(r) to the reconstruction.
+Writing the latent activity on input x(S) as ar(S) ∈{0, 1}, we may write
+ˆxθ(S) =
+m
+X
+r=1
+ar(S) vℓ(r).
+By Assumption 1, x uniquely determines S, so this notation is well defined.
+Now define a modified SAE θ′ by suppressing every latent activation that reconstructs a concept not
+present in the input:
+a′
+r(S) := ar(S)1{ℓ(r) ∈S}.
+Then
+ˆxθ′(S) =
+m
+X
+r=1
+a′
+r(S) vℓ(r).
+Since a′
+r(S) ≤ar(S) for every r and S, we have
+R(θ′) ≤R(θ).
+Moreover, if ℓ(r) /∈S, then the term ar(S)vℓ(r) adds to the reconstruction a direction orthogonal to
+x(S). Removing such a term cannot increase the squared reconstruction error. Hence
+D(θ′) ≤D(θ).
+Let the set I collects the ground-truth concepts that are reconstructed by at least one latent of θ′.
+Formally,
+I := {ℓ(r) : 1 ≤r ≤m}.
+For each ℓ∈I, let bℓ(S) ∈{0, 1} indicate whether, on input x(S), at least one latent of θ′ assigned
+to concept ℓis active:
+bℓ(S) := 1{∃r such that ℓ(r) = ℓand a′
+r(S) = 1}.
+Now define ˜θ by assigning one latent to each ℓ∈I, with reconstruction
+ˆx˜θ(S) =
+X
+ℓ∈I
+bℓ(S) vℓ,
+and, if |I| < m, adding m −|I| identically zero latents. By construction, ˜θ is tied and P(˜θ) = 0.
+20
+
+
+===== PDF PAGE 21 =====
+To compare ˜θ and θ′, fix S and ℓ∈I, and let mℓ(S) denote how many active latents of θ′ reconstruct
+concept ℓon input x(S):
+mℓ(S) :=
+X
+r:ℓ(r)=ℓ
+a′
+r(S).
+Then the coefficient of vℓin ˆxθ′(S) is mℓ(S), whereas the coefficient of vℓin ˆx˜θ(S) is bℓ(S) =
+1{mℓ(S) ≥1}. Since a′
+r(S) = 0 whenever ℓ(r) /∈S, we have mℓ(S) = 0 if cℓ= 0. Hence
+ cℓ−bℓ(S)
+2 ≤
+ cℓ−mℓ(S)
+2.
+Summing over ℓand using Assumption 1 gives
+D(˜θ) ≤D(θ′).
+Moreover, for every S,
+X
+ℓ∈I
+bℓ(S) ≤
+m
+X
+r=1
+a′
+r(S),
+so
+R(˜θ) ≤R(θ′).
+Since already D(θ′) ≤D(θ) and R(θ′) ≤R(θ), we conclude
+D(˜θ) ≤D(θ),
+R(˜θ) ≤R(θ).
+This proves the claim.
+E.5
+Exact geometry of the perfectly monosemantic frontier
+We now characterize R⋆(D0, 0) exactly in the orthogonal toy model. By Proposition 1, it suffices to
+consider tied monosemantic SAEs. For such codes, the SAE may reconstruct only concepts in a fixed
+set I ⊆{1, . . . , n}, and for each sample with active set S it outputs some ˆSθ ⊆S ∩I.
+Proposition 2 (Exact rate-distortion identity for a fixed represented set). Assume 1 and 4. Fix
+I ⊆{1, . . . , n} with |I| = m, and let θ be a tied monosemantic width-m SAE such that ˆSθ ⊆S ∩I
+for every sample x(S). Then
+D(θ) + R(θ) = Epc∥c∥0.
+Moreover,
+D(θ) ≥
+X
+ℓ/∈I
+P(cℓ= 1),
+with equality if and only if ˆSθ = S ∩I almost surely.
+Proof. For a sample with active set S,
+x =
+X
+ℓ∈S
+vℓ,
+ˆxθ =
+X
+ℓ∈ˆSθ
+vℓ,
+with ˆSθ ⊆S ∩I. Since Assumption 1 gives orthonormal concept directions,
+∥x −ˆxθ∥2
+2 =
+X
+ℓ/∈I
+cℓ+
+X
+ℓ∈I
+ cℓ−1{ℓ∈ˆSθ}
+2.
+Because 1{ℓ∈ˆSθ} ≤cℓand both terms are binary,
+ cℓ−1{ℓ∈ˆSθ}
+2 = cℓ−1{ℓ∈ˆSθ}.
+Hence
+∥x −ˆxθ∥2
+2 =
+n
+X
+ℓ=1
+cℓ−
+n
+X
+ℓ=1
+1{ℓ∈ˆSθ} = ∥c∥0 −| ˆSθ|.
+Taking expectation and using R(θ) = Epc| ˆSθ| gives
+D(θ) = Epc∥c∥0 −R(θ).
+The lower bound follows because every omitted concept ℓ/∈I contributes one unit of distortion
+whenever cℓ= 1. Equality holds if and only if the SAE reconstructs every active represented concept,
+namely ˆSθ = S ∩I almost surely.
+21
+
+
+===== PDF PAGE 22 =====
+Theorem 5 (Exact P(θ) = 0 frontier). Assume 1 and 4. Then
+R⋆(D0, 0) =
+
+
+
+
+
++∞,
+D0 <
+min
+I⊆{1,...,n}
+|I|=m
+X
+ℓ/∈I
+P(cℓ= 1),
+Epc∥c∥0 −max{D(θ) : θ ∈Θ, P(θ) = 0, D(θ) ≤D0},
+otherwise.
+In particular, the perfectly monosemantic frontier is a staircase rather than a line.
+Proof. By Proposition 1, the infimum defining R⋆(D0, 0) may be restricted to tied monosemantic
+SAEs, and by the clipping step in the proof of Proposition 1 we may further restrict to omission codes
+satisfying ˆSθ ⊆S. For every such code, Proposition 2 gives
+R(θ) = Epc∥c∥0 −D(θ).
+Therefore minimizing the rate under the constraint D(θ) ≤D0 is equivalent to maximizing the
+attainable monosemantic distortion under the same cap, which yields the second line.
+For the first line, if θ represents the set I, Proposition 2 implies
+D(θ) ≥
+X
+ℓ/∈I
+P(cℓ= 1).
+Hence no perfectly monosemantic width-m SAE is feasible below
+min
+I⊆{1,...,n}
+|I|=m
+X
+ℓ/∈I
+P(cℓ= 1).
+Finally, under Assumption 4, the set of attainable monosemantic distortions is finite, so the maximizer
+above changes only at finitely many values of D0. Thus D0 7→R⋆(D0, 0) is piecewise constant,
+namely a staircase.
+22

@@ -1,0 +1,218 @@
+[
+  {
+    "p": 0.05,
+    "initialization_seed": 0,
+    "mean_most_negative_cosine": -0.9999882938077818,
+    "max_most_negative_cosine": -0.9999702769652736,
+    "max_absolute_nonpartner_cosine": 0.01784552372908575,
+    "partners": [
+      4,
+      2,
+      1,
+      7,
+      0,
+      6,
+      5,
+      3
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.05,
+    "initialization_seed": 1,
+    "mean_most_negative_cosine": -0.9999887738444297,
+    "max_most_negative_cosine": -0.9999747062035523,
+    "max_absolute_nonpartner_cosine": 0.010874458600557562,
+    "partners": [
+      2,
+      6,
+      0,
+      4,
+      3,
+      7,
+      1,
+      5
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.05,
+    "initialization_seed": 2,
+    "mean_most_negative_cosine": -0.9999938290661798,
+    "max_most_negative_cosine": -0.9999872160058038,
+    "max_absolute_nonpartner_cosine": 0.004700876800461942,
+    "partners": [
+      2,
+      4,
+      0,
+      7,
+      1,
+      6,
+      5,
+      3
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.15,
+    "initialization_seed": 0,
+    "mean_most_negative_cosine": -0.9999916842451974,
+    "max_most_negative_cosine": -0.9999809882010375,
+    "max_absolute_nonpartner_cosine": 0.03515810257094578,
+    "partners": [
+      4,
+      2,
+      1,
+      7,
+      0,
+      6,
+      5,
+      3
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.15,
+    "initialization_seed": 1,
+    "mean_most_negative_cosine": -0.9999953021235091,
+    "max_most_negative_cosine": -0.9999893507474981,
+    "max_absolute_nonpartner_cosine": 0.015376472324340225,
+    "partners": [
+      2,
+      6,
+      0,
+      4,
+      3,
+      7,
+      1,
+      5
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.15,
+    "initialization_seed": 2,
+    "mean_most_negative_cosine": -0.9999980511412865,
+    "max_most_negative_cosine": -0.9999968759238667,
+    "max_absolute_nonpartner_cosine": 0.015151735297251495,
+    "partners": [
+      2,
+      4,
+      0,
+      7,
+      1,
+      6,
+      5,
+      3
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.3,
+    "initialization_seed": 0,
+    "mean_most_negative_cosine": -0.9999887933458331,
+    "max_most_negative_cosine": -0.9999755396875104,
+    "max_absolute_nonpartner_cosine": 0.056521252206914036,
+    "partners": [
+      3,
+      5,
+      6,
+      0,
+      7,
+      1,
+      2,
+      4
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.3,
+    "initialization_seed": 1,
+    "mean_most_negative_cosine": -0.9999998570684243,
+    "max_most_negative_cosine": -0.9999997751230236,
+    "max_absolute_nonpartner_cosine": 0.02581669616435044,
+    "partners": [
+      5,
+      4,
+      7,
+      6,
+      1,
+      0,
+      3,
+      2
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.3,
+    "initialization_seed": 2,
+    "mean_most_negative_cosine": -0.9999997313831804,
+    "max_most_negative_cosine": -0.9999989480155255,
+    "max_absolute_nonpartner_cosine": 0.02531728110500136,
+    "partners": [
+      3,
+      4,
+      5,
+      0,
+      1,
+      2,
+      7,
+      6
+    ],
+    "all_partners_mutual": true
+  },
+  {
+    "p": 0.5,
+    "initialization_seed": 0,
+    "mean_most_negative_cosine": -0.5367276554969478,
+    "max_most_negative_cosine": -0.2701275587457397,
+    "max_absolute_nonpartner_cosine": 0.6785314350043755,
+    "partners": [
+      4,
+      6,
+      1,
+      4,
+      0,
+      0,
+      1,
+      6
+    ],
+    "all_partners_mutual": false
+  },
+  {
+    "p": 0.5,
+    "initialization_seed": 1,
+    "mean_most_negative_cosine": -0.5629403601246803,
+    "max_most_negative_cosine": -0.36233107426201333,
+    "max_absolute_nonpartner_cosine": 0.8462872676428635,
+    "partners": [
+      7,
+      2,
+      1,
+      4,
+      1,
+      4,
+      5,
+      0
+    ],
+    "all_partners_mutual": false
+  },
+  {
+    "p": 0.5,
+    "initialization_seed": 2,
+    "mean_most_negative_cosine": -0.3581644557503224,
+    "max_most_negative_cosine": 0.12774547994400373,
+    "max_absolute_nonpartner_cosine": 0.7617868377588441,
+    "partners": [
+      4,
+      3,
+      1,
+      7,
+      0,
+      7,
+      7,
+      5
+    ],
+    "all_partners_mutual": false
+  }
+]

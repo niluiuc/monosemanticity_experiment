@@ -1,0 +1,67 @@
+[
+  {
+    "key": "garg2026",
+    "arxiv_id": "2602.11246",
+    "accessed_utc": "2026-10-06T00:56:10.224156+00:00",
+    "metadata": {
+      "citation_title": "How Many Features Can a Language Model Store Under the Linear Representation Hypothesis?",
+      "citation_author": "Peng, Kenny",
+      "citation_date": "2026/02/11",
+      "citation_online_date": "2026/02/11",
+      "citation_pdf_url": "https://arxiv.org/pdf/2602.11246",
+      "citation_arxiv_id": "2602.11246",
+      "citation_abstract": "We introduce a mathematical framework for the linear representation hypothesis (LRH), which asserts that intermediate layers of language models store features linearly. We separate the hypothesis into two claims: linear representation (features are linearly embedded in neuron activations) and linear accessibility (features can be linearly decoded). We then ask: How many neurons $d$ suffice to both linearly represent and linearly access $m$ features? Classical results in compressed sensing imply that for $k$-sparse inputs, $d = O(k\\log (m/k))$ suffices if we allow non-linear decoding algorithms (Candes and Tao, 2006; Candes et al., 2006; Donoho, 2006). However, the additional requirement of linear decoding takes the problem out of the classical compressed sensing, into linear compressed sensing. Our main theoretical result establishes nearly-matching upper and lower bounds for linear compressed sensing. We prove that $d = \\Omega_\\epsilon(\\frac{k^2}{\\log k}\\log (m/k))$ is required while $d = O_\\epsilon(k^2\\log m)$ suffices. The lower bound establishes a quantitative gap between classical and linear compressed setting, illustrating how linear accessibility is a meaningfully stronger hypothesis than linear representation alone. The upper bound confirms that neurons can store an exponential number of features under the LRH, giving theoretical evidence for the \"superposition hypothesis\" (Elhage et al., 2022). The upper bound proof uses standard random constructions of matrices with approximately orthogonal columns. The lower bound proof uses rank bounds for near-identity matrices (Alon, 2003) together with Tur\\'an's theorem (bounding the number of edges in clique-free graphs). We also show how our results do and do not constrain the geometry of feature representations and extend our results to allow decoders with an activation function and bias."
+    },
+    "submission_history": "Submission history From: Kenny Peng [ view email ] [v1] Wed, 11 Feb 2026 17:49:32 UTC (20 KB)",
+    "abstract_url": "https://arxiv.org/abs/2602.11246",
+    "pdf_url": "https://arxiv.org/pdf/2602.11246",
+    "pages": 20,
+    "pdf_bytes": 411772,
+    "pdf_sha256": "48862585bc9f333ea63921d4dacd5556152cfefc8746bd592c869f31f875c000",
+    "errors": []
+  },
+  {
+    "key": "hd2020",
+    "arxiv_id": "2010.07426",
+    "accessed_utc": "2026-10-06T00:56:10.225157+00:00",
+    "metadata": {
+      "citation_title": "A Theoretical Perspective on Hyperdimensional Computing",
+      "citation_author": "Rosing, Tajana",
+      "citation_journal_title": "Journal of Artificial Intelligence Research",
+      "citation_publication_date": "2021",
+      "citation_doi": "10.1613/jair.1.12664",
+      "citation_online_date": "2022/02/17",
+      "citation_pdf_url": "https://arxiv.org/pdf/2010.07426",
+      "citation_arxiv_id": "2010.07426",
+      "citation_abstract": "Hyperdimensional (HD) computing is a set of neurally inspired methods for obtaining high-dimensional, low-precision, distributed representations of data. These representations can be combined with simple, neurally plausible algorithms to effect a variety of information processing tasks. HD computing has recently garnered significant interest from the computer hardware community as an energy-efficient, low-latency, and noise-robust tool for solving learning problems. In this review, we present a unified treatment of the theoretical foundations of HD computing with a focus on the suitability of representations for learning."
+    },
+    "submission_history": "Submission history From: Anthony Thomas [ view email ] [v1] Wed, 14 Oct 2020 22:39:11 UTC (55 KB) [v2] Tue, 15 Dec 2020 17:19:09 UTC (56 KB) [v3] Thu, 17 Feb 2022 23:29:29 UTC (49 KB)",
+    "abstract_url": "https://arxiv.org/abs/2010.07426",
+    "pdf_url": "https://arxiv.org/pdf/2010.07426",
+    "pages": 36,
+    "pdf_bytes": 303774,
+    "pdf_sha256": "5a52ac98b9d5cb7db464e7ff26e5da8e850ca2a90b45fd8c24c19f1dba1aadbc",
+    "errors": []
+  },
+  {
+    "key": "pertl2025",
+    "arxiv_id": "2509.00928",
+    "accessed_utc": "2026-10-06T00:56:10.224156+00:00",
+    "metadata": {
+      "citation_title": "Superposition in Graph Neural Networks",
+      "citation_author": "Li\u00f2, Pietro",
+      "citation_date": "2025/08/31",
+      "citation_online_date": "2026/01/15",
+      "citation_pdf_url": "https://arxiv.org/pdf/2509.00928",
+      "citation_arxiv_id": "2509.00928",
+      "citation_abstract": "Interpreting graph neural networks (GNNs) is difficult because message passing mixes signals and internal channels rarely align with human concepts. We study superposition, the sharing of directions by multiple features, directly in the latent space of GNNs. Using controlled experiments with unambiguous graph concepts, we extract features as (i) class-conditional centroids at the graph level and (ii) linear-probe directions at the node level, and then analyze their geometry with simple basis-invariant diagnostics. Across GCN/GIN/GAT we find: increasing width produces a phase pattern in overlap; topology imprints overlap onto node-level features that pooling partially remixes into task-aligned graph axes; sharper pooling increases axis alignment and reduces channel sharing; and shallow models can settle into metastable low-rank embeddings. These results connect representational geometry with concrete design choices (width, pooling, and final-layer activations) and suggest practical approaches for more interpretable GNNs."
+    },
+    "submission_history": "Submission history From: Han Xuanyuan [ view email ] [v1] Sun, 31 Aug 2025 16:43:29 UTC (911 KB) [v2] Thu, 15 Jan 2026 21:25:52 UTC (914 KB)",
+    "abstract_url": "https://arxiv.org/abs/2509.00928",
+    "pdf_url": "https://arxiv.org/pdf/2509.00928",
+    "pages": 20,
+    "pdf_bytes": 1410343,
+    "pdf_sha256": "874ab6ffbc6b45f91c0d100af7900ab8f1c9dd994b7c0df9d2385d02669834f5",
+    "errors": []
+  }
+]

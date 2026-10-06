@@ -1,0 +1,182 @@
+[
+  {
+    "finite_candidates": [
+      -0.9855953693596107,
+      -0.49979823781953264,
+      -0.485797131540078,
+      -0.0,
+      0.0028809261280778715
+    ],
+    "candidate_losses": [
+      0.20000000000000004,
+      0.1705761835972965,
+      0.17003943707186558,
+      0.08228075868894298,
+      0.08227245895358752
+    ],
+    "tied_finite_minimizers": [
+      0.0028809261280778715
+    ],
+    "tie_tolerance": 1e-12,
+    "all_off_plateau_tied": false,
+    "all_off_plateau_upper": -0.9855953693596107,
+    "all_off_plateau_loss": 0.20000000000000004,
+    "intervals": [
+      {
+        "lower": -Infinity,
+        "upper": -0.9855953693596107,
+        "active": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "quadratic_A": 0.0,
+        "linear_half_B": 0.0,
+        "stationary": null
+      },
+      {
+        "lower": -0.9855953693596107,
+        "upper": -0.49979823781953264,
+        "active": [
+          false,
+          false,
+          false,
+          true
+        ],
+        "quadratic_A": 0.04000000000000001,
+        "linear_half_B": -0.0005761852256155732,
+        "stationary": 0.014404630640389328
+      },
+      {
+        "lower": -0.49979823781953264,
+        "upper": -0.485797131540078,
+        "active": [
+          false,
+          true,
+          false,
+          true
+        ],
+        "quadratic_A": 0.20000000000000004,
+        "linear_half_B": 0.07939153282550966,
+        "stationary": -0.39695766412754824
+      },
+      {
+        "lower": -0.485797131540078,
+        "upper": -0.0,
+        "active": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 0.3600000000000001,
+        "linear_half_B": -0.002880926128077872,
+        "stationary": 0.008002572577994086
+      },
+      {
+        "lower": -0.0,
+        "upper": Infinity,
+        "active": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 1.0000000000000002,
+        "linear_half_B": -0.002880926128077872,
+        "stationary": 0.0028809261280778715
+      }
+    ]
+  },
+  {
+    "finite_candidates": [
+      -1.0140011062794545,
+      -0.5142028684599219,
+      -0.49979823781953264,
+      -0.007778392377474738,
+      -0.0
+    ],
+    "candidate_losses": [
+      0.20000000000000004,
+      0.17000807211553784,
+      0.16486367125699994,
+      0.07771360106582237,
+      0.07773538228549444
+    ],
+    "tied_finite_minimizers": [
+      -0.007778392377474738
+    ],
+    "tie_tolerance": 1e-12,
+    "all_off_plateau_tied": false,
+    "all_off_plateau_upper": -1.0140011062794545,
+    "all_off_plateau_loss": 0.20000000000000004,
+    "intervals": [
+      {
+        "lower": -Infinity,
+        "upper": -1.0140011062794545,
+        "active": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "quadratic_A": 0.0,
+        "linear_half_B": 0.0,
+        "stationary": null
+      },
+      {
+        "lower": -1.0140011062794545,
+        "upper": -0.5142028684599219,
+        "active": [
+          false,
+          false,
+          false,
+          true
+        ],
+        "quadratic_A": 0.04000000000000001,
+        "linear_half_B": 0.0005600442511781801,
+        "stationary": -0.0140011062794545
+      },
+      {
+        "lower": -0.5142028684599219,
+        "upper": -0.49979823781953264,
+        "active": [
+          false,
+          true,
+          false,
+          true
+        ],
+        "quadratic_A": 0.20000000000000004,
+        "linear_half_B": -0.07716749679523432,
+        "stationary": 0.38583748397617157
+      },
+      {
+        "lower": -0.49979823781953264,
+        "upper": -0.0,
+        "active": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 0.3600000000000001,
+        "linear_half_B": 0.0028002212558909064,
+        "stationary": -0.007778392377474738
+      },
+      {
+        "lower": -0.0,
+        "upper": Infinity,
+        "active": [
+          true,
+          true,
+          true,
+          true
+        ],
+        "quadratic_A": 1.0000000000000002,
+        "linear_half_B": 0.0028002212558909064,
+        "stationary": -0.002800221255890906
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "gradient_relative_difference": 1.3556281627307646e-10,
+  "gradient_minimum_distance_to_relu_kink": 0.016221235194415616,
+  "pair_closed_vs_enumerated_max_difference": 1.1102230246251565e-16,
+  "general_bound_max_exact_minus_bound": -0.27142125909277026,
+  "mono_loss": 0.5100000000000002,
+  "mono_expected_loss": 0.51,
+  "zero_column_errors": [
+    0.14999999999999977,
+    0.14999999999999974,
+    0.15000000000000027,
+    0.15000000000000024
+  ]
+}

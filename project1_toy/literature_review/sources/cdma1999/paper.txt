@@ -1,0 +1,1930 @@
+
+
+===== PDF PAGE 1 =====
+1968
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+Optimal Sequences, Power Control, and User
+Capacity of Synchronous CDMA Systems
+with Linear MMSE Multiuser Receivers
+Pramod Viswanath, Student Member, IEEE, Venkat Anantharam, Fellow, IEEE,
+and David N. C. Tse, Member, IEEE
+Abstract—There has been intense effort in the past decade to
+develop multiuser receiver structures which mitigate interference
+between users in spread-spectrum systems. While much of this
+research is performed at the physical layer, the appropriate
+power control and choice of signature sequences in conjunction
+with multiuser receivers and the resulting network user capacity
+is not well understood. In this paper we will focus on a single cell
+and consider both the uplink and downlink scenarios and assume
+a synchronous CDMA (S-CDMA) system. We characterize the
+user capacity of a single cell with the optimal linear receiver
+(MMSE receiver). The user capacity of the system is the maximum
+number of users per unit processing gain admissible in the system
+such that each user has its quality-of-service (QoS) requirement
+(expressed in terms of its desired signal-to-interference ratio)
+met. Our characterization allows us to describe the user capacity
+through a simple effective bandwidth characterization: Users are
+allowed in the system if and only if the sum of their effective
+bandwidths is less than the processing gain of the system. The
+effective bandwidth of each user is a simple monotonic function of
+its QoS requirement. We identify the optimal signature sequences
+and power control strategies so that the users meet their QoS
+requirement. The optimality is in the sense of minimizing the sum
+of allocated powers. It turns out that with this optimal allocation
+of signature sequences and powers, the linear MMSE receiver
+is just the corresponding matched ﬁlter for each user. We also
+characterize the effect of transmit power constraints on the user
+capacity.
+Index Terms—CDMA, linear MMSE receivers, power control,
+user capacity, WBE sequences.
+I. INTRODUCTION
+A
+central problem in the design of wireless networks is how
+to use the limited resources such as bandwidth and power
+most efﬁciently in order to meet the quality-of-service require-
+ments of applications in terms of bit rate and loss. To meet
+these challenges, there have been intense effort to develop
+more sophisticated physical layer communication techniques.
+Manuscript received February 1, 1998; revised April 11, 1999. The work
+of P. Viswanath and V. Anantharam was supported by the National Science
+Foundation under Grants NCR 94-22513 and IRI 95-05561. The work of
+D. N. C. Tse was supported by the Air Force Ofﬁce of Scientiﬁc Research
+under Grant F49620-96-1-0199, and by an NSF CAREER Award under
+Grant NCR-9734090. The material in this paper was presented in part at
+the IEEE International Symposium on Information Theory, MIT, Cambridge,
+MA, August 16–21, 1998.
+The authors are with the Electrical Engineering and Computer Science
+Department, University of California at Berkeley, Berkeley, CA 94720 USA
+(e-mail: {pvi, ananth, dtse}@eecs.berkeley.edu).
+Communicated by M. L. Honig, Associate Editor for Communications.
+Publisher Item Identiﬁer S 0018-9448(99)05880-0.
+A signiﬁcant thrust of work has been on developing multiuser
+receiver structures which mitigate the interference between
+users in spread-spectrum systems. (See, for example, [21], [8],
+[9], [26], [10], [14], and [15].)
+In this paper, we focus on a synchronous power-controlled
+CDMA system with multiuser receivers. The processing gain
+represents the degrees of freedom in the system. We assume
+that at the receiver, each user is demodulated using a linear
+receiver structure; in particular, we shall focus on the “linear
+minimum mean-square error (MMSE) receiver” (formally de-
+ﬁned in Section II; also see [10]). We are interested in the
+user capacity of both the uplink (mobiles to base station)
+and the downlink (base station to mobiles) of this system
+equipped with linear MMSE multiuser receiver. We say that a
+set of users is admissible in the uplink system with processing
+gain
+if one can allot signature sequences to the users and
+control their received power such that the achieved signal-
+to-interference (SIR) of each user is greater than its SIR
+requirement. We are interested in the problem of characterizing
+the maximum number of users per degree of freedom, called
+the user capacity of the uplink system. Analogous deﬁnitions
+of admissibility and user capacity can be made for the down-
+link. For the most part, in this paper we shall focus on the
+uplink (the downlink scenario turns out to be very similar and
+we brieﬂy summarize the results) and our main results are as
+follows.
+1)
+users with SIR requirements
+are admis-
+sible in the system with processing gain
+if and only
+if
+This allows us to characterize the admissibility of users
+via a notion of effective bandwidth. If we consider
+as the effective bandwidth of a user with SIR
+requirement
+, then users are admissible if and only
+if the sum of their effective bandwidths is less than the
+processing gain of the system.
+2) Our proof of the admissibility of users with SIR re-
+quirements
+is constructive in nature, i.e., we
+explicitly allocate powers and signature sequences so
+that users’ SIR requirements are met (such allocations
+are called valid). Among the class of valid allocations,
+0018–9448/99$10.00 1999 IEEE
+
+
+===== PDF PAGE 2 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1969
+we identify the optimal allocation, optimal in the sense
+of minimizing the sum of allocated powers. The optimal
+allocation has the following structure.
+a) A user is said to be oversized if the user’s ef-
+fective bandwidth is large relative to the effective
+bandwidths of the other users. Oversized users are
+allocated orthogonal signature sequences (hence in-
+dependent channels) and powers proportional to their
+SIR requirements.
+b) Nonoversized users are allocated sequences that
+we denote generalized Welch-bound-equality (WBE)
+sequences. These users are allocated powers propor-
+tional to their effective bandwidth.
+3) With this allocation of signature sequences and powers,
+the MMSE linear receiver simpliﬁes (somewhat unex-
+pectedly) to the matched ﬁlter for each user. Thus the
+user capacity of a system using the a priori inferior
+matched ﬁlter receiver is the same as that of the system
+using MMSE linear receiver.
+4) In the special case when the SIR requirements of all the
+users are equal (to, say,
+), our main result simpliﬁes
+to the following:
+users are admissible in the system
+with processing gain
+if and only if
+Using the optimality (in the sense of minimizing sum of
+allocated powers) of the allocation scheme, we identify
+the precise loss in the admissibility of number of users
+as a function of the background noise power and the
+average received power constraint.
+In [17], the authors consider the scenario when the signature
+sequences of the users are independent and randomly chosen.
+They show that the SIR of the users of a large system (with
+a large number of users and large processing gain) converges
+(in probability) and analyze the user capacity of the system
+based on the value to which the SIR converges. It is interesting
+to compare the performance of that system with the one
+considered here when the sequences are optimally chosen.
+1) Under the MMSE receiver, the user capacity of a system
+using random sequences is asymptotically identical to
+that of a system with optimally chosen sequences. This
+holds when there are no transmit power constraints, or
+equivalently, when the background noise power is low.
+We will provide an explanation for this phenomenon.
+2) Under the conventional matched-ﬁlter receiver, a system
+using random sequences admits one user per degree
+of freedom less than when the sequences are opti-
+mally chosen. This shows that while the MMSE and
+the matched-ﬁlter receivers have the same performance
+when the sequences are optimally chosen, the MMSE
+receiver is much more robust to the choice of spreading
+sequences.
+3) Under transmit power constraints, systems employing
+random sequences admit strictly fewer users than the
+corresponding systems with optimal sequences. We
+quantify precisely the gap in performance.
+In related work, there has been a great deal of research
+studying the problem of power control of the users for con-
+ventional CDMA systems. Distributed iterative algorithms
+that achieve power control of the users are discussed in, for
+example, [4] and [6]. These ideas were extended subsequently
+to systems with MMSE receivers [18], [7], but they focused
+on deriving convergent power control algorithms rather than
+analyzing the achievable user capacity. The problem of iden-
+tifying good signature sequences has been studied in [12] in
+the context of a spread-spectrum system with conventional
+matched ﬁlter receiver and equal received power for all users.
+In [13], for equal received powers, the problem addressed
+in an information-theoretic setting is to identify signature
+sequences for which the sum capacity, the sum of rates of
+all the users at which reliable communication can take place,
+is maximized. To achieve sum capacity joint processing of
+the users is required (for example, MMSE receivers with
+successive cancellation; see [20]) while in this paper we
+restrict ourselves to single-user demodulators. Though the
+problem addressed in [13] is thus different from the problem
+addressed in this paper, the optimal sequences turn out to
+be identical. This statement is true even for the situation of
+unequal received powers, as shown in recent work [23].
+An important special case subsumed by our framework is
+when the signature sequences are constrained to be chosen
+from an orthogonal sequence set. This corresponds to dividing
+the entire bandwidth into frequency slots (or channels), i.e.,
+a joint FDMA/CDMA system. In this case, the receiver is
+trivial and both MMSE and matched-ﬁlter receiver structures
+coincide. Our main result in this framework is as follows:
+users each with SIR requirement
+are admissible in the
+system with processing gain
+if and only if
+.
+We observe that the maximum number of users admissible
+per unit processing gain differs from the earlier results by an
+integer part. Thus we identify the gain by using nonorthogonal
+codes and multiuser linear receivers; the difference depends on
+the factor
+and the processing gain
+. In the scenario when
+users are differentiated by their SIR requirement, we identify
+the user capacity of the system.
+This paper is organized as follows: In Section II, we give a
+precise deﬁnition of the uplink model and of the admissibility
+of the users. User capacity of the uplink system with linear
+MMSE receivers for the situation of equal SIR requirements
+of the users is identiﬁed in Section III. In a physical system, the
+power transmitted by a user is constrained naturally. In Section
+IV, we demonstrate the optimality of a particular allocation
+scheme (developed in Section III) in the sense of minimizing
+the sum of allocated powers. This allows us to precisely
+quantify the loss in user capacity of the system with a received
+power constraint. Section V completely generalizes the results
+of Sections III and IV to the situation when users have
+different SIR requirements. In Section VI, we will focus on
+the downlink. We can ask our admissibility and user capacity
+region questions in this setup too. As can be expected, there is
+a lot of connection between the downlink and uplink scenarios
+
+
+===== PDF PAGE 3 =====
+1970
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+and we summarize the results. Section VII focuses on the
+joint FDMA/CDMA setup that corresponds to the restriction of
+signature sequences to be chosen from an orthogonal sequence
+set and identiﬁes the user capacity of the system under various
+settings. Section VIII contains our conclusions and discusses
+directions toward future work.
+II. MODEL AND DEFINITIONS
+A. Standard Synchronous CDMA Model
+We consider a symbol-synchronous code-division multiple-
+access (CDMA) system and focus on the uplink. Following
+the standard notation (see [22, Sec. 2.1]), the received signal
+in one symbol interval (of
+time units) can be expressed as
+Here
+is the inverse of the data rate,
+is the number
+of users, and
+is the signature waveform
+of user
+, and is thought of as an element of
+, the
+Hilbert space of square integrable functions on
+. The
+waveform
+is assumed to have unit norm. The
+information transmitted by each user is modeled as zero-mean,
+independent random variables
+. The variance
+is the power at which user
+is received. We denote
+the received power of user
+as
+, the product of the transmit
+power of user
+and the path gain from user
+to the receiver
+(base station). By the assumption of perfect power control or
+equivalently perfect channel estimation, we shall assume that
+we can allocate received powers for the users. The process
+is additive white Gaussian noise independent of the user
+symbols
+.
+Let the processing gain of the system be
+. Following the
+usual notation (as in [22, Sec. 2.3.6]), the signature waveforms
+can then be written as
+(1)
+where
+is
+an
+orthonormal
+set in
+and
+is the inner product between
+the waveform of user
+, namely,
+and
+. With some abuse of notation, let us
+represent the vector of inner products
+as
+the signature sequence of user
+(
+is a vector in
+, the unit sphere in
+). It is well known that the
+projections
+of
+on
+are sufﬁcient statistics (see [22, Sec. 2.9.2 and
+Ch. 3]) for the problem of demodulating the user symbols.
+Writing
+as a vector in
+, the received
+signal can be written as
+where
+is an independent and identically distributed (i.i.d.)
+Gaussian vector with covariance
+, independent of the
+transmitted symbols. Henceforth, we consider the allocation
+of signature sequences for the users. By a suitable choice of
+the orthonormal waveform set
+,
+the signature waveforms for the users can be constructed
+(following (1)).
+Suppose the symbol of user
+is decoded using a linear
+receiver, denoted by
+(a vector in
+), then the signal-to-
+interference ratio of user
+SIR
+is
+SIR
+(2)
+We say that
+users are admissible in the system if there is an
+allocation of positive powers
+, signature sequences
+and linear receiver structures
+such that
+SIR
+Here
+is some ﬁxed SIR requirement of each user that
+has to be met for satisfactory performance. Such a choice of
+powers and signature sequences is called a valid allocation.
+B. Structure of Optimum Linear Receiver
+It is well known that the MMSE receiver is the optimum
+linear receiver, optimum in the sense of maximizing the SIR
+of each user. While there are many derivations of the structure
+of the MMSE receiver (see [10], [17], [18] for example and
+[22, Sec. 6.2])
+we give an elementary derivation
+of the same as the argument of a problem of minimizing a
+convex function over a convex set below (this will also aid
+us in developing notation to be used in the characterization of
+the user capacity regions).
+Fix the user powers
+, and the signature sequences
+. The optimum receiver
+is one that maximizes
+SIR . Now, let
+and
+Let
+and
+and we note that they are positive deﬁnite. Let
+for a positive diagonal matrix
+and unitary
+. Also, let
+. Then
+SIR
+where
+
+
+===== PDF PAGE 4 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1971
+Thus the
+is given by
+and the optimal
+receiver structure is
+(3)
+Hence, under the MMSE receiver
+(4)
+(5)
+where we used the following formula in the second step:
+whenever the terms exist. Here
+is strictly less than
+and thus all the terms are well deﬁned.
+III. CHARACTERIZATION OF USER CAPACITY
+We begin with an elementary calculation of the error of
+estimation using the MMSE linear receiver in terms of the
+signature sequences and powers of the users and derive a
+“conservation law” for the estimation errors.
+A. Conservation Law for the MMSE Receiver
+Recall the channel model in matrix form
+where
+is the matrix the columns of which are the signature
+sequences of the users and
+is the vector of transmitted
+symbols from the users. If
+is the vector MMSE estimate of
+, a direct application of the orthogonality principle yields
+and the covariance matrix of the error
+is given by
+(6)
+where
+is the covariance matrix of
+.
+It follows that
+(7)
+(8)
+where
+’s are the eigenvalues of the matrix
+. If we let
+MMSE
+be the (normalized) minimum mean-square error for user ,
+then (8) becomes
+MMSE
+(9)
+(10)
+There is a simple one-to-one relationship between the normal-
+ized minimum mean-square error MMSE of user
+and the
+SIR achieved by that user, namely, SIR (see (2)). Let
+be
+the linear estimate of
+from
+using the linear receiver
+,
+i.e.,
+. We assume that
+is appropriately normalized
+so that the error in the estimate MMSE
+is minimized at
+(the corresponding (minimum) error in
+the estimate denoted by MMSE ). Then, it can be veriﬁed that
+MMSE
+SIR
+(11)
+In particular, this relation holds when the receiver is the linear
+MMSE one, that is,
+is chosen according to (3). Using (9)
+and (11), we have
+SIR
+SIR
+MMSE
+(12)
+(13)
+The upper bound in (13) provides an upper bound to the
+performance of the users regardless of the signature sequences
+used and powers allocated—we view this as a conservation
+law. We can now derive the ﬁrst main result of this paper: the
+identiﬁcation of the user capacity of a single-cell S-CDMA
+system equipped with linear MMSE receiver. We assume that
+each user has the same SIR requirement
+. Observe that if
+the number of users is less than or equal to the processing
+gain, the trivial choice of orthogonal signature sequences for
+the users ensures arbitrary SIR requirements to be met if we
+can scale up the power of the users. Hence, without loss of
+generality, we henceforth assume that the number of users is
+greater than the processing gain.
+B. User Capacity Characterization
+The following is a complete characterization of the admissi-
+bility of the users with equal SIR requirements and equipped
+with MMSE receivers:
+Theorem 3.1:
+users are admissible in the system with
+processing gain
+if and only if
+Proof: Suppose
+users are admissible in the system
+with processing gain
+. Then, by deﬁnition, there exist
+sequences
+, positive powers
+such
+that for every user , we have SIR
+, where the receiver
+structure is as in (3). Appealing now to (13), we have the
+upper bound
+To see that this sufﬁcient also, we provide an explicit valid
+allocation scheme:
+Suppose
+. Choose the powers to be
+(14)
+
+
+===== PDF PAGE 5 =====
+1972
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+and sequences such that
+. Then, using (5),
+SIR
+SIR
+Hence for each user , we have SIR
+and the
+users
+are admissible in the system with processing gain
+. We need
+to show the existence of sequences such that
+. We
+begin with some deﬁnitions.
+Deﬁnition 3.1: For any
+, let
+denote the components of
+in decreasing order, called the
+order statistics of
+.
+Majorization makes precise the vague notion that the com-
+ponents of a vector
+are “less spread out” or “more nearly
+equal” than are the components of a vector
+by the statement
+is majorized by
+.
+Deﬁnition 3.2: For
+, say that
+is majorized by
+(or
+majorizes
+) if
+A comprehensive reference on majorization and its appli-
+cations is [11]. A simple (trivial, but important) example of
+majorization between two vectors is the following:
+Example 3.1: For every
+such that
+majorizes
+It is well known that the sum of diagonal elements of a
+matrix is equal to the sum of its eigenvalues. When the matrix
+is symmetric the precise relationship between the diagonal
+elements and the eigenvalues is that of majorization.
+Lemma 3.1 ([11, Theorems 9.B.1 and 9.B.2]): Let
+be a
+symmetric matrix with diagonal elements
+and
+eigenvalues
+we have
+majorizes
+That
+and
+cannot be
+compared by an ordering stronger than majorization is the
+consequence of the following converse: If
+and
+are
+numbers such that
+majorizes
+, then
+there exists a real symmetric matrix
+with diagonal elements
+and eigenvalues
+.
+We use these notions and results to construct sequences such
+that
+. The vector
+in
+is majorized by
+the vector with
+entries equal to
+and the remaining
+entries equal to
+(this is a simple application of Example
+3.1). Now, appealing to Lemma 3.1, there exists a symmetric
+matrix, say
+, with unit diagonal entries and eigenvalues
+and
+with multiplicities (both algebraic and geometric)
+equal to
+and
+, respectively. Let
+be orthonormal eigenvectors of
+corresponding to
+the eigenvalue
+. Denoting the matrix
+, we
+allocate sequences for the users as follows:
+...
+Then, note that
+. These sequences were ﬁrst
+identiﬁed in [12] (but in their context the sequences were
+in
+) and the authors referred to such
+as WBE sequences, sequences that meet the so-called Welch-
+bound equality (see [25]). We shall henceforth assume that the
+WBE sequences are in
+.
+C. Observations on Valid Allocations
+Below, we observe some properties of valid allocations
+in general and in particular the speciﬁc valid allocation we
+demonstrated in the proof of Theorem 3.1.
+1) Suppose
+users are admissible in the system with
+processing gain
+. Let
+be a valid allocation
+of sequences. Then, with these sequences ﬁxed, among
+all valid allocations of powers (i.e., with this power
+allocation SIR
+) there exists a component-wise
+minimal power allocation (see [18]) and with this power
+allocation, SIR
+. Hence, when the sequences are
+WBE sequences, it follows that the power allocation
+is the component-wise minimal power solution.
+2) We shall now focus on this speciﬁc allocation scheme
+of WBE sequences and corresponding component-wise
+minimal powers. This scheme allocates the smallest sum
+of powers among all valid allocations. We shall show
+this property in Section IV when we revisit user capacity
+with power constraints.
+3) With this allocation, the MMSE receiver for user
+is
+given by, following (3),
+(15)
+
+
+===== PDF PAGE 6 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1973
+where
+is a constant (which can be shown to be equal to
+). Thus the optimal linear ﬁlter in this situation is just
+a scaled version of the matched ﬁlter. This observation
+allows us to conclude that the user capacity of a system
+equipped with the a priori inferior matched ﬁlter receiver
+is the same as that of the linear MMSE receiver:
+Corollary 3.2:
+users are admissible in the system with
+processing gain
+and equipped with matched ﬁlter receivers
+if and only if
+D. Comparison with Random Sequences
+It is interesting to compare this result with the corresponding
+characterization of user capacity of a system with random
+signature sequences carried out in [17]. The results in [17]
+are asymptotic and are valid for a large system (i.e., a system
+with a large processing gain and large number of users). We
+focus on the system where each user has SIR requirement
+, the number of users is
+, and the processing gain is
+and consider the regime
+,
+, and
+.
+Appealing to the results in [17] we conclude as follows:
+1) Suppose MMSE linear receivers are used. Then, ([17,
+Sec. 5]) the SIR of each user converges (in probability)
+to a constant and (with appropriate power control) this
+constant is at least the target requirement
+if and only
+if
+. Thus for a large system, this suggests that
+using random sequences is as good as using the optimal
+WBE sequences (in the context of user capacity) for the
+signature sequences of the users.
+From (10), note that the total normalized MMSE errors
+of the users is a constant, independent of the relative
+powers of the users and depends very weakly on the
+signature sequences. To minimize the maximum MMSE
+among all users (or equivalently, to maximize the mini-
+mum SIR’s), it is, therefore, optimal to have symmetry
+among the users such that they have the same MMSE.
+This was achieved using equal received power and the
+WBE sequences described earlier. However, this “sym-
+metrization” can also be achieved asymptotically when
+random sequences are used, since it is shown in [17] that
+(with appropriate power control) the SIR’s of all users
+will converge to the same number. But maximizing the
+minimum SIR’s is equivalent to maximizing the number
+of users in a system with given equal SIR requirements.
+Hence, random sequences and the WBE sequences yield
+the same user capacity asymptotically.
+2) For the scenario of matched ﬁlters, following [17, Sec.
+5], the SIR of each user converges (in probability) to
+a constant and this constant is at least the requirement
+if and only if
+. Thus one user per degree of
+freedom is lost asymptotically when random sequences
+are used. A conservation law similar to the one for
+MMSE receivers (as in (12)) is lacking for the matched
+ﬁlter receivers.
+IV. POWER CONSTRAINT AND USER CAPACITY
+Our model has not included any constraints on the allocated
+received power of the users; we now include a received
+power constraint in our model. In this section we precisely
+quantify the loss in the user capacity due to the received power
+constraint; this loss will be a function of both the constraint
+and the power of the background Gaussian noise. One way
+to justify the constraint on the received power of the users is
+by considering average transmit power constraint of the users.
+If one is able to adopt a model of fading for the users that
+is ergodic (with the same mean fading) and independent, an
+average transmit power constraint on the users translates into
+a received power constraint.
+A. User Capacity with Power Constraints
+We deﬁne admissibility of
+users (each having SIR
+requirement
+) in the system with processing gain
+and
+power constraint
+as being able to allot
+signature sequence
+and power
+for every user such that the achieved
+SIR (given in (4)) is at least the target value
+. If the system
+has just one user, then the minimum power required by that
+single user to meet its SIR requirement is
+. To prevent
+a degenerate situation, we shall assume that
+. As
+before, we assume that the number of users is greater than the
+processing gain. Our main result in this section is to precisely
+identify the loss in user capacity by including such a power
+constraint:
+Theorem 4.1:
+users (each having SIR requirement
+) are
+admissible in the system with processing gain
+and average
+received power constraint
+if and only if
+Proof: We ﬁrst show the necessity. Suppose
+users are
+admissible. Then there exist signature sequences
+, positive powers
+, such that for every user
+, we have SIR
+. From (12), we have the conservation law
+SIR
+SIR
+(16)
+where
+are the eigenvalues of the matrix
+.
+We note that
+(17)
+where the second equality follows by some algebra and noting
+that the columns of
+have unit
+norm. Now, if we let
+, then the vector
+is majorized
+by the vector
+(see Example 3.1). We need the
+following deﬁnition.
+Deﬁnition 4.1: A real-valued function
+is said
+to be Schur-concave if for all
+such that
+majorizes
+we have
+. We say that
+is Schur-convex if
+is Schur-concave.
+An important class of Schur-convex functions is the fol-
+lowing ([11, Theorem 3.C.1]).
+
+
+===== PDF PAGE 7 =====
+1974
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+Example 4.1: If
+is convex then the symmetric
+convex function
+is Schur-convex. By deﬁnition, if
+is concave then
+the symmetric concave function
+is Schur-concave.
+Observe that the map
+is concave in
+and hence
+the symmetric concave map
+is Schur-concave (see Example 4.1). Then we have
+By hypothesis, SIR
+and hence
+(18)
+which implies that
+Since each
+it follows that
+. We then conclude
+that
+.
+To see this is sufﬁcient as well, suppose
+.
+We shall use the same allocation scheme as in the proof
+of Theorem 3.1, namely, signature sequences to be WBE
+sequences and powers
+We have, as in the proof of Theorem 3.1, the achieved SIR of
+each user is equal to
+. We only need to verify that our choice
+of powers does not exceed the constraint
+. Using the prior
+we have for each user power
+Thus the
+users are admissible in the system.
+The proof of the characterization of user capacity allows us
+to conclude an optimality property of the speciﬁc allocation
+scheme used above: suppose
+users are admissible in the
+system with processing gain
+. Then for any valid allocation
+(signature sequences
+and powers
+), from (18),
+we have that
+(19)
+For the allocation in the proofs of Theorems 3.1 and 4.1,
+the lower bound in (19) is met with equality. We draw the
+following conclusions.
+1) The allocation of WBE sequences and powers all equal
+to
+gives the smallest sum of received powers among all
+valid allocations. In this sense, this allocation is optimal.
+2) Since with this allocation the MMSE linear receiver
+for each user is just the corresponding scaled matched
+ﬁlter receiver (as seen in (15)), we have the following
+corollary.
+Corollary 4.2:
+users (each having SIR requirement
+)
+are admissible in the system with processing gain
+and
+received power constraint
+and equipped with matched ﬁlter
+receivers if and only if
+B. Comparison with Random Sequences
+We saw from the comparison in Section III that asymptot-
+ically (in a large system, where number of users
+,
+processing gain
+, and
+) there is no loss in user
+capacity with MMSE receivers while using random sequences.
+It is interesting to compare the results when there is a received
+power constraint. From the results in [17], we summarize.
+1) From [17, Sec. 5] we conclude that with a received
+power constraint
+, users have their SIR requirement
+achieved (using MMSE receiver) if and only if
+The user capacity is thus strictly less than that with
+optimal sequences, when the power constraint is ﬁnite.
+To understand why, we can appeal to (9)
+MMSE
+(20)
+where
+’s are the eigenvalues of the matrix
+.
+When the background noise power is small compared to
+the received powers, any set of sequences which sym-
+metrizes the MMSE for all users are optimal. When
+is nonnegligible, good sequences should also minimize
+the right-hand side as well. The WBE sequences achieve
+that by making the eigenvalues least “spread out,” i.e.,
+all the same. Using random sequences, the eigenvalues
+are more spread out, resulting in a user capacity penalty
+when
+is nonnegligible.
+2) When matched ﬁlters are used, following [17, Sec.
+5], we conclude that users can meet their target SIR
+requirement
+if and only if
+when the
+received power constraint is
+. Thus there is a loss in
+
+
+===== PDF PAGE 8 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1975
+user capacity strictly more than one user per degree of
+freedom when using random sequences when compared
+with the user capacity achieved with optimal sequences.
+V. MULTIPLE CLASSES, USER
+CAPACITY, AND OPTIMAL ALLOCATIONS
+In this section we consider the situation when the users
+have different SIR requirements and completely generalize the
+results of the previous two sections. This level of generality
+of allowing users to have different SIR requirements caters
+to data and voice users, sharing the common system and
+having different SIR requirements. As earlier, we shall assume,
+without loss of generality, that the number of users is bigger
+than the processing gain.
+A. User Capacity Characterization
+We ﬁrst deﬁne admissibility of
+users (with SIR require-
+ments
+) in the system with processing gain
+as being able to allot signature sequences and powers for
+the users such that for each user
+the SIR achieved by
+the MMSE receiver for that user (as in (4)) is greater than
+or equal to
+(such allocations are called valid). Our main
+result of this section is an analog of Theorem 3.1; a complete
+characterization of admissibilit:.
+Theorem 5.1:
+users (with SIR requirements
+) are admissible in the system with processing gain
+if
+and only if
+Proof: This result motivates the consideration of the
+quantity
+as the effective bandwidth of a user with SIR
+requirement
+. Then the criterion of admissibility has a simple
+interpretation: Users are admissible if and only if the sum
+of their effective bandwidths is less than the processing gain
+of the system. Let us denote the effective bandwidth by
+.
+We ﬁrst show the necessity: since
+users are admissible, by
+deﬁnition, there exists a valid allocation of signature sequences
+and powers
+. Since SIR
+, and the effective bandwidth
+is a monotonic function of the SIR requirement, from (12) we
+have
+We show that this is also sufﬁcient by explicitly demonstrating
+a valid allocation. Restricted to the context of this proof, we
+assume for notational simplicity that the SIR requirements of
+the users are ordered, i.e.,
+.
+We look for the unique
+such that
+(21)
+Say that the users
+are oversized. If
+, then no user
+is oversized (and this happens when
+).
+Observe that oversized users have effective bandwidth large
+relative to the effective bandwidths of the other users. A simple
+recursive scheme to enumerate the oversized users follows
+directly from the deﬁnition in (21).
+Let
+be the vector
+with
+the entry
+being in the th position. Then
+form
+an orthonormal basis for
+. Recall that users
+are
+oversized, and we know that
+. Consider the following
+allocation of powers and sequences:
+1) For oversized users, we allocate independent channels,
+i.e., for users in
+we allocate the signature
+sequences
+and powers
+.
+2) For nonoversized users we allocate sequences from
+the subspace
+which has dimension
+. From (21), it follows that
+and hence the vector with with
+entries equal to
+and the other
+entries equal to
+majorizes the vector
+(see
+Example 3.1). Now, appealing to Lemma 3.1, there
+exists a symmetric matrix, say
+, with diagonal entries
+and eigenvalues
+and
+with multiplicities (both algebraic and geomet-
+ric) equal to
+and
+, respectively. Let
+be orthonormal eigenvectors
+of
+corresponding to the eigenvalue
+Now, for every user
+choose power
+proportional to its effective bandwidth, namely,
+where constant
+(22)
+Observe that
+is positive by the hypothesis
+Let
+be the diagonal matrix with entries
+. For
+deﬁne sequences
+
+
+===== PDF PAGE 9 =====
+1976
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+and the matrix
+as
+...
+Since the diagonal entries of
+are unity,
+have unit
+norm for every
+. Also, note that
+(23)
+We shall denote such sequences as generalized WBE
+sequences. Note that when
+is a scaled identity, the
+sequences reduce to the WBE sequences. The Ap-
+pendix discusses the construction of generalized WBE
+sequences.
+Now allocate signature sequences for users not oversized
+as follows:
+With this allocation of sequences and powers we now have
+(24)
+Substituting in (5)
+SIR
+SIR
+(25)
+Thus each user has its SIR requirement met which completes
+the proof.
+This characterization of admissibility along with the valid
+allocation scheme above allows us to make the following
+remarks.
+1) It is interesting to observe that the linearity of the
+boundary of the user capacity is a consequence of
+(10), that the total minimum mean-square errors of the
+users is a constant independent of the received powers
+and dependent very weakly on the signature sequences.
+This also explains why here, as in the single class
+case, random sequences achieve asymptotically (as the
+processing gain gets large) the same performance as
+optimal sequences.
+2) In practice, one can imagine a small number of different
+SIR requirements of the users (say two or three). We
+introduce the notion of different “classes” of users; all
+users of the same class have a common SIR requirement.
+We assume there are
+classes (ﬁxed) and users of class
+have SIR requirement
+. We know (from Section III)
+that
+degrees of freedom can support
+users each with SIR requirement
+. This suggests that
+we could “channelize” the system such that users of
+different classes do not interfere with each other and
+asymptotically achieve
+users of class
+per degree
+of freedom whenever
+This is indeed
+true and the following statement can be veriﬁed: We
+can admit at least
+users of class
+in a system with processing gain
+where
+positive such that
+3) We can identify two important situations when there are
+no oversized users:
+a) When all the SIR requirements are identical, then
+no user is oversized. This is the result contained in
+Theorem 3.1.
+b) When there are at least as many users in each
+class as the processing gain of the system then
+it is straightforward to see that that there are no
+oversized users. Suppose class
+has
+users
+and
+. Then, we can make a familiar
+valid allocation: signature sequences for the
+users
+of class
+to be WBE sequences (this can be done by
+the hypothesis that
+) and powers the same
+for every user
+of class
+to be
+The SIR of user
+of class , as in (5), can be veriﬁed
+to be exactly
+. This ensures that for every class ,
+users of that class are admissible in the system.
+4) In the proof of Theorem 5.1, the assumption that the
+SIR requirements of the users be ordered was for nota-
+tional simplicity. Equivalently, the notion of oversized
+users could be introduced (with no assumption on the
+ordering) as below:1 User
+is deﬁned to be oversized if
+(26)
+Denote the set of oversized users as
+. Then, (21) can
+be written in this notation as
+We observe that there can be at most
+oversized
+users and that if user
+is oversized then every user with
+SIR requirement at least
+is also oversized. In the rest
+of the paper we shall adhere to this notation.
+5) For the speciﬁc valid allocation demonstrated in the
+proof of Theorem 5.1, we can calculate the MMSE
+1We would like to thank Prof. Sergio Verd´u for suggesting this terminology.
+
+
+===== PDF PAGE 10 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1977
+receiver for the users (from (3)) to be
+from (24)
+from (23)
+where
+is a constant (which is easily seen to be
+). Thus the MMSE
+receiver is just the scaled matched ﬁlter receiver for each
+user. This allows us to conclude, exactly as in Section
+III, that there is no loss in user capacity when we restrict
+the system to use the a priori inferior matched ﬁlter. To
+emphasize
+Corollary 5.2:
+users
+(with
+SIR
+requirements
+) are admissible in the system with processing gain
+and equipped with matched ﬁlter receivers if and only if
+B. Optimal Allocation of Powers and Sequences
+We proved Theorem 5.1 by explicitly demonstrating a valid
+allocation scheme. We now identify the nature of optimality
+of this allocation scheme. This is a generalization of the ideas
+in Section IV to the situation when users have different SIR
+requirements.
+The key observation used in Section IV to characterize
+the optimality of WBE sequences was (9) which related the
+eigenvalues of
+and the MMSE’s of the users (and hence
+the attained SIR’s of the users; using (11)). We now strengthen
+(9) to obtain the precise relationship between the eigenvalues
+of
+and the attained SIR’s of the users using the MMSE
+receiver structure.
+Fix
+, the signature sequence matrix
+, and the
+diagonal matrix of user powers
+. Suppose the MMSE re-
+ceiver structure is used and the attained SIR’s of the users are
+. Then appealing to (6) and (11) we have that the
+diagonal entries of the matrix
+are
+Now, if we denote the eigenvalues of
+by
+it is straightforward to verify that the
+matrix
+has
+eigenvalues equal to
+and the remaining
+eigenvalues equal to
+. Hence,
+referring to Lemma 3.1
+majorizes
+(27)
+Observe that the conservation law mentioned in (9) follows
+directly from (27) above. The statement that (27) is the precise
+relationship between the eigenvalues of
+and the attained
+SIR’s of the users is made clear by the following observation.
+Suppose we are given
+and
+such that
+majorizes
+(28)
+Then the claim is that there exists an allocation of signature
+sequences
+and user powers
+such that
+has eigenvalues
+(29)
+The attained SIR’s of the users are
+(30)
+To see this, consider the following construction of
+and
+.
+Given
+and
+satisfying (28),
+by an appeal to Lemma 3.1, there exists a
+symmetric
+matrix
+with diagonal entries
+and eigenvalues
+. Denote
+for
+each
+and let
+. Let
+be
+the
+matrix with columns the normalized eigenvectors
+of
+corresponding to the eigenvalues
+. Then
+(31)
+Deﬁne
+to be the diagonal entries of the
+matrix
+and
+to be the diagonal matrix with diagonal
+entries
+. Now deﬁne the signature sequence matrix
+by
+for some orthonormal
+matrix
+. Then observe the
+following.
+1) The columns of
+have unit norm.
+2)
+has eigenvalues
+be deﬁnition.
+3) The SIR’s attained by the users are
+. To see
+this, note that
+using (31)
+and by deﬁnition the diagonal entries of
+are
+
+
+===== PDF PAGE 11 =====
+1978
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+Hence by construction we have demonstrated the existence of
+signature sequences
+and powers
+so that both (29) and
+(30) are met.
+We shall now use the observation in (27) and (28) to
+characterize the optimality of our signature sequence and
+power allocation. Now suppose we are given that the necessary
+condition
+in Theorem 5.1 is true. Then
+by Theorem 5.1, there exist some
+and some
+such that
+the achieved SIR’s of the users are
+. If we denote
+as the eigenvalues of
+and
+then (28) shows the relationship between
+and
+. Now
+see (17)
+(32)
+The lemma below identiﬁes a lower bound on
+. Recall
+that the set of oversized users is denoted by
+.
+Lemma 5.1: Let
+be the set of oversized users. Given the
+constraint (28)
+(33)
+Suppose that this is true. Then for any allocation of se-
+quences and powers so that the SIR requirements of the users
+are met, (33) can be used in conjunction with (32) to obtain a
+lower bound on the sum of allocated received powers
+It is now straightforward to verify that the sum of powers
+allocated in the sufﬁciency proof of Theorem 5.1 (in (22))
+meets this lower bound. Thus our speciﬁc valid allocation
+of sequences and powers is optimal in the above sense of
+minimizing the sum of allocated powers. We now prove the
+lemma.
+Proof of Lemma 5.1: Let us develop some notation by
+deﬁning the set over which
+vary. Rewriting (28),
+let
+majorizes
+(34)
+Observe that the map
+is convex and hence the
+symmetric convex map
+is Schur-convex (see Deﬁnition 4.1 and Example 4.1). Hence
+if
+majorizes
+then
+. We now complete the
+proof of Lemma 5.1 by identifying a “Schur-minimal” element
+in
+. Let the set of oversized users be denoted by
+. Let
+be
+(35)
+Consider the following claims:
+(36)
+majorizes
+(37)
+Suppose these are true. Then
+is the minimum value of
+the minimization problem in (33) and the claim in Lemma 5.1
+is now straightforward to verify. We only need to prove (36)
+and (37) above.
+It
+is
+straightforward
+to
+verify
+from
+the
+deﬁnition
+of
+and
+by
+properties
+of
+oversized
+users
+that
+.
+Let
+and
+denote
+the
+order
+statistics
+of
+(see
+Deﬁnition 3.1 for the notation). Let
+be the
+order statistics of
+. By the deﬁnition of
+in (35)
+and properties of oversized users, it can be veriﬁed that the
+following relation is true among the elements of
+:
+(38)
+Hence
+we can write
+(39)
+Now, since
+we have
+and hence
+Furthermore,
+. Hence
+We complete the proof of the claim that
+majorizes
+by
+induction. Suppose
+
+
+===== PDF PAGE 12 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1979
+for some
+. Since
+and
+, we have
+Hence
+by induction hypothesis.
+(40)
+Since
+, from (40), we have
+from (39)
+This is true for all
+. Hence
+majorizes
+and
+is a Schur-minimal element of
+.
+VI. DOWNLINK AND USER CAPACITY
+Until now, we have been considering the uplink of the
+cellular system. In the downlink of this system there is a
+single transmitter (the base station) and there are multiple
+receivers (the users). We ﬁrst formally deﬁne our model and
+then consider the user capacity of the downlink.
+A. Deﬁnitions and Model
+Suppose there are
+users in the downlink of the system.
+Let the path gain from the base station (interchangeably
+referred to as transmitter) to user
+be
+. We suppose that the
+noise at the receivers is additive white Gaussian with the same
+variance
+per degree of freedom for each user (there is no
+loss of generality in this assumption since we can incorporate
+this into the path gain parameter
+). We say that
+users
+(with path gains from the base station being
+and
+each having the same SIR requirement of
+) are admissible
+in the downlink of the system with processing gain
+if we
+can allot transmit power
+and signature sequence
+at the
+transmitter corresponding to user
+SIR
+(41)
+where
+is the MMSE linear receiver given the signature
+sequences and the powers. Proceeding as in Section II-A, it
+is easy to verify that the optimal (in the sense of maximizing
+SIR for each user) linear receiver
+for user
+is
+(42)
+where
+and the corresponding SIR
+with the optimal receiver is
+SIR
+(43)
+It is clear that we can make a similar deﬁnition of admissibility
+of the users when the receiver structure is ﬁxed to be the
+matched ﬁlter. The similarity of the achieved SIR equation
+(41) to the corresponding one in the uplink in (2) is apparent.
+Only the noise variance
+in (2) is replaced now by
+. If
+we have no constraints on the allocated power we can “null
+out” the additive noise and the admissibility characterization
+is identical to that of the uplink.
+B. User Capacity Characterization
+Theorem 6.1:
+users with path gains
+from the
+base station and each having the same SIR requirement
+are
+admissible in the downlink of the system with processing gain
+if and only if
+Proof: We ﬁrst show the necessity, on the same lines of
+the uplink situation. Suppose the
+users are admissible in the
+downlink. Then, for each user , there exists signature sequence
+and transmit power at the base station
+(as a function of
+the path gains
+) such that the achieved SIR of user
+(as in (41)) is greater than or equal to
+. Using (43)
+(44)
+Proceeding as in (5), we have, for each user
+(45)
+where
+. Recalling the notation developed in
+Section II,
+and
+and
+. Then we can rewrite
+. We
+have, from (44), that for each user
+Equivalently, we have for each user
+Denoting
+, we have for each user
+Summing up the terms, we have
+
+
+===== PDF PAGE 13 =====
+1980
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+To show this is sufﬁcient as well, suppose
+and
+be arbitrary positive real numbers. Allot WBE
+signature sequences for the users and powers
+(46)
+where
+. Then,
+and hence for every
+user
+we have
+Using (45),
+SIR
+(47)
+(48)
+where we used the fact that
+since by hypothesis we have that
+and
+.
+Hence the
+users are admissible.
+Some comments are in order now:
+1) A (simple) closed-form expression of the allocation that
+is optimal (in the sense of the previous sections) seems
+unattainable. But it is worth emphasizing that our alloca-
+tion above has the property that the signature sequences
+are allocated (to be WBE sequences) independent of the
+path gains and only the powers are chosen as a function
+of the path gain.
+2) With
+matched-ﬁlter
+receivers,
+the
+admissibility
+is
+unchanged and we have
+users with path gains
+from the base station and each having the
+same SIR requirement
+are admissible in the downlink
+of the system with processing gain
+if and only if
+3) When users have different SIR requirements, a simple
+calculation shows that
+users with path gains from the
+base station
+and having SIR requirements
+are admissible in the downlink of the system
+with processing gain
+if and only if
+The same statement is true when using matched-ﬁlter
+receivers instead of MMSE receivers.
+4) For every class ,
+users per unit processing gain of
+that class are admissible by “channelizing” the downlink
+of a large enough system if
+VII. JOINT FDMA/CDMA CASE AND USER CAPACITY
+Traditional multiple-access schemes divide the channel into
+slots and it is important to note that we can incorporate
+a slotted system into our framework. We achieve this by
+forcing the signature sequences to be chosen only from an
+orthogonal sequence set. Then users that have the same
+signature sequence are in the same “slot” or “channel” and do
+not cause any interference to users in different “channels” due
+to the orthogonality of the signature sequences. In this case, the
+receiver is trivial and the MMSE and matched-ﬁlter receivers
+coincide. It is interesting to identify the user capacity in this
+situation and this exercise will enable us to explicitly identify
+the gain in user capacity by using nonorthogonal signature
+sequences. In this section, we identify the user capacity of
+the slotted system in a variety of settings. The conclusion we
+draw from the results is that the user capacity in this case
+differs from the earlier one by an integer part of a function
+of the SIR requirement. The assumption below is that the
+signature sequences are now constrained to be chosen from
+an orthogonal sequence set (whose linear span has dimension
+equal to the processing gain of the system). We ﬁrst focus on
+the uplink.
+Proposition 7.1:
+users each with SIR requirement
+are
+admissible in the system having processing gain
+if and
+only if
+if
+else.
+Proof: Since the sequences are chosen from an orthogo-
+nal set, only users having the same sequence (we shall refer to
+them as users in the same channel) cause interference to each
+other. We hence focus on the user capacity for a single channel.
+users are admissible into a channel with SIR requirement
+if there exist positive powers
+such that, analogous
+to (2)
+SIR
+(49)
+The existence of such powers can be seen to be equivalent to
+(see [16, Theorem 2.1])
+(50)
+where
+is the Perron–Frobenius eigenvalue of the argument
+(which is a nonnegative irreducible matrix; for notation and
+deﬁnition see [16, Ch. 1]) and
+is a
+matrix with all
+entries being equal to
+. Since
+, the existence of
+powers satisfying (49) is equivalent to the number of users
+. Since we have
+channels available, this is
+equivalent to the total number of users
+if
+and
+else.
+
+
+===== PDF PAGE 14 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1981
+In the general situation when users have arbitrary SIR
+requirements, we summarize our results without detailing the
+proofs.
+1) We focus on a single channel ﬁrst.
+users with SIR
+requirements
+are admissible in a single chan-
+nel if and only if
+2) When there are
+channels, a sufﬁcient condition for ad-
+missibility of
+users with SIR requirements
+is
+A necessary and sufﬁcient condition for admissibility is
+that there be a way to allot every user to one (among
+) channel such that users within each channel are
+admissible.
+Proposition 7.2:
+users each with SIR requirement
+are
+admissible in the system having processing gain
+and power
+constraint
+if and only if
+Let us consider the single channel ﬁrst.
+users are admissible
+in the single channel if there exist positive powers
+each upper-bounded by
+such that for each user
+SIR
+We can rewrite this in matrix notation as
+where
+is a
+vectors of all ones. As in (50), the
+existence of such positive powers is seen to be equivalent
+to
+. Furthermore, under this condition,
+there is a component-wise minimal power solution, (see [16,
+Theorem 2.1]) given by
+after some elementary algebra
+Thus
+users are admissible in the single channel with power
+constraint
+if and only if
+and
+.
+This is equivalent to
+Since there are
+channels, we conclude that this is equivalent
+to the total number of users (in all the
+channels)
+.
+As was done earlier, we state the user capacity for the
+downlink system in this situation without detailing the proofs.
+The proofs can be obtained by an argument similar to the
+ones made above.
+1)
+users (with path gains from the base station being
+) each with SIR requirement
+are admissible
+in the downlink of the system having processing gain
+if and only if
+if
+else.
+2)
+users (with path gains from the base station being
+) with SIR requirements
+are ad-
+missible in a single channel in the downlink if and only
+if
+VIII. CONCLUSIONS AND FUTURE WORK
+Most previous studies of multiuser receivers (see [22] for
+a comprehensive study) are user-centric. Speciﬁcally, typical
+measures such as near–far resistance focus on the performance
+of a single user in the face of worst case interference. Different
+from these works, here, we consider a network-centric for-
+mulation where the users have to simultaneously satisfy their
+performance requirements and network-level user capacity
+is the ultimate performance measure. Despite the simplistic
+setting of symbol synchronism and no fading (equivalently,
+perfect channel estimation and power control) this formulation
+allows us to study the fundamental tradeoffs between the per-
+formance of different users through the allocation of signature
+sequences and power control. Though our model does not
+make any restrictions on the users’ symbols
+, we have a
+heavily coded system (such as that of IS-95) in mind and that
+the MMSE estimates are used for soft decoding of the users’
+raw bits. The desired
+for IS-95 system is about 3–7 dB
+(see [24, p. 183]) and this corresponds to an SIR requirement
+of about
+.
+The huge literature on design of signature sequences for
+various communication models is comprehensively covered
+in [3]. The assumption of perfect power control made in this
+paper is relaxed and results here are extended in [1]. Motivated
+by the optimal nature of WBE sequences, in [19], the authors
+provide an iterative interference suppression algorithm that
+updates the signature sequences allocated to the users and
+demonstrate that the allocations converge to WBE sequences.
+APPENDIX
+EXISTENCE AND CONSTRUCTION OF
+GENERALIZED WBE SEQUENCES
+We have identiﬁed generalized WBE sequences as the
+optimal sequence allocation in Section V. In the proof of
+Theorem 5.1, we also illustrated a procedure to construct these
+sequences. In this appendix we discuss some characteriza-
+tions of these sequences and mention some open problems.
+As a reprise, we repeat the deﬁnition of generalized WBE
+sequences: Fix
+henceforth. Fix
+, the diagonal
+
+
+===== PDF PAGE 15 =====
+1982
+IEEE TRANSACTIONS ON INFORMATION THEORY, VOL. 45, NO. 6, SEPTEMBER 1999
+matrix of user powers
+. Let
+. Then,
+say that
+(the unit sphere in
+) are
+generalized WBE sequences and the matrix
+as a generalized WBE matrix if the following three conditions
+are satisﬁed:
+1) The rows of
+have the same
+norm, equal to
+.
+2) The columns of
+have unit
+norm.
+3) The rows of
+are orthogonal to each other.
+Properties 1) and 3) can also be succinctly expressed as
+. When
+and
+is scaled identity,
+orthonormal matrices are the only matrices satisfying the
+above three properties. When
+and
+is not the scaled
+identity, then there is no generalized WBE matrix. We now
+generalize this observation to arbitrary
+.
+The matrix
+has the same eigenvalues as
+along with
+additional zero eigenvalues. Since the diagonal
+entries of
+are
+a necessary condition
+for the existence of a generalized WBE matrix
+is, referring
+to Lemma 3.1
+majorizes
+which simpliﬁes to
+(51)
+Observe that when
+, (51) reduces to the condition
+that
+. As suggested by Lemma 3.1, this
+condition is also sufﬁcient for the existence of a generalized
+WBE matrix
+. To see this, suppose (51) holds. Then, by
+Lemma 3.1, there exists a real symmetric matrix, say
+,
+with diagonal entries
+and eigenvalues
+and
+with multiplicities (both geometric and algebraic)
+and
+, respectively. Let us denote the set of such matrices
+by
+and
+as an element of this set. Also, let
+be the normalized eigenvectors of
+corresponding to the
+eigenvalue
+(written as elements of
+). We claim that
+the deﬁnition
+...
+satisﬁes the three properties of generalized WBE matrix.
+Properties 1) and 3) are satisﬁed by deﬁnition. It is trivial to
+verify that
+has unit diagonal entries and hence property
+2) is satisﬁed also. The important observation is that every
+generalized WBE matrix is generated in this way: If
+is a
+generalized WBE matrix, then the
+rows of
+serves as the eigenvectors corresponding to the eigenvalue
+of some matrix
+. Also, it is a trivial observation that,
+if
+is a generalized WBE matrix, then so is
+for any
+orthonormal matrix
+, i.e., rotating all the generalized WBE
+sequences by the same rotation matrix does not alter their
+properties.
+Given their optimality, it is important to characterize gener-
+alized WBE matrices up to an equivalence class of orthonor-
+mal rotations. Such a characterization will aid design questions
+such as constructing sequences with entries constrained to
+be in
+or with a peak power constraint on the
+entries. Though we have characterized all generalized WBE
+matrices through the eigenvectors of certain positive-deﬁnite
+matrices with ﬁxed diagonal entries and ﬁxed eigenvalues,
+this characterization does not seem to aid, in a straightforward
+way, the answering of the design questions mentioned above.
+Nevertheless, this has afforded us some intuition on construct-
+ing generalized WBE matrices; in [23], we demonstrate a
+constructive (iterative, with at most
+iterations) algorithm
+to construct the eigenvectors
+of the matrix
+.
+For the special case when
+is the identity, the matrix
+reduces to a WBE matrix and simple construction schemes
+are known.
+1) WBE matrix goes by the name of tight frame2 in the
+context of over complete expansions in
+in Wavelets
+literature (see [2, Ch. 3] for a detailed review of tight
+frames). The following construction of tight frames is
+well known: assuming
+is odd, the
+th sequence is
+given by
+for
+. When
+is even, we construct
+sequences as above (replacing
+by
+) and ignore
+the ﬁrst element (namely,
+) of each sequence and
+scale the resulting sequence by
+to normalize it. It is easily veriﬁed that this constructs
+WBE sequences for arbitrary
+.
+2) In [12], the authors construct WBE sequences with
+entries restricted to
+when
+for
+.
+3) We remark that constructing WBE sequences for every
+with entries restricted to
+is equivalent
+to solving the long-standing open problem of construct-
+ing Hadamard matrices for every dimension a multiple
+of
+(see [5] for details and further references on this
+problem).
+4) Recently, in [19], motivated by the demonstration of
+the optimal nature of WBE sequences, the authors have
+described a distributed algorithm that updates iteratively
+the signature sequences of the users. Given an initial
+set of signature sequences for the users (that has some
+very weak properties) the authors show that the users’
+signature sequences converge to WBE sequences using
+this iterative algorithm.
+REFERENCES
+[1] E. K. P. Chong and J. Zhang, “Admissibility and network capacity of
+power-controlled CDMA systems in fading channels,” in 36th Annual
+Allerton Conf. Communication, Control and Computing, 1998.
+2We would like to thank Vivek Goyal and Prof. Martin Vetterli for pointing
+this out to us.
+
+
+===== PDF PAGE 16 =====
+VISWANATH et al.: OPTIMAL SEQUENCES, POWER CONTROL, AND USER CAPACITY OF SYNCHRONOUS CDMA SYSTEMS
+1983
+[2] I. Daubechies, Ten Lectures on Wavelets.
+Philadelphia, PA: SIAM,
+1992.
+[3] P. Fan and M. Darnell, Sequence Design for Communication Applica-
+tions.
+New York: Wiley, 1996.
+[4] G. J. Foschini and Z. Miljanic, “A simple distributed autonomous power
+control algorithm and its convergence” IEEE Trans. Vehic. Technol., vol.
+40, no. 4. pp. 641–646, 1993.
+[5] R. L. Graham, M. Grotschel, and L. Lovasz, Handbook of Combina-
+torics, vol. 2.
+Cambridge, MA: MIT Press, 1995.
+[6] S. V. Hanly, “An algorithm for combined cell-site selection and power
+control to maximize cellular spread spectrum capacity” IEEE J. Select.
+Areas Commun. (Special Issue on the Fundamentals of Networking),
+vol. 13, no. 7, Sept. 1995.
+[7] P. Kumar and J. Holtzman, “Power control for a spread-spectrum system
+with multiuser receivers,” in Proc. 6th IEEE PIMRC, Sept. 1995, pp.
+955–959.
+[8] R. Lupas and S. Verd´u, “Linear multiuser detectors for synchronous
+code-division multiple access,” IEEE Trans. Inform. Theory, vol. 35,
+pp. 123–136, Jan. 1989.
+[9]
+, “Near-far resistance of multiuser detectors in asynchronous
+channels,” IEEE Trans. Commun. , vol. 38, pp. 496–508, Apr. 1990.
+[10] U. Madhow and M. Honig, “MMSE interference suppression for direct-
+sequence spread-spectrum CDMA,” IEEE Trans. Commun., vol. 42, pp.
+3178–3188, Dec. 1994.
+[11] A. W. Marshall and I. Olkin, Inequalities: Theory of Majorization and
+Its Applications.
+New York: Academic, 1979.
+[12] J. L. Massey and T. Mittelholzer, “Welch’s bound and sequence sets
+for code-division multiple access systems,” in Sequences II, Meth-
+ods in Communication, Security and Computer Science, R. Capocelli,
+A. De Santis, and U. Vaccaro, Eds.
+New York: Springer-Verlag,
+1993.
+[13] M. Rupf and J. L. Massey, “Optimum sequence multisets for syn-
+chronous code-division multiple-access channels,” IEEE Trans. Inform.
+Theory, vol. 40, pp. 1261–1266, July 1994.
+[14] P. Rapajic and B. Vucetic, “Adaptive receiver structures for asyn-
+chronous CDMA systems,” IEEE J. Select. Areas Commun., vol. 12,
+pp. 685–697, May 1994.
+[15] M. Rupf, F. Tark¨oy, and J. Massey, “User-separating demodulation for
+code-division multiple access systems,” IEEE J. Select. Areas Commun.,
+vol. 12, pp. 786–795, June 1994.
+[16] E. Seneta, Nonnegative Matrices and Markov Chains, 2nd ed.
+Berlin,
+Germany: Springer-Verlag, 1981.
+[17] D. Tse and S. Hanly, “Multiuser demodulation: Effective interference,
+effective bandwidth and capacity,” IEEE Trans. Inform. Theory, vol. 45,
+pp. 641–657, Mar. 1999.
+[18] S. Ulukus and R. Yates, “Adaptive power control and MMSE interfer-
+ence suppression,” ACM Wireless Networks, vol. 4, no. 6, pp. 489–496,
+1998.
+[19]
+, “Iterative signature adaptation for capacity maximization of
+CDMA systems,” in 36th Annual Allerton Conf. Communication, Con-
+trol and Computing, 1998.
+[20] M. K. Varanasi and T. Guess, “Optimum decision feedback multiuser
+equalization and successive decoding achieves the total capacity of the
+Gaussian multiple-access channel,” in Proc. Asilomar Conf. Signals,
+Systems and Computers, 1997.
+[21] S. Verd´u, “Optimum multiuser asymptotic efﬁciency,” IEEE Trans.
+Commun., vol. 34, pp. 890–897, Sept. 1996.
+[22]
+, Multiuser Detection.
+Cambridge, U.K.: Cambridge Univ.
+Press, 1998.
+[23] P. Viswanath and V. Anantharam, “Optimal sequences and sum capacity
+of synchronous CDMA systems,” this issue, pp. 1984–1991.
+[24] A. J. Viterbi, CDMA—Principles of Spread Spectrum Communication.
+Reading, MA: Addison-Wesley, 1995.
+[25] L. R. Welch, “Lower bounds on the maximum cross correlation of
+signals,” IEEE Trans. Inform. Theory, vol. IT-20, pp. 397–399, May
+1974.
+[26] Z. Xie, Short, and C. Rushforth, “A family of suboptimum detectors for
+coherent multiuser communications,” IEEE J. Select. Areas Commn.,
+vol. 8, pp. 683–690, May 1990.

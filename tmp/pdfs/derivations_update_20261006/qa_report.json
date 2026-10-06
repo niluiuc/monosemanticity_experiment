@@ -1,0 +1,23 @@
+{
+  "pages": 66,
+  "page_boundary_issues": [],
+  "short_pages_for_visual_review": [],
+  "latex_layout_or_reference_warnings": [],
+  "source": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\research_notes\\volume2.tex",
+  "pdf": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\output\\pdf\\Superposition_Recursive_Training_Derivations.pdf",
+  "compiled_pdf_sha256": "c80ceee2916d4d09599f4e0ecebf5f3f93a6b8c6dceabb5b6dfe38a980aa35dd",
+  "visual_review_status": "passed",
+  "visual_review_scope": "All-page contact sheets, full-size new mathematical pages, introduction and figures inspected; final figure reflow pages inspected separately.",
+  "portable_compilation": "passed; normalized typeset text agrees page by page",
+  "portable_zip_integrity_and_source_hashes": "passed",
+  "math_teacher_review": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\project1_toy\\frequency_boundary_2026-10-06\\math\\teacher_document_review.md",
+  "math_teacher_review_sha256": "cdca592b4735d077329e47159de7a80e86f117d0062f57211a6d0341ef587d10",
+  "source_sha256": "ee3c97e45cec748b76128913b0c46e84ad30360b3b47272c604d35e8b466c473",
+  "portable_source_sha256": "43935073a9884376b565dd72cb657cf3f3f73bd62682b37b1028cb690afb6ed6",
+  "final_pdf_sha256": "c80ceee2916d4d09599f4e0ecebf5f3f93a6b8c6dceabb5b6dfe38a980aa35dd",
+  "portable_zip_sha256": "503cab46b97005c2798900123942a127ae38e7670c10526a91af29b17f7a6ab5",
+  "new_scientific_experiments": 0,
+  "calibration_math_review": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\project1_toy\\paper_decision_2026-10-06\\professor_calibration_review.md",
+  "calibration_math_review_sha256": "6e1ed2b9f448508d878dcb70b3902e444fd1d0a0fb17a39c8b5036bd67cb8e9d",
+  "calibration_independent_verification_sha256": "0ed4c176267bb67865bc0064be4a14916fe43e666cbfcbe7d7ddb22d679b82ea"
+}

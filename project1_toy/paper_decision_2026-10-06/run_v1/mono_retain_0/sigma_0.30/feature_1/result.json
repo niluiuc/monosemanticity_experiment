@@ -1,0 +1,11 @@
+{
+  "resolved": true,
+  "method": "exact zero-column optimal constant",
+  "beta": 0.5,
+  "objective": 0.25,
+  "global_lower": 0.25,
+  "global_upper": 0.25,
+  "global_gap": 0.0,
+  "interval_expansions": 0,
+  "seconds": 6.019999273121357e-05
+}

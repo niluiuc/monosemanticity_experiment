@@ -1,0 +1,23 @@
+{
+  "key": "hd2020",
+  "arxiv_id": "2010.07426",
+  "accessed_utc": "2026-10-06T00:56:10.225157+00:00",
+  "metadata": {
+    "citation_title": "A Theoretical Perspective on Hyperdimensional Computing",
+    "citation_author": "Rosing, Tajana",
+    "citation_journal_title": "Journal of Artificial Intelligence Research",
+    "citation_publication_date": "2021",
+    "citation_doi": "10.1613/jair.1.12664",
+    "citation_online_date": "2022/02/17",
+    "citation_pdf_url": "https://arxiv.org/pdf/2010.07426",
+    "citation_arxiv_id": "2010.07426",
+    "citation_abstract": "Hyperdimensional (HD) computing is a set of neurally inspired methods for obtaining high-dimensional, low-precision, distributed representations of data. These representations can be combined with simple, neurally plausible algorithms to effect a variety of information processing tasks. HD computing has recently garnered significant interest from the computer hardware community as an energy-efficient, low-latency, and noise-robust tool for solving learning problems. In this review, we present a unified treatment of the theoretical foundations of HD computing with a focus on the suitability of representations for learning."
+  },
+  "submission_history": "Submission history From: Anthony Thomas [ view email ] [v1] Wed, 14 Oct 2020 22:39:11 UTC (55 KB) [v2] Tue, 15 Dec 2020 17:19:09 UTC (56 KB) [v3] Thu, 17 Feb 2022 23:29:29 UTC (49 KB)",
+  "abstract_url": "https://arxiv.org/abs/2010.07426",
+  "pdf_url": "https://arxiv.org/pdf/2010.07426",
+  "pages": 36,
+  "pdf_bytes": 303774,
+  "pdf_sha256": "5a52ac98b9d5cb7db464e7ff26e5da8e850ca2a90b45fd8c24c19f1dba1aadbc",
+  "errors": []
+}

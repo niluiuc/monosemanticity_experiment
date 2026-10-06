@@ -1,0 +1,6 @@
+# Recorded numerical environment; Python >=3.12.
+numpy==2.3.5
+scipy==1.18.1
+sympy==1.14.0
+# Only needed for regenerating scientific figures.
+matplotlib==3.11.2

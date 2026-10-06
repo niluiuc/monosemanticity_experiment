@@ -1,0 +1,26 @@
+[
+  {
+    "geometry": "t=0; retain feature0",
+    "bias": [
+      "0",
+      "1/5"
+    ],
+    "loss": "2/25"
+  },
+  {
+    "geometry": "t=+infinity; retain feature1",
+    "bias": [
+      "1/5",
+      "0"
+    ],
+    "loss": "4/25"
+  },
+  {
+    "geometry": "t=-infinity; retain feature1",
+    "bias": [
+      "1/5",
+      "0"
+    ],
+    "loss": "4/25"
+  }
+]

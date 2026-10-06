@@ -1,0 +1,1845 @@
+
+
+===== PDF PAGE 1 =====
+Noname manuscript No.
+(will be inserted by the editor)
+Adversarial Noise Attacks of Deep Learning Architectures –
+Stability Analysis via Sparse-Modeled Signals
+Yaniv Romano∗
+· Aviad Aberdam∗· Jeremias Sulam · Michael Elad
+Received: date / Accepted: date
+Abstract Despite their impressive performance, deep
+convolutional neural networks (CNN) have been shown
+to be sensitive to small adversarial perturbations. These
+nuisances, which one can barely notice, are powerful
+enough to fool sophisticated and well performing classi-
+ﬁers, leading to ridiculous misclassiﬁcation results. In
+this paper we analyze the stability of state-of-the-art
+deep-learning classiﬁcation machines to adversarial per-
+turbations, where we assume that the signals belong to
+the (possibly multi-layer) sparse representation model.
+We start with convolutional sparsity and then proceed
+to its multi-layered version, which is tightly connected
+to CNN. Our analysis links between the stability of the
+classiﬁcation to noise and the underlying structure of the
+signal, quantiﬁed by the sparsity of its representation
+under a ﬁxed dictionary. In addition, we oﬀer similar
+stability theorems for two practical pursuit algorithms,
+Y. Romano and A. Aberdam contributed equally to this work.
+The research leading to these results has received funding
+from the Technion Hiroshi Fujiwara Cyber Security Research
+Center and the Israel Cyber Directorate.
+Y. R. thanks the Zuckerman Institute, ISEF Foundation and
+the Viterbi Fellowship, Technion, for supporting this research.
+Y. Romano
+Department of Statistics, Stanford University
+E-mail: yromano@stanford.edu
+A. Aberdam
+Electrical Engineering, Technion - Israel Institute of Technol-
+ogy
+E-mail: aaberdam@campus.technion.ac.il
+J. Sulam
+Biomedical Engineering, Johns Hopkins University
+E-mail: jsulam@jhu.edu
+M. Elad
+Computer Science, Technion - Israel Institute of Technology
+E-mail: elad@cs.technion.com
+which are posed as two diﬀerent deep-learning architec-
+tures – the Layered Thresholding and the Layered Basis
+Pursuit. Our analysis establishes the better robustness
+of the later to adversarial attacks. We corroborate these
+theoretical results by numerical experiments on three
+datasets: MNIST, CIFAR-10 and CIFAR-100.
+1 Introduction
+Deep learning, and in particular Convolutional Neural
+Networks (CNN), is one of the hottest topics in data
+sciences as it has led to many state-of-the-art results
+spanning across many domains [14,9]. Despite the ev-
+ident great success of classifying images, it has been
+recently observed that CNN are highly sensitive to ad-
+versarial perturbations in the input signal [26,10,17].
+An adversarial example is a corrupted version of a valid
+input (i.e., one that is classiﬁed correctly), where the
+corruption is done by adding a perturbation of a small
+magnitude to it. This barely noticed nuisance is designed
+to fool the classiﬁer by maximizing the likelihood of an
+incorrect class. This phenomenon reveals that state-of-
+the-art classiﬁcation algorithms are highly sensitive to
+noise, so much so that even a single step in the direction
+of the sign of the gradient of the loss function creates a
+successful adversarial example [10]. Furthermore, it has
+been shown that adversarial examples that are generated
+to attack one network are powerful enough to fool other
+networks of diﬀerent architecture and database [17], be-
+ing the key to the so-called ”black-box" attacks that
+have been demonstrated in some real-world scenarios
+[13].
+Adversarial training is a popular approach to im-
+prove the robustness of a given classiﬁer [10]. It aims
+to train a robust model by augmenting the data with
+arXiv:1805.11596v3  [stat.ML]  5 Aug 2019
+
+
+===== PDF PAGE 2 =====
+2
+Yaniv Romano∗et al.
+adversarial examples generated for the speciﬁc model
+and/or transferred from other models. Preprocessing
+[16] is another defense strategy, suggesting to denoise
+the input signal ﬁrst, and then feed this puriﬁed version
+of the signal to the classiﬁer. Indeed, the above defense
+methods improve the stability of the network; however,
+these are trained based on adversarial examples that
+are generated in speciﬁc ways. It is quite likely that
+future work could oﬀer a diﬀerent generation of adver-
+sarial examples that question again the reliability and
+robustness of such given networks.
+In this paper we provide a principled way to analyze
+the robustness of a classiﬁer using the vast theory devel-
+oped in the ﬁeld of sparse representations. We do so by
+analyzing the classiﬁer’s robustness to adversarial per-
+turbations, providing an upper bound on the permitted
+energy of the perturbation, while still safely classifying
+our data. The derived bounds are aﬀected by the clas-
+siﬁer’s properties and the structure of the signal. Our
+analysis assumes that the signals of interest belong to
+the sparse representation model, which is known for its
+successful regression and classiﬁcation performance [19,
+6], and was recently shown to be tightly connected to
+CNN [21]. We commence by analyzing a shallow convo-
+lutional sparse model and then proceed to its multi-layer
+extension. More concretely, suppose we are given a clean
+signal that is assigned to the correct class. How much
+noise of bounded energy can be added to this signal and
+still guarantee that it would be classiﬁed accurately?
+Our work shows that the bound on the energy of the
+noise is a function of the sparsity of the signal and the
+characteristics of the dictionaries (weights).
+We proceed by considering speciﬁc and practical
+pursuit algorithms that aim to estimate the signal’s
+representations in order to apply the classiﬁcation. Our
+work investigates two such algorithms, the non-negative
+Layered Thresholding (L-THR), which amounts to a
+conventional feed-forward CNN, and the non-negative
+Layered Basis-Pursuit (L-BP), which is reminiscent of
+an RNN (Residual Neural Network) architecture. Our
+analysis exposes the ingredients of the data model gov-
+erning the sensitivity to adversarial attacks, and clearly
+shows that the later pursuit (L-BP) is more robust.
+The bounds obtained carry in them practical impli-
+cations. More speciﬁcally, our study indicates that a
+regularization that would take the dictionaries’ coher-
+ence into account can potentially improve the stability
+to noise. Interestingly, a regularization that aligns well
+with our ﬁndings was tested empirically by Parseval
+Networks [20] and indeed shown to improve the classiﬁ-
+cation stability. As such, one can consider our work as a
+theoretical explanation for the empirical success of [20].
+Another approach that is tightly connected to our anal-
+ysis is the one reported in [27,18]. Rather than relying
+on a simple L-THR, these papers suggested solving a
+variant of the L-BP algorithm, in an attempt to promote
+sparse feature maps. Interestingly, it was shown in [18]
+that the ”fooling rate" in the presence of adversarial per-
+turbation is signiﬁcantly improved, serving as another
+empirical evidence to our theoretical conclusions. As will
+be shown in this paper, promoting sparse solutions and
+incoherent dictionaries is crucial for robust networks, as
+evidenced empirically in the above two papers [20,18].
+We should note that this work does not deal with
+the learning phase of the networks, as we assume that
+we have access to the true model parameters. Put on
+more practical terms, our work analyzes the sensitivity
+of the chosen inference architectures to malicious noise,
+by imposing assumptions on the ﬁlters/dictionaries and
+the incoming signals. These architectures follow the
+pursuit algorithms we explore, and their parameters are
+assumed to be known, obtained after learning.
+Moving to the experimental part, we start by demon-
+strating the derived theorems on a toy example, in order
+to better clarify the message of this work. Our simula-
+tions carefully illustrate how the L-BP is more stable
+to adversarial noise, when compared with the regular
+feed-forward neural network (i.e., the L-THR), and this
+is shown both in theoretical terms (showing the actual
+bounds) and in empirical performance. In order to fur-
+ther support the theoretical claims made in this paper,
+we numerically explore the stability of the L-THR and
+the L-BP architectures on actual data and learned net-
+works. Note that in these experiments the theoretical
+assumptions do not hold, as we do not have an access
+to the true model. In this part we consider three com-
+monly tested datasets: MNIST [15], CIFAR-10 [12] and
+CIFAR-100 [12]. Our experiments show that the L-BP
+is indeed more robust to noise attacks, where those are
+computed using the Fast Gradient Sign Method (FGSM)
+[10].
+This paper is organized as follows: In Section 2 we
+start by reviewing the basics of the convolutional sparse
+coding model and then proceed to its multi-layered ver-
+sion, which is tightly connected to CNN. Then, using
+Sparseland tools we establish a connection between the
+stability of the classiﬁcation to adversarial noise and
+the underlying structure of the signal, quantiﬁed by the
+sparsity of its representation. We commence by analyz-
+ing shallow networks in Section 3 and then continue to
+deeper settings in Section 4. In addition, we oﬀer similar
+stability theorems for two pursuit algorithms, which are
+posed as two diﬀerent deep-learning architectures – the
+L-THR and the L-BP. In Section 5 we numerically study
+the stability of these architectures demonstrating the
+theoretical results, starting with a toy example using
+
+
+===== PDF PAGE 3 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+3
+simulated data, and then continuing with tests on real
+data. We conclude in Section 6 by delineating further
+research directions.
+2 Background and problem setup
+Consider a set
+
+sj	
+j =
+ Xj, yj	
+j of high dimensional
+signals Xj ∈X ⊆RN and their associated labels yj ∈Y.
+Suppose that each signal Xj = DΓj belongs to the (pos-
+sibly multi-layer convolutional [21]) sparse representa-
+tion model, where D is a dictionary and Γj is a sparse
+vector. Suppose further that we are given a linear clas-
+siﬁer that operates on the sparse representation Γj and
+successfully discriminates between the diﬀerent classes.
+Ignoring the superscript j for clarity, given the input
+s = (X, y) the adversary’s goal is to ﬁnd an example
+Y = X + E, such that the energy of E is small, and yet
+the model would misclassify Y. Figure 1 depicts this clas-
+siﬁcation scheme. We consider the class of ℓp bounded
+adversaries, in the sense that for a given energy ϵ, the
+adversarial example satisﬁes ∥Y −X∥p = ∥E∥p ≤ϵ.
+Fig. 1: The classiﬁcation scheme consists of a sparse
+coding block and a linear classiﬁer. The adversarial
+noise E aims to fail the classiﬁcation, ˆy̸ = y, while
+having of the smallest possible energy.
+How much perturbation E ∈RN of bounded energy ϵ
+can be added to X so as the measurement Y = X+E will
+still be assigned to the correct class? What is the eﬀect
+of the sparsity of the true representation? What is the
+inﬂuence of the dictionary D on these conclusions? How
+can we design a system that will be robust to noise based
+on the answers to the above questions? These questions
+are the scope of this paper. Before addressing these, in
+this section we provide the necessary background on
+several related topics.
+2.1 Convolutional sparse coding
+The convolutional sparse coding (CSC) model assumes
+that a signal X ∈RN can be represented as X = DΓ,
+where D ∈RN×Nm is a given convolutional dictionary
+and Γ ∈RNm is a sparse vector. The dictionary D is
+composed of m local unique ﬁlters of length n, where
+each of these is shifted at every possible location (see
+Figure 2 left, here ignore the subscript ’1’ for clarity).
+The special structure of this matrix implies that the
+i-th patch xi ∈Rn extracted from the global signal
+X has an underlying shift-invariant local model [22].
+Concretely, xi = ΩSiΓ, where Ωis a ﬁxed matrix
+shared by all the overlapping patches, multiplied by
+the corresponding stripe vector SiΓi ∈R(2n−1)m, where
+Si ∈R(2n−1)m×mN extracts the stripe from the global
+Γ.
+Building upon the local structure of this model, it
+was shown in [22] that measuring the local sparsity
+of Γ rather than the global one is much more infor-
+mative. The notion of local sparsity is deﬁned by the
+ℓ0,∞pseudo-norm, expressed by ∥Γ∥S
+0,∞= maxi ∥SiΓ∥0,
+which counts the maximal number of non-zeros in the
+stripes (and hence the superscript S) of length (2n−1)m
+extracted from Γ.
+In the setting of this paper, we are given a noisy
+measurement of X = DΓ, formulated as Y = X + E,
+where E is an ℓp-bounded adversarial perturbation. In
+the ℓ2 case, the pursuit problem of estimating Γ given
+Y, D and the energy of E (denoted by ϵ) is deﬁned as
+(PE
+0,∞) :
+min
+Γ
+∥Γ∥
+S
+0,∞s.t. ∥Y −DΓ∥2
+2 ≤ϵ2.
+(1)
+The stability of the above problem and practical algo-
+rithms (Orthogonal Matching Pursuit – OMP, and Basis
+Pursuit – BP) that aim to tackle it were analyzed in [22].
+Under the assumption that Γ is “locally sparse enough”,
+it was shown that one can obtain an estimate ˆΓ that
+is close to the true sparse vector Γ in an ℓ2-sense. The
+number of non-zeros in Γ that guarantees such a stable
+recovery is a function of ϵ and the characteristics of the
+convolutional dictionary D.
+Two measures that will serve us in our later analysis
+are (i) the extension of the Restricted Isometry Property
+(RIP) [5] to the convolutional case, termed SRIP [22],
+and (ii) the mutual coherence. The SRIP of a dictio-
+nary D of cardinality k is denoted by δk. It measures
+how much the multiplication of a locally sparse vector
+v, ∥v∥S
+0,∞= k by D changes its energy (see deﬁnition 14
+in [22]). A small value of δk(≪1) implies that D behaves
+almost like an orthogonal matrix, i.e. ∥Dv∥2 ≈∥v∥2.
+The second measure that we will rely on is the mutual
+coherence of a dictionary with ℓ2 normalized columns,
+which is formulated as µ(D) = maxi̸=j |dT
+i dj|, where
+dj stands for the j-th column (atom) from D. In words,
+µ(D) is the maximal inner product of two distinct atoms
+extracted from D.
+2.2 Multi-layer CSC
+The multi-layer convolutional sparse coding (ML-CSC)
+model is a natural extension of the CSC to a hierarchi-
+cal decomposition. Suppose we are given a CSC signal
+
+
+===== PDF PAGE 4 =====
+4
+Yaniv Romano∗et al.
+𝑚1
+𝑛
+𝐃1 ∈ℝ𝑁×𝑁𝑚1
+∈ℝ𝑁
+∈ℝ𝑁𝑚1
+𝑛𝑚1
+𝑚2
+𝐒1,
+∈ℝ2𝑛−1 𝑚1
+𝐃2 ∈ℝ𝑁𝑚1×𝑁𝑚2
+∈ℝ𝑁𝑚2
+𝑚1
+1
+1
+2
+1
+1
+2
+∈ℝ𝑁𝑚1
+1𝚪
+𝚪
+𝐗
+𝐗
+𝚪
+𝚪
+Fig. 2: Left: The global convolutional system X = D1Γ1, along with the representation of the i-th patch S1,iΓ1.
+Right: The second layer of the multi-layer CSC model, given by Γ1 = D2Γ2.
+X = D1Γ1, where D1 ∈RN×Nm1 is a convolutional
+dictionary and Γ1 ∈RNm1 is the (local) sparse represen-
+tation of X over D1 (see Figure 2 left). The ML-CSC
+pushes this structure forward by assuming that the rep-
+resentation itself is structured, and can be decomposed
+as Γ1 = D2Γ2, where D2 ∈RNm1×Nm2 is another a con-
+volutional dictionary, multiplied by the locally sparse
+vector Γ2 ∈RNm2 (see Figure 2 right). Notice that Γ1
+has two roles, as it is the representation of X, and a
+signal by itself that has a CSC structure. The second
+dictionary D2 is composed of m2 local ﬁlters that skip
+m1 entries at a time, where each of the ﬁlters is of
+length n2m1. This results in a convolution operation in
+the spatial domain of Γ1 but not across channels (Γ1
+has m1 channels), as in CNN. The above construction
+is summarized in the following deﬁnition (Deﬁnition 1
+in [21]):
+Deﬁnition 1 For a global signal X, a set of convolu-
+tional dictionaries {Di}K
+i=1, and a vector λ, deﬁne the
+ML-CSC model as:
+Γi−1 = DiΓi,
+∥Γi∥
+S
+0,∞≤λi
+∀1 ≤i ≤K
+where Γ0 = X, and the scalar λi is the i-th entry in λ.
+Turning to the pursuit problem in the noisy regime,
+an extension of the CSC pursuit (see Equation (1)) to
+the multi-layer setting (of depth K) can be expressed
+as follows:
+Deﬁnition 2 (Deﬁnition 2 in [21]) For a global signal
+Y, a set of convolutional dictionaries {Di}K
+i=1, sparsity
+levels λ and noise energy ϵ, the deep coding problem is
+given by
+(DCP E
+λ ) : ﬁnd {Γi}K
+i=1
+s.t. ∥Y −D1Γ1∥2 ≤ϵ,
+Γi−1 = DiΓi,
+∥Γi∥
+S
+0,∞≤λi,
+∀1 ≤i ≤K.
+How can one solve this pursuit task? The work re-
+ported in [21] has shown that the forward pass of CNN
+is in fact a pursuit algorithm that is able to estimate
+the underlying representations Γ1, . . . , ΓK of a signal
+X that belongs to the ML-CSC model. Put diﬀerently,
+the forward pass was shown to be nothing but a non-
+negative layered thresholding pursuit, estimating the
+representations Γi of the diﬀerent layers. To better see
+this, let us set ˆΓ0 = Y and deﬁne the classic thresholding
+pursuit [6], ˆΓi = S+
+βi(DT
+i ˆΓi−1), for 1 ≤i ≤K. The term
+DT
+i ˆΓi−1 stands for convolving ˆΓi−1 (the feature map)
+with the ﬁlters of Di (the weights), and the soft non-
+negative thresholding function S+
+βi(v) = max{0, v −βi}
+is the same as subtracting a bias βi from v and applying
+a ReLU nonlinearity. In a similar fashion, the work in
+[21] oﬀered to replace the Thresholding algorithm in
+the sparse coding blocks with Basis-Pursuit, exposing
+a recurrent neural network architecture that emerges
+from this approach.
+This connection of CNN to the pursuit of ML-CSC
+signals was leveraged [21] to analyze the stability of CNN
+architectures. Their analysis concentrated only on the
+feature extraction stage – the pursuit – and ignored the
+classiﬁcation step and the role of the labels. In this paper
+we build upon this connection of Sparseland to CNN,
+and extend the analysis to cover the stability of layered
+pursuit algorithms when tackling the classiﬁcation task
+in the presence of noise. In Section 4 we shall consider
+a classiﬁer consisting of a chain of sparse coding blocks
+and a linear classiﬁer at its deepest layer, as depicted in
+Figure 3. Our work aims to analyze the stability of such a
+scheme, suggesting that replacing the pursuit algorithm
+in the sparse coding blocks from Thresholding to Basis-
+Pursuit yields a more stable architecture with respect
+to adversarial noise, both theoretically and practically.
+More speciﬁcally, we ﬁrst study the stability to ad-
+versarial noise of the feed-forward CNN classiﬁer. Or
+
+
+===== PDF PAGE 5 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+5
+Fig. 3: A deep classiﬁcation scheme consisting of a chain
+of sparse coding blocks and a linear classiﬁer.
+equivalently, where each of the pursuit algorithms in
+Figure 3 is chosen to be the Thresholding. This archi-
+tecture is depicted in Figure 4a. Then we switch to
+the Basis-Pursuit as the sparse coding, serving better
+the sparse model, and resulting a new deep-learning
+architecture with the same number of parameters but
+with additional feedback loops as illustrated in Figure1
+4b. We now give more formal deﬁnitions of these two
+schemes.
+Deﬁnition 3 (L-THR) For an ML-CSC signal Y =
+X + E with convolutional dictionaries {Di}K
+i=1, thresh-
+olds {βi}K
+i=1, and a classiﬁer (w, ω), deﬁne the Layered-
+Thresholding (L-THR) algorithm as: Apply
+ˆΓi = S+
+βi(DT
+i ˆΓi−1) for i = 1, 2, . . . , K,
+and assign y = sign
+
+f(ˆΓK)
+
+, where
+f(ˆΓK) = wT ˆΓK + ω.
+Deﬁnition 4 (L-BP) For an ML-CSC signal Y = X +
+E with convolutional dictionaries {Di}K
+i=1, Lagrangian
+multipliers {ϵi}K
+i=1, and a classiﬁer (w, ω), deﬁne the
+Layered-Basis-Pursuit (L-BP) algorithm as: Apply
+ˆΓi = arg min
+Γi
+ξi∥Γi∥1 + 1
+2∥DiΓi −ˆΓi−1∥2
+2
+for i = 1, 2, . . . , K,
+and assign y = sign
+
+f(ˆΓK)
+
+, where
+f(ˆΓK) = wT ˆΓK + ω.
+3 First steps: shallow sparsity
+3.1 Two-class (binary) setting
+Herein we consider the a binary classiﬁcation setting
+(i.e. Y = {1, −1}) in which a linear classiﬁer is given
+to us, being part of the generative model. This classiﬁer
+is deﬁned by the couple (w, ω), where w ∈RNm is
+a weight vector and ω is a bias term (a scalar). Put
+formally, the model we shall study in this subsection is
+given by the deﬁnition below.
+1 Note that in this scheme, the number of iterations for each
+BP pursuit stage is implicit, hidden by the number of loops
+to apply. More on this is given in later sections.
+Deﬁnition 5 A convolutional Sparseland signal X =
+DΓ, ∥Γ∥S
+0,∞≤k is said to belong to class y = 1 when the
+linear discriminant function f (Γ) = wT Γ + ω satisﬁes
+f(Γ) > 0, and y = −1 otherwise.
+The expression wT Γ + ω deﬁnes a linear discriminant
+function for which the decision surface f(Γ′) = 0 is
+a hyperplane in the feature domain (but not in the
+signal domain), where Γ′ is a point that lies on the
+decision boundary. As such, one can express the distance
+from the decision boundary in the feature domain as
+OB(X, y) = yf(Γ) = y
+ wT Γ + ω
+
+, where the subscript
+B stands for Binary. Notice that the larger the value
+of OB(X, y), the larger the distance to the decision
+boundary, as it is deﬁned by OB(X′, y) = 0. Following
+this rational, OB(X, y) is often termed the score or the
+output margin. The measure OB(X, y) is X-dependent,
+and thus we have an interest in its extreme value,
+O∗
+B =
+min
+{Xj,yj}j OB(Xj, yj),
+being a property of our data and the classiﬁer’s parame-
+ters, making our claims universal and not signal-speciﬁc.
+As will be shown hereafter, classiﬁcation robustness is
+directly related to this quantity. Moreover, we emphasize
+that there are two margins involved in our analysis: (i)
+the above-described input data margin, which cannot be
+controlled by any learning scheme, and (ii) the margin
+that a classiﬁer obtains when operating on a perturbed
+input signal, resulting in the evaluated representation ˆΓ.
+The results in this work rely on these two measures, as
+we aim to make sure that the former margin is not dimin-
+ished by the practical classiﬁer design or the adversarial
+noise.
+This takes us naturally to the adversarial setting.
+The problem we consider is deﬁned as follows:
+Deﬁnition 6 For a signal Y = X+E with a true label
+y, a convolutional dictionary D, a perturbation energy
+ϵ, and a classiﬁer (w, ω), deﬁne the binary classiﬁcation
+algorithm as:
+Solve
+ˆΓ = arg min
+Γ
+∥Γ∥
+S
+0,∞
+s.t.
+∥Y −DΓ∥2 ≤ϵ
+and assign ˆy = sign
+
+f(ˆΓ)
+
+where f(ˆΓ) = wT ˆΓ + ω.
+Notice that the signal is assigned to the correct class
+if sign(f(Y)) = y, or, equivalently when OB(Y, y) =
+yf(Y) = y(wT ˆΓ + ω) > 0. In words, the pursuit/sparse-
+coding step projects the perturbed signal Y onto the
+model by estimating the representation ˆΓ, which in
+turn is fed to a classiﬁer as formulated by f(Y). In the
+
+
+===== PDF PAGE 6 =====
+6
+Yaniv Romano∗et al.
+(a) The Layered-Thresholding classiﬁer (L-THR), corresponding to a CNN - a feed-forward convolutional neural network.
+(b) The Layered-Basis-Pursuit classiﬁer (L-BP), corresponding to a CNN with additional feedback loops.
+Fig. 4: The deep classiﬁer architectures considered in this work.
+remaining of this paper we shall study the conditions
+on X, D and ϵ which guarantee that OB(Y, y) > 0,
+i.e., the input signal Y will be assigned to the correct
+class despite of the adversarial perturbation and the
+limitations of a speciﬁc pursuit algorithm. The model
+assumptions that we are considering allow us to reveal
+the underlying characteristics of the signal (e.g. the
+properties of the dictionary and the sparsity level) that
+are crucial for a successful prediction. Put diﬀerently,
+we aim to reveal the ingredients that one should consider
+when designing a robust classiﬁcation system. Notice
+that we concentrate on the inference stage only and do
+not analyze the learning part. In fact, similarly to [8],
+we see this as an advantage since it keeps the generality
+of our ﬁndings.
+Let us start our discussion by ﬁrst studying the
+stability of the binary classiﬁcation algorithm to noise:
+Theorem 7 (Stable Binary Classiﬁcation of the CSC
+Model): Suppose we are given a CSC signal X = DΓ,
+∥Γ∥S
+0,∞≤k, contaminated with perturbation E to create
+the signal Y = X + E, such that ∥E∥2 ≤ϵ. Suppose
+further that O∗
+B > 0 and denote by ˆΓ the solution of
+the PE
+0,∞problem (see Equation (1)). Assuming that
+δ2k < 1 −
+
+2∥w∥2ϵ
+O∗
+B
+2
+, then sign(f(Γ)) = sign(f(ˆΓ)).
+Considering the more conservative bound that relies
+on µ(D), and assuming that
+∥Γ∥
+S
+0,∞< k = 1
+2
+ 
+1 +
+1
+µ(D)
+"
+1 −
+2∥w∥2ϵ
+O∗
+B
+2#!
+,
+then sign(f(Γ)) = sign(f(ˆΓ)).
+The proof of this theorem and the remaining ones are
+given in the Appendix. Among various implications, the
+above theorem shows the eﬀect of D and its properties on
+the stability of the classiﬁer. A dictionary with δ2k ≪1
+tends to preserve the distance between any pair of locally
+k-sparse vectors (deﬁned by the ℓ0,∞norm), which turns
+to be crucial for robust classiﬁcation. The beneﬁt of
+switching from the SRIP to µ(D) is that the latter
+is trivial to compute, but with the cost of weakening
+the result. The expected and somewhat unsurprising
+conclusion of Theorem 7 is that the score of the classiﬁer
+plays a key role for a stable classiﬁcation – the larger the
+distance to the decision boundary in the feature space
+the more robust the classiﬁer is to noise. This stands in
+a line with the conclusion of [8]. Another alignment with
+previous work (e.g. [3,23]) is the eﬀect of the norm of w.
+Notice that in the proposed theorem, ∥w∥2 is multiplied
+by the noise energy ϵ and both have a negative eﬀect on
+the stability. As a result, one should promote a weight
+vector of low energy (this is often controlled via a weight
+decay regularization) as it is capable of increasing the
+robustness of the sparsity-inspired classiﬁcation model
+to noise.
+The added value of Sparseland is that a “well be-
+haved" dictionary, having a small SRIP constant or low
+mutual coherence, is the key for stable recovery, which,
+in turn, would increase the robustness of the classier.
+Interestingly, implied from the proof of the obtained
+results is the fact that a successful classiﬁcation can be
+achieved without recovering the true support (i.e., the
+locations of non-zeros in Γ). This might be counter in-
+tuitive, as the support deﬁnes the subspace that the
+signal belongs to. That is, even if the noise in Y leads
+to an estimation ˆΓ that belongs to slightly diﬀerent
+subspace than the one of X, the input signal could be
+still classiﬁed correctly as long as the dimension of the
+subspace that it belongs to is small enough (the sparsity
+constraint).
+Our results and perspective on the problem are very
+diﬀerent from previous work that studies the robustness
+to adversarial noise. Fawzi et al. [8] suggested a measure
+for the diﬃculty of the classiﬁcation task, where in the
+linear setting this is deﬁned as the distance between the
+means of the two classes. Our results diﬀer from these
+as we heavily rely on a generative model, and so are
+capable of linking the intrinsic properties of the signal
+– its sparsity and ﬁlters’ design – to the success of the
+classiﬁcation task. This enables us to suggest ways to
+increase the desired robustness.
+
+
+===== PDF PAGE 7 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+7
+A recent work [7] relies on a generative model (similar
+to ours) that transforms normally-distributed random
+representation to the signal domain. Their goal was to
+prove that there exists an upper bound on the robustness
+that no classiﬁer can exceed. Still, the authors of [7]
+did not study the eﬀect of the ﬁlters nor the network’s
+depth (or the sparsity). Their analysis is very diﬀerent
+from ours as we put an emphasis on the stability of
+sparsity-inspired model and its properties.
+As already mentioned, the margin of the data has
+an impact on the stability as well. Denoting by X′ a
+point on the boundary decision, the work reported in
+[23] connected the input margin, given by ∥X′ −X∥2, to
+the output distance ∥f(Γ′) −f(Γ)∥2 = ∥f(Γ)∥2 through
+the Jacobian of the classiﬁer f(·). This connection is of
+importance as the input margin is directly related to
+the generalization error. In the scope of this paper, the
+distance between the signal and its cleaned version in
+the input space is nothing but the energy of the noise
+perturbation ∥X −Y∥2 = ϵ. This, in turn, is linked
+to the score of the classiﬁer distance ∥f(ˆΓ) −f(Γ)∥2 =
+∥wT ˆΓ −wT Γ∥2 ≤∥w∥2∥ˆΓ −Γ∥2 (refer to the proof of
+Theorem 7 for more details).
+We should clarify the term stability used in this sec-
+tion: This refers to any solver of the pursuit task that
+satisﬁes the following two constraints (i) ∥DΓ−Y∥2 ≤ϵ,
+and (ii) ∥Γ∥S
+0,∞= k. Later on we shall refer to actual
+pursuit methods and extend this result further. Con-
+cretely, suppose we run the Thresholding pursuit (or
+the BP) to estimate the representation ˆΓ of a given Y.
+Then, we feed the obtained sparse vector to our linear
+classiﬁer and hope to assign the input signal to its true
+label, despite the existence of the adversarial pertur-
+bation. Can we guarantee a successful classiﬁcation in
+such cases? While this question can be addressed in the
+CSC case, we shall study the more general multi-layer
+model. Before doing so, however, we expand the above
+to the multi-class setting.
+3.2 Multi-class setting
+In order to provide a complete picture on the factors
+that aﬀect the stability of the classiﬁcation procedure,
+we turn to study multi-class linear classiﬁers. Formally,
+the discriminant function is described by the following
+deﬁnition:
+Deﬁnition 8 A CSC signal X = DΓ, ∥Γ∥S
+0,∞≤k, is
+said to belong to class y = u if the linear discriminant
+function satisﬁes ∀v̸ = u
+fu (Γ) = wT
+u Γ + ωu > wT
+v Γ +
+ωv = fv(Γ), where u stands for the index of the true
+class, and v is in the range of [1, L]\v.
+Analogously to the binary case, the decision bound-
+ary between class u and v is given by fu(Γ′) = fv(Γ′).
+Therefore, we formalize the distance to the decision
+boundary of the class y = u in the feature space as
+OM(X, y) = minv:v̸=u fu (Γ) −fv (Γ) , which measures
+the distance between the classiﬁcation result of the u-
+classiﬁer to the rest L −1 ones for a given point X.
+Similarly to the binary setting, we obtain the minimal
+distance over all the classes and examples by
+O∗
+M =
+min
+{Xj,yj}j OM(Xj, yj),
+where we assume that OM(Xj, yj) > 0. Notice that this
+assumption aligns with the practice, as the common
+setting in CNN-based classiﬁcation assumes that a per-
+fect ﬁt of the data during training is possible. Another
+measure that will be found useful for our analysis is the
+distance between the weight vectors. Put formally, we
+deﬁne the multi-class weight matrix W of size mN × L
+as W = [w1; w2; · · · ; wL] , which stores the weight vec-
+tors as its columns. The following measure quantiﬁes
+the mutual Euclidean distance between the classiﬁers,
+given by
+φ(W) = max
+u̸=v ∥wu −wv∥2.
+The analogous of this measure in the the binary classiﬁ-
+cation, when L = 2, is the norm of the classiﬁer being
+∥w∥2, as in this case one can deﬁne w1 = −w2 = 1
+2w.
+Theorem 9 (Stable Multi-Class Classiﬁcation of the
+CSC Model): Suppose we are given a CSC signal X =
+DΓ, ∥Γ∥S
+0,∞≤k, contaminated with perturbation E
+to create the signal Y = X + E, such that ∥E∥2 ≤ϵ.
+Suppose further that fu(Γ) = wT
+u Γ +ωu correctly assigns
+X to class y = u. Suppose further that O∗
+M > 0, and
+denote by ˆΓ the solution of the PE
+0,∞problem. Assuming
+that δ2k < 1 −
+
+2φ(W)ϵ
+O∗
+M
+2
+, then Y will be assigned to
+the correct class.
+Considering the more conservative bound that relies
+on µ(D) and assuming that
+∥Γ∥
+S
+0,∞< k = 1
+2
+ 
+1 +
+1
+µ(D)
+"
+1 −
+2φ(W)ϵ
+O∗
+M
+2#!
+,
+then Y will be classiﬁed correctly.
+As one might predict, the same ingredients as in
+Theorem 7 (coherence of D or its SRIP) play a key role
+here as well. Moreover, in the two-class setting φ(W) =
+∥w∥2, and so the two theorems align. The diﬀerence
+becomes apparent for L > 2, when the mutual Euclidean
+distance between the diﬀerent classiﬁers inﬂuences the
+robustness of the system to noise. In the context of
+
+
+===== PDF PAGE 8 =====
+8
+Yaniv Romano∗et al.
+multi class support vector machine, it was shown [4]
+that the separation margin between the classes u and v is
+2/∥wu−wv∥2. This observation motivated the authors of
+[4] to minimize the distance ∥wu −wv∥2, ∀u̸ = v during
+the training phase. Interestingly, this quantity serves
+our bound as well. Notice that our theorem also reveals
+the eﬀect of the number of classes on the robustness.
+Since φ(W) measures the maximal distance between
+the L weight vectors, it is a monotonically increasing
+function of L and thereby stiﬀening our conditions for a
+successful classiﬁcation. This phenomenon was observed
+in practice, indicating that it is easier to “fool” the
+classiﬁer when the number of classes is large, compared
+to a binary setting [7].
+4 Robustness bounds for CNN
+We now turn to extend the above results to a multi-
+layer setting, and this way shed light on the stability of
+classic CNN architectures. For simplicity we return to
+the binary setting, as we have seen that the treatment
+of multiple classes has a similar analysis. We commence
+by deﬁning the model we aim to analyze in this part:
+Deﬁnition 10 An ML-CSC signal X (see deﬁnition 1)
+is said to belong to class y = 1 when the linear discrimi-
+nant function f (X) = wT ΓK + ω satisﬁes f(ΓK) > 0,
+and y = −1 otherwise.
+Notice that the classiﬁer operates on the representation
+of the last layer, and so the deﬁnition of the signal-
+dependent score OB(X, y) and the universal O∗
+B are
+similar to the ones deﬁned in Section 3.1. We now turn
+to the noisy regime, where the adversarial perturbation
+kicks in:
+Deﬁnition 11 For a corrupted ML-CSC signal Y =
+X + E with a true label y, convolutional dictionaries
+{Di}K
+i=1, a perturbation energy ϵ, sparsity levels λ, and
+a classiﬁer (w, ω), deﬁne the multi-layer binary classiﬁ-
+cation algorithm as:
+ﬁnd {ˆΓ}K
+i=1 by solving the DCP E
+λ problem;
+and assign y = sign
+
+f(ˆΓK)
+
+,
+where f(ˆΓK) = wT ˆΓK + ω.
+Above, an accurate classiﬁcation is achieved when
+sign(f(ˆΓK)) = sign (f(ΓK)). The stability of the multi-
+layer binary classiﬁcation algorithm can be analyzed
+by extending the results of [21] as presented in Section
+2. Therefore, rather than analyzing the properties of
+the problem, in this section we concentrate on speciﬁc
+algorithms that serve the ML-CSC model – the L-THR
+algorithm (i.e. the forward pass of CNN), and its L-BP
+counterpart. To this end, diﬀerently from the previous
+theorems that we presented, we will assume that the
+noise is locally bounded (rather than globally2) as sug-
+gested in [21]. Put formally, we use the ℓ2,∞-norm to
+measure the energy of the noise in a vector E, denoted
+by ∥E∥P
+2,∞, which is deﬁned to be the maximal energy
+of a n1-dimensional patch extracted from it.
+Theorem 12 (Stable Binary Classiﬁcation of the L-
+THR): Suppose we are given an ML-CSC signal X
+contaminated with perturbation E to create the signal
+Y = X + E, such that ∥E∥P
+2,∞≤ϵ0. Denote by |Γ min
+i
+|
+and |Γ max
+i
+| the lowest and highest entries in absolute
+value in the vector Γi, respectively. Suppose further that
+O∗
+B > 0 and let {ˆΓi}K
+i=1 be the set of solutions obtained
+by running the layered soft thresholding algorithm with
+thresholds {βi}K
+i=1, i.e. ˆΓi = Sβi(DT
+i ˆΓi−1) where Sβi is
+the soft thresholding operator and ˆΓ0 = Y. Assuming
+that ∀1 ≤i ≤K
+a)
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+|Γ min
+i
+|
+|Γ max
+i
+|
+
+−
+1
+µ(Di)
+ϵi−1
+|Γ max
+i
+|;
+b)
+The threshold βi is chosen according to
+|Γmin
+i
+| −Ci −ϵi−1 > βi
+> ∥Γi∥
+S
+0,∞µ(Di)|Γmax
+i
+| + ϵi−1,
+where
+Ci =
+(∥Γi∥
+S
+0,∞−1)µ(Di)|Γmax
+i
+|,
+ϵi =
+q
+∥Γi∥P
+0,∞
+
+ϵi−1 + Ci + βi
+
+;
+and
+c)
+O∗
+B > ∥w∥2
+p
+∥ΓK∥0
+
+ϵK−1 + CK + βK
+
+,
+then sign(f(ˆΓK)) = sign(f(ΓK)).
+Some of the ingredients of the above theorem are simi-
+lar to the previous results, but there are several major
+diﬀerences. First, while the discussion in Section 3 con-
+centrated on the stability of the problem, here we get
+that the forward pass is an algorithm that is capable
+of recovering the true support of the representations
+Γi. Still, this perfect recovery does not guarantee a suc-
+cessful classiﬁcation, as the error in the deepest layer
+should be smaller than O∗
+B. Second, the forward pass is
+sensitive to the contrast of the non-zero coeﬃcients in Γi
+(refer to the ratio |Γ min
+i
+|/|Γ max
+i
+|), which is a well known
+limitation of the thresholding algorithm [6]. Third, we
+see that without a careful regularization (e.g. promoting
+the coherence to be small) the noise can be easily ampli-
+ﬁed throughout the layers (ϵi increases as a function of
+i). Practitioners refer to this as the error ampliﬁcation
+eﬀect [16].
+2 Locally bounded noise results exist for the CSC as well
+[22], and can be leveraged in a similar fashion.
+
+
+===== PDF PAGE 9 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+9
+In fact, a similar regularization force is used in Par-
+seval Networks [20] to increase the robustness of CNN
+to adversarial perturbations. These promote the con-
+volutional layers to be (approximately) Parseval tight
+frames, which are extensions of orthogonal matrices to
+the non-square case. Speciﬁcally, the authors in [20]
+suggested to promote the spectral norm of the weight
+matrix DT
+i to be close to 1, i.e. ∥DiDT
+i −I∥2
+2, where I
+is the identity matrix. This regularization encourages
+the average coherence of Di to be small. As our anal-
+ysis suggests, it was shown that such a regularization
+signiﬁcantly improves the robustness of various models
+to adversarial examples.
+Suppose that our data emerges from the ML-CSC
+model, can we oﬀer an alternative architecture that is
+inherently better in handling adversarial perturbations?
+The answer is positive and is given in the form of the
+L-BP that was suggested and analyzed in [21]. Consider
+an ML-CSC model of depth two, the LBP algorithm
+suggests estimating Γ1 and Γ2 by solving a cascade of
+basis pursuit problems. The ﬁrst stage of this method
+provides an estimate for Γ1 by minimizing
+ˆΓ1 = arg min
+Γ1
+∥Y −D1Γ1∥2
+2 + ξ1∥Γ1∥1.
+Then, an approximation for the deeper representation
+Γ2 is given by
+ˆΓ2 = arg min
+Γ2
+∥ˆΓ1 −D2Γ2∥2
+2 + ξ2∥Γ2∥1.
+Finally, the recovered ˆΓ2 is fed into a classiﬁer, resulting
+in the predicted label.
+In what follows we build upon the analysis in [21] and
+show how our theory aligns with the increased stability
+that was empirically observed by replacing the L-THR
+algorithm with the L-BP [18]:
+Theorem 13 (Stable Binary Classiﬁcation of the L-
+BP): Suppose we are given an ML-CSC signal X that
+is contaminated with noise E to create the signal Y =
+X + E, such that ∥E∥P
+2,∞≤ϵ0. Suppose further that
+O∗
+B > 0, and let {ˆΓi}K
+i=1 be the set of solutions obtained
+by running the L-BP algorithm with parameters {ξi}K
+i=1,
+formulated as ˆΓi = arg min
+Γi
+ξi∥Γi∥1 + 1
+2∥DiΓi −ˆΓi−1∥2
+2,
+where ˆΓ0 = Y. Assuming that ∀1 ≤i ≤K,
+a)
+∥Γi∥S
+0,∞≤1
+3
+
+1 +
+1
+µ(Di)
+
+;
+b)
+ξi = 4ϵi−1,
+where ϵi = ∥E∥P
+2,∞· 7.5i Qi
+j=1
+q
+∥Γj∥P
+0,∞;
+and
+c)
+O∗
+B > 7.5∥w∥2
+p
+∥ΓK∥0 ϵK,
+then sign(f(ˆΓK)) = sign(f(ΓK)).
+The proof can be derived by relying on the steps of Theo-
+rem 12, combined with Theorem 12 from [21]. Note that
+the conditions for the stable classiﬁcation of the L-BP
+are not inﬂuenced by the ratio |Γmin
+i
+|/|Γmax
+i
+|. Moreover,
+the condition on the cardinality of the representations
+in the L-BP case is less strict than the one of the L-
+THR. As such, while the computational complexity of
+the BP algorithm is higher than the thresholding one,
+the former is expected to be more stable than the latter.
+This theoretical statement is supported in practice [18].
+Note that both methods suﬀer from a similar problem –
+the noise is propagated thorough the layers. A possible
+future direction to alleviate this eﬀect could be to har-
+ness the projection (onto the ML-CSC model) algorithm
+[25], whose bound is not cumulative across the layers.
+5 Numerical experiments
+Our study of the stability to bounded noise, in particu-
+lar Theorems 12 and 13, introduces a better guarantee
+for the L-BP, when compared to the well-known L-THR
+architecture (=CNN). In this section, we aim to numer-
+ically corroborate these ﬁndings by exploring the actual
+robustness to adversarial noise of these two architectures.
+We achieve this by introducing two sets of experiments:
+(i) We start with a toy example using synthetically gen-
+erated data, and show the actual behavior of the L-THR
+and the L-BP versus their theoretical bounds; and (ii)
+We proceed by testing these two architectures and ex-
+ploring their robustness to adversarial noise on actual
+data, exposing the superiority of the L-BP.
+As described in [21,1,24] and depicted in Figure 4b,
+the L-BP is implemented by unfolding the projected
+gradient steps of the iterative thresholding algorithm. By
+setting the number of unfolding iterations to zero, the L-
+BP becomes equivalent to the L-THR architecture. Note
+that both pursuit methods contain the same number of
+ﬁlters, and those are of the same dimensions. Therefore,
+the same number of free parameters govern both their
+computational paths. Nonetheless, more unfoldings in
+the L-BP lead to a higher computational complexity
+when compared to L-THR.
+5.1 Synthetic experiments
+We start our experimental section with a toy example
+using synthetically generated data, where we have com-
+plete access to the generative model and its parameters.
+This allows us to (i) Compute the theoretical bounds
+on the permitted noise; and (ii) Compare these predic-
+tions with an evaluation of the practical behavior. Our
+
+
+===== PDF PAGE 10 =====
+10
+Yaniv Romano∗et al.
+emphasis in this part is on the single layer Threshold-
+ing and Basis-Pursuit classiﬁers, as synthesizing signals
+from the multi-layered model is far more challenging.
+Our goal is to show the diﬀerences between the the-
+oretical bounds and the measured empirical stability.
+For completeness, we include experiments with both
+an undercomplete (having less atoms than the signal
+dimension) and overcomplete (where the dictionary is
+redundant) dictionaries.
+As already mentioned, we consider the bounds from
+Theorems 12 and 13 with K = 1, corresponding to a
+one hidden layer neural network with a non convolu-
+tional (fully connected) dictionary. The two following
+corollaries describe the bounds of the L-THR and the
+L-BP in such simpliﬁed case.
+Corollary 1 (Stability of one hidden layer L-THR)
+Suppose that Y = DΓ + E, where D is a general dic-
+tionary with normalized atoms, ∥E∥2 ≤ϵ, and (w, ω) is
+the linear classiﬁer. Suppose also that
+∥Γ∥0 ≤1
+2
+
+1 + |Γmin|
+|Γmax|
+1
+µ(D)
+
+−
+ϵ
+µ(D) |Γmax|,
+and that the threshold β set to satisfy:
+∥Γ∥0 µ(D) |Γmax| + ϵ < β <
+|Γmin| −(∥Γ∥0 −1)µ(D) |Γmax| −ϵ.
+Then, the support of ˆΓ
+THR is contained in the support
+of Γ, and
+ˆΓ
+THR −Γ
+
+2 ≤
+q
+∥Γ∥0 (ϵ + (∥Γ∥0 −1)µ(D) |Γmax| + β) .
+Therefore, as long as
+ϵ <
+OB
+p
+∥Γ∥0∥w∥2
+−(∥Γ∥0 −1)µ(D) |Γmax| −β,
+(2)
+the classiﬁcation is accurate, i.e., sign(f(ˆΓ
+THR)) =
+sign(f(Γ)).
+Corollary 2 (Stability of one hidden layer L-BP)
+Suppose that Y = DΓ + E, where D is a general dictio-
+nary with normalized atoms, ∥E∥2 ≤ϵ, and (w, ω) is a
+linear classiﬁer. Suppose also that ∥Γ∥0 ≤1
+3
+
+1 +
+1
+µ(D)
+
+,
+and that the Lagrangian multiplier is set to ξ = 4ϵ. Then,
+the support of ˆΓ
+BP is contained in the support of Γ, and
+ˆΓ
+BP −Γ
+
+2 ≤7.5ϵ. Therefore, as long as
+ϵ <
+OB
+7.5 ∥Γ∥0 ∥w∥2
+,
+(3)
+the classiﬁcation is accurate, i.e.,
+sign(f(ˆΓ
+BP)) =
+sign(f(Γ)).
+(a) Simulation with an undercomplete dictionary.
+(b) Simulation with an overcomplete dictionary.
+Fig. 5: Accuracy of the THR and the BP versus adversar-
+ial noise level, computed on synthetic data. Dashed lines:
+theoretical bounds; solid lines: empirical performance.
+Figure 5 presents the theoretical bounds on the ad-
+versarial noise amplitude ϵ for the Thresholding (Equa-
+tion (2)) and the Basis-Pursuit (Equation (3)) classi-
+ﬁers in dash lines. It also shows the empirical stabil-
+ity to adversarial noise under the FGSM (Fast Gradi-
+ent Sign Method) attack [10]. In these simulations we
+generate a random normalized and unbiased (ω = 0)
+classiﬁer w, and a random dictionary with normalized
+atoms and with a low mutual-coherence. Then, we ran-
+domly produce sparse representations with four nonze-
+ros in the range
+h
+|Γmin|, |Γmax|
+i
+= [1, 2]. In order to
+create a margin OB of 1, we project Γ on the clas-
+siﬁer w and keep only the representations satisfying
+wT Γ
+ ≥OB = 1. Figure 5a presents the undercomplete
+case with D ∈R100×40. One can draw three important
+conclusions from this result: 1) The theoretical stability
+
+
+===== PDF PAGE 11 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+11
+bound for the BP is better than the THR one; 2) the
+empirical performance of the BP and THR align with
+the theoretical predictions; and 3) the bounds are not
+tight due to the worst-case assumptions used in our
+work. Note that in this experiment the performance of
+the two methods is quite close – this is due to very low
+mutual-coherence of the chosen dictionary.
+This motivates the next experiment, in which we
+examine a more challenging setting that relies on an
+overcomplete dictionary. Figure 5b demonstrates this
+case with D ∈R100×150 and with representations having
+the same properties as before. In this case, the Thresh-
+olding bound collapses to zero as the mutual coherence
+is too high, and as can be seen, the practical diﬀer-
+ence between the THR and the BP classiﬁers becomes
+apparent.
+5.2 Real data experiments
+The goal of the following set of experiments is to show
+that moving from the traditional feed-forward network
+(i.e., L-THR) to L-BP can potentially improve stability,
+not only for simulated data (where the dictionaries and
+the signals are generated exactly to meet the theorem
+conditions), but also for real data such as MNIST and
+CIFAR images. Note that one could wonder whether
+these images we are about to work with belong to the
+(possibly multi-layered) sparse representation model.
+Our approach for answering this question is to impose
+the model on the data and see how the eventual pursuit
+(such as the forward-pass) performs. This line of rea-
+soning stands behind many papers that took the sparse
+representation model (or any of its many variants) and
+deployed it to true data in order to address various
+applications.
+The networks we are about to experiment with are
+obtained as unfoldings of the L-THR (Figure 4a) and the
+L-BP (Figure 4b) pursuit algorithms, and each is trained
+in a supervised fashion using back-propagation for best
+classiﬁcation performance. Our tested architectures are
+relatively simple and use a small number of parameters
+in order to isolate the eﬀect of their diﬀerences [24,2].
+Ideally, in order to demonstrate Theorems 12 and
+13, one should require that the same set of dictionaries
+is used by the two architectures, in a way that ﬁts our
+multi-layered model assumptions. However, such setup
+leads to various diﬃculties. First, as obtaining these
+dictionaries calls for training, we should decide on the
+loss to use. Trained for representation error, these archi-
+tectures would lead to inferior classiﬁcation performance
+that would render our conclusions irrelevant. The alter-
+native of training for classiﬁcation accuracy would lead
+to two very diﬀerent sets of dictionaries, violating the
+above desire. In addition, as we know from the analysis
+in [11], the learned dictionaries are strongly eﬀected by
+the ﬁnite and small number of unfoldings of the pursuit.
+In the experiments we report hereafter we chose to let
+each architecture (e.g. pursuit) to learn the best set of
+dictionaries for its classiﬁcation result.
+Given the two pre-trained networks, our experiments
+evaluate the stability by designing noise attacks using
+the Fast Gradient Sign Method (FGSM) [10] with an
+increasing amplitude ϵ. We preform this evaluation on
+three popular datasets – MNIST [15], CIFAR-10 [12] and
+CIFAR-100 [12]. For the MNIST case, we construct an
+ML-CSC model composed of 3 convolutional layers with
+64, 128 and 512 ﬁlters, respectively, and kernel sizes of
+6×6, 6×6 and 4×4, respectively, with stride of 2 in the
+ﬁrst two layers. In addition, the output of the ML-CSC
+model is followed by a fully-connected layer producing
+the ﬁnal estimate. Training is done with the Stochastic
+Gradient Descent (SGD), with a mini-batch size of 64
+samples, learning rate of 0.005 and a momentum weight
+of 0.9. We decrease the learning rate ten-fold every 30
+epochs.
+For CIFAR-10 and CIFAR-100 we deﬁne an ML-CSC
+model as having 3 convolutional layers with 32, 64 and
+128 ﬁlters, respectively, and kernel sizes of 4 × 4 with
+stride of 2. In addition, we used a classiﬁer function
+as a CNN with 4 layers where the ﬁrst 3 layers are
+convolutional and the last layer is fully-connected. This
+eﬀectively results in a 7 layers architecture, out of which
+the ﬁrst three are unfolded in the context of the L-BP
+scheme. As before, all models are trained with SGD and
+with a decreasing learning rate.
+Figure 6 presents the results for the two architectures
+and the three datasets. It is clear that the L-BP scheme is
+consistently more robust to adversarial interference. This
+evidence is in agreement with the theoretical results we
+introduced earlier, suggesting that the L-THR is more
+sensitive to bounded noise. We note again, however,
+that the theoretical guarantees presented earlier are
+not fully applicable here as the dictionaries of each
+model are diﬀerent and as some of the assumptions are
+violated. For example, the minimal distance between
+classes O∗
+M is not guaranteed to be nontrivial in real
+images scenario. However, these experiments do support
+our earlier analysis about the superiority of the L-BP
+to handle noise attacks.
+6 Conclusions
+This paper presents a general theory for the classiﬁca-
+tion robustness when handling sparsity-modeled signals.
+In the context of CSC, we studied the stability of the
+classiﬁcation problem to adversarial perturbations both
+
+
+===== PDF PAGE 12 =====
+12
+Yaniv Romano∗et al.
+(a)
+(b)
+(c)
+Fig. 6: Comparison of Layered Thresholding (L-THR)
+and Layered Basis Pursuit (L-BP) schemes under FGSM
+attack on (a) MNIST, (b) CIFAR-10 and (c) CIFAR-100
+datasets.
+for the binary- and multi-class settings. Then, we ana-
+lyzed the stability of a classiﬁer that operates on signals
+that belong to the ML-CSC model, which was recently
+shown to be tightly connected to CNN. This leads to a
+novel analysis of the sensitivity of the classic forward
+pass algorithm to adversarial perturbations and ways
+to mitigate its vulnerability (which was empirically val-
+idated in [20]). Next, we showed that by relying on
+the BP algorithm, one can theoretically improve the
+robustness to such perturbations, a phenomenon that
+was observed in practice [18].
+The bounds obtained are all referring to the case
+where the dictionaries {Di}K
+i=1 and the classiﬁcation
+weights {(wu, ωu)}L
+u=1 are perfectly known, and thus
+learning is not covered by this theory. As such, the
+margin for making an error in our work considers only
+two prime forces. First, the separability of the data, as
+manifested by O∗
+B (or O∗
+M). Second, the chance that
+our estimated Γ deviates from its true value. This can
+happen due to noise in the input (getting Y instead of
+X), and/or limitation of the pursuit algorithm. Further
+work is required in order to bring into account distortions
+in Γ caused by an imperfect estimate of D’s and w’s –
+this way considering the learning phase as well.
+A Proof of Theorem 5: stable binary
+classiﬁcation of the CSC model
+Theorem 5 (Stable Binary Classiﬁcation of the CSC
+Model): Suppose we are given a CSC signal X, ∥Γ∥S
+0,∞≤
+k, contaminated with perturbation E to create the sig-
+nal Y = X + E, such that ∥E∥2 ≤ϵ. Suppose fur-
+ther that O∗
+B > 0 and denote by ˆΓ the solution of the
+PE
+0,∞problem. Assuming that δ2k < 1−
+
+2∥w∥2ϵ
+O∗
+B
+2
+, then
+sign(f(X)) = sign(f(Y)).
+Considering the more conservative bound that relies
+on µ(D), and assuming that
+∥Γ∥
+S
+0,∞< k = 1
+2
+ 
+1 +
+1
+µ(D)
+"
+1 −
+2∥w∥2ϵ
+O∗
+B
+2#!
+,
+then sign(f(X)) = sign(f(Y)).
+Proof Without loss of generality, consider the case where
+wT Γ + ω > 0, i.e. the original signal X is assigned to
+class y = 1. Our goal is to show that wT ˆΓ + ω > 0. We
+
+
+===== PDF PAGE 13 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+13
+start by manipulating the latter expression as follows:
+wT ˆΓ + ω = wT 
+Γ + ˆΓ −Γ
+
++ ω
+=
+ wT Γ + ω
+
++ wT 
+ˆΓ −Γ
+
+≥
+ wT Γ + ω
+
+−
+wT 
+ˆΓ −Γ
+
+≥
+ wT Γ + ω
+
+−
+wT 
+2
+ˆΓ −Γ
+
+2 ,
+(4)
+where the ﬁrst inequality relies on the relation a + b ≥
+a −|b| for a > 0, and the last derivation leans on the
+Cauchy-Schwarz inequality. Using the SRIP [22] and the
+fact that both ∥Y −DΓ∥2 ≤ϵ and ∥Y −DˆΓ∥2 ≤ϵ, we
+get
+(1 −δ2k)∥ˆΓ −Γ∥2
+2 ≤∥DˆΓ −DΓ∥2
+2 ≤4ϵ2.
+Thus,
+∥ˆΓ −Γ∥2
+2 ≤
+4ϵ2
+1 −δ2k
+.
+Combining the above with Equation (4) leads to (recall
+that y = 1):
+OB(Y, y) = wT ˆΓ + ω ≥wT Γ + ω −∥w∥2
+2ϵ
+√1 −δ2k
+.
+Using the deﬁnition of the score of our classiﬁer, satis-
+fying
+0 < OB(X, y) = wT Γ + ω
+we get
+OB(Y, y) ≥OB(X, y) −∥w∥2
+2ϵ
+√1 −δ2k
+.
+We are now after the condition for OB(Y, y) > 0, and
+so we require:
+0 < OB(X, y) −∥w∥2
+2ϵ
+√1 −δ2k
+≤O∗
+B −∥w∥2
+2ϵ
+√1 −δ2k
+.
+where we relied on the fact that OB(X, y) ≥O∗
+B. The
+above inequality leads to
+δ2k < 1 −
+2∥w∥2ϵ
+O∗
+B
+2
+.
+(5)
+Next we turn to develop the condition that relies
+on µ(D). We shall use the relation between the SRIP
+and the mutual coherence [22], given by δ2k ≥(2k −
+1)µ(D) for all k < 1
+2
+
+1 +
+1
+µ(D)
+
+. Plugging this bound
+into Equation (5) results in
+0 < O∗
+B −
+2∥w∥2ϵ
+p
+1 −(2k −1)µ(D)
+,
+which completes our proof.
+B Proof of Theorem 7: stable multi-class
+classiﬁcation of the CSC model
+Theorem 7 (Stable Multi-Class Classiﬁcation of the
+CSC Model): Suppose we are given a CSC signal X,
+∥Γ∥S
+0,∞≤k, contaminated with perturbation E to create
+the signal Y = X + E, such that ∥E∥2 ≤ϵ. Suppose
+further that fu(X) = wT
+u Γ + ωu correctly assigns X to
+class y = u. Suppose further that O∗
+M > 0, and denote
+by ˆΓ the solution of the PE
+0 problem. Assuming that
+δ2k < 1 −
+
+2φ(W)ϵ
+O∗
+M
+2
+, then Y will be assigned to the
+correct class.
+Considering the more conservative bound that relies
+on µ(D) and assuming that
+∥Γ∥
+S
+0,∞< k = 1
+2
+ 
+1 +
+1
+µ(D)
+"
+1 −
+2φ(W)ϵ
+O∗
+M
+2#!
+,
+then Y will be assigned to the correct class.
+Proof Given that fu(Γ) = wT
+u Γ + ωu > fv(Γ) = wT
+v Γ +
+ωv for all v̸ = u, i.e. X belongs to class y = u, we shall
+prove that fu(ˆΓ) > fv(ˆΓ) for all v̸ = u. Denoting ∆=
+ˆΓ −Γ, we bound from below the diﬀerence fu(ˆΓ)−fv(ˆΓ)
+as follows:
+h
+wT
+u ˆΓ + ωu
+i
+−
+h
+wT
+v ˆΓ + ωv
+i
+=
+
+wT
+u (Γ + ∆) + ωu
+
+−
+
+wT
+v (Γ + ∆) + ωv
+
+=
+
+wT
+u Γ + ωu
+
+−
+
+wT
+v Γ + ωv
+
++
+ wT
+u −wT
+v
+
+∆
+≥fu(Γ) −fv(Γ) −
+ wT
+u −wT
+v
+
+∆
+
+≥fu(Γ) −fv(Γ) −∥wT
+u −wT
+v ∥2∥∆∥2.
+(6)
+Similarly to the proof of Theorem 7, the ﬁrst inequality
+holds since a + b ≥a −|b| for a = fu(Γ) −fv(Γ) > 0,
+and the last inequality relies on the Cauchy-Schwarz
+formula. Relying on φ(W) that satisﬁes
+φ(W) ≥∥wu −wv∥2,
+and plugging ∥∆∥2
+2 ≤
+4ϵ2
+1−δ2k into Equation (6) we get
+fu(ˆΓ) −fv(ˆΓ) ≥fu(Γ) −fv(Γ) −φ(W)
+2ϵ
+√1 −δ2k
+≥OM(X, y) −φ(W)
+2ϵ
+√1 −δ2k
+≥O∗
+M −φ(W)
+2ϵ
+√1 −δ2k
+,
+where the second to last inequality holds since fu(Γ) −
+fv(Γ) ≥OM(X, y), and the last inequality follows the
+
+
+===== PDF PAGE 14 =====
+14
+Yaniv Romano∗et al.
+deﬁnition of O∗
+M. As such, we shall seek for the following
+inequality to hold:
+0 < O∗
+M −φ(W)
+2ϵ
+√1 −δ2k
+→δ2k < 1 −
+2φ(W)ϵ
+O∗
+M
+2
+.
+Similarly to the binary setting, one can readily write
+the above in terms of µ(D).
+C Proof of Theorem 10: stable binary
+classiﬁcation of the L-THR
+Theorem 10 (Stable Binary Classiﬁcation of the L-
+THR): Suppose we are given an ML-CSC signal X
+contaminated with perturbation E to create the signal
+Y = X + E, such that ∥E∥P
+2,∞≤ϵ0. Denote by |Γ min
+i
+|
+and |Γ max
+i
+| the lowest and highest entries in absolute
+value in the vector Γi, respectively. Suppose further that
+O∗
+B > 0 and let {ˆΓi}K
+i=1 be the set of solutions obtained
+by running the layered soft thresholding algorithm with
+thresholds {βi}K
+i=1, i.e. ˆΓi = Sβi(DT
+i ˆΓi−1) where Sβi is
+the soft thresholding operator and ˆΓ0 = Y. Assuming
+that ∀1 ≤i ≤K
+a)
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+|Γ min
+i
+|
+|Γ max
+i
+|
+
+−
+1
+µ(Di)
+ϵi−1
+|Γ max
+i
+|;
+b)
+The threshold βi is chosen according to
+|Γmin
+i
+| −Ci −ϵi−1 > βi > Ki + ϵi−1,
+where
+Ci =
+(∥Γi∥
+S
+0,∞−1)µ(Di)|Γmax
+i
+|,
+Ki =
+∥Γi∥
+S
+0,∞µ(Di)|Γmax
+i
+|,
+ϵi =
+q
+∥Γi∥P
+0,∞
+
+ϵi−1 + Ci + βi
+
+;
+and
+c)
+O∗
+B > ∥w∥2
+p
+∥ΓK∥0
+
+ϵK−1 + CK + βK
+
+,
+then sign(f(Y)) = sign(f(X)).
+Proof Following Theorem 10 in [22], if assumptions (a)–
+(c) above hold ∀1 ≤i ≤K then
+1. The support of the solution ˆΓi is equal to that of Γi;
+and
+2. ∥Γi −ˆΓi∥P
+2,∞≤ϵi, where ϵi deﬁned above.
+In particular, the last layer satisﬁes
+∥ΓK −ˆΓK∥∞≤ϵK−1 + CK + βK.
+(7)
+Deﬁning ∆= ˆΓK −ΓK, we get
+∥∆∥2 ≤∥∆∥∞
+p
+∥∆∥0 = ∥∆∥∞
+p
+∥ΓK∥0,
+where the last equality relies on the successful recovery
+of the support. Having the upper bound on ∥∆∥2, one
+can follow the transition from Equation (4) to Equation
+(5) (see the proof of Theorem 7), leading to the following
+requirement for accurate classiﬁcation:
+O∗
+B −∥w∥2∥∆∥∞
+p
+∥ΓK∥0 > 0.
+Plugging Equation (7) to the above expression results in
+the additional condition that ties the propagated error
+throughout the layers to the output margin, given by
+O∗
+B > ∥w∥2
+p
+∥ΓK∥0
+
+ϵK−1 + CK + βK
+
+.
+References
+1. Aviad Aberdam, Jeremias Sulam, and Michael Elad. Multi-
+layer sparse coding: The holistic way. SIAM Journal on
+Mathematics of Data Science, 1(1):46–77, 2019.
+2. Adel Bibi, Bernard Ghanem, Vladlen Koltun, and Rene
+Ranftl. Deep layers as stochastic solvers. In International
+Conference on Learning Representations, 2019.
+3. Chris Bishop. Neural networks for pattern recognition.
+Oxford university press, 1995.
+4. Erin J Bredensteiner and Kristin P Bennett. Multicate-
+gory classiﬁcation by support vector machines. In Com-
+putational Optimization, pages 53–79. Springer, 1999.
+5. Emmanuel J Candes. The restricted isometry property
+and its implications for compressed sensing. Comptes
+rendus mathematique, 346(9-10):589–592, 2008.
+6. Michael Elad. Sparse and Redundant Representations:
+From Theory to Applications in Signal and Image Pro-
+cessing. Springer Publishing Company, Incorporated, 1st
+edition, 2010.
+7. Alhussein Fawzi, Hamza Fawzi, and Omar Fawzi. Ad-
+versarial vulnerability for any classiﬁer. arXiv preprint
+arXiv:1802.08686, 2018.
+8. Alhussein Fawzi, Omar Fawzi, and Pascal Frossard. Anal-
+ysis of classiﬁers’ robustness to adversarial perturbations.
+Machine Learning, 107(3):481–508, 2018.
+9. Ian Goodfellow, Yoshua Bengio, Aaron Courville, and
+Yoshua Bengio.
+Deep learning, volume 1.
+MIT press
+Cambridge, 2016.
+10. Ian J Goodfellow, Jonathon Shlens, and Christian Szegedy.
+Explaining and harnessing adversarial examples. ICLR,
+2015.
+11. Karol Gregor and Yann LeCun. Learning fast approx-
+imations of sparse coding. In Proceedings of the 27th
+International Conference on Machine Learning (ICML-
+10), pages 399–406, 2010.
+12. Alex Krizhevsky, Vinod Nair, and Geoﬀrey Hinton.
+The cifar-10 dataset. online: http://www. cs. toronto.
+edu/kriz/cifar. html, 2014.
+13. Alexey Kurakin, Ian Goodfellow, and Samy Bengio. Ad-
+versarial examples in the physical world. arXiv preprint
+arXiv:1607.02533, 2016.
+14. Yann LeCun, Yoshua Bengio, and Geoﬀrey Hinton. Deep
+learning. Nature, 521(7553):436–444, 2015.
+15. Yann LeCun, Corinna Cortes, and CJ Burges. Mnist hand-
+written digit database. AT&T Labs [Online]. Available:
+http://yann. lecun. com/exdb/mnist, 2, 2010.
+
+
+===== PDF PAGE 15 =====
+Adversarial Noise Attacks of Deep Learning Architectures – Stability Analysis via Sparse-Modeled Signals
+15
+16. Fangzhou Liao, Ming Liang, Yinpeng Dong, Tianyu Pang,
+Jun Zhu, and Xiaolin Hu. Defense against adversarial
+attacks using high-level representation guided denoiser.
+IEEE-CVPR, 2018.
+17. Yanpei Liu, Xinyun Chen, Chang Liu, and Dawn Song.
+Delving into transferable adversarial examples and black-
+box attacks. ICLR, 2017.
+18. Shahin Mahdizadehaghdam, Ashkan Panahi, Hamid Krim,
+and Liyi Dai. Deep dictionary learning: A parametric net-
+work approach. arXiv preprint arXiv:1803.04022, 2018.
+19. Julien Mairal, Francis Bach, and Jean Ponce.
+Sparse
+modeling for image and vision processing. arXiv preprint
+arXiv:1411.3230, 2014.
+20. Cisse Moustapha, Bojanowski Piotr, Grave Edouard,
+Dauphin Yann, and Usunier Nicolas. Parseval networks:
+Improving robustness to adversarial examples. ICML,
+2017.
+21. Vardan Papyan, Yaniv Romano, and Michael Elad. Con-
+volutional neural networks analyzed via convolutional
+sparse coding. Journal of Machine Learning Research,
+18(83):1–52, 2017.
+22. Vardan Papyan, Jeremias Sulam, and Michael Elad. Work-
+ing locally thinking globally: Theoretical guarantees for
+convolutional sparse coding. IEEE Trans. on Sig. Proc.,
+65(21):5687–5701, 2017.
+23. Jure
+Sokolić,
+Raja
+Giryes,
+Guillermo
+Sapiro,
+and
+Miguel RD Rodrigues. Robust large margin deep neural
+networks. IEEE Trans. on Sig. Proc., 65(16):4265–4280,
+2016.
+24. Jeremias Sulam, Aviad Aberdam, Amir Beck, and Michael
+Elad. On multi-layer basis pursuit, eﬃcient algorithms
+and convolutional neural networks. IEEE transactions
+on pattern analysis and machine intelligence, 2019.
+25. Jeremias Sulam, Vardan Papyan, Yaniv Romano, and
+Michael Elad. Multilayer convolutional sparse modeling:
+Pursuit and dictionary learning. IEEE Transactions on
+Signal Processing, 66(15):4090–4104, 2018.
+26. Christian Szegedy, Wojciech Zaremba, Ilya Sutskever,
+Joan Bruna, Dumitru Erhan, Ian Goodfellow, and Rob
+Fergus. Intriguing properties of neural networks. ICLR,
+2014.
+27. Matthew D Zeiler, Dilip Krishnan, Graham W Taylor, and
+Rob Fergus. Deconvolutional networks. In IEEE-CVPR,
+2010.

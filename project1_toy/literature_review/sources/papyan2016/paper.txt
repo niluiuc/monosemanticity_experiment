@@ -1,0 +1,3464 @@
+
+
+===== PDF PAGE 1 =====
+Convolutional Neural Networks Analyzed via
+Convolutional Sparse Coding
+Vardan Papyan*
+vardanp@campus.technion.ac.il
+Department of Computer Science
+Technion - Israel Institute of Technology
+Technion City, Haifa 32000, Israel
+Yaniv Romano*
+yromano@tx.technion.ac.il
+Department of Electrical Engineering
+Technion - Israel Institute of Technology
+Technion City, Haifa 32000, Israel
+Michael Elad
+elad@cs.technion.ac.il
+Department of Computer Science
+Technion - Israel Institute of Technology
+Technion City, Haifa 32000, Israel
+Editor:
+Abstract
+Convolutional neural networks (CNN) have led to many state-of-the-art results spanning
+through various ﬁelds. However, a clear and profound theoretical understanding of the
+forward pass, the core algorithm of CNN, is still lacking. In parallel, within the wide ﬁeld of
+sparse approximation, Convolutional Sparse Coding (CSC) has gained increasing attention
+in recent years. A theoretical study of this model was recently conducted, establishing it as
+a reliable and stable alternative to the commonly practiced patch-based processing. Herein,
+we propose a novel multi-layer model, ML-CSC, in which signals are assumed to emerge
+from a cascade of CSC layers. This is shown to be tightly connected to CNN, so much so
+that the forward pass of the CNN is in fact the thresholding pursuit serving the ML-CSC
+model. This connection brings a fresh view to CNN, as we are able to attribute to this
+architecture theoretical claims such as uniqueness of the representations throughout the
+network, and their stable estimation, all guaranteed under simple local sparsity conditions.
+Lastly, identifying the weaknesses in the above pursuit scheme, we propose an alternative to
+the forward pass, which is connected to deconvolutional, recurrent and residual networks,
+and has better theoretical guarantees.
+Keywords:
+Deep Learning, Convolutional Neural Networks, Forward Pass, Sparse Rep-
+resentation, Convolutional Sparse Coding, Thresholding Algorithm, Basis Pursuit
+∗. The authors contributed equally to this work.
+1
+arXiv:1607.08194v4  [stat.ML]  10 Oct 2016
+
+
+===== PDF PAGE 2 =====
+Papyan, Romano and Elad
+1. Introduction
+Deep learning (LeCun et al., 2015), and in particular CNN (LeCun et al., 1990, 1998;
+Krizhevsky et al., 2012), has gained a copious amount of attention in recent years as it
+has led to many state-of-the-art results spanning through many ﬁelds – including speech
+recognition (Bengio et al., 2003; Hinton et al., 2012; Mikolov et al., 2013), computer vision
+(Farabet et al., 2013; Simonyan and Zisserman, 2014; He et al., 2015), signal and image
+processing (Gatys et al., 2015; Ulyanov et al., 2016; Johnson et al., 2016; Dong et al., 2016),
+to name a few. In the context of CNN, the forward pass is a multi-layer scheme that provides
+an end-to-end mapping, from an input signal to some desired output. Each layer of this
+algorithm consists of three steps. The ﬁrst convolves the input with a set of learned ﬁlters,
+resulting in a set of feature (or kernel) maps. These then undergo a point wise non-linear
+function, in a second step, often resulting in a sparse outcome (Glorot et al., 2011). A third
+(and optional) down-sampling step, termed pooling, is then applied on the result in order to
+reduce its dimensions. The output of this layer is then fed into another one, thus forming
+the multi-layer structure, often termed forward pass.
+Despite its marvelous empirical success, a clear and profound theoretical understanding
+of this scheme is still lacking.
+A few preliminary theoretical results were recently sug-
+gested. In (Mallat, 2012; Bruna and Mallat, 2013) the Scattering Transform was proposed,
+suggesting to replace the learned ﬁlters in the CNN with predeﬁned Wavelet functions. In-
+terestingly, the features obtained from this network were shown to be invariant to various
+transformations such as translations and rotations. Other works have studied the properties
+of deep and fully connected networks under the assumption of independent identically dis-
+tributed random weights (Giryes et al., 2015; Saxe et al., 2013; Arora et al., 2014; Dauphin
+et al., 2014; Choromanska et al., 2015). In particular, in (Giryes et al., 2015) deep neural
+networks were proven to preserve the metric structure of the input data as it propagates
+through the layers of the network. This, in turn, was shown to allow a stable recovery of
+the data from the features obtained from the network.
+Another prominent paradigm in data processing is the sparse representation concept,
+being one of the most popular choices for a prior in the signal and image processing commu-
+nities, and leading to exceptional results in various applications (Elad and Aharon, 2006;
+Dong et al., 2011; Zhang and Li, 2010; Jiang et al., 2011; Mairal et al., 2014). In this
+framework, one assumes that a signal can be represented as a linear combination of a few
+columns (called atoms) from a matrix termed a dictionary. Put diﬀerently, the signal is
+equal to a multiplication of a dictionary by a sparse vector. The task of retrieving the spars-
+est representation of a signal over a dictionary is called sparse coding or pursuit. Over the
+years, various algorithms were proposed to tackle this problem, among of which we mention
+the thresholding algorithm (Elad, 2010) and its iterative variant (Daubechies et al., 2004).
+When handling natural signals, this model has been commonly used for modeling local
+patches extracted from the global data mainly due to the computational diﬃculties related
+to the task of learning the dictionary (Elad and Aharon, 2006; Dong et al., 2011; Mairal
+et al., 2014; Romano and Elad, 2015; Sulam and Elad, 2015). However, in recent years
+an alternative to this patch-based processing has emerged in the form of the Convolutional
+Sparse Coding (CSC) model (Bristow et al., 2013; Kong and Fowlkes, 2014; Wohlberg, 2014;
+Gu et al., 2015; Heide et al., 2015; Papyan et al., 2016a,b). This circumvents the afore-
+2
+
+
+===== PDF PAGE 3 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+mentioned limitations by imposing a special structure – a union of banded and Circulant
+matrices – on the dictionary involved. The traditional sparse model has been extensively
+studied over the past two decades (Elad, 2010; Foucart and Rauhut, 2013). More recently,
+the convolutional extension was extensively analyzed in (Papyan et al., 2016a,b), shedding
+light on its theoretical aspects and prospects of success.
+In this work, by leveraging the recent study of CSC, we aim to provide a new perspec-
+tive on CNN, leading to a clear and profound theoretical understanding of this scheme,
+along with new insights. Embarking from the classic CSC, our approach builds upon the
+observation that similar to the original signal, the representation vector itself also admits a
+convolutional sparse representation. As such, it can be modeled as a superposition of atoms,
+taken from a diﬀerent convolutional dictionary. This rationale can be extended to several
+layers, leading to the deﬁnition of our proposed ML-CSC model. Building on the recent
+analysis of the CSC, we provide a theoretical study of this novel model and its associated
+pursuits, namely the layered thresholding algorithm and the layered basis pursuit (BP).
+Our analysis reveals the relation between the CNN and the ML-CSC model, showing
+that the forward pass of the CNN is in fact identical to our proposed pursuit – the layered
+thresholding algorithm. This connection is of signiﬁcant importance since it gives a clear
+mathematical meaning, objective and model to the CNN architecture, which in turn can
+be accompanied by guarantees for the success of the forward pass, studied via the layered
+thresholding algorithm. Speciﬁcally, we show that the forward pass is guaranteed to recover
+an estimate of the underlying representations of an input signal, assuming these are sparse
+in a local sense. Moreover, considering a setting where a norm-bounded noise is added
+to the signal, we show that such a mild corruption in the input results in a bounded
+perturbation in the output – indicating the stability of the CNN in recovering the underlying
+representations. Lastly, we exploit the answers to the above questions in order to propose an
+alternative to the commonly used forward pass algorithm, which is tightly connected to both
+deconvolutional (Zeiler et al., 2010; Pu et al., 2016) and recurrent networks (Bengio et al.,
+1994), and also related to residual networks (He et al., 2015). The proposed alternative
+scheme is accompanied by a thorough theoretical study. Although this and the analysis
+presented throughout this work focus on CNN, we will show that they also hold for fully
+connected networks.
+This paper is organized as follows. In Section 2 we review the basics of both the CNN and
+the Sparse-Land model. We then deﬁne the proposed ML-CSC model in Section 3, together
+with its corresponding deep sparse coding problem. In Section 4, we aim to solve this using
+the layered thresholding algorithm, which is shown to be equivalent to the forward pass of
+the CNN. Next, having established the relevance of our model to CNN, we proceed to its
+analysis in Section 5. Standing on these theoretical grounds, we then propose in Section 6 a
+provably improved pursuit, termed the layered BP, accompanied by its theoretical analysis.
+We revisit the assumptions of our model in Section 7. First, in Section 7.1 we link the double
+sparsity model to ours by assuming the dictionaries throughout the layers are sparse. Then,
+in Section 7.2 we consider an idea typically employed in CNN, termed spatial-stride, showing
+its beneﬁts from a simple theoretical perspective. Combining our insights from Section 7.1
+and 7.2, we move to an experimental phase by constructing a family of signals satisfying
+the assumptions of our model, which are then used in order to verify our theoretical results.
+3
+
+
+===== PDF PAGE 4 =====
+Papyan, Romano and Elad
+(a) A convolutional matrix.
+(b) A concatenation of banded and Circulant matrices.
+Figure 1: The two facets of the convolutional structure.
+Finally, in Section 9 we conclude the contributions of this paper and present several future
+directions.
+2. Background
+This section is divided into two parts: The ﬁrst is dedicated to providing a simple mathemat-
+ical formulation of the CNN and the forward pass, while the second reviews the Sparse-Land
+model and its various extensions. Readers familiar with these two topics can skip directly
+to Section 3, which moves to serve the main contribution of this work.
+2.1 Deep Learning - Convolutional Neural Networks
+The fundamental algorithm of deep learning is the forward pass, employed both in the
+training and the inference stages. The ﬁrst step of this algorithm convolves an input (one
+dimensional) signal X ∈RN with a set of m1 learned ﬁlters of length n0, creating m1 feature
+(or kernel) maps. Equally, this convolution can be written as a matrix-vector multiplication,
+WT
+1 X ∈RNm1, where W1 ∈RN×Nm1 is a matrix containing in its columns the m1 ﬁlters
+with all of their shifts. This structure, also known as a convolutional matrix, is depicted in
+Figure 1a. A pointwise nonlinear function is then applied on the sum of the obtained feature
+maps WT
+1 X and a bias term denoted by b1 ∈RNm1. Many possible functions were proposed
+over the years, the most popular one being the Rectiﬁer Linear Unit (ReLU) (Glorot et al.,
+2011; Krizhevsky et al., 2012), formally deﬁned as ReLU(z) = max(z, 0). By cascading the
+basic block of convolutions followed by a nonlinear function, Z1 = ReLU(WT
+1 X + b1), a
+multi-layer structure of depth K is constructed. Formally, for two layers this is given by
+f(X, {Wi}2
+i=1, {bi}2
+i=1) = Z2 = ReLU
+
+WT
+2 ReLU
+ WT
+1 X + b1
+
++ b2
+
+,
+(1)
+where W2 ∈RNm1×Nm2 is a convolutional matrix (up to a small modiﬁcation discussed
+below) constructed from m2 ﬁlters of length n1m1 and b2 ∈RNm2 is its corresponding
+bias. Although the two layers considered here can be readily extended to a much deeper
+conﬁguration, we defer this to a later stage.
+4
+
+
+===== PDF PAGE 5 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+By changing the order of the columns in the convolutional matrix, one can observe that
+it can be equally viewed as a concatenation of banded and Circulant1 matrices, as depicted
+in Figure 1b. Using this observation, the above description for one dimensional signals can
+be extended to images, with the exception that now every Circulant matrix is replaced by
+a block Circulant with Circulant blocks one.
+An illustration of the forward pass algorithm is presented in Figure 2a and 2b. In Figure
+2a one can observe that W2 is not a regular convolutional matrix but a stride one, since it
+shifts local ﬁlters by skipping m1 entries at a time. The reason for this becomes apparent
+once we look at Figure 2b; the convolutions of the second layer are computed by shifting
+the ﬁlters of W2 that are of size √n1 × √n1 × m1 across N places, skipping m1 indices at
+a time from the
+√
+N ×
+√
+N × m1-sized array. A matrix obeying this structure is called a
+stride convolutional matrix.
+Thus far, we have presented the basic structure of CNN. However, oftentimes an ad-
+ditional non-linear function, termed pooling, is employed on the resulting feature map ob-
+tained from the ReLU operator.
+In essence, this step summarizes each wi-dimensional
+spatial neighborhood from the i-th kernel map Zi by replacing it with a single value. If
+the neighborhoods are non-overlapping, for example, this results in the down-sampling of
+the feature map by a factor of wi. The most widely used variant of the above is the max
+pooling (Krizhevsky et al., 2012; Simonyan and Zisserman, 2014), which picks the maximal
+value of each neighborhood. In (Springenberg et al., 2014) it was shown that this operator
+can be replaced by a convolutional layer with increased stride without loss in performance
+in several image classiﬁcation tasks. Moreover, the current state-of-the-art in image recog-
+nition is obtained by the residual network (He et al., 2015), which does not employ any
+pooling steps (except for a single layer). As such, we defer the analysis of this operator to
+a follow-up work.
+In the context of classiﬁcation, for example, the output of the last layer is fed into a
+simple classiﬁer that attempts to predict the label of the input signal X, denoted by h(X).
+Given a set of signals {Xj}j, the task of learning the parameters of the CNN – including
+the ﬁlters {Wi}K
+i=1, the biases {bi}K
+i=1 and the parameters of the classiﬁer U – can be
+formulated as the following minimization problem
+min
+{Wi}K
+i=1,{bi}K
+i=1,U
+X
+j
+ℓ
+
+h(Xj), U, f
+ Xj, {Wi}K
+i=1, {bi}K
+i=1
+ 
+.
+(2)
+This optimization task seeks for the set of parameters that minimize the mean of the loss
+function ℓ, representing the price incurred when classifying the signal X incorrectly. The
+input for ℓis the true label h(X) and the one estimated by employing the classiﬁer deﬁned
+by U on the ﬁnal layer of the CNN given by f
+ X, {Wi}K
+i=1, {bi}K
+i=1
+
+. Similarly one can
+tackle various other problems, e.g. regression or prediction.
+In the remainder of this work we shall focus on the feature extraction process and assume
+that the parameters of the CNN model are pre-trained and ﬁxed. These, for example, could
+have been obtained by minimizing the above objective via the backpropagation algorithm
+and the stochastic gradient descent, as in the VGG network (Simonyan and Zisserman,
+2014).
+1. We shall assume throughout this paper that boundaries are treated by a periodic continuation, which
+gives rise to the cyclic structure.
+5
+
+
+===== PDF PAGE 6 =====
+Papyan, Romano and Elad
+𝑚1
+𝐖2
+T ∈ℝ𝑁𝑚2×𝑁𝑚1
+𝐖1
+T ∈ℝ𝑁𝑚1×𝑁
+𝐗∈ℝ𝑁
+𝐛1 ∈ℝ𝑁𝑚1
+𝐛2 ∈ℝ𝑁𝑚2
+𝐙2 ∈ℝ𝑁𝑚2
+ReLU
+𝑛1𝑚1
+𝑚1
+𝑛0
+𝑚2
+ReLU
+(a) An illustration of Equation (1) for a one dimensional signal X.
+𝑁 
+𝑁 
+𝐗 
+𝑚1 
+𝑁 
+𝑁 
+𝑛0 
+𝑛0 
+𝐖1 
+𝑚2 
+𝑁 
+𝑁 
+𝑛1 
+𝑛1 
+𝐖2 
+(b) The evolution of an image X throughout the CNN. Notice that the number of channels
+in X is equal to one and as such m0 = 1.
+Figure 2: The forward pass algorithm for a one dimensional signal (a) and an image (b).
+2.2 Sparse-Land
+This section presents an overview of the Sparse-Land model and its many extensions. We
+start with the traditional sparse representation and the core problem it aims to solve, and
+then proceed to its nonnegative variant. Next, we continue to the dictionary learning task
+both in the unsupervised and supervised cases. Finally, we describe the recent CSC model,
+which will lead us in the next section to the proposal of the ML-CSC model. This, in turn,
+will naturally connect the realm of sparsity to that of the CNN.
+6
+
+
+===== PDF PAGE 7 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+2.2.1 Sparse Representation
+In the sparse representation model one assumes a signal X ∈RN can be described as a
+multiplication of a matrix D ∈RN×M, also called a dictionary, by a sparse vector Γ ∈RM.
+Equally, the signal X can be seen as a linear combination of a few columns from the
+dictionary D, coined atoms.
+For a ﬁxed dictionary, given a signal X, the task of recovering its sparsest representation
+Γ is called sparse coding, or simply pursuit, and it attempts to solve the following problem
+(Donoho and Elad, 2003; Tropp, 2004; Elad, 2010):
+(P0) : min
+Γ
+∥Γ∥0 s.t. DΓ = X,
+(3)
+where we have denoted by ∥Γ∥0 the number of non-zeros in Γ. The above has a convex
+relaxation in the form of the Basis-Pursuit (BP) problem (Chen et al., 2001; Donoho and
+Elad, 2003; Tropp, 2006), formally deﬁned as
+(P1) : min
+Γ
+∥Γ∥1 s.t. DΓ = X.
+(4)
+Many questions arise from the above two deﬁned problems. For instance, given a signal X,
+is its sparsest representation unique? Assuming that such a unique solution exists, can it
+be recovered using practical algorithms such as the Orthogonal Matching Pursuit (OMP)
+(Chen et al., 1989; Pati et al., 1993) and the BP (Chen et al., 2001; Daubechies et al., 2004)?
+The answers to these questions were shown to be positive under the assumption that the
+number of non-zeros in the underlying representation is not too high and in particular less
+than 1
+2
+
+1 +
+1
+µ(D)
+
+(Donoho and Elad, 2003; Tropp, 2004; Donoho et al., 2006). The quantity
+µ(D) is the mutual coherence of the dictionary D, being the maximal inner product of two
+atoms extracted from it2. Formally, we can write
+µ(D) = max
+i̸=j |dT
+i dj|.
+Tighter conditions, relying on sharper characterizations of the dictionary, were also sug-
+gested in the literature (Candes et al., 2006; Schnass and Vandergheynst, 2007; Candes
+et al., 2006; Candes and Tao, 2007). However, at this point, we shall not dwell on these.
+One of the simplest approaches for tackling the P0 and P1 problems is via the hard and
+soft thresholding algorithms, respectively. These operate by computing the inner products
+between the signal X and all the atoms in D and then choosing the atoms corresponding
+to the highest responses. This can be described as solving, for some scalar β, the following
+problems:
+min
+Γ
+1
+2∥Γ −DT X∥2
+2 + β∥Γ∥0
+for the P0, or
+min
+Γ
+1
+2∥Γ −DT X∥2
+2 + β∥Γ∥1,
+(5)
+for the P1. The above are simple projection problems that admit a closed-form solution in
+the form3 of Hβ(DT X) or Sβ(DT X), where we have deﬁned the hard thresholding operator
+2. Hereafter, we assume that the atoms are normalized to a unit ℓ2 norm.
+3. The curious reader may identify the relation between the notations used here and the ones in the
+previous subsection, which starts to reveal the relation between CNN and sparsity-inspired models. This
+connection will be made stringer and clearer as we proceed to CSC.
+7
+
+
+===== PDF PAGE 8 =====
+Papyan, Romano and Elad
+Hβ(·) by
+Hβ(z) =
+
+
+
+
+
+z,
+z < −β
+0,
+−β ≤z ≤β
+z,
+β < z,
+and the soft thresholding operator Sβ(·) by
+Sβ(z) =
+
+
+
+
+
+z + β,
+z < −β
+0,
+−β ≤z ≤β
+z −β,
+β < z.
+Both of the above, depicted in Figure 3, nullify small entries and thus promote a sparse
+solution. However, while the hard thresholding operator does not modify large coeﬃcients
+(in absolute value), the soft thresholding does, by contracting these to zero. This inherent
+limitation of the soft version will appear later on in our theoretical analysis.
+As for the theoretical guarantees for the success of the simple thresholding algorithms;
+these depend on the properties of D and on the ratio between the minimal and maximal
+coeﬃcients in absolute value in Γ, and thus are weaker when compared to those found for
+OMP and BP (Donoho and Elad, 2003; Tropp, 2004; Donoho et al., 2006). Still, under
+some conditions, both algorithms are guaranteed to ﬁnd the true support of Γ along with
+an approximation of its true coeﬃcients. Moreover, a better estimation of these can be
+obtained by projecting the input signal onto the atoms corresponding to the found support
+(indices of the non-zero entries) by solving a Least-Squares problem. This step, termed
+debiasing (Elad, 2010), results in a more accurate identiﬁcation of the non-zero values.
+2.2.2 Nonnegative Sparse Coding
+The nonnegative sparse representation model assumes a signal can be decomposed into a
+multiplication of a dictionary and a nonnegative sparse vector. A natural question arising
+from this is whether such a modiﬁcation to the original Sparse-Land model aﬀects its ex-
+pressiveness. To address this, we hereby provide a simple reduction from the original sparse
+representation to the nonnegative one.
+Consider a signal X = DΓ, where the signs of the entries in Γ are unrestricted. Notice
+that this can be equally written as
+X = DΓP + (−D)(−ΓN),
+where we have split the vector Γ to its positive coeﬃcients, ΓP , and its negative ones,
+ΓN. Since the coeﬃcients in ΓP and −ΓN are all positive, one can thus assume the sig-
+nal X admits a non-negative sparse representation over the dictionary [D, −D] with the
+vector [ΓP , −ΓN]T . Thus, restricting the coeﬃcients in the sparsity inspired model to be
+nonnegative does not change its expressiveness.
+Similar to the original model, in the nonnegative case, one could solve the associated
+pursuit problem by employing a soft thresholding algorithm. However, in this case a con-
+straint must be added to the optimization problem in Equation (5), forcing the outcome to
+be positive, i.e.,
+min
+Γ
+1
+2∥Γ −DT X∥2
+2 + β∥Γ∥1
+s.t.
+Γ ≥0.
+8
+
+
+===== PDF PAGE 9 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+−10 −8
+−6
+−4
+−2
+0
+2
+4
+6
+8
+10
+−10
+−8
+−6
+−4
+−2
+0
+2
+4
+6
+8
+10
+Hβ(z) - Hard
+Sβ(z) - Soft
+S+
+β (z) - Soft Nonnegative
+Figure 3: The thresholding operators for a constant β = 2.
+Since the above is a simple projection problem (onto the ℓ1 ball constrained to positive
+entries), it admits a closed-form solution S+
+β (DT X), where we have deﬁned the soft non-
+negative thresholding operator S+
+β (·) as
+S+
+β (z) =
+(
+0,
+z ≤β
+z −β,
+β < z.
+Remarkably, the above function satisﬁes
+S+
+β (z) = max(z −β, 0) = ReLU(z −β).
+In other words, the ReLU and the soft nonnegative thresholding operator are equal, a fact
+that will prove to be important later in our work. We should note that a similar conclusion
+was reached in (Fawzi et al., 2015). To summarize this discussion, we depict in Figure 3
+the hard, soft, and nonnegative soft thresholding operators.
+2.2.3 Unsupervised and Task Driven Dictionary Learning
+At ﬁrst, the dictionaries employed in conjunction with the sparsity inspired model were
+analytically deﬁned matrices, such as the Wavelet and the Fourier (Daubechies et al., 1992;
+Mallat and Zhang, 1993; Elad and Bruckstein, 2002; Mallat, 2008). Although the sparse
+coding problem under these can be done very eﬃciently, over the years many have shifted
+to a data driven approach – adapting the dictionary D to a set of training signals at hand
+via some learning procedure. This was empirically shown to lead to sparser representations
+and better overall performance, at the cost of complicating the involved pursuit, since the
+dictionary was usually chosen to be redundant (having more columns than rows).
+9
+
+
+===== PDF PAGE 10 =====
+Papyan, Romano and Elad
+The task of learning a dictionary for representing a set of signals {Xj}j can be formulated
+as follows
+min
+D,{Γj}j
+X
+j
+∥Xj −DΓj∥2
+2 + ξ∥Γj∥0.
+The above formulation is an unsupervised learning procedure, and it was later extended to
+a supervised setting. In this context, given a set of signals {Xj}j, one attempts to predict
+their corresponding labels {h(Xj)}j. A common approach for tackling this is ﬁrst solving
+a pursuit problem for each signal Xj over a dictionary D, resulting in
+Γ⋆(Xj, D) = arg min
+Γ
+∥Γ∥0
+s.t.
+DΓ = Xj,
+and then feeding these sparse representations into a simple classiﬁer, deﬁned by the param-
+eters U. The task of learning jointly the dictionary D and the classiﬁer U was addressed
+in (Mairal et al., 2012), where the following optimization problem was proposed
+min
+D,U
+X
+j
+ℓ
+
+h(Xj), U, Γ⋆(Xj, D)
+
+.
+The loss function ℓin the above objective penalizes the estimated label if it is diﬀerent
+from the true h(Xj), similar to what we have seen in Section 2.1. The above formulation
+contains in it the unsupervised option as a special case, in which U is of no importance,
+and the loss function is the representation error P
+j ∥Xj −DΓ⋆
+j∥2
+2.
+Double sparsity – ﬁrst proposed in (Rubinstein et al., 2010) and later employed in (Su-
+lam et al., 2016) – attempts to beneﬁt from both the computational eﬃciency of analytically
+deﬁned matrices, and the adaptability of data driven dictionaries. In this model, one as-
+sumes the dictionary D can be factorized into a multiplication of two matrices, D1 and D2,
+where D1 is an analytic dictionary with fast implementation, and D2 is a trained sparse
+one. As a result, the signal X can be represented as
+X = DΓ2 = D1D2Γ2,
+where Γ2 is sparse.
+We propose a diﬀerent interpretation for the above, which is unrelated to practical
+aspects. Since both the matrix D2 and the vector Γ2 are sparse, one would expect their
+multiplication Γ1 = D2Γ2 to be sparse as well. As such, the double sparsity model implicitly
+assumes that the signal X can be decomposed into a multiplication of a dictionary D1 and
+sparse vector Γ1, which in turn can also be decomposed similarly via Γ1 = D2Γ2.
+2.2.4 Convolutional Sparse Coding Model
+Due to the computational constraints entailed when deploying trained dictionaries, this
+approach seems valid only for treatment of low-dimensional signals.
+Indeed, the sparse
+representation model is traditionally used for modeling local patches extracted from a global
+signal. An alternative, which was recently proposed, is the CSC model that attempts to
+represent the whole signal X ∈RN as a multiplication of a global convolutional dictionary
+D ∈RN×Nm and a sparse vector Γ ∈RNm. Interestingly, the former is constructed by
+10
+
+
+===== PDF PAGE 11 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+𝑚
+=
+𝛀∈ℝ𝑛× 2𝑛−1 𝑚
+𝐱i ∈ℝ𝑛
+𝛄i ∈ℝ2𝑛−1 𝑚
+𝑚
+𝑛
+Figure 4: The i-th patch xi of the global system X = DΓ, given by xi = Ωγi.
+shifting a local matrix of size n×m in all possible positions, resulting in the same structure
+as the one shown in Figure 1a.
+In the convolutional model, the classical theoretical guarantees (we are referring to
+results reported in (Chen et al., 2001; Donoho and Elad, 2003; Tropp, 2006)) for the P0
+problem, deﬁned in Equation (3), are very pessimistic. In particular, the condition for the
+uniqueness of the underlying solution and the requirement for the success of the sparse
+coding algorithms depend on the global number of non-zeros being less than 1
+2
+
+1 +
+1
+µ(D)
+
+.
+Following the Welch bound (Welch, 1974), this expression was shown in (Papyan et al.,
+2016a) to be impractical, allowing the global number of non-zeros in Γ to be extremely low.
+In order to provide a better theoretical understanding of this model, which exploits the
+inherent structure of the convolutional dictionary, a recent work (Papyan et al., 2016a)
+suggested to measure the sparsity of Γ in a localized manner. More concretely, consider
+the i-th n-dimensional patch of the global system X = DΓ, given by xi = Ωγi. The stripe-
+dictionary Ω, which is of size n × (2n −1)m, is obtained by extracting the i-th patch from
+the global dictionary D and discarding all the zero columns from it. The stripe vector γi
+is the corresponding sparse representation of length (2n −1)m, containing all coeﬃcients
+of atoms contributing to xi. This relation is illustrated in Figure 4. Notably, the choice
+of a convolutional dictionary results in signals such that every patch of length n extracted
+from them can be sparsely represented using a single shift-invariant local dictionary Ω– a
+common assumption usually employed in signal and image processing.
+Following the above construction, the ℓ0,∞norm of the global sparse vector Γ is deﬁned
+to be the maximal number of non-zeros in a stripe of length (2n −1)m extracted from it.
+Formally,
+∥Γ∥S
+0,∞= max
+i
+∥γi∥0,
+where the letter s emphasizes that the ℓ0,∞norm is computed by sweeping over all stripes.
+Given a signal X, ﬁnding its sparest representation Γ in the ℓ0,∞sense is equal to the
+following optimization problem:
+(P0,∞) :
+min
+Γ
+∥Γ∥S
+0,∞s.t. DΓ = X.
+(6)
+11
+
+
+===== PDF PAGE 12 =====
+Papyan, Romano and Elad
+Intuitively, this seeks for a global vector Γ that can represent sparsely every patch in the
+signal X using the dictionary Ω. The advantage of the above problem over the traditional
+P0 becomes apparent as we move to consider its theoretical aspects. Assuming that the
+number of non-zeros per stripe (and not globally) in Γ is less than 1
+2
+
+1 +
+1
+µ(D)
+
+, in
+(Papyan et al., 2016a) it was proven that the solution for the P0,∞problem is unique.
+Furthermore, classical pursuit methods, originally tackling the P0 problem, are guaranteed
+to ﬁnd this representation.
+When modeling natural signals, due to measurement noise as well as model deviations,
+one can not impose a perfect reconstruction such as X = DΓ on the signal X. Instead, one
+assumes Y = X + E = DΓ + E, where E is, for example, an ℓ2-bounded error vector. To
+address this, the work reported in (Papyan et al., 2016b) considered the extension of the
+P0,∞problem to the PE
+0,∞one, formally deﬁned as
+(PE
+0,∞) :
+min
+Γ
+∥Γ∥S
+0,∞s.t. ∥Y −DΓ∥2
+2 ≤E2.
+Similar to the P0,∞problem, this was also analyzed theoretically, shedding light on the
+theoretical aspects of the convolutional model in the presence of noise. In particular, a
+stability claim for the PE
+0,∞problem and guarantees for the success of both the OMP and
+the BP were provided. Similar to the noiseless case, these assumed that the number of
+non-zeros per stripe is low.
+3. From Atoms to Molecules: Multi-Layer Convolutional Sparse Model
+Convolutional sparsity assumes an inherent structure for natural signals.
+Similarly, the
+representations themselves could also be assumed to have such a structure. In what follows,
+we propose a novel layered model that relies on this rationale.
+The convolutional sparse model assumes a global signal X ∈RN can be decomposed
+into a multiplication of a convolutional dictionary D1 ∈RN×Nm1, composed of m1 local
+ﬁlters of length n0, and a sparse vector Γ1 ∈RNm1. Herein, we extend this by proposing a
+similar factorization of the vector Γ1, which can be perceived as an N-dimensional global
+signal with m1 channels. In particular, we assume Γ1 = D2Γ2, where D2 ∈RNm1×Nm2
+is a stride convolutional dictionary (skipping m1 entries at a time) and Γ2 ∈RNm2 is a
+sparse representation. We denote the number of unique ﬁlters constructing D2 by m2 and
+their corresponding length by n1m1. Due to the multi-layer nature of this model and the
+imposed convolutional structure, we name this the ML-CSC model.
+Intuitively, X = D1Γ1 assumes that the signal X is a superposition of atoms taken
+from D1. While equation X = D1D2Γ2 views the signal as a superposition of more complex
+entities taken from the dictionary D1D2, which we coin molecules.
+While this proposal can be interpreted as a straightforward fusion between the double
+sparsity model (Rubinstein et al., 2010) and the convolutional one, it is in fact substantially
+diﬀerent. The double sparsity model assumes that D2 is sparse, and forces only the deepest
+representation Γ2 to be sparse as well. Here, on the other hand, we replace this constraint
+by forcing D2 to have a stride convolution structure, putting emphasis on the sparsity of
+both the representations Γ1 and Γ2. In Section 7.1 we will revisit the double sparsity work
+and its ties to ours by showing the beneﬁts of injecting the assumption on the sparsity of
+D2 into our proposed model.
+12
+
+
+===== PDF PAGE 13 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+𝑚1
+𝑛0
+𝐃1 ∈ℝ𝑁×𝑁𝑚1
+𝚪1 ∈ℝ𝑁𝑚1
+𝐗∈ℝ𝑁
+𝚪1 ∈ℝ𝑁𝑚1
+𝑛1𝑚1
+𝑚2
+𝐒1,𝑗𝚪1 ∈ℝ2𝑛0−1 𝑚1
+𝐏1,𝑗𝚪1 ∈ℝ𝑛1𝑚1
+𝐃2 ∈ℝ𝑁𝑚1×𝑁𝑚2
+𝚪2 ∈ℝ𝑁𝑚2
+𝑚1
+Figure 5: An instance X = D1Γ1 = D1D2Γ2 of the ML-CSC model. Notice that Γ1 is built
+of both stripes S1,jΓ1 and patches P1,jΓ1.
+Under the above construction the sparse vector Γ1 has two roles. In the context of
+the system of equations X = D1Γ1, it is the convolutional sparse representation of the
+signal X over the dictionary D1. As such, the vector Γ1 is composed from (2n0 −1)m1-
+dimensional stripes, S1,jΓ1, where Si,j is the operator that extracts the j-th stripe from
+Γi. From another point of view, Γ1 is in itself a signal that admits a sparse representation
+Γ1 = D2Γ2. Denoting by Pi,j the operator that extracts the j-th patch from Γi, the signal
+Γ1 is composed of patches P1,jΓ1 of length n1m1. The above model is depicted in Figure
+5, presenting both roles of Γ1 and their corresponding constituents – stripes and patches.
+Clearly, the above construction can be extended to more than two layers, leading to the
+following deﬁnition:
+13
+
+
+===== PDF PAGE 14 =====
+Papyan, Romano and Elad
+Deﬁnition 1 For a global signal X, a set of convolutional dictionaries {Di}K
+i=1, and a
+vector λ, deﬁne the deep coding problem DCPλ as:
+(DCPλ) :
+ﬁnd
+{Γi}K
+i=1
+s.t.
+X = D1Γ1,
+∥Γ1∥S
+0,∞≤λ1
+Γ1 = D2Γ2,
+∥Γ2∥S
+0,∞≤λ2
+...
+...
+ΓK−1 = DKΓK,
+∥ΓK∥S
+0,∞≤λK,
+where the scalar λi is the i-th entry of λ.
+Denoting Γ0 to be the signal X, the DCPλ can be rewritten compactly as
+(DCPλ) :
+ﬁnd
+{Γi}K
+i=1
+s.t.
+Γi−1 = DiΓi,
+∥Γi∥S
+0,∞≤λi,
+∀1 ≤i ≤K.
+Intuitively, given a signal X, this problem seeks for a set of representations, {Γi}K
+i=1, such
+that each one is locally sparse. As we shall see next, the above can be easily solved using
+simple algorithms that also enjoy from theoretical justiﬁcations. Next, we extend the DCPλ
+problem to a noisy regime.
+Deﬁnition 2 For a global signal Y, a set of convolutional dictionaries {Di}K
+i=1, and vectors
+λ and E, deﬁne the deep coding problem DCPE
+λ as:
+(DCPE
+λ ) :
+ﬁnd
+{Γi}K
+i=1
+s.t.
+∥Y −D1Γ1∥2 ≤E0,
+∥Γ1∥S
+0,∞≤λ1
+∥Γ1 −D2Γ2∥2 ≤E1,
+∥Γ2∥S
+0,∞≤λ2
+...
+...
+∥ΓK−1 −DKΓK∥2 ≤EK−1,
+∥ΓK∥S
+0,∞≤λK,
+where the scalars λi and Ei are the i-th entry of λ and E, respectively.
+We now move to the task of learning the model parameters. Denote by DCP⋆
+λ(X, {Di}K
+i=1)
+the representation ΓK obtained by solving the DCP problem (Deﬁnition 1, i.e., noiseless)
+for the signal X and the set of dictionaries {Di}K
+i=1. Relying on this, we now extend the
+dictionary learning problem, as presented in Section 2.2.3, to the multi-layer convolutional
+sparse representation setting.
+Deﬁnition 3 For a set of global signals {Xj}j, their corresponding labels {h(Xj)}j, a loss
+function ℓ, and a vector λ, deﬁne the deep learning problem DLPλ as:
+(DLPλ) :
+min
+{Di}K
+i=1,U
+X
+j
+ℓ
+
+h(Xj), U, DCP⋆
+λ(Xj, {Di}K
+i=1)
+
+.
+A clariﬁcation for the chosen name, deep learning problem, will be provided shortly. The
+solution for the above results in an end-to-end mapping, from a set of input signals to their
+corresponding labels. Similarly, we can deﬁne the DLPE
+λ problem. However, this is omitted
+for the sake of brevity. We conclude this section by summarizing, for the convenience of the
+reader, all notations used throughout this work in Table 1.
+14
+
+
+===== PDF PAGE 15 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+X = Γ0
+:
+a global signal of length N.
+E, Y = ˆΓ0 :
+a global error vector and its corresponding noisy signal, where generally
+Y = X + E.
+K
+:
+the number of layers.
+mi
+:
+the number of local ﬁlters in Di, and also the number of channels in Γi.
+Notice that m0 = 1.
+n0
+:
+the size of a local patch in X = Γ0.
+ni, i ≥1
+:
+the size of a local patch (not including channels) in Γi.
+nimi
+:
+the size of a local patch (including channels) in Γi.
+D1
+:
+a (full) convolutional dictionary of size N × Nm1 with ﬁlters of length n0.
+Di, i ≥2 :
+a convolutional dictionary of size Nmi−1 × Nmi with ﬁlters of length
+ni−1mi−1 and a stride equal to mi−1.
+Γi
+:
+a sparse vector of length Nmi that is the representation of Γi−1 over the
+dictionary Di, i.e. Γi−1 = DiΓi.
+Si,j
+:
+an operator that extracts the j-th stripe of length (2ni−1 −1)mi from Γi.
+∥Γi∥S
+0,∞
+:
+the maximal number of non-zeros in a stripe from Γi.
+Pi,j
+:
+an operator that extracts the j-th nimi-dimensional patch from Γi.
+∥Γi∥P
+0,∞
+:
+the maximal number of non-zeros in a patch from Γi (Deﬁnition 6).
+Ri,j
+:
+an operator that extracts the ﬁlter of length ni−1mi−1 from the j-th atom
+in Di.
+∥V∥P
+2,∞
+:
+the maximal ℓ2 norm of a patch extracted from a vector V (Deﬁnition 6).
+Table 1: Summary of notations used throughout the paper.
+4. Layered Thresholding: The Crux of the Matter
+Consider the ML-CSC model deﬁned by the set of dictionaries {Di}K
+i=1. Assume we are
+given a signal
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK,
+and our goal is to ﬁnd its underlying representations, {Γi}K
+i=1. Tackling this problem by
+recovering all the vectors at once might be computationally and conceptually challenging;
+therefore, we propose the layered thresholding algorithm that gradually computes the sparse
+vectors one at a time across the diﬀerent layers. Denoting by Pβ(·) a sparsifying operator
+that is equal to Hβ(·) in the hard thresholding case and Sβ(·) in the soft one; we commence
+by computing ˆΓ1 = Pβ1(DT
+1 X), which is an approximation of Γ1. Next, by applying another
+thresholding algorithm, however this time on ˆΓ1, an approximation of Γ2 is obtained, ˆΓ2 =
+Pβ2(DT
+2 ˆΓ1). This process, which is iterated until the last representation ˆΓK is acquired, is
+summarized in Algorithm 1.
+One might ponder as to why does the application of the thresholding algorithm on the
+signal X not result in the true representation Γ1, but instead an approximation of it. As
+15
+
+
+===== PDF PAGE 16 =====
+Papyan, Romano and Elad
+Algorithm 1 The layered thresholding algorithm.
+Input:
+X – a signal.
+{Di}K
+i=1 – convolutional dictionaries.
+P ∈{H, S, S+} – a thresholding operator.
+{βi}K
+i=1 – thresholds.
+Output:
+A set of representations {ˆΓi}K
+i=1.
+Process:
+1: ˆΓ0 ←X
+2: for i = 1 : K do
+3:
+ˆΓi ←Pβi(DT
+i ˆΓi−1)
+4: end for
+previously described in Section 2.2.1, assuming some conditions are met, the result of the
+thresholding algorithm, ˆΓ1, is guaranteed to have the correct support. In order to obtain
+the vector Γ1 itself, one should project the signal X onto this obtained support, by solving a
+Least-Squares problem. For reasons that will become clear shortly, we choose not to employ
+this step in the layered thresholding algorithm. Despite this algorithm failing in recovering
+the exact representations in the noiseless setting, as we shall see in Section 5, the estimated
+sparse vectors and the true ones are close – indicating the stability of this simple algorithm.
+Thus far, we have assumed a noiseless setting. However, the same layered thresholding
+algorithm could be employed for the recovery of the representations of a noisy signal Y =
+X + E, with the exception that the threshold constants, {βi}K
+i=1, would be diﬀerent and
+proportional to the noise level.
+Assuming two layers for simplicity, Algorithm 1 can be summarized in the following
+equation
+ˆΓ2 = Pβ2
+
+DT
+2 Pβ1
+ DT
+1 X
+ 
+.
+Comparing the above with Equation (1), given by
+f(X, {Wi}2
+i=1, {bi}2
+i=1) = ReLU
+
+WT
+2 ReLU
+ WT
+1 X + b1
+
++ b2
+
+,
+one can notice a striking similarity between the two. Moreover, by replacing Pβ(·) with the
+soft nonnegative thresholding, S+
+β (·), we obtain that the aforementioned pursuit and the
+forward pass of the CNN are equal! Notice that we are relying here on the discussion of
+Section 2.2.2, where we have shown that the ReLU and the soft nonnegative thresholding
+are equal4.
+4. A slight diﬀerence does exist between the soft nonnegative layered thresholding algorithm and the forward
+pass of the CNN. While in the former a constant threshold β is employed for all entries, the latter uses
+a bias vector, b, that might not be constant in all of its entries. This is of little signiﬁcance, however,
+since a similar approach of an entry-based constant could be used in the layered thresholding algorithm
+as well.
+16
+
+
+===== PDF PAGE 17 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+Recall the optimization problem of the training stage of the CNN as shown in Equation
+(2), given by
+min
+{Wi}K
+i=1,{bi}K
+i=1,U
+X
+j
+ℓ
+
+h(Xj), U, f
+ Xj, {Wi}K
+i=1, {bi}K
+i=1
+ 
+,
+and its parallel in the ML-CSC model, the DLPλ problem, deﬁned by
+min
+{Di}K
+i=1,U
+X
+j
+ℓ
+
+h(Xj), U, DCP⋆
+λ(Xj, {Di}K
+i=1)
+
+.
+Notice the remarkable similarity between both objectives, the only diﬀerence being in the
+feature vector on which the classiﬁcation is done; in the CNN this is the output of the
+forward pass algorithm, given by f
+ Xj, {Wi}K
+i=1, {bi}K
+i=1
+
+, while in the sparsity case this is
+the result of the DCPλ problem. In light of the discussion above, the solution for the DCPλ
+problem can be approximated using the layered thresholding algorithm, which is in turn
+equal to the forward pass of the CNN. We can therefore conclude that the problems solved
+by the training stage of the CNN and the DLPλ are tightly connected, and in fact are equal
+once the solution for the DLPλ is approximated via the layered thresholding algorithm
+(hence the name DLPλ).
+5. Theoretical Study
+Thus far, we have deﬁned the ML-CSC model and its corresponding pursuits – the DCPλ
+and DCPE
+λ problems. We have proposed a method to tackle them, coined the layered thresh-
+olding algorithm, which was shown to be equivalent to the forward pass of the CNN. Relying
+on this, we conclude that the proposed ML-CSC is the global Bayesian model implicitly
+imposed on the signal X when deploying the forward pass algorithm. Put diﬀerently, the
+ML-CSC answers the question of who are the signals belonging to the model behind the
+CNN. Having established the importance of our model, we now proceed to its theoretical
+analysis.
+We should emphasize that the following study does not assume any speciﬁc form on the
+network’s parameters, apart from a broad coherence property (as will be shown hereafter).
+This is in contrast to the work of (Bruna and Mallat, 2013) that assumes that the ﬁlters
+are Wavelets, or the analysis in (Giryes et al., 2015) that considers random weights.
+5.1 Uniqueness of the DCPλ Problem
+Consider a signal X admitting a multi-layer convolutional sparse representation deﬁned by
+the sets {Di}K
+i=1 and {λi}K
+i=1. Can another set of sparse vectors represent the signal X?
+In other words, can we guarantee that, under some conditions, the set {Γi}K
+i=1 is a unique
+solution to the DCPλ problem? In the following theorem we provide an answer to this
+question.
+17
+
+
+===== PDF PAGE 18 =====
+Papyan, Romano and Elad
+Theorem 4 (Uniqueness via the mutual coherence): Consider a signal X satisfying the
+DCPλ model,
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK,
+where {Di}K
+i=1 is a set of convolutional dictionaries and {µ(Di)}K
+i=1 are their corresponding
+mutual coherences. If
+∀1 ≤i ≤K
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+
+,
+then the set {Γi}K
+i=1 is the unique solution to the DCPλ problem, assuming that the thresh-
+olds {λi}K
+i=1 are chosen to satisfy
+∀1 ≤i ≤K
+∥Γi∥S
+0,∞≤λi < 1
+2
+
+1 +
+1
+µ(Di)
+
+.
+The proof for the above theorem is given in Appendix A. In what follows, we present its
+importance in the context of CNN. Assume a signal X is fed into a network, resulting in a set
+of activation values across the diﬀerent layers. These, in the realm of sparsity, correspond
+to the set of sparse representations {Γi}K
+i=1, which according to the above theorem are in
+fact unique representations of the signal X.
+One might ponder at this point whether there exists an algorithm for obtaining the
+unique solution guaranteed in this subsection for the DCPλ problem. As previously men-
+tioned, the layered thresholding algorithm is incapable of ﬁnding the exact representations,
+{Γi}K
+i=1, due to the lack of a Least-Squares step after each layer. One should not despair,
+however, as we shall see in a following section an alternative algorithm, which manages to
+overcome this hurdle.
+5.2 Global Stability of the DCPE
+λ Problem
+Consider an instance signal X belonging to the ML-CSC model, deﬁned by the sets {Di}K
+i=1
+and {λi}K
+i=1. Assume X is contaminated by a noise vector E, generating the perturbed signal
+Y = X + E. Suppose we solve the DCPE
+λ problem and obtain a set of solutions {ˆΓi}K
+i=1.
+How close is every solution in this set, ˆΓi, to its corresponding true representation, Γi? In
+what follows, we provide a theorem addressing this question of stability, the proof of which
+is deferred to Appendix B.
+Theorem 5 (Stability of the solution to the DCPE
+λ problem): Suppose a signal X that has
+a decomposition
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK
+18
+
+
+===== PDF PAGE 19 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+is contaminated with noise E, where ∥E∥2 ≤E0, resulting in Y = X+E. For all 1 ≤i ≤K,
+if
+1. ∥Γi∥S
+0,∞≤λi < 1
+2
+
+1 +
+1
+µ(Di)
+
+; and
+2. Ei2 =
+4E2
+i−1
+1−(2∥Γi∥S
+0,∞−1)µ(Di),
+then
+∥Γi −ˆΓi∥2
+2 ≤Ei2,
+where the set {ˆΓi}K
+i=1 is the solution for the DCPE
+λ problem.
+Intuitively, the above claims that as long as all the feature vectors {Γi}K
+i=1 are ℓ0,∞-
+sparse, then the representations obtained by solving the DCPE
+λ problem must be close to
+the true ones. Interestingly, the obtained bound increases as a function of the depth of the
+layer. This can be clearly seen from the recursive deﬁnition of Ei, leading to the following
+bound
+∥Γi −ˆΓi∥2
+2 ≤E02
+iY
+j=1
+4
+1 −(2∥Γj∥S
+0,∞−1)µ(Dj).
+Is this necessarily the true behavior of a deep network? Perhaps the answer to this
+resides in the choice we made above of considering the noise as adversary. A similar, yet
+somewhat more involved, analysis with a random noise assumption should be done, with
+the hope to see a better controlled noise propagation in this system. We leave this for our
+future work.
+Another important remark is that the above bounds the absolute error between the
+estimated and the true representation. In practice, however, the relative error is of more
+importance. This is measured in terms of the signal to noise ratio (SNR), which we shall
+deﬁne in Section 8.
+Having established the stability of the DCPE
+λ problem, we now turn to the stability of
+the algorithms attempting to solve it, the chief one being the forward pass of CNN.
+5.3 Stability of the Layered Hard Thresholding
+Consider a signal X that admits a multi-layer convolutional sparse representation, which
+is deﬁned by the sets {Di}K
+i=1 and {λi}K
+i=1. Assume we run the layered hard thresholding
+algorithm on X, obtaining the sparse vectors {ˆΓi}K
+i=1. Under certain conditions, can we
+guarantee that the estimate ˆΓi recovers the true support of Γi? or that the norm of the
+diﬀerence between the two is bounded? Assume X is contaminated with a noise vector
+E, resulting in the measurement Y = X + E. Assume further that this signal is then fed
+to the layered thresholding algorithm, resulting in another set of representations. How do
+the answers to the above questions change? To tackle these, we commence by presenting a
+stability claim for the simple hard thresholding algorithm, relying on the ℓ0,∞norm. We
+should note that the analysis conducted in this subsection is for the noisy scenario, and the
+results for the noiseless case are simply obtained by setting the noise level to zero.
+Next, we present a localized ℓ2 and ℓ0 measure of a global vector that will prove to be
+useful in the following analysis.
+19
+
+
+===== PDF PAGE 20 =====
+Papyan, Romano and Elad
+Deﬁnition 6 Deﬁne the ∥· ∥P
+2,∞and ∥· ∥P
+0,∞norm of Γi to be
+∥Γi∥P
+2,∞= max
+j
+∥Pi,jΓi∥2
+and
+∥Γi∥P
+0,∞= max
+j
+∥Pi,jΓi∥0,
+respectively. The operator Pi,j extracts the j-th patch of length nimi from the i-th sparse
+vector Γi.
+In the above deﬁnition, the letter p emphasizes that the norms are computed by sweeping
+over all patches, rather than stripes. Recall that we have deﬁned m0 = 1, since the number
+of channels in the input signal X = Γ0 is equal to one.
+Given Y = X + E = D1Γ1 + E, the ﬁrst stage of the layered hard thresholding algo-
+rithm attempts to recover the representation Γ1. Intuitively, assuming that the underlying
+representation Γ1 is ℓ0,∞-sparse, and that the energy of the noise E is ℓ2,∞-bounded; we
+would expect that the simple hard thresholding algorithm would succeed in recovering a
+solution ˆΓ1, which is both close to Γ1 and has its support. We now present such a claim,
+the proof of which is found in Appendix C.
+Lemma 7 (Stable recovery of hard thresholding in the presence of noise): Suppose a clean
+signal X has a convolutional sparse representation D1Γ1, and that it is contaminated with
+noise E to create the signal Y = X + E, such that ∥E∥P
+2,∞≤ϵ0. Denote by |Γmin
+1
+| and
+|Γmax
+1
+| the lowest and highest entries in absolute value in Γ1, respectively. Denote further by
+ˆΓ1 the solution obtained by running the hard thresholding algorithm on Y with a constant
+β1, i.e. ˆΓ1 = Hβ1(DT
+1 Y). Assuming that
+a)
+∥Γ1∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D1)
+|Γmin
+1
+|
+|Γmax
+1
+|
+
+−
+1
+µ(D1)
+ϵ0
+|Γmax
+1
+|; and
+b)
+The threshold β1 is chosen according to Equation (13) (see below),
+then the following must hold:
+1. The support of the solution ˆΓ1 is equal to that of Γ1; and
+2. ∥Γ1 −ˆΓ1∥P
+2,∞≤
+q
+∥Γ1∥P
+0,∞
+
+ϵ0 + µ(D1)
+ ∥Γ1∥S
+0,∞−1
+
+|Γmax
+1
+|
+
+.
+Notice that by plugging ϵ0 = 0 the above theorem covers the noiseless scenario. Notably,
+even in such a case, we obtain a deviation from the true representation due to the lack of
+a Least-Squares step.
+We suspect that, both in the noiseless and the noisy case, the obtained bound might
+be improved, based on the following observation. Given an ℓ2,∞-norm bounded noise, the
+above proof ﬁrst quantiﬁes the deviation between the true representation and the estimated
+one in terms of the ℓ∞norm, and only then translates the latter into the ℓ2,∞sense. A
+direct analysis going from an ℓ2,∞input error to an ℓ2,∞output deviation (bypassing the
+ℓ∞norm) might lead to smaller deviations. We leave this for future work.
+We now proceed to the next layer. Given ˆΓ1, which can be considered as a perturbed
+version of Γ1, the second stage of the layered hard thresholding algorithm attempts to
+20
+
+
+===== PDF PAGE 21 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+recover the representation Γ2. Using the stability of the ﬁrst layer – guaranteeing that Γ1
+and ˆΓ1 are close in terms of the ℓ2,∞norm – and relying on the ℓ0,∞-sparsity of Γ2, we
+show next that the second stage of the layered hard thresholding algorithm is stable as
+well. Applying the same rationale to all the remaining layers, we obtain the theorem below
+guaranteeing the stability of the complete layered hard thresholding algorithm.
+Theorem 8 (Stability of layered hard thresholding in the presence of noise): Suppose a
+clean signal X has a decomposition
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK,
+and that it is contaminated with noise E to create the signal Y = X+E, such that ∥E∥P
+2,∞≤
+ϵ0. Denote by |Γmin
+i
+| and |Γmax
+i
+| the lowest and highest entries in absolute value in the vector
+Γi, respectively. Let {ˆΓi}K
+i=1 be the set of solutions obtained by running the layered hard
+thresholding algorithm with thresholds {βi}K
+i=1, i.e.
+ˆΓi = Hβi(DT
+i ˆΓi−1) where ˆΓ0 = Y.
+Assuming that ∀1 ≤i ≤K
+a)
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+|Γmin
+i
+|
+|Γmax
+i
+|
+
+−
+1
+µ(Di)
+ϵi−1
+|Γmax
+i
+|; and
+b)
+The threshold βi is chosen according to Equation (18),
+then5
+1. The support of the solution ˆΓi is equal to that of Γi; and
+2. ∥Γi −ˆΓi∥P
+2,∞≤ϵi,
+where ϵi =
+q
+∥Γi∥P
+0,∞
+
+ϵi−1 + µ(Di)
+ ∥Γi∥S
+0,∞−1
+
+|Γmax
+i
+|
+
+.
+The proof for the above is given in Appendix D. We now turn to an analogous theorem
+for the forward pass of the CNN, prior to discussing the surprising implications of these
+theorems.
+5.4 Stability of the Forward Pass (Layered Soft Thresholding)
+In light of the discussion in Section 4, the equivalence between the layered thresholding
+algorithm and the forward pass of the CNN is achieved assuming that the operator em-
+ployed is the nonnegative soft thresholding S+
+β (·). However, thus far, we have analyzed
+the closely related hard version Hβ(·) instead. In what follows, we show how the stability
+5. Recall that ∥Γi∥P
+2,∞is deﬁned to be the maximal ℓ2 norm of a patch extract from Γi. The size of this
+patch is deﬁned according to the dictionary Di+1. However, the last sparse vector ΓK does not have a
+corresponding dictionary DK+1. As such, the size of a patch in ΓK can be chosen arbitrarily. Where
+the choice of the size directly aﬀects the bound on the diﬀerence, ϵi, due to the term
+q
+∥Γi∥P
+0,∞.
+21
+
+
+===== PDF PAGE 22 =====
+Papyan, Romano and Elad
+theorem presented in the previous subsection can be modiﬁed to the soft version, Sβ(·). For
+simplicity, and in order to stay in line with the vast sparse representation theory, herein we
+choose not to assume the nonnegative assumption. This implies that we are proposing a
+slightly diﬀerent CNN architecture in which the ReLU function is two sided (Kavukcuoglu
+et al., 2010). We now move to the stable recovery of the soft thresholding algorithm.
+Lemma 9 (Stable recovery of soft thresholding in the presence of noise): Suppose a clean
+signal X has a convolutional sparse representation D1Γ1, and that it is contaminated with
+noise E to create the signal Y = X + E, such that ∥E∥P
+2,∞≤ϵ0. Denote by |Γmin
+1
+| and
+|Γmax
+1
+| the lowest and highest entries in absolute value in Γ1, respectively. Denote further
+by ˆΓ1 the solution obtained by running the soft thresholding algorithm on Y with a constant
+β1, i.e. ˆΓ1 = Sβ1(DT
+1 Y). Assuming that
+a)
+∥Γ1∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D1)
+|Γmin
+1
+|
+|Γmax
+1
+|
+
+−
+1
+µ(D1)
+ϵ0
+|Γmax
+1
+|; and
+b)
+The threshold β1 is chosen according to Equation (13),
+then the following must hold:
+1. The support of the solution ˆΓ1 is equal to that of Γ1; and
+2. ∥Γ1 −ˆΓ1∥P
+2,∞≤
+q
+∥Γ1∥P
+0,∞
+
+ϵ0 + µ(D1)
+ ∥Γ1∥S
+0,∞−1
+
+|Γmax
+1
+| + β1
+
+.
+Armed with the above lemma, which is proven in Appendix E, we now proceed to the
+stability of the forward pass of the CNN.
+Theorem 10 (Stability of the forward pass (layered soft thresholding algorithm) in the
+presence of noise): Suppose a clean signal X has a decomposition
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK,
+and that it is contaminated with noise E to create the signal Y = X+E, such that ∥E∥P
+2,∞≤
+ϵ0.
+Denote by |Γmin
+i
+| and |Γmax
+i
+| the lowest and highest entries in absolute value in the
+vector Γi, respectively. Let {ˆΓi}K
+i=1 be the set of solutions obtained by running the layered
+soft thresholding algorithm with thresholds {βi}K
+i=1, i.e. ˆΓi = Sβi(DT
+i ˆΓi−1) where ˆΓ0 = Y.
+Assuming that ∀1 ≤i ≤K
+a)
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+|Γmin
+i
+|
+|Γmax
+i
+|
+
+−
+1
+µ(Di)
+ϵi−1
+|Γmax
+i
+|; and
+b)
+The threshold βi is chosen according to Equation (18) (with the ϵi deﬁned below),
+then
+1. The support of the solution ˆΓi is equal to that of Γi; and
+22
+
+
+===== PDF PAGE 23 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+2. ∥Γi −ˆΓi∥P
+2,∞≤ϵi,
+where ϵi =
+q
+∥Γi∥P
+0,∞
+
+ϵi−1 + µ(Di)
+ ∥Γi∥S
+0,∞−1
+
+|Γmax
+i
+| + βi
+
+.
+The proof for the above is omitted since it is tantamount to that of Theorem 8. As
+one can see, the layered soft thresholding algorithm is in fact inferior to its hard variant
+due to the added constant of βi in the local error level, ϵi. This results in a more strict
+assumption on the ℓ0,∞norm of the various representations and also augments the bound
+on the distance between the true sparse vector and the one recovered.
+Following this
+observation, a natural question arises; why does the deep learning community employ the
+ReLU, which corresponds to a soft nonnegative thresholding operator instead of another
+nonlinearity that is more similar to its hard counterpart? One possible explanation could
+be that the ﬁlter training stage of the CNN becomes harder when the ReLU is replaced
+with a non-convex alternative, which also has discontinuities, such as the hard thresholding
+operator.
+The above theorem guarantees that the distances between the original representations
+and the ones obtained from the CNN are bounded. Even if we set ϵ0 = 0, the recovered
+activations deviate from the true ones, simply because the layered thresholding algorithm
+does not do a perfect job, even on a noiseless signal.
+When the signal is noisy, these
+deviations are strengthened, but still in a controlled way.
+This, by itself, might not be surprising. After all, the CNN is a deterministic system of
+linear operations (convolutions), followed by simple non-linearities that are non-expanding.
+If we feed a slightly perturbed signal to such a system, it is clear that the activations all
+along the network will be perturbed as well with a bounded eﬀect. However, the above
+theorem shows far more than that. There are, in fact, two types of stabilities, the trivial
+one that considers the sensitivity of the whole feed-forward network to perturbations in its
+input, and the more intricate one that shows that this system enables a rather accurate
+recovery of the generating representations. The second option is the stability we prove
+here.
+5.5 Guarantees for Fully Connected Networks
+One should note that the convolutional structure imposed on the dictionaries in our model
+could be removed, and the theoretical guarantees we have provided above would still hold.
+The reason being is that the unconstrained dictionary can be regarded as a convolutional
+one, constructed from a single shift of a local matrix with no circular boundary. In the
+context of CNN, this is analogous to a fully connected layer.
+As such, the theoretical
+analysis provided here sheds light on both convolutional and fully connected networks. A
+diﬀerent point of view on the same matter can also be proposed; fully connected layers can
+be viewed as convolutional ones with ﬁlters that cover their entire input (Long et al., 2015).
+6. Layered Basis Pursuit – The Future of Deep Learning?
+The stability analysis presented above unveils two signiﬁcant limitations of the forward
+pass of the CNN. First, this algorithm is incapable of recovering the unique solution for the
+DCPλ problem, the existence of which is guaranteed from Theorem 4. This acts against
+23
+
+
+===== PDF PAGE 24 =====
+Papyan, Romano and Elad
+our expectations, since in the traditional sparsity inspired model it is a well known fact that
+such a unique representation can be retrieved, assuming certain conditions are met.
+The second issue is with the condition for the successful recovery of the true support.
+The ℓ0,∞norm of the true solution, Γi, is required to be less than an expression that
+depends on the term |Γmin
+i
+|/|Γmax
+i
+|. The dependence on this ratio is a direct consequence of
+the forward pass algorithm relying on the simple thresholding operator that is known for
+having such a theoretical limitation6. However, alternative pursuits whose success would
+not depend on this ratio could be proposed, as indeed was done in the Sparse-Land model;
+resulting in both theoretical and practical beneﬁts.
+A solution for the ﬁrst problem, already presented throughout this work, is a two-stage
+approach. First, run the thresholding operator in order to recover the correct support. Then,
+once the atoms are chosen, their corresponding coeﬃcients can be obtained by solving a
+linear system of equations. In addition to retrieving the true representation in the noiseless
+case, this step can also be beneﬁcial in the noisy scenario, resulting in a solution closer to
+the underlying one. However, since no such step exists in current CNN architectures, we
+refrain from further analyzing its theoretical implications.
+Next, we present an alternative to the layered soft thresholding algorithm, which will
+tackle both of the aforementioned problems. Recall that the result of the soft thresholding
+is a simple approximation of the solution for the P1 problem, previously deﬁned in Equation
+(4). In every layer, instead of applying a simple thresholding operator that estimates the
+sparse vector by computing ˆΓi = Sβi(DT
+i ˆΓi−1); we propose to tackle the full pursuit, i.e. to
+minimize
+ˆΓi = arg min
+Γi
+∥Γi∥1 s.t.
+ˆΓi−1 = DiΓi.
+(7)
+Notice that one could readily obtain the nonnegative sparse coding problem by simply
+adding an extra constraint in the above equation, forcing the coeﬃcients in Γi to be non-
+negative. More generally, Equation (7) can be written in its Lagrangian formulation
+ˆΓi = arg min
+Γi
+ξi∥Γi∥1 + 1
+2∥DiΓi −ˆΓi−1∥2
+2,
+(8)
+where the constant ξi is proportional to the noise level and should tend to zero in the
+noiseless scenario. We name the above the layered basis pursuit (BP) algorithm. In practice,
+one possible method for solving it is the iterative soft thresholding (IST). Formally, this
+obtains the minimizer of Equation (8) by repeating the following recursive formula
+ˆΓt
+i = Sξi/ci
+
+ˆΓt−1
+i
++ 1
+ci
+DT
+i
+
+ˆΓi−1 −DiˆΓt−1
+i
+
+,
+(9)
+where ˆΓt
+i is the estimate of Γi at iteration t. The above can be interpreted as a simple
+projected gradient descent algorithm, where the constant ci is inversely proportional to
+its step size.
+As a result, if ci is chosen to be large enough7, the above algorithm is
+6. The dependence on the ratio is also a direct consequence of assuming a worst-case analysis. Perhaps in
+reality this ratio does not play such a critical role.
+7. The constant ci should satisfy ci > 0.5λmax
+ DT
+i Di
+
+, where λmax
+ DT
+i Di
+
+is the maximal eigenvalue of
+the gram matrix DT
+i Di (Combettes and Wajs, 2005).
+24
+
+
+===== PDF PAGE 25 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+Algorithm 2 The layered iterative soft thresholding algorithm.
+Input:
+X – a signal.
+{Di}K
+i=1 – convolutional dictionaries.
+P ∈{S, S+} – a soft thresholding operator.
+{ξi}K
+i=1 – Lagrangian parameters.
+{1/ci}K
+i=1 – step sizes.
+{Ti}K
+i=1 – number of iterations.
+Output:
+A set of representations {ˆΓi}K
+i=1.
+Process:
+1: ˆΓ0 ←X
+2: for i = 1 : K do
+3:
+ˆΓ0
+i ←0
+4:
+for t = 1 : Ti do
+5:
+ˆΓt
+i ←Pξi/ci
+
+ˆΓt−1
+i
++ 1
+ci DT
+i
+
+ˆΓi−1 −DiˆΓt−1
+i
+
+6:
+end for
+7:
+ˆΓi ←ˆΓTi
+i
+8: end for
+guaranteed to converge to its global minimum that is the solution of (8), as was shown in
+(Daubechies et al., 2004). The method obtained by gradually computing the set of sparse
+representations, {Γi}K
+i=1, via the IST is summarized in Algorithm 2 and named layered
+iterative soft thresholding. Notice that this algorithm coincides with the simple layered soft
+thresholding if it is run for a single iteration with ci = 1 and initialized with ˆΓ0
+i = 0. This
+implies that the above algorithm is a natural extension to the forward pass of the CNN.
+With respect to the computational aspects of the IST algorithm, the work of (Gregor and
+LeCun, 2010) proposed the LISTA method, showing how the number of iterations required
+by the IST to convergence can be reduced using neural networks. Analogously, the work of
+(Xin et al., 2016) presented a generalization of the iterative hard thresholding (IHT), which
+was shown both theoretically and empirically to be superior to the original IHT.
+The original motivation for the layered IST was its theoretical superiority over the
+forward pass algorithm – one that will be explored in detail in the next subsection. Yet
+more can be said about this algorithm and the CNN architecture it induces. In (Gregor and
+LeCun, 2010) it was shown that the IST algorithm can be formulated as a simple recurrent
+neural network. As such, the same can be said regarding the layered IST algorithm proposed
+here, with the exception that the induced recurrent network is much deeper. The reader can
+therefore interpret this part of the work as a theoretical study of a special case of recurrent
+neural networks.
+From another perspective, the underlying architecture of the layered IST algorithm is
+a cascade of K blocks. Each of these corresponds to a ﬁxed number of unfolded iterations,
+Ti, of a single IST algorithm. As such, it contains several convolutional layers with shared
+weights, as well as skip connections in order to compute the residual, ˆΓi−1 −DiˆΓt−1
+i
+, as
+25
+
+
+===== PDF PAGE 26 =====
+Papyan, Romano and Elad
+deﬁned in Equation (9). Interestingly, the above description is reminiscent (though not
+exact) of residual networks (He et al., 2015), which have recently led to state-of-the-art
+results in image recognition.
+6.1 Success of Layered BP Algorithm
+In Section 5.1, we established the uniqueness of the solution for the DCPλ problem, as-
+suming that certain conditions on the ℓ0,∞norm of the underlying representations are met.
+However, as we have seen in the theoretical analysis of the previous section, the forward
+pass of the CNN is incapable of ﬁnding this unique solution; instead, it is guaranteed to
+be close to it in terms of the ℓ2,∞norm. Herein, we address the question of whether the
+layered BP algorithm can prevail in a task where the forward pass did not.
+Theorem 11 (Layered BP recovery guarantee using the ℓ0,∞norm): Consider a signal X,
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK,
+where {Di}K
+i=1 is a set of convolutional dictionaries and {µ(Di)}K
+i=1 are their corresponding
+mutual coherences. Assuming that ∀1 ≤i ≤K
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+
+then the layered BP algorithm is guaranteed to recover the set {Γi}K
+i=1.
+The proof for the above can be directly derived from the recovery condition of the
+BP using the ℓ0,∞norm, as presented in (Papyan et al., 2016a). The implications of this
+theorem are that the layered BP algorithm can indeed recover the unique solution to the
+DCPλ problem.
+6.2 Stability of Layered BP Algorithm
+Having established the guarantee for the success of the layered BP algorithm, we now
+move to its stability analysis. In particular, in a noisy scenario where obtaining the true
+underlying representations is impossible, does this algorithm remain stable?
+If so, how
+do its guarantees compare to those of the layered thresholding algorithm? The following
+theorem, which we prove in Appendix F, aims to answer these questions.
+Theorem 12 (Stability of the layered BP algorithm in the presence of noise): Suppose a
+clean signal X has a decomposition
+X = D1Γ1
+Γ1 = D2Γ2
+...
+ΓK−1 = DKΓK,
+26
+
+
+===== PDF PAGE 27 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+and that it is contaminated with noise E to create the signal Y = X+E, such that ∥E∥P
+2,∞≤
+ϵ0. Let {ˆΓi}K
+i=1 be the set of solutions obtained by running the layered BP algorithm with
+parameters {ξi}K
+i=1. Assuming that ∀1 ≤i ≤K
+a)
+∥Γi∥S
+0,∞< 1
+3
+
+1 +
+1
+µ(Di)
+
+; and
+b)
+ξi = 4ϵi−1,
+then
+1. The support of the solution ˆΓi is contained in that of Γi;
+2. ∥Γi −ˆΓi∥P
+2,∞≤ϵi;
+3. In particular, every entry of Γi greater in absolute value than
+ϵi
+q
+∥Γi∥P
+0,∞
+is guaranteed
+to be recovered; and
+4. The solution ˆΓi is the unique minimizer of the Lagrangian BP problem (Equation (8)),
+where ϵi = ∥E∥P
+2,∞7.5i Qi
+j=1
+q
+∥Γj∥P
+0,∞.
+Several remarks are due at this point. The condition for the stability of the layered
+thresholding algorithm, given by
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+|Γmin
+i
+|
+|Γmax
+i
+|
+
+−
+1
+µ(Di)
+ϵi−1
+|Γmax
+i
+|,
+is expected to be more strict than that of the theorem presented above, which is
+∥Γi∥S
+0,∞< 1
+3
+
+1 +
+1
+µ(Di)
+
+.
+In the case of the layered BP algorithm, the bound on the ℓ0,∞norm of the underlying
+sparse vectors does no longer depend on the ratio |Γmin
+i
+|/|Γmax
+i
+| – a term present in all
+the theoretical results of the thresholding algorithm. Moreover, the ℓ0,∞norm becomes
+independent of the local noise level of the previous layers, thus allowing more non-zeros per
+stripe.
+In addition, similar to the stability analysis presented in Section 5.2, the above shows the
+growth (as a function of the depth) of the distance between the recovered representations
+and the true ones.
+7. A Closer Look at the Proposed Model
+In this section, we revisit the assumptions of our model by imposing additional constraints
+on the dictionaries involved and showing their theoretical beneﬁts. These additional as-
+sumptions originate from the current common practice of both CNN and sparsity.
+27
+
+
+===== PDF PAGE 28 =====
+Papyan, Romano and Elad
+7.1 When a Patch Becomes a Stripe
+Throughout the analysis presented in this work, we have assumed that the representations
+in the diﬀerent layers, {Γi}K
+i=1, are ℓ0,∞-sparse. Herein, we study the propagation of the ℓ0,∞
+norm throughout the layers of the network, showing how an assumption on the sparsity of
+the deepest representation ΓK reﬂects on that of the remaining layers. The exact connection
+between the sparsities will be given in terms of a simple characterization of the dictionaries
+{Di}K
+i=1.
+Consider the representation ΓK−1, given by
+ΓK−1 = DKΓK,
+where ΓK is ℓ0,∞-sparse. Following Figure 4, the i-th patch in ΓK−1 can be expressed as
+PK−1,iΓK−1 = ΩK γK,i,
+where ΩK is the stripe-dictionary of DK, the vector PK−1,iΓK−1 is the i-th patch in ΓK−1
+and γK,i is its corresponding stripe. Recalling the deﬁnition of the ∥·∥P
+0,∞norm (Deﬁnition
+6 in Section 5.3), we have that
+∥ΓK−1∥P
+0,∞= max
+i
+∥ΩK γK,i∥0.
+Consider the following deﬁnition.
+Deﬁnition 13 Deﬁne the induced ℓ0 pseudo-norm of a dictionary D, denoted by ∥D∥0, to
+be the maximal number of non-zeros in any of its atoms8.
+The multiplication ΩK γK,i can be seen as a linear combination of at most ∥γK,i∥0 atoms,
+each contributing no more than ∥ΩK∥0 non-zeros. As such
+∥ΓK−1∥P
+0,∞≤max
+i
+∥ΩK∥0 ∥γK,i∥0.
+Noticing that ∥ΩK∥0 = ∥DK∥0 (as can be seen in Figure 4), and using the deﬁnition of the
+∥· ∥S
+0,∞norm, we conclude that
+∥ΓK−1∥P
+0,∞≤∥DK∥0 ∥ΓK∥S
+0,∞.
+(10)
+In other words, given ∥ΓK∥S
+0,∞and ∥DK∥0, we can bound the maximal number of non-zeros
+in a patch from ΓK−1.
+The claims in Section 5 and 6 are given in terms of not only ∥ΓK−1∥P
+0,∞, but also
+∥ΓK−1∥S
+0,∞. According to Table 1, the length of a patch in ΓK−1 is nK−1mK−1, while the
+size of a stripe is (2nK−2 −1)mK−1. As such, we can ﬁt (2nK−2 −1)/nK−1 patches in a
+stripe. Assume for simplicity that this ratio is equal to one. As a result, we obtain that a
+patch in the signal ΓK−1 extracted from the system
+ΓK−1 = DKΓK,
+8. According to the deﬁnition of the induced norm ∥D∥0 = maxv ∥Dv∥0
+s.t. ∥v∥0 = 1. Since ∥v∥0 = 1,
+the multiplication Dv is simply equal to one of the atoms in D times a scalar, and ∥Dv∥0 counts the
+number of non-zeros in this atom. As a result, ∥D∥0 is equal to the maximal number of non-zeros in any
+atom from D.
+28
+
+
+===== PDF PAGE 29 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+is also a stripe in the representation ΓK−1 when considering
+ΓK−2 = DK−1ΓK−1,
+hence the name of this subsection. Leveraging this assumption, we return to Equation (10)
+and obtain that
+∥ΓK−1∥S
+0,∞= ∥ΓK−1∥P
+0,∞≤∥DK∥0 ∥ΓK∥S
+0,∞.
+Using the same rationale for the remaining layers, and assuming that once again the patches
+become stripes, we conclude that
+∥Γi∥S
+0,∞= ∥Γi∥P
+0,∞≤∥ΓK∥S
+0,∞
+K
+Y
+j=i+1
+∥Dj∥0.
+(11)
+We note that our assumption here of having sparse dictionaries is reasonable, since at the
+training stage of the CNN an ℓ1 penalty is often imposed on the ﬁlters as a regularization,
+promoting their sparsity. The conclusion thus is that the ℓ0,∞norm is expected to decrease
+as a function of the depth of the representation. This aligns with the intuition that the
+higher the depth, the more abstraction one obtains in the ﬁlters, and thus the less non-zeros
+are required to represent the data. Taking this to the extreme, if every input signal could
+be represented via a single coeﬃcient at the deepest layer, we would obtain that its ℓ0,∞
+norm is equal to one.
+7.2 On the Role of the Spatial-Stride
+A common step among practitioners of CNN (Krizhevsky et al., 2012; Simonyan and Zisser-
+man, 2014; He et al., 2015) is to convolve the input to each layer with a set of ﬁlters, skipping
+a ﬁxed number of spatial locations in a regular pattern. One of the primary motivations
+for this is to reduce the dimensions of the kernel maps throughout the layers, leading to
+computational beneﬁts. In this subsection we unveil some theoretical beneﬁts of this
+common practice, which we coin spatial-stride.
+Following Figure 5, recall that Di is a stride convolutional dictionary that skips mi−1
+shifts at a time, which correspond to the number of channels in Γi−1.
+Translating the
+spatial-stride to our language, the above mentioned works do not consider all spatial shifts
+of the ﬁlters in Di. Instead, a stride of mi−1si−1 is employed, where mi−1 corresponds
+to the channel-stride, while si−1 is due to the spatial-stride. The addition of the latter
+implies that instead of assuming that the i-th sparse vector satisﬁes Γi−1 = DiΓi, we have
+that Qi−1Γi−1 = DiQT
+i QiΓi. We denote QT
+i
+∈RNmi×Nmi/si−1 as a columns’ selection
+operator that chooses the atoms from Di that align with the spatial-stride. The coeﬃcients
+corresponding to these atoms are extracted from Γi (resulting in its subsampled version) via
+the Qi matrix. In light of the above discussion, we modify the DCPλ problem, as deﬁned
+in Deﬁnition 1, into the following
+ﬁnd
+{Γi}K
+i=1
+s.t.
+X = D1QT
+1 Q1Γ1,
+∥Q1Γ1∥S
+0,∞≤λ1
+Q1Γ1 = D2QT
+2 Q2Γ2,
+∥Q2Γ2∥S
+0,∞≤λ2
+...
+...
+QK−1ΓK−1 = DKQT
+KQKΓK,
+∥QKΓK∥S
+0,∞≤λK.
+29
+
+
+===== PDF PAGE 30 =====
+Papyan, Romano and Elad
+Note that while the original ∥Γi∥S
+0,∞is equal to the maximal number of non-zeros in a stripe
+of length (2ni−1 −1)mi in Γi, the term ∥QiΓi∥S
+0,∞counts the same quantity but for stripes
+of length (2 ⌈ni−1/si−1⌉−1)mi in QiΓi.
+According to the study in Section 5 and 6, the theoretical advantage of the spatial-stride
+is twofold. First, consider the mutual coherence of the stride convolutional dictionary Di.
+Due to the locality of the ﬁlters and their restriction to certain spatial shifts, the mutual
+coherence of DiQT
+i is expected to be lower than that of Di, thus leading to more non-zeros
+allowed per stripe. Second, the length of a stripe in QiΓi is equal to (2 ⌈ni−1/si−1⌉−1)mi,
+while that of Γi is (2ni−1 −1)mi. As such, our analysis allows a larger number of non-zeros
+per a smaller-sized stripe. From another perspective, notice that imposing a spatial-stride
+on the dictionary Di is equivalent to forcing a portion of the entries in Γi to be zero. As
+such, the spatial-stride encourages sparser solutions.
+8. Experiments: The Generator Behind the CNN
+Consider the following question: can we synthesize signals obeying the ML-CSC model?
+Throughout this work we have posited that the answer to this question is positive; we have
+assumed the existence of a set of signals X, which satisfy ∀i Γi = Di+1Γi+1 where {Γi}K
+i=1
+are all ℓ0,∞bounded. However, a natural question arises as to whether we can give a simple
+example of set of dictionaries {Di}K
+i=1 and their corresponding signals X that indeed satisfy
+our model assumptions.
+A na¨ıve attempt would be to choose an arbitrary set of dictionaries, {Di}K
+i=1, and a
+random deepest representation, ΓK, and compute the remaining sparse vectors (and the
+signal itself) using the set of relations Γi = Di+1Γi+1. However, without further restrictions,
+this would lead to a set of representations {Γi}K
+i=1 with growing ℓ0,∞norm as we propagate
+towards Γ0. A somewhat better approach would be to impose sparsity on the dictionaries
+involved, as suggested in Section 7.1, thus leading to sparser representations. However,
+besides the obvious drawback of forcing a limiting structure on the dictionaries, as can be
+seen in Equation (11), in the worst case this would also lead to growth in the density of the
+representations, even if it is more controlled. The spatial-stride – at ﬁrst glance unrelated
+to this discussion – is another solution that addresses the same problem. In particular, in
+Section 7.2 this idea was shown to encourage sparser vectors by forcing zeros in a regular
+pattern in the set of representations {Γi}K
+i=1.
+In this section we combine the above notions in order to achieve our goal – generate a set
+of signals that will satisfy the ML-CSC assumptions. These will then serve as a playground
+for several experiments, which will compare both theoretically and practically the diﬀerent
+pursuits presented in this paper.
+8.1 Designing the Dictionaries
+We commence by describing the design of the dictionaries, and in the next subsection
+continue to the actual generation of the signals.
+In our experiments, the signal is one
+dimensional and therefore m0 = 1. Moreover, for simplicity, the dictionary in every layer
+contains a single atom with its shifts and thus mi = 1 ∀1 ≤i ≤K. We should note that
+the choice of a single atom simpliﬁes the involved pursuit problem, but as we will see, even
+30
+
+
+===== PDF PAGE 31 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+in such a case the suggested layered pursuits (including the forward pass) may fail. This is
+because the mutual coherence and the amount of non-zeros are still non-trivial.
+In the ﬁrst layer we choose this ﬁlter to be the analytically deﬁned discrete Meyer
+Wavelet of length n0 = 29. In order to obtain sparser representations and improve the
+coherence of the global dictionary D1, we employ a stride of s0 = 6, resulting in µ(D1) =
+2.44 × 10−4. As a consequence of our choice of D1, the signals resulting from our model
+are a superposition of shifted versions of discrete Meyer Wavelets, multiplied by diﬀerent
+coeﬃcients.
+Recall that in the context of the layered thresholding algorithm, our theoretical study
+has shown that the stability of the pursuit depends on the ratio |Γmin
+i
+|/|Γmax
+i
+|. As such, in
+addition to requiring µ(Di) to be small, we would also like the ratio |Γmin
+i
+|/|Γmax
+i
+| to be as
+close as possible to one. Since the sparse vectors satisfy Γi = Di+1Γi+1 ∀1 ≤i ≤K −1, one
+can control this ratio by forcing the entries in the dictionaries {Di}K
+i=2 to be9 discrete10.
+Following this observation, and motivated by the beneﬁts of a sparse dictionary, we generate
+a ﬁlter of length 20 with 7 non-zero entries belonging to the set {−8, −7, ..., 7, 8} (these are
+the entries before the atom is normalized to a unit ℓ2 norm). In practice, this is done by
+sampling random vectors satisfying these constraints and choosing one resulting in a good
+mutual coherence. For simplicity, all {Di}K
+i=2 are created from the very same local atom,
+i.e. ni = 20 ∀1 ≤i ≤K −1. Moreover, in all the dictionaries this atom is shifted by a
+stride of si = 6, leading to µ(Di) = 4.33 × 10−3. Note that in the above description the
+speciﬁc number of layers K was purposely omitted, as this number will vary in the following
+experiments.
+8.2 Noiseless Experiments
+We now move to the task of sampling a signal when the number of layers is K = 3. First,
+we draw a random Γ3 of length 100 with an ℓ0 norm in the range [20, 66] and set each non-
+zero coeﬃcient in it to ±1, with equal probability. Given the dictionaries and the sampled
+sparse vector Γ3, we then compute the representations Γ2, Γ1 and the signal X, which are
+of length 600, 3, 600 and N = 21, 600, respectively. The obtained sparse vectors satisfy
+∥Γ1∥S
+0,∞= 8, 5 ≤∥Γ2∥S
+0,∞≤6 and 3 ≤∥Γ3∥S
+0,∞≤7.
+Given the signals, we attempt to retrieve their underlying representations using the
+layered pursuits presented in this work. Recall that our analysis in Section 5 and 6 indicates
+that the layered hard thresholding is superior to its soft counterpart, which is equivalent
+to the forward pass, and that the layered BP is even better than both of these algorithms.
+We now turn to asserting this claim empirically.
+While doing so, we aim to study the
+gap between the theoretical guarantees presented throughout our paper and the empirical
+performance obtained in practice.
+9. Note that we do not force the entries in D1 to be discrete since X = D1Γ1 and the ratio of the entries
+in X is of no signiﬁcance to the success of the layered thresholding algorithms.
+10. In our experiments, the non-zero entries in the deepest representation ΓK are chosen to be ±1. As
+such, the sparse vector ΓK−1 = DKΓK is a superposition of ﬁlters (or their negative) taken from the
+dictionary DK. If the entries in DK are non-discrete then the summation of two ﬁlters can result in
+extremely small values in ΓK−1, which in turn would lead to a very small |Γmin
+K−1| and a bad ratio. On
+the other hand, if the atoms are chosen to be discrete, this would not happen since the entries would
+simply cancel each other.
+31
+
+
+===== PDF PAGE 32 =====
+Papyan, Romano and Elad
+For every signal X (termed realization below), we employ the layered hard thresholding
+algorithm. The thresholds are set to be the ones presented in Theorem 8, since the ℓ0,∞
+norms of the representations of each X satisfy the assumptions of this theorem. Given the
+estimated sparse vectors {ˆΓi}3
+i=1, we then compute the errors ∥ˆΓi −Γi∥P
+2,∞and compare
+these to the theoretical bounds. While doing so, we also verify that the correct support
+is indeed retrieved, as our theorem guarantees. Next, the same process is repeated for the
+layered soft thresholding algorithm, with the exception that the thresholds and the bound
+on the distance are computed according to Theorem 10. We note that the assumptions of
+this hold as well for every signal X. The results for both algorithms are depicted in Figure
+6 in terms of the local signal to noise ratio (SNR), deﬁned as 20 log 10
+
+∥Γi∥P
+2,∞
+∥ˆΓi−Γi∥P
+2,∞
+
+. Due to
+the locality of the analysis, we choose to deviate from the classical deﬁnition of the (global)
+SNR, given by 20 log 10
+
+∥Γi∥2
+∥ˆΓi−Γi∥2
+
+.
+Several remarks are due here. First and foremost, the theoretical bounds indeed hold,
+since the blue points are above their corresponding green ones and the correct supports are
+always recovered. Second, our analysis predicts that the distance between the estimated
+sparse representation, ˆΓi, and the true ones, Γi, should increase with the layer. This is
+evident by the decrease in the values of the green points with the layers. The empirical
+results presented here (blue dots) corroborate this prognosis, as the error in both algorithms
+is lowest in the ﬁrst layer and highest in the last11. Third, our analysis suggests that the
+layered hard thresholding algorithm should be superior to its soft counterpart. Once again,
+this can be deduced from the ﬁgure by comparing the values of the green points in both of
+the algorithms. The empirical results presented in Figure 6 conﬁrm this behavior, as can
+be clearly seen by comparing the errors (blue points) obtained by both algorithms in the
+i-th layer. One should note that the performance gap exhibited here is due to the constant
+βi being subtracted from every entry in the soft thresholding algorithm.
+The implications of the above discussion might be troubling in the context of CNN, as
+what this experiment shows is a deterioration of the empirical SNR throughout the layers
+of the network. Is this truly the behavior of CNN? Recall that in practice the biases of the
+diﬀerent layers (thresholds) are learned in order to achieve the best possible performance in
+solving a certain task. As such, it might be possible that the decline in SNR presented here
+is alleviated when better thresholds are employed in lieu of the theoretical ones used thus
+far. We demonstrate this by running the layered soft thresholding algorithm with an oracle
+parameter, chosen to be the minimal threshold that leads to ∥Γi∥0 non-zeros being chosen
+in the estimated sparse representation ˆΓi. The results for this are presented in Figure 6
+and colored in red.
+Indeed, we observe that this better choice of parameters improves
+the empirical performance of the layered soft thresholding algorithm and leads to a slower
+decline in SNR. Still, the performance of the layered soft thresholding is inferior to that of
+its hard variant12, as can be seen by comparing the red points with the blue ones in the
+subplots below.
+11. Interestingly, the error in the layered hard thresholding algorithm is approximately equal in the second
+and third layers.
+12. Note that in the layered hard thresholding, as long as the correct support is chosen, the threshold does
+not aﬀect the error and as such the oracle version for it is meaningless.
+32
+
+
+===== PDF PAGE 33 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+100 200 300 400
+10
+20
+30
+40
+50
+60
+70
+SNR [dB]
+Layer 1
+100 200 300 400
+10
+20
+30
+40
+50
+60
+70
+Realization
+Layered Soft Thresholding
+Layer 2
+100 200 300 400
+10
+20
+30
+40
+50
+60
+70
+Layer 3
+100 200 300 400
+10
+20
+30
+40
+50
+60
+70
+SNR [dB]
+Layer 1
+100 200 300 400
+10
+20
+30
+40
+50
+60
+70
+Realization
+Layered Hard Thresholding
+Layer 2
+100 200 300 400
+10
+20
+30
+40
+50
+60
+70
+Layer 3
+Figure 6: Comparison between the performance of the layered thresholding algorithms in a
+noiseless setting. All the signals presented here satisfy the assumptions of Theorem 8 and
+10 and indeed the correct support of all the representations are recovered. The horizontal
+axis plots the realization number, while the vertical axis shows the SNR (the higher the
+better). Blue: layered thresholding algorithm with the theoretically justiﬁable thresholds.
+Green: the theoretical bound on the error. Red: layered soft thresholding algorithm with
+oracle thresholds. Note that the points are sorted according to the theoretical bound.
+33
+
+
+===== PDF PAGE 34 =====
+Papyan, Romano and Elad
+Next, we proceed our experiments by running the layered BP algorithm, as deﬁned in
+Section 6, on the same set of signals. Recall that one of the prime motivations for proposing
+this algorithm was its ability to retrieve the exact underlying representations, as justiﬁed
+theoretically in Theorem 11. In our experiments, we validate this claim by checking that its
+conditions hold for each signal and that the underlying representations are indeed retrieved.
+We omit showing a plot for this and comparing it to the layered thresholding algorithms
+since the errors obtained are simply zeros.
+8.3 Noisy Experiments
+Having established the stability of our proposed algorithms in a perfect scenario, where
+ϵ0 = 0, we now turn to a noisy setting.
+Naturally, the estimation task becomes now
+even more challenging – not only does the SNR drop with each layer, as demonstrated
+previously, but also the input SNR is no longer inﬁnity. In order to facilitate the success of
+our algorithms, in this section we demonstrate the empirical performance and theoretical
+bounds on K = 2 layers and a small noise level.
+Similar to the previous subsection, we begin by sampling a signal X. To this end, we
+draw a random Γ2 of length 100 where 20 ≤∥Γ2∥0 ≤66. Each non-zero coeﬃcient in it is
+then set to ±1, with equal probability. Given the dictionaries and the sampled sparse vector
+Γ2, we then compute the representation Γ1 and the signal X, which are of length 600 and
+3, 600, respectively. The ℓ0,∞norm of the obtained sparse vectors satisﬁes 7 ≤∥Γ1∥S
+0,∞≤8
+and 3 ≤∥Γ2∥S
+0,∞≤7.
+Next, we contaminate each signal X with a zero-mean white additive Gaussian noise E,
+creating a signal Y = X + E. The average SNR of the obtained noisy signals is 68.53 dB.
+These are then fed into the layered pursuits, resulting in a set of estimated sparse repre-
+sentations, ˆΓi. We note that the ℓ0,∞norms of the representations of each X satisfy the
+assumptions of Theorem 8, 10 and 12. As such, the parameters for every algorithm are
+chosen according to our theoretical study. For each estimated representation we compute
+the error ∥ˆΓi −Γi∥P
+2,∞and its corresponding theoretical bound obtained from the afore-
+mentioned theorems. Since the underlying representations satisfy the assumptions of the
+stability theorem for the layered thresholding algorithms, for each signal we verify that
+indeed the correct support is found. As for the layered BP, our stability analysis guarantees
+that the support retrieved should be contained in the true one and coeﬃcients that are large
+enough in Γi should be retrieved. In practice, the layered BP always ﬁnds the full support.
+We present the obtained results in terms of the local SNR in Figure 7, showing the sta-
+bility of the diﬀerent algorithms that is in accordance with our theoretical bounds. Similar
+to the noiseless experiment, we observe that for all the algorithms the error increases both
+theoretically (green points) and empirically (blue points) with the layer depth. As previ-
+ously discussed, a performance gap exists between the soft and hard layered thresholding
+algorithms. To mitigate this, we run the layered soft thresholding with an oracle parameter
+and compare the obtained errors (red points) to those of the other algorithms. The results,
+depicted in the same ﬁgure, show a clear improvement in the performance.
+Interestingly, although theoretically superior, the layered BP leads to similar perfor-
+mance to that of the layered soft thresholding and worse performance than that of the lay-
+ered hard thresholding (when comparing the blue points). We attribute this phenomenon
+34
+
+
+===== PDF PAGE 35 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+50 100 150 200 250 300 350
+20
+30
+40
+50
+60
+70
+Realization
+SNR [dB]
+Layered Soft Thresholding
+Layer 1
+50 100 150 200 250 300 350
+20
+30
+40
+50
+60
+70
+Layer 2
+50 100 150 200 250 300 350
+20
+30
+40
+50
+60
+70
+Realization
+SNR [dB]
+Layered Hard Thresholding
+Layer 1
+50 100 150 200 250 300 350
+20
+30
+40
+50
+60
+70
+Layer 2
+50 100 150 200 250 300 350
+20
+30
+40
+50
+60
+70
+Realization
+SNR [dB]
+Layered BP
+Layer 1
+50 100 150 200 250 300 350
+20
+30
+40
+50
+60
+70
+Layer 2
+Figure 7: Comparison between the performance of the layered pursuit algorithms in a noisy
+setting. All the signals presented here satisfy the assumptions of Theorem 8, 10 and 12
+and the correct support of all the representations are indeed recovered. The horizontal axis
+plots the realization number, while the vertical axis shows the SNR (the higher the better).
+Blue: layered pursuits with the theoretically justiﬁable thresholds. Green: the theoretical
+bound on the error. Red: layered soft thresholding with oracle thresholds and layered BP
+with hand-picked parameters. Note that the points are sorted according to the theoretical
+bound.
+35
+
+
+===== PDF PAGE 36 =====
+Papyan, Romano and Elad
+to the suboptimal choice of the parameter ξi, which was chosen thus far according to our
+theoretical analysis. To validate this suspicion, we run the layered BP with hand-picked ξi
+and plot the obtained SNR in red in Figure 7. Not only are the correct supports retrieved
+for all the signals, but we can also see a clear improvement in terms of the SNR. In the ﬁrst
+layer, the layered BP outperforms the layered soft thresholding and leads to similar results
+to those of the layered hard thresholding, while in the second, the layered BP signiﬁcantly
+outperforms both of the other pursuit algorithms.
+Thus far, our experiments focused on a setting where the ratio of the coeﬃcients in Γi
+is reasonable. One should note, however, that the superiority of the layered BP becomes
+conspicuous once this ratio is spoiled. In this case, the layered thresholding algorithms
+will fail, while the layered BP will still succeed. To illustrate this, we create a signal using
+the dictionaries delineated in subsection 8.1, where the number of layers is K = 5. We
+ﬁrst draw a random Γ5 of length 100 where its ℓ0 norm is in the range 20 ≤∥Γ5∥0 ≤66,
+and then set the non-zero coeﬃcients in Γ5, similar to how it was done in the previous
+experiments. Given the dictionaries and the sampled sparse vector Γ5, we compute the
+representation {Γi}4
+i=1 and the signal X, which is of length N = 777, 600. The ℓ0,∞norms
+of the obtained sparse vectors are ∥Γ1∥S
+0,∞= 8, ∥Γ2∥S
+0,∞= 6, ∥Γ3∥S
+0,∞= 6, ∥Γ4∥S
+0,∞= 6
+and 4 ≤∥Γ5∥S
+0,∞≤7. Besides the depth of the network, the main diﬀerence between this
+experiment and the previous ones is the coeﬃcient ratio. While the ratio of the deepest
+representation Γ5 is equal to 1, due to the coeﬃcients in it being equal to ±1, the ratio of
+Γ1 is equal to 2.44 × 10−4. As a consequence, the theoretical results we have presented for
+the layered thresholding algorithms do not hold, while those of the layered BP still do.
+Next, each signal X is contaminated with a zero-mean white additive Gaussian noise
+E, resulting in a noisy signal Y = X + E. The average SNR of the noisy signals obtained
+is 124.43 dB. Note that this is a weak noise, chosen due to the deterioration of the SNR
+throughout the layers (one that is worsened when the theoretical parameters are employed).
+The signals are then fed into the layered BP algorithm, resulting in a set of estimated sparse
+representations, ˆΓi. The parameters ξi employed are the theoretically justiﬁed ones, ξi =
+4ϵi−1. We should note that in our experiments we attempted to run the layered thresholding
+algorithms, however, as our theory predicts these failed in recovering the correct supports.
+Given the estimated representations, we compute the errors ∥ˆΓi −Γi∥P
+2,∞and compare
+these to their corresponding theoretical bounds, obtained from Theorem 12. In addition, we
+verify that the retrieved supports are contained in the true one, as the theorem guarantees.
+In practice, we obtain that the layered BP always ﬁnds the full support. The obtained results
+are depicted in Figure 8 in terms of the local SNR. For comparison, we run the layered BP
+with hand-picked ξi and present the obtained results in the same ﬁgure.
+We conclude
+that the layered BP remains stable despite the poor coeﬃcient ratio, unlike the layered
+thresholding algorithms. Moreover, tuning the ξi results in a much better performance,
+similar to what we have seen in the previous experiment.
+At this point, one might ponder as to whether the hurdle of poor coeﬃcient ratio is
+one that the layered soft thresholding (forward pass) can not overcome. We believe that
+several ideas currently used in CNN, such as Batch Normalization (Ioﬀe and Szegedy, 2015)
+or Local Response Normalization (Krizhevsky et al., 2012), are tightly connected to this
+problem. However, their exact relation to this issue and its theoretical analysis is a matter
+of future work.
+36
+
+
+===== PDF PAGE 37 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+100 200
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+SNR [dB]
+Layer 1
+100 200
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+Layer 2
+100 200
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+Realization
+Layered BP
+Layer 3
+100 200
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+Layer 4
+100 200
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+Layer 5
+Figure 8: The performance of the layered BP algorithm in a noisy setting. All the signals
+presented here satisfy the assumptions of Theorem 12 and the correct support of all the
+representations are recovered. The horizontal axis plots the realization number, while the
+vertical axis shows the SNR (the higher the better). Blue: layered BP with the theoretically
+justiﬁable thresholds. Green: the theoretical bound on the error. Red: layered BP with
+hand-picked parameters. Note that the points are sorted according to the theoretical bound.
+9. Conclusion
+Deﬁnition: “A guiding question is the fundamental query that directs the search for un-
+derstanding” (Traver, 1998). In this work our guiding question was who are the signals
+that the CNN architecture is designed for? To answer this we have deﬁned the ML-CSC
+model, for which the thresholding pursuit is nothing but the forward pass of the CNN.
+Although nothing promises that the forward pass will lead to the original representation of
+a signal emerging from the ML-CSC model, we have shown this is indeed the case. Having
+established the relevance of our model to CNN, we then turned to its theoretical analysis.
+In particular, we provided guarantees for the uniqueness of the feature maps CNN aims to
+recover, and the stability of the problem CNN aims to solve.
+Inspired by the evolution of the pursuit methods in the theory of Sparse-Land, we
+continued our work by proposing the layered BP algorithm. In the noiseless case, this was
+37
+
+
+===== PDF PAGE 38 =====
+Papyan, Romano and Elad
+theoretically shown to be capable of ﬁnding the unique solution of the deep coding problem,
+the existence of which has been also guaranteed; while in the noisy setting, we have proved
+the stability of this algorithm.
+We analyzed the theoretical beneﬁts of two popular ideas employed in the CNN com-
+munity, namely the use of sparse ﬁlters and the spatial-stride. Leveraging those, we then
+generated signals satisfying the ML-CSC assumptions and demonstrated the performance
+of the pursuits presented throughout this work.
+We conclude this work by presenting our ongoing research directions:
+1. Through this paper we have assumed the worst – an adversary noise. Can our theo-
+retical analysis be extended to a setting where the noise is random?
+2. Thus far in tackling the deep coding problem, we have restricted ourself to existing
+methods, such as the forward pass of the CNN or deconvolutional networks (Zeiler
+et al., 2010). Can we suggest better approximations for the solution of this problem?
+3. Clearly a relation exists between our proposed layered iterative thresholding algorithm
+and the current throne holder in the task of image recognition – residual networks
+(He et al., 2015). Can our theory reveal the beneﬁts of introducing skip connections
+to a CNN?
+4. What is the role of common tricks currently employed in CNN in the context of
+the ML-CSC model?
+These include but are not limited to, Batch Normalization
+(Ioﬀe and Szegedy, 2015), Local Response Normalization (Krizhevsky et al., 2012),
+Dropout (Srivastava et al., 2014) and Pooling (LeCun et al., 1990; Krizhevsky et al.,
+2012; Simonyan and Zisserman, 2014).
+Acknowledgments
+The research leading to these results has received funding from the European Research
+Council under European Union’s Seventh Framework Programme, ERC Grant agreement
+no. 320649. The authors would like to thank Jeremias Sulam for the inspiring discussions
+and creative advice.
+Appendix A.
+Uniqueness via the Mutual Coherence (Proof of Theorem 4)
+Proof In (Papyan et al., 2016a) a solution Γ to the P0,∞problem, as deﬁned in Equation
+(6), was shown to be unique assuming that ∥Γ∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D)
+
+. In other words, if the
+true representation is sparse enough in the ℓ0,∞sense, no other solution is possible. Herein,
+we leverage this claim in order to prove the uniqueness of the DCPλ problem.
+Let {ˆΓi}K
+i=1 be a set of representations of the signal X, obtained by solving the DCPλ
+problem. According to our assumptions, ∥Γ1∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D1)
+
+. Moreover, since the set
+{ˆΓi}K
+i=1 is a solution of the DCPλ problem, we also have that ∥ˆΓ1∥S
+0,∞≤λ1 < 1
+2
+
+1 +
+1
+µ(D1)
+
+.
+38
+
+
+===== PDF PAGE 39 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+As such, in light of the aforementioned uniqueness theorem, both representations are equal.
+Once we have concluded that Γ1 = ˆΓ1, we would also like to show that the representa-
+tions Γ2 and ˆΓ2 are identical. Similarly, the assumptions ∥Γ2∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+
+and
+∥ˆΓ2∥S
+0,∞≤λ2 < 1
+2
+
+1 +
+1
+µ(D2)
+
+guarantee that Γ2 = ˆΓ2. The same set of steps can be
+applied for all 1 ≤i ≤K, leading to the fact that both sets of representations are identical.
+Appendix B.
+Global Stability of the DCPE
+λ Problem (Proof of Theorem 5)
+Proof In (Papyan et al., 2016b), for a signal Y = X + E = D1Γ1 + E, it was shown that
+if the following hold:
+1. ∥Γ1∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D1)
+
+and ∥E∥2 = ∥Y −D1Γ1∥2 ≤E0,
+2. ∥ˆΓ1∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D1)
+
+and ∥Y −D1ˆΓ1∥2 ≤E0,
+then
+∥∆1∥2
+2 = ∥Γ1 −ˆΓ1∥2
+2 ≤
+4E02
+1 −(2∥Γ1∥S
+0,∞−1)µ(D1) = E12.
+In the above, we have deﬁned ∆1 as the diﬀerence between the true sparse vector, Γ1, and
+the corresponding representation obtained by solving the DCPE
+λ problem, ˆΓ1. In item 2 we
+have used the fact that the solution for the DCPE
+λ problem, ˆΓ1, must satisfy ∥Y−D1ˆΓ1∥2 ≤
+E0 and ∥ˆΓ1∥S
+0,∞≤λ1; and our assumption that λ1 < 1
+2
+
+1 +
+1
+µ(D1)
+
+. Next, notice that
+ˆΓ1 = Γ1 + ∆1 = D2Γ2 + ∆1, and that the following hold:
+1. ∥Γ2∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D2)
+
+and ∥∆1∥2 = ∥ˆΓ1 −D2Γ2∥2 ≤E1,
+2. ∥ˆΓ2∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D2)
+
+and ∥ˆΓ1 −D2ˆΓ2∥2 ≤E1.
+The second item relies on the fact that both ˆΓ1 and ˆΓ2, obtained by solving the DCPE
+λ prob-
+lem, must satisfy ∥ˆΓ1 −D2ˆΓ2∥2 ≤E1 and ∥ˆΓ2∥S
+0,∞≤λ2. In addition, the second expression
+uses the assumption that λ2 < 1
+2
+
+1 +
+1
+µ(D2)
+
+. Employing once again the aforementioned
+stability theorem, we are guaranteed that
+∥∆2∥2
+2 = ∥Γ2 −ˆΓ2∥2
+2 ≤
+4E12
+1 −(2∥Γ2∥S
+0,∞−1)µ(D2) = E22.
+Using the same set of steps presented above, we conclude that
+∀1 ≤i ≤K
+∥Γi −ˆΓi∥2
+2 ≤Ei2,
+as claimed.
+39
+
+
+===== PDF PAGE 40 =====
+Papyan, Romano and Elad
+Appendix C.
+Stable Recovery of Hard Thresholding in the Presence of Noise (Proof of
+Lemma 7)
+Proof
+Denote by T1 the support of Γ1. Denote further the i-th atom from D1 by d1,i.
+The success of the hard thresholding algorithm with threshold β1 in recovering the correct
+support is guaranteed if the following holds
+min
+i∈T1
+dT
+1,iY
+ > β1 > max
+j /∈T1
+dT
+1,jY
+ .
+Using the same set of steps as those used in proving Theorem 4 in (Papyan et al., 2016b),
+we can lower bound the left-hand-side by
+min
+i∈T1
+dT
+1,iY
+ ≥|Γmin
+1
+| −(∥Γ1∥S
+0,∞−1)µ(D1)|Γmax
+1
+| −ϵ0
+and upper bound the right-hand-side via
+∥Γ1∥S
+0,∞µ(D1)|Γmax
+1
+| + ϵ0 ≥max
+j /∈T1
+dT
+1,jY
+ .
+Next, by requiring
+min
+i∈T1
+dT
+1,iY
+ ≥|Γmin
+1
+| −(∥Γ1∥S
+0,∞−1)µ(D1)|Γmax
+1
+| −ϵ0
+(12)
+> β1
+>∥Γ1∥S
+0,∞µ(D1)|Γmax
+1
+| + ϵ0
+≥max
+j /∈T1
+dT
+1,jY
+ ,
+we ensure the success of the thresholding algorithm. This condition can be equally written
+as
+∥Γ1∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D1)
+|Γmin
+1
+|
+|Γmax
+1
+|
+
+−
+1
+µ(D1)
+ϵ0
+|Γmax
+1
+|.
+Equation (12) also implies that the threshold β1 that should be employed must satisfy
+|Γmin
+1
+| −(∥Γ1∥S
+0,∞−1)µ(D1)|Γmax
+1
+| −ϵ0 > β1 > ∥Γ1∥S
+0,∞µ(D1)|Γmax
+1
+| + ϵ0.
+(13)
+Thus far, we have considered the successful recovery of the support of Γ1. Next, assum-
+ing this correct support was recovered, we shall dwell on the deviation of the thresholding
+result, ˆΓ1, from the true Γ1. Denote by Γ1,T1 and ˆΓ1,T1 the vectors Γ1 and ˆΓ1 restricted to
+the support T1, respectively. We have that
+∥Γ1 −ˆΓ1∥∞= ∥Γ1,T1 −ˆΓ1,T1∥∞
+=
+
+ DT
+1,T1D1,T1
+−1 DT
+1,T1X −DT
+1,T1Y
+
+∞
+=
+
+ DT
+1,T1D1,T1
+−1 DT
+1,T1 −DT
+1,T1
+
+X −DT
+1,T1(Y −X)
+
+∞,
+40
+
+
+===== PDF PAGE 41 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+where the Gram DT
+1,T1D1,T1 is invertible according to Lemma 1 in (Papyan et al., 2016a).
+Using the triangle inequality of the ℓ∞norm and the relation X = D1,T1Γ1,T1, we obtain
+∥Γ1 −ˆΓ1∥∞≤
+
+ DT
+1,T1D1,T1
+−1 DT
+1,T1 −DT
+1,T1
+
+D1,T1Γ1,T1
+
+∞+
+DT
+1,T1(Y −X)
+
+∞
+=
+ I −DT
+1,T1D1,T1
+
+Γ1,T1
+
+∞+
+DT
+1,T1(Y −X)
+
+∞,
+where I is an identity matrix. Relying on the deﬁnition of the induced ℓ∞norm, the above
+is equal to
+∥Γ1 −ˆΓ1∥∞≤
+I −DT
+1,T1D1,T1
+
+∞· ∥Γ1,T1∥∞+
+DT
+1,T1(Y −X)
+
+∞.
+(14)
+In what follows, we shall upper bound both of the expressions in the right hand side of the
+inequality.
+Beginning with the ﬁrst term in the above inequality,
+I −DT
+1,T1D1,T1
+
+∞, recall that the
+induced inﬁnity norm of a matrix is equal to its maximum absolute row sum. The diagonal
+entries of I −DT
+1,T1D1,T1 are equal to zero, due to the normalization of the atoms, while
+the oﬀdiagonal entries can be bounded by relying on the locality of the atoms and the
+deﬁnition of the ℓ0,∞norm. As such, each row has at most ∥Γ1∥S
+0,∞−1 non-zeros, where
+each is bounded by µ(D1) based on the deﬁnition of the mutual coherence. We conclude
+that the maximum absolute row sum can be bounded by
+∥DT
+1,T1D1,T1 −I∥∞≤(∥Γ1∥S
+0,∞−1)µ(D1).
+(15)
+Next, moving to the second expression, deﬁne R1,i ∈Rn0×N to be the operator that extracts
+a ﬁlter of length n0 from d1,i. Consequently, the operator RT
+1,i pads a local ﬁlter of length
+n0 with zeros, resulting in a global atom of length N. Notice that, due to the locality of
+the atoms RT
+1,iR1,id1,i = d1,i. Using this together with the Cauchy-Schwarz inequality, the
+normalization of the atoms, and the local bound on the error ∥Y −X∥P
+2,∞≤ϵ0, we have
+that
+DT
+1,T1(Y −X)
+
+∞= max
+i∈T1
+dT
+1,i(Y −X)
+
+(16)
+= max
+i∈T1
+(R1,id1,i)T R1,i(Y −X)
+
+≤max
+i∈T1 ∥R1,id1,i∥2 · ∥R1,i(Y −X)∥2
+≤1 · ∥Y −X∥P
+2,∞
+≤ϵ0.
+In the second to last inequality we have used Deﬁnition 6, denoting the maximal ℓ2 norm
+of a patch extracted from Y −X by ∥Y −X∥P
+2,∞. Plugging (15) and (16) into Equation
+(14), and using the fact that ∥Γ1,T1∥∞= |Γmax
+1
+|, we obtain that
+∥Γ1 −ˆΓ1∥∞≤(∥Γ1∥S
+0,∞−1)µ(D1)|Γmax
+1
+| + ϵ0.
+(17)
+In the remainder of this proof we will localize the above bound into one that is posed in
+terms of patch-errors. Note that ∥Γ1 −ˆΓ1∥P
+2,∞is equal to the maximal energy of an n1m1-
+dimensional patch taken from it, where the i-th patch can be extracted using the operator
+41
+
+
+===== PDF PAGE 42 =====
+Papyan, Romano and Elad
+P1,i. Relying on this and the relation ∥V∥2 ≤
+p
+∥V∥0 ∥V∥∞, we have that
+∥Γ1 −ˆΓ1∥P
+2,∞= max
+i
+P1,i
+
+Γ1 −ˆΓ1
+
+2
+≤max
+i
+rP1,i
+
+Γ1 −ˆΓ1
+
+0
+P1,i
+
+Γ1 −ˆΓ1
+
+∞.
+Recalling that, based on Deﬁnition 6, ∥Γ1 −ˆΓ1∥P
+0,∞denotes the maximal number of non-
+zeros in a patch of length n1m1 extracted from this vector, we obtain that
+∥Γ1 −ˆΓ1∥P
+2,∞≤
+q
+∥Γ1 −ˆΓ1∥P
+0,∞∥Γ1 −ˆΓ1∥∞
+≤
+q
+∥Γ1∥P
+0,∞∥Γ1 −ˆΓ1∥∞.
+In the last inequality we have used the success of the ﬁrst stage in recovering the correct
+support, resulting in ∥Γ1 −ˆΓ1∥P
+0,∞≤∥Γ1∥P
+0,∞. Plugging inequality (17) into the above
+equation, we conclude that
+∥Γ1 −ˆΓ1∥P
+2,∞≤
+q
+∥Γ1∥P
+0,∞
+
+ϵ0 + µ(D1)
+ ∥Γ1∥S
+0,∞−1
+
+|Γmax
+1
+|
+
+,
+as claimed.
+Appendix D.
+Stability of the Layered Hard Thresholding in the Presence of Noise
+(Proof of Theorem 8)
+Proof The stability of the ﬁrst stage of the layered hard thresholding algorithm is obtained
+from Lemma 7. Denoting by ∆1 = ˆΓ1 −Γ1, notice that ˆΓ1 = Γ1 + ∆1 = D2Γ2 + ∆1. In
+other words, Γ1 is a signal that admits a convolutional sparse representation D2Γ2, which
+is contaminated with noise ∆1, resulting in ˆΓ1. Next, we would like to employ Lemma 7
+for the signal ˆΓ1 = Γ1 + ∆1 = D2Γ2 + ∆1, with the local noise level
+∥∆1∥P
+2,∞≤
+q
+∥Γ1∥P
+0,∞
+
+ϵ0 + µ(D1)
+ ∥Γ1∥S
+0,∞−1
+
+|Γmax
+1
+|
+
+= ϵ1,
+to obtain the stability of the second stage. To this end, we require its conditions to hold;
+in particular, the ℓ0,∞norm of Γ2 to obey
+∥Γ2∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(D2)
+|Γmin
+2
+|
+|Γmax
+2
+|
+
+−
+1
+µ(D2)
+ϵ1
+|Γmax
+2
+|,
+and the threshold β2 to satisfy
+|Γmin
+2
+| −(∥Γ2∥S
+0,∞−1)µ(D2)|Γmax
+2
+| −ϵ1 > β2 > ∥Γ2∥S
+0,∞µ(D2)|Γmax
+2
+| + ϵ1.
+Assuming the above hold, Lemma 7 guarantees that the support of ˆΓ2 is equal to that of
+Γ2, and also that
+∥Γ2 −ˆΓ2∥P
+2,∞≤
+q
+∥Γ2∥P
+0,∞
+
+ϵ1 + µ(D2)
+ ∥Γ2∥S
+0,∞−1
+
+|Γmax
+2
+|
+
+= ϵ2.
+42
+
+
+===== PDF PAGE 43 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+Using the same steps as above, we obtain the desired claim for all the remaining layers,
+assuming that
+∥Γi∥S
+0,∞< 1
+2
+
+1 +
+1
+µ(Di)
+|Γmin
+i
+|
+|Γmax
+i
+|
+
+−
+1
+µ(Di)
+ϵi−1
+|Γmax
+i
+|
+and that the thresholds βi are chosen to satisfy
+|Γmin
+i
+| −(∥Γi∥S
+0,∞−1)µ(Di)|Γmax
+i
+| −ϵi−1 > βi > ∥Γi∥S
+0,∞µ(Di)|Γmax
+i
+| + ϵi−1.
+(18)
+This completes our proof.
+Appendix E.
+Stable Recovery of Soft Thresholding in the Presence of Noise (Proof of
+Lemma 9)
+Proof The success of the soft thresholding algorithm with threshold β1 in recovering the
+correct support is guaranteed if the following holds
+min
+i∈T1
+dT
+1,iY
+ > β1 > max
+j /∈T1
+dT
+1,jY
+ .
+Since the soft thresholding operator chooses all atoms with correlations greater than β1,
+the above implies that the true support T1 will be chosen. This condition is equal to that
+of the hard thresholding algorithm, and thus using the same steps as in Lemma 7, we are
+guaranteed that the correct support will be chosen under Assumptions (a) and (b).
+The diﬀerence between the hard thresholding algorithm and its soft counterpart becomes
+apparent once we consider the estimated sparse vector. While the former estimates the non-
+zero entries in ˆΓ1 by computing DT
+1,T1Y, the latter subtracts or adds a constant β1 from
+these, obtaining DT
+1,T1Y−β1B, where B is a vector of ±1. As a result, the distance between
+the true sparse vector and the estimated one is given by
+∥Γ1 −ˆΓ1∥∞=
+Γ1,T1 −ˆΓ1,T1
+
+∞
+=
+
+ DT
+1,T1D1,T1
+−1 DT
+1,T1X −
+ DT
+1,T1Y −β1B
+
+∞
+≤
+
+ DT
+1,T1D1,T1
+−1 DT
+1,T1X −DT
+1,T1Y
+
+∞+ ∥β1B∥∞,
+where in the last step we have used the triangle inequality for the ℓ∞norm. Notice that
+∥β1B∥∞= β1, since β1 must be positive according to Equation (13).
+Combining this
+together with the same steps as those used in proving Lemma 7, the above can be bounded
+by
+∥Γ1 −ˆΓ1∥P
+2,∞≤
+q
+∥Γ1∥P
+0,∞
+
+ϵ0 + µ(D1)
+ ∥Γ1∥S
+0,∞−1
+
+|Γmax
+1
+| + β1
+
+,
+resulting in the desired claim.
+43
+
+
+===== PDF PAGE 44 =====
+Papyan, Romano and Elad
+Appendix F.
+Stability of the Layered BP Algorithm in the Presence of Noise (Proof of
+Theorem 12)
+Proof In (Papyan et al., 2016b), for a signal Y = X + E = D1Γ1 + E, it was shown that
+if the following hold:
+a)
+∥Y −X∥P
+2,∞≤ϵ0; and
+b)
+∥Γ1∥S
+0,∞< 1
+3
+
+1 +
+1
+µ(D1)
+
+,
+then the solution ˆΓ1 for the Lagrangian formulation of the BP problem with β1 = 4ϵ0 (see
+Equation (8)) satisﬁes that
+1. The support of the solution ˆΓ1 is contained in that of Γ1;
+2. ∥∆1∥∞= ∥Γ1 −ˆΓ1∥∞≤7.5 ϵ0;
+3. In particular, every entry of Γ1 greater in absolute value than 7.5 ϵ0 is guaranteed to
+be recovered; and
+4. The solution ˆΓ1 is the unique minimizer of the Lagrangian BP problem (Equation (8)).
+Using similar steps to those employed in the proof of Theorem 8, we obtain that
+∥∆1∥P
+2,∞≤
+q
+∥∆1∥P
+0,∞∥∆1∥∞.
+Plugging above the inequality ∥∆1∥∞≤7.5 ϵ0, we get
+∥∆1∥P
+2,∞≤
+q
+∥∆1∥P
+0,∞7.5 ϵ0.
+Since the support of ˆΓ1 is contained in that of Γ1, we have that ∥∆1∥P
+0,∞= ∥Γ1 −ˆΓ1∥P
+0,∞≤
+∥Γ1∥P
+0,∞, leading to
+∥∆1∥P
+2,∞≤
+q
+∥Γ1∥P
+0,∞7.5 ϵ0 = ϵ1.
+We conclude that the ﬁrst stage of the layered BP is stable and the following must hold
+1. The support of the solution ˆΓ1 is contained in that of Γ1;
+2. ∥∆1∥P
+2,∞≤ϵ1;
+3. In particular, every entry of Γ1 greater in absolute value than
+ϵ1
+q
+∥Γ1∥P
+0,∞
+is guaranteed
+to be recovered; and
+4. The solution ˆΓ1 is the unique minimizer of the Lagrangian BP problem (Equation (8)).
+Next, we turn to the stability of the second stage of the layered BP algorithm. Notice
+that ˆΓ1 = Γ1 +∆1 = D2Γ2 +∆1. Put diﬀerently, Γ1 is a signal that admits a convolutional
+sparse representation D2Γ2 that is perturbed by ∆1, resulting in ˆΓ1. As such, we can
+invoke once again the same theorem from (Papyan et al., 2016b). Since we have that
+44
+
+
+===== PDF PAGE 45 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+a)
+∥∆1∥P
+2,∞≤ϵ1; and
+b)
+∥Γ2∥S
+0,∞< 1
+3
+
+1 +
+1
+µ(D2)
+
+,
+we are guaranteed that the solution ˆΓ2 for the Lagrangian formulation of the BP problem
+with parameter β2 = 4ϵ1 satisﬁes
+1. The support of the solution ˆΓ2 is contained in that of Γ2;
+2. ∥∆2∥∞= ∥Γ2 −ˆΓ2∥∞≤7.5 ϵ1 ;
+3. In particular, every entry of Γ2 greater in absolute value than 7.5 ϵ1 is guaranteed to
+be recovered; and
+4. The solution ˆΓ2 is the unique minimizer of the Lagrangian BP problem (Equation (8)).
+Using similar steps to those used above, the inequality that relies on the ℓ∞norm can be
+translated into another one that depends on the ℓ2,∞. This results in
+∥∆2∥P
+2,∞≤
+q
+∥Γ2∥P
+0,∞7.5 ϵ1 = ϵ2.
+We conclude that, similar to the ﬁrst one, the second stage of the layered BP is stable and
+the following must hold
+1. The support of the solution ˆΓ2 is contained in that of Γ2;
+2. ∥∆2∥P
+2,∞≤ϵ2;
+3. In particular, every entry of Γ2 greater in absolute value than
+ϵ2
+q
+∥Γ2∥P
+0,∞
+is guaranteed
+to be recovered; and
+4. The solution ˆΓ2 is the unique minimizer of the Lagrangian BP problem (Equation (8)).
+Using the same set of steps, we obtain similarly the stability of the remaining layers.
+References
+Sanjeev Arora, Aditya Bhaskara, Rong Ge, and Tengyu Ma. Provable bounds for learning
+some deep representations. In ICML, pages 584–592, 2014.
+Yoshua Bengio, Patrice Simard, and Paolo Frasconi. Learning long-term dependencies with
+gradient descent is diﬃcult. IEEE transactions on neural networks, 5(2):157–166, 1994.
+Yoshua Bengio, R´ejean Ducharme, Pascal Vincent, and Christian Jauvin. A neural proba-
+bilistic language model. journal of machine learning research, 3(Feb):1137–1155, 2003.
+Hilton Bristow, Anders Eriksson, and Simon Lucey. Fast convolutional sparse coding. In
+Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages
+391–398, 2013.
+45
+
+
+===== PDF PAGE 46 =====
+Papyan, Romano and Elad
+Joan Bruna and St´ephane Mallat. Invariant scattering convolution networks. IEEE trans-
+actions on pattern analysis and machine intelligence, 35(8):1872–1886, 2013.
+Emmanuel Candes and Terence Tao. The dantzig selector: Statistical estimation when p is
+much larger than n. The Annals of Statistics, pages 2313–2351, 2007.
+Emmanuel J Candes, Justin K Romberg, and Terence Tao. Stable signal recovery from
+incomplete and inaccurate measurements. Communications on pure and applied mathe-
+matics, 59(8):1207–1223, 2006.
+Scott Shaobing Chen, David L Donoho, and Michael A Saunders. Atomic Decomposition
+by Basis Pursuit. SIAM Review, 43(1):129–159, 2001.
+Sheng Chen, Stephen A Billings, and Wan Luo. Orthogonal least squares methods and
+their application to non-linear system identiﬁcation. International Journal of control, 50
+(5):1873–1896, 1989.
+Anna Choromanska, Mikael Henaﬀ, Michael Mathieu, G´erard Ben Arous, and Yann LeCun.
+The loss surfaces of multilayer networks. In AISTATS, 2015.
+Patrick L Combettes and Val´erie R Wajs. Signal recovery by proximal forward-backward
+splitting. Multiscale Modeling & Simulation, 4(4):1168–1200, 2005.
+Ingrid Daubechies, Michel Defrise, and Christine De Mol. An iterative thresholding algo-
+rithm for linear inverse problems with a sparsity constraint. Communications on pure
+and applied mathematics, 57(11):1413–1457, 2004.
+Ingrid Daubechies et al. Ten lectures on wavelets, volume 61. SIAM, 1992.
+Yann N Dauphin, Razvan Pascanu, Caglar Gulcehre, Kyunghyun Cho, Surya Ganguli, and
+Yoshua Bengio. Identifying and attacking the saddle point problem in high-dimensional
+non-convex optimization. In Advances in neural information processing systems, pages
+2933–2941, 2014.
+Chao Dong, Chen Change Loy, Kaiming He, and Xiaoou Tang. Image super-resolution
+using deep convolutional networks. IEEE transactions on pattern analysis and machine
+intelligence, 38(2):295–307, 2016.
+Weisheng Dong, Lei Zhang, Guangming Shi, and Xiaolin Wu. Image deblurring and super-
+resolution by adaptive sparse domain selection and adaptive regularization. IEEE Trans.
+on Image Process., 20(7):1838–1857, 2011.
+David L Donoho and Michael Elad. Optimally sparse representation in general (nonorthog-
+onal) dictionaries via 1 minimization. Proceedings of the National Academy of Sciences,
+100(5):2197–2202, 2003.
+David L Donoho, Michael Elad, and Vladimir N Temlyakov.
+Stable recovery of sparse
+overcomplete representations in the presence of noise. IEEE Transactions on information
+theory, 52(1):6–18, 2006.
+46
+
+
+===== PDF PAGE 47 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+M. Elad and M. Aharon. Image denoising via sparse and redundant representations over
+learned dictionaries. IEEE Trans. Image Process., 15(12):3736–3745, December 2006.
+ISSN 1057-7149.
+Michael Elad.
+Sparse and Redundant Representations: From Theory to Applications in
+Signal and Image Processing. Springer Publishing Company, Incorporated, 1st edition,
+2010. ISBN 144197010X, 9781441970107.
+Michael Elad and Alfred M Bruckstein.
+A generalized uncertainty principle and sparse
+representation in pairs of bases. IEEE Transactions on Information Theory, 48(9):2558–
+2567, 2002.
+Clement Farabet, Camille Couprie, Laurent Najman, and Yann LeCun. Learning hierar-
+chical features for scene labeling. IEEE transactions on pattern analysis and machine
+intelligence, 35(8):1915–1929, 2013.
+Alhussein Fawzi, Mike Davies, and Pascal Frossard. Dictionary learning for fast classiﬁcation
+based on soft-thresholding. International Journal of Computer Vision, 114(2-3):306–321,
+2015.
+Simon Foucart and Holger Rauhut. A mathematical introduction to compressive sensing,
+volume 1. Springer, 2013.
+Leon A Gatys, Alexander S Ecker, and Matthias Bethge. A neural algorithm of artistic
+style. arXiv preprint arXiv:1508.06576, 2015.
+Raja Giryes, Guillermo Sapiro, and Alex M Bronstein. Deep neural networks with random
+gaussian weights: A universal classiﬁcation strategy?
+IEEE Transactions on Signal
+Processing, 64(13):3444–3457, 2015.
+Xavier Glorot, Antoine Bordes, and Yoshua Bengio. Deep sparse rectiﬁer neural networks.
+In Aistats, volume 15, page 275, 2011.
+Karol Gregor and Yann LeCun. Learning fast approximations of sparse coding. In Pro-
+ceedings of the 27th International Conference on Machine Learning (ICML-10), pages
+399–406, 2010.
+Shuhang Gu, Wangmeng Zuo, Qi Xie, Deyu Meng, Xiangchu Feng, and Lei Zhang. Convolu-
+tional sparse coding for image super-resolution. In Proceedings of the IEEE International
+Conference on Computer Vision, pages 1823–1831, 2015.
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Deep residual learning for image
+recognition. arXiv preprint arXiv:1512.03385, 2015.
+Felix Heide, Wolfgang Heidrich, and Gordon Wetzstein. Fast and ﬂexible convolutional
+sparse coding.
+In IEEE Conference on Computer Vision and Pattern Recognition
+(CVPR), pages 5135–5143. IEEE, 2015.
+47
+
+
+===== PDF PAGE 48 =====
+Papyan, Romano and Elad
+Geoﬀrey Hinton, Li Deng, Dong Yu, George E Dahl, Abdel-rahman Mohamed, Navdeep
+Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara N Sainath, et al. Deep
+neural networks for acoustic modeling in speech recognition: The shared views of four
+research groups. IEEE Signal Processing Magazine, 29(6):82–97, 2012.
+Sergey Ioﬀe and Christian Szegedy. Batch normalization: Accelerating deep network train-
+ing by reducing internal covariate shift. arXiv preprint arXiv:1502.03167, 2015.
+Zhuolin Jiang, Zhe Lin, and Larry S Davis. Learning a discriminative dictionary for sparse
+coding via label consistent K-SVD. In IEEE Conference on Computer Vision and Pattern
+Recognition (CVPR), pages 1697–1704. IEEE, 2011.
+Justin Johnson, Alexandre Alahi, and Li Fei-Fei. Perceptual losses for real-time style trans-
+fer and super-resolution. arXiv preprint arXiv:1603.08155, 2016.
+Koray Kavukcuoglu, Pierre Sermanet, Y-Lan Boureau, Karol Gregor, Micha¨el Mathieu,
+and Yann L Cun. Learning convolutional feature hierarchies for visual recognition. In
+Advances in neural information processing systems, pages 1090–1098, 2010.
+Bailey Kong and Charless C Fowlkes. Fast convolutional sparse coding (fcsc). Department
+of Computer Science, University of California, Irvine, Tech. Rep, 2014.
+Alex Krizhevsky, Ilya Sutskever, and Geoﬀrey E Hinton. Imagenet classiﬁcation with deep
+convolutional neural networks. In Advances in neural information processing systems,
+pages 1097–1105, 2012.
+B Boser LeCun, John S Denker, D Henderson, Richard E Howard, W Hubbard, and
+Lawrence D Jackel.
+Handwritten digit recognition with a back-propagation network.
+In Advances in neural information processing systems. Citeseer, 1990.
+Yann LeCun, L´eon Bottou, Yoshua Bengio, and Patrick Haﬀner. Gradient-based learning
+applied to document recognition. Proceedings of the IEEE, 86(11):2278–2324, 1998.
+Yann LeCun, Yoshua Bengio, and Geoﬀrey Hinton.
+Deep learning.
+Nature, 521(7553):
+436–444, 2015.
+Jonathan Long, Evan Shelhamer, and Trevor Darrell.
+Fully convolutional networks for
+semantic segmentation. In Proceedings of the IEEE Conference on Computer Vision and
+Pattern Recognition, pages 3431–3440, 2015.
+Julien Mairal, Francis Bach, and Jean Ponce. Task-driven dictionary learning. IEEE Trans-
+actions on Pattern Analysis and Machine Intelligence, 34(4):791–804, 2012.
+Julien Mairal, Francis Bach, and Jean Ponce. Sparse modeling for image and vision pro-
+cessing. arXiv preprint arXiv:1411.3230, 2014.
+St´ephane Mallat. Group invariant scattering. Communications on Pure and Applied Math-
+ematics, 65(10):1331–1398, 2012.
+St´ephane G Mallat and Zhifeng Zhang. Matching pursuits with time-frequency dictionaries.
+IEEE Transactions on signal processing, 41(12):3397–3415, 1993.
+48
+
+
+===== PDF PAGE 49 =====
+Convolutional Neural Networks Analyzed via Convolutional Sparse Coding
+Stphane Mallat. A Wavelet Tour of Signal Processing, Third Edition: The Sparse Way.
+Academic Press, 3rd edition, 2008. ISBN 0123743702, 9780123743701.
+Tomas Mikolov, Kai Chen, Greg Corrado, and Jeﬀrey Dean. Eﬃcient estimation of word
+representations in vector space. arXiv preprint arXiv:1301.3781, 2013.
+Vardan Papyan, Jeremias Sulam, and Michael Elad. Working locally thinking globally-
+part I: Theoretical guarantees for convolutional sparse coding.
+arXiv preprint
+arXiv:1607.02005, 2016a.
+Vardan Papyan, Jeremias Sulam, and Michael Elad. Working locally thinking globally-
+part II: Stability and algorithms for convolutional sparse coding.
+arXiv preprint
+arXiv:1607.02009, 2016b.
+Yagyensh Chandra Pati, Ramin Rezaiifar, and PS Krishnaprasad. Orthogonal matching
+pursuit: Recursive function approximation with applications to wavelet decomposition.
+In The Twenty-Seventh Asilomar Conference on Signals, Systems and Computers, pages
+40–44. IEEE, 1993.
+Yunchen Pu, Xin Yuan, Andrew Stevens, Chunyuan Li, and Lawrence Carin. A deep gener-
+ative deconvolutional image model. In Proceedings of the 19th International Conference
+on Artiﬁcial Intelligence and Statistics, pages 741–750, 2016.
+Yaniv Romano and Michael Elad. Patch-disagreement as a way to improve K-SVD de-
+noising. In IEEE International Conference on Acoustics, Speech and Signal Processing
+(ICASSP), pages 1280–1284. IEEE, 2015.
+R. Rubinstein, M. Zibulevsky, and M. Elad. Double sparsity : Learning sparse dictionaries
+for sparse signal approximation. IEEE Transactions on Signal Processing, 58(3):1553–
+1564, 2010.
+Andrew M Saxe, James L McClelland, and Surya Ganguli. Exact solutions to the nonlinear
+dynamics of learning in deep linear neural networks. arXiv preprint arXiv:1312.6120,
+2013.
+Karin Schnass and Pierre Vandergheynst. Average performance analysis for thresholding.
+IEEE Signal Processing Letters, 14(11):828–831, 2007.
+Karen Simonyan and Andrew Zisserman. Very deep convolutional networks for large-scale
+image recognition. arXiv preprint arXiv:1409.1556, 2014.
+Jost Tobias Springenberg, Alexey Dosovitskiy, Thomas Brox, and Martin Riedmiller. Striv-
+ing for simplicity: The all convolutional net. arXiv preprint arXiv:1412.6806, 2014.
+Nitish Srivastava, Geoﬀrey E Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhut-
+dinov. Dropout: a simple way to prevent neural networks from overﬁtting. Journal of
+Machine Learning Research, 15(1):1929–1958, 2014.
+Jeremias Sulam and Michael Elad.
+Expected patch log likelihood with a sparse prior.
+In International Workshop on Energy Minimization Methods in Computer Vision and
+Pattern Recognition, pages 99–111. Springer, 2015.
+49
+
+
+===== PDF PAGE 50 =====
+Papyan, Romano and Elad
+Jeremias Sulam, Boaz Ophir, Michael Zibulevsky, and Michael Elad. Trainlets: Dictionary
+learning in high dimensions. IEEE Transactions on Signal Processing, 64(12):3180–3193,
+2016.
+Rob Traver. What is a good guiding question?. Educational Leadership, 55(6):70–73, 1998.
+J. A. Tropp. Just Relax : Convex Programming Methods for Identifying Sparse Signals in
+Noise. IEEE Transactions on In, 52(3):1030–1051, 2006.
+Joel A Tropp. Greed is good: Algorithmic results for sparse approximation. IEEE Trans-
+actions on Information theory, 50(10):2231–2242, 2004.
+Dmitry Ulyanov, Vadim Lebedev, Andrea Vedaldi, and Victor Lempitsky. Texture networks:
+Feed-forward synthesis of textures and stylized images. arXiv preprint arXiv:1603.03417,
+2016.
+Lloyd R Welch. Lower bounds on the maximum cross correlation of signals (corresp.). IEEE
+Transactions on Information Theory, 20(3):397–399, 1974.
+Brendt Wohlberg. Eﬃcient convolutional sparse coding. In IEEE International Conference
+on Acoustics, Speech and Signal Processing (ICASSP), pages 7173–7177. IEEE, 2014.
+Bo Xin, Yizhou Wang, Wen Gao, and David Wipf. Maximal sparsity with deep networks?
+arXiv preprint arXiv:1605.01636, 2016.
+Matthew D Zeiler, Dilip Krishnan, Graham W Taylor, and Rob Fergus. Deconvolutional
+networks. In IEEE Conference on Computer Vision and Pattern Recognition (CVPR),
+pages 2528–2535. IEEE, 2010.
+Qiang Zhang and Baoxin Li. Discriminative K-SVD for dictionary learning in face recogni-
+tion. In Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on,
+pages 2691–2698. IEEE, 2010.
+50

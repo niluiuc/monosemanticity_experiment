@@ -1,0 +1,2284 @@
+
+
+===== PDF PAGE 1 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Edward Stevinson 1 Lucas Prieto 1 Melih Barsbey 1 Tolga Birdal 1
+Abstract
+Why do adversarial examples exist, and why do
+they transfer between models? Existing explana-
+tions appeal to high-dimensional geometry, non-
+robust patterns in the input, and decision boundary
+structure, but none provides a representation-level
+mechanism that explains why specific perturba-
+tions succeed and why attacks transfer between
+models. In this paper, we show that adversar-
+ial vulnerability can stem from efficient informa-
+tion encoding in neural networks. Specifically,
+vulnerability can arise from superposition – the
+phenomenon where networks represent more con-
+cepts than they have dimensions, forcing non-
+orthogonal representation and thus interference.
+This interference causes perturbations targeting
+one representation to affect others, creating vul-
+nerabilities determined by interference patterns.
+In synthetic settings with precisely controlled su-
+perposition, we establish that superposition suf-
+fices to create adversarial vulnerability. The re-
+sulting attacks are predictable: PGD-discovered
+perturbations align with theoretically optimal per-
+turbations derived from the interference geometry.
+Models trained on similar data develop similar in-
+terference patterns, explaining attack transferabil-
+ity. We then show that successful attacks on image
+classifiers exhibit the structure predicted by our
+proposed mechanism. These findings reveal that
+adversarial vulnerability can be a byproduct of
+networks’ representational compression, comple-
+menting existing explanations based on data prop-
+erties or architectural factors. Code for this paper
+is available at: github.com/Stevinson/
+adversarial-mechinterp
+1Department of Computer Science, Imperial College London,
+London, United Kingdom. Correspondence to: Edward Stevinson
+<e.stevinson22@imperial.ac.uk>.
+Proceedings of the 43 rd International Conference on Machine
+Learning, Seoul, South Korea. PMLR 306, 2026. Copyright 2026
+by the author(s).
+1. Introduction
+Despite extensive study (Goodfellow et al., 2015; Eykholt
+et al., 2018; Bartoldson et al., 2024; Howe et al., 2025),
+adversarial examples remain poorly understood at a mech-
+anistic level. They can be reliably generated, yet we lack
+a representation-level account that predicts the structure
+of successful perturbations and explains why attacks trans-
+fer between models. Such an account could inform more
+principled defences by linking robustness interventions to
+representation structure. Existing explanations attributing
+vulnerability to decision boundary imperfections (Moosavi-
+Dezfooli et al., 2016), properties of high dimensionality
+(Gilmer et al., 2018), or to non-robust patterns in training
+data (Ilyas et al., 2019) provide valuable insights but limited
+quantitative predictions about attack characteristics.
+We approach this gap through the lens of superposition,
+a phenomenon in which neural networks represent more
+concepts, termed features, than they have dimensions by
+encoding them as non-orthogonal directions in activation
+space (Elhage et al., 2022). This packing increases repre-
+sentational capacity at the cost of introducing interference:
+activating one feature affects others in non-obvious ways.
+We demonstrate that gradient-based adversarial attacks can
+exploit this interference. Because features share representa-
+tional dimensions, perturbations can simultaneously amplify
+a target class while suppressing the source through a combi-
+nation of constructive and destructive interference.
+Our analysis reveals a mechanistic pathway from data statis-
+tics to adversarial vulnerability: 1) input correlations con-
+strain how features arrange in superposition, 2) these ar-
+rangements determine interference patterns, and 3) interfer-
+ence patterns dictate which perturbations succeed and why
+they transfer between models. This account yields testable
+predictions: attacks should align with optimal perturbations
+derived from the geometry, resulting in attack transferability
+when models have similar representations.
+We validate these predictions in controlled settings where
+superposition can be precisely manipulated via dimensional
+bottlenecks. In synthetic settings, gradient-discovered at-
+tacks align with theoretically optimal perturbations (cosine
+similarity > 0.92), and transfer rates increase from 5% to
+98% as feature geometry converges across models. We then
+show that attacks on vision transformer (ViT) classifiers
+1
+arXiv:2510.11709v2  [cs.LG]  15 Jun 2026
+
+
+===== PDF PAGE 2 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+with engineered bottlenecks exhibit the structure our theory
+predicts. Our main contributions are:
+• A mechanistic account linking superposition geometry to
+adversarial vulnerability. We show how data correlations
+induce specific feature arrangements that directly deter-
+mine realised perturbations, offering insight into attack
+transferability and class-specific susceptibility.
+• Theoretical and empirical evidence that superposition is a
+sufficient (though not necessary) condition for adversar-
+ial vulnerability. Non-orthogonal representations create
+exploitable interference, complementing rather than re-
+placing existing explanations.
+• Validation on ViT classifiers on CIFAR-10/100, STL-10,
+and TinyImageNet, demonstrating that the geometric sig-
+natures predicted by our theory appear in realistic settings.
+2. Background
+We first review adversarial examples and the attack methods
+used throughout the paper. We then introduce definitions
+for the tools we use in our analysis, namely the linear repre-
+sentation hypothesis (LRH) and superposition. Formally, let
+x ∈X denote the input to a neural network (NN), y ∈Y its
+label, and h(l) ∈Rdl the activation vector of the l-th layer.
+Adversarial attacks. Adversarial examples are inputs mod-
+ified by perturbations that cause misclassification despite
+not changing the true class, i.e. a human would still classify
+the perturbed input correctly. We define the notion of adver-
+sarial perturbations and attacks following (Szegedy et al.,
+2014; Costa et al., 2024):
+Definition 1 (Adversarial Example). Let f : X →Y be
+a classifier and Bp(x, ε) = {x′ : ∥x′ −x∥p ≤ε} the ε-
+ball around x in the ℓp norm. An input x′ = x + δ with
+x′ ∈Bp(x, ε) is an adversarial example if f(x′)̸ = f(x)
+(untargeted) or f(x′) = ytarget (targeted).
+We generate adversarial examples using projected gradient
+descent (PGD) (Madry et al., 2018), which iteratively fol-
+lows the gradient of the classification loss L while projecting
+onto the constraint set. For ℓ∞attacks:
+x(t+1) = ΠB∞(x,ε)
+
+x(t) + α · sign
+
+∇xL(x(t), y)
+
+where ΠB∞(x,ε) projects onto the ℓ∞-ball of radius ε around
+x, and α is the step size. PGD follows the direction of
+steepest loss increase, finding perturbations that maximise
+loss increase within the constraint set.
+Linear representation hypothesis (LRH). The LRH posits
+that NNs represent semantically meaningful properties of
+their inputs – concepts like “is in French” – as linear direc-
+tions in activation space (Park et al., 2024). These concepts
+are denoted by a set of M semantically meaningful features,
+C = {c1, . . . , cM}.
+Definition 2 (Linear Representation Hypothesis (LRH)).
+A neural network layer with activations h(l) ∈Rdl sat-
+isfies the LRH if it represents the latent features C =
+{c1, . . . , cM} as feature vectors {vj}M
+j=1 ⊂Rdl such that:
+h(l)(x) ≈
+M
+X
+j=1
+aj(x) vj
+where aj(x) ∈R represents the activation magnitude of fea-
+ture cj, and vj is the corresponding direction. The features
+are linearly accessible: inputs x0, x1 ∈X that differ mainly
+in the value of feature cj while holding others approximately
+fixed (i.e., aj(x1) −aj(x0) = k and |ai(x1) −ai(x0)| < λ
+for all i̸ = j and some small λ > 0) satisfy:
+h(l)(x1) −h(l)(x0) ≈kvj
+where k reflects the change in cj.
+Substantial evidence supports the LRH. Features encoding
+language (Gurnee et al., 2023), board game states (Nanda
+et al., 2023), and geographic locations (Templeton et al.,
+2024) have been identified via linear probes (Alain & Ben-
+gio, 2017) and sparse autoencoders (SAEs) (Bricken et al.,
+2023). Crucially, intervening on these directions causally
+changes model outputs, confirming they are used in compu-
+tation rather than merely correlated with it.
+Superposition. NNs are capable of representing far more
+features than there are available dimensions in activation
+space: M ≫dl. For example, language models can ref-
+erence many more place names than they have residual
+stream dimensions. This is possible through superposition:
+encoding concepts as non-orthogonal directions {vj}M
+j=1.
+Formally:
+Definition 3 (Superposition). A set of M features with rep-
+resentations {vj}M
+j=1 ⊂Rd is in superposition if:
+1. (Interference) M > d and there exist i̸ = j such that
+⟨vi, vj⟩̸ = 0.
+2. (Recoverability) There exists a decoder ψ : Rd →RM
+s.t. feature activations can be approximately recovered:
+for h = P
+j ajvj, we have ψ(h)j ≈aj for all j.
+The network trades representational capacity against fea-
+ture interference by packing more features than dimensions.
+Condition 1 captures the cost of superposition: features
+interfere with each other, i.e. activating one feature acti-
+vates others. Condition 2 ensures features remain usable
+despite interference. Whether networks mitigate this inter-
+ference through non-linear operations (e.g. ReLU, softmax)
+(Gurnee et al., 2023) or use it constructively (Prieto et al.,
+2026) is an open research question.
+2
+
+
+===== PDF PAGE 3 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Interference. Suppose the feature vectors {vi}M
+i=1 are in
+superposition, so activating one feature partially activates
+the others. The readout of feature j is the projection of the
+representation h(l) = PM
+i=1 aivi onto its direction vj:
+v⊤
+j h(l) = aj +
+X
+i̸=j
+ai
+ v⊤
+j vi
+
+.
+The first term is feature j’s own activation, while the sec-
+ond is interference from co-active features, weighted by
+their non-orthogonality with vj. On natural inputs, sparsity
+keeps this interference manageable (most ai = 0). How-
+ever, an adversary can craft inputs that activate features in
+combinations natural data never produces.
+Prevalence of superposition. The condition M > d is
+common in modern architectures. A clear illustration is
+ImageNet classifiers, which read 1,000 class logits from rep-
+resentations of a few hundred dimensions (e.g. ResNet-18:
+d = 512). Similarly, the unembedding matrix of an LLM
+maps a residual stream of dimension d to a vocabulary of
+size |V| ≫d (e.g. Llama 3 8B: d = 4096, |V| > 128,000).
+The phenomenon is also pervasive in intermediate represen-
+tations such as MLPs (Elhage et al., 2022; Bricken et al.,
+2023) and attention, where per-head QK and OV circuits
+route the residual stream through subspaces of dimension
+dhead, with recent work providing evidence that features are
+superposed across and within heads (He et al., 2026; Jermyn
+et al., 2025). Superposition is therefore the norm in widely
+deployed architectures.
+3. Setup
+3.1. Studying superposition via classification heads
+To study how adversarial attacks exploit superposition, we
+require a setting where feature vectors are known and inter-
+ference is directly measurable. Classification heads provide
+a natural setting. For a classification head with weight ma-
+trix W ∈Rk×m, the logit for class c is zc = w⊤
+c h, where
+wc is row c of W. These rows serve as class feature vectors
+– the directions along which the network reads evidence
+for each class. When the number of classes exceeds the
+representation dimension (k > m), or when semantically
+similar classes share representational structure, class vectors
+become non-orthogonal and interfere.
+This framing offers key advantages: feature vectors can
+be read directly from W without requiring discovery meth-
+ods (e.g., SAEs, probes) that introduce approximation er-
+ror; ground-truth feature labels of the respective classes are
+known; and interference between classes is directly mea-
+surable via w⊤
+i wj. By inserting a dimensional bottleneck
+before the classification head, we can systematically control
+the degree of superposition.
+We study classification heads in three settings:
+• Synthetic argmax task: A minimal bottleneck network
+with a closed-form input-to-class mapping. This permits
+computation of a ground truth after perturbation, con-
+trol over superposition geometry, and direct comparison
+between empirical attacks and theoretical optima.
+• Classification with representation bottleneck: ViTs
+trained on image datasets (CIFAR-10/100, STL-10, Tiny-
+ImageNet). This tests whether the geometric signatures
+predicted by our theory appear in practical settings with
+multiple layers of nonlinearities.
+• Classification without bottleneck: Even without a bot-
+tleneck layer, the reduction in representation rank under
+regularised training is sufficient to invoke the superposi-
+tion regime and associated vulnerability.
+We develop our theoretical framework and core findings in
+the synthetic setting (Sec. 4), then validate that the predicted
+structure emerges in realistic networks (Sec. 5).
+Synthetic setting: Argmax task. The synthetic task is con-
+structed to: (1) represent class concepts as linear directions
+per the LRH; (2) induce controlled superposition via a di-
+mensional bottleneck; (3) maintain a known mapping from
+inputs to the superposed features; and (4) permit exact com-
+putation of the true class after any perturbation, enabling
+testable predictions about adversarial mechanisms.
+Let x
+∈
+Rd with d
+=
+kp, partitioned as x
+=
+[x(1), . . . , x(k)], where each block x(j) ∈Rp holds p
+evidence components for class j.
+Following Elhage
+et al. (2022), we sample x from a sparse distribution
+Dx over [0, 1]d. The correlation structure of Dx is var-
+ied across experiments (see Sec. 4.2); in the uncorrelated
+case, each component is independently zero with proba-
+bility S (i.e., P(x(j)
+i
+= 0) = S) and otherwise drawn
+x(j)
+i
+∼Uniform(0, 1). The classification target is y =
+argmaxj∈[k]
+Pp
+i=1 x(j)
+i : each x(j)
+i
+represents evidence for
+class j, and the label is the class with greatest total evidence.
+We consider a two-layer linear bottleneck network with
+hidden dimension m < k < d:
+h = We x ∈Rm,
+z = Wd h ∈Rk
+trained with cross-entropy loss. The bottleneck forces super-
+position: the network must compress d = kp input dimen-
+sions into m < k latent dimensions and then recover suffi-
+cient information to identify the class with the largest sum,
+inducing non-orthogonal class representations. The bottle-
+neck is designed to mimic a residual stream in a transformer-
+like model, often thought of as a store of features in superpo-
+sition that does not itself perform computation (Elhage et al.,
+2021; Hänni et al., 2024). To verify generality, we also test a
+nonlinear variant with ReLU activations and biases. Models
+achieve > 95% accuracy.
+3
+
+
+===== PDF PAGE 4 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+(a) Original 
+(b) Adversarial
+(c) Predicted 
+Adversarial Input
+(d) Features, Activations & 
+Boundaries
+𝒙
+𝒙+ 𝜹
+Input,
+Input,
++0.07
++0.02
++0.01
+-0.05
+-0.06
+-0.03
++0.05
+<
+,
+<
+∆𝒉
+Figure 1. An adversarial attack exploiting superposition geometry (k = 7, m = 2, p = 1). (a) The original sample. (b) The
+adversarially perturbed sample, whose ground truth remains the same but is misclassified. The sign and magnitude of input perturbations
+are determined by the configuration of feature vectors. (c) The predicted optimal attack, matching the PGD-discovered adversary. (d) The
+original and adversarial sample in activation space. The coloured arrows show the effective class representations in the bottleneck. The
+attack shifts the representation along ∆h, with each input perturbation signed and scaled by its class direction’s alignment with this shift.
+We denote the columns of We by vc,r, where c indexes the
+class and r ∈[p] indexes evidence components. Since each
+input coordinate contributes evidence to a single class, the
+encoder learns approximately shared directions within each
+class block, vc,r ≈vc. The decoder row w⊤
+c of Wd reads
+out class-c evidence and, empirically in this setting, aligns
+with this class-level encoder direction, wc ≈vc.
+Realistic Setting: ViT on CIFAR. Our primary architec-
+ture is a ViT (Dosovitskiy et al., 2020) (12 layers, patch size
+4 × 4, 6 heads, embedding dimension 384, MLP dimension
+1536) trained from scratch on CIFAR-10/100 (Krizhevsky,
+2009), STL-10 (Coates et al., 2011), and TinyImageNet
+(Tiny-IN) (Le & Yang, 2015). A bottleneck layer is in-
+serted before the classification head, with bottleneck ra-
+tio m/k ∈{0.2, 0.3, 0.5, 1.0} controlling superposition
+pressure (e.g. m ∈{20, 30, 50, 100} for CIFAR-100’s 100
+classes). We additionally study a non-bottleneck variant
+(Sec. 5.3), where weight decay alone induces an effective
+low-rank bottleneck.
+For each configuration, we train 5 models with different
+random seeds. Unlike the synthetic setting where we have a
+closed-form mapping from inputs to classes, here we focus
+on whether the structure of adversarial perturbations reflects
+the interference geometry of the classification head. Full
+training details are provided in Sec. D.1.
+3.2. Evaluation metrics
+In the synthetic setting, we define a successful adversarial
+example as satisfying: (1) the predicted class changes under
+perturbation, and (2) the true class (recomputed via group
+sums) remains unchanged. In the realistic setting, we use
+the standard definition where the predicted class changes
+while the original label is preserved. Attacks are generated
+via ℓ∞- and ℓ2-norm PGD with step size ϵ/4, 50 steps, and
+5 restarts. For successful adversarial examples, x′ = x + δ,
+we measure:
+1. Input perturbation profile (IPP): The sign and magni-
+tude of each δi.
+2. Latent attack alignment: The similarity ∆h · wc be-
+tween the latent attack vector ∆h = hadv −horig and
+class c’s representation.
+3. Attack transferability: Success rate of attacks gener-
+ated on one model when applied to another.
+4. Robust accuracy: Fraction of examples correctly classi-
+fied after perturbation with ∥δ∥p ≤ϵ.
+4. Superposition geometry determines
+adversarial attacks
+We investigate if and how adversarial attacks exploit the
+interference inherent in superposed representations. Specifi-
+cally, we address three questions:
+1. Do adversarial perturbations exploit interference be-
+tween superposed features?
+2. Do input correlations shape the geometric arrange-
+ment of latent features?
+3. Can shared geometry explain why attacks transfer
+between models?
+4.1. Do attacks exploit interference between superposed
+features?
+An attack must move a sample across a decision boundary
+to change its class, but what determines the required input
+4
+
+
+===== PDF PAGE 5 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+perturbations? To answer this, we first characterise the
+optimal attack strategy in our linear setting.
+Proposition 1.
+The optimal input perturbation δ that
+maximally increases the pairwise margin zk −zj under
+constraint ∥δ∥2 ≤ϵ satisfies
+δ ∝W⊤
+e njk,
+njk = wk −wj,
+where njk is the normal to the pairwise decision boundary
+between classes j and k.
+Proof sketch. To increase the pairwise margin from class
+j to class k, we maximise z′
+k −z′
+j = n⊤
+jk(h + ∆h) where
+∆h = Weδ. The term n⊤
+jkh is independent of δ, so this
+reduces to max∥δ∥2≤ϵ δ⊤W⊤
+e njk. By Cauchy–Schwarz,
+this is maximised when δ ∝W⊤
+e njk. Proof in App. B.
+Corollary 1 (Interference drives vulnerability). The adver-
+sarial perturbation magnitude for coordinate r in class i
+is |δi,r| ∝|w⊤
+i (wk −wj)|, directly proportional to the
+interference between class feature vector i and the class
+representations.
+This result reveals how superposition creates adversarial vul-
+nerability: each input feature is perturbed proportionally to
+its geometric relationship with the class decision boundary.
+Under superposition, non-orthogonal representations cause
+semantically unrelated features to interfere with the class de-
+cision; adversarial perturbations exploit these dependencies
+to manipulate outputs.
+Empirical validation. We test whether PGD-discovered
+attacks match these theoretical predictions. Fig. 1 shows a
+typical adversarial example: an input of Class 2 (orange) and
+its perturbed value that misclassifies it as Class 6 (brown).
+The perturbations appear arbitrary but follow a precise pat-
+tern mediated by latent geometry. The sign and magnitude
+of δ(j) correlate strongly with how their class’s feature vec-
+tor v(j) aligns with the latent attack vector ∆h. Positively
+aligned representations (v(j) · ∆h > 0) see proportionally
+amplified inputs, while negatively aligned representations
+experience attenuation. Fig. 1(d) illustrates how these move
+the sample across the decision boundary.
+For each configuration (k, m) we train 5 models with dif-
+ferent random seeds and run ℓ2-PGD attacks. For each
+Table 1. Alignment between PGD attacks and theoretically optimal
+perturbations (cosine similarity, mean ± std dev across 5 seeds).
+Attacks are ℓ2-PGD at ϵ = 0.2. Paired t-tests against the random
+baseline give p < 10−5 for every row.
+k
+m
+Sim. (PGD vs Theory)
+Sim. (Random)
+6
+2
+0.97 ± 0.02
+0.00 ± 0.01
+30
+10
+0.96 ± 0.00
+0.00 ± 0.01
+90
+30
+0.92 ± 0.00
+0.00 ± 0.00
+successful adversarial example we compute the cosine simi-
+larity between the PGD perturbation δ and the theoretical
+optimum from Prop. 1. To account for the dependence be-
+tween attacks generated from a single trained model, we
+conservatively compute the mean similarity per seed and
+then test across seeds. As reported in Tab. 1, PGD aligns
+strongly with the theoretical direction across configurations,
+and paired t-tests against a random-direction baseline are
+highly significant (p < 10−5). As these theoretical direc-
+tions leverage interference, we conclude that PGD system-
+atically exploits superposition geometry.
+Adversarial attacks systematically exploit interference
+between superposed features. Successful PGD attacks
+are predictable given the specific superposition geometry.
+4.2. Do input correlations determine latent feature
+geometry?
+We next investigate whether correlations in the input data
+determine the geometric arrangements of feature vectors,
+and the mechanism that underlies this relationship. We hy-
+pothesise interference avoidance: frequently co-activating
+features arrange to minimise mutual interference. Stronger
+correlations impose tighter constraints on the learned ge-
+ometry. Uncorrelated data permits any class-separating
+arrangement, while strong correlations determine a unique
+geometry up to rotation.
+Empirical validation. We test this hypothesis by introduc-
+ing three correlation conditions in the training data, and
+test how these constrain the degrees of freedom in learned
+representations.
+• Uncorrelated: input dimensions sampled independently.
+• Paired: each input in class i is coupled with an input in
+class j, such that when one activates, so does its pair.
+• Global: for each sample we draw a random phase ϕ,
+and the probability that an input for class k is active is
+pk = pbase + A cos(ϕ + 2πk/K), meaning adjacent
+classes in index frequently co-activate.
+We quantify geometric similarity by comparing pairwise
+cosine similarity matrices between feature vectors across
+models trained with different random seeds. Fig. 2 displays
+the arrangement of v(j) for m = 2, k = 7.
+For each correlation condition, we tested 45 seed pairs per
+condition. The results show a monotonic relationship: un-
+correlated data yields highly variable geometries across
+seeds, paired correlations partially constrain the arrange-
+ments, whilst global correlations force near-identical ge-
+ometries. Pairwise two-sample t-tests with Bonferroni cor-
+rection confirm statistical significance (p < 10−3 for all
+comparisons).
+5
+
+
+===== PDF PAGE 6 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+4
+2
+0
+2
+4
+Seed 1
+(a) Uncorrelated
+(b) Correlated Pairs
+(c) Globally Correlated
+4
+2
+0
+2
+4
+Seed 2
+Geometric
+Similarity:
+Attack
+Transferability:
+Geometric
+Similarity:
+Attack
+Transferability:
+Geometric
+Similarity:
+Attack
+Transferability:
+0.01±0.20
+5%±5
+0.43±0.20
+33%±18
+0.97±0.01
+98%±1
+Figure 2. Input correlations constrain representation geometry,
+which governs transferability. Uncorrelated features are arranged
+at arbitrary angles across seeds; paired correlations constrain paired
+features to be orthogonal but leave the rest free; global correlations
+fix the cyclic ordering. Attack transfer scales with this constraint,
+from 5% to 98%.
+Input correlations constrain feature geometry. Stronger
+correlations reduce geometric degrees of freedom, forc-
+ing different initialisations toward similar arrangements.
+4.3. Does shared geometry explain attack
+transferability?
+Attacks tailored for specific interference patterns should
+transfer between models with similar feature arrangements.
+Proposition 2.
+Models with feature representations related
+by orthogonal transformation Q (where Q⊤Q = I) share
+identical optimal attack directions in input space.
+Proof sketch. Optimal perturbations are invariant under
+orthogonal transformation:
+δ′
+i ∝(v′
+i)⊤(v′
+k −v′
+j) =
+v⊤
+i Q⊤Q(vk −vj) = v⊤
+i (vk −vj) ∝δi. Proof in App. B.
+Empirical validation. Using the same seed pairs as the
+previous analysis, we generate attacks on source models and
+evaluate transfer success. Transfer rates correlate strongly
+with geometric similarity (Fig. 2): global correlations yield
+98%±11% transfer, paired correlations produce 33%±18%,
+and uncorrelated data shows only 5% ± 5%.
+Each perturbation creates constructive interference that
+pushes representations across decision boundaries. When
+applied to a model with different geometry, interference pat-
+terns that were previously constructive become destructive,
+causing the attack to fail.
+Attack transferability is governed by shared interference
+patterns. Models with similar superposition geometry
+exhibit high transfer rates.
+4.4. Does reducing superposition suppress attacks?
+If superposition creates vulnerability through interference,
+removing it should eliminate adversarial examples. We test
+this prediction with three experiments.
+Non-compressed bottleneck. When m = k the network
+learns to represent each v(j) orthogonally. Any perturbation
+that changes the model’s prediction also changes the ground
+truth class, e.g. moving a sample from class A to class B
+requires making the sum of class B features exceed class
+A’s – genuinely transforming it into a class B sample. We
+observe zero successful adversarial examples across 1000
+attempts at all tested ϵ values.
+Isolating superposition from capacity. When fixing m
+and varying k, robust accuracy decreases monotonically
+with k/m (Tab. 7), demonstrating that vulnerability scales
+with the degree of superposition.
+Isolating superposed features. Constraining one class
+vector v⊥to remain orthogonal to all others during training
+causes attacks between classes that remain in superposition
+to leave the orthogonal class’s inputs unperturbed.
+Adversarial attacks use their budget to exploit those fea-
+tures in superposition.
+Our theoretical and empirical results establish a mech-
+anistic pathway.
+Specifically: (i) input correlations
+constrain feature arrangements in superposition, (ii)
+these geometric arrangements determine interference
+patterns,
+(iii) interference patterns dictate optimal
+perturbations via δ ∝W⊤
+e (wk −wj) (Prop. 1), and (iv)
+shared geometric constraints yield similar interference
+patterns across models, enabling transferability (Prop. 2):
+Correlations
+constrain
+−−−−→Feature Geometry
+determines
+−−−−−→
+Interference Patterns
+enable
+−−−→Transferability
+5. Attacks on image classifiers
+We now test whether the geometric account established in
+our synthetic setting extends to image classifiers. Our theory
+makes three predictions:
+1. Interference between class feature vectors should pre-
+dict attack structure in input space.
+2. This relationship should strengthen as bottleneck di-
+mension decreases, increasing superposition pressure.
+3. Interference patterns should be consistent across ran-
+dom seeds, reflecting structure rather than optimisa-
+tion noise.
+Unlike the synthetic setting, image classifiers involve multi-
+ple layers and nonlinearities mediating the relationship be-
+6
+
+
+===== PDF PAGE 7 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+(a) Original and 
+attacked images
+(b) Projection of 𝜹 
+onto class gradients, 𝒂 
+(c) Projection of ∆𝒉 onto 
+class feature vectors, 𝒓  
+(d) Correlation: 𝒂 vs r
+𝜹" ∇𝒙logit"
+ℝ#$%&
+proj.
+𝒈!"#
+𝒈!"$
+𝒈%&$'
+ℝ&
+𝒘" ) (𝒘()*"+ −𝒘",))
+Figure 3. Attacks exploit superposition geometry in ViTs. (a) An attack misclassifies a truck as a car. (b) The perturbation projected
+onto class attack gradients in input space. (c) The latent attack vector projected onto class feature vectors. (d) When the bottleneck is tight
+(m = 2), the latent profile r strongly predicts the input-space profile a. As interference decreases (m = 10), the correlation diminishes.
+tween pixel perturbations and representation-space effects.
+The key question is whether classification head geometry
+still governs attack structure despite this complexity.
+We introduce our method to test these predictions under this
+increased model complexity (Sec. 5.1). We first examine
+models with a representation bottleneck (m < k; Sec. 5.2),
+then show that superposition-induced vulnerability can arise
+even without such a bottleneck, due to the tendency of NNs
+to learn low-rank representations (Sec. 5.3).
+5.1. Measuring attack structure
+To test whether latent interference predicts attack structure
+of the inputs, we define: (i) an input-space profile measuring
+how perturbations affect each class, (ii) a latent-space profile
+measuring geometric interference between class features.
+Input-space profile. For each class c, define the class attack
+gradient gc(x) = ∂zc/∂x, the direction in input space that
+maximally increases the logit for class c. For a perturbation
+δ, the input-space attack profile is:
+a(x, δ) =
+
+g1(x)⊤δ, . . . , gk(x)⊤δ
+
+This measures how much the perturbation pushes toward
+each class in pixel space.
+Latent-space profile. For an attack from source class s to
+target class t, the latent-space attack profile is:
+rs→t =
+
+w⊤
+1 (wt −ws), . . . , w⊤
+k (wt −ws)
+
+This measures how each class feature vector aligns with the
+attack direction wt −ws in the bottleneck, analogous to the
+latent attack alignment in Sec. 4. This profile depends only
+on the classification head weights and requires no input.
+Correlation metric. For each successful attack, we com-
+pute the Pearson correlation between a and r, excluding
+source and target classes. The latter are determined by the
+attack objective (rt > 0, rs < 0 by construction) and their
+inclusion would trivially inflate the correlation. We denote
+the mean correlation across successful attacks as ¯ρ.
+Interference metrics. We compute the interference matrix
+Sij = cos(wi, wj) and measure: (1) interference mag-
+nitude I = 2/k(k −1) P
+i<j |Sij|, the mean absolute off-
+diagonal similarity; and (2) interference consistency κ, the
+Pearson correlation between interference matrices across
+seeds, with significance testing via z-scores against random
+Gaussian weights.
+5.2. Results with bottleneck
+Interference predicts input-space attack structure. Fig. 3
+illustrates our core finding. To misclassify a truck as a car,
+the adversarial perturbation does not simply increase the
+car logit – it also perturbs seemingly unrelated classes (e.g.
+suppressing horse and amplifying ship), following a pattern
+predicted by the interference geometry in the classification
+head. This is not an isolated example: across attacks, the
+input-space profile a correlates strongly with the latent pro-
+file r (Tab. 2). This confirms Prediction 1: despite the
+complex nonlinear pathway from pixels to the classification
+head, interference geometry governs attack structure.
+Tighter bottlenecks amplify the effect. As bottleneck
+dimension increases toward the number of classes, the corre-
+lation between a and r diminishes (Tab. 2). For CIFAR-10,
+¯ρ drops from 0.89 at m = 2 to 0.16 at m = 10; for CIFAR-
+100, from 0.61 at m = 20 to 0.34 at m = 100. With
+reduced interference, attacks align primarily with the source
+and target class directions, producing minimal collateral ac-
+7
+
+
+===== PDF PAGE 8 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+tivation of other classes. This mirrors our synthetic findings,
+where reducing superposition pressure narrowed the spread
+of attack effects. The same trend holds across perturbation
+budgets (App. Tab. 9). This confirms Prediction 2.
+Table 2. Correlation between latent and input-space attack
+profiles in ViTs (ε = 2/255; additional in App. Tab. 9). ¯ρ: mean
+correlation between r and a (excluding source/target). m/k = 0.2
+corresponds to m = 2 for CIFAR-10 and m = 20 for CIFAR-100.
+Mean ± std dev over 5 seeds.
+m/k
+0.2
+0.3
+0.5
+1.0
+CIFAR-10
+0.89 ± 0.01
+0.81 ± 0.01
+0.59 ± 0.02
+0.16 ± 0.02
+CIFAR-100
+0.61 ± 0.01
+0.48 ± 0.01
+0.42 ± 0.01
+0.34 ± 0.01
+STL-10
+0.83 ± 0.01
+0.74 ± 0.02
+0.54 ± 0.01
+0.18 ± 0.02
+Tiny-IN
+0.52 ± 0.01
+0.45 ± 0.01
+0.40 ± 0.01
+0.33 ± 0.01
+Interference patterns are consistent across seeds. The
+arrangement of class feature vectors in the bottleneck is not
+arbitrary. Models trained with different random seeds de-
+velop similar interference patterns (Tab. 3) with cross-seed
+consistency yielding z-scores far exceeding the significance
+threshold. This consistency suggests that superposition ge-
+ometry is shaped by structure in the data – specifically,
+which classes share visual features – rather than by opti-
+misation trajectories. Qualitatively, the learned arrange-
+ments reflect semantic similarity (e.g. ‘cat’ closer to ‘dog’).
+Classes that share visual features develop non-orthogonal
+representations, creating predictable interference patterns
+that persist across training runs. This confirms Prediction 3.
+Adversarial attacks in vision transformers systematically
+exploit interference between superposed features, as pre-
+dicted by our analysis in the synthetic setting. Clas-
+sification head interference explains input-space attack
+structure (¯ρ up to 0.89), with effect size scaling with su-
+perposition pressure. Interference patterns are consistent
+across seeds and reflect data semantics.
+5.3. Generalising results without a bottleneck
+Previous sections used explicit bottlenecks (m < k) as a
+clean intervention to isolate superposition pressure. We
+now show our mechanism can help explain adversarial vul-
+nerability even when m ≫k. NNs trained with gradient-
+based optimisation converge towards low-rank weight ma-
+trices and representations, especially under regularisation
+(Mousavi-Hosseini et al., 2022; Feng et al., 2022; Huh et al.,
+2023). This means in practice, whether increased interfer-
+ence occurs depends on the intrinsic dimension ( ¯m), not the
+ambient dimension (m).
+We train ViT models on CIFAR-10 under increasing weight
+decay, without explicit bottlenecks. We estimate ¯m via
+PCA as the minimum principal components explaining τ =
+Table 3. ViT performance and interference metrics. Acc.: clean
+test accuracy; I: mean absolute interference; κ: cross-seed interfer-
+ence consistency. Mean ± std over 5 seeds. ResNet-50 replications
+in Sec. D.4 achieve higher and more bottleneck-stable clean accu-
+racy while exhibiting the same monotonic trend in I, indicating
+these trends are not driven by accuracy loss at tighter bottlenecks.
+m/k
+0.2
+0.3
+0.5
+1.0
+CIFAR-10
+Acc.
+58.7 ± 1.2
+79.0 ± 1.0
+87.4 ± 0.5
+89.3 ± 0.1
+I
+0.61 ± 0.1
+0.43 ± 0.1
+0.23 ± 0.1
+0.12 ± 0.0
+κ
+0.99
+0.95
+0.88
+0.80
+CIFAR-100
+Acc.
+66.3 ± 0.8
+66.2 ± 0.8
+67.9 ± 0.7
+70.2 ± 0.8
+I
+0.16 ± 0.0
+0.12 ± 0.0
+0.08 ± 0.0
+0.06 ± 0.0
+κ
+0.89
+0.90
+0.89
+0.92
+STL-10
+Acc.
+67.1 ± 0.4
+82.8 ± 0.5
+88.0 ± 0.3
+89.0 ± 0.2
+I
+0.60 ± 0.00 0.46 ± 0.01 0.18 ± 0.01 0.12 ± 0.00
+κ
+0.99
+0.96
+0.96
+0.95
+Tiny-IN
+Acc.
+55.5 ± 0.4
+56.5 ± 0.4
+57.1 ± 0.9
+58.8 ± 0.4
+I
+0.14 ± 0.00 0.10 ± 0.00 0.07 ± 0.00 0.06 ± 0.00
+κ
+0.90
+0.95
+0.96
+0.99
+0.95 of variance. Despite an embedding dimension of 384,
+regularisation creates an effective bottleneck ( ¯m ≪384).
+Results in Tab. 4 support our hypothesis: the predicted
+interference effects emerge as the effective dimension ¯m
+decreases. Increasing weight decay decreases ¯m and in-
+creases ¯ρ, mirroring the effect of explicit bottlenecks. This
+suggests that rank-reducing regularisation can amplify the
+interference-mediated vulnerability identified by our frame-
+work. This reveals that standard regularisation may inad-
+vertently create adversarial vulnerabilities. These findings
+position superposition-induced vulnerability as a concern
+in realistic training scenarios and highlight representation
+dimensionality as a component of model safety.
+Table 4. Input class attack correlation across effective dimen-
+sions in the ViT for ϵ = 2/255 on CIFAR-10. Higher weight
+decay reduces effective dimension, producing similar effects to
+explicit bottlenecks. ¯ρ is the mean correlation between latent attack
+profile r and input-space attack profile a (excluding source/target).
+λ
+0.1
+0.3
+0.6
+0.7
+1.5
+2.0
+¯m
+29
+12
+10
+9
+8
+6
+¯ρ
+0.14
+0.27
+0.40
+0.68
+0.79
+0.79
+6. Discussion & related work
+Explanations for adversarial examples. The field recog-
+nises that no single explanation accounts for all adversarial
+vulnerability, but rather a confluence of contributing factors.
+The linear hypothesis attributes vulnerability to model linear-
+ity, whereby small perturbations accumulate through layers
+8
+
+
+===== PDF PAGE 9 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+(Goodfellow et al., 2015). Our work refines this. Linearity
+enables gradient-based attacks, but vulnerability stems from
+which directions are sensitive, determined by superposition
+geometry. The non-robust features hypothesis (Ilyas et al.,
+2019) argues that models exploit predictive but brittle in-
+put patterns. In our account, robustness depends instead
+on how a feature’s representation interacts with boundaries:
+the same feature could be robust if encoded orthogonally to
+decision-relevant directions, or brittle if it interferes.
+Decision boundary analyses characterise vulnerability geo-
+metrically. Moosavi-Dezfooli et al. (2016) show boundaries
+have small mean curvature near data, allowing linear approx-
+imation, so minimal perturbations are approximately normal
+to the boundary. Shamir et al. (2021) study how non-linear
+boundary structure creates vulnerability. Our work comple-
+ments these: non-orthogonal features determine boundary
+orientations, and the interference pattern specifies which
+normal directions are achievable with small perturbations.
+Work on manifold structure (Stutz et al., 2019) distinguishes
+on-manifold from off-manifold adversaries. Our framework
+connects to this: data correlations constrain feature geom-
+etry, and perturbations exploiting superposed features will
+generically be off-manifold as natural data does not activate
+features in the combinations that interference enables.
+Attack transferability is incompletely understood. Prior
+work attributes limited transfer to representation discrep-
+ancies (Li et al., 2023; Wang et al., 2025), and shows that
+decorrelating features reduces transferability (Wiedeman &
+Wang, 2022). Our framework offers a common mechanism
+for these findings.
+Superposition and representation geometry. Superpo-
+sition research identifies feature interference mechanisms:
+Nanda (2022) distinguish representational and computa-
+tional superposition; Gurnee et al. (2023) differentiate al-
+ternating and simultaneous interference. Data correlations
+shape these arrangements: correlated features become or-
+thogonal (Elhage et al., 2022), drive superposition forma-
+tion (Chan, 2024), and induce semantic clustering (Prieto
+et al., 2026). Gorton & Lewis (2025) investigate the link
+between superposition and adversarial robustness, showing
+that interventions on superposition can control vulnerability.
+Beyond superposition, representation geometry is shaped by
+spectral bias (Rahaman et al., 2019), neural collapse (Kotha-
+palli, 2023), and optimisation objectives (Casper, 2023).
+Low-rank structure and adversarial vulnerability. Super-
+position is tied to low-rank structure: encoding k classes in
+m < k dimensions yields a classification head W ∈Rk×m
+of rank at most m. Prior work links low-rank weight matri-
+ces to adversarial vulnerability, attributing it to exploding
+singular values and poor conditioning (Barsbey et al., 2026;
+Savostianova et al., 2023). Our framework is consistent
+with this: the rank constraint forces class directions to be
+non-orthogonal, creating the interference that adversaries
+exploit. However, rank is necessary but not sufficient to
+determine an attack. Two heads of identical rank can induce
+entirely different interference patterns, and thus different
+perturbations. It is the specific feature geometry, not the
+compression ratio alone, that fixes which directions inter-
+fere. Our account refines the low-rank view by identifying
+which of the many rank-m geometries a model realises as
+the quantity that governs its vulnerability.
+Perceptual alignment of gradients (PAG). Adversarially
+robust models develop input gradients aligned with semanti-
+cally meaningful directions (Tsipras et al., 2019; Santurkar
+et al., 2019; Ganz et al., 2022; Srinivas et al., 2023). PAG
+is a property of adversarially trained models, concerning
+whether input-space gradients are perceptually meaningful.
+Our framework instead operates in activation space, show-
+ing that data correlations, low-rank structure, and weight
+decay enforce semantically meaningful feature geometry
+whose interference patterns are exploited by attacks.
+7. Concluding remarks
+We demonstrate that adversarial attacks can exploit inter-
+ference patterns arising from the geometry of superposed
+features in NNs. Our experiments, spanning toy models and
+ViTs, establish that data properties - namely correlations and
+sparsity - induce distinct superposition geometries, which
+in turn create predictable adversarial vulnerabilities. We
+show that these geometric arrangements and the resulting
+interference allow for the prediction of phenomena such as
+attack transferability and class-specific susceptibility. Our
+new perspective frames adversarial vulnerability as a po-
+tential, inherent consequence of how networks efficiently
+encode vast amounts of information via superposition.
+Limitations & future work. Our insights stem primarily
+from simplified models to isolate superposition’s role, but
+the vast adversarial robustness literature suggests precise
+vulnerability mechanisms will likely vary by attack and
+model. Our experiments establish that superposition suffices
+for adversarial vulnerability, not that it is necessary. Attacks
+find whichever weakness requires the smallest perturbation,
+and superposition may dominate in capacity-constrained
+settings while being secondary elsewhere. We focus on
+features with known labels; extension to intermediate lay-
+ers will require feature discovery via probes or dictionary
+learning (e.g. SAEs, preliminary results in App. E).
+Future work includes quantifying the ‘adversarial cost’ of su-
+perposition, characterising how adversarial training reshapes
+feature geometry, and extending the analysis to intermediate
+layers. Understanding how superposition-induced vulner-
+ability interacts with other explanatory factors will clarify
+when this mechanism dominates and when it is secondary.
+9
+
+
+===== PDF PAGE 10 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Acknowledgments
+L. Prieto was supported by the UKRI Centre for Doctoral
+Training in Safe and Trusted AI [EP/S0233356/1].
+M.
+Barsbey was supported by the EPSRC Project GNOMON
+(EP/X011364/1). T. Birdal acknowledges support from the
+Engineering and Physical Sciences Research Council [grant
+EP/X011364/1] and the UKRI Future Leaders Fellowship
+[grant number MR/Y018818/1].
+Impact statement
+Due to its investigative nature, our framework is not an-
+ticipated to have negative impact or societal consequences.
+Our experiments use only publicly available datasets and
+synthetic toy models, with no human subjects or personally
+identifiable information. The gradient-based attack meth-
+ods are well-established, and our work introduces no novel
+attacks but provides theoretical understanding of existing
+phenomena. By elucidating the relationship between super-
+position and adversarial vulnerability, we hope to inform
+research balancing model capability with robustness, con-
+tributing to trustworthy AI for critical applications. We
+declare no conflicts of interest.
+Reproducibility statement
+Source code is available at https://github.com/
+Stevinson/adversarial-mechinterp. Sec. 4 in-
+cludes architectural details, training procedures, evaluation
+metrics, and data generation processes for the synthetic
+model experiments. Sec. 5 provides architecture and train-
+ing procedures for image model experiments, with further
+details in Sec. D.1. Experiments were conducted on an
+AMD Ryzen Threadripper 3970X 32-Core with 256GB
+RAM and RTX 3090. Additional SAE experiments are
+documented in Appendix App. E.
+References
+Alain, G. and Bengio, Y. Understanding Intermediate Lay-
+ers Using Linear Classifier Probes. In 5th International
+Conference on Learning Representations, ICLR, Work-
+shop Track Proceedings, 2017.
+Andriushchenko, M., Croce, F., Flammarion, N., and Hein,
+M. Square attack: A query-efficient black-box adversarial
+attack via random search. In Vedaldi, A., Bischof, H.,
+Brox, T., and Frahm, J. (eds.), Computer Vision - ECCV,
+pp. 484–501. Springer, 2020.
+Barsbey, M., Ribeiro, A. H., ¸Sim¸sekli, U., and Birdal, T.
+On the Interaction of Compressibility and Adversarial
+Robustness. In International Conference on Learning
+Representations, ICLR, 2026.
+Bartoldson, B. R., Diffenderfer, J., Parasyris, K., and
+Kailkhura, B. Adversarial Robustness Limits via Scaling-
+Law and Human-Alignment Studies. In Forty-first Inter-
+national Conference on Machine Learning, ICML, 2024.
+Bricken, T., Templeton, A., Batson, J., Chen, B., Jermyn, A.,
+Conerly, T., Turner, N., Anil, C., Denison, C., Askell, A.,
+Lasenby, R., Wu, Y., Kravec, S., Schiefer, N., Maxwell,
+T., Joseph, N., Hatfield-Dodds, Z., Tamkin, A., Nguyen,
+K., McLean, B., Burke, J. E., Hume, T., Carter, S.,
+Henighan, T., and Olah, C.
+Towards Monosemantic-
+ity: Decomposing Language Models with Dictionary
+Learning. transformer-circuits.pub/2023/
+monosemantic-features, 2023.
+Casper, S.
+EIS IX: Interpretability and Adversaries.
+alignmentforum.org/s/a6ne2ve5uturEEQK7
+/p/kYNMXjg8Tmcq3vjM6, February 2023.
+Chan, L. Superposition is not “Just” Neuron Polysemantic-
+ity.
+lesswrong.com/posts/8EyCQKuWo6swZp
+agS/superposition-is-not-just-
+neuron-polysemanticity, April 2024.
+Coates, A., Ng, A. Y., and Lee, H. An Analysis of Single-
+Layer Networks in Unsupervised Feature Learning. In
+Gordon, G. J., Dunson, D. B., and Dudík, M. (eds.),
+Proceedings of the Fourteenth International Conference
+on Artificial Intelligence and Statistics, AISTATS, JMLR
+Proceedings, pp. 215–223, 2011.
+Costa, J. C., Roxo, T., Proença, H., and Inacio, P. R. M. How
+Deep Learning Sees the World: A Survey on Adversarial
+Attacks & Defenses. IEEE Access, 12:61113–61136,
+2024.
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-
+Fei, L. ImageNet: A Large-Scale Hierarchical Image
+Database. In 2009 IEEE Conference on Computer Vision
+and Pattern Recognition, pp. 248–255, 2009.
+Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn,
+D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer,
+M., Heigold, G., and Gelly, S. An Image Is Worth 16x16
+Words: Transformers for Image Recognition at Scale. In
+International Conference on Learning Representations,
+2020.
+Elhage, N., Nanda, N., Olsson, C., Henighan, T.,
+Joseph, N., Mann, B., Askell, A., Bai, Y., Chen,
+A., Conerly, T., DasSarma, N., Drain, D., Ganguli,
+D., Hatfield-Dodds, Z., Hernandez, D., Jones, A.,
+Kernion, J., Lovitt, L., Ndousse, K., Amodei, D.,
+Brown, T., Clark, J., Kaplan, J., McCandlish, S.,
+and Olah, C. A Mathematical Framework for Trans-
+former Circuits.
+transformer-circuits.pub
+/2021/framework/index.html, 2021.
+10
+
+
+===== PDF PAGE 11 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Elhage, N., Hume, T., Olsson, C., Schiefer, N., Henighan,
+T., Kravec, S., Hatfield-Dodds, Z., Lasenby, R., Drain,
+D., Chen, C., et al. Toy Models of Superposition. arXiv
+preprint arXiv:2209.10652, 2022.
+Eykholt, K., Evtimov, I., Fernandes, E., Li, B., Rahmati, A.,
+Xiao, C., Prakash, A., Kohno, T., and Song, D. Robust
+Physical-World Attacks on Deep Learning Visual Classi-
+fication. In Conference on Computer Vision and Pattern
+Recognition CVPR, pp. 1625–1634, 2018.
+Feng, R., Zheng, K., Huang, Y., Zhao, D., Jordan, M., and
+Zha, Z.-J. Rank Diminishing in Deep Neural Networks.
+In Advances in Neural Information Processing Systems,
+2022.
+Ganz, R., Kawar, B., and Elad, M. Do perceptually aligned
+gradients imply robustness? In Krause, A., Brunskill, E.,
+Cho, K., Engelhardt, B., Sabato, S., and Scarlett, J. (eds.),
+International Conference on Machine Learning, ICML,
+Proceedings of Machine Learning Research, 2022.
+Gao, L., la Tour, T. D., Tillman, H., Goh, G., Troll, R.,
+Radford, A., Sutskever, I., Leike, J., and Wu, J. Scaling
+and Evaluating Sparse Autoencoders. In The Thirteenth
+International Conference on Learning Representations,
+ICLR, 2025.
+Gilmer, J., Metz, L., Faghri, F., Schoenholz, S. S., Raghu,
+M., Wattenberg, M., and Goodfellow, I. J. Adversar-
+ial Spheres. In 6th International Conference on Learn-
+ing Representations, ICLR, Workshop Track Proceedings,
+2018.
+Goodfellow, I. J., Shlens, J., and Szegedy, C. Explaining and
+harnessing adversarial examples. In Bengio, Y. and Le-
+Cun, Y. (eds.), 3rd International Conference on Learning
+Representations, ICLR, 2015.
+Gorton, L. and Lewis, O. Adversarial Examples Are Not
+Bugs, They Are Superposition. NeurIPS Workshop on
+Mechanistic Interpretability, 2025.
+Gurnee, W., Nanda, N., Pauly, M., Harvey, K., Troitskii, D.,
+and Bertsimas, D. Finding Neurons in a Haystack: Case
+Studies with Sparse Probing. Trans. Mach. Learn. Res.,
+2023.
+Hänni, K., Mendel, J., Vaintrob, D., and Chan, L. Math-
+ematical Models of Computation in Superposition. In
+ICML Workshop on Mechanistic Interpretability, 2024.
+He, K., Zhang, X., Ren, S., and Sun, J. Deep Residual Learn-
+ing for Image Recognition. In Proceedings of the IEEE
+conference on computer vision and pattern recognition,
+pp. 770–778, 2016.
+He, Z., Wang, J., Lin, R., Ge, X., Shu, W., Tang, Q., Zhang,
+J., and Qiu, X. Towards Understanding the Nature of
+Attention with Low-Rank Sparse Decomposition. In The
+Fourteenth International Conference on Learning Repre-
+sentations, ICLR, 2026.
+Hendrycks, D. and Dietterich, T. G. Benchmarking neural
+network robustness to common corruptions and pertur-
+bations. In 7th International Conference on Learning
+Representations, ICLR, 2019.
+Howe, N. H. R., McKenzie, I. R., Hollinsworth, O. J., Zajac,
+M., Tseng, T., Tucker, A. D., Bacon, P., and Gleave, A.
+Scaling Trends in Language Model Robustness. In Singh,
+A., Fazel, M., Hsu, D., Lacoste-Julien, S., Berkenkamp,
+F., Maharaj, T., Wagstaff, K., and Zhu, J. (eds.), Forty-
+second International Conference on Machine Learning,
+ICML, Proceedings of Machine Learning Research, 2025.
+Huh, M., Mobahi, H., Zhang, R., Cheung, B., Agrawal, P.,
+and Isola, P. The Low-Rank Simplicity Bias in Deep
+Networks. Transactions on Machine Learning Research,
+3, 2023.
+Ilyas, A., Santurkar, S., Tsipras, D., Engstrom, L., Tran,
+B., and Madry, A. Adversarial Examples Are Not Bugs,
+They Are Features. In Advances in Neural Information
+Processing Systems 32, pp. 125–136, 2019.
+Jermyn, A., Lindsey, J., Luger, R., Turner, N., Bricken,
+T., Pearce, A., McDougall, C., Thompson, B., Wu, J.,
+Batson, J., Rivoire, K., and Olah, C. Progress on attention.
+transformer-circuits.pub/2025/attenti
+on-update/index.html, 2025.
+Joseph, S., Suresh, P., Hufe, L., Stevinson, E., Graham,
+R., Vadi, Y., Bzdok, D., Lapuschkin, S., Sharkey, L.,
+and Richards, B. A. Prisma: An Open Source Toolkit
+for Mechanistic Interpretability in Vision and Video.
+CVPR Workshop on Mechanistic Interpretability for Vi-
+sion, 2025.
+Kothapalli, V. Neural Collapse: A Review on Modelling
+Principles and Generalization. Trans. Mach. Learn. Res.,
+2023.
+Krizhevsky, A. Learning Multiple Layers of Features from
+Tiny Images. Technical report, University of Toronto,
+2009. CIFAR-10 dataset.
+Le, Y. and Yang, X. S. Tiny imagenet visual recognition
+challenge, 2015.
+Li, A., Wang, Y., Guo, Y., and Wang, Y. Adversarial Exam-
+ples are Not Real Features. Advances in Neural Informa-
+tion Processing Systems, 2023.
+11
+
+
+===== PDF PAGE 12 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Lindsey, J., Gurnee, W., Ameisen, E., Chen, B., Pearce,
+A., Turner, N. L., Citro, C., Abrahams, D., Carter,
+S., Hosmer, B., Marcus, J., Sklar, M., Templeton, A.,
+Bricken, T., McDougall, C., Cunningham, H., Henighan,
+T., Jermyn, A., Jones, A., Persic, A., Qi, Z., Thompson,
+T. B., Zimmerman, S., Rivoire, K., Conerly, T., Olah, C.,
+and Batson, J. On the Biology of a Large Language
+Model.
+transformer-circuits.pub/2025/
+attribution-graphs/biology.html, 2025.
+Madry, A., Makelov, A., Schmidt, L., Tsipras, D., and
+Vladu, A. Towards Deep Learning Models Resistant
+to Adversarial Attacks. In International Conference on
+Learning Representations, February 2018.
+Moosavi-Dezfooli, S.-M., Fawzi, A., and Frossard, P. Deep-
+Fool: A Simple and Accurate Method to Fool Deep Neu-
+ral Networks. In IEEE Conference on Computer Vision
+and Pattern Recognition (CVPR). IEEE, June 2016.
+Mousavi-Hosseini, A., Park, S., Girotti, M., Mitliagkas, I.,
+and Erdogdu, M. A. Neural Networks Efficiently Learn
+Low-Dimensional Representations with SGD. In The
+Eleventh International Conference on Learning Repre-
+sentations, 2022.
+Nanda, N. A Comprehensive Mechanistic Interpretability
+Explainer & Glossary. neelnanda.io/glossary,
+Dec 2022.
+Nanda, N., Lee, A., and Wattenberg, M. Emergent Lin-
+ear Representations in World Models of Self-Supervised
+Sequence Models. In 6th Blackbox NLP Workshop. Asso-
+ciation for Computational Linguistics, 2023.
+Park, K., Choe, Y. J., and Veitch, V. The Linear Represen-
+tation Hypothesis and the Geometry of Large Language
+Models. In Forty-first International Conference on Ma-
+chine Learning, ICML, 2024.
+Prieto, L., Stevinson, E., Barsbey, M., Birdal, T., and Medi-
+ano, P. From Data Statistics to Feature Geometry: How
+Correlations Shape Superposition. In International Con-
+ference on Learning Representations, ICLR, 2026.
+Rahaman, N., Baratin, A., Arpit, D., Draxler, F., Lin, M.,
+Hamprecht, F. A., Bengio, Y., and Courville, A. C. On
+the Spectral Bias of Neural Networks. In Proceedings of
+the 36th International Conference on Machine Learning,
+ICML, volume 97 of Proceedings of Machine Learning
+Research, pp. 5301–5310. PMLR, 2019.
+Santurkar, S., Ilyas, A., Tsipras, D., Engstrom, L., Tran,
+B., and Madry, A. Image synthesis with a single (robust)
+classifier. In Wallach, H. M., Larochelle, H., Beygelzimer,
+A., d’Alché-Buc, F., Fox, E. B., and Garnett, R. (eds.),
+Annual Conference on Neural Information Processing
+Systems NeurIPS, pp. 1260–1271, 2019.
+Savostianova, D., Zangrando, E., Ceruti, G., and Tudisco, F.
+Robust Low-Rank Training via Approximate Orthonor-
+mal Constraints. Advances in Neural Information Pro-
+cessing Systems, 36:66064–66083, 2023.
+Shamir, A., Melamed, O., and BenShmuel, O. The Dimpled
+Manifold Model of Adversarial Examples in Machine
+Learning. arXiv preprint arXiv:2106.10151, 2021.
+Srinivas, S., Bordt, S., and Lakkaraju, H. Which models
+have perceptually-aligned gradients? an explanation via
+off-manifold robustness. In Annual Conference on Neural
+Information Processing Systems 2023, NeurIPS, 2023.
+Stutz, D., Hein, M., and Schiele, B. Disentangling Adver-
+sarial Robustness and Generalization. In Proceedings
+of the international Conference on Computer Vision and
+Pattern Recognition CVPR, 2019.
+Szegedy, C., Zaremba, W., Sutskever, I., Bruna, J., Erhan,
+D., Goodfellow, I., and Fergus, R. Intriguing Properties
+of Neural Networks. In 2nd International Conference on
+Learning Representations, ICLR, 2014.
+Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken,
+T., Chen, B., Pearce, A., Citro, C., Ameisen, E., Jones,
+A., Cunningham, H., Turner, N. L., McDougall, C.,
+MacDiarmid, M., Freeman, C. D., Sumers, T. R.,
+Rees, E., Batson, J., Jermyn, A., Carter, S., Olah,
+C., and Henighan, T.
+Scaling Monosemanticity:
+Extracting Interpretable Features from Claude 3 Sonnet.
+transformer-circuits.pub/2024/scaling-
+monosemanticity, 2024.
+Tolstikhin, I. O., Houlsby, N., Kolesnikov, A., Beyer, L.,
+Zhai, X., Unterthiner, T., Yung, J., Steiner, A., Keysers,
+D., Uszkoreit, J., Lucic, M., and Dosovitskiy, A. Mlp-
+mixer: An all-mlp architecture for vision. In Advances in
+Neural Information Processing Systems, 2021.
+Tsipras, D., Santurkar, S., Engstrom, L., Turner, A., and
+Madry, A. Robustness May Be at Odds with Accuracy.
+arXiv:1805.12152 [cs, stat], September 2019.
+Uesato, J., O’Donoghue, B., Kohli, P., and van den Oord, A.
+Adversarial Risk and the Dangers of Evaluating Against
+Weak Attacks. In Proceedings of the 35th International
+Conference on Machine Learning, Proceedings of Ma-
+chine Learning Research. PMLR, 2018.
+Wang, D., Yao, W., Jiang, T., Zheng, X., and Wu, J. Im-
+proving the Transferability of Adversarial Examples by
+Feature Augmentation. IEEE Trans. Neural Networks
+Learn. Syst., 2025.
+Wiedeman, C. and Wang, G. Disrupting Adversarial Trans-
+ferability in Deep Neural Networks. Patterns, 3(5), 2022.
+12
+
+
+===== PDF PAGE 13 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Appendix
+A. Generation of adversarial examples
+We use PGD to generate AEs, which is an iterative method to generate attacks (Madry et al., 2018). For untargeted attacks,
+it maximises the classifier’s loss function L(f(x′), ytrue); for targeted, it minimises L(f(x′), ytarget) by the update rule:
+x′ (k+1) = ΠS
+
+x′ (k) ± αgk
+
+(1)
+(+ for maximisation, −for minimisation). x′ (0) is an initial perturbed input, α is step size, gk is the (normalised) gradient
+∇xL(f(x′ (k)), yclass) (yclass being ytrue or ytarget), and ΠS projects onto the ϵ-ball S = {x′ | ∥x′ −x∥p ≤ϵ}, with input
+domain clipping. We use the ℓp norms:
+1. ℓ∞: Constraint ∥δ∥ℓ∞= maxi |δi| ≤ϵ. gk is sign(∇xL(·)). ΠS clips each x′
+i to [xi −ϵ, xi + ϵ].
+2. ℓ2: Constraint ∥δ∥ℓ2 =
+pP
+i δ2
+i ≤ϵ. gk is ∇xL(·)/∥∇xL(·)∥ℓ2. ΠS rescales δ = x′ −x if ∥δ∥ℓ2 > ϵ via
+δ ←ϵ · δ/∥δ∥ℓ2.
+B. Omitted proofs & theoretical results
+To understand how adversarial attacks exploit representation interference, we analyse how a perturbation in input space
+is pulled back from a vulnerable direction in the bottleneck representation. Conceptually, the vulnerability comes from
+latent-space interference. Class feature vectors are represented in a space too small for them to be mutually orthogonal, so
+moving along one direction changes projections onto others.
+Recall the linear encoder-decoder model from Sec. 4: h = Wex ∈Rm, with We ∈Rm×d, and z = Wdh ∈Rk, with
+Wd ∈Rk×m. We write the columns of We as {vi}d
+i=1, so h = P
+i xivi. We write w⊤
+c for row c of Wd, so the class-c
+logit is zc = w⊤
+c h. The decoder rows wc are class feature vectors – they read class evidence from the bottleneck.
+In the argmax task, the input has block structure x = [x(1), . . . , x(k)], with x(c) ∈Rp and d = kp. The target depends
+on the class evidence sums sc = Pp
+r=1 x(c)
+r . Writing the encoder column for coordinate r in class block c as vc,r, we
+empirically observe that within-block columns learn approximately shared directions, vc,r ≈uc, where uc is the effective
+class direction. The decoder row w⊤
+c reads out class-c evidence and, empirically, aligns with the same direction: wc ≈uc.
+Thus our synthetic model is close to a symmetric superposition setting (Elhage et al., 2022) in that class evidence is written
+into and read from the bottleneck along the same effective directions.
+The pairwise decision boundary between classes j and k is
+Bjk = {h : zj = zk} = {h : (wk −wj)⊤h = 0}.
+The vector njk = wk −wj is the normal to this pairwise boundary, pointing in the direction that increases the margin
+zk −zj.
+Representation-level interference. We first note the latent-space mechanism. If a perturbation moves the representation by
+∆h ∝wk −wj, then the change in the logit of any class ℓis
+∆zℓ= w⊤
+ℓ∆h ∝w⊤
+ℓ(wk −wj).
+Thus the non-target classes affected by an attack, and the signs and magnitudes of those effects, are determined by the Gram
+structure of the class readout directions. In the symmetric setting where wc ≈uc, this is interference between latent class
+feature directions:
+∆zℓ∝u⊤
+ℓ(uk −uj).
+This is the sense in which superposition creates vulnerability: because the class directions are non-orthogonal, moving
+toward one class necessarily changes projections onto others.
+Proposition 1 (Optimal pairwise margin perturbation). The optimal input perturbation δ that maximally increases the
+pairwise margin zk −zj under the constraint ∥δ∥2 ≤ϵ satisfies
+δ ∝W⊤
+e njk,
+njk = wk −wj,
+where njk is the normal to the pairwise decision boundary between classes j and k.
+13
+
+
+===== PDF PAGE 14 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Proof. An input perturbation δ induces latent perturbation ∆h = Weδ. Under this perturbation, the pairwise margin
+becomes
+z′
+k −z′
+j = w⊤
+k (h + ∆h) −w⊤
+j (h + ∆h)
+(2)
+= (wk −wj)⊤h + (wk −wj)⊤Weδ.
+(3)
+The first term is independent of δ, so maximising the change in margin is equivalent to solving
+max
+∥δ∥2≤ϵ δ⊤W⊤
+e (wk −wj).
+Let gjk = W⊤
+e (wk −wj). By Cauchy-Schwarz,
+δ⊤gjk ≤∥δ∥2∥gjk∥2 ≤ϵ∥gjk∥2.
+Equality is achieved when δ is parallel to gjk, giving
+δ⋆= ϵ
+W⊤
+e (wk −wj)
+∥W⊤
+e (wk −wj)∥2
+,
+Intuitively, the attack identifies the vulnerable latent direction that increases the target readout relative to the source readout.
+The encoder transpose maps this latent direction back into input space. Thus superposition determines the vulnerable latent
+direction, while the encoder determines which input perturbation realises it.
+Corollary 1 (Interference drives vulnerability).. For input coordinate i, the adversarial perturbation magnitude satisfies
+|δi| ∝
+v⊤
+i (wk −wj)
+ ,
+where vi is the encoder direction for input coordinate i.
+For coordinate r in class block c, this gives |δc,r| ∝
+v⊤
+c,r(wk −wj)
+. Since vc,r ≈uc and uc ≈wc in our synthetic
+setting, this is equivalently
+|δc,r| ∝
+w⊤
+c (wk −wj)
+ .
+Thus, in the synthetic setting, the input perturbation profile is determined by interference between class feature vectors.
+Coordinates whose class readout aligns with wk −wj are increased; coordinates whose class readout anti-aligns are
+suppressed; and the magnitude scales with the strength of this alignment.
+Remark on multiclass targeted attacks.. Proposition 1 characterises the perturbation that maximally increases the pairwise
+margin zk −zj. In a multiclass classifier, a targeted adversarial example for class k must also make zk exceed all other
+logits. Therefore, if another class lies between j and k, a successful targeted attack may be governed by additional pairwise
+boundaries.
+Proposition 2 (Shared geometry implies shared attacks). Models with encoder directions and class readout vectors
+related by the same orthogonal transformation Q, where Q⊤Q = I, share identical optimal attack directions in input space.
+Proof. Suppose two models have
+W′
+e = QWe,
+w′
+c = Qwc
+for all classes c.
+Then the optimal attack direction for the second model is
+(W′
+e)⊤(w′
+k −w′
+j) = (QWe)⊤Q(wk −wj)
+(4)
+= W⊤
+e Q⊤Q(wk −wj)
+(5)
+= W⊤
+e (wk −wj).
+(6)
+Thus the two models have the same input-space interference vector and therefore the same optimal perturbation direction.
+14
+
+
+===== PDF PAGE 15 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Intuitively, rank or PCA determines the subspace in which attacks can act, but not the arrangement of meaningful feature
+directions inside that subspace. Superposition geometry is this internal arrangement, captured by the relevant Gram structure
+of class feature vectors. If two models learn the same geometry up to an orthogonal transformation, their inner products are
+preserved, so the perturbation that creates constructive interference in one model creates the same constructive interference
+in the other. This provides a mechanism for transferability.
+C. Synthetic argmax task
+C.1. Hypotheses testing framework
+We explicitly state our hypotheses for the three research questions in Sec. 4.
+Research Q1: Do adversarial perturbations exploit superposition geometry?
+• H0: Adversarial perturbations are random with respect to feature geometry.
+• H1: Adversarial perturbations systematically exploit geometric relationships between superposed representations.
+Research Q2: Do data correlations determine superposition geometry?
+• H0: Input correlations have no systematic effect on learned geometries.
+• H1: Input correlations determine geometric arrangements across model initializations.
+Research Q3: Does shared geometry explain attack transferability?
+• H0: Attack transferability is independent of geometric similarity.
+• H1: Transferability increases with shared latent structure.
+We test these hypotheses through controlled experiments:
+• H1(1): We measure the input perturbation profile alignment with a class’s latent representation and the latent attack
+vector.
+• H1(2): We systematically vary input correlations and measure resulting geometries.
+• H1(3): We quantify transferability rates across models with varying geometric similarity.
+C.2. Non-linear toy model
+To verify that the interference-driven attack mechanism generalises beyond the strictly linear bottleneck used in the main
+text, we test a non-linear variant of the toy classifier that places a ReLU activation and bias on the decoder, following the
+architectural convention of Elhage et al. (2022):
+h = Wex,
+z = ReLU(Wdh + bdec) .
+The bottleneck h remains linear, so the class feature vectors vc retain the same geometric interpretation as in the main text,
+and Proposition 1 continues to specify the optimal perturbation.
+Table 5. Alignment between PGD and optimal perturbations for the non-linear variant
+(ε = 0.2). We report cosine similarity (mean ± std across 5 seeds) of the per-seed mean.
+All are highly significant (paired t-test comparing PGD vs. random direction across
+seeds).
+k
+m
+Accuracy
+Sim. (PGD vs. Theory)
+Sim. (Random)
+30
+10
+0.94 ± 0.04
+0.96 ± 0.00
+0.00 ± 0.00
+90
+30
+0.97 ± 0.00
+0.92 ± 0.00
+0.00 ± 0.00
+Setup.
+We use the same task, train-
+ing procedure, and attack methodology
+as the main text (untargeted ℓ2-PGD at
+ϵ = 0.2). We do not report the low
+dimensional k = 6 result due to the
+ReLU exhibiting a dead-class initiali-
+sation pathology (nearly every sample
+has a single active input feature so each
+class’s pre-logit sign is determined by
+initialisation, and leading to dead Re-
+LUs that never recover).
+15
+
+
+===== PDF PAGE 16 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Results. Tab. 5 reports per-seed cosine alignment between PGD-discovered perturbations and the Proposition 1 direction,
+using the same per-seed aggregation and paired t-test against a random-direction baseline as the main Table 1. Alignment
+with the linear theoretical prediction matches the main-text linear result.
+C.3. Correlations constrain arrangements
+Table 6. Geometric similarity results across correlation types and
+superposition configurations.
+Correlation Type
+k
+m
+Geometric Similarity
+Uncorrelated
+6
+2
+0.18 ± 0.15
+30
+10
+0.17 ± 0.02
+90
+30
+0.17 ± 0.01
+Paired
+6
+2
+0.47 ± 0.07
+30
+10
+0.26 ± 0.07
+90
+30
+0.25 ± 0.01
+Global
+6
+2
+0.92 ± 0.04
+30
+10
+0.88 ± 0.01
+90
+30
+0.80 ± 0.01
+Tab. 6 extends our analysis of how input correlations
+shape feature geometry (Sec. 4.2) to a wider range of class
+counts (k) and hidden dimensions (m). For a model with
+k class feature vectors, let f (i) ∈Rk(k−1)/2 be the upper-
+triangular off-diagonal entries of its k × k class-vector
+cosine similarity matrix. For each correlation regime
+we train N = 10 models and report the mean ± std
+dev of the Pearson correlation ρij = Pearson(f (i), f (j))
+over all
+ N
+2
+
+= 45 unordered seed pairs. Cosines are
+rotation-invariant, so ρij measures whether the pairwise
+relationships between specific class labels agree across
+models. Pairwise comparisons across regimes use a two-
+sample t-test with Bonferroni correction.
+C.4. Separating superposition effects from capacity
+reduction
+Table 7.
+Robust accu-
+racy (%) at ε = 0.2 as a
+function of superposition
+pressure (k/m) and bot-
+tleneck width (m). Read-
+ing down a column raises
+superposition pressure at
+fixed capacity; reading
+across a row raises capac-
+ity at fixed pressure.
+Robust Acc. (%)
+k/m
+m = 2
+m = 5
+1
+98.7
+92.0
+2
+75.8
+87.2
+3
+31.0
+59.0
+4
+11.1
+33.5
+To disentangle superposition pressure from capacity, we vary the number of classes k across two
+bottleneck widths m ∈2, 5, comparing settings at matched superposition pressure (k/m) but
+different capacity. We report robust accuracy in Tab. 7. Reading down each column, increasing
+superposition pressure (k/m) at fixed capacity reduces robust accuracy; reading across each row,
+increasing capacity at fixed (k/m) improves it. These controls demonstrate that superposition
+pressure (k/m) is the driver of the adversarial vulnerabilities we observe, with greater capacity
+affording additional robustness at matched pressure.
+C.5. Rank alone does not determine attack structure
+A low-rank account of adversarial vulnerability identifies the admissible feature subspace but
+not its internal geometry. Our superposition account predicts adversarial perturbations in our toy
+model as δi ∝v⊤
+i (vk −vj) (Prop. 1), which depends on the specific pairwise overlaps v⊤
+i vj
+– the Gram structure inside the subspace – and is not invariant to rotations within it. As a result,
+two models sharing rank, latent dimension, and principal subspace can still exhibit different
+attack structures.
+To make this concrete, consider two three-class models with vi ∈R2.
+Model A.
+v1 = [1, 0]⊤,
+v2 = [0, 1]⊤,
+v3 =
+1
+√
+2[1, 1]⊤.
+For an attack from class 1 to class 2,
+δ3 ∝v⊤
+3 (v2 −v1) =
+1
+√
+2(1, 1) · (−1, 1) = 0,
+so class 3 does not participate.
+Model B (same subspace, different arrangement).
+v1 = [1, 0]⊤,
+v2 = [0, 1]⊤,
+v3 =
+1
+√
+2[1, −1]⊤.
+Now
+δ3 ∝v⊤
+3 (v2 −v1) =
+1
+√
+2(1, −1) · (−1, 1) = −
+√
+2,
+so class 3 participates strongly.
+16
+
+
+===== PDF PAGE 17 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+The two models share the same principal subspace and the same rank, but no orthogonal matrix Q satisfies v′
+i = Qvi for all
+i. The rank-constrained account therefore cannot distinguish them, yet they produce demonstrably different attacks. This
+complements Prop. 2, which establishes that orthogonal transformations do preserve optimal attacks. Our account can be
+viewed as a refinement of the low-rank account, with rank determining which subspaces are admissible, whilst the specific
+feature arrangement within that subspace determines which perturbations succeed.
+C.6. Additional examples of adversarial examples
+Fig. 1 demonstrates how adversarial attacks exploit the interference between latent features in superposition. Here we
+provide further visual examples (Fig. 4) to reinforce intuition. Specifically, we supplement the main text by showcasing:
+• Fig. 4a shows an additional instance of the setup in Sec. 4.1 (m = 2, k = 7) with an ℓ2-norm PGD attack, demonstrating
+the IPP and latent space manipulations that lead to misclassification.
+• Fig. 4b shows a similar setup (m = 2, k = 7) using an ℓ∞-norm PGD attack on a less sparse input.
+(a) An ℓ2-norm attack changing the classification of an input of class 4 to class 3. The left plot shows original and adversarial activations
+in latent space, along with representation directions. The right plots show original and perturbed input feature values.
+(b) An ℓ∞-norm attack changing the classification of an input of class 6 to class 4. The left plot shows original and adversarial activations
+in latent space relative to class latent directions. The right plots show original and perturbed input feature values.
+Figure 4. Visualisations of AEs in the toy model, supplementing Figure 1 from the main paper by illustrating attack mechanisms in
+activation space and input space under varied conditions.
+C.7. Generalisation across attack families
+Table 8. Alignment across attack families. Cosine similarity between the attack
+perturbation and the theoretical optimum from Prop. 1 (ϵ = 0.1). Mean ± std over
+N attacks per configuration.
+Attack
+Type
+(6, 2)
+(30, 10)
+(90, 30)
+PGD-ℓ2
+1st-order gradient
+0.93 ± 0.01
+0.95 ± 0.01
+0.97 ± 0.00
+SPSA
+Zeroth-order
+0.92 ± 0.01
+0.86 ± 0.00
+0.79 ± 0.00
+Square
+Score-based
+0.99 ± 0.00
+0.84 ± 0.00
+0.55 ± 0.00
+We focus on first-order gradient-based at-
+tacks throughout the main text, as they are
+the most widely used and practically relevant
+attacks in the literature. Prop. 1, however,
+derives the optimal perturbation from inter-
+ference geometry independent of the attack
+17
+
+
+===== PDF PAGE 18 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+algorithm, suggesting the mechanism may apply more broadly.
+As an initial test, we replicate the attack-alignment experiment of Sec. 4.1 using two non-gradient-based families: SPSA
+(Uesato et al., 2018), a zeroth-order method that estimates gradients by finite differences, and Square Attack (Andriushchenko
+et al., 2020), a score-based gradient-free method. Tab. 8 reports cosine similarity to the theoretical optimum across all three
+attack families. We take this as preliminary evidence that the interference-based vulnerability structure we identify may not
+be specific to first-order attacks.
+C.8. Does our proposed mechanism persist at scale?
+While empirical evidence suggests that larger models tend to be more robust to adversarial attacks, this effect is weak (Howe
+et al., 2025). When adversarial training is employed, clearer scaling trends emerge, but improvements remain largely specific
+to the attack type used during training rather than conferring general robustness.
+Regarding superposition, we note a tension at play when scaling up models. Larger models have more capacity to represent
+concepts, but in general tasks such as next-token prediction over internet text there is a long tail of useful concepts to capture,
+so the number of features models must encode grows alongside their capacity. Despite this increased capacity, superposition
+appears to be prevalent even in frontier models (Lindsey et al., 2025). Supporting evidence comes from dictionary learning
+methods. SAEs require increasingly large dictionaries for larger models (Gao et al., 2025), suggesting that the number
+of features scales with model size. Hence, the fundamental tension driving superposition, that models must compress
+many features into limited dimensions, does not disappear with scale. Moreover, our own experiments (Sec. 5.3) show
+superposition emerging under standard weight-decay regularisation even without an explicit capacity bottleneck, and Prieto
+et al. (2026) argue that the resulting interference is a useful mechanism, not one that needs mitigation.
+Since superposition persists in large-scale models, we conjecture that our insights remain relevant across model scales.
+Understanding how the superposition geometry changes with scale and with other realistic network components such
+as RMS norm, and whether the interference-based mechanism we identify governs adversarial perturbations in frontier
+networks, is interesting future work.
+D. Image classifier experiments
+To assess whether the principles identified in the toy models extend to realistic settings, Sec. 5 reports experiments on four
+image datasets (CIFAR-10/100, STL-10, Tiny ImageNet) and three backbone architectures (ViT, ResNet-50, MLP-Mixer)
+with an engineered bottleneck head. This appendix gives the full architecture and training details (Sec. D.1) and presents
+extended results. We examine what shapes the learned superposition geometry in the vision setting, verify the trends hold
+across additional perturbation budgets, replicate on ResNet-50 and MLP-Mixer (Sec. D.4), and test reduced capacity as a
+confounder (Sec. D.3).
+D.1. Architecture & training information
+We evaluate across four datasets and three backbone architectures. Unless stated otherwise, all configurations share the
+bottleneck head, training recipe, and augmentation pipeline described below.
+Datasets. We use CIFAR-10 and CIFAR-100 (Krizhevsky, 2009) (32 × 32, k = 10 and k = 100), STL-10 (Coates et al.,
+2011) (96 × 96, k = 10), and Tiny ImageNet (Le & Yang, 2015) (64 × 64, k = 200). For each dataset we hold out a
+stratified 10% of the training set as a validation split.
+Backbones. The base ViT (Dosovitskiy et al., 2020) comprised 12 transformer layers, embedding dimension d = 384,
+6 attention heads per layer, and a per-block MLP hidden dimension of 1536, with learned positional embeddings and a
+CLS token. For CIFAR (32 × 32) it used 4 × 4 patches; for Tiny ImageNet (64 × 64) it used 8 × 8 patches, giving 64
+patches in both cases. The ResNet-50 (He et al., 2016) backbone followed the standard torchvision architecture trained from
+scratch, with the CIFAR-style stem (the 7 × 7 stride-2 stem convolution replaced by a 3 × 3 stride-1 convolution and the
+initial max-pool removed) to preserve spatial resolution; global average pooling yields a 2048-dimensional feature. We
+use ResNet-50 for STL-10, whose 5,000 labelled images are too few to train a ∼30M-parameter ViT from scratch. The
+MLP-Mixer (Tolstikhin et al., 2021) backbone (used on CIFAR) had hidden dimension 512, depth 8, 4 × 4 patches (64
+tokens), token-mixing MLP dimension 256, and channel-mixing MLP dimension 2048, with mean pooling over tokens.
+18
+
+
+===== PDF PAGE 19 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Bottleneck. The bottleneck head consisted of a linear encoder projecting the pooled backbone features into an m-dimensional
+latent space, followed by a linear decoder mapping to the k class logits. We use m ∈{2, 3, 5, 10} for CIFAR-10 and STL-10,
+m ∈{20, 30, 50, 100} for CIFAR-100, and m ∈{40, 60, 100, 200} for Tiny ImageNet.
+Training. The backbone and bottleneck were trained jointly end-to-end for up to 300 epochs with early stopping (patience
+30–50). Training used the AdamW optimiser with learning rate 0.001 and weight decay 0.1, a batch size of 128, and a
+schedule of 10 epochs of linear warmup followed by cosine annealing to 10−6. The loss was cross-entropy with label
+smoothing 0.1. Dropout (0.1), Mixup (α = 0.8), and CutMix (α = 1.0) were used during training, and each configuration
+was repeated over five random seeds. For preprocessing, images were augmented with RandomCrop (padding 4 for CIFAR,
+8 for Tiny ImageNet, 12 for STL-10), RandomHorizontalFlip, and RandAugment (2 operations, magnitude 9), then
+normalised to the per-dataset mean and standard deviation.
+D.2. Additional perturbation budgets
+Table 9. Input class attack correlation across bottleneck
+dimensions and perturbation budgets. ¯ρ is the mean corre-
+lation between latent attack profile r and input-space attack
+profile a (excluding source/target).
+CIFAR-10
+CIFAR-100
+ϵ
+m
+¯ρ
+ϵ
+m
+¯ρ
+2/255
+2
+0.89
+2/255
+20
+0.61
+3
+0.81
+30
+0.48
+5
+0.59
+50
+0.42
+10
+0.16
+100
+0.34
+4/255
+2
+0.80
+4/255
+20
+0.53
+3
+0.67
+30
+0.44
+5
+0.48
+50
+0.43
+10
+0.25
+100
+0.37
+8/255
+2
+0.78
+8/255
+20
+0.49
+3
+0.64
+30
+0.39
+5
+0.44
+50
+0.34
+10
+0.30
+100
+0.29
+Tab. 9 extends the main paper analysis (Tab. 2) by evaluating
+the correlation between latent and input-space attack profiles
+across three perturbation budgets (ϵ ∈{2/255, 4/255, 8/255}),
+demonstrating that the relationship between bottleneck dimen-
+sion and attack structure holds consistently across different
+attack strengths.
+D.3. Vulnerability is not reduced capacity
+An alternative explanation for our results may be that compres-
+sion simply reduces model capacity, and lower-capacity models
+are more fragile in general. We test against this by comparing
+adversarial robustness against robustness to common corrup-
+tions (Hendrycks & Dietterich, 2019) as the bottleneck varies
+(Tab. 10). We evaluate ViTs on CIFAR-10-C, which applies
+15 common corruptions (e.g. blur, noise, weather effects) at
+varying severities.
+Table 10. Adversarial vs. corruption robustness (ViT,
+CIFAR-10 / CIFAR-10-C, ℓ∞PGD at ϵ = 2/255). Corrup-
+tion accuracy tracks clean accuracy as the bottleneck varies,
+whereas adversarial accuracy stays uniformly low, indicating
+vulnerability is not a generic consequence of reduced capac-
+ity. Mean ± std over 5 seeds.
+m/k
+Clean Acc.
+Adv. Acc.
+Corrup. Acc.
+0.2
+57.6 ± 2.2
+11.5 ± 0.7
+50.2 ± 2.0
+0.3
+78.2 ± 1.4
+12.9 ± 0.7
+66.5 ± 1.2
+0.5
+87.5 ± 0.5
+13.4 ± 0.7
+74.8 ± 0.7
+1.0
+89.1 ± 0.9
+13.8 ± 0.8
+77.2 ± 0.6
+Corruption robustness tracks clean accuracy: as the bottleneck
+tightens and clean accuracy falls, corruption accuracy falls with it
+(from 77.2% at m/k = 1.0 to 50.2% at m/k = 0.2). Adversar-
+ial robustness shows no such dependence – it remains uniformly
+low across all bottleneck ratios, including the widest. Were vul-
+nerability a generic capacity effect, both measures would degrade
+together; instead only adversarial robustness is decoupled from
+capacity, consistent with a targeted geometric mechanism rather
+than a loss of representational headroom.
+D.4. Replication across architectures
+Interference is not specific to the ViT architecture. Here we give
+the results for ResNet-50 (He et al., 2016) and MLP-Mixer (Tol-
+stikhin et al., 2021), which differ substantially from ViTs in their
+inductive biases. For each we vary the bottleneck ratio m/k and
+report clean accuracy, the mean latent–input profile correlation ¯ρ,
+and the interference magnitude I (Sec. 5.1). In both architectures,
+decreasing m/k increases ¯ρ and I monotonically, mirroring the ViT results in Tabs. 2 and 3.
+D.5. Correlations in class features
+In Sec. 4 it was correlations between inputs that drove superposition arrangements. We note that in the vision classifiers it is
+not the correlations between input classes but rather the correlations in the representations at this point in the network that
+19
+
+
+===== PDF PAGE 20 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Table 11. ResNet-50 results. ¯ρ: mean latent–input profile correla-
+tion; I: mean absolute interference. Mean ± std over 5 seeds.
+Dataset
+m/k
+Acc.
+¯ρ
+I
+CIFAR-10
+0.2
+94.5 ± 0.9
+0.80 ± 0.02
+0.60 ± 0.00
+0.3
+96.6 ± 0.2
+0.69 ± 0.01
+0.47 ± 0.00
+0.5
+96.3 ± 0.6
+0.46 ± 0.02
+0.26 ± 0.01
+1.0
+97.2 ± 0.1
+0.33 ± 0.02
+0.12 ± 0.00
+CIFAR-100
+0.2
+83.1 ± 0.2
+0.38 ± 0.01
+0.16 ± 0.00
+0.3
+83.2 ± 0.1
+0.31 ± 0.01
+0.12 ± 0.00
+0.5
+83.1 ± 0.3
+0.22 ± 0.01
+0.08 ± 0.00
+1.0
+83.2 ± 0.2
+0.15 ± 0.01
+0.05 ± 0.00
+Table 12. MLP-Mixer results. ¯ρ: mean latent–input profile corre-
+lation; I: mean absolute interference. Mean ± std over 5 seeds.
+Dataset
+m/k
+Acc.
+¯ρ
+I
+CIFAR-10
+0.2
+82.7 ± 0.9
+0.70 ± 0.04
+0.61 ± 0.00
+0.3
+89.8 ± 0.2
+0.49 ± 0.04
+0.46 ± 0.00
+0.5
+90.9 ± 0.4
+0.33 ± 0.04
+0.22 ± 0.01
+1.0
+91.5 ± 0.3
+0.15 ± 0.03
+0.12 ± 0.00
+CIFAR-100
+0.2
+66.7 ± 1.1
+0.50 ± 0.01
+0.16 ± 0.00
+0.3
+62.5 ± 2.5
+0.42 ± 0.08
+0.12 ± 0.00
+0.5
+67.7 ± 0.4
+0.25 ± 0.02
+0.08 ± 0.00
+1.0
+68.1 ± 0.8
+0.19 ± 0.04
+0.04 ± 0.00
+drive these arrangements. At the classification layer this is likely similar to the confusion matrix – i.e. how each class is
+misclassified in relation to the other classes. Classes that cluster together are those the network finds inherently similar and
+misclassifies together. To test this we repeat the experiment, finetuning the base ViT using timm/vit_base_patch16_384
+which has been trained on ImageNet-21k (14 million images, 21,843 classes) and ImageNet (1 million images, 1,000 classes).
+After fine-tuning on CIFAR-10 and applying the same bottleneck training procedure as Sec. 5, the resulting geometry shows
+random ordering between initialisations with approximately equal spacing between features (i.e. neural collapse (Kothapalli,
+2023)). In this case performance is near 100%, meaning the confusion matrix is the identity, and the superposition loses
+its structure. In contrast, models trained solely on CIFAR-10 converge to similar geometries because they share the same
+learned difficulty structure - the same pairs of classes prove challenging to distinguish, leading to consistent superposition
+patterns.
+E. Inspecting adversarial perturbations via SAE features
+The analyses of the main paper focused on scenarios with either explicitly defined class features (toy model) or class-level
+representations in a bottleneck (ViT experiments). However, in large, practical networks, interference will occur between
+unlabelled latent features across all layers. As mentioned in the future work section, SAEs offer a promising unsupervised
+method to extract more linear features from NNs (Bricken et al., 2023). This appendix section presents a preliminary
+investigation into using SAE-extracted features to characterise how a large scale ViT responds internally when processing
+AEs versus clean inputs. These initial results are intended to explore the feasibility of this approach for future work aimed at
+understanding adversarial phenomena on a feature level within large models, rather than presenting a conclusive new set of
+findings. We first outline the experimental setup and validate the SAEs behaviour on adversarial inputs before presenting
+exploratory layer-wise feature difference analyses.
+E.1. Experiment setup
+We analyse SAE-extracted features from the vision encoder of the LAION/CLIP-ViT-B-32-DataComp.XL-s13B-b90K
+model, a 12-layer ViT with ≈70% zero-shot accuracy on ImageNet-1k (Deng et al., 2009). We use open-source Prisma SAEs
+mapping the 768-dimensional activation space to a dictionary of 49,152 features (64× expansion) (Joseph et al., 2025). We
+examine SAEs trained on either mean patch token representations or CLS token representations, across all layers. We analyse
+features activating above a high threshold (0.1) to capture changes to the highest activating features, and a low threshold
+(0.001). We generate 10,000 original/successfully-attacked image pairs (ℓ∞-norm, ϵ = 0.02) for our SAE feature compar-
+isons. This setup allows for an initial exploration of how adversarial perturbations manifest at the level of SAE features.
+E.2. SAE validity for adversarial inputs
+Given that AEs are out-of-distribution inputs, and our aim is to use standardly trained SAEs to understand them, we first
+conduct a basic validation. This subsection examines the impact on model accuracy and SAE reconstruction when SAEs
+are inserted at inference time for both clean and adversarial inputs. The validation has two goals: (i) confirm that SAE
+reconstruction is faithful enough to preserve the model’s clean-input behaviour, and (ii) confirm that the SAE does not filter
+out the adversarial signal, i.e. the attack still succeeds when run through the SAEs. Together these ensure that subsequent
+feature-level differences reflect real attack-induced changes rather than artefacts of SAE reconstruction.
+20
+
+
+===== PDF PAGE 21 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Table 13. Impact on ImageNet-1k classification accuracy when inserting a pre-trained SAE (one layer at a time) during inference for
+original, ℓ∞adversarial (ϵ = 0.02), and random noisy inputs. ‘Accuracy’ refers to the ViT’s top-1 accuracy. ‘Original input + SAE’
+means the clean ViT activations at a given layer are passed through the SAE then its reconstruction is passed to the next layer. The slight
+’de-attacking’ effect (improved accuracy for ‘Adv. input + SAE’ vs ’Adv. input’) suggests SAEs might filter some adversarial noise, but
+overall, the model still largely misclassifies, indicating salient adversarial changes for misclassification are processed.
+Metric
+Layer 2
+Layer 5
+Layer 8
+Layer 11
+Accuracy
+Original input
+1.00
+1.00
+1.00
+1.00
+Original input + SAE
+0.99
+0.99
+0.99
+0.86
+Adv. input
+0.00
+0.00
+0.00
+0.00
+Adv. input + SAE
+0.02
+0.01
+0.01
+0.11
+Noisy input
+0.98
+0.98
+0.98
+0.98
+Noisy input + SAE
+0.98
+0.98
+0.98
+0.85
+SAE Improvement
+Original input
+-0.01
+-0.01
+-0.01
+-0.14
+Adv. input
+0.02
+0.01
+0.01
+0.11
+Noisy input
+-0.00
+-0.00
+-0.00
+-0.13
+E.3. Layer-wise SAE feature differences
+This subsection presents exploratory visualisations comparing SAE feature activations across different layers of the ViT for
+original, ℓ∞adversarial, and random noisy inputs. These visualisations are intended to highlight potential avenues for future,
+more in-depth investigation into how adversarial attacks distinctively alter sparse feature representations. We examine:
+• Activation count: Histograms comparing the number of SAE features activated above a set threshold in a layer for original,
+adversarial, and noisy images. This explores whether attacks characteristically alter feature sparsity.
+• Feature overlap: The degree of overlap (number of common activated features) between (original vs. adversarial) and
+(original vs. noisy) conditions. This explores if attacks activate a distinctly different set of features.
+• Jaccard Similarity: The Jaccard similarity between sets of activated features, offering a normalised measure of overlap.
+• Mean activation: Histograms of mean activation values for features active above a threshold. This looks for changes in the
+intensity of (key) features.
+• Distinct Features: The count of unique features activated across an image set for each condition.
+E.4. CLS token SAE features with high activation threshold (0.1)
+This subsection presents a preliminary analysis of SAE features derived from CLS tokens, only considering features activated
+above a threshold of 0.1. Figures 5 through 8 visualise and compare the histogram of activation counts, feature overlap,
+Jaccard similarity, and histogram of mean activations, respectively, for original, adversarial, and random noisy inputs across
+different ViT layers.
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 5. Histogram of activation counts for CLS token SAE features (threshold 0.1).
+21
+
+
+===== PDF PAGE 22 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 6. Feature overlap between original vs. attacked and original vs. noisy images for CLS token SAE features (threshold 0.1).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 7. Comparison of Jaccard similarity for CLS token SAE features (threshold 0.1).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 8. Histogram of mean thresholds for CLS token SAE features (threshold 0.1).
+E.5. CLS token SAE features with low activation threshold (0.001)
+We examine SAE features from CLS tokens with a lower activation threshold of 0.001, to not just capture the most intensely
+activated features. The subsequent figures illustrate the histogram of activation counts (Fig. 9), feature overlap (Fig. 10), Jac-
+card similarity (Fig. 11), and histogram of mean activations (Fig. 12) across layers for original, adversarial, and noisy inputs.
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 9. Histogram of activation counts for CLS token SAE features (threshold 0.001), with noise.
+22
+
+
+===== PDF PAGE 23 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 10. Feature overlap between original vs. attacked and original vs. noisy images for CLS token SAE features (threshold 0.001).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 11. Comparison of Jaccard similarity for CLS token SAE features (threshold 0.001).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 12. Histogram of mean activations for CLS token SAE features (threshold 0.001), with noise.
+E.6. Patch token SAE features with high activation threshold (0.1)
+This subsection shifts the focus to SAE features derived from the mean of patch tokens, again using a high activation
+threshold of 0.1. We present comparisons of activation count histograms (Fig. 13), distinct feature count histograms (Fig. 14),
+feature overlap (Fig. 15), Jaccard similarity (Fig. 16), and mean activation histograms (Fig. 17) for original, adversarial, and
+noisy inputs.
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 13. Histogram of activation counts for patch token SAE features (threshold 0.1), with noise.
+23
+
+
+===== PDF PAGE 24 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 14. Histogram of distinct patch features for patch token SAE features (threshold 0.1), with noise.
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 15. Feature overlap between original vs. attacked and original vs. noisy images for patch token SAE features (threshold 0.1).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 16. Comparison of Jaccard similarity for patch token SAE features (threshold 0.1).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 17. Histogram of mean thresholds for patch token SAE features (threshold 0.1), with noise.
+E.7. Patch token SAE features with low activation threshold (0.001)
+Finally, this subsection explores SAE features from the patch tokens means using a low activation threshold of 0.001. The
+figures show histograms of activation counts (Fig. 18), distinct feature counts (Fig. 19), feature overlap (Fig. 20), Jaccard
+similarity (Fig. 21), and mean activation histograms (Fig. 22) for original, adversarial, and noisy inputs.
+24
+
+
+===== PDF PAGE 25 =====
+Adversarial Vulnerability from Interference Between Features in Superposition
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 18. Histogram of activation counts for patch token SAE features (threshold 0.001), with noise.
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 19. Histogram of distinct patch features for patch token SAE features (threshold 0.001), with noise.
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 20. Feature overlap between original vs. attacked and original vs. noisy images for patch token SAE features (threshold 0.001).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 21. Comparison of Jaccard similarity for patch token SAE features (threshold 0.001).
+Layer 0
+Layer 2
+Layer 6
+Layer 11
+Figure 22. Histogram of mean activations for patch token SAE features (threshold 0.001), with noise.
+25

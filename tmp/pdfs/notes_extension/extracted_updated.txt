@@ -1,0 +1,3178 @@
+Monosemanticity and Robustness
+Reading Notes and Project 1 Derivations
+October 2026
+Abstract
+These notes examine Beyond Interpretability: The Gains of Feature Monosemanticity
+on Model Robustness by Qi Zhang, Yifei Wang, Jingyi Cui, Xiang Pan, Qi Lei, Stefanie
+Jegelka and Yisen Wang. They collect the relevant concepts, training objectives, experimental
+protocols, toy-model derivations and numerical checks, and distinguish the reported results
+from possible extensions to robustness and recursive training. Both arXiv:2410.21331v1
+and the ICLR 2025 proceedings version are considered. The continuation develops feature-
+detection risk, a resource-controlled superposition phase diagram, and a general interference
+bound, with detailed proofs and executable Python code.
+Scope
+These notes assume familiarity with undergraduate linear algebra, derivatives and probability,
+but do not assume prior mechanistic-interpretability or contrastive-learning experience. The
+aim is to derive the toy analysis, distinguish the claims from the evidence, and identify possible
+research extensions.
+The central scientific question is general: does encouraging features to represent more
+coherent concepts also improve a model’s behavior when training data or test inputs
+are imperfect? Most of the paper is about image representation learning and robustness. An
+additional language-model experiment studies safety after fine-tuning. Safety is therefore one
+application in this paper, not the definition of the entire research direction.
+Three distinctions are used throughout. A paper result is reported by the authors. An
+independent derivation is worked out here from stated assumptions. An open research claim
+is not established by either. In particular, a plausible geometric story is not automatically a
+theorem about a trained diffusion model.
+These notes cover both versions of the paper, including their appendices. The original arXiv
+version has 25 pages; the proceedings version has 33. Experimental values quoted as “v1” come
+from the linked arXiv paper. The conference version changes some tables and adds analyses.
+This distinction prevents an apparent discrepancy from being mistaken for a replication failure.
+The numerical demonstrations in these notes are small CPU simulations and exact calculations.
+They do not reproduce the paper’s ResNet or Llama training runs.
+Contents
+1
+Research question and motivation
+5
+1.1
+Start with a representation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.2
+Four kinds of robustness . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.3
+The empirical argument . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1
+
+1.4
+Connection to the proposed research . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2
+Features, sparsity and superposition
+6
+2.1
+A model where the concepts are known . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.2
+Three definitions that should not be merged . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+2.3
+Importance is a different variable . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2.4
+Why the ReLU is doing real work . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2.5
+A capacity constraint . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+3
+Contrastive learning and nonnegative features
+8
+3.1
+The encoder and projection head . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+3.2
+Derive the force on a similarity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+3.3
+The nonnegative modification . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+3.4
+Pretraining, linear probing and fine-tuning . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+3.5
+A practical detail with scientific consequences . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+4
+Sparse autoencoders and MonoLoRA
+9
+4.1
+Sparse autoencoder mathematics . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+9
+4.2
+Why reconstruction and interpretability compete . . . . . . . . . . . . . . . . . . . . . . .
+10
+4.3
+The paper’s operational semantic measure . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+4.4
+LoRA and the nonlinear variant . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+10
+4.5
+Worked exercise . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11
+5
+Reading the vision experiments carefully
+11
+5.1
+The experimental architecture . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11
+5.2
+Label corruption: the clearest pattern
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11
+5.3
+Input corruption
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+5.4
+Out-of-distribution images . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+5.5
+Few-shot and fine-tuning evidence
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+5.6
+How to read uncertainty . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+12
+5.7
+The feature-salience analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+5.8
+The larger toy experiment before the theorem . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+6
+Language-model safety and the limits of attribution
+13
+6.1
+What is being compared . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+13
+6.2
+Representative v1 results
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+14
+6.3
+What an automated safety judge measures . . . . . . . . . . . . . . . . . . . . . . . . . . .
+14
+6.4
+Causal interpretation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+14
+7
+The toy theory, derived from the distribution
+15
+7.1
+The task and two representations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+7.2
+The class priors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+7.3
+Deriving the monosemantic moments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+15
+7.4
+Deriving the polysemantic moments
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+16
+7.5
+Check the numbers at the paper’s setting
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+16
+7.6
+Why moments are a convenient route . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+16
+8
+Label noise and input noise, derived separately
+17
+8.1
+Symmetric label flips . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+17
+2
+
+8.2
+The law of total variance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+17
+8.3
+Normalization of the label-noise mixtures
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+18
+8.4
+Proving the relative-degradation comparison . . . . . . . . . . . . . . . . . . . . . . . . . .
+18
+8.5
+Independent Gaussian input noise
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+18
+8.6
+Large-noise intuition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+9
+Interpretation and limitations of the toy theory
+19
+9.1
+The scale test . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+9.2
+A concrete error calculation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+9.3
+Symmetric label noise and the Bayes decision . . . . . . . . . . . . . . . . . . . . . . . . .
+20
+9.4
+A useful reading of the paper’s theory
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+20
+10 Additions in the conference version
+20
+10.1 More general two-feature weights . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+10.2 A latent-class explanation for nonnegative features . . . . . . . . . . . . . . . . . . . . . .
+21
+10.3 The spectral-loss connection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+21
+10.4 Additional experiments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+22
+11 Reproduction procedures and worked examples
+22
+11.1 Check 1: conditional distribution and moments . . . . . . . . . . . . . . . . . . . . . . . .
+22
+11.2 Check 2: corruption laws
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+23
+11.3 Check 3: separability score versus prediction error
+. . . . . . . . . . . . . . . . . . . . . .
+23
+11.4 Requirements for a trained-model reproduction . . . . . . . . . . . . . . . . . . . . . . . .
+23
+11.5 Worked problem A: an atom changes the prior
+. . . . . . . . . . . . . . . . . . . . . . . .
+23
+11.6 Worked problem B: random noise along a readout . . . . . . . . . . . . . . . . . . . . . . .
+23
+11.7 Worked problem C: equal clean performance is a control . . . . . . . . . . . . . . . . . . .
+23
+11.8 Worked problem D: semantic purity without coverage
+. . . . . . . . . . . . . . . . . . . .
+24
+11.9 Worked problem E: complete versus partial representation . . . . . . . . . . . . . . . . . .
+24
+12 Synthesis and research extensions
+24
+12.1 The paper in one connected explanation . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+24
+12.2 Extension I: the superposition-to-robustness phase diagram . . . . . . . . . . . . . . . . .
+24
+12.3 Extension II: model collapse and monosemanticity
+. . . . . . . . . . . . . . . . . . . . . .
+25
+12.4 The combined paper . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+25
+12.5 Questions for discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+25
+13 Research setup: features, tasks and corruption
+26
+13.1 Research objectives and the operational task
+. . . . . . . . . . . . . . . . . . . . . . . . .
+26
+13.2 The variables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+26
+13.3 Three noise locations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+27
+13.4 Three outcomes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+28
+14 Linear readouts, geometric alignment and perturbation radii
+28
+14.1 The general linear decision radius . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+28
+14.2 Alignment of a tied readout with a feature axis . . . . . . . . . . . . . . . . . . . . . . . .
+29
+14.3 It is a matched readout, not always the optimal readout . . . . . . . . . . . . . . . . . . .
+29
+14.4 Interpretation: perturbations, sign, frequency and scale
+. . . . . . . . . . . . . . . . . . .
+31
+14.5 Other threat models . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+3
+
+15 Linear reconstruction risk and an isotropic comparison
+31
+15.1 The exact reconstruction risk . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+15.2 An isotropic example with no distributional advantage . . . . . . . . . . . . . . . . . . . .
+32
+15.3 Why nonlinear decoding is needed for the tradeoff
+. . . . . . . . . . . . . . . . . . . . . .
+33
+16 Project 1: feature-detection risk for fixed geometry
+34
+16.1 A matched feature detector . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+34
+16.2 Frequency, importance and capacity in the risk . . . . . . . . . . . . . . . . . . . . . . . .
+35
+16.3 Rarity also affects the best decision threshold . . . . . . . . . . . . . . . . . . . . . . . . .
+35
+16.4 Defining the phase boundary
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+35
+16.5 Statistical risk and worst-case geometry are different quantities . . . . . . . . . . . . . . .
+36
+17 Project 1: the superposed-pair tradeoff and phase diagram
+36
+17.1 Two features, one dimension . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+36
+17.2 Enumerate the four states . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+36
+17.3 The clean boundary in closed form . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+37
+17.4 Noise moves the boundary . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+38
+17.5 A reconstruction version, to show task dependence . . . . . . . . . . . . . . . . . . . . . .
+40
+17.6 Scope of the solved pair and the learned-geometry question
+. . . . . . . . . . . . . . . . .
+41
+18 Project 1: load, interference and a general bound
+42
+18.1 Centering interference
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+18.2 A robust region with an operational threshold . . . . . . . . . . . . . . . . . . . . . . . . .
+45
+18.3 How load enters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+45
+18.4 A capacity lower bound
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+45
+18.5 Importance, correlations and learned geometry
+. . . . . . . . . . . . . . . . . . . . . . . .
+46
+A Notation and source map
+48
+B References
+49
+4
+
+1
+Research question and motivation
+Focus: Explain the motivation without confusing interpretability, sparsity, robustness and safety.
+Paper reference: Both versions, abstract and Sections 1–2.
+1.1
+Start with a representation
+A neural network maps an input, such as an image, to a vector. Write this as
+r = fθ(u) ∈Rd.
+(1.1)
+Here u is the observed input, θ is the collection of learned parameters and r is an intermediate
+representation. A downstream classifier uses r to predict a class. The coordinates of r are often
+called neurons, although a useful feature can be a direction across many coordinates.
+A concept is a property of the input that we care about: a wheel, fur texture, a syntactic
+pattern, or a task-relevant latent factor. A feature is an operational variable or direction that
+responds to such a property. These are not synonyms by definition. Calling a direction a “cat
+feature” requires evidence about what activates it and what changing it does.
+An interpretable representation makes these relationships easier to identify. A robust represen-
+tation supports reliable prediction despite specified changes. The paper asks whether these two
+benefits can occur together, challenging the intuition that interpretability necessarily sacrifices
+predictive usefulness.
+1.2
+Four kinds of robustness
+1. Noisy training labels. The examples may be ordinary images, but their labels are
+sometimes wrong. The question is how reliably a classifier can be learned from these data.
+2. Corrupted inputs. Noise changes the input image. This is different from changing the
+label and different from perturbing an internal feature vector.
+3. Distribution shift. Sketch or stylized images differ systematically from pretraining images.
+A model may rely on texture when the shifted domain requires shape.
+4. Limited supervision. Few labeled examples provide less information for estimating the
+downstream decision rule.
+Adversarial robustness is another well-defined category: an adversary chooses a perturbation to
+maximize damage subject to a budget. The source paper’s central vision experiments are not a
+proof of adversarial robustness. A noisy-label improvement does not establish resistance to a
+worst-case ℓ2 attack.
+In the language-model arm, harmful responses are scored after fine-tuning. This tests a
+particular safety-related property under a particular prompt set and evaluator. It does not
+convert all the paper’s image experiments into AI-safety experiments.
+1.3
+The empirical argument
+The paper compares a conventional contrastive representation with representations modified to
+encourage monosemanticity. One route imposes nonnegativity in contrastive learning. Another
+learns sparse features with an autoencoder. It then asks whether downstream robustness improves.
+The toy analysis offers a possible explanation: packing multiple predictive signals into one neuron
+can be beneficial on clean data but can increase sensitivity to certain corruptions.
+5
+
+This is a combination of empirical evidence and a deliberately small mathematical example. It
+is not a general theorem that any increase in monosemanticity improves any notion of robustness
+in every network.
+1.4
+Connection to the proposed research
+The first proposed project asks for a more explicit tradeoff: when does storing more concepts in
+fewer dimensions help, and when does interference become too costly? The second asks what
+happens to those features across repeated training on generated data. The paper motivates the
+first question directly. It motivates the second indirectly through representation geometry; it
+does not study recursive model collapse.
+The existing paper supplies the motivation and initial evidence. The proposed extension
+requires a broader quantitative mechanism and a tested connection to recursive training.
+Discussion question. State one robustness question about ordinary noisy data and one about an
+adversary. Name the random variable or optimization problem that differs.
+2
+Features, sparsity and superposition
+Focus: Translate the geometric vocabulary into precise objects, and understand why nonlinearity
+matters.
+Paper reference: Section 2 and the toy setup; background: Elhage et al., Toy Models of Superposition.
+2.1
+A model where the concepts are known
+Let x ∈Rn contain genuine, independently specified latent features. An encoder stores them in
+m dimensions:
+h = Wx,
+W ∈Rm×n,
+h ∈Rm.
+(2.1)
+The ith column wi is the direction used to store feature i. A tied decoder reconstructs
+ˆx = ReLU(W ⊤h + b) = ReLU(Gx + b),
+G = W ⊤W.
+(2.2)
+The name “tied” means that the decoder uses the transpose of the encoder. An arbitrary
+autoencoder need not satisfy this constraint.
+The Gram matrix G measures pairwise inner products. Its diagonal entries are squared column
+lengths; its off-diagonal entries describe overlap. It is symmetric, positive semidefinite and has
+rank at most m.
+2.2
+Three definitions that should not be merged
+Activation sparsity: a feature is often zero. In the paper’s toy distribution,
+xi =
+(
+0
+with probability S,
+Ui
+with probability 1 −S,
+Ui ∼Unif[0, 1].
+(2.3)
+Thus S is the probability of being inactive and p = 1 −S is the probability of being active. It is
+not the magnitude of an active feature. Its first two moments are
+Exi = p
+2,
+Ex2
+i = p
+3,
+Var(xi) = p
+3 −p2
+4 .
+(2.4)
+6
+
+Figure 2.1: Original geometric illustration. Nonorthogonal directions can store more features
+than there are dimensions. The interpretation of their interference depends on the decoder and
+the data distribution.
+Monosemanticity: a neuron or feature responds to a coherent concept rather than many
+unrelated ones. This is a relationship between activity and meaning, not simply a count of zeros.
+Superposition: more meaningful feature directions are represented than the available
+dimensions would permit if all directions had to be orthogonal. Sparsity makes this useful
+because fewer features need to be decoded simultaneously.
+High sparsity does not imply that G is diagonal. Indeed, sparse features can make superposition
+more economical. Conversely, nonnegativity does not by itself prove that each neuron represents
+one concept.
+2.3
+Importance is a different variable
+The reconstruction objective is often
+L = E
+n
+X
+i=1
+Ii(xi −ˆxi)2,
+Ii > 0.
+(2.5)
+Ii is the cost assigned to a reconstruction error on feature i. A feature can be rare and important.
+Its expected contribution already contains its activation frequency through the expectation;
+multiplying by Ii adds another choice. “Rare” and “unimportant” cannot be substituted for each
+other in a proof.
+Importance decay might be parameterized by Ii = i−γ. Larger γ makes it less expensive
+to neglect later features. The optimizer’s response is something to solve or measure, not an
+assumption that all rare features will receive isolated directions.
+2.4
+Why the ReLU is doing real work
+Take two nonnegative features and a single latent coordinate, W = (1, −1). Then
+h = x1 −x2,
+ˆx = (max(h, 0), max(−h, 0)).
+(2.6)
+If only one feature is active, it is reconstructed exactly. If both are active, cancellation loses their
+shared magnitude. The representation is excellent when simultaneous activations are uncommon.
+A purely linear decoder cannot perform this conditional separation.
+7
+
+The pair is also a useful answer to the hot/cold question. If hot and cold are two nonnegative,
+potentially co-occurring features, cancellation can lose information. If they are defined as the
+signs of one temperature variable, a signed coordinate can be completely appropriate. The
+feature definition and task decide whether the subtraction is an error.
+2.5
+A capacity constraint
+If m < n, an exactly diagonal G can have at most m nonzero diagonal entries. A monosemantic
+baseline at fixed dimension must therefore drop some features, unless the task or definition
+changes. Comparing superposition with G = In while retaining m < n gives the monosemantic
+system impossible capacity. This is one reason a tradeoff diagram must include lost concepts,
+not only interference among retained ones.
+Discussion question. Explain how two nonnegative sparse features can share one signed coordinate,
+and identify precisely the input on which reconstruction fails.
+3
+Contrastive learning and nonnegative features
+Focus: Derive the training signal and locate the paper’s intervention in the learning pipeline.
+Paper reference: Methods and implementation appendices; conference Appendix B.5 is developed in Section
+10.
+3.1
+The encoder and projection head
+For an image u, sample two augmentations t1, t2 and form
+ra = fθ(ta(u)),
+za = gψ(ra),
+a ∈{1, 2}.
+(3.1)
+fθ is an image encoder such as ResNet-18. gψ is a projection head used during contrastive
+learning. A positive pair comes from the same original image; other images in the batch provide
+negatives. This creates supervision without class labels.
+With normalized embeddings vi = zi/ ∥zi∥2, a standard InfoNCE loss for anchor i and positive
+j is
+ℓi = −log
+exp(v⊤
+i vj/T)
+P
+k̸=i exp(v⊤
+i vk/T).
+(3.2)
+Here T > 0 is temperature, not a training generation. The denominator includes the positive and
+all other non-anchor samples. Implementations can arrange pairs and denominators differently
+while expressing the same classification idea.
+3.2
+Derive the force on a similarity
+Let aik = v⊤
+i vk/T and qik = exp(aik)/ P
+l̸=i exp(ail). Then
+∂ℓi
+∂aik
+= qik −1{k = j}.
+(3.3)
+Gradient descent increases the positive logit and suppresses negative logits in proportion to their
+current probability. The model learns features that are stable under the chosen augmentations
+and distinguish examples. It does not receive an explicit instruction saying “neuron 7 means a
+wheel.”
+Temperature sharpens or softens this distribution. Normalization prevents an unrestricted
+increase in embedding magnitude from trivially satisfying the objective. These details matter
+when comparing formulas across papers; a printed shorthand may omit them.
+8
+
+3.3
+The nonnegative modification
+Nonnegative contrastive learning restricts the representation entering the contrastive objective
+to nonnegative coordinates, typically through a ReLU. For two nonnegative vectors, the dot
+product is a sum of nonnegative terms. A negative contribution cannot cancel a positive one in
+that similarity.
+This can encourage a representation with more distinct, additive features. It is an inductive
+bias, not an algebraic equivalence between nonnegativity and monosemanticity. Dense positive
+vectors can still respond to many concepts. ReLU can also introduce inactive units and change
+optimization, scale and capacity.
+The right empirical comparison therefore measures semantic behavior, clean accuracy and
+robustness together. If nonnegative features improve robustness, the next scientific question is
+which changed property is responsible: sparsity, sign constraints, semantic selectivity, optimization
+or a combination.
+3.4
+Pretraining, linear probing and fine-tuning
+Pretraining learns the representation. Linear probing freezes it and trains only a classifier.
+Fine-tuning updates the representation as well. These operations answer different questions.
+The cross-entropy objective for a labeled example (r, y) is
+LCE = −log
+exp(a⊤
+y r + by)
+P
+c exp(a⊤
+c r + bc).
+(3.4)
+The minus sign is essential when minimizing. Some displayed cross-entropy expressions in the
+paper omit it. The intended learning operation is conventional negative log likelihood; the
+omission should not be copied into an implementation.
+Freezing the representation isolates its usefulness under noisy supervision more cleanly than up-
+dating everything. Fine-tuning asks whether the benefit survives adaptation. Neither experiment
+alone proves that semantic coherence is the unique causal mechanism.
+3.5
+A practical detail with scientific consequences
+The conference appendix compares features before and after the projector. The location matters:
+the monosemanticity-promoting transformation acts at a specific point. A downstream test on
+an earlier representation can miss the intervention’s effects. In a reproduction, record the exact
+tensor used by the probe, its normalization, and its dimensionality.
+Discussion question. Draw the pipeline from augmentation to encoder, projector, nonnegative
+transformation and classifier. Indicate which parameters move during a linear probe.
+4
+Sparse autoencoders and MonoLoRA
+Focus: Understand both alternative interventions and what they can and cannot identify.
+Paper reference: Methods, language-model experiments and implementation appendices.
+4.1
+Sparse autoencoder mathematics
+A sparse autoencoder takes a pretrained representation r and constructs sparse coefficients a:
+a = TopK(Wer + be),
+ˆr = Wda + bd.
+(4.1)
+9
+
+TopK retains a prescribed number of entries according to the implementation’s activation
+convention. In a nonnegative SAE, it is applied to nonnegative activations. The reconstruction
+loss is
+LSAE = E ∥r −ˆr∥2
+2 .
+(4.2)
+Some formulations instead penalize an ℓ1 norm; the paper uses a TopK-style constraint. The
+exact bias convention differs between the displayed versions. Do not substitute one formulation
+for another silently when reproducing results.
+The columns of Wd are dictionary directions. Their coefficients say which directions are active
+for each input. A sparse dictionary can reveal features that are mixed in the original neuron basis.
+But a successful reconstruction is not sufficient to establish faithful recovery of the network’s
+causal computation.
+4.2
+Why reconstruction and interpretability compete
+Reducing the number of active coefficients limits how much information can pass through the
+autoencoder. It may encourage selectivity, but it can discard fine detail. Increasing dictionary
+width adds representational capacity, but feature splitting or duplicated directions can make
+semantic accounting difficult.
+A useful evaluation reports at least reconstruction quality, activity/coverage, semantic selec-
+tivity and downstream behavior. A feature that fires once on one correctly labeled image has
+perfect apparent label purity but poor coverage. A dictionary can also make a representation
+look cleaner by omitting information.
+4.3
+The paper’s operational semantic measure
+The semantic-consistency idea asks whether samples activating a neuron tend to belong to a
+common class. Schematically, if Aj is the set of samples assigned as activating neuron j, a purity
+score is
+cj = max
+c
+#{u ∈Aj : y(u) = c}
+|Aj|
+.
+(4.3)
+The paper specifies activation-selection details for its experiments. The mathematical point is
+that this is a dataset- and label-dependent proxy. Class imbalance affects the baseline, and a
+neuron can represent a meaningful shared property across several classes. Conversely, class-pure
+activity can be based on a spurious background cue.
+Semantic consistency therefore supports the interpretation that features became more class-
+selective. It does not identify an intrinsic, universal monosemanticity scalar independent of the
+dataset.
+4.4
+LoRA and the nonlinear variant
+A conventional low-rank adaptation updates a frozen linear transformation by
+y = W0x + ABx,
+B ∈Rr×din,
+A ∈Rdout×r.
+(4.4)
+Its parameter cost is r(din + dout). Because AB is a fixed matrix, it can ordinarily be merged
+into W0 for inference.
+The paper’s MonoLoRA inserts ReLUs into the adaptation branch:
+y = W0x + ReLU(A ReLU(B ReLU(x))) .
+(4.5)
+10
+
+The branch is now piecewise linear and input-dependent. It retains a low-rank parameterization
+but is not a fixed low-rank matrix update globally. A single merged weight matrix cannot in
+general reproduce all activation regions.
+This intervention changes more than a verbal property called monosemanticity. It constrains
+signs and activation patterns and modifies the function class. The evidence that it preserves
+safety better under some fine-tuning conditions is empirical. A theoretical attribution solely to
+semantic purity would require further controls.
+4.5
+Worked exercise
+For scalar x, choose A = 1, B = −1 and W0 = 0. Ordinary LoRA gives −x. The MonoLoRA
+branch above is zero for all x, since the nonnegative inner activation becomes nonpositive after
+multiplication by B and is removed. This simple example demonstrates that inserting ReLUs is
+a substantive architectural intervention.
+Discussion question. Explain why an SAE dictionary’s Gram matrix is not automatically the
+dynamical operator of the original network, and why MonoLoRA is generally not mergeable.
+5
+Reading the vision experiments carefully
+Focus: Know what was trained, what was frozen, what was corrupted and what each plot demon-
+strates.
+Paper reference: v1 Section 3 and Appendix A; conference experimental additions are separated in Section
+10.
+5.1
+The experimental architecture
+The vision experiments use ResNet-18 representations on CIFAR-100 and ImageNet-100. The
+reported pretraining setup uses 200 epochs, batch size 256, weight decay 10−4 and a two-layer
+projector with hidden width 16,384 and output width 2,048. Linear evaluation runs for 50 epochs;
+fine-tuning experiments run for 100 epochs. The SAE configuration uses 2,048-dimensional layers
+and 256 active features in the main setup.
+These choices establish a particular evidence base. They do not imply that the method was
+tested on a large language model’s residual features with an SAE, or on a diffusion model. The
+LLM arm uses MonoLoRA instead.
+5.2
+Label corruption: the clearest pattern
+The v1 label-noise table reports the following clean and high-noise endpoints.
+Values are
+classification accuracies in percent.
+Dataset
+Representation
+0% label noise
+90% label noise
+ImageNet-100
+CL
+66.8
+34.4
+SAE
+66.2
+45.9
+NCL
+66.7
+48.1
+CIFAR-100
+CL
+54.5
+35.7
+SAE
+54.4
+39.1
+NCL
+52.8
+44.9
+11
+
+Read across a row to see degradation; compare rows at the same noise level to see a method
+difference. On CIFAR-100, NCL begins with lower clean accuracy but ends with higher accuracy
+at severe corruption. That is a tradeoff, not evidence that every metric improves at once.
+The noise mechanism must also be recorded.
+Ninety-percent corruption in a 100-class
+experiment is not equivalent to a binary symmetric-label flip probability of 0.9. The toy theory
+later uses a binary task with a useful range below 0.5. One cannot plug the table’s “90%” into
+that theory without translating the corruption distribution.
+5.3
+Input corruption
+The v1 Gaussian-noise plot on ImageNet-100 gives approximately these plotted values:
+Noise standard deviation
+0
+0.2
+0.4
+0.6
+CL
+66.8
+58.9
+42.7
+28.7
+SAE
+66.2
+58.9
+43.3
+30.6
+NCL
+66.7
+61.2
+46.5
+33.3
+All methods degrade. NCL degrades less over this range. The uniform-noise experiment shows a
+similar but smaller separation; at the largest plotted magnitude the reported values are 60.6,
+61.0 and 61.8 for CL, SAE and NCL.
+Image normalization and corruption placement determine what these magnitudes mean. A
+standard deviation of 0.2 in normalized image coordinates is not a standard deviation of 0.2
+in an internal feature space. A reproduction should implement the paper’s preprocessing order
+rather than treating noise levels as dimensionless labels.
+5.4
+Out-of-distribution images
+The v1 reported accuracies on sketch images are 23.6, 24.5 and 25.2 for CL, SAE and NCL; on
+stylized images, 16.5, 17.2 and 18.5. These shifts are structured changes, so a gain suggests
+more useful transferable information. It does not demonstrate a guarantee over every unseen
+distribution.
+A useful question is whether the gain comes from reduced reliance on texture, a different
+effective dimension, or a more general effect of the representation. The paper’s measurements
+motivate the mechanism but do not uniquely distinguish all alternatives.
+5.5
+Few-shot and fine-tuning evidence
+Few-shot experiments restrict the labeled data available to the downstream learner. Fine-tuning
+allows more of the model to adapt. The pattern of gains is consistent with the idea that cleaner
+features reduce the burden on limited or imperfect supervision. But each setting changes the
+estimation problem, so the correct unit of comparison is a matched protocol, not a single accuracy
+aggregated across incompatible tasks.
+5.6
+How to read uncertainty
+An accuracy difference of a few tenths of a point should be interpreted with run variation. The
+conference version adds repeated-run evidence in several settings and changes some numerical
+entries. Do not combine the mean from one version with an error bar from the other.
+For the proposed study, independent training seeds are the units for comparing training inter-
+ventions. Thousands of images from one trained model do not create thousands of independent
+12
+
+model-training replications. Bootstrap uncertainty over test examples is useful, but answers a
+different question from variability across training seeds.
+5.7
+The feature-salience analysis
+The paper also inspects the classifiers trained with 90% noisy labels. For each class it selects the
+representation dimension with the largest classifier weight and displays the images that activate it
+most strongly. The high-accuracy example is more class-coherent than the low-accuracy example.
+A second analysis selects the most active dimension for each example and compares its semantic
+consistency between correctly and incorrectly classified samples.
+These analyses connect the observed prediction outcome to interpretable feature behavior.
+They are correlational: class difficulty, frequency and the features selected by the classifier can
+affect both purity and accuracy. Their appropriate role is mechanistic evidence that motivates a
+controlled intervention, rather than a complete causal proof.
+5.8
+The larger toy experiment before the theorem
+The paper’s empirical toy uses n = 40, m = 20 and inactive probability S = 0.2. Each nonzero
+feature is uniform on [0, 1], and the classification label is the index of the largest feature. The
+paper writes the evaluated linear representation as W ⊤Wx, which has n output coordinates
+but rank at most m; the compressed code Wx itself has m coordinates. Keeping these distinct
+prevents a dimension-counting confusion.
+The non-superposed Gram matrix is diagonal with only m nonzero entries, so it stores only
+half the concepts. The superposed representation stores more. A linear classifier is trained on
+frozen features. The label-noise condition corrupts training labels by choosing another class;
+the input-noise condition trains on clean examples and corrupts validation inputs. The plotted
+accuracies are approximately 0.50 versus 0.58 on clean data, 0.31 versus 0.26 with label noise,
+and 0.19 versus 0.16 with input noise, for mono versus poly respectively.
+This is an actual accuracy tradeoff in a larger toy experiment. It should be distinguished from
+the two-feature theorem’s J score. The empirical observation motivates the theory but does not
+make that score an exact surrogate for accuracy.
+Discussion question. For each experiment family, identify the intervention, the corruption, the
+outcome and the strongest claim the result supports.
+6
+Language-model safety and the limits of attribution
+Focus: Read the safety results as a specific experiment, without redefining the whole paper as a
+safety project.
+Paper reference: v1 language-model results and implementation appendix; conference additional MMLU
+evaluation.
+6.1
+What is being compared
+The authors fine-tune Llama-2-7B-chat with LoRA and MonoLoRA on SST-2 and Dolly. The
+evaluation combines task performance with harmfulness judgments. SST-2 is a sentiment task;
+Dolly measures instruction-following adaptation through a text-generation score. Neither task is
+itself a training objective for eliminating harmful content.
+The reported SST-2 setup uses 20 epochs, batch size 16 and learning rate 10−4. The adapters
+use rank 8, scaling parameter 4 and dropout 0.1. The Dolly setup uses one epoch, batch size 4,
+13
+
+5,000 training examples and 1,000 inference examples. Query and value projections receive the
+adapters. These details limit the inference: another rank, dataset, layer selection or training
+budget may behave differently.
+6.2
+Representative v1 results
+The following table reproduces selected reported values. Lower harmfulness scores are preferred;
+higher task scores are preferred. The two harmfulness columns come from different evaluators
+and should not be averaged indiscriminately.
+Task
+Method
+Safety score avg.
+BeaverTails
+Task score
+SST-2
+Base
+4.83
+20.90
+88.65
+LoRA
+7.90
+20.60
+92.78
+MonoLoRA
+3.53
+20.00
+94.84
+Dolly
+Base
+4.83
+20.90
+10.21
+LoRA
+6.12
+23.80
+14.08
+MonoLoRA
+6.04
+22.60
+14.48
+The task score is accuracy for SST-2 and ROUGE-L for Dolly. The same numeric scale does not
+mean the same measurement.
+For SST-2, MonoLoRA improves the reported task score while reducing the two harmfulness
+measures relative to LoRA. For Dolly, it is also better than LoRA on these selected measures,
+but both adapted models have worse harmfulness scores than the base model. Thus “MonoLoRA
+always improves safety relative to the starting model” would overstate the table.
+6.3
+What an automated safety judge measures
+ShieldGemma-9B and BeaverTails-7B supply model-based judgments. A judge is a measurement
+instrument with its own mistakes, thresholds and coverage. It can support a comparison on a
+fixed evaluation set. It does not certify safety under arbitrary deployment conditions.
+The scientifically useful question is whether the result repeats across seeds, evaluators, prompt
+families and matched task quality. A method can appear safer because it is less willing to answer,
+because it learned a different style, or because an evaluator reacts differently to its wording.
+These are possibilities to test, not reasons to dismiss the reported pattern.
+6.4
+Causal interpretation
+MonoLoRA changes signs, gates and optimization as well as the purported semantic properties of
+the adapter. To isolate semantic coherence as the driver, one would ideally compare interventions
+that alter it while controlling alternative explanations, or measure a mediation pattern and then
+test it with causal perturbations.
+Safety may be a later application of this research. The central question remains the relation
+between feature organization and reliable behavior, extended to recursive training. The question
+does not require a safety benchmark or an agent system.
+Discussion question. Explain why “better than LoRA after fine-tuning” and “safer than the base
+model” are different claims. Use the Dolly values to demonstrate the difference.
+14
+
+7
+The toy theory, derived from the distribution
+Focus: Reproduce the clean conditional means and variances without skipping atoms, class priors
+or normalization.
+Paper reference: v1 Section 4 and Appendix B; independent derivation below.
+7.1
+The task and two representations
+Take two independent features with the spike-and-uniform distribution of Section 2. Define
+Y = 1{X1 > X2}.
+(7.1)
+The zero-zero case is assigned to class 0. Two one-dimensional representations are compared:
+νm = X1,
+νp = X1 −X2.
+(7.2)
+The first retains only one feature. The second packs both into a signed coordinate. In clean
+data, the sign of νp solves the classification task exactly. νm discards the second feature, so no
+downstream rule can generally recover the comparison perfectly.
+The paper uses a separability score
+J(ν) = µ1 −µ0
+√v0v1
+,
+µc = E[ν | Y = c],
+vc = Var(ν | Y = c).
+(7.3)
+This is the difference in class means divided by the product of class standard deviations. It is not
+the usual dimensionless Fisher separation. We will derive it faithfully, then interpret its limits.
+7.2
+The class priors
+Let p = 1 −S. Class 1 occurs when X1 > 0, X2 = 0, probability pS, or both are positive and
+X1 > X2, probability p2/2. Hence
+π1 = pS + p2
+2 = 1 −S2
+2
+,
+π0 = 1 + S2
+2
+.
+(7.4)
+The classes are not equally likely because there is positive mass S2 at the tie (0, 0). That atom
+is easy to overlook when thinking only in terms of continuous uniform variables.
+7.3
+Deriving the monosemantic moments
+For class 1, the unnormalized first moment is
+E[X11{Y = 1}] = pS
+Z 1
+0
+u du + p2
+Z 1
+0
+Z u
+0
+u dv du
+(7.5)
+= pS
+2 + p2
+3 .
+(7.6)
+Dividing by π1 gives µm1 = (2 + S)/(3(1 + S)). Replacing u by u2 gives
+E[X2
+11{Y = 1}] = pS
+3 + p2
+4 .
+(7.7)
+For class 0, terms with X1 = 0 contribute no positive moment. The both-active triangle u ≤v
+yields
+E[X11{Y = 0}] = p2
+6 ,
+E[X2
+11{Y = 0}] = p2
+12.
+(7.8)
+15
+
+Consequently,
+µm0 = (1 −S)2
+3(1 + S2),
+am0 = (1 −S)2
+6(1 + S2),
+(7.9)
+µm1 =
+2 + S
+3(1 + S),
+am1 =
+3 + S
+6(1 + S),
+(7.10)
+where ac = E[ν2 | Y = c]. Always finish with vc = ac −µ2
+c; confusing a second moment with a
+variance changes the claimed noise threshold.
+7.4
+Deriving the polysemantic moments
+For D = X1 −X2 on class 1,
+E[D1{Y = 1}] = pS
+2 + p2
+Z 1
+0
+Z u
+0
+(u −v) dv du
+(7.11)
+= pS
+2 + p2
+6 ,
+(7.12)
+E[D21{Y = 1}] = pS
+3 + p2
+12.
+(7.13)
+The corresponding unnormalized first moment for class 0 is the negative of the first expression.
+Its second moment is identical, because exchanging the two input coordinates reverses the sign.
+The extra atom at zero changes class probabilities but contributes no moment. Dividing by the
+appropriate priors gives
+µp0 = −(1 −S)(1 + 2S)
+3(1 + S2)
+,
+ap0 = (1 −S)(1 + 3S)
+6(1 + S2)
+,
+(7.14)
+µp1 = 1 + 2S
+3(1 + S),
+ap1 = 1 + 3S
+6(1 + S).
+(7.15)
+7.5
+Check the numbers at the paper’s setting
+At S = 0.2 the independent calculation gives
+Representation
+µ0
+µ1
+v0
+v1
+Mono
+0.205128
+0.611111
+0.060487
+0.070988
+Poly
+-0.358974
+0.388889
+0.076266
+0.070988
+The resulting J values are approximately 6.196 and 10.164. A simulation with 1.5 million samples
+reproduced all means and variances within 0.002; the actual discrepancies were substantially
+smaller.
+7.6
+Why moments are a convenient route
+The appendices use piecewise distributions and conditional integrals. Those are valid tools, but
+the event-weighted calculation above avoids writing a complete density with atoms and triangular
+pieces. For a moment-based score, computing E[νk1{Y = c}] and dividing by πc is often the
+cleanest derivation.
+Discussion question. Derive π0 and one of the second moments without consulting the formula.
+Explain exactly where the zero-zero atom enters.
+16
+
+Figure 7.1: Independent simulation at S = 0.2. The distribution includes point masses; histogram
+heights near atoms depend on bin width and should not be interpreted as ordinary continuous
+density values.
+8
+Label noise and input noise, derived separately
+Focus: Derive mixture variances and additive-noise variances, and understand why the mecha-
+nisms differ.
+Paper reference: v1 theoretical appendices. Mixture normalization is checked independently here.
+8.1
+Symmetric label flips
+Let eY equal Y with probability 1 −η and 1 −Y with probability η, independently of X. For
+0 ≤η < 1/2, labels still contain the original class ordering. The observed class priors are
+eπ0 = (1 −η)π0 + ηπ1,
+eπ1 = ηπ0 + (1 −η)π1.
+(8.1)
+Bayes’ rule, not an equal-mixture assumption, gives
+a00 = (1 −η)π0
+eπ0
+,
+a01 = ηπ1
+eπ0
+,
+(8.2)
+a10 = ηπ0
+eπ1
+,
+a11 = (1 −η)π1
+eπ1
+.
+(8.3)
+akc means P(Y = c | eY = k). Each row sums to one. This is a useful immediate check on any
+printed expression.
+8.2
+The law of total variance
+For either representation, write ∆= µ1 −µ0. Then
+eµk = ak0µ0 + ak1µ1,
+(8.4)
+evk = ak0v0 + ak1v1 + ak0ak1∆2.
+(8.5)
+The last term is the extra variance created by mixing separated means.
+To derive it, use
+E[ν2 | eY = k] = P
+c akc(vc + µ2
+c) and subtract the square of the mixture mean.
+The noisy mean separation simplifies to
+e∆= (1 −2η)π0π1
+eπ0eπ1
+∆.
+(8.6)
+Both representations share the prefactor, but their mixture variances differ because their clean
+separations and conditional variances differ.
+17
+
+8.3
+Normalization of the label-noise mixtures
+Some printed mixture coefficients in Appendix B use a factor 1 + S2 where the class-1 prior
+requires 1 −S2. Read literally, the affected weights do not normalize. The Bayes-rule expressions
+above are the corrected calculation for the stated model.
+At S = 0.2, the corrected crossing of the two J curves is η ≃0.242715.
+At η = 0.25,
+Jm ≃2.10332 and Jp ≃2.09223. Thus the qualitative claim that the ordering changes near 25%
+survives; the precise normalized derivation matters if the result is used as a starting point for
+further work.
+8.4
+Proving the relative-degradation comparison
+The paper also compares how much of each representation’s original J survives noise. Define
+Ta = eva0eva1/(va0va1) for a = m, p. Since the mean-separation prefactor k(η) = e∆/∆is common,
+eJa
+Ja
+= k(η)
+√Ta
+.
+(8.7)
+Substituting the exact moments at S = 1/5 and simplifying gives
+Tp −Tm = 292032 η(1 −η){13156 + 65501η(1 −η)}
+15341(13 −η)2(12 + η)2
+≥0.
+(8.8)
+Every factor has a known sign for 0 ≤η < 1/2. Therefore eJm/Jm ≥eJp/Jp: mono retains a
+greater fraction of its original score in this setting. This is an algebraic proof with corrected
+mixture weights, not merely an observation from a plot. It does not remove the score-versus-error
+limitation discussed in the next section.
+8.5
+Independent Gaussian input noise
+Now keep the labels defined by the original clean features, but observe X′ = X + ϵ, with
+ϵ ∼N(0, λ2I2) independent of X. The representations become
+ν′
+m = X1 + ϵ1,
+ν′
+p = X1 −X2 + ϵ1 −ϵ2.
+(8.9)
+The means are unchanged, while
+v′
+mc = vmc + λ2,
+v′
+pc = vpc + 2λ2.
+(8.10)
+The factor two follows from independence: Var(ϵ1 −ϵ2) = 2λ2. With correlated noise it becomes
+Var(ϵ1) + Var(ϵ2) −2 Cov(ϵ1, ϵ2) instead. The geometry-noise interaction depends on the noise
+covariance.
+Substitute these variances into Equation (7.3). At S = 0.2, the curves cross at λ ≃0.547927.
+An exact algebraic equation for u = λ2 is
+∆2
+m(vp0 + 2u)(vp1 + 2u) = ∆2
+p(vm0 + u)(vm1 + u).
+(8.11)
+This is a quadratic in u. Retain a nonnegative root and verify the inequality on either side. No
+symbolic regression or fitted law is needed.
+18
+
+Figure 8.1: Independently calculated versions of the paper’s separability comparisons. The label-
+noise panel uses normalized posterior class mixtures. These are score crossings, not automatically
+classification-error crossings.
+8.6
+Large-noise intuition
+As λ →∞, the denominators scale as λ2 for mono and 2λ2 for poly. Thus Jm ∼∆m/λ2 and
+Jp ∼∆p/(2λ2). At this setting, the poly representation’s larger clean separation does not
+compensate for the doubled denominator in this particular score. This is the mechanism the toy
+example illustrates.
+Discussion question. Re-derive the factor of two for input noise, and the between-means variance
+term for label noise. They come from different probability operations.
+9
+Interpretation and limitations of the toy theory
+Focus: Distinguish a separability score from prediction error, and an example from a general
+phase law.
+9.1
+The scale test
+For a positive constant c, replacing ν by cν gives
+µ′
+1 −µ′
+0 = c(µ1 −µ0),
+v′
+k = c2vk,
+J(cν) = J(ν)
+c
+.
+(9.1)
+But a threshold classifier can scale its threshold by c and make exactly the same predictions.
+Therefore J is not invariant under an innocuous rescaling of the representation. Comparing
+it is meaningful only with a fixed representation convention, and its numeric ordering is not a
+universal ordering of classifier quality.
+A dimensionless alternative such as ∆/
+p
+(v0 + v1)/2 avoids this particular scaling problem,
+but changing the metric also changes the theorem being tested. The source paper’s result should
+be taught using its own metric, with its assumptions visible.
+9.2
+A concrete error calculation
+For the clean mono representation at a positive observed value X1 = u, the probability of class 1
+is
+P(Y = 1 | X1 = u) = S + (1 −S)u.
+(9.2)
+19
+
+When S < 1/2, the optimal threshold is u∗= (1/2 −S)/(1 −S). At S = 0.2, u∗= 0.375. There
+is also a separate atom at X1 = 0, which always belongs to class 0. The clean Bayes error is
+Rm = p
+Z u∗
+0
+(S + pu) du +
+Z 1
+u∗
+p(1 −u) du
+
+= 0.23.
+(9.3)
+The poly representation has zero clean error because Y = 1{νp > 0} exactly.
+An independent numerical threshold experiment used 200,000 samples to choose thresholds
+and 400,000 separate samples to estimate error. At Gaussian noise standard deviation 0.6, the
+mono error was approximately 0.3742 and the poly error 0.3388. Yet the J curves have already
+crossed near 0.548. At noise 1.0, the same experiment gave approximately 0.4204 and 0.3960.
+This is a finite-sample demonstration, not a proof for all noise levels, but it decisively shows why
+a J crossing cannot simply be called an accuracy crossing.
+9.3
+Symmetric label noise and the Bayes decision
+Let q(ν) = P(Y = 1 | ν). Under independent symmetric flips,
+P( eY = 1 | ν) = η + (1 −2η)q(ν).
+(9.4)
+For η < 1/2, this exceeds 1/2 if and only if q(ν) > 1/2. The population Bayes decision boundary
+is unchanged. Finite data, misspecification and optimization can still make noisy supervision
+harmful, but this observation limits what a mixed-label moment score proves about classification.
+9.4
+A useful reading of the paper’s theory
+The theory demonstrates that polysemantic and monosemantic representations can respond
+differently to corruption under a specified separability measure. It offers a tractable mechanism
+that accompanies the vision evidence. It does not establish the full p, n/m, Ii boundary proposed
+for the extension, nor a theorem for recursive self-training.
+The appropriate extension is to choose an operational outcome, derive its risk under explicit
+assumptions, and test the predicted tradeoff. Sections 13–18 develop this approach for a small
+feature-detection model.
+Discussion question. Give an example of a transformation that changes J but leaves all optimal
+threshold predictions unchanged. Explain why this matters for a proposed robustness theorem.
+10
+Additions in the conference version
+Focus: Understand the additional evidence and theory rather than treating different versions as
+interchangeable.
+Paper reference: ICLR 2025 proceedings version, especially Appendices B.4–B.5 and C.1–C.6.
+20
+
+10.1
+More general two-feature weights
+The later appendix studies ν = w1X1 −w2X2 with w1 ≥w2 > 0. The same event-integral
+method gives
+µ0 = (1 −S)[(w1 −2w2) −(w1 + w2)S]
+3(1 + S2)
+,
+(10.1)
+µ1 = (2w1 −w2) + (w1 + w2)S
+3(1 + S)
+,
+(10.2)
+a0 = (1 −S)[w2
+1 −3w1w2 + 3w2
+2 −(w2
+1 −3w1w2 −w2
+2)S]
+6(1 + S2)
+,
+(10.3)
+a1 = 3w2
+1 −3w1w2 + w2
+2 + (w2
+1 + 3w1w2 −w2
+2)S
+6(1 + S)
+.
+(10.4)
+Again vc = ac −µ2
+c. Setting w1 = w2 = 1 recovers Section 7; setting w2 = 0 recovers mono.
+These substitution tests are useful safeguards against transcription errors.
+For an even cleaner derivation, compute the conditional vector mean mc = E[X | Y = c] and
+covariance Cc, then use µc = a⊤mc and vc = a⊤Cca with a = (w1, −w2)⊤. Under independent
+isotropic input noise, add λ2(w2
+1 + w2
+2) to the variance.
+One should not infer that increasing a negative contribution always increases conditional
+variance. At S = 0.2, the class-0 variance contains a negative cross term. For sufficiently small
+positive w2, this can initially reduce variance relative to w2 = 0. The exact quadratic is the right
+object to inspect; broad monotonicity language needs its own conditions.
+10.2
+A latent-class explanation for nonnegative features
+Assume a finite latent class C with prior πc, and positive pairs drawn independently conditional
+on that class. Let P(x) be the marginal probability of an observation. Then the positive-pair
+probability is
+P+(x, x′) =
+X
+c
+πcP(x | c)P(x′ | c).
+(10.5)
+Divide by P(x)P(x′) and apply Bayes’ rule:
+P+(x, x′)
+P(x)P(x′) =
+X
+c
+P(c | x)P(c | x′)
+πc
+.
+(10.6)
+This factorizes as ϕ(x)⊤ϕ(x′) with
+ϕc(x) = P(c | x)
+√πc
+≥0.
+(10.7)
+Thus a natural nonnegative representation exists for this positive-pair structure. When the class
+is perfectly determined by x, it is a scaled one-hot representation. With ambiguous classes,
+several coordinates can be positive; the conclusion is then softer than one active concept per
+example.
+10.3
+The spectral-loss connection
+For a score s(x, x′) = f(x)⊤f(x′), consider
+Lspec = −2EP+s + EP⊗P s2.
+(10.8)
+21
+
+Let Axx′ = P+(x, x′)/
+p
+P(x)P(x′) and Fx =
+p
+P(x)f(x). Expanding a squared Frobenius norm
+gives
+A −FF ⊤
+2
+F = ∥A∥2
+F + Lspec.
+(10.9)
+The coefficient 2 in the cross term matters. This normalization makes the matrix-factorization
+statement exact. The posterior representation above reproduces A if the dimension is sufficient.
+This is an existence argument for a spectral surrogate under latent conditional independence.
+It is not a theorem that SGD on the exact InfoNCE objective must discover that representation,
+or that all minimizers are semantically unique. Orthogonal transformations can preserve a Gram
+matrix while changing neuron meanings, unless additional constraints resolve the ambiguity.
+10.4
+Additional experiments
+The conference version adds or expands semantic-consistency measurements, repeated-run
+uncertainty, small-noise settings, interactions with robust loss functions, projector-location
+comparisons, MMLU checks and SAE TopK ablations.
+Representative repeated-run label-noise endpoints on ImageNet-100 are CL 34.5 ± 0.2, SAE
+45.7 ± 0.2 and NCL 48.1 ± 0.2 at 90% noise. On CIFAR-100 they are 35.4 ± 0.3, 38.0 ± 0.1 and
+45.0 ± 0.2. These are later-version values, not replacements silently inserted into Section 5’s v1
+table.
+The TopK ablation is particularly relevant to a tradeoff project. At K = 64, 128, 256, 512, 1024,
+the reported clean accuracies are 64.2, 64.7, 66.1, 66.4 and 66.8; high-label-noise accuracies are
+45.9, 45.9, 45.7, 43.1 and 38.9. The baseline without the SAE is 66.8 clean and 34.5 at high noise.
+Increasing sparsity can help robustness while sacrificing clean information. This is a motivating
+empirical tradeoff, not yet a universal phase boundary.
+Robust-loss experiments examine complementarity with cross-entropy variants; they test
+whether representation changes still matter when the downstream objective is made more
+resistant to label corruption. Projector experiments show that evaluation location is consequential.
+MMLU averages near 0.47 across the compared models support the narrower observation that
+the intervention did not produce an obvious broad capability gain in that check.
+Discussion question. Derive the posterior-factorization identity. Then name two assumptions
+that prevent it from being a universal theorem about learned monosemanticity.
+11
+Reproduction procedures and worked examples
+Focus: Reproduce and check the calculations and experimental protocols.
+11.1
+Check 1: conditional distribution and moments
+Generate N samples by multiplying independent uniform amplitudes by Bernoulli activation
+masks. Use the strict comparison Y = (X1 > X2), so the zero-zero tie enters class 0. Estimate
+class probabilities, means and variances separately.
+x = (rng.random((N, 2)) >= S) * rng.random((N, 2))
+y = (x[:, 0] > x[:, 1]).astype(int)
+mono = x[:, 0]
+poly = x[:, 0] - x[:, 1]
+for c in (0, 1):
+mean = poly[y == c].mean()
+variance = poly[y == c].var()
+22
+
+As N increases, the estimates should approach Section 7’s formulas. An error concentrated in
+class 0 often signals a mishandled atom or tie. An error in both variances often signals forgetting
+to subtract the squared mean.
+11.2
+Check 2: corruption laws
+For label noise, generate an independent Bernoulli flip mask and regroup the unchanged rep-
+resentation values by eY . Compare empirical moments with the mixture formulas. For input
+noise, perturb both coordinates independently but retain the original clean labels; compare the
+variance increments with λ2 and 2λ2.
+Do not regenerate labels from noisy inputs for this check. That would change the target and
+answer a different question. This kind of protocol mismatch can produce a plausible-looking plot
+while invalidating the intended derivation.
+11.3
+Check 3: separability score versus prediction error
+Train a scalar threshold on one sample and evaluate on a separate sample. Plot error and J
+in different panels. The independent calculations accompanying these notes already perform a
+version of this check. The purpose is to see whether the operational quantity of interest follows
+the illustrative score, rather than assuming that it does.
+11.4
+Requirements for a trained-model reproduction
+For each method, record the encoder checkpoint, representation tensor, projector use, normaliza-
+tion, SAE dimensions and TopK, probe optimizer, learning-rate schedule, corruption mechanism
+and seed. Reproduce one clean and one noisy condition first. Confirm that clean accuracy is
+reasonably consistent before expanding to a grid.
+The references identify the official repository and inspected commit. Read its configuration
+files before training. Repository inspection is not a completed reproduction; compatibility and
+configuration may still require adjustment.
+11.5
+Worked problem A: an atom changes the prior
+Question. Why is the class-0 probability not 1/2? Solution. Exchange symmetry makes the
+strict events X1 > X2 and X2 > X1 equally probable. Their probabilities sum to 1 −S2, since
+only the zero-zero tie has positive tie probability. Each strict event therefore has probability
+(1 −S2)/2. Assigning the tie to class 0 adds S2, giving (1 + S2)/2.
+11.6
+Worked problem B: random noise along a readout
+Question. For z = a⊤X and independent zero-mean input noise with covariance N, what is
+the variance increment? Solution. The increment is a⊤Na. For isotropic noise N = λ2I, it is
+λ2 ∥a∥2
+2. This explains the paper’s factors one and two, and immediately generalizes to correlated
+noise. It says nothing by itself about a worst-case attack radius.
+11.7
+Worked problem C: equal clean performance is a control
+Question. Why compare robustness at matched clean accuracy as well as at matched architec-
+ture? Solution. A representation that drops many difficult features can appear stable simply
+because it solves a smaller effective problem. Matched architecture controls resources; matched
+23
+
+clean accuracy helps control how much useful information was retained. Neither control is
+complete alone. Report the clean-versus-corrupt performance curve, not just the best noisy point.
+11.8
+Worked problem D: semantic purity without coverage
+Question. A neuron fires on only one example, which belongs to class 7. Is its purity score
+evidence of a strong class-7 feature? Solution. Its empirical purity is one, but coverage is
+negligible and uncertainty is enormous. A useful feature should generalize across examples and
+withstand controlled interventions. Report activation count and held-out behavior alongside
+purity.
+11.9
+Worked problem E: complete versus partial representation
+Question. Can G = W ⊤W equal In if W has m < n rows? Solution. No. rank(G) ≤m <
+n = rank(In). A fixed-capacity monosemantic comparator must discard features or use another
+resource allocation. This is central to a meaningful superposition tradeoff.
+12
+Synthesis and research extensions
+Focus: Summarize the contribution and connect it to the two proposed research questions.
+12.1
+The paper in one connected explanation
+The paper investigates whether more semantically coherent representations can improve practical
+robustness rather than merely making models easier to inspect. It encourages such representations
+through nonnegative contrastive learning and sparse autoencoders, and measures downstream
+behavior under noisy labels, corrupted images, distribution shifts and limited supervision. A
+separate nonlinear adapter intervention tests safety retention during language-model fine-tuning.
+The reported patterns support a useful connection between representation organization and
+reliable behavior.
+The toy model explains one possible tradeoff. A one-dimensional representation containing
+both features can separate clean classes better than one that drops a feature. Under certain
+corruptions, its conditional moments change in a way that worsens a chosen separability score
+relative to the simpler representation. The mathematical statement is deliberately narrower
+than a general robustness theorem. The conference additions strengthen the empirical case and
+provide a latent-class explanation for why nonnegative representations can arise.
+12.2
+Extension I: the superposition-to-robustness phase diagram
+The superposition-to-robustness phase diagram asks for a boundary or bound as feature
+frequency, capacity load and importance vary.
+To go beyond the source paper, define an
+operational risk, include the information lost by a monosemantic baseline, and derive the tradeoff
+under stated assumptions. Nonlinear decoding must be retained where it is responsible for sparse
+superposition’s benefit.
+The source paper is the conceptual and experimental anchor. It should be cited as motivating
+evidence, not described as a special case of a new theorem until the assumptions and metrics
+genuinely contain its setting.
+24
+
+12.3
+Extension II: model collapse and monosemanticity
+Model collapse as monosemanticity decay asks whether feature organization predicts or
+contributes to degradation across recursive training. The phrase is a research hypothesis, not an
+established result: some loops preserve a distribution, some lose rare combinations, some blur or
+amplify features, and a representation can change without a meaningful loss of quality.
+The extension should define a training-and-generation operator, measure feature-specific errors
+and derive how these errors propagate. A fixed Gram-matrix covariance identity is a useful
+elementary calculation, but it does not by itself describe a retrained generative model.
+12.4
+The combined paper
+The shared object is feature interference geometry. Its immediate effect is decoding reliability;
+its repeated effect, under an explicitly defined generation mechanism, can be distributional drift.
+The feature-detection derivations in Sections 13–18 establish the immediate-risk side of this
+program. A recursive-training operator and a validated diffusion connection require a separate
+extension; they are not inferred from the fixed-geometry formulas.
+The structure remains mathematics, controlled toy validation, real-model evidence.
+The derivations are not symbolic-regression fits. The real-model work is scientifically necessary
+for the intended empirical story, even though its exact outcome cannot be promised before
+experiments.
+12.5
+Questions for discussion
+1. What intervention produces the claimed semantic change, and where in the network is it
+applied?
+2. Which experiment concerns noisy labels, which concerns noisy inputs, and which concerns
+safety?
+3. Why can sparse features share dimensions, and why does the decoder matter?
+4. What does the paper’s J measure, and why is it not an adversarial radius or classification-
+error theorem?
+5. Which empirical observations motivate a broader phase diagram?
+6. What additional operator and assumptions are needed to study recursive self-training?
+25
+
+The continuation develops the first research question under an explicit feature-detection model.
+It connects the paper’s representation-level motivation to operational prediction errors, then
+derives a two-feature phase diagram and an interference bound for larger dictionaries. The six
+sections retain the progression from definitions to exact toy calculations to the learned-geometry
+question.
+13
+Research setup: features, tasks and corruption
+Objective: Specify the prediction task, corruption, representation and training loop so a formula
+has a definite meaning.
+13.1
+Research objectives and the operational task
+Project 1 seeks a robust-performance tradeoff in sparsity, feature-to-dimension load and impor-
+tance decay. Project 2 seeks a representation-level account of recursive-training degradation
+and a quantity that predicts it. Their intended combination uses shared feature geometry,
+shared toy infrastructure and a real-model demonstration. The source anchor is Zhang et al.’s
+monosemanticity-and-robustness paper analyzed in Sections 1–12.
+The following mathematical model specifies a controlled instance of these research questions.
+We begin with a task whose ground truth is unambiguous: recovering binary feature presence.
+This allows an actual error probability to replace an informal “cleanness” score. Continuous-
+amplitude reconstruction is also derived as a companion task.
+13.2
+The variables
+Let b = (b1, . . . , bn) ∈{0, 1}n denote genuine toy concepts. Initially bi ∼Bernoulli(pi) indepen-
+dently, unless otherwise stated. Let si = 1 −pi and let Ii > 0 weight errors. The encoder is
+W ∈Rm×n, with columns wi. Define
+h = Wb,
+G = W ⊤W.
+(13.1)
+The load is n/m. Later, a training generation is indexed by g, and the geometry may become
+Wg, Gg. A diffusion denoising step uses a different index τ.
+13.2.1
+Binary presence, continuous amplitude and a named concept
+A binary feature bi records whether a concept is present. It is not a class label for the entire
+input and is not a neuron index. An input can contain several concepts simultaneously. If
+bi ∼Bernoulli(pi), then
+P(bi = 1) = pi,
+P(bi = 0) = si = 1 −pi,
+Ebi = pi,
+Var(bi) = pi(1 −pi).
+(13.2)
+The identity b2
+i = bi gives Eb2
+i = pi and hence the variance. For a continuous sparse feature
+xi = biUi, with Ui ∼Unif[0, 1] independent of bi,
+Exk
+i = pi
+Z 1
+0
+uk du =
+pi
+k + 1,
+Exi = pi
+2 ,
+Var(xi) = pi
+3 −p2
+i
+4 .
+(13.3)
+Recovering presence and reconstructing amplitude are different tasks, even when the same encoder
+is used. Their phase boundaries need not coincide.
+For example, b = (1, 0, 1) may mean that an image contains a circle and a red object, but no
+square. The encoder maps this combination to h = w1 + w3. The columns wi identify storage
+directions; the scalar coefficient bi identifies whether each direction contributes on this input. A
+neuron coordinate is a component of h, which may mix several such contributions.
+26
+
+13.2.2
+Why the Gram matrix is positive semidefinite and rank limited
+The Gram entry is Gij = w⊤
+i wj. Symmetry follows from the symmetry of the inner product. For
+every v ∈Rn,
+v⊤Gv = v⊤W ⊤Wv = (Wv)⊤(Wv) = ∥Wv∥2
+2 ≥0.
+(13.4)
+This proves positive semidefiniteness. It does not assert that every entry of G is positive: an
+antipodal pair has a negative off-diagonal entry. Diagonal entries satisfy Gii = ∥wi∥2
+2 ≥0.
+Rank counts linearly independent directions in the image of a linear map. Because Wv ∈Rm,
+its image has dimension at most m. Its n columns also span at most n independent directions.
+Thus rank W ≤min(m, n). Moreover,
+ker(W ⊤W) = ker W,
+rank G = rank W ≤m.
+(13.5)
+For the kernel equality, Gv = 0 implies 0 = v⊤Gv = ∥Wv∥2
+2, hence Wv = 0; the converse follows
+immediately. If n > m, G cannot equal In. A fully noninterfering comparator with the same
+bottleneck must therefore omit features or use another explicitly stated resource convention.
+13.2.3
+Signed concepts and destructive interference
+If temperature is a single signed variable t, positive and negative values describe its two poles.
+With one stored direction, the readout reports the signed temperature; moving toward the
+negative pole is a change in the target signal. This is different from two separately specified
+nonnegative concepts x1, x2 represented by
+W = (1, −1),
+h = x1 −x2,
+ˆx = (ReLU(h), ReLU(−h)).
+(13.6)
+When x1 > 0, x2 = 0, the first concept is recovered exactly; when x1 = 0, x2 > 0, the second
+is recovered exactly. When both are positive, their common amplitude is lost. In particular,
+x1 = x2 > 0 gives h = 0, indistinguishable from simultaneous absence. Deciding whether two
+names denote one signed variable or two independently meaningful concepts is part of specifying
+ground truth, not something a Gram matrix determines by itself.
+13.2.4
+Three distinct roles for importance
+An importance weight Ii determines the cost of an error, while pi determines how often an
+activation occurs. A rare concept can have a large penalty when missed. In a fixed model,
+changing Ii changes the reported weighted risk without changing G. In a trained model, changing
+the weights in the training loss can also change the learned geometry. Neither operation proves
+that the optimizer must allocate an isolated direction to that concept. Those effects must be
+separated in the analysis and experiments.
+13.3
+Three noise locations
+1. Feature-space corruption: b or a continuous feature vector is perturbed before encoding.
+A feature-space adversary is an idealized mathematical model.
+2. Code-space corruption: h = Wb + ξ with ξ ∼N(0, σ2Im). This makes each matched
+readout’s variance depend on Gii.
+3. Observed-input corruption: pixels or waveforms change before a nonlinear encoder.
+The encoder’s Jacobian and nonlinear activation changes matter.
+These yield different formulas. A proof for the first cannot be described as a guarantee for the
+third without an additional argument.
+27
+
+13.4
+Three outcomes
+Feature detection error asks whether a concept is correctly declared present. Reconstruction
+error asks how accurately its amplitude is recovered. Distributional fidelity asks whether a
+generator produces the correct frequencies and combinations of concepts. A classifier can retain
+accuracy while a generator loses diversity, so these outcomes should be linked mathematically
+rather than treated as interchangeable.
+For binary detection, the main risk is
+R(W, θ; P) =
+X
+i
+IiPb∼P,ξ{ˆbi̸ = bi}.
+(13.7)
+For a phase diagram, compare the risks of two admissible representation families at the same
+stated resource budget. A boundary is the set where their risks are equal. Calling it a “phase
+boundary” is descriptive here; a finite toy model does not automatically have a thermodynamic
+singularity.
+Discussion question. For every proposed formula, write one sentence specifying what is random,
+what is fixed and what outcome it predicts.
+14
+Linear readouts, geometric alignment and perturbation radii
+Objective: Distinguish a geometric alignment score from a task-dependent perturbation radius.
+14.1
+The general linear decision radius
+Consider a binary decision with label y ∈{−1, 1} and score f(x) = β⊤x −c, where β̸ = 0.
+If yf(x) > 0, the example is correctly classified. For a perturbation with ∥δ∥q ≤ε, Hölder’s
+inequality gives
+min
+∥δ∥q≤ε yf(x + δ) = yf(x) −ε ∥β∥q∗,
+1
+q + 1
+q∗= 1.
+(14.1)
+Equality is attained by a dual-norm maximizing direction. Therefore the exact distance to the
+decision boundary is
+rq(x, y) = yf(x)
+∥β∥q∗.
+(14.2)
+This assumes unrestricted perturbations in the chosen vector space. If valid inputs must remain
+nonnegative, binary or on a manifold, the feasible attack set changes and this may become a
+lower bound on the constrained radius rather than the exact answer.
+14.1.1
+The perturbation budget and equality in the norm bound
+The constraint ∥δ∥q ≤ε specifies a set of allowed perturbations.
+Writing δ = εu reduces
+the maximization to ∥u∥q ≤1; the factor ε remains outside the inner product. For q = 2,
+Cauchy–Schwarz is tight at
+δworst = −εy
+β
+∥β∥2
+,
+yf(x + δworst) = yf(x) −ε ∥β∥2 .
+(14.3)
+The smallest budget reaching the boundary is therefore r2 = yf(x)/ ∥β∥2. Equality reaches score
+zero; crossing requires a larger budget or a stated tie rule. For q = ∞, choosing δj = −εy sign(βj)
+gives a swing ε ∥β∥1. For q = 1, concentrate the budget on a coordinate of largest |βj|, giving a
+swing ε ∥β∥∞. These are different operational quantities for the same readout.
+28
+
+14.2
+Alignment of a tied readout with a feature axis
+For the tied linear readout of feature i, take β = Gei, x = ei, c = 0, y = 1 and q = 2. Then
+Mi =
+Gii
+qP
+j G2
+ij
+=
+
+1 +
+X
+j̸=i
+G2
+ij
+G2
+ii
+
+
+−1/2
+.
+(14.4)
+This requires Gii > 0. If the feature is dropped, the entire row is zero and the ratio is 0/0, not a
+meaningful robustness score.
+Equation (14.4) is also the cosine between the row of G and the target feature axis. It is
+a legitimate geometric quantity. It equals an attack radius only in the normalized input and
+decision problem just specified. A different input x, threshold c or feature amplitude changes the
+radius through Equation (14.2).
+14.2.1
+Deriving the alignment ratio and its allowed values
+Let ei be the standard basis vector, with a one in coordinate i. Then β = Gei is column i of G,
+and β⊤ei = Gii. Because G is symmetric,
+∥Gei∥2
+2 =
+X
+j
+G2
+ji = G2
+ii +
+X
+j̸=i
+G2
+ij,
+(14.5)
+Mi =
+Gii
+q
+G2
+ii + P
+j̸=i G2
+ij
+=
+1
+q
+1 + P
+j̸=i(Gij/Gii)2 .
+(14.6)
+Dividing the sum of squares by G2
+ii is the same as dividing every summand before adding:
+P
+j G2
+ij/G2
+ii = P
+j(Gij/Gii)2. This is not the square of a sum of overlaps.
+If wi̸ = 0, the diagonal is positive and the denominator is finite and at least Gii. Hence
+0 < Mi ≤1. Negative values, including −1, cannot occur for this Gram-matrix alignment. A
+generic cosine can be negative, but this particular cosine involves a vector whose coordinate on
+ei is positive. Equality Mi = 1 holds precisely when every Gij = 0 for j̸ = i. If wi = 0, all entries
+in the corresponding row vanish, so the formula is undefined, not zero.
+For G =
+ 
+1
+−1
+−1
+1
+!
+, both scores equal 1/
+√
+2. The negative overlap lowers this sign-blind
+alignment exactly as a positive overlap of the same magnitude would. Yet the ReLU decoder
+can recover either concept perfectly when they never co-occur. This illustrates why statistical
+reliability depends on the input law and decoder as well as a squared-overlap score.
+For the same fixed geometry, replacing x = ei by x = aiei with ai > 0 changes the zero-
+threshold radius to aiMi. Replacing the threshold by c changes it to (aiGii −c)/ ∥Gei∥2, provided
+this example is correctly classified. Thus Mi is not a universal input-independent attack budget.
+A common scaling W 7→tW cancels in Mi. In contrast, scaling only column wi by t > 0 gives
+Mi(t) =
+tGii
+q
+t2G2
+ii + P
+j̸=i G2
+ij
+.
+(14.7)
+Individual feature norm, relative overlap and the overall norm budget must therefore be distin-
+guished.
+14.3
+It is a matched readout, not always the optimal readout
+The choice w⊤
+i h corresponds to the tied decoder. A general linear estimator of xi from h need
+not use wi. For centered data with covariance C and additive code-noise covariance N, the
+29
+
+least-squares coefficient is
+a∗
+i = (WCW ⊤+ N)†WCei,
+(14.8)
+with the appropriate identifiability conditions or pseudoinverse convention. Its effective feature-
+space direction is W ⊤a∗
+i . The matched direction Gei therefore need not be the least-squares-
+optimal effective readout.
+14.3.1
+Derivation of the least-squares readout
+For centered x with covariance C, let h = Wx + ξ, where independent centered noise has
+covariance N. The scalar estimate is a⊤h. Expanding its mean squared error for target xi = e⊤
+i x
+gives
+Ji(a) = E(xi −a⊤h)2
+(14.9)
+= Cii −2a⊤WCei + a⊤(WCW ⊤+ N)a,
+(14.10)
+∇aJi(a) = −2WCei + 2(WCW ⊤+ N)a.
+(14.11)
+Thus the normal equations are (WCW ⊤+ N)a = WCei. For a nonsingular covariance matrix,
+invert it. For a singular covariance matrix, the pseudoinverse gives the minimum-Euclidean-norm
+solution. Solutions differing by a vector in the covariance nullspace make the same prediction
+almost surely. For uncentered data, add an intercept µi −a⊤Wµ rather than silently dropping
+the means.
+As a concrete example, take W = (1, 1), C = diag(4, 1) and scalar code-noise variance N = 1/2.
+The least-squares coefficient for x1 is a∗
+1 = 4/(4 + 1 + 1/2) = 8/11. The tied matched coefficient
+is w1 = 1. The former compensates for nuisance variance; the latter directly uses the storage
+direction. The least-squares optimum is an optimum for this squared-error task, not automatically
+for classification, adversarial robustness or a nonlinear decoder.
+14.3.2
+Computing a Moore–Penrose pseudoinverse
+For a matrix A ∈Rr×c, take an SVD A = UΣV ⊤. Replace each positive singular value sk by
+1/sk and leave zero singular values at zero, forming a c × r matrix Σ†. Then
+A† = V Σ†U⊤.
+(14.12)
+Zero singular values encode directions with no information; there is no finite inverse in those
+directions. In numerical work, values below a stated tolerance are treated as zero.
+For the rank-one square matrix A =
+ 
+1
+1
+1
+1
+!
+, the nonzero unit singular vector is (1, 1)⊤/
+√
+2
+and the singular value is 2. Therefore
+A† = 1
+4
+ 
+1
+1
+1
+1
+!
+.
+(14.13)
+For the full-row-rank rectangular matrix
+A =
+ 
+1
+0
+1
+0
+1
+0
+!
+,
+AA⊤= diag(2, 1),
+A† = A⊤(AA⊤)−1 =
+
+
+
+1/2
+0
+0
+1
+1/2
+0
+
+
+,
+(14.14)
+one has AA† = I2, while A†A is the orthogonal projector onto the row space, not I3. The four
+defining identities are AA†A = A, A†AA† = A†, (AA†)⊤= AA† and (A†A)⊤= A†A. These
+examples show both a singular square case and a genuinely rectangular case.
+30
+
+14.4
+Interpretation: perturbations, sign, frequency and scale
+Can an attacker move a perfectly isolated feature? Yes. If G = I, then Mi = 1, but
+changing xi changes its reading. An ability to move the score does not imply Mi < 1.
+Does a negative overlap count? In this unrestricted worst-case ℓ2 setting, Gij enters
+squared, because an adversary can choose the harmful sign. For ordinary nonnegative data and a
+threshold decoder, the sign can be beneficial or harmful depending on co-occurrence. The square
+loses that distinction.
+Does rarity determine Mi? No. At fixed G, Equation (14.4) has no activation probability
+in it. Rarity may affect what G learns, or statistical collision probabilities, but it cannot be
+inserted into this fixed-geometry identity by multiplication.
+Is Mi scale invariant? It is invariant under a common rescaling W 7→aW, since all entries
+of G scale by a2. Rescaling only one column changes its overlaps relative to its diagonal and
+generally changes Mi. The diagonal has not disappeared physically merely because it is hidden
+in normalized overlaps.
+14.5
+Other threat models
+For a code-space perturbation h 7→h + δh, the tied readout changes by w⊤
+i δh, so its worst-
+case swing is ε ∥wi∥2. For random feature noise with covariance Nx, the output variance is
+(Gei)⊤Nx(Gei). These differ from each other and from the feature-space worst-case swing.
+For a nonlinear observed-input map h = f(u), a local first-order calculation uses ∇u[w⊤
+i f(u)].
+To obtain a finite-radius guarantee, bound the remainder or a Jacobian norm over the entire
+perturbation region. A Jacobian at one point is a local sensitivity measurement, not automatically
+a certificate.
+Result status: Equations in this section are standard linear estimation and norm-duality facts.
+Their assumptions determine the interpretation of the margin. These identities alone do not
+establish a new learned-representation result.
+15
+Linear reconstruction risk and an isotropic comparison
+Objective: Put sparsity and importance into a risk correctly, and see why a purely linear model
+can miss the desired tradeoff.
+15.1
+The exact reconstruction risk
+Let x have mean µ and covariance C. Observe x + ϵ, where ϵ has mean zero, covariance N and
+is independent of x. Reconstruct ˆx = G(x + ϵ). Set D = diag(I1, . . . , In). Then
+L = E[(x −ˆx)⊤D(x −ˆx)]
+(15.1)
+= tr
+h
+D{(I −G)C(I −G)⊤+ GNG⊤}
+i
++
+D1/2(I −G)µ
+
+2
+2 .
+(15.2)
+To prove this, write the error as (I −G)(x −µ) + (I −G)µ −Gϵ. Cross terms involving centered
+independent variables vanish. Use E[z⊤Dz] = tr(D Cov z) + (Ez)⊤D(Ez).
+For independent spike-and-uniform features, µi = pi/2 and Cii = pi/3 −p2
+i /4. For binary
+features, µi = pi and Cii = pi(1 −pi).
+Importance weights multiply the error after these
+distributional quantities are specified. This is an exact place for rarity and importance to enter,
+unlike inserting p into Equation (14.4).
+31
+
+15.1.1
+From a squared error to a trace: every term
+Set z = (I −G)(x −µ) −Gϵ and d = (I −G)µ. Then x −ˆx = z + d, with Ez = 0. Expanding
+gives
+E(z + d)⊤D(z + d) = Ez⊤Dz + d⊤Dd,
+(15.3)
+because both cross terms contain Ez. The scalar quadratic satisfies z⊤Dz = tr(Dzz⊤), so
+Ez⊤Dz = tr(DEzz⊤) = tr(D Cov z).
+(15.4)
+Independence and centering give
+Cov z = (I −G)C(I −G)⊤+ GNG⊤.
+(15.5)
+There is a plus sign on the noise term because the two minus signs multiply. The mean term is
+d⊤Dd =
+D1/2(I −G)µ
+
+2
+2. This proves the reconstruction formula and identifies the information
+lost when a nonzero mean is omitted.
+For independent random variables A, B, Var(A + B) = Var A + Var B, but independence is
+a condition, not a consequence of their having identical marginal Gaussian distributions. In
+general,
+Var(A ± B) = Var A + Var B ± 2 Cov(A, B).
+(15.6)
+This follows by expanding ((A −EA) ± (B −EB))2 and taking expectations. It is also the scalar
+form of the covariance transformation used above.
+15.2
+An isotropic example with no distributional advantage
+Take centered, isotropic features C = vIn, isotropic input noise N = σ2
+xIn and equal importance.
+Let F be the Gram matrix of a unit-column tight frame, so
+diag F = 1,
+F 2 = n
+mF,
+rank F = m.
+(15.7)
+Use G = gF. Every feature sees aggregate squared overlap E = n/m −1, and its reconstruction
+risk is
+ℓ(g) = v(1 −g)2 + vg2E + σ2
+xg2(1 + E).
+(15.8)
+Differentiate, set the derivative to zero, and obtain
+g∗=
+v
+(v + σ2x)(1 + E).
+(15.9)
+The minimized total risk is
+L∗= nv −
+mv2
+v + σ2x
+.
+(15.10)
+Now compare a monosemantic linear representation retaining m coordinates, each with optimal
+shrinkage a = v/(v + σ2
+x), and dropping the rest. Each retained coordinate has risk vσ2
+x/(v + σ2
+x);
+each dropped coordinate costs v. Their sum is the same expression.
+This calculation shows that isotropic second moments with a linear decoder can erase the
+sparse, nonlinear mechanism of interest. The learned sparse-superposition phenomenon cannot
+be assumed to survive replacing its decoder by an arbitrary linear map.
+32
+
+15.2.1
+What a unit-column tight frame is
+A unit-column dictionary has ∥wi∥2 = 1 for every feature. It is tight when
+WW ⊤= n
+mIm.
+(15.11)
+This says that, taken together, the columns supply equal total squared projection in every latent
+direction. It does not say the columns are mutually orthogonal. Multiplying by W ⊤and W
+gives F 2 = (n/m)F for F = W ⊤W.
+An explicit example has three columns in two dimensions:
+W =
+ 
+1
+−1/2
+−1/2
+0
+√
+3/2
+−
+√
+3/2
+!
+,
+WW ⊤= 3
+2I2,
+F =
+
+
+
+1
+−1/2
+−1/2
+−1/2
+1
+−1/2
+−1/2
+−1/2
+1
+
+
+.
+(15.12)
+The columns have 120-degree separation. Each row has off-diagonal squared overlap 1/4 + 1/4 =
+1/2 = n/m −1. More generally,
+X
+j
+F 2
+ij = (F 2)ii = n
+mFii = n
+m,
+X
+j̸=i
+F 2
+ij = n
+m −1.
+(15.13)
+The diagonal contributes one, which must be subtracted before calling the remainder interference.
+15.2.2
+Why the two optimized linear risks agree
+Let E = n/m −1. Expanding the distributed risk gives
+ℓ(g) = v −2vg + (v + σ2
+x)(1 + E)g2.
+(15.14)
+Its derivative is −2v + 2(v + σ2
+x)(1 + E)g, and its second derivative is positive. Substitution of g∗
+therefore gives a global minimum within this one-parameter family:
+ℓ(g∗) = v −
+v2
+(v + σ2x)(1 + E),
+nℓ(g∗) = nv −
+mv2
+v + σ2x
+.
+(15.15)
+For an isolated retained feature, the risk at coefficient a is v(1 −a)2 + σ2
+xa2. The optimum is
+a∗= v/(v + σ2
+x) and its risk is vσ2
+x/(v + σ2
+x). Each omitted coordinate has risk v. Consequently,
+Lmono = m vσ2
+x
+v + σ2x
++ (n −m)v
+(15.16)
+= nv −
+mv2
+v + σ2x
+= Ldistributed.
+(15.17)
+The equality compares the full set of n targets, including omitted ones. If the dropped coordinates
+were excluded from evaluation, it would be a different comparison. For n = 3, m = 2, v = 0.2, σ2
+x =
+0.1, both risks equal 1/3.
+15.3
+Why nonlinear decoding is needed for the tradeoff
+Keep a threshold or ReLU decoder, retain ground-truth concepts, and include the risk of dropped
+features in the comparator. The following sections do this. The linear identities remain useful
+as sanity checks and baselines, but the nonlinear feature-detection model produces an actual
+sparsity-dependent tradeoff.
+Discussion question. Explain why two distributions with identical mean and covariance have
+identical risk in Equation (15.2), but can behave differently after a nonlinear decoder.
+33
+
+16
+Project 1: feature-detection risk for fixed geometry
+Objective: Derive an operational error probability that contains feature frequency, importance
+and geometry explicitly.
+16.1
+A matched feature detector
+Observe h = Wb + ξ with ξ ∼N(0, σ2Im). Read feature i with
+zi = w⊤
+i h = (Gb)i + ζi,
+ˆbi = 1{zi > θi}.
+(16.1)
+The vector ζ = W ⊤ξ is Gaussian with covariance σ2G. Its components are generally correlated.
+For a single detector, its marginal variance is σ2Gii.
+Let Φ denote the standard normal CDF. Conditional on a fixed binary state b, the error
+probability is
+ei(b) = Φ
+
+−(2bi −1)((Gb)i −θi)
+σ√Gii
+
+.
+(16.2)
+When bi = 1, failure means the Gaussian score lies below threshold. When bi = 0, failure means
+it lies above threshold. These are exactly the two signs in the formula.
+Proposition 16.1 (Exact finite-state weighted risk). For σ > 0 and all scored columns satisfying
+Gii > 0,
+R(G, θ; P) =
+n
+X
+i=1
+Ii
+X
+b∈{0,1}n
+P(b)ei(b).
+(16.3)
+For an initially independent distribution, P(b) = Q
+j pbj
+j (1 −pj)1−bj.
+Proof. Condition each indicator of error on b, use Equation (16.2), and apply linearity of
+expectation. No independence between detector errors is needed. Independence of input features
+is needed only for the product formula for P.
+16.1.1
+Deriving the conditional Gaussian error
+For a fixed state b, write ui = (Gb)i and sz,i = σ√Gii.
+The score is zi = ui + ζi, where
+ζi/sz,i ∼N(0, 1). If bi = 1, an error is a false negative:
+P(zi ≤θi | b) = Φ
+ 
+θi −ui
+sz,i
+!
+.
+(16.4)
+If bi = 0, an error is a false positive:
+P(zi > θi | b) = 1 −Φ
+ 
+θi −ui
+sz,i
+!
+= Φ
+ 
+ui −θi
+sz,i
+!
+.
+(16.5)
+The identity 1 −Φ(t) = Φ(−t) combines them using 2bi −1. Correlations between different ζi do
+not affect these marginal probabilities. They do matter when computing the joint law of several
+detector outputs.
+The unconditional error is ei = (1 −pi)ei,0 + piei,1, where ei,0 is the false-positive probability
+conditional on absence and ei,1 is the false-negative probability conditional on presence. For
+pi = 0.001, false-positive rate 0.01 and false-negative rate 0.1, the total error is 0.999(0.01) +
+0.001(0.1) = 0.01009, whereas recall is only 0.9 and precision is
+pi(1 −ei,1)
+pi(1 −ei,1) + (1 −pi)ei,0
+≃0.0826.
+(16.6)
+Thus low aggregate error does not establish a useful rare-concept detector. Frequency, recall,
+precision and the importance-weighted contribution answer distinct questions.
+34
+
+16.2
+Frequency, importance and capacity in the risk
+This is an exact model-based prediction, not a regression fit. For small n, enumerate states
+and calculate risk directly. For larger n, Monte Carlo estimates the same defined quantity.
+Importance decay enters as Ii = i−γ, frequency enters through P and capacity enters through
+the admissible rank-m geometry.
+A dropped feature requires separate treatment. A detector constantly predicting zero has
+error pi; a best constant detector has error min(pi, 1 −pi). The choice must be fixed when
+defining the comparison. We use the zero-output reconstruction convention below, appropriate
+to representing absence when a concept is omitted.
+16.3
+Rarity also affects the best decision threshold
+The midpoint thresholds used in the explicit pair calculation are fixed detector choices, not a claim
+of Bayes optimality for every prior. For an isolated scalar code h = ab + ξ with b ∼Bernoulli(p),
+0 < p < 1, and Gaussian noise variance σ2, compare the two posterior probabilities. Their
+log-likelihood ratio is
+log P(b = 1 | h)
+P(b = 0 | h) = log
+p
+1 −p + ah
+σ2 −a2
+2σ2 .
+(16.7)
+Under equal false-positive and false-negative costs, the optimal threshold is
+θBayes = a
+2 + σ2
+a log 1 −p
+p
+.
+(16.8)
+A rare feature therefore requires stronger evidence before it is declared present. This can reduce
+total error while increasing the fraction of true rare occurrences that are missed. Report recall
+as well as average error. Re-optimizing thresholds is an important ablation: the fixed-threshold
+phase boundary below is exact for its detector family, not a universal Bayes-risk boundary.
+16.3.1
+Deriving the prior-dependent threshold
+For h = ab + ξ with a > 0, the class-conditional densities are Gaussians centered at 0 and a.
+Bayes’ rule gives
+log P(b = 1 | h)
+P(b = 0 | h) = log
+p
+1 −p + log exp(−(h −a)2/(2σ2))
+exp(−h2/(2σ2))
+(16.9)
+= log
+p
+1 −p + h2 −(h −a)2
+2σ2
+(16.10)
+= log
+p
+1 −p + ah
+σ2 −a2
+2σ2 .
+(16.11)
+Declaring presence when the log ratio exceeds zero and dividing by a/σ2 gives the stated threshold.
+The logarithmic term vanishes at p = 1/2; it is positive for a rare feature and negative for a
+common one. If the readout is the matched score z = ah, its threshold is aθBayes, not the same
+numerical threshold as for h. Equal error costs are assumed; asymmetric false-positive and
+false-negative costs would supply an additional log cost ratio.
+16.4
+Defining the phase boundary
+Let Gmono and Gsuper be two admissible families with the same declared capacity and norm
+constraints. A population-optimal comparison would use
+R∗
+a(p, I, σ, m) =
+inf
+G∈Ga,θ∈Θa R(G, θ; P),
+a ∈{mono, super}.
+(16.12)
+35
+
+The boundary is R∗
+super = R∗
+mono. This definition is precise, but solving the optimization for all
+loads and importance schedules is not accomplished merely by writing it. We next solve a fixed,
+interpretable two-feature family exactly. Learned-model sweeps then test whether the predicted
+local mechanism appears in trained geometries.
+16.5
+Statistical risk and worst-case geometry are different quantities
+A state-averaged interference load cannot be substituted into an unrestricted worst-case alignment
+formula.
+An unrestricted attacker can perturb inactive coordinates as well as active ones.
+Activation frequency must enter through the stated input distribution or an explicitly restricted
+perturbation set. In Equation (16.3), activation probabilities enter the actual distribution of
+states, so a sparsity-dependent risk has a legitimate derivation.
+The phase variable is a defined comparison of prediction errors under specified resources and
+corruptions.
+Result status: The finite-state expectation is exact under the detector model. It is a starting
+formula, not yet a solved global optimization over all learned dictionaries.
+17
+Project 1: the superposed-pair tradeoff and phase diagram
+Objective: Derive a genuine boundary, including rare concepts, importance weights and matched
+resource controls.
+17.1
+Two features, one dimension
+Take independent binary features with probabilities p1, p2. A superposed code is
+h = a(b1 −b2) + ξ,
+ξ ∼N(0, σ2),
+a > 0.
+(17.1)
+Decode with ˆb1 = 1{h > a/2} and ˆb2 = 1{h < −a/2}. This corresponds to a tied matched score
+with an appropriate threshold. A monosemantic comparator stores feature 1 as hm = cb1 + ξ,
+predicts it at threshold c/2 and outputs zero for feature 2.
+The two encoders have the same latent dimension, but equal a = c = 1 gives different squared
+Frobenius norms: 2 versus 1. Therefore report two controls: equal stored-feature amplitude
+(a = c = 1), and equal total encoder energy (a = 1/
+√
+2, c = 1). This prevents an apparent
+robustness effect from being explained entirely by scale.
+17.2
+Enumerate the four states
+Write
+q = Φ
+
+−a
+2σ
+
+,
+q3 = Φ
+
+−3a
+2σ
+
+,
+qm = Φ
+
+−c
+2σ
+
+.
+(17.2)
+Let P00 = (1 −p1)(1 −p2), P10 = p1(1 −p2), P01 = (1 −p1)p2 and P11 = p1p2. Conditional
+weighted errors are
+State
+Clean code
+Expected weighted detection error
+00
+0
+(I1 + I2)q
+10
+a
+I1q + I2q3
+01
+−a
+I1q3 + I2q
+11
+0
+(I1 + I2)(1 −q)
+36
+
+For state 10, missing feature 1 needs ξ ≤−a/2, while falsely predicting feature 2 needs ξ < −3a/2.
+For state 11, both features should be present but the decoder can output at most one; each
+individual feature is missed with probability 1 −q. This is the nonlinear interference cost.
+Theorem 17.1 (Exact pair risk and boundary). The superposed pair has risk
+Rp = (I1 + I2)P00q + P10(I1q + I2q3)
++ P01(I1q3 + I2q) + P11(I1 + I2)(1 −q).
+(17.3)
+The two zero-output monosemantic comparators have risks
+Rm1 = I1qm + I2p2,
+Rm2 = I2qm + I1p1.
+(17.4)
+For these specified codes and decoders, superposition is preferable exactly when Rp
+<
+min(Rm1, Rm2). Equality defines the boundary.
+Proof. Average the four conditional risks using their probabilities. For a stored mono feature,
+false-positive and false-negative probabilities both equal qm. The omitted feature is wrong
+whenever it is active, giving the additional Ijpj term.
+17.2.1
+How each Gaussian tail enters the four-state table
+For state 00, h = ξ. A false activation of concept 1 requires ξ > a/2, while a false activation
+of concept 2 requires ξ < −a/2; each probability is q. For state 10, h = a + ξ. Missing concept
+1 requires ξ ≤−a/2, with probability q, while falsely detecting concept 2 requires ξ < −3a/2,
+with probability q3. The state 01 has the reversed roles.
+For state 11, the noiseless contributions cancel and h = ξ. Concept 1 is missed unless ξ > a/2,
+hence its miss probability is 1 −q. Concept 2 is missed unless ξ < −a/2, also with probability
+1 −q. The two errors need not be independent: linearity of expectation permits summing their
+weighted marginal probabilities. The weighted count may exceed one because it counts errors on
+two targets, not the probability of a single binary failure event.
+The four input probabilities sum to one. Multiplying each conditional weighted error by its
+state probability and adding is the law of total expectation, which proves the pair-risk formula
+without assuming independent decoder outputs.
+17.3
+The clean boundary in closed form
+As σ →0, q, q3, qm →0. Thus
+Rp = (I1 + I2)p1p2,
+Rm1 = I2p2.
+(17.5)
+For p2 > 0, the superposed pair beats the comparator retaining feature 1 precisely when
+p1 <
+I2
+I1 + I2
+.
+(17.6)
+For equal frequencies and importances, this is p < 1/2, or s > 1/2. The mathematical mechanism
+is explicit: the cost of losing an omitted feature scales with one activation probability, while
+collision costs scale with a joint activation probability.
+If feature 1 is more important, increasing I1/I2 makes its protection more valuable and shrinks
+the region where sharing its direction is worthwhile. For an importance schedule Ij = j−γ,
+pairing features i and j gives the corresponding threshold pi < j−γ/(i−γ + j−γ) against retaining
+i. This is a derived importance dependence, with no assumption that rare concepts automatically
+receive isolated directions.
+37
+
+17.3.1
+Comparing against the better monosemantic allocation
+For p1, p2 > 0 in the noiseless detector, beating the comparator retaining feature 1 requires
+p1 < I2/(I1+I2); beating the comparator retaining feature 2 requires p2 < I1/(I1+I2). Therefore
+Rp < min(Rm1, Rm2)
+⇐⇒
+p1 <
+I2
+I1 + I2
+and p2 <
+I1
+I1 + I2
+.
+(17.7)
+For equal frequencies p and arbitrary weights, this becomes p < min(I1, I2)/(I1 + I2). Equal
+weights yield p < 1/2. If one feature is much more important, a mono code protecting it becomes
+preferable over a larger part of the frequency range. At pi = 0, the cancellation used in deriving
+the strict conditions is not available; direct risks determine ties and preferences.
+17.4
+Noise moves the boundary
+Equation (17.3) gives an exact boundary in terms of normal CDFs. It need not reduce to a short
+elementary polynomial to be analytic. Numerical root finding on a proved expression is different
+from fitting an unknown law to data.
+At p1 = p2 = 0.2, equal importances and equal stored-feature amplitude, the risk crossing is
+σ ≃0.658350. Under equal total encoder energy, it occurs at σ ≃0.279939. Both comparisons
+have a tradeoff; its position depends strongly on the resource convention. This is exactly why
+that convention belongs in the theorem.
+17.4.1
+Reproducing and reading the phase diagram
+The following complete Python program evaluates the proved risk functions directly.
+It
+does not train a network, fit a curve to experimental outcomes or perform symbolic re-
+gression.
+Install NumPy, SciPy and Matplotlib in a Python environment and run python
+supplement/phase_diagram.py from the source project. The program saves figures/pair_
+phase_controls.png.
+Listing 1: Exact evaluation of the two-feature risk and its zero-gap contour.
+"""Exact␣pair-risk␣phase␣diagram;␣run␣with␣NumPy,␣SciPy␣and␣Matplotlib."""
+from pathlib import Path
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.special import ndtr
+from scipy.optimize import brentq
+def pair_risks(p1, p2, I1, I2, sigma, a, c=1.0):
+# sigma is positive here. At sigma=0 use the clean formulas.
+q = ndtr(-a / (2.0 * sigma))
+q3 = ndtr(-3.0 * a / (2.0 * sigma))
+qm = ndtr(-c / (2.0 * sigma))
+P00 = (1.0 - p1) * (1.0 - p2)
+P10 = p1 * (1.0 - p2)
+P01 = (1.0 - p1) * p2
+P11 = p1 * p2
+superposed = (
+(I1 + I2) * P00 * q
++ P10 * (I1 * q + I2 * q3)
++ P01 * (I1 * q3 + I2 * q)
++ P11 * (I1 + I2) * (1.0 - q)
+)
+38
+
+mono1 = I1 * qm + I2 * p2
+mono2 = I2 * qm + I1 * p1
+return superposed, np.minimum(mono1, mono2)
+def risk_gap(p, sigma, a):
+# Equal frequencies and equal importance in this figure.
+superposed, mono = pair_risks(p, p, 1.0, 1.0, sigma, a)
+return superposed - mono
+def main():
+output = Path(__file__).resolve().parents[1] / "figures"
+output.mkdir(parents=True, exist_ok=True)
+probabilities = np.linspace(0.01, 0.80, 180)
+noise_levels = np.linspace(0.01, 1.50, 200)
+P, SIGMA = np.meshgrid(probabilities, noise_levels)
+controls = [
+("Equal␣stored-feature␣amplitude", 1.0),
+("Equal␣total␣encoder␣energy", 1.0 / np.sqrt(2.0)),
+]
+fig, axes = plt.subplots(
+1, 2, figsize=(10.4, 4.1), constrained_layout=True
+)
+for ax, (title, amplitude) in zip(axes, controls):
+gap = risk_gap(P, SIGMA, amplitude)
+image = ax.pcolormesh(
+P, SIGMA, gap, cmap="RdBu_r", shading="auto",
+vmin=-0.30, vmax=0.30,
+)
+ax.contour(
+P, SIGMA, gap, levels=[0.0], colors="black",
+linewidths=1.6,
+)
+ax.set(
+xlabel="Activation␣probability␣p␣=␣1␣-␣s",
+ylabel="Code-noise␣standard␣deviation␣sigma",
+title=title,
+)
+crossing = brentq(
+lambda noise: float(risk_gap(0.20, noise, amplitude)),
+0.05, 1.50,
+)
+ax.plot(0.20, crossing, "ko", markersize=4)
+print(f"{title}:␣p=0.20␣crossing␣sigma={crossing:.9f}")
+fig.colorbar(
+image, ax=axes,
+label="Risk(superposed)␣-␣risk(best␣mono);␣blue␣<␣0",
+)
+fig.savefig(output / "pair_phase_controls.png", dpi=220)
+plt.close(fig)
+if __name__ == "__main__":
+main()
+39
+
+Inputs and outputs of pair_risks.
+The inputs p1, p2 are presence probabilities; I1, I2 are
+penalties; σ is Gaussian code-noise standard deviation; and a, c are the pair and mono encoder
+amplitudes. ndtr is the standard normal CDF Φ. The variables q, q3 and qm implement the
+three tail probabilities. The next four variables implement the state probabilities. superposed is
+their weighted sum. np.minimum(mono1, mono2) selects the better of the two mono allocations
+rather than choosing one after seeing a preferred result.
+Constructing
+the
+grid.
+np.meshgrid
+creates
+arrays
+containing
+every
+activation-
+probability/noise pair on the specified grid. Broadcasting evaluates the same closed-form risk
+at all points. All noise levels are positive; the clean limit is derived analytically rather than
+dividing by zero. The plot fixes n = 2, m = 1, equal frequencies and equal weights. It is a slice of
+the research tradeoff, not a solved phase diagram for arbitrary feature load or arbitrary learned
+networks.
+Resource controls.
+In the left panel, a = c = 1: every stored concept has the same amplitude,
+but the pair encoder has energy ∥W∥2
+F = 2, compared with mono energy 1. In the right panel,
+a = 1/
+√
+2, c = 1: both encoder energies equal 1. The pair still represents two potential concepts,
+but each uses a weaker direction. The difference between panels shows how strongly the conclusion
+depends on a stated norm budget.
+Colors and contour.
+The color is ∆R = Rp −min(Rm1, Rm2). Blue means the superposed
+pair makes fewer importance-weighted feature errors; red means the specified mono family makes
+fewer. The black curve is ∆R = 0. Saturated colors show values clipped by the chosen color
+scale, not clipped risks. The white transition is equality of two risks, not a boundary between
+zero error and nonzero error. Both representations can fail on either side.
+A reproducible numerical slice.
+The dot at p = 0.2 marks a root found by brentq, which
+solves the already-derived equality rather than fitting an empirical law. The crossings are
+σ ≃0.658349502 under equal amplitude and σ ≃0.279938913 under equal total energy. Below
+the relevant crossing, retaining both concepts outweighs collision and noise costs for this slice;
+above it, protecting one direction has lower weighted risk. The horizontal coordinate is activation
+probability p = 1 −s, so moving right makes concepts more frequent, not sparser.
+17.4.2
+Which phase diagram is established by this calculation?
+The pair calculation establishes a boundary for two specified codes and detector rules. A learned-
+geometry diagram asks a stronger question: which geometry is selected by the training objective
+as p, n/m and importance decay vary, and whether its held-out risk crosses a capacity-controlled
+comparator. That question requires the geometry analysis and learned-toy experiments; the
+analytic plot gives a precise mechanism to test rather than a universal conclusion.
+17.5
+A reconstruction version, to show task dependence
+Now let xi = biUi with uniform amplitudes and noiseless h = x1 −x2. Decode with ReLUs.
+When only one feature is active, reconstruction is exact. When both are active, each coordinate’s
+error magnitude is min(U1, U2), and
+E[min(U1, U2)2] =
+Z 1
+0
+2tP(min(U1, U2) > t) dt = 1
+6.
+(17.8)
+40
+
+Figure 17.1: Exact two-feature phase diagrams under equal stored-feature amplitude and equal
+total encoder energy. Gaussian code noise is ordinary statistical corruption; the figure is not an
+adversarial-attack guarantee. The black equality contour is evaluated from the analytic risks for
+fixed codes and thresholds.
+Therefore Lp = (I1+I2)p1p2/6, while dropping feature 2 costs Lm1 = I2p2/3. The clean threshold
+becomes p1 < 2I2/(I1 + I2), different from the binary detection threshold. A universal boundary
+independent of task would miss this difference.
+17.5.1
+Derivation of the continuous-amplitude collision cost
+If both amplitudes are positive and x1 ≥x2, the reconstruction is (x1 −x2, 0), so both coordinate
+errors have magnitude x2. For x2 > x1, both have magnitude x1. The weighted squared error is
+therefore (I1 + I2) min(x1, x2)2 only on simultaneous activation. Conditional on that event, the
+amplitudes are independent uniform variables. Their minimum has survival probability (1 −t)2
+for 0 ≤t ≤1, hence
+E min(U1, U2)2 =
+Z 1
+0
+2t(1 −t)2 dt
+(17.9)
+= 2
+1
+2 −2
+3 + 1
+4
+
+= 1
+6.
+(17.10)
+The mono reconstruction of a dropped feature has squared error x2
+2 and expectation p2/3. This
+gives the distinct reconstruction boundary. For equal frequencies and weights it favors the pair
+for every 0 < p < 1 in the noiseless setting, whereas binary detection has crossing p = 1/2. The
+difference is caused by the target and loss, not by a contradiction in the geometry.
+17.6
+Scope of the solved pair and the learned-geometry question
+This section solves a small, explicit family of codes and decoders.
+It does not prove that
+those codes globally minimize the learned autoencoder objective at every parameter setting.
+Experiments should compare analytic predictions with measured trained geometries, and test
+whether optimization changes the boundary. The solved pair is an interpretable unit from which
+larger constructions and hypotheses can be built.
+Result status: The risk formulas and pair boundaries are exact under their stated model. Their
+status as a novel contribution, and their transfer to learned networks, are not established by this
+derivation alone.
+41
+
+18
+Project 1: load, interference and a general bound
+Objective: Connect arbitrary feature load to an error bound without replacing a worst-case norm
+by an average active count.
+18.1
+Centering interference
+For independent input features, choose
+θi =
+X
+j̸=i
+Gijpj + Gii
+2 .
+(18.1)
+Then the distance from the conditional mean to threshold is Gii/2 for either value of bi. Define
+Ti =
+X
+j̸=i
+Gij(bj −pj),
+Vi =
+X
+j̸=i
+G2
+ijpj(1 −pj),
+Bi = max
+j̸=i |Gij|.
+(18.2)
+The nuisance fluctuation is Ti + ζi, whose variance proxy is Vi + σ2Gii. Activation probabilities
+enter this variance because the nuisance activations are random; the fixed-geometry alignment
+score Mi has a different definition.
+Theorem 18.1 (A sufficient feature-error bound). For independent Bernoulli features and
+independent Gaussian code noise, the detector above satisfies
+ei ≤exp
+"
+−
+G2
+ii
+8{Vi + σ2Gii + BiGii/6}
+#
+.
+(18.3)
+The bound applies separately to each class-conditional error and hence to their mixture. Degenerate
+zero-variance cases are interpreted by their deterministic limit.
+Proof. Each centered summand Gij(bj −pj) has absolute magnitude at most Bi and total variance
+Vi. Its independent sum obeys the Bernstein exponential-moment bound with variance parameter
+Vi and scale Bi/3. Adding independent Gaussian ζi adds σ2Gii to the variance parameter. The
+exponential-moment calculation below gives either one-sided tail bound
+P(±(Ti + ζi) ≥t) ≤exp
+"
+−
+t2
+2(Vi + σ2Gii + Bit/3)
+#
+.
+(18.4)
+Set t = Gii/2. The class-0 error uses the upper tail and the class-1 error the lower tail. Each is
+bounded by the same expression, so averaging them adds no factor two.
+18.1.1
+The conditional means and the fluctuation variance
+Let di = Gii > 0 and ui = P
+j̸=i Gijpj. Independence of the input features gives
+E(zi | bi = 0) = ui,
+E(zi | bi = 1) = ui + di.
+(18.5)
+The midpoint threshold is ui + di/2. Subtracting it from the score yields
+zi −θi = di(bi −1/2) +
+X
+j̸=i
+Gij(bj −pj)
+|
+{z
+}
+Ti
++ζi.
+(18.6)
+For bi = 0, the detector fails when Ti + ζi > di/2; for bi = 1, it fails when Ti + ζi ≤−di/2. This
+explicitly identifies the two one-sided tail events.
+42
+
+Every summand Xj = Gij(bj −pj) has mean zero, variance G2
+ijpj(1 −pj) and absolute value
+at most |Gij| ≤Bi. Since the summands are independent,
+Var(Ti) =
+X
+j̸=i
+G2
+ijpj(1 −pj) = Vi.
+(18.7)
+The projected noise has variance Var(ζi) = σ2di. Thus the total variance is vi = Vi + σ2di. The
+target’s own frequency pi controls the mixture of class-conditional errors; the other frequencies
+control this nuisance variance.
+18.1.2
+Bernstein’s exponential-moment bound: the origin of Bi/3
+For a centered scalar X with |X| ≤B and variance v, expand the moment-generating function:
+EeλX = 1 +
+∞
+X
+k=2
+λkEXk
+k!
+.
+(18.8)
+The first-order term vanishes because EX = 0. For k ≥2, E|X|k ≤Bk−2EX2 = Bk−2v. The
+factorial inequality
+k! ≥2 3k−2
+(18.9)
+holds at k = 2 and remains true by induction because the next multiplier is k + 1 ≥3. Therefore,
+when |λ|B < 3,
+EeλX ≤1 + vλ2
+2
+∞
+X
+k=2
+|λ|B
+3
+k−2
+(18.10)
+= 1 +
+vλ2
+2(1 −|λ|B/3)
+(18.11)
+≤exp
+ 
+vλ2
+2(1 −|λ|B/3)
+!
+.
+(18.12)
+The denominator comes from an ordinary geometric series; the constant 1/3 comes from the
+factorial bound. Multiplying the MGFs of the independent summands, or adding their logarithms,
+gives
+log EeλTi ≤
+λ2Vi
+2(1 −|λ|Bi/3).
+(18.13)
+The same calculation works for −Ti because it uses an absolute bound.
+18.1.3
+Adding the Gaussian MGF without losing the inequality direction
+A centered Gaussian with variance σ2di has MGF Eeλζi = exp(λ2σ2di/2), obtained by completing
+the square in its density. Independence gives
+log Eeλ(Ti+ζi) ≤
+λ2Vi
+2(1 −|λ|Bi/3) + λ2σ2di
+2
+(18.14)
+≤λ2(Vi + σ2di)
+2(1 −|λ|Bi/3).
+(18.15)
+The second inequality is valid because 0 < 1 −|λ|Bi/3 ≤1: putting the Gaussian term over
+this smaller positive denominator makes the upper bound larger. It does not change the actual
+variance vi. The denominator tends to one as λ →0, so the bound retains the correct small-λ
+variance scale rather than replacing it by an infinite or arbitrary constant.
+43
+
+18.1.4
+Chernoff’s inequality and a specific admissible choice
+For t > 0 and λ > 0, Markov’s inequality applied to eλ(Ti+ζi) gives
+P(Ti + ζi ≥t) ≤exp
+ 
+−λt +
+viλ2
+2(1 −ciλ)
+!
+,
+ci = Bi/3,
+ciλ < 1.
+(18.16)
+Choose λ = t/(vi + cit) when vi > 0. This is admissible because ciλ = cit/(vi + cit) < 1. Also
+1 −ciλ = vi/(vi + cit), so substitution gives
+−λt +
+viλ2
+2(1 −ciλ) = −
+t2
+vi + cit +
+t2
+2(vi + cit)
+(18.17)
+= −
+t2
+2(vi + cit).
+(18.18)
+The same upper bound holds for the negative tail. This proves the rational Bernstein tail
+expression by an explicit feasible choice; it need not be the exact minimizing λ.
+18.1.5
+The exact optimizer of this MGF upper bound
+For ci > 0, vi > 0, differentiating the displayed exponent gives the stationary condition
+t = viλ(2 −ciλ)
+2(1 −ciλ)2 .
+(18.19)
+Writing u = 1 −ciλ solves it as
+λ∗= 1
+ci
+
+1 −
+r
+vi
+vi + 2cit
+
+.
+(18.20)
+The resulting bound is
+P(Ti + ζi ≥t) ≤exp
+"
+−vi
+c2
+i
+ 
+1 + cit
+vi
+−
+s
+1 + 2cit
+vi
+!#
+.
+(18.21)
+It is at least as sharp as the feasible-choice bound because it minimizes the same upper-bound
+exponent. Neither bound is the exact tail probability. For vi = ci = t = 1, the exponents are
+−(2 −
+√
+3) and −1/4; their difference is about 0.01795. Its size depends on the parameters and
+is not universally negligible. The rational expression is useful because its feature-error condition
+can be rearranged transparently.
+18.1.6
+From the tail bound to feature error: why Bi/6 appears
+Set t = di/2. The tail denominator contains Bit/3 = Bidi/6. The squared numerator is t2 = d2
+i /4,
+giving
+Ui = exp
+"
+−
+d2
+i
+8(Vi + σ2di + Bidi/6)
+#
+.
+(18.22)
+Each conditional error is bounded by Ui. Therefore
+ei = (1 −pi)ei,0 + piei,1 ≤(1 −pi)Ui + piUi = Ui.
+(18.23)
+There is no factor two: this is a weighted average of two class-conditional errors, not a union
+of both tails for the same class. If vi = 0, then the fluctuation is zero almost surely, and the
+deterministic positive-margin detector has no error.
+44
+
+18.1.7
+Meaning and usefulness of a sufficient region
+For 0 < δ < 1, demanding Ui ≤δ, taking logarithms and rearranging yields
+Vi + σ2di + Bidi/6 ≤
+d2
+i
+8 log(1/δ).
+(18.24)
+When this inequality holds, ei ≤δ follows under the stated assumptions. When it fails, the bound
+has not certified the target; the true detector may still meet it. For an isolated unit-norm feature
+with σ = 0.2, the exact midpoint error is Φ(−2.5) ≃0.00621, whereas the Gaussian Chernoff
+bound is exp(−3.125) ≃0.04394. The bound certifies a 5-percent target but not a 1-percent
+target, even though the exact error meets both. This example shows both finite usefulness and
+conservatism.
+18.2
+A robust region with an operational threshold
+For a target error ei ≤δ, a sufficient condition is
+Vi + σ2Gii + BiGii
+6
+≤
+G2
+ii
+8 log(1/δ).
+(18.25)
+This defines a guaranteed region for the specified detector. It is a sufficient bound, not an “if
+and only if” boundary: failure of the inequality does not imply failure of the detector. The exact
+pair calculation is sharper in its small setting; the bound covers many features.
+18.3
+How load enters
+For unit columns, define mutual coherence µ = maxi̸=j |Gij|. Then Gii = 1, Bi ≤µ and
+Vi ≤µ2 X
+j̸=i
+pj(1 −pj).
+(18.26)
+For independent random unit directions in m dimensions, EG2
+ij = 1/m, so
+EVi = 1
+m
+X
+j̸=i
+pj(1 −pj).
+(18.27)
+For equal activation probability this is (n −1)p(1 −p)/m. This is an expectation over random
+dictionaries, not a universal identity for a trained dictionary or a high-probability guarantee.
+A concentration argument or direct measured geometry is needed before using it in a theorem
+about a particular realization.
+18.4
+A capacity lower bound
+For any unit-column dictionary, tr G = n and rank G ≤m. Cauchy–Schwarz applied to its
+nonzero eigenvalues gives
+tr(G2) ≥(tr G)2
+m
+= n2
+m .
+(18.28)
+Subtracting the n diagonal squares and dividing by n yields
+1
+n
+X
+i
+X
+j̸=i
+G2
+ij ≥n
+m −1.
+(18.29)
+This is the familiar frame-potential/Welch-type constraint. It proves unavoidable average overlap
+when all features have unit norm and n > m. It does not upper-bound the worst row, force every
+pair to overlap, or determine where the optimizer places interference.
+45
+
+18.4.1
+Deriving the random-dictionary expectation
+Condition on a unit direction wi and rotate coordinates so that it is the first basis vector. An
+independent uniformly random unit direction wj then has w⊤
+i wj = (wj)1. Rotational symmetry
+makes every coordinate have the same second moment. Since Pm
+k=1(wj)2
+k = 1,
+mE(wj)2
+1 = 1,
+EG2
+ij = 1
+m.
+(18.30)
+Linearity of expectation gives EW Vi = m−1 P
+j̸=i pj(1 −pj) without requiring squared overlaps
+within a row to be independent. The expectation is over dictionaries, not over the already-
+fixed test geometry. In particular, substituting EW Vi into an exponential error bound does not
+produce a guarantee for each dictionary; expectation and a nonlinear function cannot generally
+be interchanged.
+For a deliberately conservative random-dictionary statement, Markov’s inequality gives
+PW {Vi > EW Vi/δG} ≤δG. A sharper concentration analysis may improve this, and a trained
+dictionary requires analysis of its training-induced geometry. Directly measuring Vi uses the
+conditional bound without that additional random-dictionary step.
+18.4.2
+Deriving the capacity constraint from the spectrum
+Let the r nonzero eigenvalues of G be λ1, . . . , λr. Unit columns imply tr G = n, and r ≤m.
+Cauchy–Schwarz gives
+n2 =
+ r
+X
+k=1
+λk
+!2
+≤r
+r
+X
+k=1
+λ2
+k = r tr(G2) ≤m tr(G2).
+(18.31)
+Because G is symmetric, tr(G2) = P
+i,j G2
+ij. The n diagonal entries each contribute one, so
+subtracting them gives the average off-diagonal bound. Equality at r = m requires equal nonzero
+eigenvalues n/m, the tight-frame case. A lower bound on average squared overlap is not an upper
+bound on any row’s error or a rule fixing which concepts interfere.
+18.4.3
+Squared overlap and the largest interference term
+The sum P
+j̸=i G2
+ij measures total squared overlap; it is not itself a maximum or a tail probability.
+For equal nuisance activation rates, one overlap a and four overlaps a/2 give the same Vi but
+different Bi. Their interference distributions differ because one permits a larger individual jump.
+The Bernstein expression keeps both quantities: the variance controls aggregate fluctuations and
+Bi controls a bound on individual jumps. Actual rare-event probabilities also depend on the
+joint activation law.
+18.5
+Importance, correlations and learned geometry
+Importance enters total risk as P
+i Iiei, and also influences W when the training objective is
+importance-weighted. To predict a boundary purely from p, n/m, γ, one must characterize the
+learned geometry as a function of these controls. This remains a substantive theorem target;
+measuring G and predicting risk conditional on it is a valuable intermediate test, not the same
+final claim.
+If features are correlated, use conditional distributions given bi and the nuisance covariance. In
+general, a single centered threshold no longer gives symmetric margins. Under recursive training,
+initially independent features can become dependent after one generation. Do not keep applying
+the independent-Bernoulli bound without checking its conditions.
+46
+
+Block-diagonal dictionaries containing isolated columns and antipodal pairs provide an analyt-
+ically tractable family for loads from one toward two, with risk summed across blocks. They do
+not cover arbitrary load above two. General state enumeration and the interference bound are
+the tools for that extension.
+Discussion question. Explain the difference between an exact boundary, a sufficient region, an
+average random-dictionary prediction and a theorem about learned geometry.
+18.5.1
+Correlated concepts: use conditional means and covariances
+For correlated input features, let pj|c = P(bj = 1 | bi = c) and let C−i|c be the covariance matrix
+of the remaining features conditional on bi = c. Then
+mi,c = E(zi | bi = c) = Giic +
+X
+j̸=i
+Gijpj|c,
+(18.32)
+vi,c = Gi,−iC−i|cG⊤
+i,−i + σ2Gii.
+(18.33)
+The covariance term contains both diagonal conditional variances and off-diagonal conditional
+covariances. Using unconditional variances in the first term and conditional covariances in the
+second would mix two different distributions. The separation of the class means is
+mi,1 −mi,0 = Gii +
+X
+j̸=i
+Gij(pj|1 −pj|0).
+(18.34)
+It need not equal Gii. Conditional nuisance distributions need not be Gaussian, so these first
+two moments alone do not determine the exact error. The finite-state risk remains available for
+a specified joint law, while an independence-based Bernstein argument needs replacement or
+additional assumptions.
+18.5.2
+A tractable family for feature load between one and two
+Use m mutually orthogonal latent coordinates. Let k coordinates each store an antipodal pair,
+and let the other m −k coordinates store an isolated feature. The total number of features is
+n = (m −k) + 2k = m + k, so n/m = 1 + k/m ∈[1, 2]. The Gram matrix is block diagonal.
+Weighted detection risk adds the isolated-feature risks and the pair risks:
+R =
+X
+ℓ∈S
+IℓΦ
+
+−cℓ
+2σ
+
++
+X
+(i,j)∈P
+Rp(pi, pj, Ii, Ij, σ; aij),
+(18.35)
+where S is the isolated set and P is the paired set. A total-energy constraint takes the explicit
+form P
+ℓ∈S c2
+ℓ+ 2 P
+(i,j)∈P a2
+ij = Eenc. Changing the number of pairs without controlling this
+energy would confound feature load with signal amplitude. This block family gives exact load-
+dependent comparisons, but it does not cover loads greater than two or prove global optimality
+among all dictionaries.
+18.5.3
+What must be solved to obtain a learned phase diagram
+For a tied nonlinear autoencoder, one possible population objective is
+L(W, βdec; P, I) = Eb∼P
+X
+i
+Ii
+h
+bi −ReLU((W ⊤Wb)i + βdec,i)
+i2 ,
+(18.36)
+subject to stated norm and capacity constraints. Here βdec,i is a learned decoder bias, distinct
+from the Gram diagonal di = Gii. A smooth-point derivative is
+∂L
+∂ω = −2
+X
+i
+IiE
+"
+(bi −ˆbi)∂ˆbi
+∂ω
+#
+,
+(18.37)
+47
+
+for an encoder or decoder parameter ω. Importance changes the optimization force, not merely
+the final evaluation weight. Frequency changes the sampling law inside the expectation. A
+closed-form boundary expressed only in (p, n/m, γ) requires a characterization of the selected
+geometry, its optimization assumptions and its decoder, rather than substituting an average load
+for the measured overlaps.
+The immediate test is conditional: given a trained W, does the exact risk or bound predict
+held-out feature errors under a specified corruption? The stronger test is structural: do changes
+in sparsity, load and importance select geometries with the predicted risk tradeoff? These retain
+the monosemanticity motivation of the source paper while making the mathematical contribution
+and empirical requirements explicit.
+A
+Notation and source map
+Symbol
+Meaning in these notes
+u
+Observed image or other raw input.
+r = fθ(u)
+Learned representation of an observed input.
+x ∈Rn
+Ground-truth toy features, distinct from observed pixels.
+n, m
+Number of toy features and compressed dimension.
+W, wi, G
+Encoder, its ith column, and W ⊤W.
+S, p
+Inactive probability and active probability, with p = 1 −S.
+Ii
+Weight assigned to error on feature i.
+νm, νp
+Scalar mono and poly representations in the paper’s two-feature
+analysis.
+πc
+True class prior.
+µc, vc, ac
+Conditional mean, variance and second moment.
+η, λ
+Label flip probability and Gaussian input-noise standard deviation.
+J
+The paper’s conditional-moment separability score.
+T
+Contrastive temperature; unrelated to recursive generations.
+bi, pi, si
+Binary concept presence, its activation probability, and 1 −pi.
+θi
+Feature-detection threshold in the matched score.
+Φ, ϕ
+Standard Gaussian CDF and density.
+Mi
+Gram-row alignment, defined for Gii > 0.
+β, c
+Effective linear readout and scalar decision threshold.
+N, Nx
+Noise covariances in the specified code or feature space.
+a, c in the pair
+model
+Superposed and mono encoder amplitudes.
+q, q3, qm
+Gaussian error tails for the pair and mono codes.
+Ti, Vi, Bi
+Centered nuisance interference, its variance and a largest-term bound.
+di, vi, ci in the
+tail proof
+Gii, Vi + σ2Gii and Bi/3.
+δ, δG
+Desired error upper bound and random-geometry failure probability.
+βdec,i
+Learned decoder bias, distinct from a Gram diagonal.
+The paper’s main argument is covered in Sections 1–6. The research extension occupies
+Sections 13–18. The full two-feature moment calculation and corruption analysis are in Sections
+7–9. Later theoretical and experimental additions are in Section 10. Implementation details and
+the distinction between paper reproduction and independent checks are in Section 11. The notes
+do not reproduce every bibliography entry or every plotted individual data point; they cover
+every substantive method, experiment family and theoretical component of the two versions.
+48
+
+B
+References
+1. Zhang et al. Beyond Interpretability: The Gains of Feature Monosemanticity on Model
+Robustness. Linked arXiv version: https://arxiv.org/abs/2410.21331; version-specific
+text: https://arxiv.org/html/2410.21331v1.
+2. ICLR 2025 proceedings version, 33 pages: https://proceedings.iclr.cc/paper_files/
+paper/2025/file/11822e84689e631615199db3b75cd0e4-Paper-Conference.pdf.
+3. Official implementation: https://github.com/PKU-ML/Monosemanticity-Robustness.
+Repository tree inspected at commit d8519e994d8e0ccc98ad6d55978c58d70c72421e.
+4. Elhage et al.
+Toy Models of Superposition (2022).
+https://www.anthropic.com/
+research/toy-models-of-superposition.
+5. Bricken et al.
+Towards Monosemanticity:
+Decomposing Language Models With
+Dictionary
+Learning
+(2023).
+https://www.transformer-circuits.pub/2023/
+monosemantic-features/index.html.
+49

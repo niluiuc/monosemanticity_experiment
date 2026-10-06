@@ -1,0 +1,1341 @@
+
+
+===== PDF PAGE 1 =====
+arXiv:0804.1839v1  [cs.IT]  11 Apr 2008
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+1
+Necessary and Sufﬁcient Conditions on
+Sparsity Pattern Recovery
+Alyson K. Fletcher, Member, IEEE, Sundeep Rangan,
+and Vivek K Goyal, Senior Member, IEEE
+Abstract
+The problem of detecting the sparsity pattern of a k-sparse vector in Rn from m random noisy measurements is
+of interest in many areas such as system identiﬁcation, denoising, pattern recognition, and compressed sensing. This
+paper addresses the scaling of the number of measurements m, with signal dimension n and sparsity-level nonzeros
+k, for asymptotically-reliable detection. We show a necessary condition for perfect recovery at any given SNR for
+all algorithms, regardless of complexity, is m = Ω(k log(n −k)) measurements. Conversely, it is shown that this
+scaling of Ω(k log(n −k)) measurements is sufﬁcient for a remarkably simple “maximum correlation” estimator.
+Hence this scaling is optimal and does not require more sophisticated techniques such as lasso or matching pursuit.
+The constants for both the necessary and sufﬁcient conditions are precisely deﬁned in terms of the minimum-to-
+average ratio of the nonzero components and the SNR. The necessary condition improves upon previous results
+for maximum likelihood estimation. For lasso, it also provides a necessary condition at any SNR and for low SNR
+improves upon previous work. The sufﬁcient condition provides the ﬁrst asymptotically-reliable detection guarantee
+at ﬁnite SNR.
+Index Terms
+compressed sensing, convex optimization, lasso, maximum likelihood estimation, random matrices, random
+projections, regression, sparse approximation, sparsity, subset selection
+I. INTRODUCTION
+Suppose one is given an observation y ∈Rm that was generated through y = Ax+d, where A ∈Rm×n
+is known and d ∈Rm is an additive noise vector with a known distribution. It may be desirable for an
+estimate of x to have a small number of nonzero components. An intuitive example is when one wants
+to choose a small subset from a large number of possibly-related factors that linearly inﬂuence a vector
+of observed data. Each factor corresponds to a column of A, and one wishes to ﬁnd a small subset of
+columns with which to form a linear combination that closely matches the observed data y. This is the
+subset selection problem in (linear) regression [1], and it gives no reason to penalize large values for the
+nonzero components.
+In this paper, we assume that the true signal x has k nonzero entries and that k is known when estimating
+x from y. We are concerned with establishing necessary and sufﬁcient conditions for the recovery of the
+positions of the nonzero entries of x, which we call the sparsity pattern. Once the sparsity pattern is
+correct, n −k columns of A can be ignored and the stability of the solution is well understood; however,
+we do not study any other performance criterion.
+This work was supported in part by a University of California President’s Postdoctoral Fellowship, NSF CAREER Grant CCF-643836,
+and the Centre Bernoulli at ´Ecole Polytechnique F´ed´erale de Lausanne.
+A. K. Fletcher (email: alyson@eecs.berkeley.edu) is with the Department of Electrical Engineering and Computer Sciences, University of
+California, Berkeley.
+S. Rangan (email: srangan@qualcomm.com) is with Qualcomm Technologies, Bedminster, NJ.
+V. K. Goyal (email: vgoyal@mit.edu) is with the Department of Electrical Engineering and Computer Science and the Research Laboratory
+of Electronics, Massachusetts Institute of Technology.
+
+
+===== PDF PAGE 2 =====
+2
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+A. Previous Work
+Sparsity pattern recovery (or more simply, sparsity recovery) has received considerable attention in a
+variety guises. Most transparent from our formulation is the connection to sparse approximation. In a
+typical sparse approximation problem, one is given data y ∈Rm, dictionary1 A ∈Rm×n, and tolerance
+ǫ > 0. The aim is to ﬁnd ˆx with the fewest number of nonzero entries among those satisfying ∥Aˆx−y∥≤ǫ.
+This problem is NP-hard [3] but greedy heuristics (matching pursuit [2] and its variants) and convex
+relaxations (basis pursuit [4], lasso [5] and others) can be effective under certain conditions on A and
+y [6]–[8]. Scaling laws for sparsity recovery with any A were ﬁrst given in [9].
+More recently, the concept of “sensing” sparse x through multiplication by a suitable random matrix A,
+with measurement error d, has been termed compressed sensing [10]–[12]. This has popularized the study
+of sparse approximation with respect to random dictionaries, which was considered also in [13]. Results
+are generally phrased as the asymptotic scaling of the number of measurements m (the length of y) needed
+for sparsity recovery to succeed with high probability, as a function of the other problem parameters. More
+speciﬁcally, most results are sufﬁcient conditions for speciﬁc tractable recovery algorithms to succeed. For
+example, if A has i.i.d. Gaussian entries and d = 0, then m ≍2k log(n/k) dictates the minimum scaling
+at which basis pursuit succeeds with high probability [14]. With nonzero noise variance, necessary and
+sufﬁcient conditions for the success of lasso in this setting have the asymptotic scaling [15]
+m ≍2k log(n −k) + k + 1.
+(1)
+To understand the ultimate limits of sparsity recovery, while also casting light on the efﬁcacy of lasso
+or orthogonal matching pursuit (OMP), it is of interest to determine necessary and sufﬁcient conditions
+for an optimal recovery algorithm to succeed. Of course, since it is sufﬁcient for lasso, the condition
+(1) is sufﬁcient for an optimal algorithm. Is it close to a necessary condition? We address precisely this
+question by proving a necessary condition that differs from (1) by a factor that is constant with respect
+to n and k while depending on the signal-to-noise ratio (SNR) and mean-to-average ratio (MAR), which
+will be deﬁned precisely in Section II. Furthermore, we present an extremely simple algorithm for which
+a sufﬁcient condition for sparsity recovery is similarly within a constant factor of (1).
+Previous necessary conditions had been based on information-theoretic analyses such as the capacity
+arguments in [16], [17] and a use of Fano’s inequality in [18]. More recent publications with necessary
+conditions include [19]–[22]. As described in Section III, our new necessary conditions are stronger than
+the previous results.
+Table I previews our main results and places (1) in context. The measurement model and parameters
+MAR and SNR are deﬁned in the following section. Arbitrarily small constants have been omitted, and
+the last column—labeled simply SNR →∞—is more speciﬁcally for MAR > ǫ > 0 for some ﬁxed ǫ and
+SNR = Ω(k).
+B. Paper Organization
+The setting is formalized in Section II. In particular, we deﬁne our concepts of signal-to-noise ratio and
+mean-to-average ratio; our results clarify the roles of these quantities in the sparsity recovery problem.
+Necessary conditions for success of any algorithm are considered in Section III. There we present a new
+necessary condition and compare it to previous results and numerical experiments. Section IV introduces
+a very simple recovery algorithm for the purpose of showing that a sufﬁcient condition for its success is
+rather weak—it has the same dependence on n and k as (1). Conclusions are given in Section V, and
+proofs appear in the Appendix.
+1The term seems to have originated in [2] and may apply to A or the columns of A as a set.
+
+
+===== PDF PAGE 3 =====
+FLETCHER, RANGAN AND GOYAL
+3
+ﬁnite SNR
+SNR →∞
+Any algorithm must fail
+m <
+2
+MAR·SNRk log(n −k) + k −1
+m ≤k
+Theorem 1
+(elementary)
+Necessary and
+unknown (expressions above
+m ≍2k log(n −k) + k + 1
+sufﬁcient for lasso
+and right are necessary)
+Wainwright [15]
+Sufﬁcient for maximum
+m > 8(1+SNR)
+MAR·SNR k log(n −k)
+m >
+8
+MARk log(n −k)
+correlation estimator (8)
+Theorem 2
+from Theorem 2
+TABLE I
+SUMMARY OF RESULTS ON MEASUREMENT SCALING FOR RELIABLE SPARSITY RECOVERY
+(SEE BODY FOR DEFINITIONS AND TECHNICAL LIMITATIONS)
+II. PROBLEM STATEMENT
+Consider estimating a k-sparse vector x ∈Rn through a vector of observations,
+y = Ax + d,
+(2)
+where A ∈Rm×n is a random matrix with i.i.d. N (0, 1/m) entries and d ∈Rm is i.i.d. unit-variance
+Gaussian noise. Denote the sparsity pattern of x (positions of nonzero entries) by the set Itrue, which is
+a k-element subset of the set of indices {1, 2, . . . , n}. Estimates of the sparsity pattern will be denoted
+by ˆI with subscripts indicating the type of estimator. We seek conditions under which there exists an
+estimator such that ˆI = Itrue with high probability.
+In addition to the signal dimensions, m, n and k, we will show that there are two variables that dictate
+the ability to detect the sparsity pattern reliably: the SNR, and what we will call the minimum-to-average
+ratio.
+The SNR is deﬁned by
+SNR = E[∥Ax∥2]
+E[∥d∥2] = E[∥Ax∥2]
+m
+.
+(3)
+Since we are considering x as an unknown deterministic vector, the SNR can be further simpliﬁed as
+follows: The entries of A are i.i.d. N (0, 1/m), so columns ai ∈Rm and aj ∈Rm of A satisfy E[a′
+iaj] = δij.
+Therefore, the signal energy is given by
+E
+
+∥Ax∥2
+=
+E
+"
+∥
+X
+j∈Itrue
+ajxj∥2
+#
+=
+X X
+i,j∈Itrue
+E [a′
+iajxixj]
+=
+X X
+i,j∈Itrue
+xixjδij = ∥x∥2.
+Substituting into the deﬁnition (3), the SNR is given by
+SNR = 1
+m∥x∥2.
+(4)
+The minimum-to-average ratio of x is deﬁned as
+MAR = minj∈Itrue |xj|2
+∥x∥2/k
+.
+(5)
+Since ∥x∥2/k is the average of {|xj|2 | j ∈Itrue}, MAR ∈(0, 1] with the upper limit occurring when all
+the nonzero entries of x have the same magnitude.
+
+
+===== PDF PAGE 4 =====
+4
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+Remarks: Other works use a variety of normalizations, e.g.: the entries of A have variance 1/n in [12],
+[20]; the entries of A have unit variance and the variance of d is a variable σ2 in [15], [18], [21], [22];
+and our scaling of A and a noise variance of σ2 are used in [23]. This necessitates great care in comparing
+results.
+Some results involve
+MAR · SNR = k
+m min
+j∈Itrue |xj|2.
+While a similar quantity affects a regularization weight sequence in [15], there it does not affect the
+number of measurements required for the success of lasso.2 The magnitude of the smallest nonzero entry
+of x is also prominent in the phrasing of results in [21], [22].
+III. NECESSARY CONDITION FOR SPARSITY RECOVERY
+We ﬁrst consider sparsity recovery without being concerned with computational complexity of the
+estimation algorithm. Since the vector x ∈Rn is k-sparse, the vector Ax belongs to one of L =
+ n
+k
+
+subspaces spanned by k of the n columns of A. Estimation of the sparsity pattern is the selection of one
+of these subspaces, and since the noise d is Gaussian, the probability of error is minimized by choosing
+the subspace closest to the observed vector y. This results in the maximum likelihood (ML) estimate.
+Mathematically, the ML estimator can be described as follows. Given a subset J ⊆{1, 2, . . . , n}, let
+PJy denote the orthogonal projection of the vector y onto the subspace spanned by the vectors {aj | j ∈J}.
+The ML estimate of the sparsity pattern is
+ˆIML = arg max
+J : |J|=k
+∥PJy∥2,
+where |J| denotes the cardinality of J. That is, the ML estimate is the set of k indices such that the
+subspace spanned by the corresponding columns of A contain the maximum signal energy of y.
+Since the number of subspaces, L, grows exponentially in n and k, an exhaustive search is computa-
+tionally infeasible. However, the performance of ML estimation provides a lower bound on the number of
+measurements needed by any algorithm that cannot exploit a priori information on x other than it being
+k-sparse.
+Theorem 1: Let k = k(n) and m = m(n) vary with n such that limn→∞k(n) = ∞and
+m(n) <
+2 −δ
+MAR · SNRk log(n −k) + k −1
+(6)
+for some δ > 0. Then even the ML estimator asymptotically cannot detect the sparsity pattern, i.e.,
+lim
+n→∞Pr
+
+ˆIML = Itrue
+
+= 0.
+Proof: See Appendix B.
+The theorem shows that for ﬁxed SNR and MAR, the scaling m = Ω(k log(n −k)) is necessary for
+reliable sparsity pattern recovery. The next section will show that this scaling can be achieved with an
+extremely simple method.
+Remarks:
+1) The theorem applies for any k(n) such that limn→∞k(n) = ∞, including both cases with k = o(n)
+and k = Θ(n). In particular, under linear sparsity (k = αn for some constant α), the theorem shows
+that
+m ≍
+2α
+MAR · SNRn log n
+measurements are necessary for sparsity recovery. Similarly, if m/n is bounded above by a constant,
+then sparsity recovery will certainly fail unless k = O(n/ log n).
+2The formulation of [15] makes SNR = Θ(n), which obscures the effect of the noise level. See also the second remark following
+Theorem 2.
+
+
+===== PDF PAGE 5 =====
+FLETCHER, RANGAN AND GOYAL
+5
+2) In the case of MAR · SNR < 1, the bound (6) improves upon the necessary condition of [15] for the
+asymptotic success of lasso by the factor (MAR · SNR)−1.
+3) The bound (6) can be compared against the information-theoretic bounds mentioned earlier. The
+tightest of these bounds is in [17] and shows that the problem dimensions must satisfy
+2
+m log2
+n
+k
+
+≤log2(1 + SNR) −α log2(1 +
+SNR
+α ),
+(7)
+where α = k/n is the sparsity ratio. For large n and k, the bound can be rearranged as
+m ≥2h(α)
+α
+
+log2(1 + SNR) −α log2(1 +
+SNR
+α )
+−1
+k,
+where h(·) is the binary entropy function. In particular, when the sparsity ratio α is ﬁxed, the bound
+shows only that m needs to grow at least linearly with k. In contrast, Theorem 1 shows that with
+ﬁxed sparsity ratio m = Ω(k log(n−k)) is necessary for reliable sparsity recovery. Thus, the bound
+in Theorem 1 is signiﬁcantly tighter and reveals that the previous information-theoretic necessary
+conditions from [16]–[18], [21], [22] are overly optimistic.
+4) Results more similar to Theorem 1—based on direct analyses of error events rather than information-
+theoretic arguments—appeared in [19], [20]. The previous results showed that with ﬁxed SNR as
+deﬁned here, sparsity recovery with m = Θ(k) must fail. The more reﬁned analysis in this paper
+gives the additional log(n −k) factor and the precise dependence on MAR · SNR.
+5) Theorem 1 is not contradicted by the relevant sufﬁcient condition of [21], [22]. That sufﬁcient
+condition holds for scaling that gives linear sparsity and MAR·SNR = Ω(√n log n). For MAR·SNR =
+√n log n, Theorem 1 shows that fewer than m ≍2√k log k measurements will cause ML decoding
+to fail, while [22, Thm. 3.1] shows that a typicality-based decoder will succeed with m = Θ(k)
+measurements.
+6) Note that the necessary condition of [18] is proven for MAR = 1. Theorem 1 gives a bound that
+increases for smaller MAR; this suggests (though does not prove, since the condition is merely
+necessary) that smaller MAR makes the problem harder.
+Numerical validation: Computational conﬁrmation of Theorem 1 is technically impossible, and even
+qualitative support is hard to obtain because of the high complexity of ML detection. Nevertheless, we
+may obtain some evidence through Monte Carlo simulation.
+Fig. 1 shows the probability of success of ML detection for n = 20 as k, m, SNR, and MAR are varied,
+with each point representing at least 500 independent trials. Each subpanel gives simulation results for
+k ∈{1, 2, . . . , 5} and m ∈{1, 2, . . . , 40} for one (SNR, MAR) pair. Signals with MAR < 1 are created
+by having one small nonzero component and k −1 equal, larger nonzero components. Overlaid on the
+color-intensity plots is a black curve representing (6).
+Taking any one column of one subpanel from bottom to top shows that as m is increased, there
+is a transition from ML failing to ML succeeding. One can see that (6) follows the failure-success
+transition qualitatively. In particular, the empirical dependence on SNR and MAR approximately follows
+(6). Empirically, for the (small) value of n = 20, it seems that with MAR·SNR held ﬁxed, sparsity recovery
+becomes easier as SNR increases (and MAR decreases).
+Less extensive Monte Carlo simulations for n = 40 are reported in Fig. 2. The results are qualitatively
+similar. As might be expected, the transition from low to high probability of successful recovery as a
+function of m appears more sharp at n = 40 than at n = 20.
+IV. SUFFICIENT CONDITION WITH MAXIMUM CORRELATION DETECTION
+Consider the following simple estimator. As before, let aj be the jth column of the random matrix A.
+Deﬁne the maximum correlation (MC) estimate as
+ˆIMC =
+
+j : |a′
+jy| is one of the k largest values of |a′
+iy|
+	
+.
+(8)
+
+
+===== PDF PAGE 6 =====
+6
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+(1, 1)
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+(2, 1)
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+(5, 1)
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+(10, 1)
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+(10, 0.5)
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+(10, 0.2)
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+(10, 0.1)
+ 
+ 
+2
+4
+5
+10
+15
+20
+25
+30
+35
+40
+0
+0.2
+0.4
+0.6
+0.8
+1
+k
+k
+k
+k
+k
+k
+k
+m
+Fig. 1.
+Simulated success probability of ML detection for n = 20 and many values of k, m, SNR, and MAR. Each subﬁgure gives
+simulation results for k ∈{1, 2, . . . , 5} and m ∈{1, 2, . . . , 40} for one (SNR, MAR) pair. Each subﬁgure heading gives (SNR, MAR). Each
+point represents at least 500 independent trials. Overlaid on the color-intensity plots is a black curve representing (6).
+(10, 1)
+2
+4
+10
+20
+30
+40
+(10, 0.5)
+2
+4
+10
+20
+30
+40
+k
+k
+m
+Fig. 2.
+Simulated success probability of ML detection for n = 40; SNR = 10; MAR = 1 (left) or MAR = 0.5 (right); and many values of
+k and m. Each subﬁgure gives simulation results for k ∈{1, 2, . . . , 5} and m ∈{1, 2, . . . , 40}, with each point representing at least 1000
+independent trials. Overlaid on the color-intensity plots (with scale as in Fig. 1) is a black curve representing (6).
+This algorithm simply correlates the observed signal y with all the frame vectors aj and selects the indices
+j with the highest correlation. It is signiﬁcantly simpler than both lasso and matching pursuit and is not
+meant to be proposed as a competitive alternative. Rather, the MC method is introduced and analyzed to
+illustrate that a trivial method can obtain optimal scaling with respect to n and k.
+Theorem 2: Let k = k(n) and m = m(n) vary with n such that limn→∞k = ∞, lim supn→∞k/n ≤
+1/2, and
+m > (8 + δ)(1 + SNR)
+MAR · SNR
+k log(n −k)
+(9)
+for some δ > 0. Then the maximum correlation estimator asymptotically detects the sparsity pattern, i.e.,
+lim
+n→∞Pr
+
+ˆIMC = Itrue
+
+= 1.
+Proof: See Appendix C.
+
+
+===== PDF PAGE 7 =====
+FLETCHER, RANGAN AND GOYAL
+7
+Remarks:
+1) Comparing (6) and (9), we see that for a ﬁxed SNR and minimum-to-average ratio, the simple
+MC estimator needs only a constant factor more measurements than the optimal ML estimator.
+In particular, the results show that the scaling of the minimum number of measurements m =
+Θ(k log(n−k)) is both necessary and sufﬁcient. Moreover, the optimal scaling factor not only does
+not require ML estimation, it does not even require lasso or matching pursuit—it can be achieved
+with a remarkably simply method such as maximum correlation.
+There is, of course, a difference in the constant factors of the expressions (6) and (9). Speciﬁcally,
+the MC method requires a factor 4(1 + SNR) more measurements than ML detection. In particular,
+for low SNRs (i.e. SNR ≪1), the factor reduces to 4.
+2) For high SNRs, the gap between the MC estimator and the ML estimator can be large. In particular,
+the lower bound on the number of measurements required by ML decreases to k −1 as SNR →∞.3
+In contrast, with the MC estimator increasing the SNR has diminishing returns: as SNR →∞, the
+bound on the number of measurements in (9) approaches
+m >
+8
+MARk log(n −k).
+(10)
+Thus, even with SNR →∞, the minimum number of measurements is not improved from m =
+O(k log(n −k)).
+This diminishing returns for improved SNR exhibited by the MC method is also a problem for
+more sophisticated methods such as lasso. For example, the analysis of [15] shows that when the
+SNR = Θ(n) (so SNR →∞) and MAR is bounded strictly away from zero, lasso requires
+m > 2k log(n −k) + k + 1
+(11)
+for reliable recovery. Therefore, like the MC method, lasso does not achieve a scaling better than
+m = O(k log(n −k)), even at inﬁnite SNR.
+3) There is certainly a gap between MC and lasso. Comparing (10) and (11), we see that, at high
+SNR, the simple MC method requires a factor of at most 4/MAR more measurements than lasso.
+This factor is largest when MAR is small, which occurs when there are relatively small non-zero
+components. Thus, in the high SNR regime, the main beneﬁt of lasso is not that it achieves an
+optimal scaling with respect to k and n (which can be achieved with the simpler MC), but rather
+that lasso is able to detect small coefﬁcients, even when they are much below the average power.
+Numerical validation: MC sparsity pattern detection is extremely simple and can thus be simulated
+easily for large problem sizes. Fig. 3 reports the results of a large number Monte Carlo simulations of the
+MC method with n = 100. The threshold predicted by (9) matches well to the parameter combinations
+where the probability of success drops below about 0.995.
+V. CONCLUSIONS
+We have considered the problem of detecting the sparsity pattern of a sparse vector from noisy random
+linear measurements. Our main conclusions are:
+• Necessary and sufﬁcient scaling with respect to n and k. For a given SNR and minimum-to-average
+ratio, the scaling of the number of measurements
+m = O(k log(n −k))
+is both necessary and sufﬁcient for asymptotically reliable sparsity pattern detection. This scaling is
+signiﬁcantly worse than predicted by previous information-theoretic bounds.
+3Of course, at least k + 1 measurements are necessary.
+
+
+===== PDF PAGE 8 =====
+8
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+(1, 1)
+10
+20
+200
+400
+600
+800
+1000
+(10, 1)
+10
+20
+200
+400
+600
+800
+1000
+(100, 1)
+10
+20
+200
+400
+600
+800
+1000
+(1, 0.5)
+10
+20
+200
+400
+600
+800
+1000
+(10, 0.5)
+10
+20
+200
+400
+600
+800
+1000
+(100, 0.5)
+10
+20
+200
+400
+600
+800
+1000
+(1, 0.2)
+10
+20
+200
+400
+600
+800
+1000
+(10, 0.2)
+10
+20
+200
+400
+600
+800
+1000
+(100, 0.2)
+10
+20
+200
+400
+600
+800
+1000
+k
+k
+k
+m
+m
+m
+Fig. 3.
+Simulated success probability of MC detection for n = 100 and many values of k, m, SNR, and MAR. Each subﬁgure gives
+simulation results for k ∈{1, 2, . . . , 20} and m ∈{25, 50, . . . , 1000} for one (SNR, MAR) pair. Each subﬁgure heading gives (SNR, MAR),
+so SNR = 1, 10, 100 for the three columns and MAR = 1, 0.5, 0.2 for the three rows. Each point represents 1000 independent trials. Overlaid
+on the color-intensity plots (with scale as in Fig. 1) is a black curve representing (9).
+• Scaling optimality of a trivial method. The optimal scaling with respect to k and n can be achieved
+with a trivial maximum correlation (MC) method. In particular, both lasso and OMP, while likely to
+do better, are not necessary to achieve this scaling.
+• Dependence on SNR. While the threshold number of measurements for ML and MC sparsity recovery
+to be successful have the same dependence on n and k, the dependence on SNR differs signiﬁcantly.
+Speciﬁcally, the MC method requires a factor of up to 4(1 + SNR) more measurements than ML.
+Moreover, as SNR →∞, the number of measurements required by ML may be as low as m = k +1.
+In contrast, even letting SNR →∞, the maximum correlation method still requires a scaling m =
+O(k log(n −k)).
+• Lasso and dependence on MAR. MC can also be compared to lasso, at least in the high SNR regime.
+There is a potential gap between MC and lasso, but the gap is smaller than the gap to ML. Speciﬁcally,
+in the high SNR regime, MC requires at most 4/MAR more measurements than lasso, where MAR is
+the mean-to-average ratio deﬁned in (5). Both lasso and MC scale as m = O(k log(n −k)). Thus,
+the beneﬁt of lasso is not in its scaling with respect to the problem dimensions, but rather its ability
+to detect the sparsity pattern even in the presence of relatively small nonzero coefﬁcients (i.e. low
+MAR).
+
+
+===== PDF PAGE 9 =====
+FLETCHER, RANGAN AND GOYAL
+9
+While our results settle the question of the optimal scaling of the number of measurements m in terms
+of k and n, there is clearly a gap in the necessary and sufﬁcient conditions in terms of the scaling of
+the SNR. We have seen that full ML estimation could potentially have a scaling in SNR as small as
+m = O(1/SNR) + k −1. An open question is whether there is any practical algorithm that can achieve a
+similar scaling.
+A second open issue is to determine conditions for partial sparsity recovery. The above results deﬁne
+conditions for recovering all the positions in the sparsity pattern. However, in many practical applications,
+obtaining some large fraction of these positions would be sufﬁcient. Neither the limits of partial sparsity
+recovery nor the performance of practical algorithms are completely understood, though some results have
+been reported in [20]–[22], [24].
+APPENDIX
+A. Deterministic Necessary Condition
+The proof of Theorem 1 is based on the following deterministic necessary condition for sparsity recovery.
+Recall the notation that for any J ⊆{1, 2, . . . , n}, PJ denotes the orthogonal projection onto the span of
+the vectors {aj}j∈J. Additionally, let P ⊥
+J = I −PJ denote the orthogonal projection onto the orthogonal
+complement of span({aj}j∈J).
+Lemma 1: A necessary condition for ML detection to succeed (i.e. ˆIML = Itrue) is:
+for all i ∈Itrue and j̸ ∈Itrue,
+|a′
+iP ⊥
+Ky|2
+a′
+iP ⊥
+Kai
+≥|a′
+jP ⊥
+Ky|2
+a′
+jP ⊥
+Kaj
+(12)
+where K = Itrue \ {i}.
+Proof: Note that y = PKy + P ⊥
+Ky is an orthogonal decomposition of y into the portions inside and
+outside the subspace S = span({aj}j∈K). An approximation of y in subspace S leaves residual P ⊥
+Ky.
+Intuitively, the condition (12) requires that the residual be at least as highly correlated with the remaining
+“correct” vector ai as it is with any of the “incorrect” vectors {aj}j̸∈Itrue.
+Fix any i ∈Itrue, j̸ ∈Itrue and let
+J = K ∪{j} = (Itrue \ {i}) ∪{j}.
+That is, J is equal to the true sparsity pattern Itrue, except that a single “correct” index i has been replaced
+by an “incorrect” index j. If the ML estimator is to select ˆIML = Itrue then the energy of the noisy vector
+y must be larger on the true subspace Itrue, than the incorrect subspace J. Therefore,
+∥PItruey∥2 ≥∥PJy∥2.
+(13)
+Now, a simple application of the matrix inversion lemma shows that since Itrue = K ∪{i},
+∥PItruey∥2 = ∥PKy∥2 + |a′
+iP ⊥
+Ky|2
+a′
+iP ⊥
+Kai
+.
+(14a)
+Also, since J = K ∪{j},
+∥PJy∥2 = ∥PKy∥2 + |a′
+jP ⊥
+Ky|2
+a′
+jP ⊥
+Kaj
+.
+(14b)
+Substituting (14a)–(14b) into (13) and cancelling ∥PKy∥2 shows (12).
+
+
+===== PDF PAGE 10 =====
+10
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+B. Proof of Theorem 1
+To simplify notation, assume without loss of generality that Itrue = {1, 2, . . ., k}. Also, assume that the
+minimization in (5) occurs at j = 1 with
+|x1|2 = m
+k
+SNR · MAR.
+(15)
+Finally, since adding measurements (i.e. increasing m) can only improve the chances that ML detection
+will work, we can assume that in addition to satisfying (6), the numbers of measurements satisfy the
+lower bound
+m > ǫk log(n −k) + k −1,
+(16)
+for some ǫ > 0. This assumption implies that
+lim log(n −k)
+m −k + 1 = lim 1
+ǫk = 0.
+(17)
+Here and in the remainder of the proof the limits are as m, n and k →∞subject to (6) and (16). With
+these requirements on m, we need to show lim Pr(ˆIML = Itrue) = 0.
+From Lemma 1, ˆIML = Itrue implies (12). Thus
+Pr
+
+ˆIML = Itrue
+
+≤
+Pr
+ 
+|a′
+iP ⊥
+Ky|2
+a′
+iP ⊥
+Kai
+≥|a′
+jP ⊥
+Ky|2
+a′
+jP ⊥
+Kaj
+∀i ∈Itrue, j̸ ∈Itrue
+!
+≤
+Pr
+ 
+|a′
+1P ⊥
+Ky|2
+a′
+1P ⊥
+Ka1
+≥|a′
+jP ⊥
+Ky|2
+a′
+jP ⊥
+Kaj
+∀j̸ ∈Itrue
+!
+=
+Pr(∆−≥∆+),
+where
+∆−
+=
+1
+log(n −k)
+|a′
+1P ⊥
+Ky|2
+a′
+1P ⊥
+Ka1
+,
+∆+
+=
+1
+log(n −k)
+max
+j∈{k+1,...,n}
+|a′
+jP ⊥
+Ky|2
+a′
+jP ⊥
+Kaj
+,
+and K = Itrue \{1} = {2, . . . , k}. The −and + superscripts are used to reﬂect that ∆−is the energy lost
+from removing “correct” index 1, and ∆+ is the energy added from adding the worst “incorrect” index.
+The theorem will be proven if we can show that
+lim sup ∆−< lim inf ∆+
+(18)
+with probability approaching one. We will consider the two limits separately.
+1) Limit of ∆+: Let VK be the k −1 dimensional space spanned by the vectors {aj}j∈K. For each
+j̸ ∈Itrue, let uj be the unit vector
+uj = P ⊥
+Kaj/∥P ⊥
+Kaj∥.
+Since aj has i.i.d. Gaussian components, it is spherically symmetric. Also, if j̸ ∈K, aj is independent
+of the subspace VK. Hence, in this case, uj will be a unit vector uniformly distributed on the unit sphere
+in V ⊥
+K . Since V ⊥
+K is an m −k + 1 dimensional subspace, it follows from Lemma 4 (see Appendix D)
+that if we deﬁne
+zj = |u′
+jP ⊥
+Ky|2/∥P ⊥
+Ky∥2,
+then zj follows a Beta(1, m −k + 1) distribution. See Appendix D for a review of the chi-squared and
+beta distributions and some simple results on these variables that will be used in the proofs below.
+
+
+===== PDF PAGE 11 =====
+FLETCHER, RANGAN AND GOYAL
+11
+By the deﬁnition of uj,
+|a′
+jP ⊥
+Ky|2
+a′
+jP ⊥
+Kaj
+= |u′
+jP ⊥
+Ky|2 = zj∥P ⊥
+Ky∥2,
+and therefore
+∆+ =
+1
+log(n −k)∥P ⊥
+Ky∥2
+max
+j∈{k+1,...,n} zj.
+(19)
+Now the vectors aj are independent of one another, and for j̸ ∈Itrue, each aj is independent of P ⊥
+Ky.
+Therefore, the variables zj will be i.i.d. Hence, using Lemma 5 (see Appendix D) and (17),
+lim m −k + 1
+log(n −k)
+max
+j=k+1,...,n zj = 2
+(20)
+in distribution. Also,
+lim inf
+1
+m −k + 1∥P ⊥
+Ky∥2
+(a)
+≥
+lim
+1
+m −k + 1∥P ⊥
+Itruey∥2
+(b)=
+lim
+1
+m −k + 1∥P ⊥
+Itrued∥2
+(c)
+=
+lim
+m −k
+m −k + 1 = 1
+(21)
+where (a) follows from the fact that K ⊂Itrue and hence ∥P ⊥
+Ky∥≥∥P ⊥
+Itruey∥; (b) is valid since P ⊥
+Itrueaj = 0
+for all j ∈Itrue and therefore PItruex = 0; and (c) follows from the fact that P ⊥
+Itrued is a unit-variance
+white random vector in an m −k dimensional space. Combining (19), (20) and (21) shows that
+lim inf ∆+ ≥2.
+(22)
+2) Limit of ∆−: For any j ∈K, P ⊥
+Kaj = 0. Therefore,
+P ⊥
+Ky = P ⊥
+K
+ k
+X
+j=1
+ajxj + d
+!
+= x1P ⊥
+Ka1 + P ⊥
+Kd.
+Hence,
+|a′
+1P ⊥
+Ky|2
+a′
+1P ⊥
+Ka1
+=
+∥P ⊥
+Ka1∥x1 + v
+2 ,
+where v is given by
+v = a′
+1P ⊥
+Kd/∥P ⊥
+Ka1∥.
+Since P ⊥
+Ka1/∥P ⊥
+Ka1∥is a random unit vector independent of d, and d is a zero-mean, unit-variance
+Gaussian random vector, v ∼N (0, 1). Therefore,
+lim ∆−
+=
+lim
+
+∥P ⊥
+Ka1∥x1
+log1/2(n −k)
++
+1
+log1/2(n −k)
+v
+
+2
+=
+lim ∥P ⊥
+Ka1∥2|x1|2
+log(n −k) ,
+(23)
+where, in the last step, we used the fact that
+v/ log1/2(n −k) →0.
+Now, a1 is a Gaussian vector with variance 1/m in each component and P ⊥
+K is a projection onto an
+m −k + 1 dimensional space. Hence,
+lim m∥P ⊥
+Ka1∥2
+m −k + 1 = 1.
+(24)
+
+
+===== PDF PAGE 12 =====
+12
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+Starting with a combination of (23) and (24),
+lim sup ∆−
+=
+lim sup |x1|2(m −k + 1)
+m log(n −k)
+(a)
+=
+lim sup (SNR · MAR)(m −k + 1)
+k log(n −k)
+(b)
+<
+2 −δ
+(25)
+where (a) uses (15); and (b) uses (6).
+Comparing (22) and (25) proves (18), thus completing the proof.
+C. Proof of Theorem 2
+We will show that there exists a µ > 0 such that, with high probability,
+|a′
+iy|2 > µ
+for all i ∈Itrue;
+|a′
+jy|2 < µ
+for all j̸ ∈Itrue.
+(26)
+When (26) is satisﬁed,
+|a′
+iy| > |a′
+jy|
+for all indices i ∈Itrue and j̸ ∈Itrue.
+Thus, (26) implies that the maximum correlation estimator ˆIMC in (8) will select ˆIMC = Itrue. Consequently,
+the theorem will be proven if can ﬁnd a µ such that (26) holds with high probability.
+Since δ > 0, we can ﬁnd an ǫ > 0 such that
+√
+8 + δ −
+√
+2 + ǫ >
+√
+2.
+(27)
+Deﬁne
+µ = (2 + ǫ)(1 + SNR) log(n −k).
+(28)
+Deﬁne two probabilities corresponding to the two conditions in (26):
+pMD
+=
+Pr
+ |a′
+iy|2 < µ
+for some i ∈Itrue
+
+(29)
+pFA
+=
+Pr
+ |a′
+jy|2 > µ
+for some j̸ ∈Itrue
+
+.
+(30)
+The ﬁrst probability pMD is the probability of missed detection, i.e., the probability that the energy on one
+of the “true” vectors, ai with i ∈Itrue, is below the threshold µ. The second probability pFA is the false
+alarm probability, i.e., the probability that the energy on one of the “incorrect” vectors, aj with j̸ ∈Itrue,
+is above the threshold µ. Since the correlation estimator detects the correct sparsity pattern when there
+are no missed vectors or false alarms, we have the bound
+Pr
+
+ˆIMC̸ = Itrue
+
+≤pMD + pFA.
+So the result will be proven if we can show that pMD and pFA approach zero as m, n and k →∞
+satisfying (9). We analyze these two probabilities separately.
+
+
+===== PDF PAGE 13 =====
+FLETCHER, RANGAN AND GOYAL
+13
+1) Limit of pFA: Consider any index j̸ ∈Itrue. Since y is a linear combination of vectors {ai}i∈Itrue
+and the noise vector d, aj is independent of y. Also, recall that the components of aj are N (0, 1/m).
+Therefore, conditional on ∥y∥2, the inner product a′
+jy is Gaussian with mean zero and variance ∥y∥2/m.
+For large m, ∥y∥2/m →1 + SNR. Hence, we can write
+|a′
+jy|2 = (1 + SNR)u2
+j,
+where uj is a random variable that converges in distribution to a zero mean Gaussian with unit variance.
+Using the deﬁnitions of pFA in (30) and µ in (28), we see that
+pFA
+=
+Pr
+
+max
+j̸∈Itrue |a′
+jy|2 > µ
+
+=
+Pr
+
+max
+j̸∈Itrue(1 + SNR)u2
+j > µ
+
+=
+Pr
+
+max
+j̸∈Itrue u2
+j > µ/(1 + SNR)
+
+=
+Pr
+
+max
+j̸∈Itrue u2
+j > (2 + ǫ) log(n −k)
+
+→0
+where the last limit uses Lemma 3 (see Appendix D) on the maxima of chi-squared random variables.
+2) Limit of pMD: Consider any index i ∈Itrue. Observe that
+a′
+iy = ∥ai∥2|xi|2 + a′
+iei,
+where
+ei = y −aixi =
+X
+ℓ∈Itrue,ℓ̸=i
+aℓxℓ+ d.
+It is easily veriﬁed that ∥ai∥2 →1 and ∥ei∥2/m →1 + SNR. Using a similar argument as above, one can
+show that
+a′
+iy = xi + (1 + SNR)1/2ui,
+(31)
+where ui approaches a zero-mean, unit-variance Gaussian in distribution.
+Now, using (4), (5) and (9),
+|xi|2
+≥
+MAR∥x∥2
+k
+= m MAR · SNR
+k
+>
+(8 + δ)(1 + SNR) log(n −k).
+(32)
+Combining (27), (28), (31) and (32)
+|a′
+iy|2 ≤µ
+⇐⇒
+ xi + (1 + SNR)1/2ui
+ ≤µ1/2
+=⇒
+(1 + SNR)u2
+i ≥
+ |xi| −µ1/22
+⇐⇒
+u2
+i > 2 log(n −k)
+=⇒
+u2
+i > 2 log(k)
+where, in the last step, we have used the fact that since k/n < 1/2, n −k > k. Therefore, using Lemma
+3
+pMD
+=
+Pr
+
+min
+i∈Itrue |a′
+iy|2 ≤µ
+
+≤
+Pr
+
+max
+i∈Itrue u2
+i > 2 log(k)
+
+→0.
+(33)
+Hence, we have shown both pFA →0 and pMD →0 as n →∞, and the theorem is proven.
+
+
+===== PDF PAGE 14 =====
+14
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+D. Maxima of Chi-Squared and Beta Random Variables
+The proofs of the main results above require a few simple results on the maxima of large numbers of
+chi-squared and beta random variables. A complete description of chi-squared and beta random variables
+can be found in [25].
+A random variable U has a chi-squared distribution with r degrees of freedom if it can be written as
+U =
+r
+X
+i=1
+Z2
+i ,
+where Zi are i.i.d. N (0, 1). For every n and r deﬁne the random variables
+M n,r
+=
+max
+i∈{1,...,n} Ui,
+M n,r
+=
+min
+i∈{1,...,n} Ui,
+where the Ui’s are i.i.d. chi-squared with r degrees of freedom.
+Lemma 2: For M n,r deﬁned as above,
+lim
+n→∞
+1
+log(n)M n,1 = 2,
+where the convergence is in distribution.
+Proof: We can write Mn,1 = maxi∈{1,...,n} Z2
+i where Zi are i.i.d. N (0, 1). Then, for any a > 0,
+Pr
+
+1
+log(n)M n,1 < a
+
+=
+Pr
+ |Z1|2 < a log(n)
+n
+=
+erf
+p
+a log(n)/2
+n
+≈
+"
+1 −
+s
+2
+πa log(n) exp(−a log(n)/2)
+#n
+=
+"
+1 −
+s
+2
+πa log(n)
+1
+na/2
+#n
+where the approximation is valid for large n. Taking the limit as n →∞, one can now easily show that
+lim
+n→∞Pr
+
+1
+log(n)M n < a
+
+=
+
+0,
+for a < 2;
+1,
+for a > 2
+and therefore M n/ log(n) →2 in distribution.
+Lemma 3: In any limit where r →∞and log(n)/r →0,
+lim
+r→∞
+1
+rMn,r = lim
+r→∞
+1
+rM n,r = 1,
+where the convergence is in distribution.
+Proof: It sufﬁces to show
+lim sup
+r→∞
+1
+rMn,r
+≤
+1,
+lim inf
+r→∞
+1
+rMn,r
+≥
+1.
+
+
+===== PDF PAGE 15 =====
+FLETCHER, RANGAN AND GOYAL
+15
+We will just prove the ﬁrst inequality since the proof of the second is similar. We can write
+1
+rM n,r = max
+i=1,...,n Vi,
+where each Vi = Ui/r and the Ui’s are i.i.d. chi-squared random variables with r degree of freedom.
+Using the characteristic function of Ui and Chebyshev’s inequality, one can show that for all ǫ > 0,
+Pr(Vi > (1 + ǫ))
+=
+Pr(Ui > (1 + ǫ)r)
+≤
+(1 + ǫ)e−ǫr/2.
+Therefore,
+Pr
+ M n,r ≤1 + ǫ
+
+=
+[Pr(Vi ≤1 + ǫ)]n
+≥
+
+1 −(1 + ǫ)e−ǫr/2n
+≥
+1 −(1 + ǫ)ne−ǫr/2
+=
+1 −(1 + ǫ) exp [log(n) −ǫr/2]
+→
+1,
+where the limit in the last step follows from the fact that log(n)/r →0. Since this is true for all ǫ
+it follows that lim sup r−1M n,r ≤1. Similarly, one can show lim inf r−1M n,r ≥1 and this proves the
+lemma.
+The next two lemmas concern certain beta distributed random variables. A real-valued scalar random
+variable W follows a Beta(r, s) distribution if it can be written as
+W = Ur/(Ur + Vs),
+where the variables Ur and Vs are independent chi-squared random variables with r and s degrees of
+freedom, respectively. The importance of the beta distribution is given by the following lemma.
+Lemma 4: Let x and u ∈Rs be any two independent random vectors, with u being uniformly distributed
+on the unit sphere. Let w = |u′x|2/∥x∥2 be the energy of w projected onto u. Then w is independent of
+x and follows a Beta(1, s −1) distribution.
+Proof: This can be proven along the lines of the arguments in [9].
+The following lemma provides a simple expression for the maxima of certain beta distributed variables.
+Lemma 5: Given any s and n, let wj,s, j = 1, . . . , n, be i.i.d. Beta(1, s−1) random variables and deﬁne
+Tn,s = max
+j=1,...,n wj,s.
+Then for any limit with n and s →∞and log(n)/s →0,
+lim
+n,s→∞
+s
+log(n)Tn,s = 2,
+where the convergence is in distribution.
+Proof: We can write wj,s = uj/(uj +vj,s−1) where uj and vj,s−1 are independent chi-squared random
+variables with 1 and s −1 degrees of freedom, respectively. Let
+M n
+=
+max
+j∈{1,...,n} uj
+M n,s−1
+=
+max
+j∈{1,...,n} vj,s−1
+M n,s−1
+=
+min
+j∈{1,...,n} vj,s−1.
+Using the deﬁnition of Tn,s,
+Tn,s ≤
+M n
+M n + M n,s−1
+.
+
+
+===== PDF PAGE 16 =====
+16
+NECESSARY AND SUFFICIENT CONDITIONS FOR SPARSITY PATTERN RECOVERY
+Now Lemmas 2 and 3 and the hypothesis of this lemma show that M n/ log(n) →2, Mn,s−1/(s−1) →1,
+and log(n)/s →0. One can combine these limits to show that
+lim sup
+n,s→∞
+s
+log(n)Tn,s ≤2.
+Similarly, one can show that
+lim inf
+n,s→∞
+s
+log(n)Tn,s ≥2,
+and therefore sTn,s/ log(n) →2.
+ACKNOWLEDGMENT
+The authors thank Martin Vetterli for his support, wisdom, and encouragement.
+REFERENCES
+[1] A. Miller, Subset Selection in Regression, 2nd ed., ser. Monographs on Statistics and Applied Probability.
+New York: Chapman &
+Hall/CRC, 2002, no. 95.
+[2] S. G. Mallat and Z. Zhang, “Matching pursuits with time-frequency dictionaries,” IEEE Trans. Signal Process., vol. 41, no. 12, pp.
+3397–3415, Dec. 1993.
+[3] B. K. Natarajan, “Sparse approximate solutions to linear systems,” SIAM J. Computing, vol. 24, no. 2, pp. 227–234, Apr. 1995.
+[4] S. S. Chen, D. L. Donoho, and M. A. Saunders, “Atomic decomposition by basis pursuit,” SIAM J. Sci. Comp., vol. 20, no. 1, pp.
+33–61, 1999.
+[5] R. Tibshirani, “Regression shrinkage and selection via the lasso,” J. Royal Stat. Soc., Ser. B, vol. 58, no. 1, pp. 267–288, 1996.
+[6] D. L. Donoho, M. Elad, and V. N. Temlyakov, “Stable recovery of sparse overcomplete representations in the presence of noise,” IEEE
+Trans. Inform. Theory, vol. 52, no. 1, pp. 6–18, Jan. 2006.
+[7] J. A. Tropp, “Greed is good: Algorithmic results for sparse approximation,” IEEE Trans. Inform. Theory, vol. 50, no. 10, pp. 2231–2242,
+Oct. 2004.
+[8] ——, “Just relax: Convex programming methods for identifying sparse signals in noise,” IEEE Trans. Inform. Theory, vol. 52, no. 3,
+pp. 1030–1051, Mar. 2006.
+[9] A. K. Fletcher, S. Rangan, V. K. Goyal, and K. Ramchandran, “Denoising by sparse approximation: Error bounds based on rate–
+distortion theory,” EURASIP J. Appl. Sig. Process., vol. 2006, pp. 1–19, Mar. 2006.
+[10] E. J. Cand`es, J. Romberg, and T. Tao, “Robust uncertainty principles: Exact signal reconstruction from highly incomplete frequency
+information,” IEEE Trans. Inform. Theory, vol. 52, no. 2, pp. 489–509, Feb. 2006.
+[11] D. L. Donoho, “Compressed sensing,” IEEE Trans. Inform. Theory, vol. 52, no. 4, pp. 1289–1306, Apr. 2006.
+[12] E. J. Cand`es and T. Tao, “Near-optimal signal recovery from random projections: Universal encoding strategies?” IEEE Trans. Inform.
+Theory, vol. 52, no. 12, pp. 5406–5425, Dec. 2006.
+[13] A. K. Fletcher, S. Rangan, and V. K. Goyal, “Sparse approximation, denoising, and large random frames,” in Proc. Wavelets XI, part
+of SPIE Optics & Photonics, vol. 5914, San Diego, CA, Jul.–Aug. 2005, pp. 172–181.
+[14] D. L. Donoho and J. Tanner, “Counting faces of randomly-projected polytopes when the projection radically lowers dimension,” J.
+Amer. Math. Soc., submitted.
+[15] M. J. Wainwright, “Sharp thresholds for high-dimensional and noisy recovery of sparsity,” Univ. of California, Berkeley, Dept. of
+Statistics, Tech. Rep., May 2006, arXiv:math.ST/0605740 v1 30 May 2006.
+[16] S. Sarvotham, D. Baron, and R. G. Baraniuk, “Measurements vs. bits: Compressed sensing meets information theory,” in Proc. 44th
+Ann. Allerton Conf. on Commun., Control and Comp., Monticello, IL, Sep. 2006.
+[17] A. K. Fletcher, S. Rangan, and V. K. Goyal, “Rate-distortion bounds for sparse approximation,” in IEEE Statist. Sig. Process. Workshop,
+Madison, WI, Aug. 2007, pp. 254–258.
+[18] M. J. Wainwright, “Information-theoretic limits on sparsity recovery in the high-dimensional and noisy setting,” Univ. of California,
+Berkeley, Dept. of Statistics, Tech. Rep. 725, Jan. 2007.
+[19] V. K. Goyal, A. K. Fletcher, and S. Rangan, “Compressive sampling and lossy compression,” IEEE Sig. Process. Mag., vol. 25, no. 2,
+pp. 48–56, Mar. 2008.
+[20] G. Reeves, “Sparse signal sampling using noisy linear projections,” Univ. of California, Berkeley, Dept. of Elec. Eng. and Comp. Sci.,
+Tech. Rep. UCB/EECS-2008-3, Jan. 2008.
+[21] M. Akc¸akaya and V. Tarokh, “Shannon theoretic limits on noisy compressive sampling,” arXiv:0711.0366v1 [cs.IT]., Nov. 2007.
+[22] ——, “Noisy compressive sampling limits in linear and sublinear regimes,” in Proc. Conf. on Inform. Sci. & Sys., Princeton, NJ, Mar.
+2008.
+[23] J. Haupt and R. Nowak, “Signal reconstruction from noisy random projections,” IEEE Trans. Inform. Theory, vol. 52, no. 9, pp.
+4036–4048, Sep. 2006.
+[24] S. Aeron, M. Zhao, and V. Saligrama, “On sensing capacity of sensor networks for the class of linear observation, ﬁxed SNR models,”
+arXiv:0704.3434v3 [cs.IT]., Jun. 2007.
+[25] M. Evans, N. Hastings, and J. B. Peacock, Statistical Distributions, 3rd ed.
+New York: John Wiley & Sons, 2000.

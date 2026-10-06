@@ -1,0 +1,65 @@
+[
+  {
+    "key": "accessibility2026",
+    "arxiv_id": "2609.09556",
+    "accessed_utc": "2026-10-06T00:54:38.342769+00:00",
+    "metadata": {
+      "citation_title": "High-probability guarantees for linear accessibility in feature superposition",
+      "citation_author": "Vompa, Enrico",
+      "citation_date": "2026/09/09",
+      "citation_online_date": "2026/09/25",
+      "citation_pdf_url": "https://arxiv.org/pdf/2609.09556",
+      "citation_arxiv_id": "2609.09556",
+      "citation_abstract": "Neural networks can leverage feature superposition to encode more concepts than dimensions, but cross-feature interference constrains the linear accessibility of simultaneously active features. By framing linear accessibility as a compressed sensing problem, we derive high-probability bounds for fixed supports under subgaussian noise, proving the sufficient dimension scales linearly ($d=O_{\\varepsilon}(k \\log m)$) rather than prior worst-case quadratic limits. We characterize the asymmetry between active and inactive interference and the trade-off between interference and observation-noise budgets. We then validate these bounds across system parameters through Gaussian-tail approximations. We also introduce IHT-SAE, which uses learned iterative refinement to improve feature recovery beyond the limits of linear availability. These results quantify the geometric constraints of the linear representation hypothesis, providing a framework for evaluating sparse autoencoders, compositional generalization, and neural interpretability."
+    },
+    "submission_history": "Submission history From: Enrico Vompa [ view email ] [v1] Wed, 9 Sep 2026 00:26:35 UTC (2,626 KB) [v2] Thu, 17 Sep 2026 21:15:17 UTC (2,671 KB) [v3] Fri, 25 Sep 2026 13:27:30 UTC (2,851 KB)",
+    "abstract_url": "https://arxiv.org/abs/2609.09556",
+    "pdf_url": "https://arxiv.org/pdf/2609.09556",
+    "pages": 21,
+    "pdf_bytes": 3928738,
+    "pdf_sha256": "9713acf552f4d63f3b40bf06f4139519b6eccc58380b0593a24d73a03294eda0",
+    "errors": []
+  },
+  {
+    "key": "gong2025",
+    "arxiv_id": "2505.11611",
+    "accessed_utc": "2026-10-06T00:54:38.343771+00:00",
+    "metadata": {
+      "citation_title": "Signal in the Noise: Polysemantic Interference Transfers and Predicts Cross-Model Influence",
+      "citation_author": "Song, Dawn",
+      "citation_date": "2025/05/16",
+      "citation_online_date": "2026/03/18",
+      "citation_pdf_url": "https://arxiv.org/pdf/2505.11611",
+      "citation_arxiv_id": "2505.11611",
+      "citation_abstract": "Polysemanticity is pervasive in language models and remains a major challenge for interpretation and model behavioral control. Leveraging sparse autoencoders (SAEs), we map the polysemantic topology of two small models (Pythia-70M and GPT-2-Small) to identify SAE feature pairs that are semantically unrelated yet exhibit interference within models. We intervene at four foci (prompt, token, feature, neuron) and measure induced shifts in the next-token prediction distribution, uncovering polysemantic structures that expose a systematic vulnerability in these models. Critically, interventions distilled from counterintuitive interference patterns shared by two small models transfer reliably to larger instruction-tuned models (Llama-3.1-8B/70B-Instruct and Gemma-2-9B-Instruct), yielding predictable behavioral shifts without access to model internals. These findings challenge the view that polysemanticity is purely stochastic, demonstrating instead that interference structures generalize across scale and family. Such generalization suggests a convergent, higher-order organization of internal representations, which is only weakly aligned with intuition and structured by latent regularities, offering new possibilities for both black-box control and theoretical insight into human and artificial cognition."
+    },
+    "submission_history": "Submission history From: Shiyang Lai [ view email ] [v1] Fri, 16 May 2025 18:20:42 UTC (14,777 KB) [v2] Mon, 29 Sep 2025 16:04:15 UTC (6,164 KB) [v3] Wed, 18 Mar 2026 17:55:08 UTC (11,265 KB)",
+    "abstract_url": "https://arxiv.org/abs/2505.11611",
+    "pdf_url": "https://arxiv.org/pdf/2505.11611",
+    "pages": 41,
+    "pdf_bytes": 8529663,
+    "pdf_sha256": "fa04b70dc8f4b7710dbde5e0a3a78354a871f598bf719142210fbd0feb05bf51",
+    "errors": []
+  },
+  {
+    "key": "lu2026",
+    "arxiv_id": "2606.13934",
+    "accessed_utc": "2026-10-06T00:54:38.344769+00:00",
+    "metadata": {
+      "citation_title": "Adversarial Concept Search: Predicting Compositional Errors From Feature Geometry",
+      "citation_author": "Saphra, Naomi",
+      "citation_date": "2026/06/11",
+      "citation_online_date": "2026/06/11",
+      "citation_pdf_url": "https://arxiv.org/pdf/2606.13934",
+      "citation_arxiv_id": "2606.13934",
+      "citation_abstract": "Humans cannot always intuit what scenarios are most challenging to LLMs. Hoping to capture challenging edge cases, developers either design problems to be difficult for humans or curate extensive benchmarks. What if we could instead anticipate which scenarios a model will fail on? In this paper, we use an LLM's representational geometry to predict which concept combinations it will fail on. We attribute this compositional failure to interference between salient features. In tasks that require systematic composition - toy programmatic settings, multihop reasoning, multilingual factual recall - we find that when a pair of concepts is encoded near-orthogonally, the model reliably composes them. When their linear encodings are close, producing interference, the model fails to compose them. Our method reliably anticipates failure modes across different compositional tasks, without evaluating specific inputs. These results lay the groundwork to use representational geometry to identify high-risk examples, construct targeted stress tests, and provide a scalable foundation for active learning in real-world deployment."
+    },
+    "submission_history": "Submission history From: Jennifer Meng Lu [ view email ] [v1] Thu, 11 Jun 2026 21:52:45 UTC (13,530 KB)",
+    "abstract_url": "https://arxiv.org/abs/2606.13934",
+    "pdf_url": "https://arxiv.org/pdf/2606.13934",
+    "pages": 40,
+    "pdf_bytes": 17533899,
+    "pdf_sha256": "bbfbf505e05b4bea4b3eaeba86493e69a6853db45b2b5092305bacde5d30b9ae",
+    "errors": []
+  }
+]

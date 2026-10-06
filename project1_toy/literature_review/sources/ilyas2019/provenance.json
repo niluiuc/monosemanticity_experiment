@@ -1,0 +1,21 @@
+{
+  "key": "ilyas2019",
+  "arxiv_id": "1905.02175",
+  "accessed_utc": "2026-10-06T00:51:57.115105+00:00",
+  "metadata": {
+    "citation_title": "Adversarial Examples Are Not Bugs, They Are Features",
+    "citation_author": "Madry, Aleksander",
+    "citation_date": "2019/05/06",
+    "citation_online_date": "2019/08/12",
+    "citation_pdf_url": "https://arxiv.org/pdf/1905.02175",
+    "citation_arxiv_id": "1905.02175",
+    "citation_abstract": "Adversarial examples have attracted significant attention in machine learning, but the reasons for their existence and pervasiveness remain unclear. We demonstrate that adversarial examples can be directly attributed to the presence of non-robust features: features derived from patterns in the data distribution that are highly predictive, yet brittle and incomprehensible to humans. After capturing these features within a theoretical framework, we establish their widespread existence in standard datasets. Finally, we present a simple setting where we can rigorously tie the phenomena we observe in practice to a misalignment between the (human-specified) notion of robustness and the inherent geometry of the data."
+  },
+  "submission_history": "Submission history From: Dimitris Tsipras [ view email ] [v1] Mon, 6 May 2019 17:45:05 UTC (1,701 KB) [v2] Tue, 7 May 2019 02:01:14 UTC (1,772 KB) [v3] Wed, 19 Jun 2019 00:25:20 UTC (1,785 KB) [v4] Mon, 12 Aug 2019 14:36:10 UTC (1,787 KB)",
+  "abstract_url": "https://arxiv.org/abs/1905.02175",
+  "pdf_url": "https://arxiv.org/pdf/1905.02175",
+  "pages": 37,
+  "pdf_bytes": 2593952,
+  "pdf_sha256": "81c3715d1e256579071591f3bc61f55d63b32a33dcc981026209d14d32990f32",
+  "errors": []
+}

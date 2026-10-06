@@ -1,0 +1,1718 @@
+
+
+===== PDF PAGE 1 =====
+Preprint
+HIGH-PROBABILITY GUARANTEES FOR LINEAR ACCES-
+SIBILITY IN FEATURE SUPERPOSITION
+Enrico Vompa (envomp@taltech.ee)
+Applied Artificial Intelligence Group
+Tallinn University of Technology, Estonia
+ABSTRACT
+Neural networks can leverage feature superposition to encode more concepts than
+dimensions, but cross-feature interference constrains the linear accessibility of
+simultaneously active features. By framing linear accessibility as a compressed
+sensing problem, we derive high-probability recovery bounds for fixed supports
+under subgaussian noise, proving that d = Oε(k log m) dimensions suffice for
+the per-input regime in which networks typically operate in, in contrast to the
+quadratic scaling required by uniform worst-case guarantees. We characterize the
+asymmetry between active and inactive interference and the trade-off between
+interference and observation-noise budgets.
+We then validate these bounds
+across system parameters through numerical experiments based on Gaussian-
+tail approximations. We also introduce IHT-SAE, which uses learned iterative
+refinement to improve feature recovery beyond the limits of linear accessibility.
+These results quantify the geometric constraints of the linear representation hy-
+pothesis, providing a framework for evaluating sparse autoencoders, compositional
+generalization, and neural interpretability. Code to reproduce this work is available
+at: https://anonymous.4open.science/r/Linear-Availability-07CD
+1
+INTRODUCTION
+Stochastic separation theorems show that in high dimensions, any point in a random set can be
+separated from the others by a hyperplane with high probability, even when the set grows exponentially
+with dimension (Sidorov & Zolotykh, 2020). Though traditionally applied to single features, these
+concentration principles extend to simultaneously active features. Compressed sensing formalizes
+how a vast number of features (m) can be encoded into a smaller d-dimensional space when a sparse
+subset of size k is active; mirroring feature superposition in neural networks (Elhage et al., 2022).
+Even though LLM spaces are globally not uniform (Ethayarajh, 2019), concept subspaces are (Cai
+et al., 2021), and can be effectively approximated by Gaussian distributions (Zhao et al., 2025).
+It is this very local uniformity that gives rise to representational geometry (linear representation
+hypothesis) in vision encoders (Radford et al., 2021) and LLMs (Park et al., 2025; 2024), which
+encode features into composite structures (e.g., categorical, hierarchical, spatial, relational, etc).
+Within this geometry, co-occurring features such as “Christmas” and “December” can occupy
+similar directions, producing constructive interference that aids decoding (Prieto et al., 2026), while
+destructive interference can suppress active features (Stevinson et al., 2025). Yet true compositional
+reasoning may require recovering unusual combinations such as “Christmas in July” without familiar
+co-occurrences, making control of cross-feature interference central to reliable linear decoding.
+We apply the subgaussian Hoeffding inequality to derive high-probability bounds for linear decoding,
+showing that the sufficient dimension scales linearly with the number of active features, compared
+with quadratic scaling under uniform worst-case guarantees (Garg et al., 2026). We further use
+Gaussian-tail approximations to estimate failure rates and assess these predictions numerically.
+Sparse autoencoders (SAEs) recover such features by reconstructing representations as sparse
+combinations of learned feature directions (Huben et al., 2024). Standard single-step encoders,
+however, remain constrained by linear accessibility. We therefore introduce IHT-SAE, which refines a
+learned sparse estimate through residual-based updates with learned step sizes and TopK thresholding.
+We further find that decoder performance depends on the coefficient distribution: strongly decaying
+language-model activations favor greedy residual subtraction, while flatter vision-encoder activations
+narrow the gap between strategies.
+1
+arXiv:2609.09556v3  [stat.ML]  25 Sep 2026
+
+
+===== PDF PAGE 2 =====
+Preprint
+Our main contribution is a framework for understanding feature accessibility in superposition:
+- We distinguish uniform worst-case from fixed-support high-probability linear accessibility guaran-
+tees, showing that in the latter, governed by cross-feature interference, a dimension d = Oε(k log m)
+suffices for fixed error and failure tolerances when the noise satisfies σ = Oε(1/√log m).
+- We place linear/nonlinear encoding/decoding within a shared representational regime, consistent
+with the linear representation hypothesis. Here, nonlinearities are used for setting/getting the
+feature coefficients to minimize or bypass the cross-feature interference.
+- We connect these guarantees to SAEs, introduce IHT-SAE to recover features beyond the limits of
+linear accessibility, while decoupling iteration count from the sparsity budget, and demonstrate that
+the choice of nonlinear decoder should match the model’s coefficient distribution.
+2
+THEORY: COMPRESSED SENSING FRAMEWORK
+We model the problem in a compressed sensing framework, where a high-dimensional sparse vector
+is mapped to a lower-dimensional measurement space.
+2.1
+LINEAR VERSUS NONLINEAR ENCODING
+Definition 1 (Linear encoding with independent noise). Let x ∈[−1, 1]m be a k-sparse input signal,
+let A = [a1, . . . , am] ∈Rd×m be a dictionary of unit ℓ2-norm feature embeddings (∥ai∥2 = 1), and
+let z ∈Rd denote an independent observation noise vector. The linear encoding maps the input and
+noise to a compressed d-dimensional sketch y via:
+y = Ax + z =
+X
+j∈S
+xjaj + z
+where S ⊆[m] represents the active feature support of size |S| ≤k.
+An alternative to this framework is encoding nonlinear representations. Linear representations
+possess a wider margin of error during decoding, operating as a probabilistic structure. Geometrically,
+decoding a linear sketch is akin to measuring the cosine similarity between nearly orthogonal feature
+directions; slight measurement errors yield proportionally small perturbations in the recovered state.
+In contrast, discontinuous nonlinear representations, such as RAM of storing the k largest coefficients
+alongside their indices, can achieve a high compression of d = O(k) (Ba et al., 2010). However,
+slight errors during decoding of such structures (e.g., a corrupted index mapping) can completely
+break the structure, resulting in disparate representations rather than proportional deviations. Such
+a non-differentiable representation space renders gradient-based optimization intractable (but not
+impossible). We later show how nonlinearity can be employed for encoding linear representations
+while minimizing the margin of error when reading said features.
+2.2
+NONLINEAR DECODING
+Classical compressed sensing demonstrates that a k-sparse vector in Rm can be embedded into
+approximately d = O(k log(m/k)) measurements, assuming a known measurement matrix (Candes
+& Tao, 2005). Here, recovery can be achieved in polynomial time using nonlinear decoding algorithms
+(ℓ1-minimization) (Cand`es et al., 2006), which extends to noisy environments, provided the noise z is
+bounded by ||z||ℓ2 ≤ε (Cand`es, 2008). Assuming the measurement matrix satisfies the restricted
+isometry property with a constant δ2k <
+√
+2 −1, this recovery is guaranteed to be stable in both the
+ℓ1/ℓ1 and ℓ2/ℓ1 regimes (Cand`es, 2008), with a matching lower bound in these regimes (Ba et al.,
+2010). Here, these proofs hold uniformly for all combinatorially many k-sparse supports.
+Input x
+1
+0
+0
+0.8
+0
+0.9
+Noise z
+0.01
+0.02
+-0.04
+Encode
+y = A(x) + z
+0.85
+-0.12
+0.94
+Sketch y
+Decode
+ℓ1/ℓ1, ℓ2/ℓ1
+0.98
+0
+0
+0.76
+0
+0.98
+Recovery ̂x
+Figure 1: Compressed sensing encoding and decoding pipeline.
+2
+
+
+===== PDF PAGE 3 =====
+Preprint
+2.3
+LINEAR DECODING
+Linear decoding requires features to be linearly accessible, meaning they are recovered by a fixed
+linear decoder. As opposed to relatively clean recovery as in nonlinear decoding, linear decoding
+may produce cross-feature interference on both inactive and active coordinates (Stevinson et al.,
+2025). Depending on its sign, this interference can create spurious inactive estimates or distort active
+estimates. Decoding can therefore be framed as the existence of a threshold which separates active
+features from inactive ones.
+Definition 2 (Linear decoding). Given a compressed sketch y ∈Rd and a dictionary A ∈Rd×m,
+linear decoding is defined by the single-step matched-filter projection:
+bx = A⊤y
+such that the estimated coefficient for any feature i ∈[m] is recovered via the inner product
+bxi = ⟨ai, y⟩.
+The geometric limits of linear decoding are invariant to the magnitude of the compressed state
+y. By the bilinearity of the inner product, scaling the compressed state by a factor α > 0 scales
+the entire decoding projection equally ⟨ai, αy⟩= α⟨ai, y⟩. Because the compressed state is a
+linear combination of active features (y = P xjaj), this scaling magnifies both the target signal
+and the interference by the same factor. Figure 2 visualizes the recovery bounds in the empirical
+high-probability and worst-case scenarios, where a separating threshold could reside.
+0
+5
+10
+15
+20
+25
+Sparsity (k active features)
+−20
+−10
+0
+10
+20
+Signal magnitude
+Empirical (RMSNorm)
+0
+5
+10
+15
+20
+25
+Sparsity (k active features)
+Worst-case coherence bound (RMSNorm)
+d = 64
+d = 128
+d = 256
+d = 512
+Minimum active signal
+Maximum inactive signal
+Figure 2: Signal magnitudes and recovery bounds in an RMSNorm vector space.
+2.4
+THE WORST-CASE SCENARIO OF LINEAR DECODING
+Requiring the linear decoder to satisfy ∥A⊤Ax −x∥∞< ε uniformly for every k-sparse vector
+x ∈[−1, 1]m yields an upper bound d = Oε(k2 log m); a nearly matching lower bound of d =
+Ωε
+
+k2
+log k log m
+k
+
+applies even when allowing any arbitrary linear decoder B⊤(Garg et al., 2026).
+This k2 scaling is a geometric limitation representing how effectively low-rank projections can
+suppress cross-feature interference uniformly over all combinatorially many k-sparse inputs.
+2.5
+THE EMPIRICAL HIGH-PROBABILITY LINEAR DECODING SCENARIO
+By analyzing the joint probability space of the dictionary, signal, and noise, we can bound the
+total cross-feature interference and noise. We partition the error tolerance ε, allocating a budget
+of α ∈(0, 1) to noise and (1 −α) to interference. A subgaussian tail bound controls both the
+interference Ii and the projected noise. Because subgaussian tails decay exponentially fast, applying
+a union bound across all features guarantees with high probability that both components remain
+bounded within allocated budget.
+3
+
+
+===== PDF PAGE 4 =====
+Preprint
+To bound the maximum interference, we partition the sum of individual tail probabilities into two:
+PA,x
+
+max
+i∈I |Ii| ≥(1 −α)ε
+
+≤2(m −|S|) exp
+
+−d(1 −α)2ε2
+2|S|
+
+|
+{z
+}
+inactive
++ I|S|≥2 · 2|S| exp
+
+−d(1 −α)2ε2
+2(|S| −1)
+
+|
+{z
+}
+active
+≤2m exp
+
+−d(1 −α)2ε2
+2|S|
+
+≤δint
+(1)
+The inactive term bounds the interference on inactive coordinates, where the interference is generated
+by all |S| active features, whose erroneous inclusion would produce false positives. The active term
+bounds the interference on active coordinates, where the interference is generated by the remaining
+|S| −1 active features, whose erroneous exclusion would produce false negatives. The union bound
+includes both terms, so the condition controls the interference failures relevant to both error types.
+Lemma 1 (Interference constraint). Let d, m, k ∈N>0 with 1 ≤|S| ≤k ≤m for an arbitrarily
+chosen index set S ⊆[m]. Suppose the dictionary columns A = [a1, . . . , am] are mean-zero and
+sampled independently and uniformly from the unit sphere Sd−1, and the active signal coefficients
+(xj)j∈S are drawn from a joint distribution Px ∈PS satisfying |xj| ≤1 independently of A (with
+xj = 0 for j /∈S). For any error threshold ε > 0, fraction α ∈(0, 1), and failure probability
+δint ∈(0, 1), if the dimension d satisfies:
+d ≥
+2|S|
+(1 −α)2ε2 ln
+2m
+δint
+
+then the maximum cross-feature interference is bounded by (1 −α)ε with probability at least 1 −δint.
+For fixed α and δint independent of m, k, ε, substituting |S| ≤k yields the dimension scaling
+dreq = Oε(k log m), matching the asymptotic scaling in hyperdimensional computing theory (Thomas
+et al., 2021). However, unlike prior work that absorbs coefficients into feature vectors (implicitly
+assuming unit scale), we separate feature directions from their coefficient distributions, where our
+guarantees hold for arbitrary bounded coefficient distributions. This separation also yields a variance
+proxy for interference (Equation 14); combined with the noise variance, this proxy explains the
+budget borrowing dynamic. It also allows us to distinguish active from inactive interference.
+Lemma 2 (Noise constraint). Let the dictionary A and signal x satisfy the conditions of Lemma 1.
+Suppose the observation noise z = (z1, . . . , zd) is drawn from a product distribution Pz ∈Zσ
+independent of (A, x), with independent, mean-zero coordinates satisfying the subgaussian norm
+bound ∥zn∥ψ2 ≤σ for σ > 0. For any fraction α ∈(0, 1), error tolerance ε > 0, and noise failure
+budget δnoise ∈(0, 1), if the subgaussian scale satisfies:
+σ ≤
+√cαε
+p
+ln(2m/δnoise)
+then noise is bounded by αε with probability at least 1 −δnoise, where c > 0 is an absolute constant.
+For fixed α and δnoise, this bounds the maximum certified noise scales as σmax = Oε(1/√log m).
+Theorem 1 (Fixed-support decoding guarantee). Let ε > 0 and α ∈(0, 1), and let the failure budget
+be partitioned into δint, δnoise ∈(0, 1) such that δint + δnoise = ∆< 1. If the dimension d and noise
+scale σ satisfy Lemma 1 and Lemma 2, respectively, then:
+∀S ⊆[m] with 1 ≤|S| ≤k,
+sup
+Px∈PS
+sup
+Pz∈Zσ
+PA,x,z (∥bx −x∥∞≥ε) ≤∆
+Meaning, for any arbitrary fixed support S across all valid distributions, the maximum estimation
+error exceeds ε with a joint failure probability of at most ∆.
+Corollary 1 (High-probability support recovery). Given the ℓ∞error bound ∥bx −x∥∞≤ε from
+Theorem 1 and a known minimum active coefficient xmin ≤minj∈S |xj|, support recovery via the
+thresholding rule bS = {i : |bxi| > τ} is guaranteed if there exists a threshold τ satisfying:
+εinactive < xmin −εactive =⇒
+εinactive
+| {z }
+maxi/
+∈S |bxi|
+< τ < xmin −εactive
+|
+{z
+}
+minj∈S |bxj|
+4
+
+
+===== PDF PAGE 5 =====
+Preprint
+Full proof is in Appendix A.
+3
+NUMERICAL TESTS: EVALUATING THEORY
+In our numerical tests (unless specified otherwise), all dictionary columns are drawn from Gaussian
+distribution and L2-normalized to unit length. For each sample, k active features are selected
+uniformly at random with coefficients set to 1, yielding noiseless observations.
+As the Hoeffding inequality provides a conservative bound for any dictionary uniformly distributed
+on the unit sphere Sd−1, we can obtain a more precise estimate for the failure probability δgauss
+by modeling the interference terms independently (Equation 1) and computing their Gaussian
+approximation (Appendix A.3). Because this formulation bounds the tail-matching factor from
+below by a constant (0.5), the Gaussian approximation occasionally falls below the Hoeffding bound
+but never exceeds it. This approximation effectively captures the scaling dynamics of the system
+parameters. In configurations where the number of features is small relative to the dimension size,
+it yields a high probability of successful decoding; and instead when dimension size is relatively
+smaller, the probability decreases accordingly.
+With minimum active coefficient xmin = 1, the empirical maximum deviations are computed as
+maxi∈S |1.0 −bxi| and maxi/∈S |bxi| for active and inactive terms, respectively, from which we derive
+the empirical failure rate δemp. As δ approaches zero, the term ln(2m/δ) grows indefinitely. To
+prevent finite-sample Monte Carlo noise from distorting the failure-rate ratio δgauss/δemp, we restrict
+our evaluation to regimes with at least 100 empirical failures. Because the empirical failure count
+Nfail for rare events approximates a Poisson distribution, its relative statistical error (coefficient
+of variation) is defined by the ratio of the standard deviation to the mean, σ/µ ≈√Nfail/Nfail =
+1/√Nfail (Rubinstein & Kroese, 2016). By requiring Nfail ≥100, the estimated coefficient of
+variation of the empirical denominator is at most 1/
+√
+100 = 10%, reducing the influence of sampling
+noise on the failure-rate ratio. Meaning, 40, 000 trials enables evaluating high-probability decoding
+regimes down to a minimum failure rate of 0.25% (a 99.75% success rate).
+As recovery success approaches 100%, the δemp converges to δgauss (Figure 3), demonstrating that
+the Gaussian approximation closely estimates the required dimension for high-probability decoding,
+providing empirical support that Hoeffding inequality governs the guarantee for high-probability (low
+failure-probability) linear accessibility. Similar results for Gaussian and Laplace1 distributions are
+shown in Appendix D.
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+Sparsity (k)
+0.5
+1
+2
+4
+8
+Bounding ratio (δgauss/δemp)
+Inactive term (Rademacher)
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+Sparsity (k)
+Active term (Rademacher)
+0%
+100%
+Success
+rate
+d = 64
+d = 128
+d = 256
+d = 512
+Tight bound threshold
+Figure 3: Tightness of Gaussian approximation for high-probability decoding on Rademacher
+distribution. 40, 000 trials were run for every combination of sparsity k ∈[2, 24], dictionary size
+m ∈{512, 1024, 2048, 4096} and dimension d ∈{64, 128, 256, 512}, evaluated against various
+error thresholds ε ∈{0.1, 0.2, . . . , 0.9}. When k = 2 and active coefficients have equal magnitude,
+a projection ⟨ai, aj⟩equally contributes to the failures of target i and j, so the union bound counts
+the same underlying event twice (negligible for larger k).
+1Though Laplace distribution is subexponential, because we project the dictionary columns onto a unit
+sphere, it becomes bounded and subsequently subgaussian. These normalized columns are not uniform on the
+sphere, however. Nevertheless, under suitable central limit theorem conditions, centered, variance-normalized
+interference asymptotically approaches a normal distribution, motivating the Gaussian approximation.
+5
+
+
+===== PDF PAGE 6 =====
+Preprint
+3.1
+SUPPORT RECOVERY
+Figures 4 and 5 evaluate success by the existence of a
+valid separating threshold (Corollary 1).
+In general vector space, where active features are simply
+summed together, the magnitude of the superposed state
+grows unbounded as the number of simultaneous features
+(k) increases. Subsequently, applying RMSNorm (Zhang
+& Sennrich, 2019) constrains the superposed state vector
+to a fixed magnitude of
+√
+d. Despite this difference
+in magnitudes, relative signal-to-interference ratios are
+identical as normalization scales the target signal and the
+background geometric interference by the same factor.
+0
+5
+10
+15
+20
+25
+Sparsity (k active features)
+0
+20
+40
+60
+80
+100
+Success rate (%) - empirical
+General vector space
+RMSNorm vector space
+d = 64
+d = 128
+d = 256
+d = 512
+Figure 4: Recovery of general and RM-
+SNorm vector spaces across dimensions
+and sparsities.
+Our proofs partition the error tolerance ε into noise
+budget (αε) and interference budget ((1 −α)ε).
+In practice, success simply requires that the sum of
+interference and noise remains below the tolerance ε.
+Because we model interference and additive noise as in-
+dependent variables, Bienaym´e’s identity dictates that the
+variance of their sum equals the sum of their individual
+variances (we derive the variance proxy for interference
+in Equation 14). Meaning, the system exhibits budget
+borrowing, where high interference can consume the
+total tolerance ε, leaving no room for noise, and vice
+versa.
+0.00
+0.05
+0.10
+0.15
+0.20
+0.25
+Noise level (σ)
+20
+40
+60
+80
+100
+Success rate (%) - empirical
+d = 64
+d = 128
+d = 256
+d = 512
+Figure 5: Recovery in noisy environment.
+3.2
+NONLINEAR DECODING ALGORITHMS
+When dictionary is known, sparse inference can be performed using methods such as OMP (orthogonal
+matching pursuit), iterative hard thresholding, or LASSO (least absolute shrinkage and selection
+operator). OMP greedily orthogonalizes the residual of linearly most accessible feature (Pati et al.,
+1993). Iterative hard thresholding instead uses residual correlations to correct all feature activation
+estimates, then retains the k largest in magnitude (Blumensath & Davies, 2009). And LASSO
+estimates sparse coefficients by minimizing reconstruction error with an ℓ1 penalty (Tibshirani,
+1996).
+Meaning, it operates in a nonlinear decoding regime where the theoretical bounds of
+ℓ1/ℓ1 apply. This convex problem can be solved using ISTA (iterative shrinkage-thresholding
+algorithm) (Daubechies et al., 2004), which alternates residual-based coefficient updates with soft
+thresholding, or its accelerated variant, FISTA (Beck & Teboulle, 2009).
+In unsupervised dictionary learning, the optimization must simultaneously discover feature directions
+and identify the unknown k-sparse activation support, where coefficients can be estimated using
+different sparse-inference methods, such as OMP, FISTA, or ISTA (Appendix B). Building on iterative
+soft thresholding, LISTA (learned iterative shrinkage-thresholding algorithm) unfolds ISTA into a
+fixed-depth network and learns its parameters through backpropagation (Gregor & LeCun, 2010).
+3.3
+FEATURE RECOVERY USING SAES
+A TopK SAE (Gao et al., 2024) encoder resembles a learned hard-thresholding step, whereas a
+ReLU SAE encoder resembles LISTA without iterative refinement. Both amortize the cost of sparse
+inference via a learned encoder that predicts sparse codes in a single forward pass, jointly optimizing
+the encoder and decoder dictionary through gradient descent. As monotonic activation functions
+(e.g., ReLU) do not increase the capacity of linear accessibility (Garg et al., 2026), these standard
+SAEs operate in a linear decoding regime. This could explain why SAEs fail at compositional
+generalization within a compressed sensing framework when trained on LLM activations (Barin-
+Pacela et al., 2026). Because Transformers can provably implement LISTA-type iterative nonlinear
+decoding algorithms (Liu et al., 2025), they have the capacity to operate in a nonlinear decoding
+regime. Meaning, LLMs can represent features in denser superposition that remain inaccessible to
+the linear decoding regime of SAEs.
+6
+
+
+===== PDF PAGE 7 =====
+Preprint
+To elevate SAEs into a nonlinear decoding regime, MP-SAE incorporates matching pursuit into an
+SAE by learning a dictionary through an unrolled matching-pursuit encoder that performs sequential
+residual updates (Costa et al., 2025). To further improve robustness to unknown sparsity, building on
+iterative hard thresholding, we augment a TopK SAE with learned iterative refinement (as in LISTA),
+and tie the update matrices to the decoder dictionary in order to align refinement with the SAE’s
+reconstruction objective.
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+F1 score
+noise to signal ratio = 0.0
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+noise to signal ratio = 0.1
+TopK (n = 0, linear decoder)
+Optimal encoder for linear decoder
+MP-SAE (darker →n = 32)
+IHT-SAE (darker →n = 32)
+Figure 6: Support recovery using TopK, IHT-SAE and MP-SAE in RMSNorm vector space (m =
+1024, d = 128). Curves show F1 scores versus active sparsity k at noise-to-signal power ratios of
+0 and 0.1. To evaluate support recovery up to permutation and sign ambiguities, predicted feature
+activations are greedily aligned with the ground truth by mapping each true dictionary direction
+to the learned latent direction that maximizes their absolute cosine similarity. Reliable support
+recovery requires active coefficients to be sufficiently large to remain distinguishable from cross-
+feature interference and noise. We therefore impose a minimum active coefficient of 0.1 before
+normalization. Darker shades indicate more iterations (n ∈{1, 2, 4, 8, 16, 32}); black denotes single-
+step TopK (n = 0). The dashed green line denotes the optimal encoder baseline. Similar results for
+general vector space in C.2. Detailed methodology in Section C.
+Our IHT-SAE (algorithm in Appendix C.3) refines a learned sparse initialization through residual-
+based updates with learned step sizes. Each update adjusts coefficients jointly, then retains at most
+top-k values, followed by ReLU. MP-SAE instead starts from zero, greedily selecting a feature from
+the residual and subtracting its contribution. Thus, n = k is an ideal iteration budget for MP-SAE if
+each iteration selects one new, correct feature. But choosing that n comes with the caveat of needing
+to know the active sparsity. IHT-SAE decouples iteration count from the sparsity budget by retaining
+at most k features after each update.
+We also compute an optimal coefficient baseline that maximizes the separation margin between
+active and inactive features using gradient descent (methodology in Appendix C.1), outperforming
+a regular linear decoder. For context, every iteration in isolation within these SAEs is governed by
+linear accessibility, so future work could incorporate better encoding to preemptively account for
+interference and boost recovery performance even further. This also extends to foundational models,
+where one could maximize linear accessibility while minimizing false positives and negatives.
+Sparse features
+input x
+1
+0
+0.8
+0
+0.9
+Active set S of k features
+LINEAR ENCODING
+Simple sum
+cj = xj
+Use input weights directly
+NONLINEAR ENCODING
+Interference-minimizing sum
+cS = f(x)
+Preemptively minimize interference
+on subsequent readout
+SHARED REPRESENTATION
+y = ∑
+j ∈S
+cjaj + z
+y
+c1a1
+c2a2
+c3a3
+Coefficients cj vary, aj are fixed.
+Observation noise z can be present.
+LINEAR DECODING
+Simple readout̂
+x = A ⊤y
+One projection, strong interference
+NONLINEAR DECODING
+Interference-minimizing readout
+OMP, IHT, ISTA and variants, etc
+Coefficient distributions determine the best choice
+Figure 7: Overview of the compressed sensing framework of linear/nonlinear encoding/decoding.
+7
+
+
+===== PDF PAGE 8 =====
+Preprint
+3.3.1
+EVALUATION ON FOUNDATION MODELS
+We evaluated both IHT-SAE and MP-SAE on activations extracted from foundational models. We
+probed layer index 18 of Qwen3-4B (Bai et al., 2023) using the TinyStories dataset (Eldan & Li,
+2023) and layer index 5 of the CLIP ViT-Base (Radford et al., 2021) using the Oxford-IIIT Pet
+dataset (Parkhi et al., 2012). We report the reconstruction variance explained (R2, Bricken et al.
+(2023)) and downstream performance preservation, measured by the degradation in cross-entropy
+(CE) loss when replacing original model activations with the SAE reconstructions. The training
+methodology mirrors the synthetic setup (Section C), where models were trained for 10, 000 steps
+with a batch size of 1024 using the Adam optimizer, incorporating ℓ2-normalization of the decoder
+dictionary after every update. For these experiments, we fixed the sparsity budget to k = 32 and set
+the SAE dictionary size to four times the hidden dimension of the respective foundation model. We
+evaluated single-step TopK (n = 0), IHT-SAE (n ∈{4, 8, 16}), and MP-SAE (n = 32). Here, 16
+iteration IHT-SAE and 32 iteration MP-SAE take equal amount of FLOPs per forward pass, where
+each IHT iteration takes roughly the amount of FLOPs of baseline TopK forward pass.
+Table 1: Downstream performance and reconstruction variance explained of SAE architectures on
+foundation models. The baseline row shows the original cross-entropy (CE) loss. SAE rows report
+mean ± sample standard deviation across three seeds for R2 reconstruction and the increase in CE
+loss (∆) when substituting original activations with SAE reconstructions.
+CLIP ViT
+Qwen3 4B GPT
+Encoder
+R2
+∆CE loss
+R2
+∆CE loss
+Baseline
+–
+1.6961
+–
+1.9833
+TopK (0 iterations)
+0.7000 ± 0.0003
++0.0558 ± 0.0036
+0.9989 ± 0.0000
++0.0996 ± 0.0022
+IHT (4 iterations)
+0.7509 ± 0.0008
++0.0286 ± 0.0063
+0.9989 ± 0.0000
++0.0976 ± 0.0026
+IHT (8 iterations)
+0.7576 ± 0.0010
++0.0226 ± 0.0010
+0.9989 ± 0.0000
++0.1252 ± 0.0075
+IHT (16 iterations)
+0.7584 ± 0.0024
++0.0255 ± 0.0022
+0.9988 ± 0.0000
++0.1318 ± 0.0102
+MP (32 iterations)
+0.7623 ± 0.0001
++0.0201 ± 0.0023
+0.9990 ± 0.0000
++0.0414 ± 0.0008
+Different nonlinear decoding algorithms handle coefficient distributions differently, meaning, the
+best algorithm depends on the coefficient distribution of the model being analyzed. OMP has been
+shown to perform well in α-strongly-decaying coefficient distributions (Wen et al., 2020), where
+the non-zero active coefficients, when sorted in descending order of magnitude such that |x(1)| ≥
+|x(2)| ≥· · · ≥|x(k)| > 0, satisfy the condition: |x(i+1)| ≤α|x(i)|
+for all i ∈{1, . . . , k −1}.
+This allows it to greedily subtract massive outliers without them distorting the recovery of smaller
+features, which explains the better downstream reconstruction loss of MP-based SAEs over IHT in
+LLMs (Figure 8). As such, we provide the theoretical and empirical pieces for constructing SAEs
+whose inductive bias matches that of the model being analyzed.
+0
+1
+2
+3
+4
+5
+6
+7
+Coefficient magnitude
+100
+101
+102
+103
+104
+105
+Density (log scale)
+TopK SAE
+16 iteration IHT SAE
+32 iteration MP SAE
+(a) CLIP vision model
+0
+2000
+4000
+6000
+8000
+10000
+Coefficient magnitude
+100
+101
+102
+103
+104
+105
+106
+107
+Density (log scale)
+TopK SAE
+16 iteration IHT SAE
+32 iteration MP SAE
+(b) GPT language model
+Figure 8: Unfilled histogram of coefficient distributions on a logarithmic y-axis. MP SAE has an
+inductive bias towards an α-strongly-decaying coefficient distribution, highlighting its capacity to
+isolate extreme outlier activations in language models.
+8
+
+
+===== PDF PAGE 9 =====
+Preprint
+4
+DISCUSSION
+It is important to distinguish a concept manifold from features. While a conceptual manifold, all
+things that could be (e.g., days of the week) might not be one-dimensionally linear, its materialized
+instances (e.g., Monday) exists as a linearly separable point along that structure (Engels et al.,
+2025). While it has been shown to extend to higher dimensional manifold structures (numbers on a
+helix, Kantamneni & Tegmark (2025)), every instance (e.g, Friday the second) is still a composite
+feature of sparse activations.
+4.1
+UNKNOWN NONLINEAR TRANSFORM
+A parallel line of work, known as World Models, has emerged which force nonlinear observations
+into a linear transform of the world’s latent structure (Klindt et al., 2026). This is best understood
+through structural features, which are compositional properties that require nonlinearity to be
+recovered (Vompa & Tammet, 2026). Rather than assuming representations are inherently nonlinear,
+we hypothesize it is more akin to an unsolved problem where the base features are represented linearly,
+while higher-order properties are derived via iterative bottom-up perception (e.g., nonlinear encoding)
+or top-down reasoning (e.g., nonlinear decoding) (Vompa et al., 2026). Here, new information is added
+linearly to the residual stream, while successive layers can transform the representational basis and
+refine feature estimates. This enables iterative nonlinear encoding/decoding, providing a mechanism
+through which greater Transformer depth can improve compositional generalization (Vompa &
+Tammet, 2026).
+4.2
+LIMITATIONS
+The connection between linear accessibility and LLM mechanics remains speculative, relying on
+external empirical evidence. Under the conditions of the Lindeberg central limit theorem (Lindeberg,
+1922), centered, variance-normalized interference asymptotically converges to a normal distribution
+as |S| grows; coupled with normalization (typically RMSNorm), their linear projections become
+bounded and subsequently subgaussian. This does not guarantee the uniform feature directions
+assumed by our theorem; nevertheless, we show that Gaussian tails are bounded by the Hoeffding
+bound theoretically and through numerical experiments. We describe the conditions where linear
+accessibility is possible, and subsequently the sufficient conditions for SAEs and more generally
+LRH, the extent LLMs utilize this remains unknown. This work does not claim a new state-of-the-art
+architecture, but rather clarifies the conditions governing a decoder choice.
+5
+CONCLUSION
+We characterize the high-probability guarantees of linear accessibility in feature superposition,
+showing that a sufficient dimension for fixed-support decoding is d = O(k log m) dimensions.
+Within this framework, we demonstrate that linear/nonlinear encoding/decoding can share a linear
+representational regime (assumed by LRH) of a simple weighted sum over active features, where
+nonlinearities can be used for setting/getting the coefficients to bypass cross-feature interference.
+These results clarify the geometric limits of the linear representation hypothesis and suggest how
+learned superposition can support compositional reasoning.
+9
+
+
+===== PDF PAGE 10 =====
+Preprint
+REFERENCES
+Khanh Do Ba, Piotr Indyk, Eric Price, and David P. Woodruff. Lower bounds for sparse recovery. In
+SODA, 2010. URL https://arxiv.org/abs/1106.0365.
+Jinze Bai, Shuai Bai, Yunfei Chu, Zeyu Cui, Kai Dang, Xiaodong Deng, Yang Fan, Wenbin Ge,
+Yu Han, Fei Huang, Binyuan Hui, Luo Ji, Mei Li, Junyang Lin, Runji Lin, Dayiheng Liu, Gao Liu,
+Chengqiang Lu, Keming Lu, Jianxin Ma, Rui Men, Xingzhang Ren, Xuancheng Ren, Chuanqi
+Tan, Sinan Tan, Jianhong Tu, Peng Wang, Shijie Wang, Wei Wang, Shengguang Wu, Benfeng
+Xu, Jin Xu, An Yang, Hao Yang, Jian Yang, Shusheng Yang, Yang Yao, Bowen Yu, Hongyi
+Yuan, Zheng Yuan, Jianwei Zhang, Xingxuan Zhang, Yichang Zhang, Zhenru Zhang, Chang
+Zhou, Jingren Zhou, Xiaohuan Zhou, and Tianhang Zhu. Qwen technical report, 2023. URL
+https://arxiv.org/abs/2309.16609.
+Vit´oria Barin-Pacela, Shruti Joshi, Isabela Camacho, Simon Lacoste-Julien, and David Klindt.
+Stop probing, start coding: Why linear probes and sparse autoencoders fail at compositional
+generalisation. In 2nd Workshop on Compositional Learning: Safety, Interpretability, and Agents,
+2026. URL https://openreview.net/forum?id=3NN3ehMKxW.
+Amir Beck and Marc Teboulle. A fast iterative shrinkage-thresholding algorithm for linear inverse
+problems. SIAM Journal on Imaging Sciences, 2(1), 2009. URL https://doi.org/10.
+1137/080716542.
+Thomas Blumensath and Mike E. Davies. Iterative hard thresholding for compressed sensing. Applied
+and Computational Harmonic Analysis, 2009. ISSN 1063-5203. URL https://doi.org/10.
+1016/j.acha.2009.04.002.
+Trenton Bricken, Adly Templeton, Joshua Batson, Brian Chen, Adam Jermyn, Tom Conerly, Nick
+Turner, Cem Anil, Carson Denison, Amanda Askell, Robert Lasenby, Yifan Wu, Shauna Kravec,
+Nicholas Schiefer, Tim Maxwell, Nicholas Joseph, Zac Hatfield-Dodds, Alex Tamkin, Karina
+Nguyen, Brayden McLean, Josiah E Burke, Tristan Hume, Shan Carter, Tom Henighan, and
+Christopher Olah. Towards monosemanticity: Decomposing language models with dictionary
+learning. Transformer Circuits Thread, 2023. https://transformer-circuits.pub/2023/monosemantic-
+features/index.html.
+Xingyu Cai, Jiaji Huang, Yuchen Bian, and Kenneth Church. Isotropy in the contextual embedding
+space: Clusters and manifolds. In International Conference on Learning Representations, 2021.
+URL https://openreview.net/forum?id=xYGNO86OWDH.
+Emmanuel Candes and Terence Tao. Decoding by linear programming. In IEEE Transactions on
+Information Theory, 2005. URL https://arxiv.org/abs/math/0502327.
+Emmanuel J. Cand`es. The restricted isometry property and its implications for compressed sensing.
+Comptes Rendus Mathematique, 346(9):589–592, 2008. ISSN 1631-073X. URL https://www.
+sciencedirect.com/science/article/pii/S1631073X08000964.
+Emmanuel J. Cand`es, Justin K. Romberg, and Terence Tao. Stable signal recovery from incomplete
+and inaccurate measurements. Communications on Pure and Applied Mathematics, 59(8):1207–
+1223, 2006. URL https://onlinelibrary.wiley.com/doi/abs/10.1002/cpa.
+20124.
+Val´erie Costa, Thomas Fel, Ekdeep Singh Lubana, Bahareh Tolooshams, and Demba E. Ba. From
+flat to hierarchical: Extracting sparse representations with matching pursuit. In NeurIPS, 2025.
+URL https://openreview.net/forum?id=Ll5miDx8KB.
+I. Daubechies, M. Defrise, and C. De Mol. An iterative thresholding algorithm for linear inverse
+problems with a sparsity constraint. Communications on Pure and Applied Mathematics, 2004.
+URL https://onlinelibrary.wiley.com/doi/abs/10.1002/cpa.20042.
+Ronen Eldan and Yuanzhi Li. Tinystories: How small can language models be and still speak coherent
+english?, 2023. URL https://arxiv.org/abs/2305.07759.
+10
+
+
+===== PDF PAGE 11 =====
+Preprint
+Nelson Elhage, Tristan Hume, Catherine Olsson, Nicholas Schiefer, Tom Henighan, Shauna Kravec,
+Zac Hatfield-Dodds, Robert Lasenby, Dawn Drain, Carol Chen, Roger Grosse, Sam McCandlish,
+Jared Kaplan, Dario Amodei, Martin Wattenberg, and Christopher Olah. Toy models of superposi-
+tion. Transformer Circuits Thread, 2022. URL https://transformer-circuits.pub/
+2022/toy_model/index.html.
+K. Engan, S.O. Aase, and J. Hakon Husoy. Method of optimal directions for frame design. In
+1999 IEEE International Conference on Acoustics, Speech, and Signal Processing. Proceed-
+ings. ICASSP99 (Cat. No.99CH36258), 1999. URL https://ieeexplore.ieee.org/
+document/760624.
+Joshua Engels, Eric J Michaud, Isaac Liao, Wes Gurnee, and Max Tegmark. Not all language model
+features are one-dimensionally linear. ICLR, 2025.
+Kawin Ethayarajh.
+How contextual are contextualized word representations? Comparing the
+geometry of BERT, ELMo, and GPT-2 embeddings. In EMNLP-IJCNLP, 2019. URL https:
+//aclanthology.org/D19-1006/.
+Leo Gao, Tom Dupr´e la Tour, Henk Tillman, Gabriel Goh, Rajan Troll, Alec Radford, Ilya Sutskever,
+Jan Leike, and Jeffrey Wu. Scaling and evaluating sparse autoencoders, 2024. URL https:
+//arxiv.org/abs/2406.04093.
+Nikhil Garg, Jon Kleinberg, and Kenny Peng. How many features can a language model store under
+the linear representation hypothesis?
+In COLT, 2026. URL https://arxiv.org/abs/
+2602.11246.
+Karol Gregor and Yann LeCun. Learning fast approximations of sparse coding. In Proceedings of
+the 27th International Conference on International Conference on Machine Learning, 2010. URL
+https://dl.acm.org/doi/10.5555/3104322.3104374.
+Robert Huben, Hoagy Cunningham, Logan Riggs Smith, Aidan Ewart, and Lee Sharkey. Sparse
+autoencoders find highly interpretable features in language models. In ICLR, 2024. URL https:
+//openreview.net/forum?id=F76bwRSLeK.
+Subhash Kantamneni and Max Tegmark. Language models use trigonometry to do addition, 2025.
+URL https://arxiv.org/abs/2502.00873.
+David Klindt, Yann LeCun, and Randall Balestriero. When does lejepa learn a world model?, 2026.
+URL https://arxiv.org/abs/2605.26379.
+J. W. Lindeberg. Eine neue herleitung des exponentialgesetzes in der wahrscheinlichkeitsrechnung.
+Mathematische Zeitschrift, 15:211–225, 1922. URL http://eudml.org/doc/167717.
+Renpu Liu, Ruida Zhou, Cong Shen, and Jing Yang. On the learn-to-optimize capabilities of
+transformers in in-context sparse recovery. In ICLR, 2025. URL https://openreview.
+net/forum?id=NHhjczmJjo.
+Kiho Park, Yo Joong Choe, and Victor Veitch. The linear representation hypothesis and the geometry
+of large language models. In ICML, 2024. URL https://arxiv.org/abs/2311.03658.
+Kiho Park, Yo Joong Choe, Yibo Jiang, and Victor Veitch.
+The geometry of categorical and
+hierarchical concepts in large language models. In ICLR, 2025. URL https://openreview.
+net/forum?id=bVTM2QKYuA.
+Omkar M. Parkhi, Andrea Vedaldi, Andrew Zisserman, and C. V. Jawahar. Cats and dogs. In IEEE
+Conference on Computer Vision and Pattern Recognition, 2012.
+Y.C. Pati, R. Rezaiifar, and P.S. Krishnaprasad. Orthogonal matching pursuit: recursive function
+approximation with applications to wavelet decomposition. In Proceedings of 27th Asilomar
+Conference on Signals, Systems and Computers, 1993. URL https://ieeexplore.ieee.
+org/document/342465.
+11
+
+
+===== PDF PAGE 12 =====
+Preprint
+Lucas Prieto, Edward Stevinson, Melih Barsbey, Tolga Birdal, and Pedro A. M. Mediano. From
+data statistics to feature geometry: How correlations shape superposition. In The Fourteenth
+International Conference on Learning Representations, 2026. URL https://openreview.
+net/forum?id=7akSRQS5Xh.
+Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal,
+Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, Gretchen Krueger, and Ilya Sutskever.
+Learning transferable visual models from natural language supervision. ICML, 2021.
+Reuven Y. Rubinstein and Dirk P. Kroese. Simulation and the Monte Carlo Method. 2016. URL
+https://app.dimensions.ai/details/publication/pub.1106805670.
+Sergey Sidorov and Nikolai Zolotykh. Linear and fisher separability of random points in the d-
+dimensional spherical layer and inside the d-dimensional cube. IJCNN, 2020.
+Edward Stevinson, Lucas Prieto, Melih Barsbey, and Tolga Birdal. Adversarial attacks leverage
+interference between features in superposition. In Mechanistic Interpretability Workshop at
+NeurIPS 2025, 2025. URL https://openreview.net/forum?id=LqI52GG2Ss.
+Anthony Thomas, Sanjoy Dasgupta, and Tajana Rosing. A theoretical perspective on hyperdi-
+mensional computing. Journal of Artificial Intelligence Research, 72, October 2021. URL
+http://dx.doi.org/10.1613/jair.1.12664.
+Robert Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical
+Society: Series B (Methodological), 01 1996. ISSN 0035-9246. URL https://doi.org/10.
+1111/j.2517-6161.1996.tb02080.x.
+Roman Vershynin. High-Dimensional Probability: An Introduction with Applications in Data
+Science. Cambridge Series in Statistical and Probabilistic Mathematics. Cambridge University
+Press, Cambridge, 2 edition, 2026.
+C. Vignat and S. Bhatnagar.
+An extension of wick’s theorem.
+Statistics and Probability
+Letters, 2008. URL https://www.sciencedirect.com/science/article/pii/
+S0167715208001405.
+Enrico Vompa and Tanel Tammet.
+The scaling properties of implicit deductive reasoning in
+transformers, 2026. URL https://arxiv.org/abs/2605.04330.
+Enrico Vompa, Tanel Tammet, and Mohit Vaishnav. Beyond the linear separability ceiling: Aligning
+representations in VLMs. Transactions on Machine Learning Research, 2026. URL https:
+//openreview.net/forum?id=3uX4p80bN0.
+Jinming Wen, Rui Zhang, and Wei Yu. Signal-dependent performance analysis of orthogonal
+matching pursuit for exact sparse recovery. IEEE Transactions on Signal Processing, 2020. URL
+http://dx.doi.org/10.1109/TSP.2020.3016571.
+Biao Zhang and Rico Sennrich. Root mean square layer normalization. 2019. URL https:
+//arxiv.org/abs/1910.07467.
+Haiyan Zhao, Heng Zhao, Bo Shen, Ali Payani, Fan Yang, and Mengnan Du. Beyond single
+concept vector: Modeling concept subspace in llms with gaussian distribution. ICLR, 2025. URL
+https://arxiv.org/abs/2410.00153.
+12
+
+
+===== PDF PAGE 13 =====
+Preprint
+A
+SUFFICIENT HIGH-PROBABILITY BOUND FOR LINEAR DECODING
+Grounded in the linear representation hypothesis, the dictionary A = [a1, . . . , am] ∈Rd×m encodes
+semantic features as normalized latent directions (∥ai∥2 = 1). The observed state is a sparse linear
+superposition of these vectors y = Ax + z, where z is additive observation noise. We analyze the
+linear decoder:
+bx = A⊤y
+(2)
+Let d, m, k ∈N>0 with 1 ≤k ≤m, where d is the ambient dimension (number of observations), m
+the total feature count, and k the maximum sparsity. Fix an arbitrary deterministic index set S ⊆[m]
+with sparsity 1 ≤|S| ≤k. We make the following assumptions throughout:
+- Dictionary columns a1, . . . , am are mean-zero, and sampled independently and uniformly from the
+unit sphere Sd−1.
+- The active signal coefficients (xj)j∈S are drawn from any joint distribution Px ∈PS, where PS
+denotes the broad class of all valid bounded coefficient distributions (|xj| ≤1) that are independent
+of A. We set xj = 0 for j /∈S.
+- Observation noise z = (z1, . . . , zd) is drawn from a distribution Pz ∈Zσ, where Zσ denotes the
+class of product noise distributions independent of (A, x) with independent, mean-zero coordinates
+satisfying the subgaussian norm bound ∥zn∥ψ2 ≤σ, where σ > 0.
+Our analysis of this decoding draws largely upon the high-dimensional probability techniques detailed
+in Vershynin (2026), from which the theorems utilized below are sourced. We fixed a support S to
+avoid the uniform-support combinatorial penalty, with inactive coordinates set to zero (xj = 0 for
+j /∈S). For any target coordinate i ∈[m], the number of interfering active features is denoted by
+si := |S \ {i}|. Because S is fixed, si is a fixed quantity bounded by si = |S| −1 when i ∈S, and
+si = |S| when i /∈S. In either case, si ≤|S| ≤k.
+A.1
+ERROR DECOMPOSITION
+Let ε > 0 denote the maximum acceptable global decoding error. To analyze this error for a target
+coordinate i, we expand the observation model y = P
+j∈S xjaj + z and subtract the true signal xi
+from the decoder estimate bxi = ⟨ai, y⟩:
+bxi −xi = ⟨ai, y⟩−xi
+=
+*
+ai,
+X
+j∈S
+xjaj + z
++
+−xi
+= xi⟨ai, ai⟩+
+X
+j∈S\{i}
+xj⟨ai, aj⟩+ ⟨ai, z⟩−xi
+= xi(⟨ai, ai⟩−1) +
+X
+j∈S\{i}
+xj⟨ai, aj⟩
+|
+{z
+}
+Ii
++ ⟨ai, z⟩
+| {z }
+Ni
+(3)
+Because the dictionary vectors are normalized (∥ai∥2 = 1), the self-term vanishes (xi(1 −1) = 0),
+isolating the decoding error to the cross-feature interference Ii and the projected noise Ni:
+bxi −xi = Ii + Ni
+(4)
+We define I := {i : si ≥1} as the subset of coordinates that face cross-talk (worst-case having
+a cardinality of m); for i /∈I, the interference is zero (si = 0 and Ii = 0). To separate the two
+contributions to the total error, we partition the global tolerance ε. We allocate a fraction α ∈(0, 1)
+to the noise, and (1 −α) to the interference. By the triangle inequality, if the total error exceeds ε, at
+least one component must necessarily exceed its allocated budget. This bounds the total failure event
+within the union of individual failures:
+{|Ii + Ni| ≥ε} ⊆{|Ii| ≥(1 −α)ε} ∪{|Ni| ≥αε}
+(5)
+Applying the union bound to these sets yields the decoupled probability bound:
+P(|Ii + Ni| ≥ε) ≤P(|Ii| ≥(1 −α)ε) + P(|Ni| ≥αε)
+(6)
+13
+
+
+===== PDF PAGE 14 =====
+Preprint
+A.2
+INTERFERENCE CONCENTRATION
+We evaluate the interference concentration in the joint probability space of the dictionary and the
+signal. For any fixed target coordinate i ∈I and any distribution Px ∈PS, with S fixed, we
+condition on the signal x and the target vector ai realizations. Recall Ii = P
+j∈S\{i} xjUj, where
+Uj = ⟨ai, aj⟩. Since aj ∼Unif(Sd−1) and ai is a fixed unit vector, evaluating all moments allows
+us to bound the exponential moment.
+To do so, we count the ways to partition 2r factors into disjoint pairs. Through the sphere version
+of Wick’s theorem (Vignat & Bhatnagar, 2008), this count gives the even moments of Uj, which
+we then bound and substitute into the exponential series to bound its exponential moment. Let
+I2r = {1, . . . , 2r} and let Π2r be the set of partitions of I2r into r disjoint pairs. For each integer
+r ≥1, U 2r
+j
+= Q2r
+k=1⟨ai, aj⟩= ⟨ai, aj⟩· ⟨ai, aj⟩· · · ⟨ai, aj⟩, with 2r identical factors. Because ai is
+fixed and the expectation is over aj, Wick’s theorem pairs the ai from one factor with the ai from
+another, resolving every pair to ⟨ai, ai⟩. For a pairing σ ∈Π2r, let I2r/σ contain one representative
+from each pair, giving r indices in total. Then:
+EA[U 2r
+j
+| ai] =
+Γ(d/2)
+2rΓ(r + d/2)
+X
+σ∈Π2r
+| {z }
+|Π2r| terms
+Y
+k∈I2r/σ
+⟨ai, ai⟩
+|
+{z
+}
+r factors, all 1
+=
+1 · 3 · · · (2r −1)
+d(d + 2) · · · (d + 2r −2) ≤(2r)!
+2rr! dr
+(7)
+Here Γ is the Gamma function, satisfying Γ(z + 1) = zΓ(z), and |Π2r| denotes the number
+of pairings. Each pairing contributes 1 because ⟨ai, ai⟩= ∥ai∥2
+2 = 1. The final equality uses
+|Π2r| = 1·3 · · · (2r−1) and the Gamma recurrence to obtain the denominator d(d+2) · · · (d+2r−2).
+The inequality follows by bounding this denominator below by dr and using 1 · 3 · · · (2r −1) =
+(2r)!/(2rr!).
+To control the probability of large interference via the exponential moment method, we first bound
+EA[eλUj | ai]. Since |Uj| ≤1, we can expand the exponential and average its series term by term.
+The odd moments vanish by symmetry, and the even-moment bound above yields for every λ ∈R
+(we will choose the exact value later):
+EA[eλUj | ai] = 1 + λ2
+2! EA[U 2
+j | ai] + λ4
+4! EA[U 4
+j | ai] + λ6
+6! EA[U 6
+j | ai] + · · ·
+(8)
+= 1 +
+∞
+X
+r=1
+λ2r
+(2r)!EA[U 2r
+j
+| ai]
+(9)
+≤1 +
+∞
+X
+r=1
+λ2r
+(2r)!
+(2r)!
+2rr! dr
+(10)
+= 1 +
+∞
+X
+r=1
+1
+r!
+λ2
+2d
+r
+= exp
+λ2
+2d
+
+(11)
+Conditional on x, ai, the interference Ii is symmetric about zero, so its two tails have equal probability.
+For t > 0 and λ > 0, we apply Markov’s inequality (Proposition 1.6.2) to eλIi and multiply by two.
+Conditional independence factors the expectation into a product, and the exponential-moment bound
+with parameter λxj bounds each factor. Thus:
+PA(|Ii| ≥t | x, ai) = 2PA(Ii ≥t | x, ai) = 2PA(eλIi ≥eλt | x, ai)
+≤2EA[eλIi | x, ai]
+eλt
+= 2e−λt
+Y
+j∈S\{i}
+EA[eλxjUj | x, ai]
+(12)
+14
+
+
+===== PDF PAGE 15 =====
+Preprint
+Substituting Equation 11, with parameter λxj, into Equation 12 yields:
+PA(|Ii| ≥t | x, ai) ≤2e−λt
+Y
+j∈S\{i}
+exp
+(λxj)2
+2d
+
+= 2e−λt exp
+
+X
+j∈S\{i}
+λ2x2
+j
+2d
+
+
+= 2 exp
+
+−λt + λ2
+2d
+X
+j∈S\{i}
+x2
+j
+
+.
+(13)
+Using |xj| ≤1 and P
+j∈S\{i} x2
+j ≤si, we obtain the variance proxy:
+1
+d
+X
+j∈S\{i}
+x2
+j ≤si
+d
+(14)
+For si > 0, choosing λ = dt/si minimizes the quadratic exponent −λt + λ2si/(2d).
+Thus, substituting Equation 14 into Equation 13 and choosing λ = dt/si, we obtain:
+PA (|Ii| ≥t | x, ai) ≤2 exp
+
+−dt2
+si
++ dt2
+2si
+
+= 2 exp
+
+−dt2
+2si
+
+(15)
+We did this instead of applying the subgaussian Hoeffding inequality (Theorem 2.7.3) to avoid an
+unspecified absolute constant by proving it is 0.5. Furthermore, Theorem 2.2.1 assumes Rademacher
+variables, so we couldn’t use it directly, but the steps in this proof follow the same exponential
+moment method.
+Because the right hand side of this bound is deterministic and independent of the specific realizations
+of x and ai, taking the expectation over x ∼Px and ai ∼Unif(Sd−1) preserves the bound in the
+joint (A, x) probability space:
+PA,x (|Ii| ≥t) ≤2 exp
+
+−dt2
+2si
+
+(16)
+Intuitively, if the failure probability satisfies this bound for every individual realization of the signal
+and target vector, the expected failure probability across all random signals and vectors preserves this
+exact same bound. As such, to bound the worst-case cross-talk across all valid coordinates i ∈I, we
+seek the probability that the maximum interference exceeds our allocated threshold t = (1 −α)ε.
+Applying the union bound over I transforms the maximum into a sum of individual tail probabilities:
+PA,x
+
+max
+i∈I |Ii| ≥(1 −α)ε
+
+≤
+X
+i∈I
+PA,x (|Ii| ≥(1 −α)ε)
+(17)
+Where maxi∈∅|Ii| = 0. We evaluate this sum by partitioning I into inactive coordinates (i /∈S,
+where si = |S|) and active coordinates (i ∈S, where si = |S| −1). This splits the sum into two
+components, yielding the joint interference constraint with failure probability at most δint:
+PA,x
+
+max
+i∈I |Ii| ≥(1 −α)ε
+
+≤2(m −|S|) exp
+
+−d(1 −α)2ε2
+2|S|
+
+|
+{z
+}
+inactive
++ I|S|≥2 · 2|S| exp
+
+−d(1 −α)2ε2
+2(|S| −1)
+
+|
+{z
+}
+active
+≤2m exp
+
+−d(1 −α)2ε2
+2|S|
+
+≤δint
+(18)
+15
+
+
+===== PDF PAGE 16 =====
+Preprint
+The inactive term controls the interference budget on inactive coordinates, where the interference is
+generated by all si = |S| active features, whose erroneous inclusion would produce false positives.
+The active term controls the interference budget on active coordinates, where the interference is
+generated by the remaining si = |S| −1 active features, whose erroneous exclusion would produce
+false negatives. Here, the term vanishes when |S| = 1. The union bound includes both terms, so
+the resulting condition controls the interference failures relevant to both error types. Inverting the
+rightmost inequality for d yields the Lemma 1.
+0
+5
+10
+15
+20
+25
+Sparsity (k active features)
+0
+5
+10
+15
+20
+Signal magnitude
+Empirical (RMSNorm, m=128)
+0
+5
+10
+15
+20
+25
+Sparsity (k active features)
+Empirical (RMSNorm, m=16384)
+d = 64
+d = 128
+d = 256
+d = 512
+Minimum active signal
+Maximum inactive signal
+Figure A.1: Support recovery in an RMSNorm vector space for different dictionary sizes in a
+noiseless setting. Consistent with the theoretical high-probability bound d = Oϵ(k log m), the
+empirical recovery gap visualizes that linear accessibility supports exponentially many features.
+Success rates are evaluated across varying ambient dimensions d and sparsities k.
+A.3
+GAUSSIAN APPROXIMATION OF δINT
+Recall that interference Ii = P
+j∈S\{i} xjUj, where Uj = ⟨ai, aj⟩, is a linear combination of 1D
+projections. Since noise is absent, we simplify (1 −α)ε = ε. By the projective central limit theorem
+(Theorem 3.3.9), 1D marginals of vectors uniformly distributed on the unit sphere converge to a
+normal distribution. Because |xj| ≤1, summing the independent projection variances of 1/d across
+the si active interfering features results in a worst-case total interference variance of σ2 = si/d.
+Standardizing Ii/σ ≈N(0, 1) and defining the normalized threshold t = ε/σ = ε
+p
+d/si, we apply
+the Gaussian tail bound (Proposition 2.1.2) to approximate the two-sided failure probability:
+P(|Ii| ≥ε) = P(|Ii/σ| ≥t) ≈2
+
+1
+t
+√
+2π
+
+e−t2/2
+= 2
+ √si
+ε
+√
+2πd
+
+exp
+
+−dε2
+2si
+
+(19)
+For comparison, we define a tail-matching factor by matching the Gaussian approximation to the form
+of the Hoeffding envelope (Equation 16). By allocating the entire error budget to the interference
+term, the threshold for the Hoeffding envelope becomes t = ε. Subsequently isolating a tail-matching
+factor ctail yields:
+2 exp
+
+−ctail
+dε2
+si
+
+= 2
+ √si
+ε
+√
+2πd
+
+exp
+
+−dε2
+2si
+
+−ctail
+dε2
+si
+= ln
+ √si
+ε
+√
+2πd
+
+−dε2
+2si
+ctail = 0.5 −si
+dε2 ln
+ √si
+ε
+√
+2πd
+
+(20)
+To understand how an absolute constant can bound the tail-matching factor from below, let’s substitute
+ε
+p
+d/si = t back, yielding:
+ctail = 0.5 −1
+t2 ln
+
+1
+t
+√
+2π
+
+(21)
+16
+
+
+===== PDF PAGE 17 =====
+Preprint
+1
+2
+3
+4
+5
+t
+−3
+−2
+−1
+0
+1
+2
+3
+ctail
+Asymptote (t →∞)
+(0.50)
+Repeated at
+t = 1/√2π ≈0.399
+(0.50)
+Max: 1.656
+at t ≈ 0.658
+ctail(t)
+Figure A.2: ctail(t) is bounded from below by 0.5 for t = ε
+p
+d/si ≥1/
+√
+2π.
+To compute the Gaussian approximation for δint, we plug ctail back into the Hoeffding envelope, and
+apply the union bound M ∈{(m −|S|), |S|} over the exponent:
+δgauss = 2M exp
+
+−max
+
+0.5, 0.5 −si
+dε2 ln
+ √si
+ε
+√
+2πd
+ dε2
+si
+
+(22)
+This approximation captures the scaling dynamics of the system parameters. The floor of 0.5 within
+the exponent ensures that the numerical estimate does not exceed the baseline Hoeffding bound.
+The ctail term is then utilized to occasionally get a better numerical estimate, yielding more accurate
+numerical results in regimes where the Gaussian tail decays faster than the worst-case Hoeffding
+envelope. In configurations where the number of features is small relative to the dimension size, the
+exponential decay yields a high probability of successful decoding; and instead when dimension size
+is relatively smaller, the probability decreases accordingly.
+A.4
+NOISE CONCENTRATION
+Conditional on A, because the projected noise Ni = ⟨ai, z⟩= Pd
+n=1 ai,nzn is a sum of independent,
+mean-zero subgaussian variables, we can apply the subgaussian Hoeffding inequality (Theorem
+2.7.3), where c > 0 is a constant:
+Pz (|Ni| ≥t | A) ≤2 exp
+ 
+−
+ct2
+Pd
+n=1 ∥ai,nzn∥2
+ψ2
+!
+(23)
+By the definition of our noise class Zσ, the subgaussian norm of each coordinate is ∥zn∥ψ2 ≤σ.
+When factoring out ai,n and using the fact that ai is a unit vector (∥ai∥2 = 1), we get:
+d
+X
+n=1
+∥ai,nzn∥2
+ψ2 ≤σ2
+d
+X
+n=1
+a2
+i,n = σ2
+(24)
+Substituting Equation 24 into Equation 23 with our allocated error threshold t = αε, we obtain:
+Pz (|Ni| ≥αε | A) ≤2 exp
+
+−cα2ε2
+σ2
+
+(25)
+Applying a union bound over all m coordinates, analogous to Equation 17, yields the conditional
+noise constraint:
+Pz
+
+max
+i∈[m] |Ni| ≥αε
+ A
+
+≤
+m
+X
+i=1
+Pz (|Ni| ≥αε | A) ≤2m exp
+
+−cα2ε2
+σ2
+
+≤δnoise
+(26)
+Since this conditional bound holds uniformly for every realization of A, it also holds under the joint
+distribution of (A, z), with failure probability at most δnoise. Inverting the rightmost inequality for σ
+yields the Lemma 2.
+17
+
+
+===== PDF PAGE 18 =====
+Preprint
+B
+DICTIONARY RECOVERY
+To measure dictionary recovery across varying dimensions (d ∈{64, 128, 256}) and sparsities
+(k ∈[1, 50)) for a dictionary of size m = 1024, we employ stochastic alternating minimization for up
+to 100 iterations using batches of N = 50, 000 samples. The samples are generated via Y = DtrueX
+(general vector space), where k active coefficients per sample are drawn from a normal distribution
+N(0, 1) with uniformly random support.
+Sparse codes are estimated using OMP (constrained to k non-zeros), FISTA (50 iterations with
+Nesterov acceleration and spectral norm-derived step sizes), and ISTA (unrolled for 10 iterations
+using weight matrices derived from the current dictionary), with both FISTA and ISTA optimizing
+the LASSO objective (λ = 0.5).
+The dictionary is then updated from accumulated sufficient statistics XXT and Y XT using ridge-
+regularized MOD with a penalty of 10−4, followed by ℓ2 column normalization (Engan et al., 1999).
+Degenerate atoms (||di||2 < 10−8) are dynamically reinitialized from random batch samples, and
+training halts early if the maximum column shift falls below 10−5. Recovery is evaluated up to
+sign and permutation ambiguities by applying the Hungarian matching algorithm to the cost matrix
+−|DT
+trueDpred|.
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+0.2
+0.4
+0.6
+0.8
+1.0
+Cosine similarity
+OMP
+d = 64
+d = 128
+d = 256
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+FISTA
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+ISTA
+Figure A.3: Dictionary recovery using OMP, FISTA and ISTA, where the last two optimize a LASSO
+objective. Figures present the median, 5th, 25th, 75th, and 95th percentiles of the matched cosine
+similarities between corresponding ground-truth and learned dictionary columns in a noiseless setting.
+Feature directions and their coefficients are drawn from a normal distribution. Details in Section B.
+18
+
+
+===== PDF PAGE 19 =====
+Preprint
+C
+FEATURE RECOVERY USING SAES
+To measure SAE performance across varying sparsities (k ∈[1, 50)) and noise levels ({0, 0.1}) for a
+dictionary of size m = 1024 embedded in d = 128 dimensions, we train models for 10, 000 steps
+using batches of 1024 samples. Samples are generated as Y = DtrueX + z (general vector space),
+optionally followed by RMSNorm, where the number of active features is drawn uniformly from
+[1, k] during training and fixed to k during evaluation, and z is Gaussian noise scaled by the signal
+variance. Active coefficients are sampled from |x| ∼|N(0, 1)| + 0.1.
+We evaluate an iterative TopK SAE (unfolded with learned step sizes) and MP-SAE (utilizing
+sequential matching pursuit residual updates) across n ∈{0, 1, 2, 4, 8, 16, 32} iterations, where
+n = 0 is equivalent to a standard single-step TopK SAE. Models are optimized using Adam (learning
+rate 10−3, cosine annealing) to minimize mean squared error alongside an auxiliary residual-based
+reconstruction loss for dead latent revival. The decoder dictionary columns are ℓ2-normalized after
+every parameter update. Performance is evaluated across 2048 test samples using the F1-score for
+active support recovery.
+C.1
+OPTIMAL ENCODER BASELINE
+We compute a coefficient vector cS that maximizes the separation margin between active and inactive
+features for a single-step matched-filter readout. For a true active signal xS with support S and active
+dictionary columns AS, we optimize cS such that the minimum active readout score exceeds the
+maximum inactive score by a target margin γ. Given the readout scores s = A⊤AScS, the objective
+minimizes the margin violation:
+min
+cS max(0, γ −(min
+i∈S si −max
+j /∈S sj))
+We solve this objective iteratively using the Adam optimizer with a learning rate of 0.01 for 200
+iterations, setting the target margin γ = 0.1.
+Simply put, when the true coefficient xj is 1, but is measured 1 −1 = 0 because of interference,
+we add 1 to the transmitted signal so it measures 2 −1 = 1, which is the ground truth. However,
+increasing cj might change the measurement for another active or inactive feature. This optimizes
+the coefficients for all active and inactive features simultaneously.
+C.2
+SAE IN GENERAL VECTOR SPACE
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+F1 score
+noise to signal ratio = 0.0
+0
+10
+20
+30
+40
+50
+Sparsity (k active features)
+noise to signal ratio = 0.1
+TopK (n = 0, linear decoder)
+Optimal encoder for linear decoder
+MP-SAE (darker →n = 32)
+IHT-SAE (darker →n = 32)
+Figure A.4: Support recovery using TopK, IHT-SAE and MP-SAE in general vector space (m = 1024,
+d = 128). Curves show F1 scores versus active sparsity k at noise-to-signal power ratios of 0 and
+0.1. Darker shades indicate more iterations (n ∈{1, 2, 4, 8, 16, 32}); black denotes single-step TopK
+(n = 0).
+19
+
+
+===== PDF PAGE 20 =====
+Preprint
+C.3
+IHT-SAE ALGORITHM
+TopK-SAE and IHT-SAE
+Input: x; encoder We; decoder D; biases bpre, blat; sparsity budget k; IHT step sizes {ηt}T
+t=1.
+function TopKReLU(v, k)
+S ←extract indices of the k largest entries in v
+h ←initialize zero vector of the same shape as v
+hS ←ReLU(vS)
+return h
+end function
+TopK-SAE
+y ←x −bpre
+h0 ←TopKReLU(Wey + blat, k)
+ˆxTopK ←Dh0 + bpre
+IHT-SAE
+h ←h0
+for n = 1, . . . , N do
+r ←y −Dh
+h ←TopKReLU(h + ηnD⊤r, k)
+end for
+ˆxIHT ←Dh + bpre
+Figure A.5: TopK-SAE and IHT-SAE forward passes. IHT-SAE refines a TopK initialization through
+residual-based updates; N = 0 recovers TopK-SAE. TopK selects the largest signed values before
+applying ReLU, retaining at most k active coefficients.
+20
+
+
+===== PDF PAGE 21 =====
+Preprint
+D
+GAUSSIAN APPROXIMATION ON OTHER DISTRIBUTIONS
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+Sparsity (k)
+0.5
+1
+2
+4
+8
+Bounding ratio (δgauss/δemp)
+Inactive term (Gaussian)
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+Sparsity (k)
+Active term (Gaussian)
+0%
+100%
+Success
+rate
+d = 64
+d = 128
+d = 256
+d = 512
+Tight bound threshold
+(a) Gaussian distribution
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+Sparsity (k)
+0.5
+1
+2
+4
+8
+Bounding ratio (δgauss/δemp)
+Inactive term (Laplace)
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+Sparsity (k)
+Active term (Laplace)
+0%
+100%
+Success
+rate
+d = 64
+d = 128
+d = 256
+d = 512
+Tight bound threshold
+(b) Laplace distribution
+Figure A.6: Tightness of Gaussian approximation for high-probability decoding on other distri-
+butions. 40, 000 trials were run for every combination of sparsity k ∈[2, 24], dictionary size
+m ∈{512, 1024, 2048, 4096} and dimension d ∈{64, 128, 256, 512}, evaluated against various
+error thresholds ε ∈{0.1, 0.2, . . . , 0.9}.
+21

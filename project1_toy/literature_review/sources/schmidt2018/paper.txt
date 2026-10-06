@@ -1,0 +1,2955 @@
+
+
+===== PDF PAGE 1 =====
+Adversarially Robust Generalization Requires More Data
+Ludwig Schmidt
+MIT
+Shibani Santurkar
+MIT
+Dimitris Tsipras
+MIT
+Kunal Talwar
+Google Brain
+Aleksander Mądry
+MIT
+Abstract
+Machine learning models are often susceptible to adversarial perturbations of their inputs.
+Even small perturbations can cause state-of-the-art classiﬁers with high “standard” accuracy to
+produce an incorrect prediction with high conﬁdence. To better understand this phenomenon, we
+study adversarially robust learning from the viewpoint of generalization. We show that already
+in a simple natural data model, the sample complexity of robust learning can be signiﬁcantly
+larger than that of “standard” learning. This gap is information theoretic and holds irrespective
+of the training algorithm or the model family. We complement our theoretical results with
+experiments on popular image classiﬁcation datasets and show that a similar gap exists here as
+well. We postulate that the diﬃculty of training robust classiﬁers stems, at least partially, from
+this inherently larger sample complexity.
+1
+Introduction
+Modern machine learning models achieve high accuracy on a broad range of datasets, yet can easily
+be misled by small perturbations of their input. While such perturbations are often simple noise
+to a human or even imperceptible, they cause state-of-the-art models to misclassify their input
+with high conﬁdence. This phenomenon has ﬁrst been studied in the context of secure machine
+learning for spam ﬁlters and malware classiﬁcation [5, 14, 33]. More recently, researchers have
+demonstrated the phenomenon under the name of adversarial examples in image classiﬁcation [19,
+49], question answering [26], voice recognition [8, 9, 47, 60], and other domains (for instance, see
+[1, 3, 12, 20, 23, 24, 30, 58]). Overall, the existence of such adversarial examples raises concerns
+about the robustness of trained classiﬁers. As we increasingly deploy machine learning systems in
+safety- and security-critical environments, it is crucial to understand the robustness properties of
+our models in more detail.
+A growing body of work is exploring this robustness question from the security perspective by
+proposing attacks (methods for crafting adversarial examples) and defenses (methods for making
+classiﬁers robust to such perturbations). Often, the focus is on deep neural networks, e.g., see [11, 22,
+34, 36, 41, 45, 51, 57]. While there has been success with robust classiﬁers on simple datasets [29, 34,
+42, 46], more complicated datasets still exhibit a large gap between “standard” and robust accuracy [2,
+11]. An implicit assumption underlying most of this work is that the same training dataset that
+enables good standard accuracy also suﬃces to train a robust model. However, it is unclear if this
+assumption is valid.
+So far, the generalization aspects of adversarially robust classiﬁcation have not been thoroughly
+investigated. Since adversarial robustness is a learning problem, the statistical perspective is of
+1
+arXiv:1804.11285v2  [cs.LG]  2 May 2018
+
+
+===== PDF PAGE 2 =====
+integral importance. A key observation is that adversarial examples are not at odds with the
+standard notion of generalization as long as they occupy only a small total measure under the data
+distribution. So to achieve adversarial robustness, a classiﬁer must generalize in a stronger sense.
+We currently do not have a good understanding of how such a stronger notion of generalization
+compares to standard “benign” generalization, i.e., without an adversary.
+In this work, we address this gap and explore the statistical foundations of adversarially robust
+generalization. We focus on sample complexity as a natural starting point since it underlies the core
+question of when it is possible to learn an adversarially robust classiﬁer. Concretely, we pose the
+following question:
+How does the sample complexity of standard generalization compare to that of adversarially
+robust generalization?
+To study this question, we analyze robust generalization in two distributional models. By focusing
+on speciﬁc distributions, we can establish information-theoretic lower bounds and describe the exact
+sample complexity requirements for generalization. We ﬁnd that even for a simple data distribution
+such as a mixture of two class-conditional Gaussians, the sample complexity of robust generalization
+is signiﬁcantly larger than that of standard generalization. Our lower bound holds for any model and
+learning algorithm. Hence no amount of algorithmic ingenuity is able to overcome this limitation.
+In spite of this negative result, simple datasets such as MNIST have recently seen signiﬁcant
+progress in terms of adversarial robustness [29, 34, 42, 46]. The most robust models achieve accuracy
+around 90% against large ℓ∞-perturbations. To better understand this discrepancy with our ﬁrst
+theoretical result, we also study a second distributional model with binary features. This binary data
+model has the same standard generalization behavior as the previous Gaussian model. Moreover, it
+also suﬀers from a signiﬁcantly increased sample complexity whenever one employs linear classiﬁers
+to achieve adversarially robust generalization. Nevertheless, a slightly non-linear classiﬁer that
+utilizes thresholding turns out to recover the smaller sample complexity of standard generalization.
+Since MNIST is a mostly binary dataset, our result provides evidence that ℓ∞-robustness on MNIST
+is signiﬁcantly easier than on other datasets. Moreover, our results show that distributions with
+similar sample complexity for standard generalization can still exhibit considerably diﬀerent sample
+complexity for robust generalization.
+To complement our theoretical results, we conduct a range of experiments on MNIST, CIFAR10,
+and SVHN. By subsampling the datasets at various rates, we study the impact of sample size
+on adversarial robustness. When plotted as a function of training set size, our results show that
+the standard accuracy on SVHN indeed plateaus well before the adversarial accuracy reaches its
+maximum. On MNIST, explicitly adding thresholding to the model during training signiﬁcantly
+reduces the sample complexity, similar to our upper bound in the binary data model. On CIFAR10,
+the situation is more nuanced because there are no known approaches that achieve more than 50%
+accuracy even against a mild adversary. But as we show in the next subsection, there is clear
+evidence for overﬁtting in the current state-of-the-art methods.
+Overall, our results suggest that current approaches may be unable to attain higher adversarial
+accuracy on datasets such as CIFAR10 for a fundamental reason: the dataset may not be large
+enough to train a standard convolutional network robustly. Moreover, our lower bounds illustrate
+that the existence of adversarial examples should not necessarily be seen as a shortcoming of speciﬁc
+classiﬁcation methods. Already in a simple data model, adversarial examples provably occur for
+any learning approach, even when the classiﬁer already achieves high standard accuracy. So while
+2
+
+
+===== PDF PAGE 3 =====
+0
+20000
+40000
+60000
+Training Steps
+0
+20
+40
+60
+80
+100
+Accuracy
+MNIST
+Adversarial train
+Adversarial test
+Standard test
+0
+20000
+40000
+60000
+80000
+Training Steps
+0
+20
+40
+60
+80
+100
+CIFAR10
+Adversarial train
+Adversarial test
+Standard test
+Figure 1: Classiﬁcation accuracies for robust optimization on MNIST and CIFAR10. In both cases,
+we trained standard convolutional networks to be robust to ℓ∞-perturbations of the input. On
+MNIST, the robust test error closely tracks the corresponding training error and the model achieves
+high robust accuracy. On CIFAR10, the model still achieves a good natural (non-adversarial)
+test error, but there is a signiﬁcant generalization gap for the robust accuracy. This phenomenon
+motivates our study of adversarially robust generalization.
+vulnerability to adversarial ℓ∞-perturbations might seem counter-intuitive at ﬁrst, in some regimes
+it is an unavoidable consequence of working in a statistical setting.
+1.1
+A motivating example: Overﬁtting on CIFAR10
+Before we describe our main results, we brieﬂy highlight the importance of generalization for
+adversarial robustness via two experiments on MNIST and CIFAR10. In both cases, our goal is to
+learn a classiﬁer that achieves good test accuracy even under ℓ∞-bounded perturbations. We follow
+the standard robust optimization approach [4, 34, 53] – also known as adversarial training [19, 49] –
+and (approximately) solve the saddle point problem
+min
+θ
+E
+x
+
+max
+∥x′−x∥∞≤ε loss(θ, x′)
+
+via stochastic gradient descent over the model parameters θ. We utilize projected gradient descent
+for the inner maximization problem over allowed perturbations of magnitude ε (see [34] for details).
+Figure 1 displays the training curves for three quantities: (i) adversarial training error, (ii) adversarial
+test error, and (iii) standard test error.
+The results show that on MNIST, robust optimization is able to learn a model with around 90%
+adversarial accuracy and a relatively small gap between training and test error. However, CIFAR10
+oﬀers a diﬀerent picture. Here, the model (a wide residual network [59]) is still able to fully ﬁt the
+training set even against an adversary, but the generalization gap is signiﬁcantly larger. The model
+only achieves 47% adversarial test accuracy, which is about 50% lower than its training accuracy.1
+Moreover, the standard test error is about 87%, so the failure of generalization indeed primarily
+1We remark that this accuracy is still currently the best published robust accuracy on CIFAR10 [2]. For instance,
+contemporary approaches to architecture tuning do not yield better robust accuracies [13].
+3
+
+
+===== PDF PAGE 4 =====
+occurs in the context of adversarial robustness. This failure might be surprising particularly since
+properly tuned convolutional networks rarely overﬁt much on standard vision datasets.
+1.2
+Outline of the paper
+In the next section, we describe our main theoretical results at a high level. Sections 3 and 4 then
+provide more details for our lower bounds on ℓ∞-robust generalization. Section 5 complements
+these results with experiments. We conclude with a discussion of our results and future research
+directions.
+2
+Theoretical Results
+Our theoretical results concern statistical aspects of adversarially robust classiﬁcation. In order to
+understand how properties of data aﬀect the number of samples needed for robust generalization, we
+study two concrete distributional models. While our two data models are clearly much simpler than
+the image datasets currently being used in the experimental work on ℓ∞-robustness, we believe that
+the simplicity of our models is a strength in this context.
+After all, the fact that we can establish a separation between standard and robust generalization
+already in our Gaussian data model is evidence that the existence of adversarial examples for neural
+networks should not come as a surprise. The same phenomenon (i.e., classiﬁers with just enough
+samples for high standard accuracy necessarily being vulnerable to ℓ∞- attacks) already occurs in
+much simpler settings such as a mixture of two Gaussians.
+Also, our main contribution is a lower bound. So establishing a hardness result for a simple
+problem means that more complicated distributional setups that can “simulate” the Gaussian model
+directly inherit the same hardness.
+Finally, as we describe in the subsection on the Bernoulli model, the beneﬁts of the thresholding
+layer predicted by our theoretical analysis do indeed appear in experiments on MNIST as well. Since
+multiple defenses against adversarial examples have been primarily evaluated on MNIST [29, 42,
+46], it is important to note that ℓ∞-robustness on MNIST is a particularly easy case: adding a
+simple thresholding layer directly yields nearly state-of-the-art robustness against moderately strong
+adversaries (ε = 0.1), without any further changes to the model architecture or training algorithm.
+2.1
+The Gaussian model
+Our ﬁrst data model is a mixture of two spherical Gaussians with one component per class.
+Deﬁnition 1 (Gaussian model). Let θ⋆∈Rd be the per-class mean vector and let σ > 0 be the
+variance parameter. Then the (θ⋆, σ)-Gaussian model is deﬁned by the following distribution over
+(x, y) ∈Rd × {±1}: First, draw a label y ∈{±1} uniformly at random. Then sample the data point
+x ∈Rd from N(y · θ⋆, σ2I).
+While not explicitly speciﬁed in the deﬁnition, we will use the Gaussian model in the regime
+where the norm of the vector θ⋆is approximately
+√
+d. Hence the main free parameter for controlling
+the diﬃculty of the classiﬁcation task is the variance σ2, which controls the amount of overlap
+between the two classes.
+To contrast the notions of “standard” and “robust” generalization, we brieﬂy recap a standard
+deﬁnition of classiﬁcation error.
+4
+
+
+===== PDF PAGE 5 =====
+Deﬁnition 2 (Classiﬁcation error). Let P : Rd ×{±1} →R be a distribution. Then the classiﬁcation
+error β of a classiﬁer f : Rd →{±1} is deﬁned as β = P(x,y)∼P[f(x)̸ = y].
+Next, we deﬁne our main quantity of interest, which is an adversarially robust counterpart of
+the above classiﬁcation error. Instead of counting misclassiﬁcations under the data distribution, we
+allow a bounded worst-case perturbation before passing the perturbed sample to the classiﬁer.
+Deﬁnition 3 (Robust classiﬁcation error). Let P : Rd × {±1} →R be a distribution and let
+B : Rd →P(Rd) be a perturbation set.2 Then the B-robust classiﬁcation error β of a classiﬁer
+f : Rd →{±1} is deﬁned as β = P(x,y)∼P[ ∃x′ ∈B(x) : f(x′)̸ = y].
+Since ℓ∞-perturbations have recently received a signiﬁcant amount of attention, we focus on
+robustness to ℓ∞-bounded adversaries in our work. For this purpose, we deﬁne the perturbation set
+Bε
+∞(x) = {x′ ∈Rd | ∥x′ −x∥∞≤ε}. To simplify notation, we refer to robustness with respect to
+this set also as ℓε
+∞-robustness. As we remark in the discussion section, understanding generalization
+for other measures of robustness (ℓ2, rotatations, etc.) is an important direction for future work.
+Standard generalization.
+The Gaussian model has one parameter for controlling the diﬃculty
+of learning a good classiﬁer. In order to simplify the following bounds, we study a regime where it is
+possible to achieve good standard classiﬁcation error from a single sample.3 As we will see later, this
+also allows us to calibrate our two data models to have comparable standard sample complexity.
+Concretely, we prove the following theorem, which is a direct consequence of Gaussian concen-
+tration. Note that in this theorem we use a linear classiﬁer: for a vector w, the linear classiﬁer
+fw : Rd →{±1} is deﬁned as fw(x) = sgn(⟨w, x⟩).
+Theorem 4. Let (x, y) be drawn from a (θ⋆, σ)-Gaussian model with ∥θ⋆∥2 =
+√
+d and σ ≤c · d
+1/4
+where c is a universal constant. Let bw ∈Rd be the vector bw = y · x. Then with high probability, the
+linear classiﬁer f bw has classiﬁcation error at most 1%.
+To minimize the number of parameters in our bounds, we have set the error probability to 1%.
+By tuning the model parameters appropriately, it is possible to achieve a vanishingly small error
+probability from a single sample (see Corollary 19 in Appendix A.1).
+Robust generalization.
+As we just demonstrated, we can easily achieve standard generalization
+from only a single sample in our Gaussian model. We now show that achieving a low ℓ∞-robust
+classiﬁcation error requires signiﬁcantly more samples.
+To this end, we begin with a natural
+strengthening of Theorem 4 and prove that the (class-weighted) sample mean can also be a robust
+classiﬁer (given suﬃcient data).
+Theorem 5. Let (x1, y1), . . . , (xn, yn) be drawn i.i.d. from a (θ⋆, σ)-Gaussian model with ∥θ⋆∥2 =
+√
+d
+and σ ≤c1d
+1/4. Let bw ∈Rd be the weighted mean vector bw = 1
+n
+Pn
+i=1 yixi. Then with high probability,
+the linear classiﬁer f bw has ℓε
+∞-robust classiﬁcation error at most 1% if
+n ≥
+(
+1
+for
+ε ≤1
+4d−1/4
+c2 ε2√
+d
+for
+1
+4d−1/4 ≤ε ≤1
+4
+.
+2We write P(Rd) to denote the power set of Rd, i.e., the set of subsets of Rd.
+3We remark that it is also possible to study a more general setting where standard generalization requires a larger
+number of samples.
+5
+
+
+===== PDF PAGE 6 =====
+We refer the reader to Corollary 23 in Appendix A.1 for the details. As before, c1 and c2 are two
+universal constants. Overall, the theorem shows that it is possible to learn an ℓε
+∞-robust classiﬁer
+in the Gaussian model as long as ε is bounded by a small constant and we have a large number of
+samples.
+Next, we show that this signiﬁcantly increased sample complexity is necessary. Our main theorem
+establishes a lower bound for all learning algorithms, which we formalize as functions from data
+samples to binary classiﬁers. In particular, the lower bound applies not only to learning linear
+classiﬁers.
+Theorem 6. Let gn be any learning algorithm, i.e., a function from n samples to a binary classiﬁer
+fn. Moreover, let σ = c1 · d
+1/4, let ε ≥0, and let θ ∈Rd be drawn from N(0, I). We also draw n
+samples from the (θ, σ)-Gaussian model. Then the expected ℓε
+∞-robust classiﬁcation error of fn is at
+least (1 −1/d)1
+2 if
+n ≤c2
+ε2 √
+d
+log d .
+The proof of the theorem can be found in Corollary 23 (Appendix A.2) and we provide a brief
+sketch in Section 3. It is worth noting that the classiﬁcation error 1/2 in the lower bound is tight. A
+classiﬁer that always outputs a ﬁxed prediction trivially achieves perfect robustness on one of the
+two classes and hence robust accuracy 1/2.
+Comparing Theorems 5 and 6, we see that the sample complexity n required for robust general-
+ization is bounded as
+c
+log d ≤
+n
+ε2√
+d
+≤c′ .
+Hence the lower bound is nearly tight in our regime of interest. When the perturbation has constant
+ℓ∞-norm, the sample complexity of robust generalization is larger than that of standard generalization
+by
+√
+d, i.e., polynomial in the problem dimension. This shows that for high-dimensional problems,
+adversarial robustness can provably require a signiﬁcantly larger number of samples.
+Finally, we remark that our lower bound applies also to a more restricted adversary. As we
+outline in Sections 3, the proof uses only a single adversarial perturbation per class. As a result,
+the lower bound provides transferable adversarial examples and applies to worst-case distribution
+shifts without a classiﬁer-adaptive adversary. We refer the reader to Section 7 for a more detailed
+discussion.
+2.2
+The Bernoulli model
+As mentioned in the introduction, simpler datasets such as MNIST have recently seen signiﬁcant
+progress in terms of ℓ∞-robustness. We now investigate a possible mechanism underlying these
+advances.
+To this end, we study a second distributional model that highlights how the data
+distribution can signiﬁcantly aﬀect the achievable robustness. The second data model is deﬁned on
+the hypercube {±1}d, and the two classes are represented by opposite vertices of that hypercube.
+When sampling a datapoint for a given class, we ﬂip each bit of the corresponding class vertex with
+a certain probability. This data model is inspired by the MNIST dataset because MNIST images are
+close to binary (many pixels are almost fully black or white).
+Deﬁnition 7 (Bernoulli model). Let θ⋆∈{±1}d be the per-class mean vector and let τ > 0 be the
+class bias parameter. Then the (θ⋆, τ)-Bernoulli model is deﬁned by the following distribution over
+6
+
+
+===== PDF PAGE 7 =====
+(x, y) ∈{±1}d × {±1}: First, draw a label y ∈{±1} uniformly at random from its domain. Then
+sample the data point x ∈{±1}d by sampling each coordinate xi from the distribution
+xi =
+(
+y · θ⋆
+i
+with probability 1/2 + τ
+−y · θ⋆
+i
+with probability 1/2 −τ .
+As in the previous subsection, the model has one parameter for controlling the diﬃculty of
+learning. A small value of τ makes the samples less correlated with their respective class vectors
+and hence leads to a harder classiﬁcation problem. Note that both the Gaussian and the Bernoulli
+model are deﬁned by simple sub-Gaussian distributions. Nevertheless, we will see that they diﬀer
+signiﬁcantly in terms of robust sample complexity.
+Standard generalization.
+As in the Gaussian model, we ﬁrst calibrate the distribution so that
+we can learn a classiﬁer with good standard accuracy from a single sample.4 The following theorem is
+a direct consequence of the fact that bounded random variables exhibit sub-Gaussian concentration.
+Theorem 8. Let (x, y) be drawn from a (θ⋆, τ)-Bernoulli model with τ ≥c · d−1/4 where c is a
+universal constant. Let bw ∈Rd be the vector bw = y ·x. Then with high probability, the linear classiﬁer
+f bw has classiﬁcation error at most 1%.
+To simplify the bound, we have set the error probability to be 1% as in the Gaussian model. We
+refer the reader to Corollary 28 in Appendix B.1 for the proof.
+Robust generalization.
+Next, we investigate the sample complexity of robust generalization in
+our Bernoulli model. For linear classiﬁers, a small robust classiﬁcation error again requires a large
+number of samples:
+Theorem 9. Let gn be a linear classiﬁer learning algorithm, i.e., a function from n samples to a
+linear classiﬁer fn. Suppose that we choose θ⋆uniformly at random from {±1}d and draw n samples
+from the (θ⋆, τ)-Bernoulli model with τ = c1 · d−1/4. Moreover, let ε < 3τ and 0 < γ < 1/2. Then the
+expected ℓε
+∞-robust classiﬁcation error of fn is at least 1
+2 −γ if
+n ≤c2
+ε2γ2d
+log d/γ .
+We provide a proof sketch in Section 4 and the full proof in Appendix B.2. At ﬁrst, the lower
+bound for linear classiﬁers might suggest that ℓ∞-robustness requires an inherently larger sample
+complexity here as well. However, in contrast to the Gaussian model, non-linear classiﬁers can achieve
+a signiﬁcantly improved robustness. In particular, consider the following thresholding operation
+T : Rd →Rd which is deﬁned element-wise as
+T(x)i =
+(
++1
+if xi ≥0
+−1
+otherwise .
+It is easy to see that for ε < 1, the thresholding operator undoes the action of any ℓ∞-bounded
+adversary, i.e., we have T(Bε
+∞(x)) = {x} for any x ∈{±1}d. Hence we can combine the thresholding
+operator with the classiﬁer learned from a single sample to get the following upper bound.
+4To be precise, the two distributions have comparable sample complexity for standard generalization in the regime
+where σ ≈τ −1.
+7
+
+
+===== PDF PAGE 8 =====
+Theorem 10. Let (x, y) be drawn from a (θ⋆, τ)-Bernoulli model with τ ≥c · d−1/4 where c is a
+universal constant. Let bw ∈Rd be the vector bw = yx. Then with high probability, the classiﬁer f bw ◦T
+has ℓε
+∞-robust classiﬁcation error at most 1% for any ε < 1.
+This theorem shows a stark contrast to the Gaussian case. Although both models have similar
+sample complexity for standard generalization, there is a
+√
+d gap between the ℓ∞-robust sample
+complexity for the Bernoulli and Gaussian models. This discrepancy provides evidence that robust
+generalization requires a more nuanced understanding of the data distribution than standard
+generalization.
+In isolation, the thresholding step might seem speciﬁc to the Bernoulli model studied here.
+However, our experiments in Section 5 show that an explicit thresholding layer also signiﬁcantly
+improves the sample complexity of training a robust neural network on MNIST. We conjecture
+that the eﬀectiveness of thresholding is behind many of the successful defenses against adversarial
+examples on MNIST (for instance, see Appendix C in [34]).
+3
+Lower Bounds for the Gaussian Model
+Recall our main theoretical result: In the Gaussian model, no algorithm can produce a robust
+classiﬁer unless it has seen a large number of samples. In particular, we give a nearly tight trade-oﬀ
+between the number of samples and the ℓ∞-robustness of the classiﬁer. The following theorem is the
+technical core of this lower bound. Combined with standard bounds on the ℓ∞-norm of a random
+Gaussian vector, it gives Theorem 6 from the previous section.
+Theorem 11. Let gn be any learning algorithm, i.e., a function from n samples in Rd × {±1} to a
+binary classiﬁer fn. Moreover, let σ > 0, let ε ≥0, and let θ ∈Rd be drawn from N(0, I). We also
+draw n samples from the (θ, σ)-Gaussian model. Then the expected ℓε
+∞-robust classiﬁcation error of
+fn is at least
+1
+2
+P
+v∼N(0,I)
+r
+n
+σ2 + n∥v∥∞≤ε
+
+.
+Several remarks are in order. Since we lower bound the expected robust classiﬁcation error for a
+distribution over the model parameters θ⋆, our result implies a lower bound on the minimax robust
+classiﬁcation error (i.e., minimum over learning algorithms, maximum over unknown parameters θ⋆).
+Second, while we refer to the learning procedure as an algorithm, our lower bounds are information
+theoretic and hold irrespective of the computational power of this procedure.
+Moreover, our proof shows that given the n samples, there is a single adversarial perturbation
+that (a) applies to all learning algorithms, and (b) leads to at least a constant fraction of fresh
+samples being misclassiﬁed. In other words, the same perturbation is transferable across examples as
+well as across architectures and learning procedures. Hence our simple Gaussian data model already
+exhibits the transferability phenomenon, which has recently received signiﬁcant attention in the
+deep learning literature (e.g., [35, 49, 52]).
+We defer a full proof of the theorem to Section A.2 of the supplementary material. Here, we
+sketch the main ideas of the proof.
+We ﬁx an algorithm gn and let Sn denote the set of n samples given to the algorithm. We are
+interested in the expected robust classiﬁcation error, which can be formalized as
+Eθ∗ESnEy∼±1
+Pr
+x∼N(yθ∗,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+.
+8
+
+
+===== PDF PAGE 9 =====
+We swap the two outer expectations so the quantity of interest becomes
+ESnEθ∗Ey∼±1
+Pr
+x∼N(yθ∗,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+.
+Given the samples Sn, the posterior on θ∗is a Gaussian distribution with parameters deﬁned by
+simple statistics of Sn (the sample mean and the number of samples). Since the new data point x
+(to be classiﬁed) is itself drawn from a Gaussian distribution with mean θ∗, the posterior distribution
+µ+ on the positive examples x ∼N(θ∗, σ2) is another Gaussian with a certain mean ¯z and standard
+deviation σ′. Similarly, the posterior distribution µ−on the negative examples is a Gaussian with
+mean −¯z and the same standard deviation σ′. At a high level, we will now argue that the adversary
+can make the two posterior distributions µ−and µ+ similar enough so that the problem becomes
+inherently noisy, preventing any classiﬁer from achieving a high accuracy.
+To this end, deﬁne the classiﬁcation sets of fn as A+ = {x | fn(x) = +1} and A−= Rd \ A+.
+This allows us to write the expected robust classiﬁcation error as
+ESnEθ∗
+1
+2 Pr
+µ+[Bε
+∞(A−)] + 1
+2 Pr
+µ−[Bε
+∞(A+)]
+
+.
+We now lower bound the inner probabilities by considering the ﬁxed perturbation ∆= z. Note
+that a point x ∼µ+ is certainly misclassiﬁed if we have ∥∆∥∞≤ε and x −∆∈A−. Thus the
+expected misclassiﬁcation rate is at least µ+({x | x −∆∈A−}) = µ+(A−+ ∆).5 But since µ+ is
+simply a translated version of N(0, σ′2), this implies that
+Pr
+µ+[Bε
+∞(A−)] ≥µ0(A−+ ∆−¯z) = µ0(A−)
+where the distribution µ0 is the centered Gaussian µ0 = N(0, σ′2). Similarly,
+Pr
+µ−[Bε
+∞(A+)] ≥µ0(A+ −∆+ ¯z) = µ0(A+).
+Since µ0(A−) + µ0(A+) = 1, this implies that the adversarial perturbation −¯z misclassiﬁes in
+expectation half of the positively labeled examples, which completes the proof. As mentioned above,
+the crucial step is that the posteriors µ+ and µ−are similar enough so that we can shift both to the
+origin while still controlling the measure of the sets A−and A+.
+4
+Lower Bounds for the Bernoulli Model
+For the Bernoulli model, our lower bound applies only to linear classiﬁers. As pointed out in Section
+2.2, non-linear classiﬁers do not suﬀer an increase in sample complexity in this data model. We now
+give a high-level overview of our proof that the sample complexity for learning a linear classiﬁer
+must increase as
+n ≥c ε2d
+log d .
+(1)
+At ﬁrst, this lower bound may look stronger than in the Gaussian case, where Theorem 6
+established a lower bound of the form ε2√
+d
+log d , i.e., with only a square root dependence on d. However,
+5For a set A and a vector v, we use the notation A + v to denote the set {x + v : x ∈A}.
+9
+
+
+===== PDF PAGE 10 =====
+it is important to note that the relevant ℓ∞-robustness scale for linear classiﬁers in the Bernoulli
+model is on the order of Θ(τ), whereas non-linear classiﬁers can achieve robustness for noise level ε
+up to 1. In particular, we prove that no linear classiﬁer can achieve small ℓ∞-robust classiﬁcation
+error for ε > 3τ (see Lemma 30 in Appendix B.2 for details). Recall that we focus on the τ = Θ(d−1
+4 )
+regime. In this case, the lower bound in Equation 1 is on the order of
+√
+d samples, which is
+comparable to the (nearly) tight bound for the Gaussian case. This is no coincidence: for our noise
+parameters σ ≈τ −1 ≈d
+1
+4 , one can show that approximately σ2 =
+√
+d samples suﬃce to recover θ∗
+to suﬃciently good accuracy.
+The point of start of our proof of the lower bound for linear classiﬁers is the following observation.
+For an example (x, y), a linear classiﬁer with parameter vector w robustly classiﬁes the point x if
+and only if
+inf
+∆:∥∆∥∞≤ε⟨yw, x + ∆⟩> 0 ,
+which is equivalent to
+⟨yw, x⟩>
+sup
+∆:∥∆∥∞≤ε
+⟨yw, ∆⟩.
+By the deﬁnition of dual norms, the supremum on the right hand size is thus equal to ε∥yw∥1 = ε∥w∥1.
+The learning algorithm infers the parameter vector w from a limited number of samples. Since
+these samples are noisy copies of the unknown parameters θ⋆, the algorithm cannot be too certain
+of any single bit in θ∗(recall that we draw θ∗uniformly from the hypercube). We formalize this
+intuition in Lemma 29 (Appendix B.2) as a bound on the log odds given a sample S:
+log Pr[θ = +1 | S]
+Pr[θ = −1 | S] .
+Given such a bound, we can analyze the uncertainty in the estimate w by establishing an upper
+bound on the posterior |E[θ⋆
+i |S]| for each i ∈[d]. This in turn allow us to bound E[⟨w, θ⋆⟩|S]. With
+control over this expectation, we can then relate the prediction ⟨w, x⟩and the ℓ1-norm ∥w∥1 via a
+tail bound argument. We defer the details to Appendix B.2.
+5
+Experiments
+We complement our theoretical results by performing experiments on multiple common datasets.
+5.1
+Experimental setup
+We consider standard convolutional neural networks and train models on datasets of varying
+complexity. Speciﬁcally, we study the MNIST [32], CIFAR-10 [31], and SVHN [38] datasets. The
+latter is particularly well-suited for our analysis since it contains a large number of training images
+(more than 600,000), allowing us to study adversarially robust generalization in the large dataset
+regime.
+Model architecture.
+For MNIST, we use the simple convolution architecture obtained from the
+TensorFlow tutorial [50]. In order to prevent the model from overﬁtting when trained on small
+data samples, we regularize the model by adding weight decay with parameter 0.5 to the training
+loss. For CIFAR-10, we consider a standard ResNet model [21]. It has 4 groups of residual layers
+10
+
+
+===== PDF PAGE 11 =====
+with ﬁlter sizes (16, 16, 32, 64) and 5 residual units each. On SVHN, we also trained a network of
+larger capacity (ﬁlter sizes of (16, 64, 128, 256) instead of (16, 16, 32, 64)) in order to perform well
+on the harder problems with larger adversarial perturbations. All of our models achieve close to
+state-of-the-art performance on the respective benchmark.
+Robust optimization.
+We perform robust optimization to train our classiﬁers. In particular, we
+train against a projected gradient descent (PGD) adversary, starting from a random initial perturba-
+tion of the training datapoint (see [34] for more details). We consider adversarial perturbations in
+ℓ∞norm, performing PGD updates of the form
+xt+1 = ΠBε∞(x0) (xt + λ · sgn(∇L(xt)))
+for some step size λ. Here, L denotes the loss of the model, while ΠBr∞(x)(z) corresponds to projecting
+z onto the ℓ∞ball of radius r around x. On MNIST, we perform 20 steps of PGD, while on CIFAR-10
+and SVHN we perform 10 steps. We evaluate all networks against a 20-step PGD adversary. We
+choose the PGD step size to be 2.5 · ε/k, where ε denotes the maximal allowed perturbation and k is
+the total number of steps. This allows PGD to reach the boundary of the optimization region within
+k
+2.5 steps from any starting point.
+5.2
+Empirical sample complexity evaluation
+We study how the generalization performance of adversarially robust networks varies with the size
+of the training dataset. To do so, we train networks with a speciﬁc ℓ∞adversary (for some ﬁxed
+εtrain) while reducing the size of the training set. The training subsets are produced by randomly
+sub-sampling the complete dataset in a class-balanced fashion. When increasing the number of
+samples, we ensure that each dataset is a superset of the previous one.
+We then evaluate the robustness of each trained network to perturbations of varying magnitude
+(εtest). For each choice of training set size N and ﬁxed attack εtest, we select the best performance
+achieved across all hyperparameters settings (training perturbations εtrain and model size). On all
+three datasets, we observed that the best natural accuracy is usually achieved for the naturally
+trained network, while the best adversarial accuracy for almost all values of εtest was achieved when
+training with the largest εtrain. We maximize over the hyperparameter settings since we are not
+interested in the performance of a speciﬁc model, but rather in the inherent generalization properties
+of the dataset independently of the classiﬁer used. The results of these experiments are shown in
+Figure 2 for each dataset.
+The plots clearly demonstrate the need for more data to achieve adversarially robust generalization.
+For any ﬁxed test set accuracy, the number of samples needed is signiﬁcantly higher for robust
+generalization. In the SVHN experiments (where we have suﬃcient training samples to observe
+plateauing behavior), the natural accuracy reaches its maximum with signiﬁcantly fewer samples
+than the adversarial accuracy. We report more details of our experiments in Section C of the
+supplementary material.
+5.3
+Thresholding experiments
+Motivated by our theoretical study of the Bernoulli model, we investigate whether thresholding can
+also improve the sample complexity of robust generalization against an ℓ∞adversary on a real dataset.
+MNIST is a natural candidate here since the images are nearly black-and-white and hence lie close
+11
+
+
+===== PDF PAGE 12 =====
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+MNIST
+test=0
+test=0.1
+test=0.2
+test=0.3
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+CIFAR-10
+test=0
+test=2
+test=4
+test=8
+103
+104
+105
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+SVHN
+test=0
+test=1
+test=2
+test=4
+Figure 2: Adversarially robust generalization performance as a function of training data size for
+ℓ∞adversaries on the MNIST, CIFAR-10 and SVHN datasets. For each choice of training set size
+and εtest, we plot the best performance achieved over εtrain and network capacity. This clearly
+shows that achieving a certain level of adversarially robust generalization requires signiﬁcantly more
+samples than achieving the same level of standard generalization.
+to vertices of a hypercube (as in the Bernoulli model). This is further motivated by experimental
+evidence indicating that adversarially robust networks on MNIST learn such thresholding ﬁlters
+when trained adversarially [34].
+We repeat the sample complexity experiments performed in Section 5.2 with networks where
+thresholding ﬁlters are explicitly encoded in the model. Here, we replace the ﬁrst convolutional layer
+with a ﬁxed thresholding layer consisting of two channels, ReLU(x−εtrain) and ReLU(x−(1−εtrain)),
+where x is the input image. Results from networks trained with this thresholding layer are shown
+in Figure 3. For naturally trained networks, we use a value of ε = 0.1 for the thresholding ﬁlters,
+whereas for adversarially trained networks we set ε = εtrain. For each data subset size and test
+perturbation εtest, we plot the best test accuracy achieved over networks trained with diﬀerent
+thresholding ﬁlters, i.e., diﬀerent values of ε. We separately show the eﬀect of explicit thresholding
+in such networks when they are trained naturally or adversarially using PGD. As predicted by our
+theory, the networks achieve good adversarially robust generalization with signiﬁcantly fewer samples
+when thresholding ﬁlters are added. Further, note that adding a simple thresholding layer directly
+yields nearly state-of-the-art robustness against moderately strong adversaries (ε = 0.1), without
+any other modiﬁcations to the model architecture or training algorithm. It is also worth noting that
+the thresholding ﬁlters could have been learned by the original network architecture, and that this
+modiﬁcation only decreases the capacity of the model. Our ﬁndings emphasize network architecture
+as a crucial factor for learning adversarially robust networks from a limited number of samples.
+We also experimented with thresholding ﬁlters on the CIFAR10 dataset, but did not observe any
+signiﬁcant diﬀerence from the standard architecture. This agrees with our theoretical understanding
+that thresholding helps primarily in the case of (approximately) binary datasets.
+12
+
+
+===== PDF PAGE 13 =====
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Standard Training
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Standard Training + Thresholding
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Adversarial Training
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Adversarial Training + Thresholding
+test=0
+test=0.1
+test=0.2
+test=0.3
+Figure 3: Adversarial robustness to ℓ∞attacks on the MNIST dataset for a simple convolution
+network [34] with and without explicit thresholding ﬁlters. For each training set size choice and
+εtest, we report the best test set accuracy achieved over choice of thresholding ﬁlters and εtrain. We
+observe that introducing thresholding ﬁlters signiﬁcantly reduces the number of samples needed to
+achieve good adversarial generalization.
+6
+Related Work
+Due to the large body of work on adversarial robustness, we focus on related papers that also provide
+theoretical explanations for adversarial examples. Compared to prior work, the main diﬀerence of
+our approach is the focus on generalization. Most related papers study robustness either without
+the learning context, or in the limit as the number of samples approaches inﬁnity. As a result,
+ﬁnite sample phenomena do not arise in these theoretical approaches. As we have seen in Figure
+1, adversarial examples are currently a failure of generalization from a limited training set. Hence
+we believe that studying robust generalization is an insightful avenue for understanding adversarial
+examples.
+• Wang, Jha, and Chaudhuri [54] study the adversarial robustness of nearest neighbor classiﬁers. In
+contrast to our work, the authors give theoretical guarantees for a speciﬁc classiﬁcation algorithm.
+We focus on the inherent sample complexity of adversarially robust generalization independently
+of the learning method. Moreover, our results hold for ﬁnite sample sizes while the results in [54]
+are only asymptotic.
+• Recent work by Gilmer et al. [18] explores a speciﬁc distribution where robust learning is
+empirically diﬃcult with overparametrized neural networks.6 The main phenomenon is that even
+a small natural error rate on their dataset translates to a large adversarial error rate. Our results
+give a more nuanced picture that involves the sample complexity required for generalization. In
+our data models, it is possible to achieve an error rate that is essentially zero by using a very
+small number of samples, whereas the adversarial error rate is still large unless we have seen a lot
+of samples.
+• Fawzi, Moosavi-Dezfooli, and Frossard [17] relate the robustness of linear and non-linear classiﬁers
+6It is worth noting that the distribution in [18] has only one degree of freedom. Hence we conjecture that the observed
+diﬃculty of robust learning in their setup is due to the chosen model class and not due to an information-theoretic
+limit as in our work.
+13
+
+
+===== PDF PAGE 14 =====
+to adversarial and (semi-)random perturbations.
+Their work studies the setting where the
+classiﬁer is ﬁxed and does not encompass the learning task. We focus on generalization aspects of
+adversarial robustness and provide upper and lower bounds on the sample complexity. Overall,
+we argue that adversarial examples are inherent to the statistical setup and not necessarily a
+consequence of a concrete classiﬁer model.
+• The work of Xu, Caramanis, and Mannor [56] establishes a connection between robust optimization
+and regularization for linear classiﬁcation. In particular, they show that robustness to a speciﬁc
+perturbation set is exactly equivalent to the standard support vector machine. The authors
+give asymptotic consistency results under a robustness condition, but do not provide any ﬁnite
+sample guarantees. In contrast, our work considers speciﬁc distributional models where we can
+demonstrate a clear gap between robust and standard generalization.
+• Papernot et al. [40] discuss adversarial robustness at the population level. They assume the
+existence of an adversary that can signiﬁcantly increase the loss for any hypothesis in the
+hypothesis class. By deﬁnition, robustness against adversarial perturbations is impossible in this
+regime. As demonstrated in Figure 1, we instead conjecture that current classiﬁcation models
+are not robust to adversarial examples because they fail to generalize. Hence our results concern
+generalization from a ﬁnite number of samples. We show that even when the hypothesis class
+is large enough to achieve good robust classiﬁcation error, the sample complexity of robust
+generalization can still be signiﬁcantly bigger than that of standard generalization.
+• In a recent paper, Fawzi, Fawzi, and Fawzi [16] also give provable lower bounds for adversarial
+robustness. There are several important diﬀerences between their work and ours. At a high level,
+the results in [16] state that there are fundamental limits for adversarial robustness that apply
+to any classiﬁer. As pointed out by the authors, their bounds also apply to the human visual
+system. However, an important aspect of adversarial examples is that they often fool current
+classiﬁers, yet are still easy to recognize for humans. Hence we believe that the approach in [16]
+does not capture the underlying phenomenon since it does not distinguish between the robustness
+of current artiﬁcial classiﬁers and the human visual system.
+Moreover, the lower bounds in [16] do not involve the training data and consequently apply in
+the limit where an inﬁnite number of samples is available. In contrast, our work investigates how
+the amount of available training data aﬀects adversarial robustness. As we have seen in Figure 1,
+adversarial robustness is currently an issue of generalization. In particular, we can train classiﬁers
+that achieve a high level of robustness on the CIFAR10 training set, but this robustness does not
+transfer to the test set. Therefore, our perspective based on adversarially robust generalization
+more accurately reﬂects the current challenges in training robust classiﬁers.
+Finally, Fawzi, Fawzi, and Fawzi [16] utilize the notion of a latent space for the data distribution
+in order to establish lower bounds that apply to any classiﬁer. While the existence of generative
+models such as GANs provides empirical evidence for this assumption, we note that it does
+not suﬃce to accurately describe the robustness phenomenon. For instance, there are multiple
+generative models that produce high-quality samples for the MNIST dataset, yet there are now
+also several successful defenses against adversarial examples on MNIST. As we have shown in our
+work, the ﬁne-grained properties of the data distribution can have signiﬁcant impact on how hard
+it is to learn a robust classiﬁer.
+14
+
+
+===== PDF PAGE 15 =====
+Margin-based theory.
+There is a long line of work in machine learning on exploring the connection
+between various notions of margin and generalization, e.g., see [44] and references therein. In this
+setting, the ℓp margin, i.e., how robustly classiﬁable the data is for ℓ∗
+p-bounded classiﬁers, enables
+dimension-independent control of the sample complexity. However, the sample complexity in concrete
+distributional models can often be signiﬁcantly smaller than what the margin implies. As we will see
+next, standard margin-based bounds do not suﬃce to demonstrate a gap between robust and benign
+generalization for the distributional models studied in our work.
+First, we brieﬂy remind the reader about standard margin-based results (see Theorem 15.4 in
+[44] for details). For a dataset that has bounded ℓ2 norm ρ and ℓ2 margin γ, the classiﬁcation error
+of the hard-margin SVM scales as
+s
+(ρ/γ)2
+n
+where n is the number of samples. To illustrate this bound, consider the Gaussian model in the
+regime σ = Θ(d
+1/4) where a single sample suﬃces to learn a classiﬁer with low error (see Theorem 4).
+The standard bound on the norm of an i.i.d. Gaussian vector shows that we have a data norm bound
+ρ = Θ(d
+3/4) with high probability. While the Gaussian model is not strictly separable in any regime,
+we can still consider the probability that a sample achieves at least a certain margin:
+P
+z∼N(0,σ2I)
+⟨z, θ⋆⟩
+∥θ⋆∥2
+≥ρ
+
+≥1 −δ .
+A simple calculation shows that for ∥θ⋆∥2 =
+√
+d (as in our earlier bounds), the Gaussian model does
+not achieve margin γ ≥
+√
+d even at the quantile δ = 1/2. Hence the margin-based bound would
+indicate a sample complexity of Ω(d
+1/4) already for standard generalization, which obscures the
+dichotomy between standard and robust sample complexity.
+Robust statistics.
+An orthogonal line of work in robust statistics studies robustness of estimators
+to corruption of training data [25]. This notion of robustness, while also important, is not directly
+relevant to the questions addressed in our work.
+7
+Discussion and Future Directions
+The vulnerability of neural networks to adversarial perturbations has recently been a source of
+much discussion and is still poorly understood. Diﬀerent works have argued that this vulnerability
+stems from their discontinuous nature [49], their linear nature [19], or is a result of high-dimensional
+geometry and independent of the model class [18]. Our work gives a more nuanced picture. We
+show that for a natural data distribution (the Gaussian model), the model class we train does not
+matter and a standard linear classiﬁer achieves optimal robustness. However, robustness also strongly
+depends on properties of the underlying data distribution. For other data models (such as MNIST
+or the Bernoulli model), our results demonstrate that non-linearities are indispensable to learn from
+few samples. This dichotomy provides evidence that defenses against adversarial examples need to
+be tailored to the speciﬁc dataset and hence may be more complicated than a single, broad approach.
+Understanding the interactions between robustness, classiﬁer model, and data distribution from the
+perspective of generalization is an important direction for future work.
+15
+
+
+===== PDF PAGE 16 =====
+What do our results mean for robust classiﬁcation of real images? Our Gaussian lower bound
+implies that if an algorithm works for all (or most) settings of the unknown parameter θ⋆, then
+achieving strong ℓ∞-robustness requires a sample complexity increase that is polynomial in the
+dimension. There are a few diﬀerent ways this lower bound could be bypassed. After all, it is
+conceivable that the noise scale σ is signiﬁcantly smaller for real image datasets, making robust
+classiﬁcation easier. And even if that was not the case, a good algorithm could work for the
+parameters θ⋆that correspond to real datasets while not working for most other parameters. To
+accomplish this, the algorithm would implicitly or explicitly have prior information about the
+correct θ⋆. While some prior information is already incorporated in the model architectures (e.g.,
+convolutional and pooling layers), the conventional wisdom is often not to bias the neural network
+with our priors. Our work suggests that there are trade-oﬀs with robustness here and that adding
+more prior information could help to learn more robust classiﬁers.
+The focus of our paper is on adversarial perturbations in a setting where the test distribution
+(before the adversary’s action) is the same as the training distribution. While this is a natural
+scenario from a security point of view, other setups can be more relevant in diﬀerent robustness
+contexts. For instance, we may want a classiﬁer that is robust to small changes between the training
+and test distribution. This can be formalized as the classiﬁcation accuracy on unperturbed examples
+coming from an adversarially modiﬁed distribution. Here, the power of the adversary is limited
+by how much the test distribution can be modiﬁed, and the adversary is not allowed to perturb
+individual samples coming from the modiﬁed test distribution. Interestingly, our lower bound for the
+Gaussian model also applies to such worst-case distributional shifts. In particular, if the adversary
+is allowed to shift the mean θ⋆by a vector in Bε
+∞, our proof sketched in Section 3 transfers to the
+distribution shift setting. Since the lower bound relies only on a single universal perturbation, this
+perturbation can also be applied directly to the mean vector.
+Future directions.
+Several questions remain. We now provide a list of concrete directions for
+future work on robust generalization.
+Stronger lower bounds. An interesting aspect of adversarial examples is that the adversary
+can often fool the classiﬁer on most inputs [11, 49]. While our results show a lower bound
+for classiﬁcation error 1/2, it is conceivable that misclassiﬁcation rates much closer to 1 are
+unavoidable for at least one of the two classes (or equivalently, when the adversary is allowed
+to pick the class label). In order to avoid degenerate cases such as achieving robustness by
+being the constant classiﬁer, it would be interesting to study regimes where the classiﬁer has
+high standard accuracy but does not achieve robustness yet. In such a regime, does good
+standard accuracy imply that the classiﬁer is vulnerable to adversarial perturbations on almost
+all inputs?
+Diﬀerent perturbation sets. Depending on the problem setting, diﬀerent perturbation sets are
+relevant. Due to the large amount of empirical work on ℓ∞robustness, our paper has focused
+on such perturbations. From a security point of view, we want to defend against perturbations
+that are imperceptible to humans. While this is not a well-deﬁned concept, the class of small
+ℓ∞-norm perturbations should be contained in any reasonable deﬁnition of imperceptible
+perturbations. However, changes in diﬀerent ℓp norms [11, 36, 49], sparse perturbations [10,
+37, 39, 48], or mild spatial transformations can also be imperceptible to a human [55]. In
+less adversarial settings, more constrained and lower-dimensional perturbations such as small
+16
+
+
+===== PDF PAGE 17 =====
+rotations and translations may be more appropriate [15]. Overall, understanding the sample
+complexity implications of diﬀerent perturbation sets is an important direction for future work.
+Further notions of test time robustness. As mentioned above, less adversarial forms of robust-
+ness may be better suited to model challenges arising outside security. How much easier is
+it to learn a robust classiﬁer in more benign settings? This question is naturally related to
+problems such as transfer learning and domain adaptation.
+Broader classes of distributions. Our results directly apply to two concrete distributional mod-
+els. While the results already show interesting phenomena and are predictive of behavior on
+real data, understanding the robustness properties for a broader class of distributions is an
+important direction for future work. Moreover, it would be useful to understand what general
+properties of distributions make robust generalization hard or easy.
+Wider sample complexity separations. In our work, we show a separation of
+√
+d between the
+standard and robust sample complexity for the Gaussian model. It is open whether larger gaps
+are possible. Note that for large adversarial perturbations, the data may no longer be robustly
+separable which leads to trivial gaps in sample complexity, simply because the harder robust
+generalization problem is impossible to solve. Hence this question is mainly interesting in the
+regime where a robust classiﬁer exists in the model class of interest.
+Robustness in the PAC model. Our focus has been on robust learning for speciﬁc distributions
+without any limitations on the hypothesis class. A natural dual perspective is to investigate
+robust learning for speciﬁc hypothesis classes, as in the probably approximately correct (PAC)
+framework. For instance, it is well known that the sample complexity of learning a half space
+in d dimensions is O(d). Does this sample complexity also suﬃce to learn in the presence of an
+adversary at test time? While robustness to adversarial training noise has been studied in the
+PAC setting (e.g., see [7, 27, 28]), we are not aware of similar work on test time robustness.
+Acknowledgements
+Ludwig Schmidt is supported by a Google PhD Fellowship. During this research project, Ludwig
+was also a research fellow at the Simons Institute for the Theory of Computing, an intern in the
+Google Brain team, and a visitor at UC Berkeley. Shibani Santurkar is supported by the National
+Science Foundation (NSF) under grants IIS-1447786, IIS-1607189, and CCF-1563880, and the Intel
+Corporation. Dimitris Tsipras was supported in part by the NSF grant CCF-1553428. Aleksander
+Mądry was supported in part by an Alfred P. Sloan Research Fellowship, a Google Research Award,
+and the NSF grant CCF-1553428.
+References
+[1]
+Anurag Arnab, Ondrej Miksik, and Philip H. S. Torr. “On the Robustness of Semantic
+Segmentation Models to Adversarial Attacks”. arXiv, 2017. http://arxiv.org/abs/1711.
+09856.
+17
+
+
+===== PDF PAGE 18 =====
+[2]
+Anish Athalye, Nicholas Carlini, and David Wagner. “Obfuscated Gradients Give a False
+Sense of Security: Circumventing Defenses to Adversarial Examples”. arXiv, 2018. https:
+//arxiv.org/abs/1802.00420.
+[3]
+Vahid Behzadan and Arslan Munir. “Vulnerability of Deep Reinforcement Learning to Policy
+Induction Attacks”. International Conference on Machine Learning and Data Mining (MLDM),
+2017. https://arxiv.org/abs/1701.04143.
+[4]
+Aharon Ben-Tal, Laurent El Ghaoui, and Arkadi Nemirovski. Robust optimization. Princeton
+University Press, 2009.
+[5]
+Battista Biggio and Fabio Roli. “Wild Patterns: Ten Years After the Rise of Adversarial
+Machine Learning”. arXiv, 2017. https://arxiv.org/abs/1712.03141.
+[6]
+Stéphane Boucheron, Gábor Lugosi, and Pascal Massart. Concentration Inequalities: A Nonasymp-
+totic Theory of Independence. Oxford University Press, 2013.
+[7]
+Nader H. Bshouty, Nadav Eiron, and Eyal Kushilevitz. “PAC Learning with Nasty Noise”.
+Algorithmic Learning Theory (ALT), 1999. https://link.springer.com/chapter/10.1007/
+3-540-46769-6_17.
+[8]
+Nicholas Carlini, Pratyush Mishra, Tavish Vaidya, Yuankai Zhang, Micah Sherr, Clay
+Shields, David Wagner, and Wenchao Zhou. “Hidden Voice Commands”. USENIX Security
+Symposium, 2016. https://www.usenix.org/conference/usenixsecurity16/technical-
+sessions/presentation/carlini.
+[9]
+Nicholas Carlini and David Wagner. “Audio Adversarial Examples: Targeted Attacks on
+Speech-to-Text”. arXiv, 2018. https://arxiv.org/abs/1801.01944.
+[10]
+Nicholas Carlini and David Wagner. “Defensive Distillation is Not Robust to Adversarial
+Examples”. arXiv preprint arXiv:1607.04311, 2016. http://arxiv.org/abs/1607.04311.
+[11]
+Nicholas Carlini and David Wagner. “Towards Evaluating the Robustness of Neural Networks”.
+Symposium on Security and Privacy (SP), 2016. http://arxiv.org/abs/1608.04644.
+[12]
+Moustapha M Cisse, Yossi Adi, Natalia Neverova, and Joseph Keshet. “Houdini: Fooling
+Deep Structured Visual and Speech Recognition Models with Adversarial Examples”. Neural
+Information Processing Systems (NIPS), 2017. https://arxiv.org/abs/1707.05373.
+[13]
+Ekin D. Cubuk Cubuk, Barret Zoph, Samuel S. Schoenholz, and Quoc V. Le. “Intriguing
+Properties of Adversarial Examples”. arXiv, 2017. https://arxiv.org/abs/1711.02846.
+[14]
+Nilesh Dalvi, Pedro Domingos, Mausam, Sumit Sanghai, and Deepak Verma. “Adversarial
+Classiﬁcation”. International Conference on Knowledge Discovery and Data Mining (KDD),
+2004. http://doi.acm.org/10.1145/1014052.1014066.
+[15]
+Logan Engstrom, Brandon Tran, Dimitris Tsipras, Ludwig Schmidt, and Aleksander Madry.
+“A Rotation and a Translation Suﬃce: Fooling CNNs with Simple Transformations”. arXiv,
+2017. https://arxiv.org/abs/1712.02779.
+[16]
+Alhussein Fawzi, Hamza Fawzi, and Omar Fawzi. “Adversarial vulnerability for any classiﬁer”.
+arXiv, 2018. https://arxiv.org/abs/1802.08686.
+[17]
+Alhussein Fawzi, Seyed-Mohsen Moosavi-Dezfooli, and Pascal Frossard. “Robustness of
+classiﬁers: from adversarial to random noise”. Neural Information Processing Systems (NIPS),
+2016. https://arxiv.org/abs/1608.08967.
+18
+
+
+===== PDF PAGE 19 =====
+[18]
+Justin Gilmer, Luke Metz, Fartash Faghri, Samuel S. Schoenholz, Maithra Raghu, Martin
+Wattenberg, and Ian Goodfellow. “Adversarial Spheres”. arXiv, 2018. https://arxiv.org/
+abs/1801.02774.
+[19]
+Ian J. Goodfellow, Jonathon Shlens, and Christian Szegedy. “Explaining and Harnessing
+Adversarial Examples”. arXiv, 2014. http://arxiv.org/abs/1412.6572.
+[20]
+Kathrin Grosse, Nicolas Papernot, Praveen Manoharan, Michael Backes, and Patrick D.
+McDaniel. “Adversarial Perturbations Against Deep Neural Networks for Malware Classiﬁ-
+cation”. European Symposium on Research in Computer Security (ESORICS), 2016. http:
+//arxiv.org/abs/1606.04435.
+[21]
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. “Deep Residual Learning for
+Image Recognition”. Conference on Computer Vision and Pattern Recognition (CVPR), 2016.
+https://arxiv.org/abs/1512.03385.
+[22]
+Warren He, James Wei, Xinyun Chen, Nicholas Carlini, and Dawn Song. “Adversarial
+Example Defenses: Ensembles of Weak Defenses are not Strong”. USENIX Workshop on
+Oﬀensive Technologies, 2017. https://arxiv.org/abs/1706.04701.
+[23]
+Alex Huang, Abdullah Al-Dujaili, Erik Hemberg, and Una-May O’Reilly. “Adversarial
+Deep Learning for Robust Detection of Binary Encoded Malware”. arXiv, 2018. https :
+//arxiv.org/abs/1801.02950.
+[24]
+Sandy H. Huang, Nicolas Papernot, Ian J. Goodfellow, Yan Duan, and Pieter Abbeel.
+“Adversarial Attacks on Neural Network Policies”. International Conference on Learning
+Representations (ICLR), 2017. https://arxiv.org/abs/1702.02284.
+[25]
+Peter J. Huber. Robust Statistics. Wiley, 1981.
+[26]
+Robin Jia and Percy Liang. “Adversarial Examples for Evaluating Reading Comprehension
+Systems”. Conference on Empirical Methods in Natural Language Processing (EMNLP), 2017.
+https://arxiv.org/abs/1707.07328.
+[27]
+Michael J. Kearns, Robert E. Schapire, and Linda M. Sellie. “Toward Eﬃcient Agnostic
+Learning”. Machine Learning, 1994. https://doi.org/10.1023/A:1022615600103.
+[28]
+Michael Kearns and Ming Li. “Learning in the Presence of Malicious Errors”. SIAM Journal
+on Computing, 1993. http://dx.doi.org/10.1137/0222052.
+[29]
+J Zico Kolter and Eric Wong. “Provable defenses against adversarial examples via the convex
+outer adversarial polytope”. International Conference on Learning Representations (ICLR),
+2018. https://arxiv.org/abs/1711.00851.
+[30]
+Jernej Kos, Ian Fischer, and Dawn Song. “Adversarial examples for generative models”.
+arXiv, 2017. http://arxiv.org/abs/1702.06832.
+[31]
+Alex Krizhevsky and Geoﬀrey Hinton. “Learning Multiple Layers of Features from Tiny
+Images”. Technical report, 2009. https://www.cs.toronto.edu/~kriz/learning-features-
+2009-TR.pdf.
+[32]
+Yann LeCun, Corinna Cortes, and Christopher J.C. Burges. “The MNIST database of
+handwritten digits”. Website, 1998. http://yann.lecun.com/exdb/mnist/.
+19
+
+
+===== PDF PAGE 20 =====
+[33]
+Daniel Lowd and Christopher Meek. “Adversarial Learning”. International Conference on
+Knowledge Discovery in Data Mining (KDD), 2005. http://doi.acm.org/10.1145/1081870.
+1081950.
+[34]
+Aleksander Madry, Aleksandar Makelov, Ludwig Schmidt, Dimitris Tsipras, and Adrian
+Vladu. “Towards Deep Learning Models Resistant to Adversarial Attacks”. International
+Conference on Learning Representations (ICLR), 2018. https://arxiv.org/abs/1706.06083.
+[35]
+Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, Omar Fawzi, and Pascal Frossard. “Uni-
+versal adversarial perturbations”. Conference on Computer Vision and Pattern Recognition
+(CVPR), 2017. https://arxiv.org/abs/1610.08401.
+[36]
+Seyed-Mohsen Moosavi-Dezfooli, Alhussein Fawzi, and Pascal Frossard. “DeepFool: A Simple
+and Accurate Method to Fool Deep Neural Networks”. Conference on Computer Vision and
+Pattern Recognition (CVPR), 2016. https://arxiv.org/abs/1511.04599.
+[37]
+Nina Narodytska and Shiva Prasad Kasiviswanathan. “Simple Black-Box Adversarial
+Perturbations for Deep Networks”. Conference on Computer Vision and Pattern Recognition
+(CVPR) Workshops, 2017. http://arxiv.org/abs/1612.06299.
+[38]
+Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y. Ng.
+“Reading Digits in Natural Images with Unsupervised Feature Learning”. NIPS Workshop
+on Deep Learning and Unsupervised Feature Learning, 2011. http://ufldl.stanford.edu/
+housenumbers/.
+[39]
+Nicolas Papernot, Patrick D. McDaniel, Somesh Jha, Matt Fredrikson, Z. Berkay Celik,
+and Ananthram Swami. “The Limitations of Deep Learning in Adversarial Settings”. IEEE
+European Symposium on Security and Privacy, EuroS&P 2016, Saarbrücken, Germany, March
+21-24, 2016, 2016. http://dx.doi.org/10.1109/EuroSP.2016.36.
+[40]
+Nicolas Papernot, Patrick McDaniel, Arunesh Sinha, and Michael Wellman. “Towards the
+Science of Security and Privacy in Machine Learning”. European Symposium on Security and
+Privacy, 2018. https://arxiv.org/abs/1611.03814.
+[41]
+Nicolas Papernot, Patrick McDaniel, Xi Wu, Somesh Jha, and Ananthram Swami. “Distillation
+as a Defense to Adversarial Perturbations against Deep Neural Networks”. Symposium on
+Security and Privacy (SP), 2016. https://arxiv.org/abs/1511.04508.
+[42]
+Aditi Raghunathan, Jacob Steinhardt, and Percy Liang. “Certiﬁed Defenses against Ad-
+versarial Examples”. International Conference on Learning Representations (ICLR), 2018.
+https://arxiv.org/abs/1801.09344.
+[43]
+Phillippe Rigollet and Jan-Christian Hütter. “High-Dimensional Statistics”. Lecture notes,
+2017. http://www-math.mit.edu/~rigollet/PDFs/RigNotes17.pdf.
+[44]
+Shai Shalev-Shwartz and Shai Ben-David. Understanding Machine Learning: From Theory
+to Algorithms. Cambridge University Press, 2014. http://www.cs.huji.ac.il/~shais/
+UnderstandingMachineLearning/.
+[45]
+Mahmood Sharif, Sruti Bhagavatula, Lujo Bauer, and Michael K. Reiter. “Accessorize
+to a Crime: Real and Stealthy Attacks on State-of-the-Art Face Recognition”. Conference
+on Computer and Communications Security (CCS), 2016. http://doi.acm.org/10.1145/
+2976749.2978392.
+20
+
+
+===== PDF PAGE 21 =====
+[46]
+Aman Sinha, Hongseok Namkoong, and John Duchi. “Certifying Some Distributional
+Robustness with Principled Adversarial Training”. International Conference on Learning
+Representations (ICLR), 2018. https://arxiv.org/abs/1710.10571.
+[47]
+Liwei Song and Prateek Mittal. “Inaudible Voice Commands”. Conference on Computer and
+Communications Security (CCS), 2017. http://arxiv.org/abs/1708.07238.
+[48]
+Jiawei Su, Danilo Vasconcellos Vargas, and Kouichi Sakurai. “One pixel attack for fooling
+deep neural networks”. arXiv, 2017. http://arxiv.org/abs/1710.08864.
+[49]
+Christian Szegedy, Wojciech Zaremba, Ilya Sutskever, Joan Bruna, Dumitru Erhan, Ian
+J. Goodfellow, and Rob Fergus. “Intriguing properties of neural networks”. International
+Conference on Learning Representations (ICLR), 2014. http://arxiv.org/abs/1312.6199.
+[50]
+Tensor Flow Models Repository. https://www.tensorflow.org/tutorials/layers. 2017.
+[51]
+Florian Tramèr, Alexey Kurakin, Nicolas Papernot, Dan Boneh, and Patrick D. McDaniel.
+“Ensemble Adversarial Training: Attacks and Defenses”. International Conference on Learning
+Representations (ICLR), 2018. http://arxiv.org/abs/1705.07204.
+[52]
+Florian Tramèr, Nicolas Papernot, Ian J. Goodfellow, Dan Boneh, and Patrick D. McDaniel.
+“The Space of Transferable Adversarial Examples”. arXiv, 2017. http://arxiv.org/abs/1704.
+03453.
+[53]
+Abraham Wald. “Statistical decision functions which minimize the maximum risk”. Annals
+of Mathematics, 1945.
+[54]
+Yizhen Wang, Somesh Jha, and Kamalika Chaudhuri. “Analyzing the Robustness of Nearest
+Neighbors to Adversarial Examples”. arXiv, 2017. https://arxiv.org/abs/1706.03922.
+[55]
+Chaowei Xiao, Jun-Yan Zhu, Bo Li, Warren He, Mingyan Liu, and Dawn Song. “Spatially
+Transformed Adversarial Examples”. International Conference on Learning Representations
+(ICLR), 2018. https://arxiv.org/abs/1801.02612.
+[56]
+Huan Xu, Constantine Caramanis, and Shie Mannor. “Robustness and Regularization
+of Support Vector Machines”. Journal of Machine Learning Research (JMLR), 2009. http:
+//www.jmlr.org/papers/v10/xu09b.html.
+[57]
+Weilin Xu, David Evans, and Yanjun Qi. “Feature Squeezing: Detecting Adversarial Examples
+in Deep Neural Networks”. Network and Distributed System Security Symposium (NDSS), 2017.
+https://arxiv.org/abs/1704.01155.
+[58]
+Xiaojun Xu, Xinyun Chen, Chang Liu, Anna Rohrbach, Trevor Darell, and Dawn Song.
+“Can you fool AI with adversarial examples on a visual Turing test?” arXiv, 2017. http:
+//arxiv.org/abs/1709.08693.
+[59]
+Sergey Zagoruyko and Nikos Komodakis. “Wide Residual Networks”. British Machine Vision
+Conference (BMVC), 2016. http://arxiv.org/abs/1605.07146.
+[60]
+Guoming Zhang, Chen Yan, Xiaoyu Ji, Taimin Zhang, Tianchen Zhang, and Wenyuan Xu.
+“DolphinAtack: Inaudible Voice Commands”. Conference on Computer and Communications
+Security (CCS), 2017. http://arxiv.org/abs/1708.09537.
+21
+
+
+===== PDF PAGE 22 =====
+A
+Omitted proofs for the Gaussian model
+A.1
+Upper bounds
+We begin with standard results about (sub)-Gaussian concentration in Fact 12 and Lemmas 13
+to 16. These results show that a class-weighted average of suﬃciently many samples from the
+Gaussian model achieves a large inner product with the unknown mean vector. Lemma 17 then
+relates the inner product between a linear classiﬁer and the mean vector to the classiﬁcation accuracy.
+Theorem 18 uses the lemmas to establish our main theorem for standard generalization. Corollary
+19 instantiates the bound for learning from one sample. After further simpliﬁcation, this yields
+Theorem 4 from the main text.
+For robust generalization, we ﬁrst relate the inner product between a linear classiﬁer and the
+unknown mean vector to the robust classiﬁcation accuracy in Lemma 20. Similar to the standard
+classiﬁcation error, Theorem 21 and Corollary 22 then yield our upper bounds for robust generalization.
+Simplifying Corollary 22 further gives Theorem 5 from the main text.
+Fact 12. Let z ∈Rd be drawn from a centered spherical Gaussian, i.e., z ∼Nd(0, σ2I) where σ > 0.
+Then we have P[∥z∥2 ≥σ
+√
+d + t] ≤e−t2/(2σ2)
+.
+Proof. We refer the reader to Example 5.7 in [6] for a reference of this standard result. Combined
+with E[∥z∥2] ≤σ
+√
+d, which is obtained from Jensen’s Inequality, the aforementioned example gives
+the desired upper tail bound.
+Lemma 13. Let z1, . . . , zn ∈Rd be drawn i.i.d. from a spherical Gaussian, i.e., zi ∼Nd(µ, σ2I)
+where µ ∈Rd and σ > 0. Let z ∈Rd be the sample mean vector z = 1
+n
+Pn
+i=1 zi. Finally, let δ > 0 be
+the target probability. Then we have
+P
+
+∥z∥2 ≥∥µ∥2 +
+σ
+√
+d +
+p
+2 log 1/δ
+
+√n
+
+≤δ .
+Proof. Since each zi has the same distribution as µ + gi for gi ∼Nd(0, σ2I), we can bound the
+desired tail probability for
+z = 1
+n
+n
+X
+i=1
+µ + gi
+= µ + 1
+n
+n
+X
+i=1
+gi .
+Morever, the average of the gi has the same distribution as g ∼Nd(0, σ2
+n I). Hence it suﬃces to
+bound the tail of ∥µ + g∥2. For any c ≥0, applying the triangle inequality then gives
+P[∥z∥2 ≥∥µ∥2 + c] = P[∥µ + g∥2 ≥∥µ∥2 + c]
+≤P[∥g∥2 ≥c] .
+Setting c = σ
+p
+d/n + t with
+t = σ
+r
+2 log 1/δ
+n
+and substituting into Fact 12 then gives the desired result.
+22
+
+
+===== PDF PAGE 23 =====
+For convenient use in our later theorems, we instantiate Lemma 13 with the parameters most
+relevant for our Gaussian model. In particular, the norm of the mean vector µ is
+√
+d and we are
+interested in up to exponentially small failure probability δ (but not necessarily smaller).
+Lemma 14. Let z1, . . . , zn ∈Rd be drawn i.i.d. from a spherical Gaussian with mean norm
+√
+d,
+i.e., zi ∼Nd(µ, σ2I) where µ ∈Rd, ∥µ∥2 =
+√
+d, and σ > 0. Let z ∈Rd be the sample mean vector
+z = 1
+n
+Pn
+i=1 zi. Then we have
+P
+
+∥z∥2 ≥
+
+1 + 2σ
+√n
+√
+d
+
+≤e−d/2 .
+Proof. We substitute into Lemma 13 with ∥µ∥2 =
+√
+d and
+p
+2 log 1/δ =
+√
+d.
+Lemma 15. Let z1, . . . , zn ∈Rd be drawn i.i.d. from a spherical Gaussian, i.e., zi ∼Nd(µ, σ2I)
+where µ ∈Rd and σ > 0. Let z ∈Rd be the mean vector z = 1
+n
+Pn
+i=1 zi. Finally, let δ > 0 be the
+target probability. Then we have
+P
+"
+⟨z, µ⟩≤∥µ∥2
+2 −σ∥µ∥2
+r
+2 log 1/δ
+n
+#
+≤δ .
+Proof. As in Lemma 13, we use the fact that z has the same distribution as µ+g where g ∼Nd(0, σ2
+n I).
+For any t ≥0, this allows us to simplify the tail event to
+P
+h
+⟨z, µ⟩≤∥µ∥2
+2 −t
+i
+= P[⟨g, µ⟩≤−t] .
+The right hand side can now be simpliﬁed to P[h ≥t] where h ∼N(0, σ2∥µ∥2
+2/n). Invoking the
+standard sub-Gaussian tail bound
+P[h ≥t] ≤exp
+ 
+−
+n · t2
+2σ2∥µ∥2
+2
+!
+and substituting t = σ∥µ∥2
+q
+2 log 1/δ
+n
+then gives the desired result.
+Lemma 16. Let z1, . . . , zn ∈Rd be drawn i.i.d. from a spherical Gaussian with mean norm
+√
+d,
+i.e., zi ∼Nd(µ, σ2I) where µ ∈Rd, ∥µ∥2 =
+√
+d, and σ > 0. Let z ∈Rd be the sample mean vector
+z = 1
+n
+Pn
+i=1 zi and let bw ∈Rd be the unit vector in the direction of z, i.e., bw = z/∥z∥2. Then we have
+P
+
+⟨bw, µ⟩≤
+2√n −1
+2√n + 4σ
+√
+d
+
+≤2 exp
+
+−
+d
+8(σ2 + 1)
+
+.
+Proof. We invoke Lemma 14, which yields
+∥z∥2 ≤
+
+1 + 2σ
+√n
+√
+d
+with probability 1 −e
+−d/2. Moreover, we invoke Lemma 15 with δ = e
+−d/8σ2 and ∥µ∥2 =
+√
+d to get
+⟨z, µ⟩≥d −
+d
+2√n
+23
+
+
+===== PDF PAGE 24 =====
+with probability 1 −e
+−d/8σ2. We continue under both events, which yields the desired overall failure
+probability 2e
+−d/2.
+We now have
+⟨bw, µ⟩= ⟨z, µ⟩
+∥z∥2
+≥
+
+1 −
+1
+2√n
+
+d
+∥z∥2
+≥
+
+1 −
+1
+2√n
+
+d
+(1 + 2σ
+√n)
+√
+d
+=
+2√n −1
+2√n + 4σ
+√
+d
+as stated in the lemma.
+Lemma 17. Let z ∈Rd be drawn from a spherical Gaussian, i.e., z ∼Nd(µ, σ2I) where µ ∈Rd and
+σ > 0. Moreover, let w ∈Rd be an arbitrary unit vector with ⟨w, µ⟩≥ρ where ρ ≥0. Then we have
+P[⟨w, z⟩≤ρ] ≤exp
+
+−(⟨w, µ⟩−ρ)2
+2σ2
+
+.
+Proof. Since z has the same distribution as µ + g where g ∼Nd(0, σ2I), we can bound the tail event
+as
+P[⟨w, z⟩≤ρ] = P[⟨w, µ + g⟩≤ρ]
+= P[⟨w, g⟩≤ρ −⟨w, µ⟩] .
+The inner product ⟨w, g⟩is distributed as a univariate normal N(0, σ2) because the vector w has
+unit norm. Hence we can invoke the standard sub-Gaussian tail bound to get the desired tail
+probability.
+Theorem 18 (Standard generalization in the Gaussian model.). Let (x1, y1), . . . , (xn, yn) ∈Rd ×
+{±1} be drawn i.i.d. from a (θ⋆, σ)-Gaussian model with ∥θ⋆∥2 =
+√
+d. Let bw ∈Rd be the unit vector
+in the direction of z = 1
+n
+Pn
+i=1 yixi, i.e., bw = z/∥z∥2. Then with probability at least 1−2 exp(−
+d
+8(σ2+1)),
+the linear classiﬁer f bw has classiﬁcation error at most
+exp
+
+−
+(2√n −1)2d
+2(2√n + 4σ)2σ2
+
+.
+Proof. Let zi = yi · xi and note that each zi is independent and has distribution Nd(θ⋆, σ2I). Hence
+we can invoke Lemma 16 and get
+⟨bw, θ⋆⟩≥
+2√n −1
+2√n + 4σ
+√
+d
+with probability at least 1 −2 exp(−
+d
+8(σ2+1)) as stated in the theorem.
+24
+
+
+===== PDF PAGE 25 =====
+Next, unwrapping the deﬁnition of f bw allows us to write the classiﬁcation error of f bw as
+P[f bw(x)̸ = y] = P[⟨bw, θ⋆⟩≤0] .
+Invoking Lemma 17 with ρ = 0 then gives the desired bound.
+Corollary 19 (Generalization from a single sample.). Let (x, y) be drawn from a (θ⋆, σ)-Gaussian
+model with
+σ ≤
+d
+1/4
+5
+p
+log 1/β
+.
+Let bw ∈Rd be the unit vector bw =
+yx
+∥x∥2 . Then with probability at least 1 −2 exp(−
+d
+8(σ2+1)), the linear
+classiﬁer f bw has classiﬁcation error at most β.
+Proof. Invoking Theorem 18 with n = 1 gives a classiﬁcation error bound of
+β′ = exp
+
+−
+d
+2(2 + 4σ)2σ2
+
+.
+It remains to show that β′ ≤β.
+We now bound the denominator in β′. First, we have
+2 + 4σ ≤2d
+1/4 + 4
+5d
+1/4
+≤3d
+1/4 .
+Next, we bound the entire denominator as
+2(2 + 4σ)2σ2 ≤2 · 9
+√
+d ·
+√
+d
+25 log 1/β
+≤
+d
+log 1/β
+which yields the desired classiﬁcation error when substituted back into β′.
+Lemma 20. Assume a (θ⋆, σ)-Gaussian model. Let p ≥1, ε ≥0 be robustness parameters, and let
+bw be a unit vector such that ⟨bw, θ⋆⟩≥ε∥bw∥∗
+p., where ∥·∥∗
+p is the dual norm of ∥·∥p. Then the linear
+classiﬁer f bw has ℓε
+p-robust classiﬁcation error at most
+exp
+ 
+−
+(⟨bw, θ⋆⟩−ε∥bw∥∗
+p)2
+2σ2
+!
+.
+Proof. Per Deﬁnition 3, we have to upper bound the quantity
+P
+(x,y)∼P
+
+∃x′ ∈B(x) : f bw(x′)̸ = y
+
+.
+25
+
+
+===== PDF PAGE 26 =====
+For linear classiﬁers, we can rewrite this event as follows:
+P
+(x,y)∼P
+
+∃x′ ∈Bε
+p(x) : f bw(x′)̸ = y
+
+=
+P
+(x,y)∼P
+
+∃x′ ∈Bε
+p(x) : ⟨y · x′, bw⟩≤0
+
+=
+P
+(x,y)∼P
+
+∃∆∈Bε
+p(0) : ⟨y · (x + ∆), bw⟩≤0
+
+=
+P
+(x,y)∼P
+"
+min
+∆∈Bεp(0)⟨y · (x + ∆), bw⟩≤0
+#
+=
+P
+(x,y)∼P
+"
+⟨y · x, bw⟩+
+min
+∆∈Bεp(0)⟨y · ∆, bw⟩≤0
+#
+.
+We now use the deﬁnition of the dual norm. Note that for any ∆∈Bε
+p, we also have −∆∈Bε
+p. Since
+y ∈{±1}, we can drop the y factor. Overall, we get
+P
+(x,y)∼P
+"
+⟨y · x, bw⟩+
+min
+∆∈Bεp(0)⟨y · ∆, bw⟩≤0
+#
+=
+P
+(x,y)∼P
+h
+⟨y · x, bw⟩−ε∥bw∥∗
+p ≤0
+i
+=
+P
+(x,y)∼P
+h
+⟨y · x, bw⟩≤ε∥bw∥∗
+p
+i
+.
+By assumption in the lemma, we have ⟨bw, θ⋆⟩≥ε∥bw∥∗
+p. Hence we can invoke Lemma 17 with µ = θ⋆
+and ρ = ε∥bw∥∗
+p to get the desired bound on the robust classiﬁcation error.
+Theorem 21. Let (x1, y1), . . . , (xn, yn) ∈Rd × {±1} be drawn i.i.d. from a (θ⋆, σ)-Gaussian model
+with ∥θ⋆∥2 =
+√
+d. Let bw ∈Rd be the unit vector in the direction of z = 1
+n
+Pn
+i=1 yixi, i.e., bw = z/∥z∥2.
+Then with probability at least 1 −2 exp(−
+d
+8(σ2+1)), the linear classiﬁer f bw has ℓε
+∞-robust classiﬁcation
+error at most β if
+ε ≤
+2√n −1
+2√n + 4σ −σ
+p
+2 log 1/β
+√
+d
+.
+Proof. Let zi = yi · xi and note that each zi is independent and has distribution Nd(θ⋆, σ2I). Hence
+we can invoke Lemma 16 and get
+⟨bw, θ⋆⟩≥
+2√n −1
+2√n + 4σ
+√
+d
+with probability at least 1 −2 exp(−
+d
+8(σ2+1)) as stated in the theorem.
+Since ∥bw∥2 = 1, we have ∥bw∥∗
+∞= ∥bw∥1 ≤
+√
+d. The bound on ε in the theorem allows us to
+invoke Lemma 20. This yields an ℓε
+2-robust classiﬁcation error of at most
+exp
+ 
+−(⟨bw, θ⋆⟩−ε
+√
+d)2
+2σ2
+!
+.
+Since
+⟨bw, θ⋆⟩−ε∥bw∥∗
+p ≥
+2√n −1
+2√n + 4σ
+√
+d −
+√
+d
+ 
+2√n −1
+2√n + 4σ −σ
+p
+2 log 1/β
+√
+d
+!
+this simpliﬁes to the robust classiﬁcation error stated in the theorem.
+26
+
+
+===== PDF PAGE 27 =====
+Corollary 22. Let (x1, y1), . . . , (xn, yn) ∈Rd × {±1} be drawn i.i.d. from a (θ⋆, σ)-Gaussian model
+with ∥θ⋆∥2 =
+√
+d and σ ≤1
+32d
+1/4. Let bw ∈Rd be the unit vector in the direction of z = 1
+n
+Pn
+i=1 yixi,
+i.e., bw = z/∥z∥2. Then with probability at least 1 −2 exp(−
+d
+8(σ2+1)), the linear classiﬁer f bw has
+ℓε
+∞-robust classiﬁcation error at most 0.01 if
+n ≥
+(
+1
+for
+ε ≤1
+4d−1/4
+64 ε2√
+d
+for
+1
+4d−1/4 ≤ε ≤1
+4
+.
+Proof. We begin by invoking Theorem 21, which gives a ℓε′
+∞-robust classiﬁcation error at most
+β = 0.01 for
+ε′ =
+2√n −1
+2√n + 4σ −σ
+p
+2 log 1/β
+√
+d
+≥
+2√n −1
+2√n + 1
+8d1/4 −
+1
+8d1/4 .
+First, we consider the case where ε ≤1
+4d−1/4. Using n = 1, the resulting robustness is
+ε′ ≥
+1
+2 + 1
+8d1/4 −
+1
+8d1/4
+≥
+1
+(2 + 1
+8)d1/4 −
+1
+8d1/4
+≥1
+4d−1/4
+≥ε
+as required.
+Next, we consider the case 1
+4d−1/4 ≤ε ≤1
+4. Substituting n = 64ε2√
+d, we get
+ε′ ≥
+16εd
+1/4 −1
+16εd1/4 + 1
+8d1/4 −
+1
+8d1/4
+≥
+12εd
+1/4
+4d1/4 + 1
+8d1/4 −
+1
+8d1/4
+≥12
+5 ε −1
+2ε
+≥ε
+which completes the proof.
+A.2
+Lower bound
+The following theorem is our main lower bound for the Gaussian model. To make the lower bound
+easily comparable to Corollary 22 on the upper bound side, we simplify the lower bound in Corollary
+23 and bring it into a similar form.
+27
+
+
+===== PDF PAGE 28 =====
+Theorem 11. Let gn be any learning algorithm, i.e., a function from n samples in Rd × {±1} to a
+binary classiﬁer fn. Moreover, let σ > 0, let ε ≥0, and let θ ∈Rd be drawn from N(0, I). We also
+draw n samples from the (θ, σ)-Gaussian model. Then the expected ℓε
+∞-robust classiﬁcation error of
+fn is at least
+1
+2
+P
+v∼N(0,I)
+r
+n
+σ2 + n∥v∥∞≤ε
+
+.
+Proof. We begin by formally stating the expected ℓε
+∞-robust classiﬁcation error of fn:
+Ξ =
+E
+θ∼N(0,I)
+
+
+E
+y1,...,yn∼R
+
+
+E
+x1,...,xn
+∼N(yiθ,σ2I)
+"
+E
+y∼R
+"
+P
+x∼N(yθ,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+##
+
+
+
+where it is important to note that fn = gn((x1, y1), . . . , (xn, yn)) depends on the samples (xi, yi) but
+not on θ. This will allow us to re-arrange the above expectations in a crucial way.
+We ﬁrst rewrite the expectations by noting that we can sample zi ∼N(θ, σ2I) without condi-
+tioning on the class yi by then setting fn = gn((y1z1, y1), . . . , (ynzn, yn)). This yields
+Ξ =
+E
+θ∼N(0,I)
+
+
+E
+y1,...,yn∼R
+
+
+E
+z1,...,zn
+∼N(θ,σ2I)
+"
+E
+y∼R
+"
+P
+x∼N(yθ,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+##
+
+
+
+=
+E
+y1,...,yn∼R
+
+
+E
+θ∼N(0,I)
+
+
+E
+z1,...,zn
+∼N(θ,σ2I)
+"
+E
+y∼R
+"
+P
+x∼N(yθ,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+##
+
+
+
+where in the second line we moved the expectation over the class labels to the outside.
+Next, we will swap the order of the expectations over the mean parameter θ and the conditional
+samples xi. Since the posterior distribution for a Gaussian prior and likelihood is also Gaussian, the
+conditional distribution of θ given the zi is a multivariate Gaussian with parameters
+µ′ =
+n
+σ2 + nz
+Σ′ =
+σ2
+σ2 + n I
+where z = Pn
+i=1 zi. Moreover, let M be the marginal distribution over (zi, . . . , zn) after integrating
+over θ (which we will analyze later). Then we get
+Ξ =
+E
+y1,...,yn∼R
+
+
+E
+(z1,...,zn)∼M
+
+
+E
+θ∼N(µ′,Σ′)
+"
+E
+y∼R
+"
+P
+x∼N(yθ,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+##
+|
+{z
+}
+=Ψ
+
+
+
+
+(2)
+We now bound the term Ψ. Since the inner events only depends on θ through x, we can combine
+the Gaussian expectation with the Gaussian probability after moving the expectation over the label
+28
+
+
+===== PDF PAGE 29 =====
+y to the outside. This gives
+Ψ =
+E
+θ∼N(µ′,Σ′)
+"
+E
+y∼R
+"
+P
+x∼N(yθ,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+##
+=
+E
+y∼R
+"
+E
+θ∼N(µ′,Σ′)
+"
+P
+x∼N(yθ,σ2I)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+##
+=
+E
+y∼R
+"
+P
+x∼N(yµ′,Σ′′)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = y
+
+#
+(3)
+where Σ′′ = Σ′ + σ2I.
+Next, we bound the y = +1 case in the expectation over y. The y = −1 case can be handled
+exactly analogously. We introduce the set A−⊆Rd as the set of inputs on which the classiﬁer
+fn returns −1, i.e., A−= {x | fn(x) = −1}. Note that we can treat A−as ﬁxed here since it only
+depends on the samples zi and labels yi but not on the parameter θ or the new sample x. This
+allows us to rewrite the ﬁrst event as
+{x | ∃x′ ∈Bε
+∞(x) : fn(x′)̸ = +1} = {x | ∃x′ ∈A−: ∥x −x′∥∞≤ε}
+= Bε
+∞(A−) .
+Now, note that as long as ∥µ′∥∞≤ε, the set Bε
+∞(A−) contains a copy of A−shifted by ±µ′. Hence
+we have
+P
+x∼N(µ′,Σ′′)
+
+∃x′ ∈Bε
+∞(x) : fn(x′)̸ = +1
+
+=
+P
+N(µ′,Σ′′)
+[Bε
+∞(A−)]
+≥I
+
+∥µ′∥∞≤ε
+
+·
+P
+N(0,Σ′′)
+[A−]
+Repeating the same argument for the y = −1 case and substituting back into Equation (3) yields
+Ψ ≥
+E
+y∼R
+"
+I
+
+∥µ′∥∞≤ε
+
+·
+P
+N(0,Σ′′)
+
+A−sgn(y)
+
+#
+= I
+
+∥µ′∥∞≤ε
+
+· 1
+2
+ 
+P
+N(0,Σ′′)
+[A−] +
+P
+N(0,Σ′′)
+[A+]
+!
+= 1
+2I
+
+∥µ′∥∞≤ε
+
+.
+In the last line, we used that the sets two sets A−and A+ are complements of each other and hence
+their total mass under the measure N(0, Σ′′) is 1.
+Substituting back into Equation (2) yields
+Ξ ≥
+E
+y1,...,yn∼R
+"
+E
+(z1,...,zn)∼M
+1
+2I
+
+∥µ′∥∞≤ε
+#
+= 1
+2
+E
+(z1,...,zn)∼M
+
+I
+
+∥µ′∥∞≤ε
+
+= 1
+2
+P
+(z1,...,zn)∼M
+
+n
+σ2 + n∥z∥∞≤ε
+
+29
+
+
+===== PDF PAGE 30 =====
+where we dropped the expectation over the labels yi since the inner expression is now independent
+of the labels.
+It remains to analyze the distribution of the vector z.
+Note that conditioned on a vector
+θ2 ∼Nd(0, I), the distribution of each zi is N(θ2, σ2I). Hence the conditional distribution of z given
+θ2 is N(θ2, σ2
+n I) and integrating over θ2 yields a marginal distribution of N(0, (1 + σ2
+n )I). Overall,
+this gives
+Ξ ≥1
+2
+P
+θ2∼N(0,(1+ σ2
+n )I)
+
+n
+σ2 + n∥θ2∥∞≤ε
+
+= 1
+2
+P
+θ2∼N(0,I)
+r
+n
+σ2 + n∥θ2∥∞≤ε
+
+where we used
+n
+σ2 + n
+r
+1 + σ2
+n
+=
+r
+n
+σ2 + n .
+Rearranging this inequality yields the statement of the theorem.
+Corollary 23. Let gn be any learning algorithm, i.e., a function from n ≥0 samples in Rd × {±1}
+to a binary classiﬁer fn. Moreover, let σ > 0, let ε ≥0, and let θ ∈Rd be drawn from N(0, I). We
+also draw n samples from the (θ, σ)-Gaussian model. Then the expected ℓε
+∞-robust classiﬁcation error
+of fn is at least (1 −1/d)1
+2 if
+n ≤
+ε2σ2
+8 log d .
+Proof. We have
+r
+n
+σ2 + n ≤
+s
+ε2σ2
+8σ2 log d =
+ε
+2√2 log d .
+Hence we get
+P
+v∼N(0,I)
+r
+n
+σ2 + n∥v∥∞≤ε
+
+≥
+P
+v∼N(0,I)
+r
+ε
+2√2 log d∥v∥∞≤ε
+
+=
+P
+v∼N(0,I)
+h
+∥v∥∞≤2
+p
+2 log d
+i
+.
+Standard concentration results for the maximum of d i.i.d. Gaussians (e.g., see Theorem 5.8 in [6])
+now imply that the above probability is at least (1 −1/d). Invoking into Theorem 11 then completes
+the proof of this corollary.
+B
+Omitted proofs for the Bernoulli model
+B.1
+Upper bounds
+As in the Gaussian case, our upper bounds rely on standard sub-Gaussian concentration. Lemmas
+24 and 25 provide lower bounds on the inner product between a single sample from the Bernoulli
+model and the unknown parameter vectors. Lemma 26 then relates the inner product between a
+linear classiﬁer and the unknown mean vector to the classiﬁcation accuracy. Combining these results
+30
+
+
+===== PDF PAGE 31 =====
+yields Theorem 27 for generalization from a single sample. Simplifying this theorem yields Corollary
+28, which directly implies Theorem 8 from the main text.
+Lemma 24. Let (x, y) ∈Rd × {±1} be a sample drawn from a (θ⋆, τ)-Bernoulli model and let
+z = xy. Let δ > 0 be the target probability. Then we have
+P
+h
+⟨z, θ⋆⟩≤2τd −
+p
+2d log 1/δ
+i
+≤δ .
+Proof. To center z, we deﬁne g = z −E[z] = z −2τθ⋆, where each coordinate of g has zero mean.
+Then, we can write
+⟨z, θ⋆⟩= ⟨g + 2τθ⋆, θ⋆⟩= ⟨g, θ⋆⟩+ 2τd .
+Hence for all t > 0 we have,
+P[⟨z, θ⋆⟩≤2τd −t ] = P[⟨g, θ⋆⟩≤−t ] .
+Note that g = (g1, g2, ..., gd) is a vector of sub-Gaussian random variables since each entry is bounded,
+i.e., each gj (like zj) lies in an interval of length 2. Hence, the sub-Gaussian parameter of each gj is
+1. Invoking Corollary 1.7 from Rigollet and Hütter [43] for the weighted combination of independent
+sub-Gaussian random variables, we get that
+P
+
+
+d
+X
+j=1
+gjθ⋆
+j ≤−t
+
+≤exp
+
+−
+t2
+2||θ⋆||2
+2
+
+.
+Since ∥θ⋆∥2
+2 = d, we can simplify the tail event
+P[⟨z, θ⋆⟩≤2τd −t] ≤exp
+
+−t2
+2d
+
+which then gives
+P
+h
+⟨z, θ⋆⟩≤2τd −
+p
+2d log 1/δ
+i
+≤δ
+as desired.
+Lemma 25. Let (x, y) ∈Rd × {±1} be a sample drawn from a (θ⋆, τ)-Bernoulli model and let
+z = xy. Let bw ∈Rd be the unit vector in the direction of z, i.e., bw = z/∥z∥2. Then we have
+P
+h
+⟨bw, θ⋆⟩≤τ
+√
+d
+i
+≤exp
+
+−τ 2d
+2
+
+.
+Proof. We know that
+∥z∥2 =
+√
+d .
+Moreover, we invoke Lemma 24 with δ = exp(−τ 2d
+2 ) to get
+⟨z, θ⋆⟩≤τd
+31
+
+
+===== PDF PAGE 32 =====
+with probability δ. We now have
+⟨bw, θ⋆⟩= ⟨z, θ⋆⟩
+∥z∥2
+≤
+τd
+√
+d
+with probability δ as stated in the lemma.
+Lemma 26. Let (x, y) ∈Rd × {±1} be a sample drawn from a (θ⋆, τ)-Bernoulli model and let
+z = xy. Moreover, let w ∈Rd be an arbitrary unit vector with ⟨w, 2τθ⋆⟩≥0. Then we have
+P[⟨w, z⟩≤0] ≤exp
+
+−2τ 2⟨w, θ⋆⟩2
+.
+Proof. As in Lemma 24, we center z = 2τθ⋆+ g, where g is a vector of zero-mean sub-Gaussian
+random variables. We can bound the tail event as
+P[⟨w, z⟩≤0] = P[⟨w, 2τθ⋆+ g⟩≤0]
+= P[⟨w, g⟩≤−⟨w, 2τθ⋆⟩] .
+We know that the sub-Gaussian parameter of each gj is 1 as discussed in Lemma 24. Hence, invoking
+Corollary 1.7 from Rigollet and Hütter [43] for the weighted combination of independent sub-gaussian
+random variables, we get that
+P
+
+
+d
+X
+j=1
+gjwj ≤−t
+
+≤exp
+
+−
+t2
+2||w||2
+2
+
+= exp
+
+−t2
+2
+
+.
+Thus,
+P[⟨w, g⟩≤−⟨w, 2τθ⋆⟩] ≤exp
+ 
+−⟨w, 2τθ⋆⟩2
+2
+!
+as desired in the lemma.
+Theorem 27 (Standard generalization in the Bernoulli model.). Let (x, y) ∈Rd × {±1} be drawn
+from a (θ⋆, τ)-Bernoulli model. Let bw ∈Rd be the unit vector in the direction of z = yx, i.e.,
+bw = z/∥z∥2. Then with probability at least 1 −exp(−τ 2d
+2 ), the linear classiﬁer f bw has classiﬁcation
+error at most exp
+ −2τ 4d
+
+.
+Proof. We invoke Lemma 25 to get
+⟨bw, θ⋆⟩≥τ
+√
+d
+with probability at least 1 −exp(−τ 2d
+2 ) as stated in the theorem. Next, unwrapping the deﬁnition of
+f bw allows us to write the classiﬁcation error of f bw as
+P[f bw(x)̸ = y] = P[⟨bw, z⟩≤0] .
+Invoking Lemma 26 then gives the desired bound.
+32
+
+
+===== PDF PAGE 33 =====
+Corollary 28 (Generalization from a single sample.). Let (x, y) ∈Rd × {±1} be drawn from a
+(θ⋆, τ)-Bernoulli model with
+τ ≥
+log 1/β
+2d
+1/4
+.
+Let bw ∈Rd be the unit vector bw =
+yx
+∥x∥2 . Then with probability at least 1 −exp(−τ 2d
+2 ), the linear
+classiﬁer f bw has classiﬁcation error at most β.
+Proof. Invoking Theorem 27 gives a classiﬁcation error bound of
+β′ = exp
+ −2τ 4d
+
+.
+It remains to show that β′ ≤β. Now,
+log 1/β′ = 2τ 4d
+≥2 · log 1/β
+2d
+· d
+≥log 1/β
+which yields the desired bound.
+B.2
+Lower bounds
+In this section, we show that any linear classiﬁer for the (θ∗, τ)-Bernoulli model requires many
+samples to be robust. The main result is formalized in Theorem 31, which can be simpliﬁed to yield
+Theorem 9 from the main text. Before we proceed to the main theorem, we ﬁrst prove a simple but
+useful lemma.
+Lemma 29. Let θ be drawn uniformly at random from {−1, 1} and let (x1, y1), . . . , (xn, yn) be drawn
+independently from the (θ, τ)-Bernoulli model. Then for τ ≤1/4 and n ≤
+1
+τ 2 , we have with probability
+1 −δ over the samples that
+log Pr[θ = +1 | (x1, y1) . . . , (xn, yn)]
+Pr[θ = −1 | (x1, y1) . . . , (xn, yn)] ∈
+"
+−15τ
+r
+2n log 2
+δ , 15τ
+r
+2n log 2
+δ
+#
+Proof. For any sequence (x1, y1) . . . , (xn, yn), we can write
+Pr[θ = +1 | (x1, y1) . . . , (xn, yn)]
+Pr[θ = −1 | (x1, y1) . . . , (xn, yn)] = Pr[(x1, y1), . . . , (xn, yn) | θ = +1]
+Pr[(x1, y1), . . . , (xn, yn) | θ = −1]
+(4)
+because Pr[θ = +1] = Pr[θ = −1]. We now simplify the right hand side to
+Pr[(x1, y1), . . . , (xn, yn) | θ = +1]
+Pr[(x1, y1), . . . , (xn, yn) | θ = −1] =
+n
+Y
+i=1
+Pr[(xi, yi) | θ = +1]
+Pr[(xi, yi) | θ = −1]
+=
+n
+Y
+i=1
+ 1
+2 + τ
+1
+2 −τ
+!yixi
+(5)
+where the second line follows from a simple calculation of the conditional probabilities.
+33
+
+
+===== PDF PAGE 34 =====
+Writing zi = yixi, we next combine Equations (4) and (5) to
+Pr[θ = +1 | (x1, y1) . . . , (xn, yn)]
+Pr[θ = −1 | (x1, y1) . . . , (xn, yn)] = exp
+ 
+ˆτ
+n
+X
+i=1
+zi
+!
+,
+where ˆτ is such that exp(ˆτ) = 1+2τ
+1−2τ . For τ ≤1
+4, a simple calculation shows that ˆτ ≤5τ.
+Conditioned on θ, the sum z = Pn
+i=1 zi has expectation 2τnθ ≤2τn. Hoeﬃng’s Inequality (e.g.,
+see Theorem 2.8 in [6]) then yields that with probability 1 −δ/2
+z ≤2τn +
+r
+2n log 2
+δ .
+It follows that with probability 1 −δ/2 (taken over the samples z1, . . . , zn), the likelihood ratio above
+is bounded by
+exp(ˆτ
+X
+i
+zi) ≤exp
+ 
+2ˆττn + ˆτ
+r
+2n log 2
+δ
+!
+Under the assumptions that n ≤
+1
+τ 2 , we have
+τn ≤√n
+and the upper bound follows because the ﬁrst term in the exp is at most twice the second term. The
+lower bound is symmetric.
+We next evaluate the ℓ∞robustness of the optimal linear classiﬁer.
+Lemma 30. Let θ⋆∈{−1, +1}d and consider the linear classiﬁer fθ⋆for the (θ⋆, τ)-Bernoulli model.
+Then,
+ℓτ
+∞-robustness: The ℓτ
+∞-classiﬁcation error of fθ⋆is at most 2 exp(−τ 2d/2).
+ℓ3τ
+∞-nonrobustness: The ℓ3τ
+∞-classiﬁcation error of fθ⋆is at least 1 −2 exp(−τ 2d/2).
+Near-optimality of θ⋆: For any linear classiﬁer, the ℓ3τ
+∞-classiﬁcation error is at least 1
+6.
+Proof. Let (x, y) be drawn from the (θ⋆, τ)-Bernoulli model. Then for the linear classiﬁer w = θ⋆,
+we have
+E[⟨w, yx⟩] = 2τ⟨w, θ⋆⟩= 2τd .
+Let S denote the set
+S = {(x, y) : ⟨w, yx⟩∈[τd, 3τd]} .
+Hoeﬃng’s Inequality (e.g., see Theorem 2.8 in [6]) then gives
+Pr[(x, y)̸ ∈S] = Pr [⟨w, yx⟩̸ ∈[τd, 3τd]] ≤2 exp(−τ 2d/2) .
+On the other hand, for a parameter ε,
+sup
+e∈Bε∞
+⟨w, e⟩= ε∥w∥1 = εd .
+34
+
+
+===== PDF PAGE 35 =====
+Thus if ε < τ, then for any (x, y) ∈S,
+inf
+e∈Bε∞
+⟨w, y(x + e)⟩> 0 ,
+so that any (x, y) ∈S is ℓτ
+∞-robustly classiﬁed. On the other hand, for ε > 3τ, for any (x, y) ∈S,
+inf
+e∈Bε∞
+⟨w, y(x + e)⟩< 0 ,
+so that (x, y) is not ℓ3τ
+∞-robustly classiﬁed.
+Finally, let w′ be any other linear classiﬁer. Then we have
+E[⟨w′, yx⟩] = 2τ⟨w′, θ⋆⟩≤2τ∥w′∥1 ,
+Let Ei be a ±1 random variable with expectation 2τ. We observe that the random variable yxiw′
+i is
+stochastically dominated by Ei · |w′
+i| (note that yxi is itself a ±1 random variable with expectation
+2τ). We can now write Ei as
+E = Ai + Bi ,
+where the random variable Ai is in {0, 1} and has expectation 2τ. The random variable Bi is in
+{−1, 0, 1} and has a symmetric distribution that depends on A. In particular, Bi = 0 iﬀAi = 1
+and Bi is a Rademacher random variable otherwise. Since Ai is non-negative, we can use Markov’s
+inequality on P
+i|wi|Ai. The Bi’s have a symmetric distribution even conditioned on Ai so that
+P
+i|w′
+i|Bi ≤0 with probability at least 1/2. Thus with probability at least 1/6, we have
+⟨w′, yx⟩≤3τ∥w′∥1 .
+Thus for any ε > 3τ,
+inf
+e∈Bε∞
+⟨w′, y(x + e)⟩= ⟨w′, yx⟩+ inf
+e∈Bε∞
+⟨w′, ye⟩
+≤3τ∥w∥1 −ε∥w∥1
+< 0 .
+Thus the ℓ3τ
+∞-classiﬁcation error of w′ is at least 1/6.
+Lemma 30 implies that the most interesting robustness regime for linear classiﬁers is ε = O(τ).
+For larger values of ε, it is impossible to learn a linear classiﬁer with small robust classiﬁcation error
+regardless of the number of samples used.
+We now focus on this robustness regime and establishes a lower bound on the sample complexity
+of ℓε
+∞-robust classiﬁcation for ε ∈(0, τ).
+Theorem 31. Let gn be a linear classiﬁer learning algorithm, i.e., a function that takes n samples
+from {−1, +1}d × ±1 to a linear classiﬁer w ∈Rd. Suppose that we choose θ⋆uniformly at random
+from {−1, +1}d and draw n samples from the (θ⋆, τ)-Bernoulli model with τ ≤1/4. Let w then be
+the output of gn on these samples. Moreover, let ε < 3τ and 0 < γ < 1/2. Then if
+n ≤
+ε2γ2
+5000 · τ 4 log(4d/γ)
+the linear classiﬁer fw has expected ℓε
+∞-classiﬁcation error at least 1
+2 −γ.
+35
+
+
+===== PDF PAGE 36 =====
+Before we proceed to the formal proof, we brieﬂy explain the approach at a high level. Informally,
+Lemma 29 above implies that for small n, the algorithm gn is suﬃciently uncertain about each
+co-ordinate θ⋆
+i so that in expectation, the dot product ⟨w, θ⋆⟩is small compared to ∥w∥1. Since the
+ℓ1 norm ∥w∥1 is dual to the ℓ∞norm bounding the adversarial perturbation, it can be related to the
+adversarial robustness of the classiﬁer w on a fresh sample x. This then leads to the lower bound
+stated above, as we will now prove in more detail.
+Proof. Let S be the set of n samples input to gn and let w be the resulting classiﬁer as deﬁned in
+the theorem. Our ﬁrst goal is to bound the uncertainty in the estimate w by establishing an upper
+bound on |E[θ⋆
+i |S]| for each i ∈[d], which will in turn allow us to bound Eθ⋆[⟨w, θ⋆⟩|S].
+We have
+E[θ⋆
+i |S] = P[θ⋆
+i = +1|S] −P[θ⋆
+i = −1|S] .
+We ﬁrst consider the case that P[θ⋆
+i = +1|S] ≥P[θ⋆
+i = −1|S], which means that the conditional
+expectation E[θ⋆
+i |S] is non-negative. Hence it suﬃces to provide an upper bound on this quantity. The
+lower bound in the complementary case P[θ⋆
+i = +1|S] < P[θ⋆
+i = −1|S] can be derived analogously.
+We have
+E[θ⋆
+i |S] = P[θ⋆
+i = +1|S] −P[θ⋆
+i = −1|S]
+= P[θ⋆
+i = −1|S]
+P[θ⋆
+i = +1|S]
+P[θ⋆
+i = −1|S] −1
+
+≤1
+2
+P[θ⋆
+i = +1|S]
+P[θ⋆
+i = −1|S] −1
+
+(6)
+where we used the assumption P[θ⋆
+i = +1|S] ≥P[θ⋆
+i = −1|S] (and hence P[θ⋆
+i = −1|S] ≤1/2).
+Next, we bound the ratio of probabilities by invoking Lemma 29 (note that we have τ ≤1/4 and
+n ≤1/τ 2 as required). With probability (1 −γ
+2), S is such that for all i ∈[d] we have
+Pr[θ⋆
+i = +1 | S]
+Pr[θ⋆
+i = −1 | S] ∈
+"
+exp
+ 
+−15τ
+s
+2n log 4d
+γ
+!
+, exp
+ 
+15τ
+s
+2n log 4d
+γ
+!#
+.
+Substituting this into Equation (6) then yields
+E[θ⋆
+i |S] ≤1
+2
+ 
+exp
+ 
+15τ
+s
+2n log 4d
+γ
+!
+−1
+!
+≤15τ
+s
+2n log 4d
+γ
+where we used the inequality ex −1 ≤2x for 0 ≤x ≤1 (note that the upper bound on n in the
+theorem implies that the argument to the exponential function is in this range).
+Combining the bound above with the analogous lower bound gives
+|E[θ⋆
+i |S]| ≤15τ
+s
+2n log 4d
+γ
+36
+
+
+===== PDF PAGE 37 =====
+so that
+Eθ⋆[⟨w, θ⋆⟩|S] =
+d
+X
+i=1
+Eθ⋆[wiθ⋆
+i |S]
+=
+d
+X
+i=1
+wi · Eθ⋆[θ⋆
+i |S]
+≤15τ
+s
+2n log 4d
+γ · ∥w∥1 .
+We condition on such an S for the rest of this proof.
+The second part of the proof will bound the classiﬁcation margin the linear classiﬁer w achieves
+on a fresh sample x. Incorporating the class label y, this margin is the quantity y⟨w, x⟩. From the
+ﬁrst part of the proof, it follows that
+E
+θ⋆,(x,y)
+[⟨w, yx⟩] = 2τ · Eθ⋆[⟨w, θ⋆⟩]
+≤30τ 2p
+2n log(4d/γ) · ∥w∥1 .
+To simplify the following calculation, we introduce the shorthand an = 30τ 2p
+2n log(4d/γ). Next,
+we provide a tail bound on ⟨w, yx⟩. Similar to Lemma 30, we observe that the random variable
+yxiwi is stochastically dominated by Ei · |wi| where Ei is a ±1 random variable with expectation an.
+We can again write Ei as
+E = Ai + Bi ,
+where the random variable Ai is in {0, 1} and has expectation an. The random variable Bi is in
+{−1, 0, 1} and has a symmetric distribution that depends on A. In particular, Bi = 0 iﬀAi = 1
+and Bi is a Rademacher random variable otherwise. Since Ai is non-negative, we can use Markov’s
+inequality on P
+i|wi|Ai. The Bi’s have a symmetric distribution even conditioned on Ai so that
+P
+i|wi|Bi ≤0 with probability at least 1/2. Thus with probability at least 1−γ
+2 , we have
+⟨w, yx⟩≤an
+γ ∥w∥1 .
+Using the upper bound on n from the theorem statement, we have
+an
+γ
+≤30τ 2p
+2n log(4d/γ)
+γ
+< ε .
+Next, consider the strongest adversarial perturbation e ∈Bε
+∞for a given w, i.e., the vector e ∈Rd
+achieving
+min
+e∈Bε∞
+⟨w, e⟩.
+By duality, the minimum value is exactly ε∥w∥1. Hence conditioned on the samples S and the bound
+on ⟨w, yx⟩, the adversarially perturbed point x + e is mis-classiﬁed because
+y⟨w, x⟩= y⟨w, x⟩+ y⟨w, e⟩
+< ε∥w∥1 −ε∥w∥1
+= 0 .
+37
+
+
+===== PDF PAGE 38 =====
+The overall probability of this event occuring is at least 1 −γ
+2 (conditioning on S) times 1−γ
+2
+(bound
+on ⟨w, x⟩). Since
+
+1 −γ
+2
+1 −γ
+2
+
+≥1
+2 −γ .
+this completes the proof.
+C
+Omitted Figures
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+MNIST, train=0
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+MNIST, train=0.1
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+MNIST, train=0.2
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+MNIST, train=0.3
+test=0
+test=0.1
+test=0.2
+test=0.3
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+CIFAR-10, train=0
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+CIFAR-10, train=2
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+CIFAR-10, train=4
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+CIFAR-10, train=8
+test=0
+test=2
+test=4
+test=8
+103
+104
+105
+Training Set Size
+0
+20
+40
+60
+80
+100
+SVHN, train=0
+103
+104
+105
+Training Set Size
+0
+20
+40
+60
+80
+100
+SVHN, train=1
+103
+104
+105
+Training Set Size
+0
+20
+40
+60
+80
+100
+SVHN, train=2
+103
+104
+105
+Training Set Size
+0
+20
+40
+60
+80
+100
+SVHN, train=4
+test=0
+test=1
+test=2
+test=4
+Figure 4: Complete experiments for adversarially robust generalization for ℓ∞adversaries. For each
+dataset and training ε we report the performance of the corresponding classiﬁer for each testing ε.
+We observe that the best performance on natural examples is achieved through natural training and
+the best adversarial performance is achieved when training with the largest εtrain considered.
+38
+
+
+===== PDF PAGE 39 =====
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Standard, natural
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Standard, train=0.1
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Standard, train=0.2
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Standard, train=0.3
+test=0
+test=0.1
+test=0.2
+test=0.3
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Thresholding, natural
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Thresholding, train=0.1
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Thresholding, train=0.2
+103
+104
+Training Set Size
+0
+20
+40
+60
+80
+100
+Test Accuracy (%)
+Thresholding, train=0.3
+test=0
+test=0.1
+test=0.2
+test=0.3
+Figure 5: Complete experiments for adversarially robust generalization for ℓ∞adversaries for
+standard networks (top row) and networks with thresholding (bottom row) for the MNIST dataset.
+Thresholding corresponds to replacing the ﬁrst convolutional layer with two channels ReLU(x −ε)
+computing ReLU(x−(1−ε)). For each training εtrain we report the performance of the corresponding
+classiﬁer for each testing εtest. For natural training, we use thresholding ﬁlters identical to those
+used for εtrain = 0.1. We observe that in each case, explicitly encoding thresholding ﬁlters in the
+network architecture boosts the adversarial robustness for a given training εtrain and training set
+size.
+39

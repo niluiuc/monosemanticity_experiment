@@ -1,0 +1,1549 @@
+
+
+===== PDF PAGE 1 =====
+Polysemanticity and Capacity in Neural Networks
+Adam Scherlis1, Kshitij Sachan1, Adam S. Jermyn2, Joe Benton, Buck Shlegeris1
+1Redwood Research
+2Flatiron Institute
+Abstract
+Individual neurons in neural networks often represent a mixture of unrelated features. This
+phenomenon, called polysemanticity, can make interpreting neural networks more difficult
+and so we aim to understand its causes. We propose doing so through the lens of feature
+capacity, which is the fractional dimension each feature consumes in the embedding space.
+We show that in a toy model the optimal capacity allocation tends to monosemantically
+represent the most important features, polysemantically represent less important features
+(in proportion to their impact on the loss), and entirely ignore the least important features.
+Polysemanticity is more prevalent when the inputs have higher kurtosis or sparsity and
+more prevalent in some architectures than others. Given an optimal allocation of capacity,
+we go on to study the geometry of the embedding space. We find a block-semi-orthogonal
+structure, with differing block sizes in different models, highlighting the impact of model
+architecture on the interpretability of its neurons.
+1
+Introduction
+Individual neurons in neural networks often represent multiple unrelated features in the input [OMS17,
+OCS+20]. This phenomenon is known as polysemanticity, and makes it more difficult to interpret neural
+networks [OCS+20]. While "feature" is a somewhat fuzzy concept [EHO+22b], there are at least some
+cases where we “know it when we see it”. For example, when the input features are independent random
+variables that do not interact in the data-generating process, neurons that represent combinations of these
+input features can be confidently called polysemantic. In this work we explore how loss functions incentivize
+polysemanticity in this setting, and the structure of the learned solutions.
+Fittingly, there are multiple ways that polysemanticity can manifest. Here we focus on one form that seems
+particularly fundamental, namely superposition [EHO+22b]. Suppose we have a linear layer that embeds
+features which then pass through a layer with a nonlinear activation function. The feature embedding vectors
+might not be orthogonal, in which case multiple neurons (nonlinear units) are involved in representing each
+feature. When there are at least as many features as neurons this means that some neurons represent multiple
+features, and so are polysemantic (Figure 1, right). There are other causes of polysemanticity, e.g. feature
+embedding vectors could be rotated relative to the neuron basis (Figure 1, left), but we do not study these in
+this work.
+Here we build on the work of [EHO+22b], who studied polysemanticity in the context of toy models of
+autoencoders. They found that models can support both monosemantic and polysemantic neurons, that pol-
+ysemantic neurons can perform certain kinds of computations, and that the embedding vectors of features
+often formed repeating motifs of a few features symmetrically embedded in a low-dimensional subspace.
+Moreover, in their models they found distinct “phases” where superposition was either significant or com-
+pletely absent. Sparser inputs resulted in more superposition. Features with similar importance were more
+likely to be in superposition. This reflects an abundance of unexpected structure, and gives new handles on
+the phenomenon of polysemanticity.
+We study these phenomena through the lens of capacity, or the fraction of an embedding dimension allocated
+to each feature (Section 2, also termed “dimensionality” by [EHO+22b]). This ranges from 0-1 for each
+arXiv:2210.01892v4  [cs.NE]  25 Mar 2025
+
+
+===== PDF PAGE 2 =====
+Rotated Embeddings
+Non-Orthogonal Embeddings
+Figure 1: Feature embedding vectors are shown in two dimensions. The neuron basis corresponds to the
+coordinate axes. Left: rotated embeddings. Right: non-orthogonal embeddings. In both cases the result is
+polysemanticity because each neuron receives some input when either feature is present.
+Figure 2: The marginal loss reduction −∂L/∂Ci is shown for several features as a function of feature capacity
+in our toy model. Circles represent the optimal capacity allocation for a particular total embedding dimension.
+Colors vary to make individual curves more distinguishable.
+feature, and the total capacity across all features is bounded by the dimension of the embedding space.
+Because the model has a limited number of neurons and so a limited number of embedding dimensions,
+there is a trade-off between representing different features. We find that the capacity constraint on individual
+features (0-1) means that many features are either ignored altogether (not embedded) or else allocated a full
+dimension orthogonal to all the other features in the embedding space, depending on the relative importance
+of each feature to the loss. Features are represented polysemantically only when the marginal loss reduction
+of assigning more capacity to each is equal (Figure 2). This neatly explains the sharp “pinning” of features to
+either 0 or 1 capacity noted by [EHO+22b], and gives us a framework for understanding the circumstances
+under which features are represented polysemantically.
+To explore capacity allocation in a concrete model, we instantiate our theory for a one-layer model with
+quadratic activations (Section 3). Our model differs from the Anthropic toy model in that ours uses a different
+activation function to make the math more tractable, and, more importantly, ours is focused on polysemantic
+computation rather than data compression. We contrast these toy models in Figure 3.
+For our toy model we can analytically determine the capacity allocation as a function of feature sparsity
+and importance (i.e. weight in the loss), and so construct a “phase diagram” (Figure 4). While the details
+of our phase diagram differ from those of [EHO+22b], reflecting our different toy model, there are three
+qualitative features that are in good agreement. First, when a feature is much more important than the rest,
+2
+
+
+===== PDF PAGE 3 =====
+Figure 3: Comparison between the Anthropic toy model of [EHO+22b] (left) and our toy model (right).
+Model inputs are at the bottom of the diagram and outputs are at the top. The key difference is that the
+Anthropic model studies the compression and recovery of high-dimensional vectors, while ours examines
+how a smaller number of polysemantic neurons can simulate the computation done by a larger number of
+monosemantic ones. Figure kindly provided by Chris Olah.
+it is always represented fully with its own embedding dimension. Second, when a feature is much less
+important than the rest, it is ignored entirely. Finally, in a sparsity-dependent intermediate region features are
+partially represented, sharing embedding dimensions. In addition, this confirms our theoretical expectation
+that capacity is allocated according to how much each feature matters to the loss (a mixture of importance
+and sparsity) and that it is often allocated to fully ignore some features while fully representing others. We
+supplement this with empirical results for a variety of activation functions showing that the phase diagram
+predicts the behavior of a broad family of 2-layer models.
+We then turn to study the geometry of the embedding space (Section 4). When embedding matrices fully
+utilize the available capacity we call them “efficient”. We find that every efficient embedding matrix has a
+block-semi-orthogonal structure, with features partitioned into different blocks. When multiple features in a
+block are present they interfere with each other, causing spurious correlations in the output and hence greater
+loss. Features do not, however, interfere across blocks.
+The blocks in efficient matrices correspond to the polytope structure [EHO+22b] found, with small blocks
+corresponding to features embedded as regular polytopes and large blocks corresponding to less-ordered
+structures. Large- and small-block arrangements come with different advantages. With large blocks there
+is significant freedom to allocate capacity across features, whereas with small blocks there is the additional
+constraint that the capacity of each block be an integer and that the block capacities add up to the total
+capacity. On the other hand, with small blocks the lengths of embedding vectors can be chosen more freely
+because blocks can be scaled independently of each other without affecting the capacity allocation.
+In our quadratic model the embedding matrices in our toy model always have one large block, which is cor-
+respondingly less structured. We expect that differences in architecture can lead to different sizes of blocks,
+which could provide a way to control the extent of polysemanticity in models, alongside other approaches
+such as changing the activation function [EHO+22a].
+2
+Capacity and Superposition
+2.1
+Definitions
+Suppose we have a model composed of stacks of linear layers with nonlinear activation functions. In each
+layer, the model applies a linear transform to the input vector x to produce an embedding vector e, and then
+performs an element-wise non-linear calculation on those embeddings to produce the non-linear activation
+vector h. For instance, we might have
+3
+
+
+===== PDF PAGE 4 =====
+Figure 4: Upper: Analytical and empirical phase diagrams for our toy model with 6 features and 3 neurons.
+In both panels one feature has a different importance from the rest, and colors show the resulting capacity
+allocation for that feature as a function of sparsity and relative importance. Lower: Plots of marginal loss re-
+duction ∂L/∂Ci as a function of feature capacity for each labelled point in the analytical phase diagram. The
+blue curve represents the feature with varied importance and the black one represents the constant important
+feature. Black dots are optimal allocations of capacity.
+Figure 5: Left: An embedding matrix with two blocks. Center: The relationship between features and
+(principal-component-aligned) neurons for this matrix. Right: Embedding vector geometry for this matrix.
+4
+
+
+===== PDF PAGE 5 =====
+Figure 6: Example capacity allocations for different embeddings.
+e ≡W · x
+(1)
+h ≡ReLU(e)
+(2)
+with W ∈Rd×p, x ∈Rp, e, h ∈Rd. We associate each dimension of the input vector x with a feature, and
+we call each dimension of the non-linear layer a neuron.
+For simplicity, in the rest of this paper we work with a one-layer model, but our capacity definition should be
+valid for any layer in a multi-layer model.
+When a model represents a feature in the input space, it is convenient to think that it expends some capacity
+to do so. Our intuition here is that as we ask a model to represent more and more features we eventually
+exhaust its ability to do so, resulting in features interfering. We study the superposition phenomena by asking
+the question: "How do models allocate limited representation capacity to input features?" In what follows
+we assume that each input feature is assigned a unique dimension in the input space (e.g. feature i is input
+dimension i), and capacity we define below.
+Let W·,i ∈Rd be the embedding vector for feature i. The capacity allocated to feature i is
+Ci =
+(W·,i · W·,i)2
+P
+j(W·,i · W·,j)2
+(3)
+We can think of Ci as “the fraction of a dimension” allocated to feature i ([EHO+22b])1. The numerator
+measures the size of the embedding and the denominator tracks the interference from other features. By this
+definition, Ci is bounded between 0 and 1. In the case W·,i = 0, where this expression is undefined, we set
+Ci = 0.2
+We define the total model capacity to be C = P
+i Ci (in a multi-layer model, this would be a single layer-
+pair’s capacity). This is bounded between 1 and the embedding dimension D (see Appendix F for a proof of
+the upper bound).
+Note that a set of capacities does not uniquely specify a weight matrix. For example, capacity is invariant to
+the overall scaling and rotation of W. In what follows it will be useful to have a full parameterization of W
+that includes Ci, so we define S to be a set of additional parameters that uniquely specify a weight matrix W
+given its capacities C1, . . . , CN. We can then parameterize the loss using (C1, . . . , CN, S) rather than W.
+2.2
+Loss Minimization
+We are interested in how loss minimization allocates capacity among different features. Because the capacity
+of each feature lies in [0, 1] and there is also a constraint on the total capacity of a model, this is a constrained
+optimization problem:
+min
+C1:n,S
+L(C1:n, S)
+s.t.
+0 ≤Ci ≤1
+1 ≤
+X
+i
+Ci ≤D
+1We can also interpret Ci as the squared correlation coefficient between xi and (W T Wx)i – see Appendix E.
+2This is the limit of the expression from almost all directions, so in practice W·,i ≈0 implies Ci ≈0.
+5
+
+
+===== PDF PAGE 6 =====
+In brief, we minimize over S first to find the S∗(Ci) minimizing the loss3. We then minimize over Ci
+Intuitively capacity should always be a good thing, so we are interested in situations where the loss function
+L is monotonically decreasing in Ci. In this case, the bound on the total capacity P
+i Ci ≤D will be
+saturated, and we can replace this constraint with a Lagrange multiplier:
+min
+C1:n,λ
+L(C1:n) + λ
+ X
+i
+Ci −D
+!
+(4)
+s.t.
+0 ≤Ci ≤1
+Because we have independent constraints on each Ci, for each i the minimum occurs either at a boundary
+(Ci = 0 or 1) or in between at a point where
+∂
+∂Ci
+ 
+L(C1:n) + λ
+ X
+i
+Ci −D
+!!
+= 0
+(5)
+The derivative in the three cases will obey
+∂L(C1:n)
+∂Ci
+≥−λ
+(Ci = 0)
+(6)
+∂L(C1:n)
+∂Ci
+= −λ
+(0 < Ci < 1)
+(7)
+∂L(C1:n)
+∂Ci
+≤−λ
+(Ci = 1)
+(8)
+In other words, at the minimum of the loss, capacity is allocated to each feature until the marginal value
+(decrease in loss) from additional capacity is at a constant threshold – unless the feature is so important that
+the marginal value is above threshold even when fully represented, or so unimportant that the marginal value
+is below threshold even when the feature is ignored.
+Note that none of this derivation depended on the precise definition of capacity. We only had to assume that
+(1) allocating more capacity to a feature never makes the loss greater, (2) all capacity allocations satisfying
+the feature-level and total constraints are realizable by some embedding matrix. Thus we could have used
+other definitions, and indeed in Appendix G we explore one such alternative.
+We can visualize this in terms of the graph of ∂L/∂Ci as a function of Ci, holding Cj constant for j̸ = i. For
+instance, in Figure 2 there are diminishing returns: ∂2L/∂C2
+i > 0, so that each additional unit of capacity
+makes the next one less useful. If ∂L/∂Ci crosses −λ, the value of Ci where it crosses will be the optimal
+allocation. Features only get 0 or 1 capacity if the entire ∂L/∂Ci curve is above or below −λ (respectively).
+By contrast, in the case of increasing returns (∂2L/∂C2
+i < 0), every feature will have Ci = 0 or Ci = 1 and
+superposition will not occur at all. As we show below for several different toy models, diminishing returns
+occur for inputs of high sparsity or kurtosis, and accelerating return for inputs of low sparsity or kurtosis.
+3
+Quadratic model
+We now instantiate our theory for a two-layer model with quadratic activations. This choice of activation
+function allows us to study this model analytically in some detail.
+We define our model in Section 3.1. In Section 3.2 we analyze the loss function for the case of independent
+random input features. We are able to write the expected loss entirely in terms of the embedding lengths and
+the variance and kurtosis of feature strengths.
+In Section 3.3 we demonstrate a surprising feature of this quadratic model: the loss function can be written in
+terms of the feature capacity and the embedding lengths. This allows us to analytically explore the marginal
+benefit of allocating more capacity to each feature.
+We then go on to solve for the optimum allocation of capacity across features (Section 3.4) and relate this to
+our results from Section 2).
+3There are multiple ways to define S, which give different (∂L/∂Ci) holding "S" constant. Minimizing over S
+removes this ambiguity.
+6
+
+
+===== PDF PAGE 7 =====
+3.1
+The model
+We study a regression task, with ground-truth data x, y(x) and modeled data x, ˜y(x). The ground truth data
+is generated by a random vector of IID variables, x, and a set of “importance" coefficients vi:
+y =
+X
+i
+vix2
+i .
+(9)
+We think of vi as the importance of feature i, and highlight that y here is a scalar. The model ˜y(x) is
+parameterized as
+˜y =
+X
+i
+(Wi,· · x)2 + b
+(10)
+where b is a bias and W is a rectangular embedding matrix. Like y, ˜y is a scalar. Note that the ground-truth
+and modeled data are both of the form xT Ax for a matrix A. For the ground truth, this is a full-rank diagonal4
+matrix; for our model it is limited in rank by the shape of W. Therefore, perfect loss is not possible in general.
+Our loss function is squared error
+L(x) = (˜y(x) −y(x))2.
+(11)
+3.2
+Interpreting the loss function
+We now assume that E[xi] = 0 and Cov[xi, xj] = δij, but do not impose any additional restrictions on the
+distribution of {xi}. With this, we find (Appendix A)
+E[L] = (E[x4
+i ] −1)
+X
+i
+(||W·,i||2 −vi)2 + 2
+X
+i̸=j
+(W·,i · W·,j)2
+(12)
+The loss is a weighted sum of two components. The first term captures true correlations in the data, because
+vi ∝Cov[y, x2
+i ], while the second represents “hallucinated correlations” which are not present in the data
+(W·,i · W·,j ∝Cov[˜y, xixj]) but which the model produces anyway (Appendix B). When the fourth moment
+is large (for example due to sparsity, see Appendix D) the hallucinated term becomes less important and we
+get polysemanticity/superposition.
+More generally, when a model is incapable of representing the precise correlations in the data there is often a
+tradeoff, where the model can improve its representation of the true correlations at the cost of incorporating
+hallucinated ones. This will often be beneficial to the overall loss, but can end up spreading the task of
+representing a single feature across multiple neurons. If the model has a limited number of neurons this can
+result in polysemanticity.
+3.3
+Capacity
+We would like to write the expected loss in terms of the capacity of each feature. Recalling the definition of
+capacity, the expected loss can be written as
+L(⃗C,⃗n) = (k −1)
+X
+i
+(ni −vi)2 −2
+X
+i
+n2
+i + 2
+X
+i
+n2
+i
+Ci
+,
+(13)
+where L ≡E[L] is the expected loss, k ≡E[x4
+i ] is the kurtosis, and ni ≡||W·,i||2 is the squared embedding
+length. This form is surprising because it says that the loss is composed of (1) a term that depends only
+on the embedding lengths and (2) a sum of terms that each depend on the capacity of just one feature. In
+particular, what is surprising is that the effects of interference between features are entirely captured by the
+feature capacity, so the second term can be interpreted as the loss due to interference.
+Perhaps more striking, the partial derivative of loss with respect to capacity is just
+∂L
+∂Ci
+= −2 n2
+i
+C2
+i
+.
+(14)
+4In general, we could consider a ground truth with an arbitrary full-rank A instead of a diagonal matrix. Forcing A to
+be diagonal is then equivalent to choosing to always write x in the principal-component (SVD) basis of A. This gives a
+slightly stronger motivation for our choice to interpret the components of x as separate “features": we are really choosing
+features based on the principal axes of A.
+7
+
+
+===== PDF PAGE 8 =====
+That is, the marginal benefit of capacity for feature i depends only on the embedding length and capacity of
+that feature and not at all on any other aspect of the model. In what follows we make extensive use of this
+property to find the optimal capacity allocation.
+3.4
+Optimal capacity allocation
+We now minimize the loss to find (Appendix C):
+Ci = max
+
+min
+k −1
+k −3
+vi
+λ −
+2
+k −3, 1
+
+, 0
+
+(15)
+ni =
+
+
+
+0
+Ci = 0
+k−1
+k−3vi −
+2λ
+k−3
+0 < Ci < 1
+vi
+Ci = 1
+(16)
+Here λ is a Lagrange multiplier determined by the condition that P
+i Ci = D. In Appendix C we also verify
+that this solution is indeed feasible (i.e. there is an embedding matrix producing the above Ci and ni).
+For kurtosis k > 3, features will be ignored if
+k −1
+2
+vi < λ
+(17)
+and fully represented if
+vi > λ
+(18)
+If k ≤3, features will always either be ignored or fully represented because the loss is concave-down (or flat)
+in Ci. Hence the D features with highest vi will be represented.
+3.5
+Phase diagrams
+We now calculate phase diagrams for capacity allocation.
+3.5.1
+Phase diagram boundaries
+First, we solve for λ by inserting the set of vi into equation (57):
+Ci = max
+
+min
+k −1
+k −3
+vi
+λ −
+2
+k −3, 1
+
+, 0
+
+.
+We then sum over i and set this equal to D, allowing us to solve for λ.
+Features will be polysemantic if (equations 17 and 18)
+vi < λ < k −1
+2
+vi
+or equivalently
+2
+k −1λ < vi < λ
+Note that for k < 3, this is impossible, so features will never be partially represented (polysemantic).
+3.5.2
+Most-importances-equal case
+We now consider the case with N features, D < N dimensions, and
+vi = V
+(19)
+vi = 1
+i̸ = 1
+(20)
+When all features are partially represented we can use the constraint P
+i Ci = D to solve for λ and find
+λ = (k −1)(N −1 + V )
+(k −3)D + 2N
+.
+8
+
+
+===== PDF PAGE 9 =====
+Feature #1 therefore has capacity
+C1 =
+(k −3)D + 2N
+(k −3)(N −1 + V )V −
+2
+k −3.
+As a sanity check, this is D/N when V = 1.
+Feature #1 becomes fully represented (C1 = 1) when
+V ≥
+(k −1)(N −1)
+(k −3)(D −1) + 2(N −1)
+When k is large, this approaches (N −1)/(D −1). When V ≥(N −1)/(D −1), feature #1 is fully
+represented regardless of k.
+Feature #1 is ignored (C1 = 0) when
+V ≤
+2(N −1)
+(k −3)D + 2(N −1)
+When k is large, this goes to zero like 1/k.
+For k = 3, both bounds are at V = 1 and the feature instantly changes from being ignored to fully represented
+when V crosses 1.
+3.6
+Phase Diagram Intuition
+Figure 4 shows the analytic phase diagram and the corresponding empirical results. The lower panel shows
+the marginal loss benefit (−∂L/∂Ci) as a function of feature capacity for each labelled point in the analytical
+phase diagram.
+We first focus on relative feature importance. In our model an increase in relative feature importance corre-
+sponds to shifting ∂L/∂Ci up by a constant factor. Going from point D to point F, the blue feature increases
+in relative importance, and the corresponding marginal loss curve is shifted up. At point D the blue feature is
+too unimportant to be represented, at point E the blue feature is similar enough in importance to be allocated
+a fractional dimension with equal marginal loss benefit to the black reference feature, and at point F the blue
+feature is so much more important than the black feature that it consumes all available capacity.
+We next turn to sparsity (kurtosis). As sparsity increases, the marginal loss curves go from convex (A) to flat
+(C), and eventually to concave (E). Thus, there are diminishing returns to representing a feature when it is
+sparse and increasing returns when it is dense. When features are dense, the curves are concave, so the feature
+with larger marginal loss benefit is purely represented and the other feature is ignored. This explains the jump
+from ignored to monosemantic at the top of the phase diagram between points A and B. When features are
+sparse, we see a smoother transition from ignored to polysemantic to monosemantic representations.
+At the critical point (labelled C in the figure), the marginal loss benefit curves are flat and equal in scale, so
+any allocation of capacity that makes full use of the available embedding dimensions is optimal. Thus, any
+given feature could be ignored, represented monosemantically, or represented polysemantically.
+The shapes of the ∂L/∂Ci curves are specific to our toy model, but it is generally true that the boundaries
+between phases are determined by the marginal loss benefit of capacity. Note that this is true for any notion
+of capacity satisfying the properties discussed in Section 2.2.
+Finally, we note that our phase diagram bears a striking resemblance to that of a physical system with a
+second-order phase transition: there is a line of discontinuous “first order” change (above the critical point),
+giving way to a continuous transition at higher sparsity. The resemblance is stronger if we think of ∂L/∂Ci
+as our “order parameter" instead of Ci itself: ∂L/∂Ci is constant along one side of the discontinuity, and
+changes as a function of sparsity along the other side, with the discontinuity going to zero at the critical point.
+∂L/∂Ci is continuous everywhere else. That said, there are some notable differences from typical second-
+order transitions; most importantly, ∂L/∂Ci is not a smooth analytic function of importance and sparsity,
+but rather a piecewise-analytic function whose derivatives are discontinuous at the edges of the superposition
+phase. It is also unclear whether there is any meaningful analog of critical-point phenomena such as critical
+exponents.
+9
+
+
+===== PDF PAGE 10 =====
+3.7
+Other models and nonlinearities
+We now compare the numerical phase diagram for our toy model to that of Anthropic’s autoencoder
+model [EHO+22b]. The key difference between these models is that we sum the output of the nonlinear
+layer before computing the loss whereas in Anthropic’s model the loss is computed by summing the squared
+differences on the output layer. This means that theirs is tasked with data compression (i.e. recovering an
+encoded vector) while ours is tasked with a nonlinear computation.
+We compare these models across three nonlinearities: quadratic, ReLU, and GeLU. In our model when we
+vary the nonlinearity we do so both in the ground truth and in the activations. We further consider two cases:
+one with six features embedded in three dimensions (“6 in 3”) and one with six features embedded in five
+dimensions (“6 in 5”).
+The top row of Figure 7 shows the results for our toy model. The same general shape is the same in all cases,
+as predicted from our theoretical results: a sharp 0-1 transition at mild sparsity (low kurtosis), and a smoother
+transition with a region of superposition for more extreme sparsity (higher kurtosis).
+The superposition phase of our model also seems to be smoother, with capacity changing steadily from 0 to 1
+(as predicted by our analytic results). In contrast, the Anthropic model has a large region where the capacity
+used by a feature is “stuck” close to 1/2. This presumably corresponds to an antipodal embedding geometry;
+or, in the terminology of Section 4, a separate block of the embedding matrix containing two features in a
+one-dimensional subspace. If the neuron basis is rotated appropriately, this becomes a single neuron that
+represents two features, with neither the neuron nor the features overlapping with anything else. By contrast,
+the superposed features in our model unavoidably project onto many neurons regardless of how the neuron
+basis is rotated.
+Interestingly, some aspects of the phase diagram seem to depend on the nonlinearity and/or model. Our
+model has a narrower superposed region than Anthropic’s model. For the “6 in 3” case with significantly
+more features than neurons, Anthropic’s model shows features in superposition even when their importance
+is orders of magnitude larger than any other feature, which does not happen for our model (or for Anthropic’s
+when there is only one more feature than neurons).
+4
+Geometry of efficient matrices
+In this section we study the geometric of efficient embedding matrices, namely those which saturate the total
+capacity bound P
+i Ci ≤D with the capacity defined in equation (3). In particular, we exhaustively enumer-
+ate the forms these matrices can take and comment on the implications for the optimal capacity allocation in
+models.
+4.1
+Diagonal (monosemantic)
+The simplest way to make W efficient is to put D of the vectors orthogonal to each other with arbitrary
+lengths and set the rest to zero. This makes W a diagonal matrix padded with zeros.
+In this case, the capacities Ci are either 0 or 1. The norms-squared ni are zero (if Ci = 0) or nonzero but
+arbitrary (if Ci = 1).
+4.2
+Semiorthogonal (“everything bagel”)
+At the other extreme, we can choose W =
+√
+λR where R is semiorthogonal, meaning that RRT = I. (This
+means the rows of W are orthonormal, but the columns aren’t.)
+In this case, we have WW T = λI, so
+(W T W)2 = λW T W
+(21)
+and the capacity simplifies to
+Ci = 1
+λ[W T W]ii = ni
+λ
+(22)
+So the capacities and norms of vectors are directly related.
+10
+
+
+===== PDF PAGE 11 =====
+Figure 7: Empirical phase diagrams are shown for our toy model, Anthropic’s toy model with 6 features
+in 3 dimensions, and Anthropic’s toy model with 6 features in 5 dimensions. For each model we study
+three different nonlinearities. Our toy model looks similar for 6 features in 3 dimensions and 6 features in
+5 dimensions for all nonlinearities, so we only display plots of 6 features in 3 dimensions. The contour at
+c = 0.5 has been replaced with two contours at c = 0.47, 0.53 to give more detail for the large c ≈1/2
+regions, which correspond to the antipode polytope from [EHO+22b].
+We now confirm that this is efficient:
+X
+i
+Ci = 1
+λTr(W T W) = 1
+λTr(WW T ) = 1
+λλD = D
+(23)
+Theorem 1 Such a matrix exists for any⃗C that sums to D, so this gives us a way of dividing up capacity
+efficiently however we like.
+The proof is shown in Appendix H.
+The singular values of a semiorthogonal matrix are all equal (and vice versa), so the condition of semiorthog-
+onality is equivalent to requiring embedding vectors to be distributed in all directions in a balanced, isotropic
+way.5 This gives some geometric intuition for what the angles between vectors are doing: shorter vectors, for
+features with less capacity, will be spaced closer together in order to keep the overall arrangement balanced.
+4.3
+Mixed (tegum product)
+We can combine these approaches by splitting our embedding space into orthogonal subspaces of dimension
+Dk and using a semiorthogonal matrix to embed Nk of our vectors into the kth subspace.
+To do this, make W block-diagonal with blocks λkRk, where Rk is a Dk × Nk semiorthogonal matrix. Here
+P
+k Dk = D and P
+k Nk = N. For an example with two blocks, see Figure 5.
+5The exact sense of “balanced" is a little tricky: the vectors don’t have to be centered around the origin! Instead, think
+about a dataset whose principal components all have the same variance.
+11
+
+
+===== PDF PAGE 12 =====
+Within each block, the dimensions of a subspace are divided up as before:
+ni = λkCi
+if i ∈block k
+(24)
+X
+i∈block k
+Ci = Dk
+(25)
+Note that the independent scalars λk let us scale different subspaces arbitrarily. (This is the only thing that
+makes this more general than the previous case.)
+4.4
+General
+So far we have chosen subspaces aligned with the standard basis on RD (i.e. the neurons), but we can
+rotate our set of embedding vectors however we like without changing⃗C or⃗n. Similarly, we have assigned
+dimensions of RN (i.e. features) to subspaces sequentially, but we can do it in any order.
+In other words: a sufficient condition for efficiency is that W is a D × N matrix of the form QBP, where
+• Q is a D × D orthogonal matrix,
+• P is an N × N permutation matrix, and
+• B is a D × N block-diagonal matrix whose (rectangular) blocks are of the form Rk√γk, where γk
+is a positive scalar and Rk is a semiorthogonal matrix.
+In terms of the SVD decomposition W = QSR, an equivalent condition is that rows of R corresponding to
+unequal singular values Sii are never nonzero in the same column.
+Theorem 2 This is also a necessary condition; all efficient matrices are of this form.
+The proof is shown in Appendix H.
+4.5
+Interpolating between regimes
+Consider some block of an efficient matrix (factor of a tegum product), and some vector⃗wi in that block. If
+the norm-squared ni of that vector is increased, its capacity Ci increases in order to keep c ∝n within the
+block. At the same time, the vector becomes more orthogonal to the rest of the block.
+If the capacity reaches Ci = 1, the vector becomes fully orthogonal and separates into a new block. Once
+that happens, ni can be varied arbitrarily without affecting Ci.
+On the other hand, if the capacity decreases to Ci = 0, then ni = 0 and the vector becomes zero; at that point
+the feature is ignored.
+4.6
+Application to toy models
+Empirically, Anthropic found that (when importances are equal) their embedding matrices often factor into
+orthogonal subspaces containing simple geometric structures [EHO+22b]. This is equivalent to the statement
+that their embedding matrices have a large number of small blocks. (This also explains some features of the
+phase diagram for their model, such as a large region near c = 1/2; see above.) In contrast, the embedding
+matrices in our model have one large superposed block (except for ignored or fully-represented features).
+We can understand this phenomenon by thinking about the constraints on⃗C and⃗n in the large-block and
+small-block regime. When there is one large block, capacity can be divided up arbitrarily; however, the
+lengths of embedding vectors are determined entirely by the capacities (up to an overall scalar). For our
+model, this is compatible with good loss, because minimizing loss gives the relationship Ci ∝ni anyway
+(see above). However, for Anthropic’s model, this may be more constraining of embedding vector norms
+than the loss function “wants".
+In contrast, a collection of small blocks imposes constraints on capacity allocation, because each block must
+separately add up to the correct capacity. Once capacity is allocated, however, the lengths of vectors can be
+chosen much more freely by scaling blocks independently of each other. This doesn’t provide any benefit for
+our toy model, but seems to be useful to Anthropic’s.
+12
+
+
+===== PDF PAGE 13 =====
+This qualitative difference matters because it affects the interpretability of the network: when there are many
+small blocks, it is possible to choose an orthogonal basis of neurons such that each neuron is only poly-
+semantic between a small number of features. On the other hand, large blocks imply that neurons will be
+polysemantic between many features at once.
+5
+Conclusions
+We have studied polysemanticity through the lens of feature capacity, or the fraction of an embedding di-
+mension allocated to each feature. Treating capacity allocation as a constrained optimization problem, we
+find that many features are either ignored (not embedded) or else allocated a full embedding dimension or-
+thogonal to all other features, depending on their relative importance to the loss. Features are represented
+polysemantically only when the marginal loss reduction of assigning more capacity to each is equal and sig-
+nificant (Figure 2). This neatly explains the sharp “pinning” of features to either 0 or 1 capacity noted by
+[EHO+22b].
+To explore capacity allocation in a concrete model, we investigated a 2-layer model with quadratic activations
+(Section 3) and constructed a phase diagram of capacity allocation. We found good qualitative agreement
+to the phase diagram of [EHO+22b], and confirmed our theoretical predictions regarding optimal capacity
+allocation.
+Finally, we studied the geometry of the embedding space (Section 4), and characterized embedding matrices
+which make full use of the available dimensions. We found that efficient embedding matrices are block-
+semiorthogonal. These blocks correspond to the polytope structure [EHO+22b] found, with small blocks
+corresponding to features embedded as regular polytopes and large blocks corresponding to less-ordered
+structures. Large- and small-block arrangements come with different advantages. With large blocks there
+is significant freedom to allocate capacity across features, whereas with small blocks there is the additional
+constraint that the capacity of each block be an integer and that the block capacities add up to the total
+capacity. On the other hand, with small blocks the lengths of embedding vectors can be chosen more freely
+because blocks can be scaled independently of each other without affecting the capacity allocation.
+In our quadratic model the embedding matrices in our toy model always have one large block, while
+[EHO+22b] found a range of block sizes depending on the properties of the training distribution. This
+suggests that differences in architecture can lead to different sizes of blocks, which could provide a way to
+control the extent of polysemanticity in models, alongside other approaches such as changing the activation
+function [EHO+22a].
+Author Contributions
+AS derived the geometry of efficient matrices, proved the upper bound on the model capacity, and proposed
+an alternate definition of capacity. KS performed the numerical calculations in this work. ASJ, KS, and BS
+developed the capacity allocation and constrained optimization framework. AS, KS, and BS developed the
+quadratic model, and derived the expected loss, and related this to the input kurtosis and sparsity. AS, KS,
+ASJ, and BS derived the analytic optima for the quadratic model. JB proved the existence of feasible matrices
+for optimal capacity allocations and proved that single-block semiorthogonal matrices can be found for any
+capacity allocation. JS, KS, ASJ, and BS provided feedback on drafts and the organization of this manuscript.
+AS, ASJ, and KS contributed to writing this manuscript.
+Acknowledgments
+The Flatiron Institute is supported by the Simons Foundation. We are grateful to Jacob Steinhardt, David
+Lindner, Oliver Balfour, Jeff Wu, Ryan Greenblatt, and Martin Wattenberg for helpful comments on this
+manuscript, as well as to Chris Olah and Nicholas Schiefer for discussions about this work. We thank Chris
+Olah for producing Figure 3.
+A
+Quadratic Model Expected Loss
+Our loss function is squared error
+L(x) = (˜y(x) −y(x))2.
+(26)
+13
+
+
+===== PDF PAGE 14 =====
+We assume that the xi’s are IID with E[xi] = 0 and Var[xi] = 1. With this, we can write the expected loss as
+E[L] = E[(xT Dx + b)2]
+(27)
+= E
+
+
+
+X
+i,j
+Dijxixj + b
+
+
+2
+
+(28)
+=
+X
+i,j,k,l
+DijDklE [xixjxkxl] + 2b
+X
+i,j
+DijE[xixj] + b2,
+(29)
+where D = W T W −v and v is the diagonal matrix formed of {vi}.
+We can split the first summation term into several summations by considering all partitions of four terms (4,
+3|1, 2|2, 2|1|1, 1|1|1|1). For example, the 2|2 cases are P
+(i=j)̸=(k=l), P
+(i=k)̸=(j=l), P
+(i=l)̸=(k=j). Because
+the x’s are independent with mean 0 and variance 1, the only partition terms that are non-zero are 4 and 2|2,
+so we find
+E[L] = E[x4
+i ]
+X
+i
+D2
+ii +
+X
+i̸=j
+DiiDjj + 2
+X
+i̸=j
+D2
+ij + 2b
+X
+i
+D2
+ii + b2
+(30)
+= (E[x4
+i ] −1)
+X
+i
+D2
+ii +
+X
+i,j
+DiiDjj + 2
+X
+i̸=j
+D2
+ij + 2b
+X
+i
+D2
+ii + b2
+(31)
+= (E[x4
+i ] −1)
+X
+i
+D2
+ii +
+ X
+i
+Dii
+!2
++ 2
+X
+i̸=j
+D2
+ij + 2b
+X
+i
+D2
+ii + b2
+(32)
+= (E[x4
+i ] −1)
+X
+i
+D2
+ii +
+ 
+b +
+X
+i
+Dii
+!2
++ 2
+X
+i̸=j
+D2
+ij.
+(33)
+Inspecting the second term we see that at optimum b = −P
+i Dii. Making this assignment we find
+E[L] = (E[x4
+i ] −1)
+X
+i
+D2
+ii + 2
+X
+i̸=j
+D2
+ij,
+(34)
+Substituting in for D gives us
+E[L] = (E[x4
+i ] −1)
+X
+i
+(||W·,i||2 −vi)2 + 2
+X
+i̸=j
+(W·,i · W·,j)2
+(35)
+14
+
+
+===== PDF PAGE 15 =====
+B
+Covariances and Correlations
+Here we derive the relationship between the terms in the quadratic model loss and true/hallucinated correla-
+tions:
+Cov[y, x2
+i ] = Cov
+
+X
+j
+vjx2
+j, x2
+i
+
+
+(36)
+= viCov[x2
+i , x2
+i ]
+(37)
+= vi(E[x4
+i ] −E[x2
+i ]2)
+(38)
+= vi(E[x4
+i ] −1)
+(39)
+Cov[˜y, x2
+i ] = Cov
+
+X
+j,k
+(W T W)jkxjxk, x2
+i
+
+
+(40)
+= (W T W)iiCov[x2
+i , x2
+i ]
+(41)
+= ||W·,i||2(E[x4
+i ] −1)
+(42)
+(43)
+Cov[y, xixj] = 0
+(i̸ = j)
+(44)
+Cov[˜y, xixj] = Cov
+
+X
+j,k
+(W T W)jkxjxk, xixj
+
+
+(i̸ = j)
+(45)
+= 2(W T W)ijCov[xixj, xixj]
+(46)
+= 2(W·,i · W·,j)
+(47)
+(48)
+Here the true correlations in the model are described by the term Cov[˜y, x2
+i ], as these are what appear in the
+ground truth (Cov[y, x2
+i ]). By contrast, the hallucinated correlations are those of the form Cov[˜y, xixj], i̸ = j,
+which are zero in the ground truth but are generally non-zero in the quadratic toy model.
+C
+Quadratic Model Loss Minmization
+In minimizing the loss we have to consider three constraints:
+1. 1 ≤P
+i Ci ≤D
+2. 0 ≤Ci ≤1
+3. (⃗C,⃗n) is feasible
+Here feasibility means that there is actually a set of embedding directions we can choose such that W realizes
+the capacity allocation⃗C and embedding lengths⃗n. Our strategy here will be to “ask forgiveness rather than
+permission": We minimize L, ignoring the feasibility constraint, and check for feasibility after the fact.
+First we hold⃗C fixed and optimize over⃗n:
+∂L
+∂ni
+= 2(k −1)(ni −vi) −4ni + 4 ni
+Ci
+(49)
+0 = 2(k −1)(n∗
+i −vi) −4n∗
+i + 4n∗
+i
+Ci
+(50)
+n∗
+i ((k −3) + 2/Ci) = (k −1)vi
+(51)
+n∗
+i =
+(k −1)vi
+(k −3) + 2/Ci
+(52)
+Note that limCi→0 n∗
+i = 0 and limCi→0(n∗
+i
+2/Ci) = 0, so the final two terms of the loss are zero for non-
+represented features.
+15
+
+
+===== PDF PAGE 16 =====
+Next we differentiate with respect to capacity to find
+∂L(⃗C,⃗n∗(⃗C))
+∂Ci
+= ∂L
+∂Ci
++
+X
+j
+∂L
+∂nj
+∂n∗
+j
+∂Ci
+(53)
+The second term vanishes6, so we only have the first term
+∂L
+∂Ci
+= −2(n∗
+i (Ci))2
+C2
+i
+(54)
+This is non-positive, so our loss is monotonically decreasing in Ci. That means that we will saturate our first
+constraint, P
+i Ci = D.
+Next let’s solve for Ci and ni:
+λCi =
+(k −1)vi
+(k −3) + 2/Ci
+(55)
+vi
+λ = Ci
+k −3
+k −1 +
+2
+k −1
+(56)
+Ci = max
+
+min
+k −1
+k −3
+vi
+λ −
+2
+k −3, 1
+
+, 0
+
+(57)
+where we have introduced the clipping at 0 and 1 to make this also apply to the capacities on the boundary.
+With Ci we then obtain
+ni =
+
+
+
+0
+Ci = 0
+k−1
+k−3vi −
+2λ
+k−3
+0 < Ci < 1
+vi
+Ci = 1
+(58)
+C.0.1
+Checking feasibility
+For our solution (⃗C,⃗n) to be feasible, there must exist a corresponding matrix W.
+As shown in Appendix H, for any⃗C with P
+i Ci = D ≤N and 0 ≤Ci ≤1, there is a semiorthogonal
+matrix W of shape (N, D) with Ci(W) = Ci.
+We next need to show that⃗n is compatible with⃗C. The condition ni ∝Ci holds for any semiorthogonal
+matrix, and we can multiply each W·,i by a scalar to get the constant of proportionality right.
+Therefore, this solution is feasible!
+D
+Kurtosis and Sparsity
+D.1
+Sparsity increases fourth moment
+Suppose that, with probability p, x takes the value of a new random variable z and otherwise it is 0 (i.e.
+x = sz, s ∼B(p)). We set the mean E[z] = 0 and variance Var[z] = 1/p so that E[x] = 0, Var[x] = 1. As p
+decreases (i.e. sparsity increases), E[x4] increases:
+E[x4] = E[s4z4] = E[s4]E[z4] = p · Kurt[z]Var[z]2 = Kurt[z]/p
+(59)
+D.2
+Uniform Random Variable Moments
+We want to choose a such that for x ∼U(−a, a) · B(p), Var[x] = 1. Choose a =
+q
+3
+p:
+Var[x] = E[s2]E[z2] = p ·
+
+2
+p
+3/p
+2
+12
+= 1
+(60)
+Kurt[x] = E[x4]
+E[x2]2 = 9
+5 · 1
+p
+(61)
+6This is because we optimized over {ni} without any constraints, so⃗n∗is a local optimum for any⃗C.
+16
+
+
+===== PDF PAGE 17 =====
+E
+Interpretation as correlation coefficient
+The (population) Pearson correlation coefficient ρ2, also called “fraction of variance explained”, is defined as
+the ratio between covariance squared and the product of variances:
+ρ2(X, Y ) = (k −1)(X, Y )2
+κ(X, X)κ(Y, Y )
+(62)
+(The more-familiar r2 is an estimator for ρ2 computed from a sample.)
+Let’s assume our input features Xi are linearly uncorrelated and have mean zero and variance one:
+(k −1)(Xi) = 0
+(63)
+(k −1)(Xi, Xj) = δij
+(64)
+We’ll embed them with embedding vectors wi = W ˆei = W:,i and immediately unembed with W T . Then ρ2
+between the ith input and output is (using Einstein notation for everything except i, which is never summed)
+ρ2(Xi, [W T WX]i) =
+(k −1)(Xi, W ∗ikWkjXj)2
+(k −1)(Xi, Xi)(k −1)(WikWkjXj, Wik′Wk′j′Xj′)
+(65)
+=
+(WikWkj(k −1)(Xi, Xj))2
+WikWkjWik′Wk′j′(k −1)(Xi, Xi)(k −1)(Xj, Xj′)
+(66)
+=
+(WikWkjδij)2
+WikWkjWik′Wk′j′δjj′
+(67)
+=
+(WikWki)2
+(WikWkj)(Wik′Wk′j)
+(68)
+=
+(wi · wi)2
+P
+j(wi · wj)2
+(69)
+= Ci
+(70)
+where we’ve written the sum over j explicitly for the sake of clarity.
+Note that W T is not always the optimal way to reconstruct Xi from WX. We haven’t checked the math, but
+it seems to be the case that using the optimal unembedding matrix instead of W T gives the alternate definition
+of capacity in Appendix G.
+F
+Proof of capacity constraint
+Suppose we have N features and D neurons, with N ≥D.
+Let our embedding matrix be Wai, with shape [D, N]. The embedding vectors in RD are column vectors⃗
+wi := W:,i with components [wi]a = Wai.
+Define
+Vai :=
+Wai
+p
+[W T WW T W]ii
+(71)⃗
+vi := V:,i =⃗
+wi
+qP
+j(⃗wi ·⃗wj)2
+(72)
+and
+U := V T W
+(73)
+Uij =⃗vi ·⃗wj
+(74)
+17
+
+
+===== PDF PAGE 18 =====
+Note that
+U 2
+ii =
+(⃗wi ·⃗wi)2
+P
+j(⃗wi ·⃗wj)2 = Ci
+(75)
+Also,
+N
+X
+j=1
+U 2
+ij = 1
+(76)
+so the row vectors ˆui := Ui,: ∈RN are unit vectors.
+Let D′ := rank(U) ≤D, so that the vectors ˆui span a subspace of dimension D′.
+Let the D′ unit vectors ˆyb ∈RN with components [yb]i =: Ybi be an orthonormal basis for this subspace.
+Let Xib be the components of ˆui in the ˆyb basis, so that
+U = XY
+(77)
+ˆui =
+D′
+X
+b=1
+Xibˆyb
+(78)
+ˆui is a unit vector, so its components in an orthonormal basis obey
+D′
+X
+b=1
+X2
+ib = 1
+(79)
+Therefore, the row vectors ˆxi := Xi,: ∈RD′ are unit vectors.
+We can also define vectors⃗yi := Y:,i; note that these are the columns of Y and ˆyb are the rows.
+Note that Uij = ˆxi ·⃗yi, so we have
+Ci = U 2
+ii = (ˆxi ·⃗yi)2
+(80)
+≤(ˆxi · ˆxi)(⃗yi ·⃗yi)
+by Cauchy-Schwarz
+(81)
+= (⃗yi ·⃗yi)
+(82)
+=
+D′
+X
+b=1
+Y 2
+bi
+(83)
+Finally, summing over i,
+N
+X
+i=1
+Ci ≤
+N
+X
+i=1
+D′
+X
+b=1
+Y 2
+bi
+(84)
+=
+D′
+X
+b=1
+N
+X
+i=1
+Y 2
+bi
+(85)
+=
+D′
+X
+b=1
+|ˆyb|2
+(86)
+= D′ ≤D
+(87)
+18
+
+
+===== PDF PAGE 19 =====
+G
+An alternative definition of capacity
+Instead of applying equation (2) directly to W, we can take the (compact) SVD W = QSR and apply it to
+R,
+˜Ci(W) := ([RT R]ii)2
+[(RT R)2]ii
+= [RT R]ii
+(88)
+An equivalent prescription is to first rotate (by Q−1) and then scale (by S−1) the embedding space RD so
+that the embedding vectors are isotropically distributed, then take ˜Ci to be the norm-squared of the new
+embedding vector S−1Q−1⃗wi.
+This is equivalent to our previous definition when W is “c-efficient”,
+N
+X
+i=1
+Ci = D =⇒˜Ci = Ci
+(89)
+but relaxes the condition for “˜c-efficiency” dramatically, to the point that generic matrices are efficient:
+N
+X
+i=1
+˜Ci = rank(W)
+(90)
+W full rank =⇒
+N
+X
+i=1
+˜Ci = D
+(91)
+On the other hand, ˜Ci(W) is a somewhat more discontinuous function of W than Ci(W) is.
+Our results for the quadratic toy model are essentially unchanged; W is efficient at the minimum of E[L], so
+these definitions coincide (although we’re not sure their derivatives do). In more realistic models, it remains
+to be seen which version is more useful.
+This new definition also sheds some light on “c-efficiency”: a matrix is efficient if its embedding vectors
+are isotropically distributed within each block. In the case of only one block, a matrix is efficient if identity
+covariance for a random⃗x implies identity covariance for W⃗x.
+H
+Feasibility Proofs
+Set-up:
+We have vectors w1, . . . , wN ∈RD spanning RD, where D ≤N, arranged into an D × N matrix
+W =
+ |
+|
+w1
+. . .
+wN
+|
+|
+!
+.
+Our aim is to show that
+N
+X
+i=1
+Ci ≤D
+and to determine the conditions under which equality holds.
+Solution:
+We begin by finding a maximal decomposition of RD into orthogonal subspaces V1 ⊕· · · ⊕Vr
+such that each wi lies in some Vs and partition the wi accordingly, discarding any index with wi = 0. It then
+suffices to examine the problem separately on each subspace Vs.
+Therefore, we assume that w1, . . . , wN are such that we cannot decompose our problem further. In particular,
+this implies that wi̸ = 0 for all i and we cannot partition the indices into two subsets S, T such that wi·wj = 0
+for all i ∈S, j ∈T.
+19
+
+
+===== PDF PAGE 20 =====
+Lemma 1 Let {e1, . . . , eN} be the standard basis of RN and let V ⊆RN be a linear subspace of dimension
+D, such that ei̸ ∈V ⊥for all i. Then for any arbitrary unit vectors v1, . . . , vN ∈V , we have
+N
+X
+i=1
+(vi · ei)2 ≤D
+with equality if and only if vi is parallel to proj(ei, V ), where proj(u, W) denotes the orthogonal projection
+of a vector u onto the subspace W.
+Proof: Define v∗
+i ∈V to be a unit vector in the direction proj(ei, V ), and note that this exists by the
+assumption ei̸ ∈V ⊥. Then we have |vi · ei| ≤|v∗
+i · ei| for all other unit vectors v ∈V , with equality if and
+only if vi is parallel to v∗
+i . So it suffices to show that
+N
+X
+i=1
+(v∗
+i · ei)2 = D.
+Let b1, . . . , bD be an orthonormal basis for V , and let bD+1, . . . , bN be an orthonormal basis for V ⊥. Then
+v∗
+i = λi(b1 · ei)b1 + · · · + (bD · ei)bD
+where the normalising constant λi = (PD
+j=1(bj · ei)2)−1/2 is non-zero as v∗
+i is non-zero (and we may wlog
+assume λi > 0). Then
+(v∗
+i · ei)2 = λ2
+i
+
+
+D
+X
+j=1
+(bj · ei)2
+
+
+2
+=
+D
+X
+j=1
+(bj · ei)2
+from which the lemma follows.
+Define the matrix A = (aij)i,j=1,...,N via aij = wi · wj, and denote by ai the vector (ai1, . . . , ain)T ∈RN,
+so that
+A =
+ |
+|
+a1
+. . .
+aN
+|
+|
+!
+and the capacities can be expressed as Ci = a2
+ii/||ai||2. Note that aii = ||wi||2̸ = 0 and so non of the ai are
+trivial. Also, note that A = W T W, so the rank of A is the same as the rank of W, and thus equal to D.
+Now let vi = ai/||ai||, so that vi is a unit vector. Since the rank of A is D, the ai span a space V ⊆RN of
+dimension D. We can write
+vi · ei = aii/||ai||,
+from which it also follows that ei̸ ∈V ⊥(otherwise we would have aii = 0 which is not possible). Therefore
+we may apply Lemma 1 to get
+N
+X
+i=1
+Ci ≤D
+with equality if and only if ai is parallel to proj(ei, V ).
+Assuming that equality holds, using the proof of Lemma 1, we can write
+ai = µi
+D
+X
+k=1
+(bk · ei)bk,
+aij = µi
+D
+X
+k=1
+(bk · ei)(bk · ej)
+for some constant µi. Since aii = ai · ei > 0, we see that µi > 0.
+Now, if µi̸ = µj then
+µjaij = µjµi
+D
+X
+k=1
+(bk · ei)(bk · ej) = µiaji
+from which we conclude by the symmetry of aij that aij = wi · wj = 0. Hence if we have any µi̸ = µj we
+can perform a non-trivial decomposition into orthogonal subspaces V1 ⊕· · · ⊕Vr satisfying the conditions at
+the start of the solution. Since we assumed this was not possible, we must in fact have µ := µi is constant
+for all i.
+20
+
+
+===== PDF PAGE 21 =====
+Consider the map
+Λ : wi 7→µ1/2
+D
+X
+k=1
+(bk · ei)bk.
+If we let T ⊆RN be the linear subspace spanned by w1, . . . , wN, then dim T = m and Λ maps T to V . We
+can also check that the orthogonality of the bases {ei}i and {bi}i implies that Λ preserves the inner products
+of the wi. It follows that Λ is invertible and orthogonal.
+In addition, we have that
+bT
+j ΛWei = bT
+j Λwi = µ1/2
+D
+X
+k=1
+(bk · ei)(bk · bj) = µ1/2(bj · ei)
+so if we consider ΛW as a map from RD with basis {ei}i to V with basis {bi}i then it has matrix
+ΛW = µ1/2
+
+
+
+b1 · e1
+. . .
+b1 · eN
+...
+...
+bD · e1
+. . .
+bD · eN
+
+
+.
+Using PN
+j=1(bi · ej)2 = 1, it follows that ΛWW T ΛT = µID. Since Λ is orthogonal, we deduce that
+WW T = µID as required.
+Showing that every saturating case is achievable:
+We want to show that for every tuple of real numbers
+(C1, . . . , CN) with 0 ≤Ci ≤1 and PN
+i=1 Ci = D, we can find w1, . . . , wN ∈RD such that
+Ci =
+(wi · wi)2
+PN
+j=1(wi · wj)2 .
+A tuple (C1, . . . , CN) is feasible if there exists an N × N unitary matrix U such that if we let ˆU denote the
+first D rows of U and define u1, . . . , uN ∈RD by
+ˆU =
+ |
+|
+u1
+. . .
+uN
+|
+|
+!
+,
+then ||ui||2 = Ci for each i = 1, . . . , n. Note that if (C1, . . . , CN) is feasible then for the corresponding ui,
+if we denote their components by {uki}D
+k=1, we have
+(ui · ui)2
+PN
+j=1(ui · uj)2 =
+(ui · ui)2
+PN
+j=1
+PD
+k,l=1 uikujkuilujl
+=
+(ui · ui)2
+PD
+k,l=1 ukiuliδkl
+=
+(ui · ui)2
+PD
+k=1 ukiuki
+= ||ui||2 = Ci
+so we see that (C1, . . . , CN) is a valid set of capacities by taking wi = ui for each i. Hence it suffices to
+show that all the relevant tuples are feasible.
+Lemma 2 Suppose that (C1, . . . , CN) is a feasible tuple. Then
+1. any permutation of (C1, . . . , CN) is feasible;
+2. for any C′
+N, C′
+N+1 ≥0 such that C′
+N + C′
+N+1 = CN, the tuple (C1, . . . , Cn−1, C′
+N, C′
+N+1) is
+feasible;
+3. the tuple (1 −C1, . . . , 1 −CN) is feasible, with D replaced by N −D.
+21
+
+
+===== PDF PAGE 22 =====
+Proof: Let U be an N × N unitary matrix corresponding to (C1, . . . , CN) as above. Then (i) is immediate
+by permuting the columns of U, and (iii) follows by exchanging the first D and last N −D rows of U, noting
+that the squared norm of each column is 1.
+To prove (ii), consider extending U to an (N + 1) × (N + 1) unitary matrix U ′ by placing U in the upper
+n × n quadrant and placing a 1 at the bottom right position. Then write
+U ′ =
+
+
+
+U
+0
+0
+1
+
+
+=
+ |
+|
+|
+u′
+1
+. . .
+u′
+N
+u′
+N+1
+|
+|
+|
+!
+,
+for vectors u′
+i ∈RN+1. Now we may rotate the final pair of vectors together by an arbitrary angle θ and the
+resulting matrix remains orthogonal:
+U ′
+θ =
+ 
+u′
+1
+. . .
+u′
+N cos(θ) + u′
+N+1 sin(θ)
+−u′
+N sin(θ) + u′
+N+1 cos(θ)
+!
+,
+Restricting to the first D rows of U ′
+θ, we see that the first n−1 columns still have squared norms C1, . . . , Cn−1
+respectively (inherited from U). Therefore, as θ varies the sums of the squared norms of the final two columns
+must be CN. Moreover, the split between the two columns varies continuously between (CN, 0) and (0, CN)
+as θ ranges between 0 and π/2. Therefore we can achieve any split (C′
+N, c′
+N+1) between the final two
+columns, proving part (2).
+Finally, we show that every tuple (C1, . . . , CN) satisfying 0 ≤Ci ≤1 and PN
+i=1 Ci = m is feasible.
+Suppose not, for a contradiction. Then we may pick such a tuple with minimal n. Clearly all such tuples with
+n ≤1 are feasible, so we may assume n ≥2.
+If there are any Ci, Cj with Ci+Cj ≤1 then we may replace Ci, Cj by Ci+Cj to get another tuple satisfying
+the given conditions but with smaller n. By our minimality assumption, we conclude this new tuple must be
+feasible. But then our original tuple is feasible by Lemma 2.1 and 2.2.
+On the other hand, if there are no Ci, Cj with Ci +Cj ≤1 then consider the tuple (1−C1, . . . , 1−CN). We
+know that we must have (1−Ci)+(1−Cj) ≤1 for any i, j. Replacing (1−Ci), (1−Cj) by (1−Ci)+(1−Cj)
+to get a new tuple and following the argument of the previous paragraph, we conclude that the new tuple must
+be feasible, and so (1 −C1, . . . , 1 −CN) must be feasible also. But then (C1, . . . , CN) is feasible too by
+Lemma 2.3. We are thus done in all cases.
+22
+
+
+===== PDF PAGE 23 =====
+References
+[EHO+22a] Nelson Elhage, Tristan Hume, Catherine Olsson, Neel Nanda, Tom Henighan, Scott Johnston,
+Sheer ElShowk, Nicholas Joseph, Nova DasSarma, Ben Mann, Danny Hernandez, Amanda
+Askell, Kamal Ndousse, Andy Jones, Dawn Drain, Anna Chen, Yuntao Bai, Deep Ganguli,
+Liane Lovitt, Zac Hatfield-Dodds, Jackson Kernion, Tom Conerly, Shauna Kravec, Stanislav
+Fort, Saurav Kadavath, Josh Jacobson, Eli Tran-Johnson, Jared Kaplan, Jack Clark, Tom Brown,
+Sam McCandlish, Dario Amodei, and Christopher Olah. Softmax linear units. Transformer
+Circuits Thread, 2022. https://transformer-circuits.pub/2022/solu/index.html.
+[EHO+22b] Nelson Elhage, Tristan Hume, Catherine Olsson, Nicholas Schiefer, Tom Henighan, Shauna
+Kravec, Zac Hatfield-Dodds, Robert Lasenby, Dawn Drain, Carol Chen, Roger Grosse, Sam
+McCandlish, Jared Kaplan, Dario Amodei, Martin Wattenberg, and Christopher Olah. Toy
+models of superposition. Transformer Circuits Thread, 2022. https://transformer-circuits.pub/
+2022/toy_model/index.html.
+[OCS+20]
+Chris Olah, Nick Cammarata, Ludwig Schubert, Gabriel Goh, Michael Petrov, and Shan Carter.
+Zoom in: An introduction to circuits. Distill, 2020. doi:10.23915/distill.00024.001. https:
+//distill.pub/2020/circuits/zoom-in.
+[OMS17]
+Chris Olah, Alexander Mordvintsev, and Ludwig Schubert. Feature visualization. Distill, 2017.
+doi:10.23915/distill.00007. https://distill.pub/2017/feature-visualization.
+23

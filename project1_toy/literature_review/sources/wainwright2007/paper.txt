@@ -1,0 +1,1247 @@
+
+
+===== PDF PAGE 1 =====
+arXiv:math/0702301v2  [math.ST]  20 Feb 2007
+Information-theoretic limits on sparsity recovery in the
+high-dimensional and noisy setting
+Martin J. Wainwright
+Department of Statistics, and
+Department of Electrical Engineering and Computer Sciences
+University of California, Berkeley
+wainwrig@{eecs,stat}.berkeley.edu
+Technical Report, UC Berkeley, Department of Statistics
+January 2007
+Abstract
+The problem of recovering the sparsity pattern of a ﬁxed but unknown vector β∗∈Rp
+based on a set of n noisy observations arises in a variety of settings, including subset selection
+in regression, graphical model selection, signal denoising, compressive sensing, and construc-
+tive approximation. Of interest are conditions on the model dimension p, the sparsity index s
+(number of non-zero entries in β∗), and the number of observations n that are necessary and/or
+suﬃcient to ensure asymptotically perfect recovery of the sparsity pattern. This paper focuses
+on the information-theoretic limits of sparsity recovery: in particular, for a noisy linear obser-
+vation model based on measurement vectors drawn from the standard Gaussian ensemble, we
+derive both a set of suﬃcient conditions for asymptotically perfect recovery using the optimal
+decoder, as well as a set of necessary conditions that any decoder, regardless of its computa-
+tional complexity, must satisfy for perfect recovery. This analysis of optimal decoding limits
+complements our previous work [24] on sharp thresholds for sparsity recovery using the Lasso
+(ℓ1-constrained quadratic programming) with Gaussian measurement ensembles.
+Keywords: High-dimensional statistical inference; subset selection; signal denoising; compressive
+sensing; model selection; sparsity recovery; information-theoretic bounds; Fano’s method.
+1
+Introduction
+Suppose that we are given a set of n observations of a ﬁxed but unknown vector β∗∈Rp. In
+a variety of settings, it is known a priori that the vector β∗is sparse, meaning that its support
+set S—corresponding to those indices i for which β∗
+i is non-zero—is relatively small, say with
+size |S| =: s ≪p. Sparsity recovery refers to the problem of correctly estimating the support set
+S based on a set of noisy observations. This sparsity recovery problem is of broad interest, arising
+in various areas, including subset selection in regression [20], structure estimation in graphical
+models [19], sparse approximation [7, 21], signal denoising [5], and compressive sensing [8, 3].
+A great deal of work over the past few years has focused on the performance of computationally
+tractable methods, many based on ℓ1 or other convex relaxations, both for recovering the exact
+sparsity pattern as well as related problems in sparse approximation. We provide a brief overview
+of those parts of this extensive literature most relevant to our work in Section 1.1 below. Of equal
+1
+
+
+===== PDF PAGE 2 =====
+interest and complementary in nature, however, are the information-theoretic limits associated
+with the performance of any procedure for sparsity recovery. Such understanding of fundamental
+limitations is crucial in assessing the behavior of computationally tractable methods. In partic-
+ular, there is little point in proposing novel methods for sparsity recovery, possibly with higher
+computational complexity, if currently extant and computationally tractable methods achieve the
+information-theoretic limits. On the other hand, an information-theoretic analysis can reveal where
+there currently exists a gap between the performance of computationally tractable methods, and the
+fundamental limits. Indeed, the information-theoretic analysis of this paper makes contributions
+of both types.
+With this motivation in mind, the focus of this paper is on the information-theoretic limitations
+of sparsity recovery. In particular, our analysis focuses on the noisy and high-dimensional setting,
+meaning that the observations are contaminated by noise, and all three problem parameters—the
+number of observations n, the model dimension p, and the sparsity index s, deﬁned below—may
+tend to inﬁnity. Our main results, stated more precisely in Section 1.2, are necessary and suﬃcient
+conditions on the triplet (n, p, s) for exact recovery. In particular, given noisy linear observations
+based on measurement vectors drawn from the standard Gaussian ensemble, we derive both a set
+of suﬃcient conditions for asymptotically perfect recovery using the optimal decoder, as well as a
+set of necessary conditions that any decoder must satisfy for perfect recovery. The analysis given
+here complements our earlier paper [24] that established precise thresholds on the success/failure
+of the Lasso (i.e., ℓ1-constrained quadratic programming) for sparsity recovery.
+The remainder of this paper is organized as follows. In Section 1.1, we provide a more precise
+formulation of the problem, and a brief discussion of past work, whereas Section 1.2 provides a
+precise statement of our main results, and a discussion of their consequences. Section 2 and the
+appendices are devoted to the proofs of our main results, and we conclude in Section 3 with a
+discussion of open directions.
+1.1
+Problem formulation and past work
+We begin with a more precise formulation of the problem, as well as a discussion of previous work,
+with emphasis on that most closely related to the results in this paper. Let β∗∈Rp be a ﬁxed but
+unknown vector; we refer to the ambient dimension p as the model dimension. Deﬁne the support
+set of β∗as
+S
+:=
+{i ∈{1, . . . , p} | β∗
+i̸ = 0}.
+(1)
+We refer to its size s := |S| as the sparsity index. Finally, suppose that we are given a set of n
+observations, of the form
+Yi
+=
+xT
+i β∗+ Wi,
+i = 1, . . . , n
+(2)
+where each xi ∈Rp is a measurement vector, and Wi ∼N(0, σ2) is additive Gaussian noise. Of
+interest are conditions on the triplet (n, p, s) under which a given method either succeeds or fails
+in recovering the sparsity pattern S.
+Observation models:
+The linear observation model (2) can be studied in either its noiseless
+variant (σ2 = 0), or the noisy setting (σ2 > 0); this paper focuses exclusively the noisy setting.
+2
+
+
+===== PDF PAGE 3 =====
+In addition, previous work has addressed both deterministic families and random ensembles of
+measurement vectors {xi}n
+i=1. The analysis in this paper is based on the standard Gaussian mea-
+surement ensemble, in which each measurement vector xi is drawn from the zero-mean isotropic
+Gaussian distribution N(0, Ip×p).
+Error metrics:
+Consider some method that generates the vector bβ ∈Rp as an estimate of the
+truth β∗. There are various distinct criteria for assessing how close the estimate is to the truth,
+including
+• various ℓp norms E∥bβ −β∗∥p, especially ℓ2 and ℓ1, or
+• some measurement of predictive power (e.g., E[∥Yi −bYi∥2
+2], where bYi is the estimate based on
+bβ).
+Given the abundance of recent results on sparse approximation (not all of which are mutually
+comparable), it is particularly important to specify up front the choice of error metric. In this
+paper, we focus exclusively on the sparsity recovery problem, for which the appropriate error
+metric is simply the 0 −1 loss associated with the event of recovering the correct support S—viz.:
+ρ(bβ, β∗)
+=
+I
+hn
+bβi̸ = 0
+∀i ∈S
+o
+∩
+n
+bβj = 0
+∀j /∈S
+oi
+.
+(3)
+Past work:
+Closely related in its information-theoretic spirit is the earlier paper of Fletcher et
+al. [14] that analyzed the standard Gaussian ensemble from a rate-distortion perspective, studying
+the average ℓ2-error of the optimal decoder. The results given here also address the information-
+theoretic limitations, albeit of the sparsity recovery problem, using the error metric (3) as opposed
+to ℓ2-norm. In a related but distinct line of work, the use of ℓ1-relaxation for sparse approximation
+has a lengthy history; relatively early papers from the 1990s include the work of Chen, Donoho and
+Saunders [5], as well as Tibshirani [22] on ℓ1-constrained quadratic programming (known as the
+Lasso in the statistics literature). A great deal of subsequent work has analyzed the performance of
+ℓ1-relaxations, both in the noiseless [12, 13, 18] and noisy setting [23] for deterministic ensembles,
+as well as the noiseless [10, 3, 11] and noisy setting [4, 2, 9, 19, 27, 24] for random ensembles.
+Other work has provided conditions under which estimation of a noise-contaminated vector via the
+Lasso [2, 9] or other types of convex relaxation [4] is stable in the ℓ2 sense; however, such ℓ2-stability
+does not guarantee exact recovery of the underlying sparsity pattern.
+A notable feature of the results given here is that they apply to completely general scaling
+of the triplet (n, p, s). In contrast, most previous work has addressed one of two possible special
+cases of sparsity scaling: (a) either the linear sparsity regime [e.g 3, 10, 9], in which s = αp
+for some α ∈(0, 1); or (b) the sublinear sparsity regime [e.g., 19, 27], in which s/p tends to
+zero. Depending on the underlying motivation for sparse approximation, both of these sparsity
+regimes are of independent interest. In covering the full range of scaling, the results given here are
+complementary to those of our previous paper [24] that provided threshold results, also applicable
+to general scaling of (n, p, s), for the success/failure of the Lasso when used for sparsity recovery
+with random Gaussian measurement ensembles. We discuss connections to previous work in more
+technical detail following the statement of our main results below.
+3
+
+
+===== PDF PAGE 4 =====
+1.2
+Our contributions
+The analysis of this paper procedure is asymptotic in nature, focusing on scaling conditions on
+the triplet (n, p, s) under which asymptotically exact recovery is either possible or impossible. As
+mentioned previously, we focus on the linear observation model (2) in the noisy setting (σ2 > 0), and
+with the measurement vectors xi drawn in an i.i.d. manner from the standard Gaussian N(0, Ip×p)
+ensemble. A decoder is a mapping from the n-vector of observations Y to an estimated subset—say
+of the form bS = φ(Y ). We think of the underlying true vector β∗∈Rp with its support S randomly
+chosen, uniformly over all
+ p
+s
+
+subspaces of size s. Accordingly, the average error probability perr of
+any decoder is given by
+perr(φ) =
+1
+ p
+s
+
+X
+S, |S|=s
+P[φ(Y )̸ = S | S].
+Here the term P[φ(Y )̸ = S | S] corresponds to the probability, conditioned on the true underlying
+support being S and averaging over the measurement noise W, the choice of Gaussian random
+matrix X, and the choice of the entries β∗
+S on the ﬁxed support S, that the decoder makes an error.
+We say that
+• the sparsity recovery is asymptotically reliable (error-free) if perr(φ) →0 as n →+∞, and
+• the sparsity recovery is asymptotically unreliable if for some constant c > 0, the error proba-
+bility stays bounded perr(φ) ≥c as n →+∞.
+In addition to the three parameters (n, p, s), our results also involve the minimum value of the
+unknown vector β∗on its support, given by
+M(β∗)
+:=
+min
+i∈S |β∗
+i |.
+(4)
+We begin by stating a set of conditions on the triplet (n, p, s) which are suﬃcient to ensure asymp-
+totically perfect recovery of the sparsity pattern:
+Theorem 1 (Suﬃcient conditions). If (n −s)M2(β∗) →+∞, then the following condition suﬃces
+to ensure asymptotically reliable recovery: for some ﬁxed constant C > 0,
+n
+>
+C max
+
+s log(p/s),
+1
+M2(β∗) log(p −s)
+
+.
+(5)
+The proof of this claim, given in Section 2.2, is constructive in nature, based on direct analysis of
+the error probability associated with the optimal decoder.
+Theorem 2 (Necessary conditions). Asymptotically reliable recovery is impossible under the fol-
+lowing condition: for some ﬁxed constant C′ > 0:
+n
+<
+
+C′
+s M2(β∗)
+
+s log p
+s.
+(6)
+The proof of this claim, given in Section 2.3, is somewhat more indirect in nature, based on
+exploiting a corollary of Fano’s inequality [6, 15, 16, 26], in order to lower bound the probability
+of error for a restricted hypothesis testing problem. To interpret these results, we consider two
+distinct regimes of sparsity:
+4
+
+
+===== PDF PAGE 5 =====
+Regime of sublinear sparsity:
+First suppose that the sparsity is sublinear, meaning that
+s = o(p). Based on the two theorems, we identify the critical scaling as M2(β∗) = Θ(1/s). With
+this scaling, the suﬃcient condition in Theorem 1 reduces to n > C s max{log(p −s), log p
+s},
+whereas the necessary condition in Theorem 2 reduces to n < C′ s log p
+s. For many choices of sub-
+linear sparsity (e.g., s = O(√p)), we have log p
+s = Ω(log(p −s)) −o(1), so that we can summarize
+the two conditions as a threshold of the order n = Θ(s log(p −s)). To compare with our previ-
+ous work [24] on computationally tractable methods, we established that ℓ1-constrained quadratic
+programming (Lasso) has a threshold1 for success/failure of order n = Θ (s log(p −s)), so that the
+Lasso essentially achieves the information-theoretic bounds.
+Regime of linear sparsity:
+Next consider the regime of linear sparsity, in which s = αp for
+some α ∈(0, 1). Considering ﬁrst the suﬃcient conditions of Theorem 1, we see that as long as
+M2(β∗)s →+∞, then n = Θ(p) observations are suﬃcient to ensure asymptotically reliable re-
+covery.
+This information-theoretic condition should be compared with our earlier analysis [24]
+of ℓ1-constrained quadratic programming (the Lasso); one consequence of this work is that if
+n < 2s log(p −s), then the Lasso fails with probability converging to one, even if M2(β∗) stays
+bounded away from zero.
+Given that 2s log(p −s) ≫Θ(p) for linear sparsity s = αp, we see
+that there is a substantial gap between the performance of the Lasso and the optimal decoder in
+the linear sparsity regime. Thus, Theorem 1 raises the interesting question as to the existence
+of computationally eﬃcient techniques for asymptotically reliable recovery in the regime of linear
+sparsity.
+2
+Analysis
+This section is devoted to the proofs of Theorems 1 and 2. We begin by setting up some useful
+notation to be used throughout the remainder of the paper.
+2.1
+Notation and set-up
+For compactness in notation, let us use X to denote the n × p matrix formed with the vectors
+xk = (xk1, xk2, . . . , xkp) ∈Rp as rows, and the vectors Xj = (x1j, x2j, . . . , xnj)T ∈Rn as columns,
+as follows:
+X
+:=
+
+
+xT
+1
+xT
+2...
+xT
+n
+
+=
+
+X1
+X2
+· · ·
+Xp
+
+.
+(7)
+Using Y and W to denote the n-dimensional observation and noise vectors respectively, we can
+re-write our linear observation model (2) in matrix-vector form as follows:
+Y
+=
+Xβ∗+ W.
+(8)
+1Those results [24] allowed the minimum value to scale as M2(β∗) = f(s)/s, where f is any function such that
+lims→+∞f(s) = +∞.
+5
+
+
+===== PDF PAGE 6 =====
+Given any subset V ⊆{1, . . . , p}, we use the notation β∗
+V to denote the |V |-dimensional subvector
+{β∗
+i , i ∈V }, and similarly for other vectors (e.g., Y , etc.). In an analogous manner, we use XV
+to denote the n × |V | matrix with columns {Xi, i ∈V }. From herein, we assume without loss of
+generality that σ2 = 1, so that W ∼N(0, In×n) is simply a standard Gaussian vector. (Note that
+any scaling of σ can be accounted for in the scaling of β∗, via the parameter M(β∗).)
+In addition, we use the following standard notation for asymptotics of real sequences {an} and
+{bn}: (i) an = O(bn) means that an ≤Cbn for some constant C ∈(0, ∞); (ii) an = Ω(bn) means
+that an ≥C′bn for some constant C′ ∈(0, ∞); (iii) an = Θ(bn) is shorthand for an = O(bn) and
+an = Ω(bn), and (iv) an = o(bn) means that an/bn →0.
+2.2
+Proof of Theorem 1
+Optimal decoding:
+We begin by describing the “best” decoder, that is optimal in terms of
+minimizing the probability of error perr(φ) over all decoding rules. It is based on the following
+real-valued function, deﬁned on the subsets U ⊂{1, . . . , p}, as
+f(U; Y, X, β∗) = arg min
+βU
+
+∥Y −XUβU∥2
+2
+	
+.
+(9)
+We frequently write f(U) as a shorthand; note that this value corresponds to the error associated
+with the best estimator of Y that lies in Ra(XU). The optimal decoder chooses the best subset bS
+based on the minimal value of this error, ranging over all subsets U of size s:
+bS = φopt(Y )
+:=
+arg min
+|U|=s f(U; Y, X, β∗).
+(10)
+Note that by symmetry, the error probability P[bS̸ = S | S] is in fact the same regardless of which
+underlying set S acts as the true one. Consequently, we can view the choice of S as ﬁxed (and
+hence non-random), and write
+perr(φ) = P[φ(Y )̸ = S],
+(11)
+which should now be understood as an unconditional probability (with S ﬁxed).
+Analysis of error probability:
+Consider the diﬀerence ∆(U) := f(U) −f(S) between the
+reconstruction error f(S) using the true subset S, versus the error f(U) candidate subset U. For
+any subset U such that XU is full rank, deﬁne the n × n matrices
+ΠU
+:=
+XU
+
+XT
+U XU
+−1 XT
+U ,
+and
+(12a)
+Π⊥
+U
+:=
+In×n −XU
+
+XT
+U XU
+−1 XT
+U .
+(12b)
+Note that ΠU and Π⊥
+U are both orthogonal projection matrices, associated with the s-dimensional
+range space Ra(XU) and (n−s)-dimensional nullspace Ker(XU) respectively. With these deﬁnitions,
+we state the following result (see Appendix A for a proof):
+Lemma 1. For a given vector β∗with support S, the optimal decoder declares U over S if and
+only if the random variable
+∆(U)
+=
+Π⊥
+U
+
+XS\Uβ∗
+S\U + W
+
+2
+−
+Π⊥
+S W
+
+2
+.
+(13)
+is negative.
+6
+
+
+===== PDF PAGE 7 =====
+Overall, the optimal decoder fails if and only if at least one U (with cardinality |U| = s) is preferable
+to S; consequently, the probability of error can be written as
+P[bS̸ = S]
+=
+P
+h
+[
+U̸=S, |U|=s
+{∆(U) < 0}
+i
+.
+(14)
+In order to analyze this error probability, we begin by considering the range of possible integers
+k := |S\U|, corresponding to the complement of the overlap. The following lemma characterizes
+the exponential decay rates of the random variable ∆(U):
+Lemma 2. For ﬁxed k (with 1 ≤k ≤s), we have for any U with |S\U| = k,
+P[∆(U) < 0]
+≤
+exp
+
+
+
+−(n −s)∥β∗
+S\U∥2
+12
+
+∥β∗
+S\U∥2 + 4
+
+
+
++ 2 exp
+
+
+−k
+4
+"
+−1 + 1
+4(n −s)
+∥β∗
+S\U∥2
+k
+#2
+
+. (15)
+Proof. We begin by conditioning on the Gaussian noise vector W. Since each element of XS\U is
+standard normal, each entry of the random vector XS\Uβ∗
+S\U is zero-mean Gaussian with variance
+∥β∗
+S\U∥2. Consequently, if we rescale by the standard deviation, then the random vector
+∥β∗
+S\U∥−1 
+XS\Uβ∗
+S\U + W
+
+is an n-dimensional Gaussian random vector with independent entries, each with with unit variance,
+and mean vector W. Applying the orthogonal transform Π⊥
+U reduces the number of degrees of
+freedom to (n −s), so that we conclude that
+∥β∗
+S\U∥−2 Π⊥
+U
+
+XS\Uβ∗
+S\U + W
+
+2
+is a non-central χ2 variate with d = n −s degrees of freedom, and non-centrality parameter
+ν = ∥β∗
+S\U∥−2∥Π⊥
+UW∥2. With these choices of (d, ν), we have
+P[∆(U) < 0 | W]
+=
+P
+
+χ2(d, ν) < t
+
+where we have set t := ∥Π⊥
+S W ∥2
+∥β∗
+S\U∥2 for shorthand. Thus, conditioned on W, our problem reduces to
+bounding the tail of a non-central χ2 variate. In Appendix D, we state some known tail bounds [1]
+on such variates, which we use here. In order to apply these bounds, we condition on the following
+“good event”, deﬁned in terms of W
+A
+=
+(
+∥Π⊥
+UW∥2 −∥Π⊥
+S W∥2
+∥β∗
+S\U∥2
+ ≤n −s
+2
+) \ n
+∥Π⊥
+UW∥2 ≤2(n −s)
+o
+.
+Note that the ﬁrst event deﬁning A ensures that
+d + ν −t
+=
+(n −s) +
+1
+∥β∗
+S\U∥2
+
+∥Π⊥
+UW∥2 −∥Π⊥
+S W∥2
+≥n −s
+2
+≥0.
+(16)
+7
+
+
+===== PDF PAGE 8 =====
+Consequently, conditioned on A, we may set x := (d+ν−t)2
+4(d+2ν) in equation (35b) to obtain the upper
+bound
+log P[∆(U) < 0 | A]
+≤
+−(d + ν −t)2
+4(d + 2ν)
+=
+−
+
+[n −s] + ∥Π⊥
+U W ∥2−∥Π⊥
+S W ∥2
+∥β∗
+S\U∥2
+2
+4
+
+[n −s] + 2∥Π⊥
+U W ∥2
+∥β∗
+S\U∥2
+
+=
+−(n −s)
+
+1 + ∥Π⊥
+U W ∥2−∥Π⊥
+S W ∥2
+(n−s) ∥β∗
+S\U∥2
+2
+4
+
+1 + 2
+∥Π⊥
+U W ∥2
+(n−s) ∥β∗
+S\U∥2
+
+(b)
+≤
+−(n −s)
+1/2
+4
+
+1 + 4/∥β∗
+S\U∥2
+
+=
+−(n −s)
+∥β∗
+S\U∥2
+8
+
+∥β∗
+S\U∥2 + 4
+,
+(17)
+where inequality (b) makes use of the second event deﬁning A.
+We complete the proof by observing that
+P[∆(U) < 0]
+≤
+P[∆(U) < 0 | A] + P[Ac],
+(18)
+so that it suﬃces to upper bound P[Ac]. By union bound, we have
+P[Ac]
+≤
+P
+"
+∥Π⊥
+UW∥2 −∥Π⊥
+S W∥2
+∥β∗
+S\U∥2
+ ≥n −s
+2
+#
++ P
+h
+∥Π⊥
+UW∥2 ≥2(n −s)
+i
+.
+(19)
+Since ∥Π⊥
+UW∥2 is a central χ2 with (n −s) degrees of freedom, we may apply the tail bounds from
+Appendix D to conclude that
+P
+h
+∥Π⊥
+UW∥2 ≥2(n −s)
+i
+≤
+exp(−(n −s)/12).
+(20)
+Turning to the ﬁrst term on the RHS on equation (19), we observe that
+∥Π⊥
+UW∥2 −∥Π⊥
+S W∥2
+=
+∥ΠUW∥2 −∥ΠSW∥2
+d=
+X
+i∈U\S
+Z2
+i −
+X
+j∈S\U
+Z2
+j ,
+where {Zi, Zj} are i.i.d. standard normal variates. Now if the diﬀerence P
+i∈U\S Z2
+i −P
+j∈S\U Z2
+j is
+to exceed 1
+2(n −s)∥β∗
+S\U∥2, then at least one of the terms must exceed 1
+4(n −s)∥β∗
+S\U∥2. Moreover,
+8
+
+
+===== PDF PAGE 9 =====
+we observe that P
+j∈S\U Z2
+j is χ2
+k, where k = |S\U|. Hence, we have
+log P
+"
+∥Π⊥
+UW∥2 −∥Π⊥
+S W∥2
+∥β∗
+S\U∥2
+ ≥n −s
+2
+#
+≤
+log 2 P
+"
+χ2
+k
+k ≥1
+4(n −s)
+∥β∗
+S\U∥2
+k
+#
+=
+log 2P
+"
+χ2
+k −k ≥k
+(
+−1 + 1
+4(n −s)
+∥β∗
+S\U∥2
+k
+)#
+≤
+−k
+4
+"
+−1 + 1
+4(n −s)
+∥β∗
+S\U∥2
+k
+#2
++ log 2,
+where we have used the upper bound (34a) from Appendix D with x := k
+4
+
+−1 + 1
+4(n −s)
+∥β∗
+S\U∥2
+k
+2
+in the ﬁnal inequality.
+Weakened but simpler bound:
+In order to make further progress, we simplify the bound (15)
+from Lemma 2, at the expense of weakening it, by noting that for all k ≥1, we have ∥β∗
+S\U∥2 ≥
+k M2(β∗), so that
+P[∆(U) ≤0]
+≤
+exp
+−(n −s)k M2(β∗)
+12 (k M2(β∗) + 4)
+
++ 2 exp
+(
+−k
+4
+n −s
+4
+M2(β∗) −1
+2)
+.
+(21)
+The advantage of this weakened bound is that it is independent of the subset U, and depends only
+on the parameter k = |S\U|.
+From this weakened bound (21), we see the necessity (at least for this analysis) of the require-
+ment (n −s) M2(β∗) →+∞, so that the second error term decays asymptotically. Under this
+requirement, we have (for suﬃciently large n) that the second error exponent can be bounded as
+−k
+4
+n −s
+4
+M2(β∗) −1
+2
+≤
+−k
+12
+n −s
+4
+M2(β∗) −1
+
+≤
+−k
+4
+n −s
+8
+M2(β∗)
+≤
+−(n −s)k M2(β∗)
+12 (k M2(β∗) + 8) .
+The ﬁrst error exponent is also upper bounded by this same quantity, so that we can simplify the
+upper bound to
+P[∆(U) ≤0]
+≤
+3 exp
+−(n −s)k M2(β∗)
+12 (k M2(β∗) + 8)
+
+.
+(22)
+Denote by N(k) the number of subsets U of size s, with overlap exactly equal to k. A standard
+counting argument yields that, for each k with 1 ≤k ≤s, there are
+N(k)
+=
+s
+k
+ p −s
+k
+
+(23)
+9
+
+
+===== PDF PAGE 10 =====
+such subsets. Using this simple bound (22) and union bound applied to the representation (14),
+we can upper bound the error probability as
+P[bS̸ = S]
+≤
+3
+s
+X
+k=1
+s
+k
+ p −s
+k
+
+exp
+−(n −s)k M2(β∗)
+12 (k M2(β∗) + 8)
+
+.
+(24)
+Analysis of the upper bound:
+We now analyze the upper bound (24); in particular, our goal
+is to derive suﬃcient conditions for each of the terms in the summation to vanish asymptotically.
+In order to deal with the binomial coeﬃcients, we make use of the bounds (see Appendix C)
+log
+s
+k
+
+≤k log se
+k ,
+and
+log
+p −s
+k
+
+≤k log (p −s)e
+k
+.
+(25)
+Applying these two bounds, we conclude that the (logarithm of the) kth term is upper bounded by
+k
+
+2 + log s
+k + log p −s
+k
+
+−(n −s)k M2(β∗)
+12 (k M2(β∗) + 8).
+Requiring this term to be negative asymptotically is equivalent to having
+(n −s)
+≥
+12
+ kM2(β∗) + 8
+
+k M2(β∗)
+k
+
+2 + log s
+k + log p −s
+k
+
+=
+12
+
+k +
+8
+M2(β∗)
+ 
+2 + log s
+k + log p −s
+k
+
+.
+(26)
+In order to understand the behavior of this lower bound, we consider k in two distinct regimes:
+• On one hand, if k = γs for some γ ∈(0, 1), then the second term on the RHS of the bound (26)
+is dominated by the term log p−s
+γs = Ω(log p
+s), so that the overall lower bound is dominated
+by max{s, M−2(β∗)} log(p/s).
+• On the other hand, if k = o(s), the lower bound is dominated by the maximum of linear
+growth s, and the quantity M−2(β∗) log(p −s).
+Overall, we conclude that the condition
+n
+>
+C max
+
+s log(p/s),
+1
+M2(β∗) log(p −s)
+
+,
+(27)
+for some constant C > 0 is suﬃcient in order to achieve asymptotically reliable recovery, as claimed
+in Theorem 1.
+2.3
+Proof of Theorem 2
+We now turn to the proof of the necessary conditions given in Theorem 2.
+10
+
+
+===== PDF PAGE 11 =====
+Fano method:
+Our analysis is based on a well-known lower bound on the probability of error
+in a multiway hypothesis testing problem in terms of Kullback-Leibler divergences. In the non-
+parametric statistics literature [15, 16, 26], this approach is referred to as the Fano method, since
+the bound is a corollary of Fano’s inequality from information theory [6]. Here we state and make
+use of the following variant [25]:
+Lemma 3. Consider a family of N distributions {P1, . . . , PN}. Then the average probability of
+error in performing in a hypothesis test over this family is lower bounded as
+perr
+≥
+1 −
+1
+N2
+N
+P
+i,j=1
+D(Pi ∥Pj) + log 2
+log (N −1)
+,
+where D(Pi ∥Pj) denotes the Kullback-Leibler divergence between distributions Pi and Pj.
+Restricted problem:
+Consider the collection of all N =
+ p
+s
+
+subsets of size s chosen from
+{1, . . . , p}. In order to produce lower bounds, we analyze the behavior of the optimal decoder for
+a restricted problem, in which we assume that for any ﬁxed support S, it is known a priori that
+β∗
+i = M(β∗) for all indices i ∈S. (Recall that M(β∗) is the minimum absolute value of entries
+in the support of β∗.) This problem is simply an N-way hypothesis testing problem, in which the
+observation under the hypothesis associated with subset U takes the form
+Y
+=
+XU⃗v + W,
+(28)
+where⃗v = M(β∗)⃗1s is a rescaled s-vector of ones, and W ∼N(0, In×n).
+Let us index the collection of all s-sized subsets with i = 1, 2, . . . , N, and use U[i] to denote the
+corresponding support. For each index i, let Pi denote the multivariate Gaussian distribution with
+mean XU[i]⃗v and covariance matrix In×n; note that Pi is simply the class-conditional distribution
+of Y under the hypothesis U[i]. Moreover, the Kullback-Leibler divergence between any such pair
+is given by D(Pi ∥Pj) = 1
+2∥XU[i]⃗v −XU[j]⃗v∥2
+2, so that the corresponding Fano bound takes the form
+perr
+≥
+1 −1
+2
+1
+N2
+PN
+i,j=1 ∥XU[i]⃗v −XU[j]⃗v∥2
+2 + 2 log 2
+log[N −1]
+.
+Upper bounds via concentration:
+Thus, in order to ensure that pe stays bounded away from
+zero, we need to (upper) bound the quantity
+1
+2
+1
+N2
+PN
+i,j=1 ∥XU[i]⃗v −XU[j]⃗v∥2
+2
+
+log[N −1] away
+from one.
+For a given pair of subsets (U, V ) in our collection, consider the random variable
+ZU,V := ∥XU⃗v −XV⃗v∥2
+2. A little calculation shows that ZU,V ∼γ(U, V )χ2
+n, where
+γ(U, V ) = 2 M2(β∗) (s −|U ∩V |) .
+(29)
+The following result bounds the upper tail behavior of the random variable Z =
+1
+N2
+P
+U̸=V ZU,V .
+Lemma 4. The tail of Z obeys the bound
+P
+
+Z ≥4M2(β∗)sn
+
+≤
+1
+2.
+11
+
+
+===== PDF PAGE 12 =====
+Using this lemma (see Appendix B for a proof of this claim), we are guaranteed that at least 1/2
+of the Gaussian ensembles satisfy the upper bound
+1
+2
+1
+N2
+N
+P
+i,j=1
+D(Pi ∥Pj)
+log[N −1]
+=
+1
+2
+1
+N2
+P
+U̸=V ZU,V
+log[N −1]
+≤4M2(β∗)sn
+log[N −1] .
+(30)
+Hence, as long as the quantity (30) remains bounded from above away from one, the Fano bound
+implies that the probability of error averaged over the whole ensemble will remain bounded away
+from zero. Consequently, we obtain the necessary condition that
+n
+>
+log[N −1]
+4M2(β∗)s
+for reliable recovery with probability one asymptotically. To obtain a more transparent bound, we
+ﬁrst lower bound N via log[N −1] ≥1
+2 log N, and then further via
+1
+2 log N
+=
+1
+2 log
+p
+s
+
+≥1
+2s log p
+s,
+as stated in Appendix C. Consequently, we obtain the necessary condition
+n > Ω
+
+1
+s M2(β∗)s log p
+s
+
+,
+(31)
+as stated in Theorem 2.
+3
+Conclusion
+In this paper, we have analyzed the information-theoretic limits of the sparsity recovery problem
+for the linear observation model (2) with measurement vectors drawn from the standard Gaussian
+ensemble. We have established both lower and upper bounds on the number of observations n as a
+function of the model dimension p and sparsity index s that are required for asymptotically reliable
+recovery.
+There are a variety of open questions raised by our analysis. First, while our upper and lower
+bounds are essentially matching for certain regimes of scaling (e.g., sublinear sparsity with the
+minimum M2(β∗) = Θ(1/s)), it is likely that the analysis can be tightened in other regimes. In
+particular, the analysis of the necessary conditions (see proof of Theorem 2) involves some slack since
+it is based on analyzing a very restricted ensemble. Second, our results (in particular, a corollary
+of Theorem 1) reveal that with the sparsity index scaling linearly (s = αp for some α ∈(0, 1)),
+as long, as the minimum value M2(β∗) decays suﬃciently slowly, then asymptotically reliable
+recovery is possible with only a linear number of observations (i.e., n = βp for some β > 0). Since
+our previous work [24] established that the Lasso (ℓ1-constrained quadratic programming) cannot
+achieve reliable recovery in this particular (n, p, s) regime, it remains to determine a computationally
+tractable method that approaches such performance in the regime of linear sparsity. Third, whereas
+the current analysis has focused on a very special class of Gaussian ensemble, the analysis given
+here could be extended to a broader class of measurement ensembles.
+12
+
+
+===== PDF PAGE 13 =====
+Acknowledgements
+This work was partially supported by NSF CAREER Award CCF-0545862, NSF Grant DMS-
+0605165, and an Alfred P. Sloan Foundation Fellowship. We thank Peter Bickel for helpful discus-
+sions and pointers.
+A
+Proof of Lemma 1
+We begin by showing that for any subset U for which XU is full rank, the function f has the
+equivalent form f(U) = ∥Π⊥
+UY ∥2
+2. Under the given rank condition, the linear least squares estimator
+of β∗
+U is given by bβU =
+
+XT
+U XU
+−1 XT
+U Y .
+Noting that XU bβU = ΠUY , we substitute into the
+quadratic norm and expand, thereby obtaining
+f(U)
+=
+∥Y −XU c
+βU∥2
+2 = ∥(I −ΠU)Y ∥2
+2 = ∥Π⊥
+UY ∥2
+2
+as claimed. Lastly, to establish equation (13), we note that
+f(U)
+=
+∥Π⊥
+U (XSβ∗
+S + W) ∥2
+2 = ∥Π⊥
+U
+ XS\Uβ∗
+S\U + W
+
+∥2
+2,
+since Π⊥
+Uv = 0 for any vector v belonging to the range of XU.
+B
+Proof of Lemma 4
+Note that Z =
+1
+N2
+P
+U,V ZU,V is a rescaled sum of a total number N 2 variables (neither independent
+nor identically distributed). However, since Z is a non-negative random variable, we may apply
+Markov’s inequality for any t > 0 to conclude that
+P [Z ≥t]
+≤
+E[Z]
+t
+.
+(32)
+Since each ZU,V has distribution γ(U, V )χ2
+n, we have E[ZU,V ] = γ(U, V )n. From equation (29), we
+note that γ(U, V ) ≤2M2(β∗)s, and hence
+E[Z]
+≤
+max
+U̸=V (γ(U, V )) n = 2M2(β∗)sn,
+Hence setting t = 4M2(β∗)sn in the bound (32) yields the claim.
+C
+Bounds on binomial coeﬃcients
+Although more reﬁned results are certainly possible, we make frequent use of the following crude
+bounds on the binomial coeﬃcients
+n
+k
+k
+≤
+n
+k
+
+≤
+n e
+k
+k
+.
+(33)
+13
+
+
+===== PDF PAGE 14 =====
+D
+Tail bounds for chi-square variables
+The following large-deviations bounds for centralized χ2 are taken from Laurent and Massart [17].
+Given a centralized χ2-variate X with d degrees of freedom, then for all x ≥0,
+P
+h
+X −d ≥2
+√
+dx + 2x
+i
+≤P
+h
+X −d ≥2
+√
+dx
+i
+≤
+exp(−x),
+and
+(34a)
+P
+h
+X −d ≤−2
+√
+dx
+i
+≤
+exp(−x).
+(34b)
+More generally, the analogous tail bounds for non-central χ2, taken from Birg´e [1], can be estab-
+lished via the Chernoﬀbound. Let X be a non-central χ2 variable with d degrees of freedom and
+non-centrality parameter ν ≥0. Then for all x > 0,
+P
+h
+X ≥(d + ν) + 2
+p
+(d + 2ν)x + 2x
+i
+≤
+exp(−x),
+and
+(35a)
+P
+h
+X ≤(d + ν) −2
+p
+(d + 2ν)x
+i
+≤
+exp(−x).
+(35b)
+References
+[1] L. Birg´e. An alternative point of view on Lepski’s method. In State of the Art in Probability
+and Statistics, number 37 in IMS Lecture Notes, pages 113–133. Institute of Mathematical
+Statistics, 2001.
+[2] E. Candes, J. Romberg, and T. Tao. Stable signal recovery from incomplete and inaccurate
+measurements. Communications on Pure and Applied Mathematics, 59(8):1207–1223, August
+2006.
+[3] E. Candes and T. Tao.
+Decoding by linear programming.
+IEEE Trans. Info Theory,
+51(12):4203–4215, December 2005.
+[4] E. Candes and T. Tao. The Dantzig selector: Statistical estimation when p is much larger
+than n. Annals of Statistics, 2006.
+[5] S. Chen, D. L. Donoho, and M. A. Saunders. Atomic decomposition by basis pursuit. SIAM
+J. Sci. Computing, 20(1):33–61, 1998.
+[6] T.M. Cover and J.A. Thomas. Elements of Information Theory. John Wiley and Sons, New
+York, 1991.
+[7] R. A. DeVore and G. G. Lorentz. Constructive Approximation. Springer-Verlag, New York,
+NY, 1993.
+[8] D. Donoho. Compressed sensing. IEEE Trans. Info. Theory, 52(4):1289–1306, April 2006.
+[9] D. Donoho. For most large underdetermined systems of linear equations, the minimal ℓ1-norm
+near-solution approximates the sparsest near-solution. Communications on Pure and Applied
+Mathematics, 59(7):907–934, July 2006.
+14
+
+
+===== PDF PAGE 15 =====
+[10] D. Donoho. For most large underdetermined systems of linear equations, the minimal ℓ1-norm
+solution is also the sparsest solution.
+Communications on Pure and Applied Mathematics,
+59(6):797–829, June 2006.
+[11] D. Donoho and J. Tanner. Thresholds for the recovery of sparse solutions via ℓ1 minimization.
+In Proc. Conf. on Inofrmation Sciences and Systems, March 2006.
+[12] M. Elad and A. M. Bruckstein. A generalized uncertainty principle and sparse representation
+in pairs of bases. IEEE Trans. Info Theory, 48(9):2558–2567, September 2002.
+[13] A. Feuer and A. Nemirovski. On sparse representation in pairs of bases. IEEE Trans. Info
+Theory, 49(6):1579–1581, 2003.
+[14] A. K. Fletcher, S. Rangan, V. K. Goyal, and K. Ramchandran. Denoising by sparse approxi-
+mation: Error bounds based on rate-distortion theory. Journal on Applied Signal Processing,
+10:1–19, 2006.
+[15] R. Z. Has’minskii. A lower bound on the risks of nonparametric estimates of densities in the
+uniform metric. Theory Prob. Appl., 23:794–798, 1978.
+[16] I. A. Ibragimov and R. Z. Has’minskii. Statistical Estimation: Asymptotic Theory. Springer-
+Verlag, New York, 1981.
+[17] B. Laurent and P. Massart. Adaptive estimation of a quadratic functional by model selection.
+Annals of Statistics, 28(5):1303–1338, 1998.
+[18] D. M. Malioutov, M. Cetin, and A. S. Willsky.
+Optimal sparse representations in general
+overcomplete bases.
+In Int. Conf. on Acoustics, Speech, and Signal Processing, volume 2,
+pages II–793–796, May 2004.
+[19] N. Meinshausen and P. Buhlmann. High-dimensional graphs and variable selection with the
+lasso. Annals of Statistics, 2006. To appear.
+[20] A. J. Miller. Subset selection in regression. Chapman-Hall, New York, NY, 1990.
+[21] B. K. Natarajan.
+Sparse approximate solutions to linear systems.
+SIAM J. Computing,
+24(2):227–234, 1995.
+[22] R. Tibshirani. Regression shrinkage and selection via the lasso. Journal of the Royal Statistical
+Society, Series B, 58(1):267–288, 1996.
+[23] J. Tropp. Just relax: Convex programming methods for identifying sparse signals in noise.
+IEEE Trans. Info Theory, 52(3):1030–1051, March 2006.
+[24] M. J. Wainwright. Sharp thresholds for high-dimensional and noisy sparsity recovery using
+ℓ1-constrained quadratic programs. In Proc. Allerton Conference on Communication, Control
+and Computing, October 2006. Long version appeared as UC Berkeley Technical Report 709.
+[25] Y. G. Yatracos.
+A lower bound on the error in non-parametric regression type problems.
+Annals of Statistics, 16(3):1180–1187, 1988.
+15
+
+
+===== PDF PAGE 16 =====
+[26] B. Yu. Assouad, Fano and Le Cam. In Festschrift for Lucien Le Cam, pages 423–435. Springer-
+Verlag, Berlin, 1997.
+[27] P. Zhao and B. Yu. Model selection with the lasso. Technical report, UC Berkeley, Department
+of Statistics, March 2006. Accepted to Journal of Machine Learning Research.
+16

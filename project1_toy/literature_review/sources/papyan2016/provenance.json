@@ -1,0 +1,21 @@
+{
+  "key": "papyan2016",
+  "arxiv_id": "1607.08194",
+  "accessed_utc": "2026-10-06T00:52:22.361868+00:00",
+  "metadata": {
+    "citation_title": "Convolutional Neural Networks Analyzed via Convolutional Sparse Coding",
+    "citation_author": "Elad, Michael",
+    "citation_date": "2016/07/27",
+    "citation_online_date": "2016/10/10",
+    "citation_pdf_url": "https://arxiv.org/pdf/1607.08194",
+    "citation_arxiv_id": "1607.08194",
+    "citation_abstract": "Convolutional neural networks (CNN) have led to many state-of-the-art results spanning through various fields. However, a clear and profound theoretical understanding of the forward pass, the core algorithm of CNN, is still lacking. In parallel, within the wide field of sparse approximation, Convolutional Sparse Coding (CSC) has gained increasing attention in recent years. A theoretical study of this model was recently conducted, establishing it as a reliable and stable alternative to the commonly practiced patch-based processing. Herein, we propose a novel multi-layer model, ML-CSC, in which signals are assumed to emerge from a cascade of CSC layers. This is shown to be tightly connected to CNN, so much so that the forward pass of the CNN is in fact the thresholding pursuit serving the ML-CSC model. This connection brings a fresh view to CNN, as we are able to attribute to this architecture theoretical claims such as uniqueness of the representations throughout the network, and their stable estimation, all guaranteed under simple local sparsity conditions. Lastly, identifying the weaknesses in the above pursuit scheme, we propose an alternative to the forward pass, which is connected to deconvolutional, recurrent and residual networks, and has better theoretical guarantees."
+  },
+  "submission_history": "Submission history From: Vardan Papyan [ view email ] [v1] Wed, 27 Jul 2016 17:44:05 UTC (1,191 KB) [v2] Sat, 30 Jul 2016 18:58:02 UTC (605 KB) [v3] Thu, 6 Oct 2016 21:14:01 UTC (2,275 KB) [v4] Mon, 10 Oct 2016 22:37:55 UTC (2,275 KB)",
+  "abstract_url": "https://arxiv.org/abs/1607.08194",
+  "pdf_url": "https://arxiv.org/pdf/1607.08194",
+  "pages": 50,
+  "pdf_bytes": 2444905,
+  "pdf_sha256": "605187bf888eba330f28c3e50d25aeffe37689c5b535b6842d5b6e55c4066ecb",
+  "errors": []
+}

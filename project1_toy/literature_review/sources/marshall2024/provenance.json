@@ -1,0 +1,21 @@
+{
+  "key": "marshall2024",
+  "arxiv_id": "2401.17975",
+  "accessed_utc": "2026-10-06T00:53:33.576357+00:00",
+  "metadata": {
+    "citation_title": "Understanding polysemanticity in neural networks through coding theory",
+    "citation_author": "Kirchner, Jan H.",
+    "citation_date": "2024/01/31",
+    "citation_online_date": "2024/01/31",
+    "citation_pdf_url": "https://arxiv.org/pdf/2401.17975",
+    "citation_arxiv_id": "2401.17975",
+    "citation_abstract": "Despite substantial efforts, neural network interpretability remains an elusive goal, with previous research failing to provide succinct explanations of most single neurons' impact on the network output. This limitation is due to the polysemantic nature of most neurons, whereby a given neuron is involved in multiple unrelated network states, complicating the interpretation of that neuron. In this paper, we apply tools developed in neuroscience and information theory to propose both a novel practical approach to network interpretability and theoretical insights into polysemanticity and the density of codes. We infer levels of redundancy in the network's code by inspecting the eigenspectrum of the activation's covariance matrix. Furthermore, we show how random projections can reveal whether a network exhibits a smooth or non-differentiable code and hence how interpretable the code is. This same framework explains the advantages of polysemantic neurons to learning performance and explains trends found in recent results by Elhage et al.~(2022). Our approach advances the pursuit of interpretability in neural networks, providing insights into their underlying structure and suggesting new avenues for circuit-level interpretability."
+  },
+  "submission_history": "Submission history From: Simon Marshall [ view email ] [v1] Wed, 31 Jan 2024 16:31:54 UTC (18,351 KB)",
+  "abstract_url": "https://arxiv.org/abs/2401.17975",
+  "pdf_url": "https://arxiv.org/pdf/2401.17975",
+  "pages": 17,
+  "pdf_bytes": 21462401,
+  "pdf_sha256": "925750b10f5b66a9b80e5cdf7f6a76ca4bb5b7416ac3663d8eb4fdc1f340426e",
+  "errors": []
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "p": 0.05,
+    "p_rational": "1/20",
+    "lower_sigma": 0.20226523792507076,
+    "upper_sigma": 0.20940769208615226,
+    "lower_difference": 0.0006782151160261846,
+    "upper_difference": -0.00018322730726080295,
+    "root_sigma": 0.20795519406087754,
+    "root_residual": 6.938893903907228e-18,
+    "converged": true,
+    "iterations": 6,
+    "function_calls": 7
+  },
+  {
+    "p": 0.05,
+    "p_rational": "1/20",
+    "lower_sigma": 0.6140523992789051,
+    "upper_sigma": 0.6357360121396401,
+    "lower_difference": -0.0016402052861922353,
+    "upper_difference": 0.0015460044864699513,
+    "root_sigma": 0.6252753374369201,
+    "root_residual": -2.335631688055173e-14,
+    "converged": true,
+    "iterations": 5,
+    "function_calls": 6
+  },
+  {
+    "p": 0.35,
+    "p_rational": "7/20",
+    "lower_sigma": 0.2669883401733045,
+    "upper_sigma": 0.27641631702584446,
+    "lower_difference": 1.2852868476822404e-05,
+    "upper_difference": -2.9889086819279154e-05,
+    "root_sigma": 0.269886292550721,
+    "root_residual": -2.0816681711721685e-17,
+    "converged": true,
+    "iterations": 6,
+    "function_calls": 7
+  },
+  {
+    "p": 0.35,
+    "p_rational": "7/20",
+    "lower_sigma": 1.0699106833448677,
+    "upper_sigma": 1.1076917083526003,
+    "lower_difference": -0.00011206193391025132,
+    "upper_difference": 7.394855051348626e-05,
+    "root_sigma": 1.0932765900703794,
+    "root_residual": -8.326672684688674e-17,
+    "converged": true,
+    "iterations": 6,
+    "function_calls": 7
+  },
+  {
+    "p": 0.375,
+    "p_rational": "3/8",
+    "lower_sigma": 0.12442908847495314,
+    "upper_sigma": 0.12882296786745032,
+    "lower_difference": 2.6532902903990624e-08,
+    "upper_difference": -1.3681001612368801e-08,
+    "root_sigma": 0.12773969942565494,
+    "root_residual": 5.21772295508649e-19,
+    "converged": true,
+    "iterations": 7,
+    "function_calls": 8
+  },
+  {
+    "p": 0.375,
+    "p_rational": "3/8",
+    "lower_sigma": 3.3628158657061844,
+    "upper_sigma": 3.4815646849267257,
+    "lower_difference": -7.073704044679996e-06,
+    "upper_difference": 1.9998998898762554e-05,
+    "root_sigma": 3.3971473353548483,
+    "root_residual": 2.7755575615628914e-17,
+    "converged": true,
+    "iterations": 6,
+    "function_calls": 7
+  }
+]

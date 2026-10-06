@@ -1,0 +1,32 @@
+{
+  "independent_active_subset_cases": 48,
+  "maximum_bias_minimum_loss_discrepancy": 1.6697788640876666e-34,
+  "maximum_pair_bias_formula_discrepancy": 0.0,
+  "maximum_pair_feature_loss_discrepancy": 1.3877787807814457e-17,
+  "counterexample": {
+    "W": [
+      0.3826834323650898,
+      -0.9238795325112867
+    ],
+    "bias": [
+      0.6035533905932737,
+      0.21548220313557542
+    ],
+    "feature_losses": [
+      0.21338834764831846,
+      0.03303721745056052
+    ],
+    "exact_total_expression": "(9 + 2*sqrt(2))/48",
+    "exact_total_value": 0.24642556509887895,
+    "direct_population_total": 0.24642556509887897,
+    "strict_gap_below_quarter": 0.0035744349011210355,
+    "maximum_expression_discrepancy": 2.7755575615628914e-17
+  },
+  "dense_equalimportance_branch_check": {
+    "angles_checked": 361,
+    "maximum_profiled_loss_formula_discrepancy": 8.326672684688674e-17,
+    "maximum_loss_at_analytic_bias_discrepancy": 5.551115123125783e-17,
+    "analytic_global_claim": "p=0.5, importance=(1,1), energy=1 only; proof reviewed separately."
+  },
+  "scope": "Independent finite-case checks, exact counterexample, and checks of the dense special-case proof; no general-p geometry claim."
+}

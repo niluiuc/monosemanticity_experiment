@@ -1,0 +1,65 @@
+[
+  {
+    "key": "romano2018",
+    "arxiv_id": "1805.11596",
+    "accessed_utc": "2026-10-06T01:00:38.150390+00:00",
+    "metadata": {
+      "citation_title": "Adversarial Noise Attacks of Deep Learning Architectures -- Stability Analysis via Sparse Modeled Signals",
+      "citation_author": "Elad, Michael",
+      "citation_date": "2018/05/29",
+      "citation_online_date": "2019/08/05",
+      "citation_pdf_url": "https://arxiv.org/pdf/1805.11596",
+      "citation_arxiv_id": "1805.11596",
+      "citation_abstract": "Despite their impressive performance, deep convolutional neural networks (CNNs) have been shown to be sensitive to small adversarial perturbations. These nuisances, which one can barely notice, are powerful enough to fool sophisticated and well performing classifiers, leading to ridiculous misclassification results. In this paper we analyze the stability of state-of-the-art deep-learning classification machines to adversarial perturbations, where we assume that the signals belong to the (possibly multi-layer) sparse representation model. We start with convolutional sparsity and then proceed to its multi-layered version, which is tightly connected to CNNs. Our analysis links between the stability of the classification to noise and the underlying structure of the signal, quantified by the sparsity of its representation under a fixed dictionary. In addition, we offer similar stability theorems for two practical pursuit algorithms, which are posed as two different deep-learning architectures - the layered Thresholding and the layered Basis Pursuit. Our analysis establishes the better robustness of the later to adversarial attacks. We corroborate these theoretical results by numerical experiments on three datasets: MNIST, CIFAR-10 and CIFAR-100."
+    },
+    "submission_history": "Submission history From: Yaniv Romano [ view email ] [v1] Tue, 29 May 2018 17:25:11 UTC (210 KB) [v2] Thu, 22 Nov 2018 06:01:52 UTC (469 KB) [v3] Mon, 5 Aug 2019 20:40:54 UTC (754 KB)",
+    "abstract_url": "https://arxiv.org/abs/1805.11596",
+    "pdf_url": "https://arxiv.org/pdf/1805.11596",
+    "pages": 15,
+    "pdf_bytes": 834046,
+    "pdf_sha256": "f0404c56fccf8dc0ef686509b9e28ac0d1a835883e3881200a9811d69ee0464a",
+    "errors": []
+  },
+  {
+    "key": "sulam2020",
+    "arxiv_id": "2010.12088",
+    "accessed_utc": "2026-10-06T01:00:38.152387+00:00",
+    "metadata": {
+      "citation_title": "Adversarial Robustness of Supervised Sparse Coding",
+      "citation_author": "Arora, Raman",
+      "citation_date": "2020/10/22",
+      "citation_online_date": "2021/01/04",
+      "citation_pdf_url": "https://arxiv.org/pdf/2010.12088",
+      "citation_arxiv_id": "2010.12088",
+      "citation_abstract": "Several recent results provide theoretical insights into the phenomena of adversarial examples. Existing results, however, are often limited due to a gap between the simplicity of the models studied and the complexity of those deployed in practice. In this work, we strike a better balance by considering a model that involves learning a representation while at the same time giving a precise generalization bound and a robustness certificate. We focus on the hypothesis class obtained by combining a sparsity-promoting encoder coupled with a linear classifier, and show an interesting interplay between the expressivity and stability of the (supervised) representation map and a notion of margin in the feature space. We bound the robust risk (to $\\ell_2$-bounded perturbations) of hypotheses parameterized by dictionaries that achieve a mild encoder gap on training data. Furthermore, we provide a robustness certificate for end-to-end classification. We demonstrate the applicability of our analysis by computing certified accuracy on real data, and compare with other alternatives for certified robustness."
+    },
+    "submission_history": "Submission history From: Jeremias Sulam [ view email ] [v1] Thu, 22 Oct 2020 22:05:21 UTC (523 KB) [v2] Mon, 4 Jan 2021 15:10:47 UTC (183 KB)",
+    "abstract_url": "https://arxiv.org/abs/2010.12088",
+    "pdf_url": "https://arxiv.org/pdf/2010.12088",
+    "pages": 25,
+    "pdf_bytes": 720932,
+    "pdf_sha256": "091d873d54dd4cc822529218beb0d38c7cc69b62e252fea2cb117481253cabce",
+    "errors": []
+  },
+  {
+    "key": "elude2026_arxiv",
+    "arxiv_id": "2605.31304",
+    "accessed_utc": "2026-10-06T01:00:38.153386+00:00",
+    "metadata": {
+      "citation_title": "Interpretability Without Tradeoffs: Disentangling Polysemanticity At Equal Predictive Performance",
+      "citation_author": "Hesse, Robin",
+      "citation_date": "2026/05/29",
+      "citation_online_date": "2026/05/29",
+      "citation_pdf_url": "https://arxiv.org/pdf/2605.31304",
+      "citation_arxiv_id": "2605.31304",
+      "citation_abstract": "Deep neural networks (DNNs) are widely used, but interpreting what they actually learn remains difficult. A major obstacle is that individual neurons often encode multiple unrelated concepts, obscuring the decision process of the network. While prior work, such as sparse autoencoders, can separate these mixed signals into more meaningful, \"monosemantic\" features, this typically requires altering the model in ways that can degrade downstream performance. To overcome this, we introduce ELUDe (explicit, lossless, unsupervised disentanglement), a method for improving the interpretability of DNNs while preserving their functional equivalence. ELUDe breaks latent representations into clear, inspectable sub-units that behave like interpretable features, while guaranteeing that the model's outputs remain exactly the same. It requires no explicit training, no labels, and can be applied to pretrained models. ELUDe works by reorganizing how information flows between layers, re-routing concept-specific contributions while preserving the original computation by construction. Across several vision models, including DINOv2 and supervised ViT-B/16, ELUDe improves interpretability, keeps downstream accuracy unchanged, runs efficiently, and supports practical uses such as steering model representations. In short, ELUDe offers interpretability (almost) without a tradeoff: clearer, scalable, and actionable model insights with no loss in performance."
+    },
+    "submission_history": "Submission history From: Do\u011fukan Ba\u011fc\u0131 [ view email ] [v1] Fri, 29 May 2026 13:39:09 UTC (11,044 KB)",
+    "abstract_url": "https://arxiv.org/abs/2605.31304",
+    "pdf_url": "https://arxiv.org/pdf/2605.31304",
+    "pages": 28,
+    "pdf_bytes": 12019451,
+    "pdf_sha256": "c637912014ade99dbb8d2a21187beda01f96ad4b62e4b81126af3e7cc26e5221",
+    "errors": []
+  }
+]

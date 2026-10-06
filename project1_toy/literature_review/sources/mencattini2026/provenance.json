@@ -1,0 +1,21 @@
+{
+  "key": "mencattini2026",
+  "arxiv_id": "2605.14694",
+  "accessed_utc": "2026-10-06T00:51:54.158904+00:00",
+  "metadata": {
+    "citation_title": "The Rate-Distortion-Polysemanticity Tradeoff in SAEs",
+    "citation_author": "Locatello, Francesco",
+    "citation_date": "2026/05/14",
+    "citation_online_date": "2026/05/14",
+    "citation_pdf_url": "https://arxiv.org/pdf/2605.14694",
+    "citation_arxiv_id": "2605.14694",
+    "citation_abstract": "Sparse Autoencoders (SAEs) that can accurately reconstruct their input (minimizing distortion) by making efficient use of few features (minimizing the rate) often fail to learn monosemantic representations (highly interpretable), limiting their usefulness for mechanistic interpretability. In this paper, we characterise this tension in learning faithful, efficient, and interpretable explanations, introducing the Rate-Distortion-Polysemanticity tradeoff in SAEs. Under toy-modeling assumptions, we theoretically and empirically show that restricting the SAE to be monosemantic necessarily comes with an increase in rate and distortion. Assuming a generative model behind the input observations, we further demonstrate that the degree of polysemanticity of optimal SAEs is determined by the training data distribution, especially by the probability of features to co-occur. Finally, we extend the analysis to real-world settings by deriving necessary conditions that a polysemanticity measure should satisfy when the data-generating process is unknown, and we benchmark existing proxy metrics on SAEs trained on Large Language Models. Taken together, our findings show that polysemanticity is a data problem that should be accounted for when addressing it at the architectural and optimization level."
+  },
+  "submission_history": "Submission history From: Francesco Montagna [ view email ] [v1] Thu, 14 May 2026 11:10:52 UTC (396 KB)",
+  "abstract_url": "https://arxiv.org/abs/2605.14694",
+  "pdf_url": "https://arxiv.org/pdf/2605.14694",
+  "pages": 22,
+  "pdf_bytes": 1016601,
+  "pdf_sha256": "b79d5773e29a4b8e08dd20ed18b3d7fa08c485ca09825c19f32923422a27dece",
+  "errors": []
+}

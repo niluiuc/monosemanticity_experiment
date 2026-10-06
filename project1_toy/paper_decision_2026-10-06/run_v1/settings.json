@@ -1,0 +1,39 @@
+{
+  "p": 0.5,
+  "importance": [
+    1.0,
+    1.0
+  ],
+  "n": 2,
+  "m": 1,
+  "encoder_energy": 1.0,
+  "geometries": [
+    "shared_same_sign",
+    "shared_opposite_sign",
+    "mono_retain_0"
+  ],
+  "sigmas": [
+    0.0,
+    0.3,
+    0.6
+  ],
+  "primary_outcome": "summed population reconstruction MSE",
+  "population": "four equally probable independent Bernoulli(.5) states",
+  "noise": "Gaussian code noise h+sigma*epsilon,epsilon N(0,1)",
+  "fixed_W": true,
+  "bias_calibration": "oracle population separately for EVERY geometry",
+  "global_feature_loss_tolerance": 1e-08,
+  "floating_slack": 1e-12,
+  "maximum_interval_expansions": 100000,
+  "curvature_bound": "2*(1+1/(sd*sqrt(2*pi)))",
+  "upper_beta": "1-min(offsets)",
+  "lower_beta": "-max(offsets)-12*sd-1",
+  "bounded_local_incumbent": {
+    "method": "bounded",
+    "xatol": 1e-12,
+    "maxiter": 500
+  },
+  "global_claim": "numerical bounded global-gap check, not exact rational proof",
+  "linear_control_added": false,
+  "no_new_training": true
+}

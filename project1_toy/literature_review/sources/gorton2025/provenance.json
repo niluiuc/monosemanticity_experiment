@@ -1,0 +1,21 @@
+{
+  "key": "gorton2025",
+  "arxiv_id": "2508.17456",
+  "accessed_utc": "2026-10-06T00:48:02.043946+00:00",
+  "metadata": {
+    "citation_title": "Adversarial Examples Are Not Bugs, They Are Superposition",
+    "citation_author": "Lewis, Owen",
+    "citation_date": "2025/08/24",
+    "citation_online_date": "2025/09/13",
+    "citation_pdf_url": "https://arxiv.org/pdf/2508.17456",
+    "citation_arxiv_id": "2508.17456",
+    "citation_abstract": "Adversarial examples -- inputs with imperceptible perturbations that fool neural networks -- remain one of deep learning's most perplexing phenomena despite nearly a decade of research. While numerous defenses and explanations have been proposed, there is no consensus on the fundamental mechanism. One underexplored hypothesis is that superposition, a concept from mechanistic interpretability, may be a major contributing factor, or even the primary cause. We present four lines of evidence in support of this hypothesis, greatly extending prior arguments by Elhage et al. (2022): (1) superposition can theoretically explain a range of adversarial phenomena, (2) in toy models, intervening on superposition controls robustness, (3) in toy models, intervening on robustness (via adversarial training) controls superposition, and (4) in ResNet18, intervening on robustness (via adversarial training) controls superposition."
+  },
+  "submission_history": "Submission history From: Liv Gorton [ view email ] [v1] Sun, 24 Aug 2025 17:19:53 UTC (3,355 KB) [v2] Sat, 13 Sep 2025 23:06:06 UTC (3,355 KB)",
+  "abstract_url": "https://arxiv.org/abs/2508.17456",
+  "pdf_url": "https://arxiv.org/pdf/2508.17456",
+  "pages": 14,
+  "pdf_bytes": 3659334,
+  "pdf_sha256": "d6061d2c2a03b891bbfd722c96457d8dcd9d5e912bc8f9c2e8d76eecc338d75a",
+  "errors": []
+}

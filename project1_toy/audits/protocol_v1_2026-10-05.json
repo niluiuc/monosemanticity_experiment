@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "run_directory": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\project1_toy\\runs\\protocol_v1_2026-10-05",
+  "hashed_files_checked": 143,
+  "raw_binary_predictions_replayed": 105600000,
+  "trained_feature_rows_checked": 1920,
+  "maximum_exact_risk_recompute_difference": 0.0,
+  "training_runs_repeated": 12,
+  "maximum_retraining_parameter_or_trace_difference": 0.0,
+  "scope": "integrity, arithmetic replay and optional optimizer reproduction; not novelty or real-model validation"
+}

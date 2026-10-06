@@ -1,0 +1,22 @@
+{
+  "key": "benhaim2009",
+  "arxiv_id": "0903.4579",
+  "accessed_utc": "2026-10-06T00:48:10.978006+00:00",
+  "metadata": {
+    "citation_title": "Coherence-Based Performance Guarantees for Estimating a Sparse Vector Under Random Noise",
+    "citation_author": "Elad, Michael",
+    "citation_doi": "10.1109/TSP.2010.2052460",
+    "citation_date": "2009/03/26",
+    "citation_online_date": "2009/12/02",
+    "citation_pdf_url": "https://arxiv.org/pdf/0903.4579",
+    "citation_arxiv_id": "0903.4579",
+    "citation_abstract": " We consider the problem of estimating a deterministic sparse vector x from underdetermined measurements Ax+w, where w represents white Gaussian noise and A is a given deterministic dictionary. We analyze the performance of three sparse estimation algorithms: basis pursuit denoising (BPDN), orthogonal matching pursuit (OMP), and thresholding. These algorithms are shown to achieve near-oracle performance with high probability, assuming that x is sufficiently sparse. Our results are non-asymptotic and are based only on the coherence of A, so that they are applicable to arbitrary dictionaries. Differences in the precise conditions required for the performance guarantees of each algorithm are manifested in the observed performance at high and low signal-to-noise ratios. This provides insight on the advantages and drawbacks of convex relaxation techniques such as BPDN as opposed to greedy approaches such as OMP and thresholding."
+  },
+  "submission_history": "Submission history From: Zvika Ben-Haim [ view email ] [v1] Thu, 26 Mar 2009 13:37:09 UTC (20 KB) [v2] Wed, 2 Dec 2009 07:02:27 UTC (30 KB)",
+  "abstract_url": "https://arxiv.org/abs/0903.4579",
+  "pdf_url": "https://arxiv.org/pdf/0903.4579",
+  "pages": 12,
+  "pdf_bytes": 204410,
+  "pdf_sha256": "761518f9d72a8cfc9f3c73531db2778d5ee40f7686bde3bafc0aa4e4ed37fb31",
+  "errors": []
+}

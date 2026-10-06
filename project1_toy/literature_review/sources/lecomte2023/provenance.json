@@ -1,0 +1,21 @@
+{
+  "key": "lecomte2023",
+  "arxiv_id": "2312.03096",
+  "accessed_utc": "2026-10-06T00:47:52.964588+00:00",
+  "metadata": {
+    "citation_title": "What Causes Polysemanticity? An Alternative Origin Story of Mixed Selectivity from Incidental Causes",
+    "citation_author": "Koyejo, Sanmi",
+    "citation_date": "2023/12/05",
+    "citation_online_date": "2024/02/13",
+    "citation_pdf_url": "https://arxiv.org/pdf/2312.03096",
+    "citation_arxiv_id": "2312.03096",
+    "citation_abstract": "Polysemantic neurons -- neurons that activate for a set of unrelated features -- have been seen as a significant obstacle towards interpretability of task-optimized deep networks, with implications for AI safety. The classic origin story of polysemanticity is that the data contains more ``features\" than neurons, such that learning to perform a task forces the network to co-allocate multiple unrelated features to the same neuron, endangering our ability to understand networks' internal processing. In this work, we present a second and non-mutually exclusive origin story of polysemanticity. We show that polysemanticity can arise incidentally, even when there are ample neurons to represent all features in the data, a phenomenon we term \\textit{incidental polysemanticity}. Using a combination of theory and experiments, we show that incidental polysemanticity can arise due to multiple reasons including regularization and neural noise; this incidental polysemanticity occurs because random initialization can, by chance alone, initially assign multiple features to the same neuron, and the training dynamics then strengthen such overlap. Our paper concludes by calling for further research quantifying the performance-polysemanticity tradeoff in task-optimized deep neural networks to better understand to what extent polysemanticity is avoidable."
+  },
+  "submission_history": "Submission history From: Rylan Schaeffer [ view email ] [v1] Tue, 5 Dec 2023 19:29:54 UTC (1,379 KB) [v2] Sun, 11 Feb 2024 00:52:49 UTC (881 KB) [v3] Tue, 13 Feb 2024 06:26:22 UTC (881 KB)",
+  "abstract_url": "https://arxiv.org/abs/2312.03096",
+  "pdf_url": "https://arxiv.org/pdf/2312.03096",
+  "pages": 14,
+  "pdf_bytes": 910705,
+  "pdf_sha256": "82f9317ee84dd471ab688e99615cde04a2a51efab3257c4a0c257018976e7b2c",
+  "errors": []
+}

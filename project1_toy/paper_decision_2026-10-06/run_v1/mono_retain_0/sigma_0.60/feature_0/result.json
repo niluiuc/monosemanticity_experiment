@@ -1,0 +1,15 @@
+{
+  "resolved": true,
+  "reason": "numerical global gap tolerance",
+  "method": "midpoint Taylor lower bound numerical B&B",
+  "beta": -0.2728966960348526,
+  "objective": 0.21709280699917588,
+  "gradient": -8.478143187495846e-11,
+  "global_lower": 0.2170927970689127,
+  "global_upper": 0.21709280700017589,
+  "global_gap": 9.931263172946458e-09,
+  "interval_expansions": 58,
+  "generated_nodes": 117,
+  "remaining_nodes": 4,
+  "seconds": 0.006570399971678853
+}

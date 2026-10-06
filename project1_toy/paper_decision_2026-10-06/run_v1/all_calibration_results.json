@@ -1,0 +1,225 @@
+[
+  {
+    "label": "shared_same_sign",
+    "sigma": 0.0,
+    "features": []
+  },
+  {
+    "label": "shared_same_sign",
+    "sigma": 0.3,
+    "features": [
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": -0.16989511387554806,
+        "objective": 0.09137730246341336,
+        "gradient": -8.374496096585915e-10,
+        "global_lower": 0.09137729519402411,
+        "global_upper": 0.09137730246441336,
+        "global_gap": 7.270389248970055e-09,
+        "interval_expansions": 47,
+        "generated_nodes": 95,
+        "remaining_nodes": 4,
+        "seconds": 0.006827499950304627
+      },
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": 0.24977794465112163,
+        "objective": 0.22655321120737515,
+        "gradient": 1.1944600863955657e-10,
+        "global_lower": 0.22655320705491083,
+        "global_upper": 0.22655321120837515,
+        "global_gap": 4.153464322476097e-09,
+        "interval_expansions": 50,
+        "generated_nodes": 101,
+        "remaining_nodes": 4,
+        "seconds": 0.005392000079154968
+      }
+    ]
+  },
+  {
+    "label": "shared_same_sign",
+    "sigma": 0.6,
+    "features": [
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": -0.3416961547429261,
+        "objective": 0.22829286684498537,
+        "gradient": 9.394306686727472e-09,
+        "global_lower": 0.22829285903550636,
+        "global_upper": 0.22829286684598538,
+        "global_gap": 7.810479013548033e-09,
+        "interval_expansions": 53,
+        "generated_nodes": 107,
+        "remaining_nodes": 4,
+        "seconds": 0.0055791998747736216
+      },
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": 0.23130270510108447,
+        "objective": 0.2628418668590154,
+        "gradient": -9.162803238371708e-09,
+        "global_lower": 0.2628418611248846,
+        "global_upper": 0.26284186686001537,
+        "global_gap": 5.7351307591879674e-09,
+        "interval_expansions": 50,
+        "generated_nodes": 101,
+        "remaining_nodes": 6,
+        "seconds": 0.00526450015604496
+      }
+    ]
+  },
+  {
+    "label": "shared_opposite_sign",
+    "sigma": 0.0,
+    "features": []
+  },
+  {
+    "label": "shared_opposite_sign",
+    "sigma": 0.3,
+    "features": [
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": 0.18365827923926803,
+        "objective": 0.09137730246341322,
+        "gradient": 2.8682537733804025e-09,
+        "global_lower": 0.0913772951940241,
+        "global_upper": 0.09137730246441322,
+        "global_gap": 7.270389124069965e-09,
+        "interval_expansions": 47,
+        "generated_nodes": 95,
+        "remaining_nodes": 4,
+        "seconds": 0.005023999838158488
+      },
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": 0.6033313283014674,
+        "objective": 0.22655321120737515,
+        "gradient": -1.3682841804030232e-08,
+        "global_lower": 0.22655320705491083,
+        "global_upper": 0.22655321120837515,
+        "global_gap": 4.153464322476097e-09,
+        "interval_expansions": 50,
+        "generated_nodes": 101,
+        "remaining_nodes": 4,
+        "seconds": 0.005422499962151051
+      }
+    ]
+  },
+  {
+    "label": "shared_opposite_sign",
+    "sigma": 0.6,
+    "features": [
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": 0.01185721353758844,
+        "objective": 0.22829286684498543,
+        "gradient": -1.1329244820057482e-08,
+        "global_lower": 0.22829285903550636,
+        "global_upper": 0.22829286684598543,
+        "global_gap": 7.810479069059184e-09,
+        "interval_expansions": 53,
+        "generated_nodes": 107,
+        "remaining_nodes": 4,
+        "seconds": 0.006969599984586239
+      },
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": 0.584856102543357,
+        "objective": 0.2628418668590154,
+        "gradient": 2.231088480630916e-09,
+        "global_lower": 0.26284186112488467,
+        "global_upper": 0.26284186686001537,
+        "global_gap": 5.735130703676816e-09,
+        "interval_expansions": 50,
+        "generated_nodes": 101,
+        "remaining_nodes": 6,
+        "seconds": 0.004692499991506338
+      }
+    ]
+  },
+  {
+    "label": "mono_retain_0",
+    "sigma": 0.0,
+    "features": []
+  },
+  {
+    "label": "mono_retain_0",
+    "sigma": 0.3,
+    "features": [
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": -0.08368774031049175,
+        "objective": 0.06250541096332787,
+        "gradient": -4.156024080437248e-09,
+        "global_lower": 0.06250540397714173,
+        "global_upper": 0.06250541096432788,
+        "global_gap": 6.987186149109981e-09,
+        "interval_expansions": 48,
+        "generated_nodes": 97,
+        "remaining_nodes": 3,
+        "seconds": 0.005224800202995539
+      },
+      {
+        "resolved": true,
+        "method": "exact zero-column optimal constant",
+        "beta": 0.5,
+        "objective": 0.25,
+        "global_lower": 0.25,
+        "global_upper": 0.25,
+        "global_gap": 0.0,
+        "interval_expansions": 0,
+        "seconds": 6.019999273121357e-05
+      }
+    ]
+  },
+  {
+    "label": "mono_retain_0",
+    "sigma": 0.6,
+    "features": [
+      {
+        "resolved": true,
+        "reason": "numerical global gap tolerance",
+        "method": "midpoint Taylor lower bound numerical B&B",
+        "beta": -0.2728966960348526,
+        "objective": 0.21709280699917588,
+        "gradient": -8.478143187495846e-11,
+        "global_lower": 0.2170927970689127,
+        "global_upper": 0.21709280700017589,
+        "global_gap": 9.931263172946458e-09,
+        "interval_expansions": 58,
+        "generated_nodes": 117,
+        "remaining_nodes": 4,
+        "seconds": 0.006570399971678853
+      },
+      {
+        "resolved": true,
+        "method": "exact zero-column optimal constant",
+        "beta": 0.5,
+        "objective": 0.25,
+        "global_lower": 0.25,
+        "global_upper": 0.25,
+        "global_gap": 0.0,
+        "interval_expansions": 0,
+        "seconds": 5.430006422102451e-05
+      }
+    ]
+  }
+]

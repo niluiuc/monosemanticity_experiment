@@ -1,0 +1,9 @@
+{
+  "source_hashes": {
+    "display_risk_curves.csv": "381b44099f8d9e893a9664822c3e9a5d0d80d278c47293bafda1fd3c7cb34d04",
+    "primary_risks.csv": "7b7246de2c2165d6b3172d881647ba9d2470baed14c6ad53193072fe9f9433d2",
+    "display_crossings.json": "be658bc5d9f4433e573e4c242f2dc91a4e012880c233030534f482d905bb6194"
+  },
+  "change": "Presentation only: zero panel scale and label, saved crossing markers, negative-area shading. No numerical values changed; original run plots preserved.",
+  "source_script": "plot_report.py"
+}

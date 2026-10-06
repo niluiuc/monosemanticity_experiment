@@ -1,0 +1,21 @@
+{
+  "key": "sulam2020",
+  "arxiv_id": "2010.12088",
+  "accessed_utc": "2026-10-06T01:00:38.152387+00:00",
+  "metadata": {
+    "citation_title": "Adversarial Robustness of Supervised Sparse Coding",
+    "citation_author": "Arora, Raman",
+    "citation_date": "2020/10/22",
+    "citation_online_date": "2021/01/04",
+    "citation_pdf_url": "https://arxiv.org/pdf/2010.12088",
+    "citation_arxiv_id": "2010.12088",
+    "citation_abstract": "Several recent results provide theoretical insights into the phenomena of adversarial examples. Existing results, however, are often limited due to a gap between the simplicity of the models studied and the complexity of those deployed in practice. In this work, we strike a better balance by considering a model that involves learning a representation while at the same time giving a precise generalization bound and a robustness certificate. We focus on the hypothesis class obtained by combining a sparsity-promoting encoder coupled with a linear classifier, and show an interesting interplay between the expressivity and stability of the (supervised) representation map and a notion of margin in the feature space. We bound the robust risk (to $\\ell_2$-bounded perturbations) of hypotheses parameterized by dictionaries that achieve a mild encoder gap on training data. Furthermore, we provide a robustness certificate for end-to-end classification. We demonstrate the applicability of our analysis by computing certified accuracy on real data, and compare with other alternatives for certified robustness."
+  },
+  "submission_history": "Submission history From: Jeremias Sulam [ view email ] [v1] Thu, 22 Oct 2020 22:05:21 UTC (523 KB) [v2] Mon, 4 Jan 2021 15:10:47 UTC (183 KB)",
+  "abstract_url": "https://arxiv.org/abs/2010.12088",
+  "pdf_url": "https://arxiv.org/pdf/2010.12088",
+  "pages": 25,
+  "pdf_bytes": 720932,
+  "pdf_sha256": "091d873d54dd4cc822529218beb0d38c7cc69b62e252fea2cb117481253cabce",
+  "errors": []
+}

@@ -1,0 +1,7 @@
+{
+  "p": "2/5",
+  "selection": "reviewed theorem: mono above pc",
+  "mono_first_loss": "3/25",
+  "mono_second_loss": "6/25",
+  "no_new_branch_enumeration_above_transition": true
+}

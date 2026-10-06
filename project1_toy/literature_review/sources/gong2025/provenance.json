@@ -1,0 +1,21 @@
+{
+  "key": "gong2025",
+  "arxiv_id": "2505.11611",
+  "accessed_utc": "2026-10-06T00:54:38.343771+00:00",
+  "metadata": {
+    "citation_title": "Signal in the Noise: Polysemantic Interference Transfers and Predicts Cross-Model Influence",
+    "citation_author": "Song, Dawn",
+    "citation_date": "2025/05/16",
+    "citation_online_date": "2026/03/18",
+    "citation_pdf_url": "https://arxiv.org/pdf/2505.11611",
+    "citation_arxiv_id": "2505.11611",
+    "citation_abstract": "Polysemanticity is pervasive in language models and remains a major challenge for interpretation and model behavioral control. Leveraging sparse autoencoders (SAEs), we map the polysemantic topology of two small models (Pythia-70M and GPT-2-Small) to identify SAE feature pairs that are semantically unrelated yet exhibit interference within models. We intervene at four foci (prompt, token, feature, neuron) and measure induced shifts in the next-token prediction distribution, uncovering polysemantic structures that expose a systematic vulnerability in these models. Critically, interventions distilled from counterintuitive interference patterns shared by two small models transfer reliably to larger instruction-tuned models (Llama-3.1-8B/70B-Instruct and Gemma-2-9B-Instruct), yielding predictable behavioral shifts without access to model internals. These findings challenge the view that polysemanticity is purely stochastic, demonstrating instead that interference structures generalize across scale and family. Such generalization suggests a convergent, higher-order organization of internal representations, which is only weakly aligned with intuition and structured by latent regularities, offering new possibilities for both black-box control and theoretical insight into human and artificial cognition."
+  },
+  "submission_history": "Submission history From: Shiyang Lai [ view email ] [v1] Fri, 16 May 2025 18:20:42 UTC (14,777 KB) [v2] Mon, 29 Sep 2025 16:04:15 UTC (6,164 KB) [v3] Wed, 18 Mar 2026 17:55:08 UTC (11,265 KB)",
+  "abstract_url": "https://arxiv.org/abs/2505.11611",
+  "pdf_url": "https://arxiv.org/pdf/2505.11611",
+  "pages": 41,
+  "pdf_bytes": 8529663,
+  "pdf_sha256": "fa04b70dc8f4b7710dbde5e0a3a78354a871f598bf719142210fbd0feb05bf51",
+  "errors": []
+}
