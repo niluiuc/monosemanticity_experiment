@@ -12,6 +12,79 @@ replace the original output. The present experiment tests Project 1 only.
 the smallest useful test, and a stopping criterion. No language model, diffusion
 model, recursive training, symbolic regression, or large parameter search in this run.
 
+## Current Project 1 question and contribution target — 6 October 2026
+
+This section states the current paper-level target. The protocols and dated
+entries below remain historical records; their outputs and unfavorable findings
+are not replaced by this clarification. No new experiment or derivation was
+performed for this scope update.
+
+- **Our project question:** For representations selected by clean training,
+  where is the boundary between monosemanticity and superposition giving lower
+  corrupted reconstruction error, and how does it depend on feature frequency,
+  importance, compression and noise? The central deliverable is a predictive
+  phase diagram of `R_super - R_mono`: positive favors mono, negative favors
+  sharing, and zero marks their risk-equality boundary. Feature-storage
+  transitions and risk-equality boundaries must be distinguished.
+- **Comparison definition:** Use the same declared weighted reconstruction
+  MSE for both representations, with matched code width and encoder energy.
+  Include the reconstruction loss of concepts omitted by the mono comparator.
+  Specify whether decoder biases remain clean-trained or receive symmetric
+  noisy-distribution calibration; these are separate risk diagrams, not
+  interchangeable measurements. Gaussian code corruption is the current
+  controlled setting, not an adversarial or AI-safety guarantee.
+- **Related prior results:** Elhage studies clean sparsity/importance-dependent
+  storage and superposition phases. Scherlis derives capacity-allocation
+  phases in a different solvable model. Zhang's motivating ICLR paper studies
+  clean/noisy performance tradeoffs empirically and compares specified mono/poly
+  representations theoretically. Later work connects interference, adversarial
+  vulnerability and feature retention. The existence of phases or a clean/noisy
+  reversal is therefore not our claimed discovery. Exact assumptions and
+  reading limits are in `paper_decision_2026-10-06/exact_claim_comparison.md`.
+- **Our targeted addition:** Link clean training's selected geometry to the
+  same operational corrupted risk and a predicted boundary, with equal-resource
+  and decoder-calibration controls. The controls support the phase diagram;
+  a single calibrated reversal does not replace it or establish novelty.
+- **Completed evidence:** Exact global clean-selection results in restricted
+  two-feature settings, a fixed-importance clean storage transition, corrupted
+  risk calculations and a dense clean/noisy MSE reversal that survives symmetric
+  oracle bias calibration. The separate at-least-two-crossing detection result
+  is valid for its specified decoder but is not the same reconstruction-MSE
+  diagram. Independent checks and adverse training outcomes are retained.
+- **Still required:** A boundary or informative bound across meaningful
+  parameter changes, verification of its predictions in a controlled larger
+  toy, and one bounded real-representation mechanism test. The full arbitrary-
+  load/importance boundary and a strong main-track contribution are not complete.
+
+### Focused contribution versus a genuine generalization
+
+- **Why a sharp dagger:** The immediate missing link is specific: a predictive
+  robustness boundary grounded in the geometry actually selected by training,
+  rather than another observation that mono helps under noise. This is a
+  focused contribution target, not a statement that existing results were weak
+  or that our contribution has already been established.
+- **Why the current result is not a superset:** Our Bernoulli features, fixed
+  energy, tied-ReLU reconstruction and Gaussian code-noise outcome do not
+  automatically contain Zhang's classification/separability theory or Scherlis's
+  quadratic model. Different assumptions plus additional experiments do not
+  prove a mathematical generalization of those results.
+- **Broader question we can target:** Can a common, explicitly specified model
+  yield a joint feature-storage and robustness phase diagram, recovering
+  compatible published clean-storage results in the zero-noise limit and
+  extending them to predicted mono-versus-sharing risk boundaries under noise,
+  as feature frequency, importance and compression vary?
+- **What would justify calling it a superset:** Identify the particular prior
+  results being generalized; match their assumptions, objectives and outcomes;
+  demonstrate their recovery as special cases; and derive a new regime or
+  boundary from the broader result. This can generalize selected compatible
+  results, not all existing architectures, tasks or robustness notions.
+- **Time-bounded execution:** Keep the joint diagram as the organizing question.
+  Start with the existing analytically controlled frequency/noise family at
+  fixed load and declared importance. Each necessary extension must resolve a
+  missing boundary prediction, with a prespecified minimal test and stopping
+  rule. Arbitrary-load or architecture generalization remains a stretch target;
+  do not restart the project or launch unrelated toy families to claim breadth.
+
 ## Background and motivation
 
 The research direction starts from *Beyond Interpretability: The Gains of Feature

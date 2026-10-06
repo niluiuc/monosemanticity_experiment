@@ -1,7 +1,7 @@
 {
   "branch": "nil-research",
   "workspace_files": 1041,
-  "workspace_bytes": 154169297,
+  "workspace_bytes": 154174382,
   "included_pdf": "output/pdf/Superposition_Recursive_Training_Derivations.pdf",
   "pdf_sha256": "c80ceee2916d4d09599f4e0ecebf5f3f93a6b8c6dceabb5b6dfe38a980aa35dd",
   "exclusions_by_reason": {
@@ -2999,8 +2999,8 @@
     },
     {
       "path": "project1_toy/plan.md",
-      "bytes": 53043,
-      "sha256": "bf2b8aaf029ea432a87144e576768a38ebd41f654a36acc9984bcd7cfaf4b45b"
+      "bytes": 58128,
+      "sha256": "c7d5f500e24bb40dc5503136e8d379df9bb7c74278d8d5678c962ef8bc41309c"
     },
     {
       "path": "project1_toy/plot_results.py",
