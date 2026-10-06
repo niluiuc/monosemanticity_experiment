@@ -12,6 +12,52 @@ replace the original output. The present experiment tests Project 1 only.
 the smallest useful test, and a stopping criterion. No language model, diffusion
 model, recursive training, symbolic regression, or large parameter search in this run.
 
+## Broader organizing research question — explicitly adopted 6 October 2026
+
+**Can we derive a joint feature-storage and robustness phase diagram that
+recovers compatible known clean-storage phases at zero noise and extends them
+to monosemantic-versus-superposed reconstruction-risk boundaries as feature
+frequency, importance, compression and noise vary?**
+
+This is the broader Project 1 question and organizing goal. It couples two
+predictions within a declared model: what geometry clean training selects,
+and where that selected geometry has lower corrupted reconstruction risk than
+the matched mono comparator. The focused boundary question below is the
+tractable route into this broader goal, not a replacement for it.
+
+The comparison remains `R_super - R_mono`, with one declared reconstruction
+outcome, matched width/energy, all discarded-concept losses included, and
+separately specified frozen-bias and symmetric-calibration policies. A joint
+diagram must distinguish a change in which concepts are stored from a change
+in which representation has lower risk.
+
+### Additional mathematics required for the broader goal
+
+1. **Training-selected geometry:** Extend the restricted clean-selection
+   results to the parameter family whose phase diagram we actually claim.
+   Existing fixed-geometry formulas and selected two-feature optima do not
+   solve arbitrary importance ratios or feature-to-dimension ratios.
+2. **Robustness boundary:** Compose the selected geometry with the declared
+   corrupted reconstruction risk and characterize its zero-difference boundary
+   against mono, analytically or through an informative proved bound. Two noisy
+   comparison points establish a reversal in one case, not a general boundary.
+   The detection-error crossing theorem must not be substituted for this MSE
+   boundary.
+3. **Recovery of prior special cases:** Identify compatible earlier results,
+   match their assumptions/objectives, and show how the broader result reduces
+   to them. Our current model does not automatically contain all results of
+   Elhage, Zhang or Scherlis; calling the outcome a generalization requires
+   the corresponding mathematical reduction.
+
+**Execution rule:** Reuse the existing clean-selection and Gaussian-risk
+derivations. First resolve the frequency/noise boundary in the analytically
+controlled family; add importance or load only when needed for a specific
+claimed extension. Larger-toy and real-model validation can proceed with
+prespecified tests, but cannot replace the missing mathematics. General
+arbitrary-load theory remains a stretch target until tractability is shown.
+This scope statement adds no new theorem or experiment; every subsequent
+derivation must also enter the existing companion derivation PDF.
+
 ## Current Project 1 question and contribution target — 6 October 2026
 
 This section states the current paper-level target. The protocols and dated
