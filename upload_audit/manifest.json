@@ -1,12 +1,12 @@
 {
   "branch": "nil-research",
-  "workspace_files": 1058,
-  "workspace_bytes": 155389317,
+  "workspace_files": 1525,
+  "workspace_bytes": 280699485,
   "included_pdf": "output/pdf/Superposition_Recursive_Training_Derivations.pdf",
-  "pdf_sha256": "b5723b30db7cef32e60a8f24184c1d301bbff8b8fe55948975596e77ae668414",
+  "pdf_sha256": "3229051222d5bb111538fd107ede1e8bb93ba63ae3d051def2fe23b771cbde2f",
   "exclusions_by_reason": {
-    "exclude_all_other_pdfs_user_rule": 60,
-    "exclude_latex_user_rule": 32,
+    "exclude_all_other_pdfs_user_rule": 61,
+    "exclude_latex_user_rule": 41,
     "exclude_overleaf_source_zip_user_rule": 2,
     "exclude_personal_discussion_user_rule": 293,
     "exclude_output_pdf_user_rule": 1,
@@ -113,9 +113,24 @@
       "sha256": "a27650937fcd79358e200921fbb6fe4a94219e6184251ff9e4016fb2a06e6026"
     },
     {
+      "path": "output/overleaf/research_derivations/figures/project1_calibrated_boundary_scaling.png",
+      "bytes": 52856,
+      "sha256": "351caca9ebffd886a1febf7057504f4a1a41342f10d0818a06378da0844654a4"
+    },
+    {
       "path": "output/overleaf/research_derivations/figures/project1_calibration_mse.png",
       "bytes": 121434,
       "sha256": "35258e136785eac5185a1e9f738db5648e19f1c4225719088c15ba1dc511924a"
+    },
+    {
+      "path": "output/overleaf/research_derivations/figures/project1_frozen_boundary_scaling.png",
+      "bytes": 60145,
+      "sha256": "7655660d1d0a175108d8eeb740c9219984341df4a0fb46af06941192bee0fafd"
+    },
+    {
+      "path": "output/overleaf/research_derivations/figures/project1_frozen_phase_map.png",
+      "bytes": 131054,
+      "sha256": "4eb1e967f2b53cf2d22464c3821dffad9f927dfa3da23b75dfa142262ce1f0e0"
     },
     {
       "path": "output/overleaf/research_derivations/figures/project1_storage_transition.png",
@@ -129,8 +144,8 @@
     },
     {
       "path": "output/pdf/Superposition_Recursive_Training_Derivations.pdf",
-      "bytes": 1352651,
-      "sha256": "b5723b30db7cef32e60a8f24184c1d301bbff8b8fe55948975596e77ae668414"
+      "bytes": 1562227,
+      "sha256": "3229051222d5bb111538fd107ede1e8bb93ba63ae3d051def2fe23b771cbde2f"
     },
     {
       "path": "output/Project1_Focused_Bridge_2026-10-06.sha256.json",
@@ -181,6 +196,546 @@
       "path": "project1_toy/audits/protocol_v1_2026-10-05.json",
       "bytes": 523,
       "sha256": "3d418d647fbc290ab78144ec40c5e84232b3f0e3ace9f40b45c2892613adcc49"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/environment.json",
+      "bytes": 290,
+      "sha256": "c029b6e5c2f7ee0f56a3d7feec099e8b91b65b6810d626ea902a94380136690c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/mono.json",
+      "bytes": 236,
+      "sha256": "83aa6e3d75226af65284719efcc1d64d3a8c333aef1562cca506dc8693b463e3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/mono.npz",
+      "bytes": 625,
+      "sha256": "b98660348c2e5dfb0124775401080df939e59800c44fb3b203bf3f0fd05e3194"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/population.npz",
+      "bytes": 1377,
+      "sha256": "92bc9759abe4005cdb8116d040f0de19db02b2c190b92c3281f07122f0b6f482"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/prechecks.json",
+      "bytes": 386,
+      "sha256": "91ff86bc6659ec2bfeb7a220d0509130ea0b2395222f2549a7e20a99b35390d4"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/results.json",
+      "bytes": 12093,
+      "sha256": "6cbed707808d5c648042e206623648363022cce59bafedd4c9542ba4041d2ccb"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_0/checkpoints.npz",
+      "bytes": 17705,
+      "sha256": "053dd47fc97e567a8a8ae8868310c87bb53a96efcff9582f0f616c9fb7d1e351"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_0/clean_bias_profiles.json",
+      "bytes": 9877924,
+      "sha256": "4af5af419d60d4b5fc5dd82e8458e94fa42e6acdb2dd863ce9884cd48fd968af"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_0/final.npz",
+      "bytes": 126262,
+      "sha256": "c46b5f3f7d2b31ed73aebf0d6daa19d77568462ff21cf0cfd2b71d54d635f310"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_0/history.csv",
+      "bytes": 406726,
+      "sha256": "e4355a776c10691bebfb729773168b625dd106f28bac379f3a41ce2c64d765a0"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_0/results.json",
+      "bytes": 2099,
+      "sha256": "dc1763aceab7af852190975648e8c99395c2d54da48afd8d0614072771dc2420"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_1/checkpoints.npz",
+      "bytes": 17754,
+      "sha256": "41cd90ffe56c02110acc2876619b904a070a759956610536638262fd3bc8f9a6"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_1/clean_bias_profiles.json",
+      "bytes": 9874258,
+      "sha256": "15480addea23def6dd4cd1f4400b696e9828468bcc4fcf009ce03b8dd8935b64"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_1/final.npz",
+      "bytes": 129814,
+      "sha256": "cee39a185c97bcf5b1ddea5132b246b95ee36f65155b10b27724583588e6a4a3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_1/history.csv",
+      "bytes": 406249,
+      "sha256": "b681ad28436ad786ed85d6245e48193a44dba949c98ef806fdac3da920a78a8f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_1/results.json",
+      "bytes": 2090,
+      "sha256": "d4c954196cf125aad0985ec3c071bff961ce66256c4158602c54c9f2ae676849"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_2/checkpoints.npz",
+      "bytes": 17452,
+      "sha256": "5b2955367b0dde0db9fab6437062d8f8e218056a39b29c5b74a0056058c3df85"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_2/clean_bias_profiles.json",
+      "bytes": 9874015,
+      "sha256": "e1e339cf0e42e707b5930cf0a4c691e9b85276c4d1c04635f51d026052bda591"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_2/final.npz",
+      "bytes": 122688,
+      "sha256": "a6b852e6c950ec3d4d537350bb17d183d1020309574a18a8bcab28b06c26f5f3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_2/history.csv",
+      "bytes": 406665,
+      "sha256": "6cad9c83b33c350ee9acdf4df1574e634072bf2556613ef8d449266667c6cd8c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_2/results.json",
+      "bytes": 2080,
+      "sha256": "19e159dd667ddd7b3f757d5820ca3d2c738c411ae64fe3ccc96f30acce1988c7"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_3/checkpoints.npz",
+      "bytes": 17715,
+      "sha256": "5d2f7154f2d4216e034b236ff9404850b3477762297e45bd40ef0a05bfb01888"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_3/clean_bias_profiles.json",
+      "bytes": 9873364,
+      "sha256": "f44d8924ce89182ec2a65c48d6337a5b0fc1a05af69b494086d4daf08e4fa6bf"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_3/final.npz",
+      "bytes": 126339,
+      "sha256": "134c8268ed827171f78d875e81543859b7ff055c391805804e59b913a8582416"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_3/history.csv",
+      "bytes": 405344,
+      "sha256": "cae3ff3a1fde635523d7c1b18479d60b34a824a7a9917a8299491a052604ec36"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_3/results.json",
+      "bytes": 2094,
+      "sha256": "bc4ecc3f1859f8cd70c2e6eab74b2ced62ff1654bd7b340eecb27c53a47c88d2"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_4/checkpoints.npz",
+      "bytes": 17571,
+      "sha256": "725380c7d76e330d6bfb4a6ff3ea2f85eaefc78285cc162dcbcfd304b8b8a421"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_4/clean_bias_profiles.json",
+      "bytes": 9875138,
+      "sha256": "127f1050b1b3996298fcc9725542f1752f245a32fa783a7905a5e6fb3a24c64f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_4/final.npz",
+      "bytes": 127247,
+      "sha256": "135efd5ee2803bf5002105b970f049897b019131576f3d6aa6422f2f79fe4afa"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_4/history.csv",
+      "bytes": 404925,
+      "sha256": "440bdf294f373c0bc1e4380b425a5effdc19a92927850a5c8cd94d5d6d8bbaa6"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/seed_4/results.json",
+      "bytes": 2076,
+      "sha256": "a1f8cb208c4a90fc76af4b723fbe5cd9d2f83989755295ff352d8716df3a5e85"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/settings.json",
+      "bytes": 813,
+      "sha256": "fa8a575bd56f8a35b2b5ff6595e5fba310aaa03a7804258059290e6b92d0ebae"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/sha256_manifest.json",
+      "bytes": 3834,
+      "sha256": "d2015f87b4b369dc8de76dcc3ce781e0328560fc70a6dd9e24970ed906b6f87d"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/source_snapshot/__pycache__/bridge_math.cpython-312.pyc",
+      "bytes": 11184,
+      "sha256": "586944cd566643b703401e14abf76997419ad6d6e31915c2c5faf788bd81f029"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/source_snapshot/__pycache__/toy_math_snapshot.cpython-312.pyc",
+      "bytes": 13980,
+      "sha256": "ce37548c023edf5cc558ffcbb4948eee6f41d14b03f1415c647613746c0eed82"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/source_snapshot/bridge_math.py",
+      "bytes": 6987,
+      "sha256": "f605b2a2c1ffb3f345f7199014403e3710ef24820901e75d1f011a3f2af4ecbd"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/source_snapshot/protocol.md",
+      "bytes": 3391,
+      "sha256": "ff6bc3238c43ea348b77797449c657ede73eb7e1b62065871f9087e985768d8c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/source_snapshot/run_clean_training.py",
+      "bytes": 6738,
+      "sha256": "9628ea1327020436733b47276da8960ae15d4c4dfe93703b6b8212f5ba2c6319"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/source_snapshot/toy_math_snapshot.py",
+      "bytes": 8295,
+      "sha256": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/clean_run_v1/timing.json",
+      "bytes": 36,
+      "sha256": "4be61cead023a72faa90b5949d84fb0f9664ffbd9a4c9a517e7daa4679729692"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/independent_clean_review_v1/results.json",
+      "bytes": 1703,
+      "sha256": "41f690b22888af66d7e88c6f9e99a37d82eeedcd722a43bf2e79ae218c3def9d"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/independent_repair_review_v1/checker_failure.md",
+      "bytes": 330,
+      "sha256": "43799b2a72407285c83e61f6f14053c10d34653d540463271c9e11c1ac0e1b16"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/independent_repair_review_v2/results.json",
+      "bytes": 1440,
+      "sha256": "5c1b5aa693b8beb199e45dc0112a1e9089fd2bb4e7dcc2bf1fbabef464792367"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/professor_decision.md",
+      "bytes": 8338,
+      "sha256": "30ca04fda46ca3df96b07d50180a45bf87ca2c349bef3033ff10694ca8fa1af6"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/protocol.md",
+      "bytes": 3391,
+      "sha256": "ff6bc3238c43ea348b77797449c657ede73eb7e1b62065871f9087e985768d8c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/README.md",
+      "bytes": 6624,
+      "sha256": "f85c5b3b4eb2c53c99641c38b85e43a7fd7c00a64a9cf7b8d76859b8d8944dd9"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_outcomes.md",
+      "bytes": 3967,
+      "sha256": "e32cdc0d18c8160bb98165185340eb48f77954fe2714352d3dfed2fb54ffcda7"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_protocol.md",
+      "bytes": 2783,
+      "sha256": "682f0215fcae8130ddc9bc59d778c5d41c73ecf0f7917387730bb7d9c9b7d6b8"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/environment.json",
+      "bytes": 290,
+      "sha256": "c029b6e5c2f7ee0f56a3d7feec099e8b91b65b6810d626ea902a94380136690c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/mono.json",
+      "bytes": 236,
+      "sha256": "83aa6e3d75226af65284719efcc1d64d3a8c333aef1562cca506dc8693b463e3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/population.npz",
+      "bytes": 1377,
+      "sha256": "92bc9759abe4005cdb8116d040f0de19db02b2c190b92c3281f07122f0b6f482"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_0/final.npz",
+      "bytes": 126262,
+      "sha256": "c46b5f3f7d2b31ed73aebf0d6daa19d77568462ff21cf0cfd2b71d54d635f310"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_0/results.json",
+      "bytes": 2099,
+      "sha256": "dc1763aceab7af852190975648e8c99395c2d54da48afd8d0614072771dc2420"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_1/final.npz",
+      "bytes": 129814,
+      "sha256": "cee39a185c97bcf5b1ddea5132b246b95ee36f65155b10b27724583588e6a4a3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_1/results.json",
+      "bytes": 2090,
+      "sha256": "d4c954196cf125aad0985ec3c071bff961ce66256c4158602c54c9f2ae676849"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_2/final.npz",
+      "bytes": 122688,
+      "sha256": "a6b852e6c950ec3d4d537350bb17d183d1020309574a18a8bcab28b06c26f5f3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_2/results.json",
+      "bytes": 2080,
+      "sha256": "19e159dd667ddd7b3f757d5820ca3d2c738c411ae64fe3ccc96f30acce1988c7"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_3/final.npz",
+      "bytes": 126339,
+      "sha256": "134c8268ed827171f78d875e81543859b7ff055c391805804e59b913a8582416"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_3/results.json",
+      "bytes": 2094,
+      "sha256": "bc4ecc3f1859f8cd70c2e6eab74b2ced62ff1654bd7b340eecb27c53a47c88d2"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_4/final.npz",
+      "bytes": 127247,
+      "sha256": "135efd5ee2803bf5002105b970f049897b019131576f3d6aa6422f2f79fe4afa"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/input_snapshot/seed_4/results.json",
+      "bytes": 2076,
+      "sha256": "a1f8cb208c4a90fc76af4b723fbe5cd9d2f83989755295ff352d8716df3a5e85"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/results.json",
+      "bytes": 6832,
+      "sha256": "9a5962642d7d806f62c97764f6147565fdcec8b4307f88d57cfc0477687b9c1f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_0/backtracking_trials.csv",
+      "bytes": 192763,
+      "sha256": "f97b593011e9075e3fcfbe844009de30c6a791340e9b6d5ab500449e09dc2934"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_0/checkpoints.npz",
+      "bytes": 7069,
+      "sha256": "5a7740ad032ca87d15a9de98b3092f34c2f54a1aa691d69d5b9409d04978d15f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_0/clean_bias_profiles.json",
+      "bytes": 9877228,
+      "sha256": "1dc9b5889e951d10c4f619da115e7041edd6d2db63b33fd9eeb51fcedfeb3868"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_0/final.npz",
+      "bytes": 91741,
+      "sha256": "892f3b8e5afe8622962212bc432529bc92d2d391f92e8388d7cbccffef6ae040"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_0/history.csv",
+      "bytes": 284871,
+      "sha256": "e9fc62b56913df8dc5c9ebf01b6d7f2dae7ae4496542b354c4f039056d6c02d6"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_0/results.json",
+      "bytes": 1205,
+      "sha256": "490c215d3447a4e7b49a93202e0a6309f777239322cf52715a49373bd4977722"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_1/backtracking_trials.csv",
+      "bytes": 189144,
+      "sha256": "004046905b39c84b3d01a3c696bb99a387cb4123f099cc3009cd40b2f19e2d54"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_1/checkpoints.npz",
+      "bytes": 7097,
+      "sha256": "bfe408a9adf2e15ea85b56eb6847f8a2fa10e870bf842594834cd6cf70bba546"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_1/clean_bias_profiles.json",
+      "bytes": 9873295,
+      "sha256": "46190b87f25c8cea377992b96bcc018e694c0a79cb23bb25c05090af3006d07a"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_1/final.npz",
+      "bytes": 94373,
+      "sha256": "64057ed84c1aad6e175e4b49461ba6089841907f4a03b94c49a5f80cc9e46043"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_1/history.csv",
+      "bytes": 281058,
+      "sha256": "066dc7332b8a646f4cb3d1cd3742035fd92c1207e817c2bd16165d12efea42db"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_1/results.json",
+      "bytes": 1196,
+      "sha256": "ad96d016c6d7e522bfd46ab6eb3abad5b732af70d98038e77d11e487934641b3"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_2/backtracking_trials.csv",
+      "bytes": 188732,
+      "sha256": "941b28a16902a7bd22db41bef009f9b375b403728b9e412eb6a29c164369357b"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_2/checkpoints.npz",
+      "bytes": 7082,
+      "sha256": "219ed031ae20530b464fa53e4eff4a70572333078682f2c589efb4b51ec0a349"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_2/clean_bias_profiles.json",
+      "bytes": 9872013,
+      "sha256": "f4dbfe858efd24fadfc23ee639a18f12239209deabf49decf19404b1904b4c03"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_2/final.npz",
+      "bytes": 92938,
+      "sha256": "595b38244a9bb4abbe4ce8a496f5d456a5ab0715d3953475971e24ff4226c57f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_2/history.csv",
+      "bytes": 279709,
+      "sha256": "d08f9fe34b8e550d024a9ed0e8e22ff30fbf5624dde49f1deb0d743c1d66c72c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_2/results.json",
+      "bytes": 1213,
+      "sha256": "5f8dfe2880336154531e9f825e6ddb6a091606809d4242e14fd460de95f80641"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_3/backtracking_trials.csv",
+      "bytes": 188681,
+      "sha256": "734109656c4e77f858c548c86face54591bc96a0d46555f1c213eebca8693b8e"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_3/checkpoints.npz",
+      "bytes": 7088,
+      "sha256": "1b6f0a82aab8a75645c79edc5a0aa7b3751b0727463320ac418012b9e7fef1a5"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_3/clean_bias_profiles.json",
+      "bytes": 9873394,
+      "sha256": "2d11f2781f53642d1caecbd60919b36f9a7c4231e773302008394571a821d92d"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_3/final.npz",
+      "bytes": 93255,
+      "sha256": "2c54bbda9e27085c90332e2d28199bb0597772a331762e21f44f57ccff4f76ad"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_3/history.csv",
+      "bytes": 280618,
+      "sha256": "b403878b96c7fa614675f3b05433604add671b6025ff014a7cb5c2cc954c7729"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_3/results.json",
+      "bytes": 1217,
+      "sha256": "c4221dce83b04bf85ab5c3ef08041aca5c8e0e62b775f617c334f689a134f053"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_4/backtracking_trials.csv",
+      "bytes": 188336,
+      "sha256": "b59e9f1e167365211851e630cd8cd3d62bc1fab24a5f9cf4d6efb9349563699f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_4/checkpoints.npz",
+      "bytes": 7083,
+      "sha256": "df2b450063d7e9533252ec274eb3954f46a983f93799333efcfb741aa2af0c9a"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_4/clean_bias_profiles.json",
+      "bytes": 9872363,
+      "sha256": "d0f4de4fdd23830b5cc0303cdcedb26840bafb2b8a64f726e956999b3545f293"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_4/final.npz",
+      "bytes": 93061,
+      "sha256": "f33f00daf1b30e5fcb1e6c9272cf5f1fd1604b1bd20b009bb702bed7731b8604"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_4/history.csv",
+      "bytes": 279739,
+      "sha256": "0227a0081457d38551f90c1fe47df03623a6e0e368c901b401e7b19bb0c2b57f"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/seed_4/results.json",
+      "bytes": 1203,
+      "sha256": "aff50efbf259a7e214e2168a007b0db74127a1487c58c3967cd4ec2ec35539f4"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/settings.json",
+      "bytes": 809,
+      "sha256": "2b2ec7a49490a338674c262b578bb3974bd6729276ba53cd7017a8a171cb5145"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/sha256_manifest.json",
+      "bytes": 5798,
+      "sha256": "13e217e103f47b554402dfa1e05592c258a9bd19cd8c05299b454b2be3f7b183"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/__pycache__/bridge_math.cpython-312.pyc",
+      "bytes": 11185,
+      "sha256": "832f9e8fe45fa982ecdb0215b175509b43f8002106cf034cfe6acc2239e554f4"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/__pycache__/toy_math_snapshot.cpython-312.pyc",
+      "bytes": 13981,
+      "sha256": "a2fd03b55d303998755310ebd1de4dada38442571aeac966ace6921bd3024e66"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/bridge_math.py",
+      "bytes": 6987,
+      "sha256": "f605b2a2c1ffb3f345f7199014403e3710ef24820901e75d1f011a3f2af4ecbd"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/original_training_manifest.json",
+      "bytes": 3834,
+      "sha256": "d2015f87b4b369dc8de76dcc3ce781e0328560fc70a6dd9e24970ed906b6f87d"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/original_training_settings.json",
+      "bytes": 813,
+      "sha256": "fa8a575bd56f8a35b2b5ff6595e5fba310aaa03a7804258059290e6b92d0ebae"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/professor_decision.md",
+      "bytes": 8338,
+      "sha256": "30ca04fda46ca3df96b07d50180a45bf87ca2c349bef3033ff10694ca8fa1af6"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/repair_protocol.md",
+      "bytes": 2783,
+      "sha256": "682f0215fcae8130ddc9bc59d778c5d41c73ecf0f7917387730bb7d9c9b7d6b8"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/run_bounded_repair.py",
+      "bytes": 7761,
+      "sha256": "722aa912d288ead31507a1f368e11fdc3c7182c870c9faf7ccec7129b150e261"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/source_snapshot/toy_math_snapshot.py",
+      "bytes": 8295,
+      "sha256": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/repair_run_v1/timing.json",
+      "bytes": 35,
+      "sha256": "b4381e4c12e8ebb9596188e930dbb1c30404db7a962a8ef0f6b3ba8945c368c5"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/run_bounded_repair.py",
+      "bytes": 7761,
+      "sha256": "722aa912d288ead31507a1f368e11fdc3c7182c870c9faf7ccec7129b150e261"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/run_clean_training.py",
+      "bytes": 6738,
+      "sha256": "9628ea1327020436733b47276da8960ae15d4c4dfe93703b6b8212f5ba2c6319"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/verify_clean_outputs.py",
+      "bytes": 2014,
+      "sha256": "7226bfc4aee89f945818c195a4922b24a87483bba1e32cf0e70eeb1e0040966d"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/verify_repair_outputs.py",
+      "bytes": 2393,
+      "sha256": "7d12f1d601ea4637fd30006357854f3f2cb1ab8697c88ea6e9ba9ebae5d34acc"
     },
     {
       "path": "project1_toy/checks.py",
@@ -1808,6 +2363,1636 @@
       "sha256": "3745f5f6281bb428d3ab54d45df2909362242bb88c271c7a28bf930be202a5eb"
     },
     {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/__pycache__/run_critical_calibration.cpython-312.pyc",
+      "bytes": 14911,
+      "sha256": "1f269f006c3d996703623e00837447e953aa6cf4cc10c0061ff06db3fb75a02d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/__pycache__/run_frozen_map.cpython-312.pyc",
+      "bytes": 13200,
+      "sha256": "05f56e7b40afed745d125c3fdbd7661cda3edbb5fb5116127f584309a3a1518c"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/archive_certificate_sources.py",
+      "bytes": 1732,
+      "sha256": "aeb6791f0e33eec81357ef06a565a57bc8ecabbcc7d6c012dfb5747ad59034c2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/bisect_calibrated_boundaries.py",
+      "bytes": 4427,
+      "sha256": "6e2bc94c9c2da04f06f54605e575e224782ee43a0c564c23c3f6d1fa6ded9450"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_00/mono_feature_0.json",
+      "bytes": 89648,
+      "sha256": "0d58d8c3631992f57e5fee28958084c12f10ddeffecbb99c9048a49da7ad32f5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_00/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_00/sharing_feature_0.json",
+      "bytes": 89053,
+      "sha256": "3a1a97760fa8f2a291853121905c3a1f4c091ef5c1fd07e6084b4db8f879c673"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_00/sharing_feature_1.json",
+      "bytes": 100541,
+      "sha256": "c38f404c42d5262fd6fad65ed41233e4797a1807d21cbf87a54500decb3a62e4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_01/mono_feature_0.json",
+      "bytes": 96921,
+      "sha256": "a602ee78a3f08cbd05cd53bb1ee10be556757b4f74fc13c64e6b8693e7e7c691"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_01/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_01/sharing_feature_0.json",
+      "bytes": 93759,
+      "sha256": "a74dfa914633c57d73336140f7f6cda6696f7eda5f04bf50d5c908ba63b0ac8b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_01/sharing_feature_1.json",
+      "bytes": 100566,
+      "sha256": "0d8b941e37062e0d81d5dc880a70412737b846f89557e2f5fa61afeee5920e21"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_02/mono_feature_0.json",
+      "bytes": 92662,
+      "sha256": "a55efd6fa0519751a8c116627d28a04ca1220ec5d80ff00a24bf25b4e3e26cab"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_02/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_02/sharing_feature_0.json",
+      "bytes": 91737,
+      "sha256": "2e510dce20a9bbfeb8b85ce5861e326eab74e88bbfbaf101482d5667d9c9cf51"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_02/sharing_feature_1.json",
+      "bytes": 100534,
+      "sha256": "264675a8d703a0157ffa56c3a6c92f17fe55c898e4665ea5b1f4b30bec548680"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_03/mono_feature_0.json",
+      "bytes": 97180,
+      "sha256": "549efc6e36f4f2bb2ce6a0a900dd5fce32fdf6bc45654aa53c612e34cbab673b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_03/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_03/sharing_feature_0.json",
+      "bytes": 93225,
+      "sha256": "788b0d5f1bd02c00965959fbb501f731fb1ac37b2d0e6d3f1173df212e0c0cfc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_03/sharing_feature_1.json",
+      "bytes": 100559,
+      "sha256": "1412b79ee89bcb4d131246129147f58778557eddf16d3260bf9319c0e0dbd0ab"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_04/mono_feature_0.json",
+      "bytes": 94753,
+      "sha256": "240b1da564662d882bcfaacca21858492d2c899b79fc6599a75b972002bb3341"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_04/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_04/sharing_feature_0.json",
+      "bytes": 89063,
+      "sha256": "5c1f83150618cb551255bde900d5b26b493f73212675c0e8258ec7636cc51a66"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_04/sharing_feature_1.json",
+      "bytes": 100537,
+      "sha256": "227521d3f3cd2144128c3c6af9be7ed66d0fb377d825a34c0384368260f56afa"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_05/mono_feature_0.json",
+      "bytes": 94332,
+      "sha256": "ad5aee38482ce45acf0b2e052a6305e577ce3d96631912b36ca64e3612f848b4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_05/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_05/sharing_feature_0.json",
+      "bytes": 90243,
+      "sha256": "bd674b7894a7bc3f6295bd414aafd3d98068ee431d6d1c3e0fc78b02e6318e31"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_05/sharing_feature_1.json",
+      "bytes": 100572,
+      "sha256": "2ce4dc84bcedcba9b5a73462bb176f22ec5f77b2ee4cd2b2024f66fa364d2fb7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_06/mono_feature_0.json",
+      "bytes": 94736,
+      "sha256": "ae3fb3d251957f9724ef607bed741436c08a82e1fb32f70e19fe6cda7e8d6f6a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_06/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_06/sharing_feature_0.json",
+      "bytes": 88801,
+      "sha256": "6c82ffbeb85cc647f91bee81d164531e304d8681acb21ce3416ce9d5fa7becc5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_06/sharing_feature_1.json",
+      "bytes": 100542,
+      "sha256": "7d2a8bda84050aabdcc12839d38db3e147ac0c48da1f15b735d1d92a3e319a65"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_07/mono_feature_0.json",
+      "bytes": 95697,
+      "sha256": "d9677e1618fb103686547ede2b1cffe974a9c06dd7828546d2364251a3b29633"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_07/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_07/sharing_feature_0.json",
+      "bytes": 89029,
+      "sha256": "7cd4528ccf876e557635a75bbdf5d3278d60418744d83326924171d666081e7f"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0005/midpoint_07/sharing_feature_1.json",
+      "bytes": 100541,
+      "sha256": "c743dfbc4a3d206503678f924fedb8a5c1202fb76e33a848c547d9f71755abfb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_00/mono_feature_0.json",
+      "bytes": 91390,
+      "sha256": "e5970f55988e0a1e719a849cc3f09492c7abd03d2f5b38fb70572229b55374fe"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_00/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_00/sharing_feature_0.json",
+      "bytes": 84792,
+      "sha256": "e8c1f1eb392b36f004955483fc7a7777eb1c04fc39da7e17d2c1f36f2b561349"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_00/sharing_feature_1.json",
+      "bytes": 93126,
+      "sha256": "60d3111978b90148b53c50d4b8e7c5e6d380608e6023fb211162cac851389162"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_01/mono_feature_0.json",
+      "bytes": 91874,
+      "sha256": "74724a7767e7bd310e63a8c6a8152d0c86d19aca41ffe4397eb7bd520d632217"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_01/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_01/sharing_feature_0.json",
+      "bytes": 87472,
+      "sha256": "5ec59dcc439df18ab5f83d1e5783177da38608d3911e3edbd686d044e9715f51"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_01/sharing_feature_1.json",
+      "bytes": 93062,
+      "sha256": "b9acf6c375c7ff43591a0e9989c845732675abb4ca32457cfbed12e5c66e5c4e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_02/mono_feature_0.json",
+      "bytes": 91692,
+      "sha256": "aff54ccb7342cd6085f83dd2c52b07a6e4a2934e1fe4a091c13b2b014e836377"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_02/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_02/sharing_feature_0.json",
+      "bytes": 81939,
+      "sha256": "cc6e99a932fef97f0927916ff440021846be36b16073ccdaf0e8490b26732945"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_02/sharing_feature_1.json",
+      "bytes": 93134,
+      "sha256": "5e174ee176e6a8172a3c6d58163b7ccdd429741cc4bdb994ddbcfe30e127dd76"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_03/mono_feature_0.json",
+      "bytes": 88894,
+      "sha256": "d80dc265512d65de66346c62dad2874c0d6ca76c50359e68cf3cfa826a0a2159"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_03/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_03/sharing_feature_0.json",
+      "bytes": 81949,
+      "sha256": "8f362979918319dea5b5ab451ea7efeeb24e603c3e314e5fd19345606d76e187"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_03/sharing_feature_1.json",
+      "bytes": 93147,
+      "sha256": "7027b919bf897594877803d9e6d95b5a07a96bb6ec5a7208ab8a7c89f1a3be2e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_04/mono_feature_0.json",
+      "bytes": 85700,
+      "sha256": "022dd70bab423587d78a2fc4879332be99f2f008aa5904d7cbab41d47b01b776"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_04/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_04/sharing_feature_0.json",
+      "bytes": 81573,
+      "sha256": "65fcf640a7be2de340110b94d4f1ca1a1035b990ddc3ef34b117dbf69a8c9242"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_04/sharing_feature_1.json",
+      "bytes": 92889,
+      "sha256": "0a11aa66fe81a7f9cc51355e702fb40f2ca9798af05981778f1e1a6375697883"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_05/mono_feature_0.json",
+      "bytes": 88028,
+      "sha256": "0afbda167b870e658bad45f1b38f996e8cd64df47b3eb5e47c62b11f9b73b282"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_05/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_05/sharing_feature_0.json",
+      "bytes": 83420,
+      "sha256": "205e72912c95d809a719ac3c6b1ae9b81f83d2ff5a7052f31fa28e31626fe2a4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_05/sharing_feature_1.json",
+      "bytes": 93108,
+      "sha256": "ce4d9c5d2822e2adec346344be137481d9398b6d96f81694a32f647f04386154"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_06/mono_feature_0.json",
+      "bytes": 85728,
+      "sha256": "1c4c3234f36eab0978953fc417a854ec72fc1b21beaf6d8119106bb623bd83ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_06/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_06/sharing_feature_0.json",
+      "bytes": 81864,
+      "sha256": "6017b555d6f0b039a0204cb2977afc4efa41136b4e7f955046607836a62e9b72"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_06/sharing_feature_1.json",
+      "bytes": 93120,
+      "sha256": "15e4e199e4f27ec0db24e55a32d8f867388c4f24a8bb234bad789ff8125b5819"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_07/mono_feature_0.json",
+      "bytes": 87245,
+      "sha256": "2dbee94c845a633a6b6497e677ca26a7a11444f0b32acbdd4fc4958c520ca262"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_07/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_07/sharing_feature_0.json",
+      "bytes": 82884,
+      "sha256": "5ae772c200b81d9127197ad99eb7988c48c59fb2b8b733060b56da9e3260c1d3"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.001/midpoint_07/sharing_feature_1.json",
+      "bytes": 92997,
+      "sha256": "13bcb04b06c6dbbbee47d3e61b1dc2af924b75fc8bfe8c574dc2e700d3c5bd26"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_00/mono_feature_0.json",
+      "bytes": 79925,
+      "sha256": "0b46b714bef8c3c13995fb5d48be0d5871479f73dd87ffeb0776727187084ebe"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_00/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_00/sharing_feature_0.json",
+      "bytes": 76949,
+      "sha256": "436c883a435cd3054b44f8b6b96a6d0cc1378c211c8e4469f4c0d6accdfdf014"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_00/sharing_feature_1.json",
+      "bytes": 81846,
+      "sha256": "7f0711325bf2beab436560187c7cc4d4ee9ec7613a7ef24ccbcee258b9e8b727"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_01/mono_feature_0.json",
+      "bytes": 78545,
+      "sha256": "0895cc589983c6ec81478b83014dc74e7e0c7e1222c9bc1891af1e36b4474779"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_01/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_01/sharing_feature_0.json",
+      "bytes": 74347,
+      "sha256": "4fe6a59d5f60d6a27fb5c70a251a8b14c962d72f947f56ef29b4ebfc69d5c3e2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_01/sharing_feature_1.json",
+      "bytes": 82979,
+      "sha256": "b405f408477dd9b95b3111d5cc1038cb727e708d7ba3cedd2bd5c2b2def002ad"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_02/mono_feature_0.json",
+      "bytes": 77842,
+      "sha256": "57578a57737e761c0c7b2c17081f033f06148351a9b5c4092a686baeb4166dd4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_02/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_02/sharing_feature_0.json",
+      "bytes": 75842,
+      "sha256": "e48ad7a11a31a76b3f2d956ce9bbf933764dda80a6299824c3c7a7ef52cbb0fe"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_02/sharing_feature_1.json",
+      "bytes": 80724,
+      "sha256": "e0b659f15fab8a666f3b42a40a9ea1b35cfd737ffc6756b88eba4bb9284a8e24"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_03/mono_feature_0.json",
+      "bytes": 79481,
+      "sha256": "fbc9d14aa69cdaf5075975d6778993bb33fe8b70c8fd7eea49cc1415d8da06cc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_03/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_03/sharing_feature_0.json",
+      "bytes": 75817,
+      "sha256": "9b097bff3e9470cff55897958faa9d04c44b4d88703cf0a704b74d8dfc83fce4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_03/sharing_feature_1.json",
+      "bytes": 81873,
+      "sha256": "41cc5a250bb19f2dd3d63c63f036a2b0fdcc2e5a143db7e8860620c6724f1380"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_04/mono_feature_0.json",
+      "bytes": 76790,
+      "sha256": "2d2266dfd61ed616fe9e70084d41e3cab3fbfb838942a9556a8eff61eb5e78d3"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_04/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_04/sharing_feature_0.json",
+      "bytes": 74358,
+      "sha256": "71d201fe93339cc45e78e7cb4c12794660acca6b670d3e74607ecfce52f84c48"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_04/sharing_feature_1.json",
+      "bytes": 81871,
+      "sha256": "80eaecdf8823388cdabc76a3bda3aff855489e322a643146461c065e67d88fbf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_05/mono_feature_0.json",
+      "bytes": 78553,
+      "sha256": "9c0b173b446ad7b79ad4ba0671c1068c14eb842fbd83b5cde2e5ed1c67984bdd"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_05/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_05/sharing_feature_0.json",
+      "bytes": 74337,
+      "sha256": "696b35ce005348cbe1e952c20e1ef1c1d109facfe1fbc8b082c2288f9843f248"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.0025/midpoint_05/sharing_feature_1.json",
+      "bytes": 81862,
+      "sha256": "89c28664bcea308f5ded46e6fe9ce7f7b515c05a3ffd7cfbe2d96923fa9ec9df"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_00/mono_feature_0.json",
+      "bytes": 74093,
+      "sha256": "a3e7d98cd960795d5af5e86b024448bd41402fe0d4eb396d3f58c15d74e28ea8"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_00/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_00/sharing_feature_0.json",
+      "bytes": 73223,
+      "sha256": "d017b6f32edaf3f3ae8cdaaa8b1951134a2ecb0428356ec8b57794eb6e51dde6"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_00/sharing_feature_1.json",
+      "bytes": 73231,
+      "sha256": "d0a3fe7d86ffdc5c9b3f97bc043c1de5e045c31d42df6bcf26b059c21dc9da85"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_01/mono_feature_0.json",
+      "bytes": 75884,
+      "sha256": "d51ab92605d0e85fc8482c8a43cbad50c6db7e7dcaacdad7904368ecc4d461d6"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_01/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_01/sharing_feature_0.json",
+      "bytes": 70381,
+      "sha256": "3e6a1ec878147c8057085ece00fffdf4d7801625f9e63af8c3ca4f46cffd7cf5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_01/sharing_feature_1.json",
+      "bytes": 72011,
+      "sha256": "cc89ef95d4fef523d46156145adb0406917baf62d9dd5b2ca5a173f67bc7198b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_02/mono_feature_0.json",
+      "bytes": 75340,
+      "sha256": "c443741a4863c2571e86630119ae41d89a32bffc295e3c4753e8d7dcd1b9d6ab"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_02/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_02/sharing_feature_0.json",
+      "bytes": 70022,
+      "sha256": "b596c0fc3ff182ea1fb7dff6c6e2858972781bfd2cce1357bb0aa9aa7bc8fd0b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_02/sharing_feature_1.json",
+      "bytes": 73492,
+      "sha256": "ceaba9b052bd133ef26308dd41dda91eadadb6580a7691b9a7779795af310ab3"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_03/mono_feature_0.json",
+      "bytes": 73699,
+      "sha256": "f51ffcfa180578a7e2941f687c33531e2e62fa168e8e69af49a9a08521aa1fda"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_03/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_03/sharing_feature_0.json",
+      "bytes": 68245,
+      "sha256": "02dbe21ddcb96a0d987185b96afcbf468f270f3586f141732b9e07365e54fcdc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_03/sharing_feature_1.json",
+      "bytes": 72261,
+      "sha256": "3001e74a300419f735d336032eab1636b36c6ffdbc8c6a095e2c259c17a1e6d0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_04/mono_feature_0.json",
+      "bytes": 69144,
+      "sha256": "f27933c45c2c2fff9511e5e03e44df1ca4b53c23a7eb311c03b2bbcce54b7224"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_04/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_04/sharing_feature_0.json",
+      "bytes": 70307,
+      "sha256": "d3b8bf069f55db8a35a952d51da643dbbd78b35c2a575faae92268f1257123e5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_04/sharing_feature_1.json",
+      "bytes": 72519,
+      "sha256": "392d119bb8987045c7b2583b4dccce5f83a3c8a1d4014e761fd9a1e7e6f6d803"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_05/mono_feature_0.json",
+      "bytes": 71317,
+      "sha256": "37a854d1bfe1ed80556b9338927bf7e0104e808244b757a0a62321b6f1cc1eab"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_05/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_05/sharing_feature_0.json",
+      "bytes": 67103,
+      "sha256": "ea914491b9d205110fc39addccab519279b5bf12b5db106b88e877ed0afb35c1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_05/sharing_feature_1.json",
+      "bytes": 72555,
+      "sha256": "7c03567c7147861cb09807c5fe219c75a75602fc9b0f782a1276521a4fc9533c"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_06/mono_feature_0.json",
+      "bytes": 73970,
+      "sha256": "325d9e8b839868e73fa19db719d16b0cda4468c612c7e31635b0fb9ca5c90412"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_06/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_06/sharing_feature_0.json",
+      "bytes": 65540,
+      "sha256": "ac12cd6a215a21c338740632f2cc7c3fb72ec767cdf08b163448bd20b3faf220"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_06/sharing_feature_1.json",
+      "bytes": 72567,
+      "sha256": "f4501f890c237731f4a3805c5b513eea447bab250e1c81031322563068b03134"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_07/mono_feature_0.json",
+      "bytes": 71315,
+      "sha256": "4910ee6d3522363dcd66e916c7834b0a7deffda6fe66aaedd5d27e43c93925d5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_07/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_07/sharing_feature_0.json",
+      "bytes": 65823,
+      "sha256": "db7b115f0af6e48d207fe376109338a396e97b4db6fe31402cfe0a642c9535af"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_07/sharing_feature_1.json",
+      "bytes": 72549,
+      "sha256": "02796e4fea7c9789b11253a8b61e11614de9d71dd3cd20e3a51796b1e925f0d3"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_08/mono_feature_0.json",
+      "bytes": 73565,
+      "sha256": "b3d6d65cd704607254c2cc0f2002eeb11f656ce9361b5f65958764f9c4cf95d4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_08/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_08/sharing_feature_0.json",
+      "bytes": 65342,
+      "sha256": "9baf8ad46c134147169d1044dafb0c3e6c5a2e47c42fa68b2863ab0c4f0ad4ee"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_08/sharing_feature_1.json",
+      "bytes": 72472,
+      "sha256": "b668984feac7ae6ca0e5a0e67d199ba4b03f1619ca92bee55313b46dc3179684"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_09/mono_feature_0.json",
+      "bytes": 72469,
+      "sha256": "da720e7cc7b3f8fb53467026673a77c755d34eab469e09c97274a9dc754f9f56"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_09/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_09/sharing_feature_0.json",
+      "bytes": 65639,
+      "sha256": "74486c2e56904a399aaee406a1478076b3ef374f16c3fd8455a86830946dbebb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.005/midpoint_09/sharing_feature_1.json",
+      "bytes": 72452,
+      "sha256": "f7119a2108a7985ad2dd74c5975c250edde6d4ff74d6a889cdfe81ce7920612b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_00/mono_feature_0.json",
+      "bytes": 72867,
+      "sha256": "ebdc6e8024d37728f24ed77d9eb4dcb6977f3dc9b9ba84ccc43ad0ef9eda8da0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_00/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_00/sharing_feature_0.json",
+      "bytes": 72783,
+      "sha256": "ab65c14c35d0467ff1beb0744160f793c588bc80141f0993ef5cec1d7ab0cbf3"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_00/sharing_feature_1.json",
+      "bytes": 73445,
+      "sha256": "82769c6a0b84082588cbe11cebc42a289eb3ce212b0cc540d1b4f45af91cd458"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_01/mono_feature_0.json",
+      "bytes": 71530,
+      "sha256": "111ea02e6b979cb26ce04b4bcaf5f8952e62fb13fd8f86796324219c8dcf23a5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_01/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_01/sharing_feature_0.json",
+      "bytes": 71297,
+      "sha256": "a04984d8d748a3c7ed2b3e7db48b478e12458d66f0806c7b5eacf1b35c8442a2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_01/sharing_feature_1.json",
+      "bytes": 73714,
+      "sha256": "3a914489e7ebd7828a2565bb61f5c80a5adae4345934ee6dfd5e936e11db8886"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_02/mono_feature_0.json",
+      "bytes": 69926,
+      "sha256": "87a518a887d0cb925b3d4e47bd8664b4c22fb13412dd0c8701cc84144156a017"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_02/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_02/sharing_feature_0.json",
+      "bytes": 67295,
+      "sha256": "820a98f1f794970791eeb59544c9e0635773a9bf23e1abeff12b795bff1ae9f0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_02/sharing_feature_1.json",
+      "bytes": 72039,
+      "sha256": "16a77080f9025dfb2eb8e3def2271a5e7d7602001d0cbb87cf2d6f1438a487c0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_03/mono_feature_0.json",
+      "bytes": 70401,
+      "sha256": "e7223ffd4e492a17adf35f2256d461cb340c085aebe03e7a1ec19236762c0e1a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_03/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_03/sharing_feature_0.json",
+      "bytes": 70185,
+      "sha256": "9e49a87405f697122b341305c477adcad47b7b181ccf61d41cb9616f8727c885"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_03/sharing_feature_1.json",
+      "bytes": 72028,
+      "sha256": "1552d675840e12846a425ca24271bd3b410d3187988eb7ae0ff663bf5dd92b52"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_04/mono_feature_0.json",
+      "bytes": 70508,
+      "sha256": "07c9de4313c32bd3e47555a1eb41726a19644953a2dca66638ea7a0308324cb2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_04/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_04/sharing_feature_0.json",
+      "bytes": 68745,
+      "sha256": "cc9180f91dd6300162ec60b353e60e5c2617add0fe9b93ad0c8ee50529a8cf1b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_04/sharing_feature_1.json",
+      "bytes": 71758,
+      "sha256": "cf739d54afb2c724a585eeb03c10dbde0293619b2ed77b47c0a69fb13a70043e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_05/mono_feature_0.json",
+      "bytes": 71205,
+      "sha256": "03dc7872f40e8c2ba89976011f810b664cbf6569dfdbeea2530b25aeda66478d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_05/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_05/sharing_feature_0.json",
+      "bytes": 70197,
+      "sha256": "14dbf1e630fb1e2b52e1f46d49ad736e015fb56209a16c919bab4f0c563ba3ef"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_05/sharing_feature_1.json",
+      "bytes": 71735,
+      "sha256": "5f048c87a9d28cb1071e2a07d52c663680d10856783c25e66b8e81aa0c7a3382"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_06/mono_feature_0.json",
+      "bytes": 65433,
+      "sha256": "ce94d8e5ee6079beb3cb5bb81d97d7852b3d1e2bc3ba9bb39383e420effbc3b9"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_06/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_06/sharing_feature_0.json",
+      "bytes": 71581,
+      "sha256": "c7b7f5ae39cd21c735473145f332d8450357ebb6117d7608e0cb31b1d96ee9bf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_06/sharing_feature_1.json",
+      "bytes": 72003,
+      "sha256": "205c0c9495e7a2cd582344204795938011d256c2dbb6c0976d86fd048f3fa0b0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_07/mono_feature_0.json",
+      "bytes": 68577,
+      "sha256": "54e2f44a48ecc3c91ba1d60157390fcf2cca15a6ec6baf61801f567cfb4f370e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_07/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_07/sharing_feature_0.json",
+      "bytes": 68729,
+      "sha256": "da2883f5e320d13839be876b9db49ee0ae3de1a3ec8b82f92e96afd10f21f128"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_07/sharing_feature_1.json",
+      "bytes": 72031,
+      "sha256": "89120f5f42db2e83e7dfe117b460da63eed0310da7863cac206ef4eaa1d2b9bc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_08/mono_feature_0.json",
+      "bytes": 68960,
+      "sha256": "4f8ce17b58b25e37bfc5846dc7f6eb3337680f00963e98de2edcc48ce2dc9d6d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_08/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_08/sharing_feature_0.json",
+      "bytes": 69820,
+      "sha256": "41fdd862e8ae297aa215717ee6cd992123b4f11460d76b04e07657a494d6b7e4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_08/sharing_feature_1.json",
+      "bytes": 71908,
+      "sha256": "576ed857510ec544e096d93d7969e62d16aaf1ac66d9cfef833cac1993ceefbb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_09/mono_feature_0.json",
+      "bytes": 68314,
+      "sha256": "64386bf153e9473f0117b8a9f01af1f235c05a6d40a0624805d0e995d38b4044"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_09/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_09/sharing_feature_0.json",
+      "bytes": 68718,
+      "sha256": "13b94cd14a0651e88b52993df73e952ade86346df59d6eb2d11ccd03f0c57003"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_09/sharing_feature_1.json",
+      "bytes": 72003,
+      "sha256": "3f94219c39473e232de21da60320913e6861c75d762f7c85cad4cb78b3a2b67d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_10/mono_feature_0.json",
+      "bytes": 68405,
+      "sha256": "a7694fa018bce809e8fda8a0e4c5d8d3c1ea289f1d307ef864fd8c3b61cfebf4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_10/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_10/sharing_feature_0.json",
+      "bytes": 68966,
+      "sha256": "764cbbd96581e5319f1b5e830768f07decfe619452748e3760f7b6ddc5342b72"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_10/sharing_feature_1.json",
+      "bytes": 71926,
+      "sha256": "b93b00bd28283ed6310aa9bc03a02b7e31307487fd84fa9006bb676438dbbc4d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_11/mono_feature_0.json",
+      "bytes": 68687,
+      "sha256": "29a3e394e0a6363717d8c96a0fa2f899e716d22ce00f3a2d664266efc652c58b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_11/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_11/sharing_feature_0.json",
+      "bytes": 69911,
+      "sha256": "6e9bfef2c80ad2105bc62c25bdc1941dfed77ee86f7ec7cbe1dfe1d5e9731378"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_11/sharing_feature_1.json",
+      "bytes": 72048,
+      "sha256": "45c02047ce9aa3f1f1fa519f50c1fba574f54b40a623ee9ed9e15018e6f09848"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_12/mono_feature_0.json",
+      "bytes": 68949,
+      "sha256": "3710ad7ab46eaf193166f28f49728ff1d1ba987570c01e2a8d13f51000a1be9d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_12/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_12/sharing_feature_0.json",
+      "bytes": 69903,
+      "sha256": "4b52005d9923f6199e2543f8ec5692429eaf54e15c92c13c8e5258ae2a0c99e7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.01/midpoint_12/sharing_feature_1.json",
+      "bytes": 71793,
+      "sha256": "d2fdb3aa20af261abae032bc36d3c611f5acc850b920a492c522bff7849104a2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_00/mono_feature_0.json",
+      "bytes": 66849,
+      "sha256": "6f4818001d41a225d53be46a41932db7f9aeef574ed2d6d28935705f912af242"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_00/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_00/sharing_feature_0.json",
+      "bytes": 65829,
+      "sha256": "8a6d9796c33685a0711c2baafb5f22b580304486fd03b550ca2ef6c5b0f4af18"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_00/sharing_feature_1.json",
+      "bytes": 69527,
+      "sha256": "e25a499f822b857c4ce0d70b27da55063a57565235f62a42c35257ae4282b733"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_01/mono_feature_0.json",
+      "bytes": 72619,
+      "sha256": "bf37936995ef2b9b45cffc35ae1fae1688be5988504d6e3b534976d7c5232a31"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_01/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_01/sharing_feature_0.json",
+      "bytes": 68678,
+      "sha256": "2c6e829d561b3d87fb63b65431e95a77e0b6bd5da93b81138d2cf698e4e870b5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_01/sharing_feature_1.json",
+      "bytes": 69132,
+      "sha256": "2ae49883fe27406d3a8c9d5c01df2776711a7df6b94806141a22d4923e736e73"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_02/mono_feature_0.json",
+      "bytes": 69038,
+      "sha256": "e0492ca6f9dc3b2bc3671c7cc58ba8cbf3d15550bd9c1c75bb3577dc9e3c21bc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_02/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_02/sharing_feature_0.json",
+      "bytes": 71879,
+      "sha256": "c71a1d9cb36339de008355efa2e1e3f6bde4118b869a5f3c402ce65fbd2a9dd9"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_02/sharing_feature_1.json",
+      "bytes": 70131,
+      "sha256": "6827724a5a716401b24bafe080f4c4a72e77bc9b8d75d76b215f7e3ff377f945"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_03/mono_feature_0.json",
+      "bytes": 71227,
+      "sha256": "26f79efe4e437c24f7b0d71ca517cb252f1bca561223f76d58e97737f2a9e0ce"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_03/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_03/sharing_feature_0.json",
+      "bytes": 70078,
+      "sha256": "99cdbb3274d4eaa15a25229b7cf23b9fac956ead3b5fc90cd7a69697958a5adc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_03/sharing_feature_1.json",
+      "bytes": 73532,
+      "sha256": "e3cd6edf3420fd688c8158e2cfcb45a1cdc92b2718066258f85d253a7a0d1de5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_04/mono_feature_0.json",
+      "bytes": 73038,
+      "sha256": "5dc3879d827cf87c6bb55fc5fdab8ee95437346e70443f2aa1a9c9af7318d83d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_04/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_04/sharing_feature_0.json",
+      "bytes": 65906,
+      "sha256": "5271bd288400f1fc55dce6914ea17210510eb6d2ac4fa129f3477f1c556054fc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_04/sharing_feature_1.json",
+      "bytes": 74526,
+      "sha256": "a6c4abd2d8831de848972ca0d7629b38639c45faddc2454460da6300ed84625b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_05/mono_feature_0.json",
+      "bytes": 70180,
+      "sha256": "be6cec9655851b09cac82cd5314d6bde9e49f9cb94092d4c42803bc43b108884"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_05/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_05/sharing_feature_0.json",
+      "bytes": 71309,
+      "sha256": "613fa31dfd3fa120e326f8547e71b934d74a7990b5ba9841666108c4a439cc02"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_05/sharing_feature_1.json",
+      "bytes": 74678,
+      "sha256": "4065eb63749672e4625effd700340a24b77a2c84ec8f03e6b43b156ed24b506c"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_06/mono_feature_0.json",
+      "bytes": 68816,
+      "sha256": "0f0bbedac2eace84cb23a41908ae2eed39a5ecf43926141fb3ac4e70a3d69c87"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_06/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_06/sharing_feature_0.json",
+      "bytes": 68729,
+      "sha256": "f576acef7c1765064185f0ed6d5c51b4507fa01d6e331b89ed9f3b96f8ceeea7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_06/sharing_feature_1.json",
+      "bytes": 72991,
+      "sha256": "dbf957b952c35c14ca7b7b7d1c03d27f260f0d7b54218d150690f45c2dc8bfd2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_07/mono_feature_0.json",
+      "bytes": 70980,
+      "sha256": "0ab3fda201127a262453020bdade7a5442a39af0ced24757072495b61a78a2da"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_07/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_07/sharing_feature_0.json",
+      "bytes": 70160,
+      "sha256": "7c5839fc80704305a862ded7f7f49ac57c98ff917991d83ffaf097d1ce5b985c"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_07/sharing_feature_1.json",
+      "bytes": 73351,
+      "sha256": "c960b50784ccf2315aee6131c66bf36f1b4adba28b10a7d3161f5d5a51924501"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_08/mono_feature_0.json",
+      "bytes": 71376,
+      "sha256": "3986191b224aa1b6ac9c6e4a8ffdd446cfa5476400ffc654a11b36a3425798bb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_08/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_08/sharing_feature_0.json",
+      "bytes": 68288,
+      "sha256": "7ed2b7e19c4e7d33072489d00f9d8d15a4fdcf2dd4a716b56f2a0da582537108"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_08/sharing_feature_1.json",
+      "bytes": 73105,
+      "sha256": "2a6ef0f7dc128ca75f7a92227375d2782944f7c1830f119f4a21a07ac85d950b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_09/mono_feature_0.json",
+      "bytes": 71097,
+      "sha256": "f801eac3cdcf1d6a8b95cd60ac226f7dc41516b8dcee1303a1a8086f8ba081bf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_09/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_09/sharing_feature_0.json",
+      "bytes": 68708,
+      "sha256": "ea457f2cde78b6bd07466c28884e6397ea0bc7b89d87a07a9c58ae2e97a35dd5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_09/sharing_feature_1.json",
+      "bytes": 73083,
+      "sha256": "aa729d501fc3b2a935cffaba322568ef4cb394505b11ae23ebda9353d04ae035"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_10/mono_feature_0.json",
+      "bytes": 68469,
+      "sha256": "cc6493466fce61fa47e397215caca8283655b5af542075110ede109d0b96b14e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_10/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_10/sharing_feature_0.json",
+      "bytes": 70445,
+      "sha256": "e5f75796bab8368841d5e11550f30a389680e20b61ba38d5757e0fa9cfa5fceb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_10/sharing_feature_1.json",
+      "bytes": 73113,
+      "sha256": "14de222c477ad659c4932baa9d200425660f6f1f66b95fd0d8fcce3b9f2b19b8"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_11/mono_feature_0.json",
+      "bytes": 69888,
+      "sha256": "9c4a1c951b54aee21d073fadda32aefc6ce2b02ed664a1a7137742310c908527"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_11/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_11/sharing_feature_0.json",
+      "bytes": 69876,
+      "sha256": "f3a1479aefdea414727779adb6e18c6d4d58262786382b0498fbaa583a8a5938"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_11/sharing_feature_1.json",
+      "bytes": 73090,
+      "sha256": "e732c59b4b0cfe21b47365914837fabe28c3f1624d03a6ca0a3420fd1ef3da18"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_12/mono_feature_0.json",
+      "bytes": 68700,
+      "sha256": "ad41bd2105e31e2735a0b8aad1bc28f7389943eb801b6d220a7485b67885925e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_12/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_12/sharing_feature_0.json",
+      "bytes": 70162,
+      "sha256": "f1d12f65328f91e0cb48c7c9d813b314d193b6657ea8ce9f481271f8928dfe24"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_12/sharing_feature_1.json",
+      "bytes": 73078,
+      "sha256": "26bc7a66b4fa121936b4415f70378b5f1703076a471e5b2e275be45165e3f326"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_13/mono_feature_0.json",
+      "bytes": 68731,
+      "sha256": "2d273cf3515af27760320056f4eed14734da3971048e881c668ad4f57b36bb57"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_13/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_13/sharing_feature_0.json",
+      "bytes": 70146,
+      "sha256": "f4d78179e03197de8a5373cebc925e04c7dda122986278be54b3dda9c31a1030"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_13/sharing_feature_1.json",
+      "bytes": 73112,
+      "sha256": "9b00622d4925f009a06db38568c887ef65f9ebea0e6e7e80dfcf8ec9f656c06a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_14/mono_feature_0.json",
+      "bytes": 68629,
+      "sha256": "d7027705929891d51caaf74567cddc9ec37886695e3312e226d3320afb876554"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_14/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_14/sharing_feature_0.json",
+      "bytes": 70166,
+      "sha256": "e50dc0bb44cd377cf71c4e8cfd3c6478f53ce24f09b3a0aaa23c0b837ae97feb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/epsilon_.02/midpoint_14/sharing_feature_1.json",
+      "bytes": 73109,
+      "sha256": "b4789097c152b1686793bdb84d0be68afe85398150c52d236994ee8385876d3f"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/results.json",
+      "bytes": 60631,
+      "sha256": "5568d0a84d7fb7f5ba146063603abc57cce3f3ebd3e9df7f94da0f38c7999a83"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/settings.json",
+      "bytes": 262,
+      "sha256": "694315baca38e95a288c16bbe534651b34bc1309be6ec5095598e4153924220b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/sha256_manifest.json",
+      "bytes": 29954,
+      "sha256": "e28623ec795556cf2f3dd4ed72787e3b640223e6a01fb52829e909f5b134e2e5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/bisect_calibrated_boundaries.py",
+      "bytes": 4427,
+      "sha256": "6e2bc94c9c2da04f06f54605e575e224782ee43a0c564c23c3f6d1fa6ded9450"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/calibration_precision_protocol.md",
+      "bytes": 2009,
+      "sha256": "e996fc12b905f37cb19419385acee96897f2c9537825217bf8d98674254d2a28"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/comparisons.json",
+      "bytes": 11637,
+      "sha256": "707a1db0db6108a84351a8e6f5dfb5231f9e309d4f109436f53f61c5f7fd1b14"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/critical_calibration_method_review.md",
+      "bytes": 4712,
+      "sha256": "11d3b37d4b04be148dd7e661a634deff01d0f930e22f68d0d1827f39dc8c89ce"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/frozen_geometry_results.json",
+      "bytes": 22808,
+      "sha256": "247ec444823d98900cba6eaef50608cb202e41637ded184fa713d4873c4d958b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/run_critical_calibration.py",
+      "bytes": 6444,
+      "sha256": "773b417c8b43d2fc397b63e20a27d4203be4b0874aa1f0f4d7f6d87e86bd1be7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/source_snapshot/run_frozen_map.py",
+      "bytes": 5259,
+      "sha256": "9410d2e8458e84282dd95ad6516e8498c8dd19c8986e59987914b1cbc66b8788"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_run_v1/timing.json",
+      "bytes": 30,
+      "sha256": "318536e04a8e2d1188ac3b09505c2f7624302f05e3982ff6092fc650a495c9bd"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_boundary_scaling.png",
+      "bytes": 52856,
+      "sha256": "351caca9ebffd886a1febf7057504f4a1a41342f10d0818a06378da0844654a4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_professor_check_results.json",
+      "bytes": 5047,
+      "sha256": "983bbbb6ea2ac518ce39c5a3ff0b8e5ce9212337c2353ef62f9b01df633dc9e2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_professor_checks.py",
+      "bytes": 6970,
+      "sha256": "7e0b3c5ef91d350b5f40c0310b57fce0b1ad5ba7629d55fcd83cd630c811f806"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_results_professor_review.md",
+      "bytes": 6009,
+      "sha256": "d6a234f45e8c0ed9b7baebdbf9aa807df7e1b1e641b744c19005120572c00314"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/comparisons.json",
+      "bytes": 11637,
+      "sha256": "707a1db0db6108a84351a8e6f5dfb5231f9e309d4f109436f53f61c5f7fd1b14"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_0.5/mono_feature_0.json",
+      "bytes": 93809,
+      "sha256": "aef8bb19c51b3d089657c0bc516871975876f51fe57138bcc7cf33b40f9a59df"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_0.5/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_0.5/sharing_feature_0.json",
+      "bytes": 92284,
+      "sha256": "f22b5801afbc58952968aebee79000027dd5e7bef1ea410f120cd393d3d69a3c"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_0.5/sharing_feature_1.json",
+      "bytes": 103528,
+      "sha256": "dc5daba27b3eaf96f4a17fd46db328ce9f902231ac3e8c0b3740eb4aa4b1f10e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_2.0/mono_feature_0.json",
+      "bytes": 89960,
+      "sha256": "86bed5b88f2342d923c1d3160b6cba6543ed6e1cfee5bfe9deac4582c941c450"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_2.0/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "d45fa82bc8afd5713b975b7d8fc0668807e88771deba2ea27669c0229fd18b3d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_2.0/sharing_feature_0.json",
+      "bytes": 91712,
+      "sha256": "ef3f0ab308c3cdeb5edf61d3abc78f7be5eb5aac45acc71abaeaa64d4590852d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0005_multiplier_2.0/sharing_feature_1.json",
+      "bytes": 100615,
+      "sha256": "196d80cb46968e614c88bd134133efdff7ce049fe755039477addeba6bcb9364"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_0.5/mono_feature_0.json",
+      "bytes": 89685,
+      "sha256": "ac03de3848558c792f87ab48049670650569e564e3f1ca92ad54560d8a22c345"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_0.5/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_0.5/sharing_feature_0.json",
+      "bytes": 81416,
+      "sha256": "205263adc68734ce8db74f9be6945b26a4b0b3535f69f13be3f087d1bf5e4541"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_0.5/sharing_feature_1.json",
+      "bytes": 94546,
+      "sha256": "5b525fc448859b5bf21171c6d93f2aec54d4e36222d0d61f07f6d0417308a495"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_2.0/mono_feature_0.json",
+      "bytes": 85493,
+      "sha256": "faea0d2554013f512d2b8824465a4b466b0fa3f5104a9a644abb264d062a6b1a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_2.0/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "8581ab668c0df1a52814352f39ce50b4145a07fa952ba83604eb641c7a9ccecf"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_2.0/sharing_feature_0.json",
+      "bytes": 81944,
+      "sha256": "16af2065c583d8413809585dac9b46991103900538eed2ba1e88fb000dbd3581"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.001_multiplier_2.0/sharing_feature_1.json",
+      "bytes": 91499,
+      "sha256": "5db8de5bd5ba5a33da047c496aebfdd40af946f440f835dbe4114acbda561bb3"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_0.5/mono_feature_0.json",
+      "bytes": 78738,
+      "sha256": "5f629a5bec4d6b0fbde74b81563c16e8bb8bc98bc6dc80934ccf57a1479a07d6"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_0.5/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_0.5/sharing_feature_0.json",
+      "bytes": 77289,
+      "sha256": "3ab84e8c5a9202b925170bd8e4b32aabe519c3bd538b77554c9151afff2734d2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_0.5/sharing_feature_1.json",
+      "bytes": 84557,
+      "sha256": "74715a1c5fa73818a5b6f527a8fcf43e4b426be8bd44f39f8c521b7c5b6e8b88"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_2.0/mono_feature_0.json",
+      "bytes": 77173,
+      "sha256": "c2b093b40a4f113b0e561cdd511a0f825843c7a7bd63e281b027419ddfc6087f"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_2.0/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9fc2daef79b23af078e26e65220962f3f9583b9b3ce9633a491d3a5bab1509ba"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_2.0/sharing_feature_0.json",
+      "bytes": 75550,
+      "sha256": "228263a9f0c24afff68bb9203d8d6e7450df2ef7c2a9203003206553fe4f1036"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.0025_multiplier_2.0/sharing_feature_1.json",
+      "bytes": 83450,
+      "sha256": "b981e11b91e7b78454e2802723683df15160b4a9a6622d4e88d92746cc096830"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_0.5/mono_feature_0.json",
+      "bytes": 74032,
+      "sha256": "993e0243c78951362ce0253f50046cc2437740d5366259bf35f568d2a8a801df"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_0.5/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_0.5/sharing_feature_0.json",
+      "bytes": 70154,
+      "sha256": "96694661f184bf849c2f993c6603b727b2616a478a7c2d865801d1e1732dff14"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_0.5/sharing_feature_1.json",
+      "bytes": 73376,
+      "sha256": "b8beb81f0e5279b7e7bc5e2f7abe338e4f4fd976129568d920658f36051efcec"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_2.0/mono_feature_0.json",
+      "bytes": 68226,
+      "sha256": "d8fc8ca011b53e8dd306f4521368f1e3fdd4802c76c6e3bc332f4061fbe269b6"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_2.0/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "0707a1c27886247241ab34e89fab953f535f48a143131ecd6604d6c6dcdeb5e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_2.0/sharing_feature_0.json",
+      "bytes": 72675,
+      "sha256": "2e609c0a9fc1397abf4ba3ee9d705acad310de92b4cdb070d249510c815e16e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.005_multiplier_2.0/sharing_feature_1.json",
+      "bytes": 71895,
+      "sha256": "acdceda15b77086d6213e81cfd0effab57d2376988b191768cce74809f74d351"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_0.5/mono_feature_0.json",
+      "bytes": 73834,
+      "sha256": "fa6aabe7678672055e1ad8bc1216afc129977e8dd6bd41ba88856f7e438883e8"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_0.5/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_0.5/sharing_feature_0.json",
+      "bytes": 71165,
+      "sha256": "a31df05da2193a403e8dd9bf92e8f8bd0ee0381848f0186d2f747824dc650507"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_0.5/sharing_feature_1.json",
+      "bytes": 70819,
+      "sha256": "6b1b25f64efaca817a334015dc5b78c9660146217cf658b4c9c9e18b745087be"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_2.0/mono_feature_0.json",
+      "bytes": 70005,
+      "sha256": "88c0e3783049ec8afce35745b5723ff78e1502284ef1a9566c588369be36dc4e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_2.0/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "066ed9aaa42a2cff6fa04fec7b65ec9971ddc5b5ee22527cba7892c5d1fd947d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_2.0/sharing_feature_0.json",
+      "bytes": 71307,
+      "sha256": "b2f4250de1c9de2f3335c9add318f08ef24d109b0d750922f4ec9a18505d8ec2"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.01_multiplier_2.0/sharing_feature_1.json",
+      "bytes": 68830,
+      "sha256": "f8c0444a51a9d1a86ab60a56bb677d40793a4c386853678a34f214a2ac343e4b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_0.5/mono_feature_0.json",
+      "bytes": 67281,
+      "sha256": "70f7bab0509e410007678a9532d44a3c2a630f210ca43761502d80a3ff77789d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_0.5/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_0.5/sharing_feature_0.json",
+      "bytes": 67337,
+      "sha256": "87be1b744ffa8873a06eae95e54f18ff9c923c711499d8960259f79be82fffd9"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_0.5/sharing_feature_1.json",
+      "bytes": 71880,
+      "sha256": "171e3e7232629fa2263a304f18ae61551e2ec1e25c96be1baecf18677ba47907"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_2.0/mono_feature_0.json",
+      "bytes": 68274,
+      "sha256": "cc9ed386886af6dd129d36c294e989114d829b135e1a5afcb60184dbc190989a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_2.0/mono_feature_1.json",
+      "bytes": 362,
+      "sha256": "9269a0a4c04ea000e714d511de291afdb8c89f2eef810b7c307d693bd8deaae4"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_2.0/sharing_feature_0.json",
+      "bytes": 68882,
+      "sha256": "2120aaadb78e0e655485a27a76ab4e09c0bc1184d757b57c3926e6f989782267"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/epsilon_.02_multiplier_2.0/sharing_feature_1.json",
+      "bytes": 74301,
+      "sha256": "e9d80bb026241afef626a9a7acd1c5c49d0550941c525105665cd0beefe9016e"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/settings.json",
+      "bytes": 313,
+      "sha256": "14210806f66e54519acb07da7b560e68b6f25922047a27d290181cf093026a91"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/sha256_manifest.json",
+      "bytes": 6793,
+      "sha256": "bb41850d8891e69e813ddf82e1e16e06853b33b654b2f05a6c2a834abec5905d"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/source_snapshot/calibration_precision_protocol.md",
+      "bytes": 2009,
+      "sha256": "e996fc12b905f37cb19419385acee96897f2c9537825217bf8d98674254d2a28"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/source_snapshot/critical_calibration_method_review.md",
+      "bytes": 4712,
+      "sha256": "11d3b37d4b04be148dd7e661a634deff01d0f930e22f68d0d1827f39dc8c89ce"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/source_snapshot/frozen_geometry_results.json",
+      "bytes": 22808,
+      "sha256": "247ec444823d98900cba6eaef50608cb202e41637ded184fa713d4873c4d958b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/source_snapshot/run_critical_calibration.py",
+      "bytes": 6444,
+      "sha256": "773b417c8b43d2fc397b63e20a27d4203be4b0874aa1f0f4d7f6d87e86bd1be7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/source_snapshot/run_frozen_map.py",
+      "bytes": 5259,
+      "sha256": "9410d2e8458e84282dd95ad6516e8498c8dd19c8986e59987914b1cbc66b8788"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibrated_run_v1/timing.json",
+      "bytes": 31,
+      "sha256": "1a501f12aea5347a60e31cdfa3b1c4308facc0209979988212ec9ac36da45987"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/calibration_precision_protocol.md",
+      "bytes": 2009,
+      "sha256": "e996fc12b905f37cb19419385acee96897f2c9537825217bf8d98674254d2a28"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/certify_strip_roots.py",
+      "bytes": 3992,
+      "sha256": "29c2c322816995e15881468120aff687500af19eeb6fd26a58916a7923cd0a4a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_reproduced/results.json",
+      "bytes": 16170,
+      "sha256": "119122d7c9195f7a723ce8769df8636e4736f414170e4b6969ff77b427d9ce42"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_reproduced/source_sha256.json",
+      "bytes": 203,
+      "sha256": "f0f778d5d3632ef0d0627fefa4f1ed0f1da99c15bafe754005bc68ff40705fa0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_reproduced/source_snapshot/certify_strip_roots.py",
+      "bytes": 3992,
+      "sha256": "29c2c322816995e15881468120aff687500af19eeb6fd26a58916a7923cd0a4a"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_v1/results.json",
+      "bytes": 16170,
+      "sha256": "119122d7c9195f7a723ce8769df8636e4736f414170e4b6969ff77b427d9ce42"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_v1/source_revision_notes.md",
+      "bytes": 383,
+      "sha256": "0ef279c185cc589c9a3e4a0bf382729d831dd0b0bbda1918f086e2e5c044fe18"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_v1/source_sha256.json",
+      "bytes": 203,
+      "sha256": "8ee54c8eab84e22cf7edb090944000e65bb52e9318f6b2ae48820aaf119d7060"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/clean_global_certificate_v1/source_snapshot/certify_strip_roots.py",
+      "bytes": 3852,
+      "sha256": "8d2cfa1529067e3563c95ed837ca544783f9ddd94f6fee163c49a821ea62e891"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/critical_calibration_method_review.md",
+      "bytes": 4712,
+      "sha256": "11d3b37d4b04be148dd7e661a634deff01d0f930e22f68d0d1827f39dc8c89ce"
+    },
+    {
       "path": "project1_toy/joint_phase_theory_2026-10-06/critical_constants.png",
       "bytes": 91472,
       "sha256": "dea0f3f61f2337984bffb9690c5664247849c5b241ad91d1571c6a70dcce69f5"
@@ -1818,14 +4003,89 @@
       "sha256": "dea0f3f61f2337984bffb9690c5664247849c5b241ad91d1571c6a70dcce69f5"
     },
     {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_boundary_scaling.png",
+      "bytes": 60145,
+      "sha256": "7655660d1d0a175108d8eeb740c9219984341df4a0fb46af06941192bee0fafd"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_independent_review_v1/results.json",
+      "bytes": 2625,
+      "sha256": "8fc2472d977199210a8872b2351bb102b64f01c122e595f7f01bf0ebd9f46ced"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_map_protocol.md",
+      "bytes": 1905,
+      "sha256": "2d06f72a98282586dbe561aa60c7d0a57744f5a84cdacb2280a9dfbaf03082e5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_phase_map.png",
+      "bytes": 131054,
+      "sha256": "4eb1e967f2b53cf2d22464c3821dffad9f927dfa3da23b75dfa142262ce1f0e0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/all_grid_intervals.json",
+      "bytes": 333941,
+      "sha256": "44a828e35264d4a16e6243fc816ef7a9026a7121d3179b427577ae86dceeb9e1"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/population_map.csv",
+      "bytes": 277172,
+      "sha256": "2f3c99858b9a18ddacec13b2e27e4b2019216773e40a4e292fa2416a452c5619"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/results.json",
+      "bytes": 22808,
+      "sha256": "247ec444823d98900cba6eaef50608cb202e41637ded184fa713d4873c4d958b"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/settings.json",
+      "bytes": 473,
+      "sha256": "dde0dae40b28558a75074211dc6d031626daccf8aa48f40204745edf308d2888"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/sha256_manifest.json",
+      "bytes": 590,
+      "sha256": "5eedafed14bd7285a0e7576a3dab1e61b35dcfcb132ff4ea32e4446331dcff53"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/source_snapshot/frozen_map_protocol.md",
+      "bytes": 1905,
+      "sha256": "2d06f72a98282586dbe561aa60c7d0a57744f5a84cdacb2280a9dfbaf03082e5"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/frozen_run_v1/source_snapshot/run_frozen_map.py",
+      "bytes": 5259,
+      "sha256": "9410d2e8458e84282dd95ad6516e8498c8dd19c8986e59987914b1cbc66b8788"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/global_strip_professor_review.md",
+      "bytes": 6181,
+      "sha256": "4072549625b513dcad821f6d20f42d2d554babedc72b4b7fd67b761ab665d44f"
+    },
+    {
       "path": "project1_toy/joint_phase_theory_2026-10-06/novelty_assessment.md",
       "bytes": 3249,
       "sha256": "f3221afe1d9349f1310fdef586abc44eb8840ab803fec0bdd9f08c55ea84be80"
     },
     {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/plot_calibrated_boundaries.py",
+      "bytes": 1031,
+      "sha256": "9acfd39bcc642e38c212acddd97c5ace8a089d3f9d2b04315905619eee8e7fa6"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/plot_frozen_map.py",
+      "bytes": 1821,
+      "sha256": "a8b9f8b0027bab990f606b9072ef59f1fb29afdbe36ee1875b8376128d533cad"
+    },
+    {
       "path": "project1_toy/joint_phase_theory_2026-10-06/plot_saved_checks.py",
       "bytes": 867,
       "sha256": "c075eab69c2cd974ee542389c032abeb2a21f932f91bdab605bb29cb7ab9ece9"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/professor_addendum_review.md",
+      "bytes": 7137,
+      "sha256": "a69b80bb26b458a717c3d97ffbad8970ff380abe3443fd5c0c1d02407fc0faec"
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/protocol.md",
@@ -1834,8 +4094,18 @@
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/README.md",
-      "bytes": 1004,
-      "sha256": "47b402954641adcbf34a7470579ae7d5a613d31b1a4b0f3218422e31b393b910"
+      "bytes": 3381,
+      "sha256": "8a6a3754e9ef960b62444f1eb37ec6cd37287d34a57d89b46377f66237b0d2ef"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/run_critical_calibration.py",
+      "bytes": 6444,
+      "sha256": "773b417c8b43d2fc397b63e20a27d4203be4b0874aa1f0f4d7f6d87e86bd1be7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/run_frozen_map.py",
+      "bytes": 5259,
+      "sha256": "9410d2e8458e84282dd95ad6516e8498c8dd19c8986e59987914b1cbc66b8788"
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/verification_results.json",
@@ -1853,9 +4123,14 @@
       "sha256": "84ce9181808e48a3938bb2887584cd27aa717904e103f50445a4cdf2ddd7081a"
     },
     {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/verify_frozen_map_independent.py",
+      "bytes": 2879,
+      "sha256": "0727fb51022e3085d3b321e674e6771adbdb68a9993ba5e5be351a10b3873f5e"
+    },
+    {
       "path": "project1_toy/joint_phase_theory_2026-10-06/week_plan.md",
-      "bytes": 6119,
-      "sha256": "a640e1e1ebd32ed8b44a0995e068dc1572cf9bb4f472e9be200be67e82df992b"
+      "bytes": 9284,
+      "sha256": "2cebe1104dee37c7a8469518f31168c7c451b335baa9f7781eea022872429059"
     },
     {
       "path": "project1_toy/literature_review/__pycache__/fetch_sources.cpython-312.pyc",
@@ -3054,8 +5329,8 @@
     },
     {
       "path": "project1_toy/plan.md",
-      "bytes": 62874,
-      "sha256": "03fc3ebea6809fdd63cab1e5b8c51c0ac58a9953225e3e4a2c58ad088c26a8c5"
+      "bytes": 68960,
+      "sha256": "d91baceadf490915728c7e390c733dcca14efc9b1777ea99997c98fdbe0a282a"
     },
     {
       "path": "project1_toy/plot_results.py",
@@ -3938,9 +6213,24 @@
       "sha256": "a27650937fcd79358e200921fbb6fe4a94219e6184251ff9e4016fb2a06e6026"
     },
     {
+      "path": "research_notes/figures/project1_calibrated_boundary_scaling.png",
+      "bytes": 52856,
+      "sha256": "351caca9ebffd886a1febf7057504f4a1a41342f10d0818a06378da0844654a4"
+    },
+    {
       "path": "research_notes/figures/project1_calibration_mse.png",
       "bytes": 121434,
       "sha256": "35258e136785eac5185a1e9f738db5648e19f1c4225719088c15ba1dc511924a"
+    },
+    {
+      "path": "research_notes/figures/project1_frozen_boundary_scaling.png",
+      "bytes": 60145,
+      "sha256": "7655660d1d0a175108d8eeb740c9219984341df4a0fb46af06941192bee0fafd"
+    },
+    {
+      "path": "research_notes/figures/project1_frozen_phase_map.png",
+      "bytes": 131054,
+      "sha256": "4eb1e967f2b53cf2d22464c3821dffad9f927dfa3da23b75dfa142262ce1f0e0"
     },
     {
       "path": "research_notes/figures/project1_storage_transition.png",
@@ -3949,13 +6239,18 @@
     },
     {
       "path": "research_notes/finalize_derivation_delivery.py",
-      "bytes": 3950,
-      "sha256": "c99634bb8ea3d9f18b7c52a9458583319e9b02fdbda9cb36cbadaac7bb3bfc40"
+      "bytes": 4444,
+      "sha256": "3f4e854c0c30f51cd919749a70659322e5ee3971c5664d67622706fb5bd49165"
     },
     {
       "path": "research_notes/integrate_calibration_update.py",
       "bytes": 1252,
       "sha256": "9db7b0de20e6db84bf872037cf223a42aa0a99630af6d789f6018c8c30e4a0f1"
+    },
+    {
+      "path": "research_notes/integrate_finite_phase_update.py",
+      "bytes": 1588,
+      "sha256": "2de41e6fcb470ce7fc3225a23ba8de6d91edc25015bd4674c89d2fb93f13705c"
     },
     {
       "path": "research_notes/integrate_project1_derivations.py",
@@ -4009,28 +6304,28 @@
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/contact_0.png",
-      "bytes": 498934,
-      "sha256": "bcaf193e1e3e7524daa1f28a3d7a2eab3e72fda786dabd841065b4940bf6ceb3"
+      "bytes": 475110,
+      "sha256": "ca7e0ed1b867c8bf6c13a73991270b29d7bacb5cdfa8925b0c1569c61887f921"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/contact_1.png",
-      "bytes": 535570,
-      "sha256": "4cf2c715100d3cda313352c9f6719263e3920ba17ca34422a9eb1acc50b4cdd5"
+      "bytes": 536456,
+      "sha256": "958ff0b4679b2e9a0800ee45bd8a7a772f30b75d74e024ccf1d9db2a075870c9"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/contact_2.png",
-      "bytes": 605358,
-      "sha256": "b7629f1dcfd0e873dd861cc8ca3306f9f30387830af6f9bb137a18f6ef3e2cd2"
+      "bytes": 608673,
+      "sha256": "1e339250ce0bde2255088bcb5678aeb0e9012c656c5940d71d3d5d2b9aa45dc1"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/contact_3.png",
-      "bytes": 534792,
-      "sha256": "42711e81af287134b79d809765188df0c35691b7a348d4b018e1472ae9f75408"
+      "bytes": 533868,
+      "sha256": "a1bbfd5b829dd4db0d0f4db95ad7ca926f605af2e9412440dc832f69b2100b93"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/contact_4.png",
-      "bytes": 194245,
-      "sha256": "20a34f9107731f166e0289370239cca56cbdf65c23fb45bf94ba51e315b549cf"
+      "bytes": 541879,
+      "sha256": "5b8d4ae7492c156312e2d8793bb351e04f095d82e4eb28ab5319b5fa6eea2e5f"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_01.png",
@@ -4054,348 +6349,393 @@
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_05.png",
-      "bytes": 117422,
-      "sha256": "753c4c266136441d8beed5e5b5f97bb4411edb1a1abf5e64168044b781a9ff0b"
+      "bytes": 126215,
+      "sha256": "0e17f73b13e66e2b07fdcad2d2c39a0232815912c0f49f77c7cc495644d2c6aa"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_06.png",
-      "bytes": 104127,
-      "sha256": "16b5621a3f4457c1d90d44f10ef15f14c3b8d70a60626e16f681da65f2c9dd21"
+      "bytes": 117580,
+      "sha256": "7b921d43016e6fc9060acdc6b3821f7d2066737ed437d1fed63ea86bd54ccda8"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_07.png",
+      "bytes": 23630,
+      "sha256": "ba342ded8f6e6c8a02edba7a1d92f09004bcd73d77aa679289df61efc3063b8c"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_08.png",
       "bytes": 112593,
       "sha256": "2355ff71ed098087dc1c38e12a0b99d4c686312264b75713d2624d60d75652f7"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_08.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_09.png",
       "bytes": 58846,
       "sha256": "73435a4f8be0c166aa29d2c9c831cbc23361518ad8d18c859014b90d4f1fce99"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_09.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_10.png",
       "bytes": 107072,
       "sha256": "3e6969a139693eb753f13d86fd189eaa9093b3ead16ab94a49119a8001cf5eb0"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_10.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_11.png",
       "bytes": 131665,
       "sha256": "6eb8a0e2cf274802e18b29cde2a61c7dd6bb9b83a58fa188f74561335b05a489"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_11.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_12.png",
       "bytes": 103320,
       "sha256": "ab6c8d1cfb1b8b1a3e01d77810d6e66a965252ed84ef02fc8d0c879712f88051"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_12.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_13.png",
       "bytes": 50368,
       "sha256": "9d9fc8a23784664a1c68412d12b653d88f272d610c42ee37bd4e42d39667a9e8"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_13.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_14.png",
       "bytes": 110398,
       "sha256": "7f32daf411f903c45383f5a7cabebdae42939b41e05f20b22f237b734d132a5a"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_14.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_15.png",
       "bytes": 123075,
       "sha256": "1b9bdabf6062f01a7dce52780fcedec8ff6a55260bff1f9d4dfca0226337f76d"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_15.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_16.png",
       "bytes": 98801,
       "sha256": "6176496d1fcd75a8b874222e44207ab80084d36d73270a93b91c97925afb2832"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_16.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_17.png",
       "bytes": 136688,
       "sha256": "c6da1c1e2b6804f34f53801b4d8ac00c4b2e42d96c27b22e88cb25486d036044"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_17.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_18.png",
       "bytes": 163188,
       "sha256": "6f8ac634430aa2e4c3a2904ae949d86812ecc79b059c2bdd128fd859a4b8d1da"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_18.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_19.png",
       "bytes": 91804,
       "sha256": "1d26de8ff44310ec18d21cb15a26ffc9994313d53927c614f1ab2f7b9add2025"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_19.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_20.png",
       "bytes": 113832,
       "sha256": "44866e1568cb8aa19c16c16009b37d0979d2fe10ebcc7e98982c3c8412e8f91a"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_20.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_21.png",
       "bytes": 49157,
       "sha256": "492ef65d1a0b3ab10e910a5df3658e4406db65d007a8ad19f617f4be64ebafdb"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_21.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_22.png",
       "bytes": 111634,
       "sha256": "da69c4a18e187b036cb9987b865a2210a2dcf4b775a674cc5c123a6404736f3f"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_22.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_23.png",
       "bytes": 129870,
       "sha256": "92764b8537c32061ec9b51a632c2ad3dea008685ed84ef9d8c48b976e4053c1d"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_23.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_24.png",
       "bytes": 127010,
       "sha256": "f8c90c624c0d98648993dc44344656945ce2762dceabc0a60a67a3a0b15576bf"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_24.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_25.png",
       "bytes": 112191,
       "sha256": "1c0c9941908fbab415ff81f9286123e45a36b61356f751faa1cc39fbc5807623"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_25.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_26.png",
       "bytes": 123953,
       "sha256": "cecc1089f2279870ab5e0a118d176099fea44224326ace9af8ee29ba3e3a10ae"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_26.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_27.png",
       "bytes": 115378,
       "sha256": "cc761295f63fe032060cf860c2f8f4f2b44180703c01eae479467cece5d45db0"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_27.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_28.png",
       "bytes": 148300,
       "sha256": "31a3fdb77a1b0e60134e83d0e8c007cb9ddb146f234badfa198bf2395bd574bd"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_28.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_29.png",
       "bytes": 112311,
       "sha256": "f8d2fbb0ed02ffce4afe5af47b317e8311aa0651eeec16668b410d9fbda419a3"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_29.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_30.png",
       "bytes": 150164,
       "sha256": "06f462809207ac8e1679660b21bc15d7cf1e94606c6aa0dec04bbc70c1774cad"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_30.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_31.png",
       "bytes": 119501,
       "sha256": "5b036d70ac6ba0e32be5f303776f2a943c4c86e92089812d73a69bbd2a6fa23a"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_31.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_32.png",
       "bytes": 106893,
       "sha256": "6e5090b55a4ace22bfbcb285b7ea1c139580bff75b8e168d6cac35f2581deb5b"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_32.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_33.png",
       "bytes": 130141,
       "sha256": "c4cd4f3b4d1485147d43064eb87100f2788e4752f32c8376042ac359fcf3df13"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_33.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_34.png",
       "bytes": 126335,
       "sha256": "2b7bfad3843f3c0c68131dc93f235798c0e3397abd2e3843de30c09c5eef3fdf"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_34.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_35.png",
       "bytes": 148223,
       "sha256": "b8d0fcd6d226a6b5754a2ed678ae3c8c625563c322c472ec50b38964c0bd520a"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_35.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_36.png",
       "bytes": 106307,
       "sha256": "ece73d83348059ddb180de892563ad3173d3dea1c7f1f24dabba33327b789fd9"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_36.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_37.png",
       "bytes": 136597,
       "sha256": "b79476cbbe2b4f26aba69eb0246407d5c5385cb20f0cdbe31b410740c9a8b777"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_37.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_38.png",
       "bytes": 155149,
       "sha256": "925492e1c5d8027a3e63f76e9b52037b2f983026ded99f4fe9466ba8f048219d"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_38.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_39.png",
       "bytes": 142065,
       "sha256": "aa1d59849ee86480962e059bf9831efd9999a0cb714b488236dd96948024a31f"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_39.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_40.png",
       "bytes": 127901,
       "sha256": "d5017506c7aa04583a6a39e07d1acf4a70993ac0bb795a4ab1635b5b9615c9d5"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_40.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_41.png",
       "bytes": 154328,
       "sha256": "5ae3c4ac86428ea053bd767e7e5f2f9aaac865f0c89d9ae03c8fc1f6194f6899"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_41.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_42.png",
       "bytes": 155726,
       "sha256": "0f9e72fa2e1c072963316c432a19c63e6df9def16eb31bb44a7cbaf902b89732"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_42.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_43.png",
       "bytes": 129985,
       "sha256": "6b25beb04b30fb8a58071143dca93ae71a53254dd7fe53a7b0f65e1afd7c6176"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_43.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_44.png",
       "bytes": 128649,
       "sha256": "896255fef432ea07ffe5cfa869f7e4f56047c365831eae167c737e19c1466380"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_44.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_45.png",
       "bytes": 130529,
       "sha256": "6b7ce562b6b04a98e31dbace185fc2fff6b26a8c3e1015e663bd9d2ac08c5c40"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_45.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_46.png",
       "bytes": 148738,
       "sha256": "4c31670e35fa7d99e9b03d006e64091e64d2eb21d2ee2fd09343aac177c6d9c6"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_46.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_47.png",
       "bytes": 157917,
       "sha256": "6050c4be39d1ffd02e7ceaaebf5d617571072767b683c03e0dc6c411e9576f08"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_47.png",
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_48.png",
       "bytes": 148431,
       "sha256": "1fe4f44042a89d2aaf7b4f7103e683c77d5031b33a341649685f00ff5bdefaf7"
     },
     {
-      "path": "tmp/pdfs/derivations_update_20261006/qa/page_48.png",
-      "bytes": 103994,
-      "sha256": "31afd5e3adce8d93c237f4b38aefa2add1a64b281f6f25ecf085193e9f953425"
-    },
-    {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_49.png",
-      "bytes": 111078,
-      "sha256": "e6cc419bd6c3d34026578712040f8a0b0168cc36ba75e56f1e6622a2c59a5ed8"
+      "bytes": 113941,
+      "sha256": "d5f304d5e3ab7b09ba30ef88317aff5bdd845a39fcca8ca25636d10c9abdc69c"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_50.png",
-      "bytes": 97204,
-      "sha256": "73197dfb409cf5a4f100621d83fc353503976615b80a02ff7f1fadea059fbc63"
+      "bytes": 129066,
+      "sha256": "524e280715837e355950a0fed2a64ce8574413b570ae031676aa8f24473adb34"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_51.png",
-      "bytes": 123433,
-      "sha256": "be4cd337b37e9c9e9692fa00aa905445130d8775df04fb3df960c5e6d11e2925"
+      "bytes": 146311,
+      "sha256": "3da1f449502010a42ced923bada78f91d23ee740effe60fffc559265599116d0"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_52.png",
-      "bytes": 49036,
-      "sha256": "4529ff5f46bf21af0218e0662bccdce8e805dfe4462ce5fc5c761306908ee235"
+      "bytes": 140105,
+      "sha256": "1b496929ff77c4186472555dcb77e30d729bdfd18669e31fa3e6405d262dff2c"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_53.png",
-      "bytes": 103350,
-      "sha256": "6b1e750e58c8e9a7fbc876b6204b7558c1ed8a807fab9fbab16def14a2d2f106"
+      "bytes": 162890,
+      "sha256": "d3de0d3800c6413b52c1e0526070b6ad5b5bd70d033db665a99d926a4e83d0f0"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_54.png",
-      "bytes": 126098,
-      "sha256": "40ba53016898701a94b213e4bbf0d95105493249f60831e5bba8c42f49afbf70"
+      "bytes": 120670,
+      "sha256": "e8c36d85040edac96f501d004bc77547378f1c6258bb0394f3b5ee6a86fafd5a"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_55.png",
-      "bytes": 95482,
-      "sha256": "1f1202ae7590940395b01d523407c0e424d96ffe5e58e4066dcfef29c49e1590"
+      "bytes": 135727,
+      "sha256": "c327cb26d9d223d728aa82143bd39f71d19991585a958a5ab8d273eff78c597e"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_56.png",
-      "bytes": 128638,
-      "sha256": "3bde6563b39f43e644f69a0b998d6aca94245d126022090794fa7e7df6e513ce"
+      "bytes": 132854,
+      "sha256": "f7d5fc061b86b62002c3cad17eea70f15708d910065d12b14658715f7ebea8fd"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_57.png",
-      "bytes": 100812,
-      "sha256": "7ab99248a6e783c7995c48eaf60f4f081f6e88d4d5907320b5b5d74dc264e36a"
+      "bytes": 89761,
+      "sha256": "0c9f9f8202f4a19d83536d4dca45e9ab75ef33b0f22d82b1488fcd01d2a02429"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_58.png",
-      "bytes": 110382,
-      "sha256": "e24d72fa011f8022a2a37b5dffd3a4f1c1ac9d8b874b31567d7096f62b9757a3"
+      "bytes": 103964,
+      "sha256": "8dafbe53d0084260f329c09f666c240f0d6594ff8cb9e669ae43d5cb5f7819d9"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_59.png",
-      "bytes": 146024,
-      "sha256": "9fbe125d5ec8ba59b2f083c94bccd6d66a95369b15d5530f14d7f047fc00d546"
+      "bytes": 111081,
+      "sha256": "0d4a4d3a1aa525cb19b0ce1aff06b24790340fff46ffe30e869048c7e6d77caa"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_60.png",
-      "bytes": 131669,
-      "sha256": "6a99385268ae2d9ff91a646262a08dbe2173b646c21e982080856c1bb864e6db"
+      "bytes": 97315,
+      "sha256": "4d9c319fabde80ca7518fc9bcf3b1ed98e6186979d333e6c3c64a0c5ae1d591f"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_61.png",
-      "bytes": 151137,
-      "sha256": "70250833fb7d71b2c1740d2eb67e409b4925e38236a697d9fcc9c7feaae30c8a"
+      "bytes": 123421,
+      "sha256": "e710e84df6aa708ab959a1d137fd093bcb3526668224ae00233b89a212f4ca00"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_62.png",
-      "bytes": 122709,
-      "sha256": "8889096e535a045f529ece34953e559f8af14f4562efb121cadf81383770338e"
+      "bytes": 49031,
+      "sha256": "6c73d9df91f4221d2ab3e2d09d37283579afbc2c1d3e34ee592563e5c3e6560a"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_63.png",
-      "bytes": 109001,
-      "sha256": "4db803b20a44114425b78678b53e042ce5246b18715546d1b54fc3a42f0ddf6d"
+      "bytes": 103483,
+      "sha256": "3535cb64f9e9ecc4680f0d9e3808ae960c22d54ebfdd179771527f84fcbadb73"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_64.png",
-      "bytes": 134472,
-      "sha256": "9a7d87e6a29f1e417c2aef9b6814e5a32ff194037fcf42ce30b0439e38f7b6dc"
+      "bytes": 126083,
+      "sha256": "ab563c3ed64e75938ad19a8043c4ec8a2d704b1ef5522997af3ccf54a3954d47"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_65.png",
-      "bytes": 39266,
-      "sha256": "8dce48f8fb6f52fde45879ac237ea4ec1cf2c4a469f079760daa94567c8f566f"
+      "bytes": 95524,
+      "sha256": "3e0fc7785752c3f2e441eaf1b184e3077685239e44190f38e098ac99a1a05a4a"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_66.png",
-      "bytes": 101086,
-      "sha256": "7415268e650ee39fe93108769b3e63aac5033ba52da5f12fd00cd60090ba35a8"
+      "bytes": 128644,
+      "sha256": "6dc7f4bbe058e234e910f8b0c95475707b468239c4c9afba99ed05dedc99cec0"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_67.png",
-      "bytes": 121977,
-      "sha256": "577b6f88324a477b498fd83d62a4aa2029a4d8d1ac8496e22fac2534a95fe3a5"
+      "bytes": 100923,
+      "sha256": "8ccac85f0f8d03503eca2c618f6e0e6d8f4dd41fa80e22a589c8675c58946ad6"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_68.png",
-      "bytes": 99845,
-      "sha256": "cbbe76a6dac800feb115d058e8ca1c6929f9c3c8b9742dbedee8a11f5a85e10a"
+      "bytes": 110359,
+      "sha256": "d057e2939cbbfd209fc08f2ab7615e59f98dcd9326f87f713d2f078c7f37fb84"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_69.png",
-      "bytes": 117652,
-      "sha256": "ead27ab8c29d141ac9ca1ffeea4e305e1f6a9557587232aeb42b466a512a9328"
+      "bytes": 146022,
+      "sha256": "609b4fab122068ebd5d5430b6cc2dfa5fc2e3e9106171adbe998e98614c4099d"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_70.png",
-      "bytes": 162057,
-      "sha256": "7abdff0a6f74fee5b8461dcbc30012d74d25cee555ef65c9d7f4e347b1427c12"
+      "bytes": 131765,
+      "sha256": "02deaf9e6d3a55ef7db540e62079b9b92948910f37f1352e2eef2cb00844434c"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/page_71.png",
-      "bytes": 162113,
-      "sha256": "ca45f919991d897e6328dbd77873136abf482c6e9cf8177a423b4039dd7550b3"
+      "bytes": 151129,
+      "sha256": "94a2f558aae8fb5be150c502fff4666c4f8bb862742a162c5966a1710c977bdb"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_72.png",
+      "bytes": 122713,
+      "sha256": "3ab011f3904433b225f8da0e1fa3796e4a23778a702bb33846677839f7a4e260"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_73.png",
+      "bytes": 109090,
+      "sha256": "ae99cc88a0e5824723acc9876ab25eebe516e953ad3c112fbf2db0ccc7245f10"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_74.png",
+      "bytes": 134451,
+      "sha256": "d2c48d7730e550bcaf8af5ad8515cd0aca81e2237ef4ef89f0229c74c235572f"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_75.png",
+      "bytes": 39291,
+      "sha256": "0ce4625b4bf3ae7b25be98195e91181d851ba67f39b16c02c559989b9dc46ffb"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_76.png",
+      "bytes": 101109,
+      "sha256": "b9d0a0bff6e153d8aac3c12d0b710691240111b94ac33f5dd9a5faf077709685"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_77.png",
+      "bytes": 122027,
+      "sha256": "f009b33be4b4221567aca6ed944f81d93f9f0ce47b91422f38f8c21e59c829dc"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_78.png",
+      "bytes": 99734,
+      "sha256": "cd5f16f3af6ca9b763f6b077c3920dcf0b0ecec64475232f27b7eb196cd32b27"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_79.png",
+      "bytes": 117565,
+      "sha256": "2f37817ce720e0417993ace409bfc3c73097c4162be04dacc4d0b22b9b7e0d48"
+    },
+    {
+      "path": "tmp/pdfs/derivations_update_20261006/qa/page_80.png",
+      "bytes": 162043,
+      "sha256": "51e6563c3c8eb4bf5e84357afc423c7a2d3480524d967b4c5ddafeb9c8277216"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa/text.txt",
-      "bytes": 165409,
-      "sha256": "91ddf64b95ce83ca3807147d5ee913983863dcf62953764060fe703e1f89820f"
+      "bytes": 188924,
+      "sha256": "05363495133c14e4a2b96d3fe9275a8c9cc6ddc0773b6379fcc7c2178b959770"
     },
     {
       "path": "tmp/pdfs/derivations_update_20261006/qa_report.json",
-      "bytes": 2425,
-      "sha256": "e808aec359ff2b6ad2159c3dbcb472defae0bf1197e70adb32a3faca084f37e8"
+      "bytes": 2193,
+      "sha256": "2bb1f269c2b338efbd19ca9b51aa5e30cab97bb96120b3d1f569c3e70c313e8e"
     },
     {
       "path": "tmp/pdfs/notes_extension/contact_00.png",
@@ -5301,11 +7641,6 @@
       "path": "tmp/toy_model_source.txt",
       "bytes": 164541,
       "sha256": "ae5cd2aafb7f9c9eb6d82c011d23b90cf7ce14fad37fa842e501bbf64c5cd791"
-    },
-    {
-      "path": "project1_toy/joint_phase_theory_2026-10-06/professor_addendum_review.md",
-      "bytes": 7137,
-      "sha256": "a69b80bb26b458a717c3d97ffbad8970ff380abe3443fd5c0c1d02407fc0faec"
     }
   ]
 }

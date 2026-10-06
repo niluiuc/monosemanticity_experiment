@@ -1,0 +1,57 @@
+{
+  "hash_checks": 39,
+  "checks": [
+    {
+      "seed": 0,
+      "independent_loss": 0.24942832355389927,
+      "saved_loss": 0.24942832355389924,
+      "energy": 4.0,
+      "loss_stability_pass": false,
+      "full_support": true,
+      "minimum_column_norm": 2.1751591828623726e-06,
+      "Q": 29024.148253332703
+    },
+    {
+      "seed": 1,
+      "independent_loss": 0.3509481696618615,
+      "saved_loss": 0.35094816966186154,
+      "energy": 4.000000000000001,
+      "loss_stability_pass": false,
+      "full_support": true,
+      "minimum_column_norm": 0.24609073852727675,
+      "Q": 0.9737490443682154
+    },
+    {
+      "seed": 2,
+      "independent_loss": 0.29704022762926996,
+      "saved_loss": 0.29704022762926996,
+      "energy": 4.0,
+      "loss_stability_pass": false,
+      "full_support": true,
+      "minimum_column_norm": 0.7034394748799292,
+      "Q": 0.709974536811102
+    },
+    {
+      "seed": 3,
+      "independent_loss": 0.32598536952467627,
+      "saved_loss": 0.3259853695246763,
+      "energy": 4.000000000000001,
+      "loss_stability_pass": false,
+      "full_support": true,
+      "minimum_column_norm": 0.5804719980999986,
+      "Q": 0.7480568827122501
+    },
+    {
+      "seed": 4,
+      "independent_loss": 0.298244217485678,
+      "saved_loss": 0.29824421748567803,
+      "energy": 4.0,
+      "loss_stability_pass": false,
+      "full_support": true,
+      "minimum_column_norm": 0.6915632042194445,
+      "Q": 0.7122029273791234
+    }
+  ],
+  "all_passed": true,
+  "scope": "Independent recomputation of saved final losses/energy/stability/support constants; no stationarity or global geometry certificate."
+}

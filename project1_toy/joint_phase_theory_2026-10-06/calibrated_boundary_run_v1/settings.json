@@ -1,0 +1,7 @@
+{
+  "precision_digits": 70,
+  "relative_bracket_width": "1e-5",
+  "maximum_bisections": 30,
+  "loss_gap_target": "unchanged:min(1e-10,C epsilon^3/100)",
+  "ambiguous_midpoint_policy": "stop and preserve last sign-certified bracket; no precision retuning"
+}

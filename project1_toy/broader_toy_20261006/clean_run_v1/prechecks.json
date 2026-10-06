@@ -1,0 +1,12 @@
+{
+  "population_states": 256,
+  "probability_sum": 1.0000000000000007,
+  "gradient_test_seed": 2026100608,
+  "minimum_score_distance": 0.0002861752831485598,
+  "gradient_finite_difference_h": 1e-06,
+  "gradient_absolute_max_error": 5.967448757360216e-11,
+  "mono_loss": 0.2514085403153298,
+  "expected_mono_loss": 0.25140854031532983,
+  "mono_energy": 4.0,
+  "passed": true
+}

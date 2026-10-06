@@ -1,0 +1,11 @@
+{
+  "precision_digits": 70,
+  "slack": "1.0e-40",
+  "maximum_expansions": 100000,
+  "coefficient": "1.3187498488288778740362828097327779990082368341903312461441176969245",
+  "multipliers": [
+    ".5",
+    "2"
+  ],
+  "method": "Numerical midpoint Taylor B&B, interval-specific analytic curvature bound"
+}

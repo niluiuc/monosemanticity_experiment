@@ -322,160 +322,191 @@ Contents
 40
 8.15 Verification status and contribution scope . . . . . . . . . . . . . . . . . . . . . . . . . . .
 41
+8.16 An exact global certificate for the prescribed algebraic frequencies
+. . . . . . . . . . . . .
+42
+8.16.1 Exact root brackets without rationalizing the probability
+. . . . . . . . . . . . . .
+44
+8.17 Prescribed finite reconstruction-risk maps . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+8.18 Numerical calibration bounds at critical precision . . . . . . . . . . . . . . . . . . . . . . .
+45
+8.19 Finite calibrated boundary comparisons and numerical resolution . . . . . . . . . . . . . .
+46
+8.20 The prescribed eight-feature clean test and its limitations . . . . . . . . . . . . . . . . . .
+47
+8.21 A bounded repair of the larger-toy optimizer
+. . . . . . . . . . . . . . . . . . . . . . . . .
+48
+8.21.1 Population gradients and the energy constraint . . . . . . . . . . . . . . . . . . . .
+48
+8.21.2 Retraction and actual-loss backtracking . . . . . . . . . . . . . . . . . . . . . . . .
+49
+8.21.3 Why merely decaying projected Adam is inconclusive
+. . . . . . . . . . . . . . . .
+49
+8.21.4 Recorded repair outcomes and the stopping decision . . . . . . . . . . . . . . . . .
+50
 9
 Project 2: the correct meaning of the covariance recursion
-42
+51
 9.1
 A fixed linear map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-42
+51
 9.2
 Why rank deficiency does not imply gradual decay . . . . . . . . . . . . . . . . . . . . . .
-42
+51
 9.3
 The same margin can mean shrinkage, stability or growth . . . . . . . . . . . . . . . . . .
-42
+51
 9.4
 Adaptive maps and injected variation
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-43
+52
 9.5
 Finite-sample shrinkage is estimator-specific . . . . . . . . . . . . . . . . . . . . . . . . . .
-43
+52
 10 Project 2: an exact nonlinear generation operator
-44
+53
 10.1 Define the transition before discussing collapse
 . . . . . . . . . . . . . . . . . . . . . . . .
-44
+53
 10.2 The pair kernel in closed form . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-44
+53
 10.3 An explicit order parameter for a defined loss . . . . . . . . . . . . . . . . . . . . . . . . .
-45
+54
 10.4 What the eigenvalues mean here
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-45
+54
 10.5 A monosemantic comparator
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-46
+55
 11 The mathematical link between the two projects
-47
+56
 11.1 Use the generation mechanism as a coupling . . . . . . . . . . . . . . . . . . . . . . . . . .
-47
+56
 11.2 Importance-weighted version
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-47
+56
 11.3 A replenishment bound
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-48
-11.4 When the bound is informative . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-48
-11.5 Where monosemanticity enters the actual research claim . . . . . . . . . . . . . . . . . . .
-48
-12 What changes when the model is genuinely retrained
-49
-12.1 Training is part of the dynamics
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-49
-12.2 Deriving the response of the learned parameters . . . . . . . . . . . . . . . . . . . . . . . .
-49
-12.3 The local generation Jacobian . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-50
-12.4 A tractable staged experiment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-50
-12.5 Order parameters worth testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-50
-13 Diffusion: the bridge that is valid, and the one to test
-51
-13.1 A diffusion model in five equations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-51
+57
 Research derivations | Updated October 2026
 iv
 
 
 Contents
+11.4 When the bound is informative . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+57
+11.5 Where monosemanticity enters the actual research claim . . . . . . . . . . . . . . . . . . .
+57
+12 What changes when the model is genuinely retrained
+58
+12.1 Training is part of the dynamics
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+58
+12.2 Deriving the response of the learned parameters . . . . . . . . . . . . . . . . . . . . . . . .
+58
+12.3 The local generation Jacobian . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+59
+12.4 A tractable staged experiment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+59
+12.5 Order parameters worth testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+59
+13 Diffusion: the bridge that is valid, and the one to test
+60
+13.1 A diffusion model in five equations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+60
 13.2 Two clocks, two different processes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-51
+60
 13.3 A Gaussian denoiser that can be solved completely . . . . . . . . . . . . . . . . . . . . . .
-52
+61
 13.4 Posterior sampling changes the answer completely
 . . . . . . . . . . . . . . . . . . . . . .
-52
+61
 13.5 Where a representation-level contribution can enter . . . . . . . . . . . . . . . . . . . . . .
-53
+62
 13.6 Existing work the new claim must distinguish itself from . . . . . . . . . . . . . . . . . . .
-53
+62
 14 Experiments that test the derivations
-54
+63
 14.1 Stage A: exact identities and finite-state calculations . . . . . . . . . . . . . . . . . . . . .
-54
+63
 14.2 Stage B: learn the geometry in controlled toys . . . . . . . . . . . . . . . . . . . . . . . . .
-54
+63
 14.3 Stage C: recursive training on the same toys . . . . . . . . . . . . . . . . . . . . . . . . . .
-54
+63
 14.4 Stage D: one controlled image generator . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-55
+64
 14.5 Stage E: a small natural-image diffusion demonstration . . . . . . . . . . . . . . . . . . . .
-55
+64
 14.6 How to measure geometry consistently . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-55
+64
 14.7 Interventions that support a mechanism . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-56
+65
 14.8 Evaluation and uncertainty
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-56
+65
 14.9 A compact evidence table . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-56
+65
 15 An eight-week program that preserves both projects
-57
+66
 15.1 Status of this execution outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-57
+66
 15.2 One integrated paper structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-57
+66
 15.3 Weekly deliverables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-57
+66
 15.4 What to reduce if the compute budget is tight
 . . . . . . . . . . . . . . . . . . . . . . . .
-58
+67
 15.5 What would make the paper substantive . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-58
+67
 A Formula ledger: retain, qualify or replace
-60
+69
 B Further derivations and worked exercises
-61
+70
 B.1
 Gaussian ReLU moments for continuous reconstruction
 . . . . . . . . . . . . . . . . . . .
-61
+70
 B.2
 Mixture covariance includes a mean term
 . . . . . . . . . . . . . . . . . . . . . . . . . . .
-61
+70
 B.3
 Exercise 1: an exact adversarial perturbation . . . . . . . . . . . . . . . . . . . . . . . . .
-61
+70
 B.4
 Exercise 2: rare feature versus common nuisance
 . . . . . . . . . . . . . . . . . . . . . . .
-61
+70
 B.5
 Exercise 3: why a largest overlap and a sum differ
 . . . . . . . . . . . . . . . . . . . . . .
-62
+71
+Research derivations | Updated October 2026
+v
+
+
+Contents
 B.6
 Exercise 4: solve the mixed fixed kernel
 . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-62
+71
 B.7
 Exercise 5: covariance does not identify concepts . . . . . . . . . . . . . . . . . . . . . . .
-62
+71
 B.8
 Exercise 6: a sharply stated falsification . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-62
+71
 C Numerical verification record
-63
+72
 D Primary references and claim boundaries
-64
+73
 Research derivations | Updated October 2026
-v
+vi
 
 
 Chapter 1
@@ -3109,6 +3140,584 @@ Research derivations | Updated October 2026
 41
 
 
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.16
+An exact global certificate for the prescribed algebraic fre-
+quencies
+The critical numerical frequencies are p = pc −ϵ, where pc = (3−
+√
+5)/2 and each prescribed ϵ is
+rational. They are algebraic probabilities; replacing them by nearby rationals would change the
+problem. A short global branch argument covers all six exact probabilities, without repeating
+an exhaustive rational-coefficient root enumeration.
+Theorem 8.2 (Global clean geometry on a finite critical strip). In the two-feature, one-code-
+dimensional Bernoulli model with importance (1, 1/2), total encoder energy one, tied ReLU
+reconstruction and free clean biases, let
+9
+25 ≤p < pc.
+Up to global encoder sign, the unique globally minimizing geometry is
+W∗= (√a∗, −√c∗),
+a∗= (1 + k2
+∗)−1,
+c∗= k2
+∗(1 + k2
+∗)−1.
+Here k∗is the unique root in (0, 1/8) of
+Jp(k) = A(p) + 3pqk + 3 −5p −p2
+2
+k2 −pqk3 = 0,
+A(p) = p −1 −p + p2
+2
+.
+(8.68)
+Its globally optimal biases are
+β1 = p(c∗+ pr∗)
+D
+,
+β2 = p(a∗+ r∗),
+r∗=
+k∗
+1 + k2∗
+,
+D = 1 −p + p2.
+At p = pc, the global optimum is important-feature mono retention with k∗= 0; no mixed
+geometry ties it.
+Proof. Let a ≥1/2 be the larger squared column norm, c = 1 −a and r = √ac. The parameter
+k =
+p
+c/a lies in [0, 1]. The finite bias profiling calculation in Proposition 7.1 and the subsequent
+sign-sector profiles cover all free biases, including the all-off plateau and nonconvex activation
+kinks. We use those profiles to exclude every competing geometry, rather than assume that a
+stationary cubic root is global.
+Same-sign geometries and mono orientation.
+The globally profiled same-sign strong and
+weak losses are
+S+ = pqc(1 + 2qr)
+2 −p
+,
+W+ = pqa.
+Since S+ ≤pqc ≤W+, assigning importance one to the strong column is the better orientation.
+Even that orientation has excess over important-feature mono
+S+ + 1
+2W+ −1
+2pq = pqc(p/2 + 2qr)
+2 −p
+> 0
+for every mixed same-sign code. Retention of the unimportant feature has loss pq, larger than
+the important-retention loss pq/2.
+Research derivations | Updated October 2026
+42
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Complete opposite-sign weak profile on the strip.
+The globally profiled strong loss and
+bias are
+S−= pqc −pq
+D (qr −pc)2,
+βs = p(c + pr)
+D
+.
+The possible weak minima are the two-, three- and all-active vertices derived in Equations (7.44)–
+(7.46). The two-active vertex requires p ≤k −k2 ≤1/4, so it is impossible on this strip. The
+all-active vertex is feasible for k ≤p/q and has loss W4 = pqa. The three-active vertex is feasible
+for k ≥p/q if p + Dk2 −qk ≥0; its loss is
+W3 = pqa −pq
+D (qr −pa)2.
+Its lower feasibility restriction is automatic here, because
+pa + Dc −qr = [pa −(r −c)] + p(r −qc) > 0.
+Indeed, the first bracket is a{p −(k −k2)} > 0 and the second term is nonnegative. The first
+weak interval’s stationary point is beyond its right boundary. Target-one activation kinks have
+downward derivative jumps and cannot be minima; target-zero kink minima are covered by
+adjacent quadratic vertices on their closures. The all-off weak loss p is worse than the feasible
+zero-bias loss pqa2 +p2 < p for c > 0. Thus no additional weak-bias minimum has been omitted.
+For both surviving profiles the weak loss is at least the strong loss:
+W4 ≥pqc ≥S−,
+W3 −S−= pq(a −c)
+D
+{q + 2pqr} ≥0.
+Therefore placing importance one on the stronger column is always the better orientation. This
+covers importance swaps rather than assuming them away.
+Excluding the three-active weak region globally.
+For k ≥p/q, the weighted excess over
+mono is
+∆3 =
+pq
+2D(1 + k2)2 Hp(k),
+where
+Hp(k) = (1 −p −p2)k4 + 4pqk3 + (−2 + 5p −2p2)k2 + 2pqk −p2.
+Write U(p) = 1 −p −p2 and V (p) = −2 + 5p −2p2. On this strip,
+pq ≥144
+625,
+V (p) + p = −2(p2 −3p + 1) ≥−62
+625,
+U(p) > 0.
+Moreover qk ≥p ≥9/25 > 1/6 and k ≤1. Hence
+H′
+p(k) = 4U(p)k3 + 2pk(6qk −1) + 2pq + 2{V (p) + p}k
+≥288
+625 −124
+625 = 164
+625 > 0.
+At k = p/q, the three-active and all-active weak profiles agree. For the all-active profile the
+excess is
+∆A = pqc
+D {A(p) + (1 −2p)c + 2pqr}.
+At this boundary r = pq/(p2 + q2). Since
+A(p) ≥−31
+1250,
+r ≥144
+337,
+1 −2p > 0,
+its bracket is bounded below by
+−31
+1250 + 2144
+625
+144
+337 = 72497
+421250 > 0.
+Thus Hp(p/q) > 0 and strict increase excludes every three-active weak geometry. The global
+minimum can only be in the all-active weak branch 0 ≤k ≤p/q.
+Research derivations | Updated October 2026
+43
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+A unique global minimum in the remaining branch.
+Substitute a, c, r into the exact
+remaining loss difference:
+∆A(k, p) = pq
+D
+k2{A(p) + 2pqk + E(p)k2}
+(1 + k2)2
+,
+E(p) = 1 −p −p2
+2
+.
+(8.69)
+Direct differentiation gives
+∂k∆A = 2pq
+D
+kJp(k)
+(1 + k2)3 .
+(8.70)
+For p < pc, Jp(0) = A(p) < 0. Its derivative is
+J′
+p(k) = 3pq(1 −k2) + (3 −5p −p2)k > 0
+(0 ≤k ≤1),
+because p ≤pc < 2/5 implies 3 −5p −p2 > 0. At k = 1/8, dropping the positive quadratic term
+yields the exact lower bound
+Jp(1/8) ≥−31
+1250 + 3
+8
+144
+625 −
+1
+512
+1
+4 =
+78223
+1280000 > 0.
+There is therefore exactly one root k∗∈(0, 1/8). Since p/q ≥9/16 > 1/8, it lies strictly within
+the all-active weak branch. The loss strictly decreases before this root and strictly increases
+after it.
+Its minimum is negative, since the loss initially decreases from ∆A(0, p) = 0.
+All
+other sign, importance and weak-bias sectors have been excluded above, so this is the unique
+global geometry up to global sign. The unique minimizing biases follow from their strict interior
+quadratic vertices.
+At pc, A = 0 and Jp(k) > 0 for k > 0, which gives the stated mono
+endpoint.
+8.16.1
+Exact root brackets without rationalizing the probability
+The six prescribed ϵ values .02, .01, .005, .0025, .001, .0005 are rational, and pc −.02 > 9/25;
+hence every prescribed frequency lies within the theorem’s strip. Each coefficient of Jp belongs
+to the exact quadratic field Q(
+√
+5).
+Represent a field element as u + v
+√
+5 with rational u, v, reducing (
+√
+5)2 to five in every multi-
+plication. At a rational dyadic k, evaluate Jp(k) exactly in this representation. Its sign needs
+no floating approximation: if u and v have the same sign, that sign is decisive; if u > 0, v < 0,
+compare u2 with 5v2; if u < 0, v > 0, reverse that comparison. Zero coefficients are handled
+directly. Nonzero rational u, v cannot satisfy u2 = 5v2.
+Bisection of [0, 1/8] using these exact signs gives a dyadic bracket for the unique globally selected
+root at any declared width. Preserve the field coefficients, endpoint signs and bracket width
+with the numerical geometry. High-precision evaluation inside that bracket gives approximate
+weights and risks; the probability itself has never been replaced by a rational surrogate. The
+strip theorem establishes global selection, while the bracket establishes which algebraic root the
+numerical evaluation approximates.
+8.17
+Prescribed finite reconstruction-risk maps
+Six fixed distances below the clean storage transition were evaluated:
+ϵ ∈{.02, .01, .005, .0025, .001, .0005}.
+The same opposite-sign branch geometry and clean biases were used in each case. At execution,
+the numerical solver supplied a local stationary point, with residual below 10−55 and valid branch
+Research derivations | Updated October 2026
+44
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+inequalities. The global geometry justification must come from the separate analytical branch
+proof; a residual is not a global optimization certificate.
+For each geometry, the population weighted reconstruction MSE was evaluated at zero and
+121 logarithmic noise levels from 10−7 to 2 using 70-decimal arithmetic. Every state of the
+two-feature Bernoulli population was included. Adjacent sign changes were bisected to relative
+bracket width below 10−5.
+All 732 population rows and all 726 adjacent grid intervals are
+retained. Same-sign endpoints mean no detected bracket, not proof that the interval contains
+no root.
+ϵ
+Detected brackets
+First σ/ϵ3/2
+Second σ/ϵ3/2
+.02
+0
+—
+—
+.01
+2
+2.016567
+5.030085
+.005
+2
+1.954383
+7.509814
+.0025
+2
+1.960828
+10.851459
+.001
+2
+1.974055
+17.358848
+.0005
+2
+1.978801
+24.640265
+The first detected boundary approaches the analytical coefficient
+p
+C/B = 1.98355848 . . .. No
+exponent was fitted. The farthest prescribed case has no detected crossing on this grid; that
+result is retained. The earlier gate-scale samples at x = .05 and 10 missed the positive interval,
+while the prescribed noise grid resolves it in five cases. This is added evidence, not replacement
+of those failed samples. The full positive-noise root count is not certified.
+An independent implementation integrated the Gaussian squared-error function directly at three
+fixed case/grid-index combinations, for both comparators. Six risk comparisons agree to within
+2.78×10−17; the omitted |Z| > 12 tail bounds are below 1.38×10−32. The quadrature routine’s
+reported errors are also retained. This is an implementation check of selected population risks,
+not directed-rounding certification of every root.
+8.18
+Numerical calibration bounds at critical precision
+The following computation preserves the existing scalar bias branch-and-bound method while
+replacing float64 arithmetic by 70-decimal arithmetic and declaring a numerical slack of 10−40.
+For one output with offsets oj, binary targets yj and probabilities Pj, let s > 0 be its noise
+standard deviation and µj = oj + β. Its objective satisfies
+f′′(β) = 2
+X
+j
+Pj
+
+Φ(µj/s) −yj
+s ϕ(µj/s)
+
+.
+On a bias interval [l, u], define dj = dist(0, [oj + l, oj + u]). Since 0 ≤Φ ≤1, P
+j Pj = 1, and ϕ
+decreases with absolute argument,
+|f′′(β)| ≤H[l,u] = 2
+
+1 +
+X
+j
+Pjyj
+ϕ(dj/s)
+s
+
+
+(l ≤β ≤u).
+(8.71)
+This specializes the preceding global curvature bound without changing the risk or the permitted
+biases.
+At the midpoint m and radius r = (u −l)/2, Taylor’s theorem therefore gives the
+numerical lower bound
+max{0, f(m) −|f′(m)|r −H[l,u]r2/2 −10−40}.
+Research derivations | Updated October 2026
+45
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Figure 8.4: Saved population MSE curves with frozen clean biases. Positive means mono has
+lower risk. The horizontal coordinate is scaled by ϵ3/2 and the vertical coordinate by ϵ3; these
+scalings are derived rather than fitted. Dashed lines show the predicted first-crossing coefficient.
+The display window clips values outside [−2, 2]; the full numerical curves are preserved in the
+raw CSV. Connecting sampled points does not certify root completeness.
+Any evaluated feasible bias supplies an upper bound with the same declared slack. The outside
+half-lines are bounded using the preceding tail and monotonicity arguments. Thus no local bias
+optimizer is mistaken for a global result.
+The prescribed total weighted-loss gap target is min(10−10, Cϵ3/100). Each output’s gap target
+is this quantity divided by 1 + 1/2, so the weighted sum obeys the total target. A maximum
+of 100,000 interval expansions per output is retained.
+Differences between model losses are
+reported as intervals, and a sign is claimed only when that interval excludes zero. High-precision
+arithmetic with declared slack remains a numerical bound check, not exact or directed-rounding
+interval arithmetic. Calibration results are a separate execution record; the frozen map above
+does not supply them.
+8.19
+Finite calibrated boundary comparisons and numerical res-
+olution
+The same six globally selected clean geometries were evaluated under symmetric oracle bias
+calibration. The prescribed noise brackets are 0.5 and 2 times the derived calibrated coefficient
+1.3187498488 . . . ϵ3/2. All 12 comparisons met their declared global numerical loss-gap targets.
+At every lower bracket sharing has lower weighted MSE; at every upper bracket mono has
+lower weighted MSE. The difference was evaluated using the sharing lower bound minus the
+mono upper bound and the sharing upper bound minus the mono lower bound. These intervals
+exclude zero for the 12 prescribed endpoints.
+Only these successful brackets were bisected.
+The loss-gap target was left unchanged, and
+execution stopped when a midpoint’s difference interval contained zero. No additional calibration
+tolerance was chosen to make a narrow boundary plot. The surviving sign-certified numerical
+Research derivations | Updated October 2026
+46
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+brackets are:
+ϵ
+Lower σ/ϵ3/2
+Upper σ/ϵ3/2
+.02
+1.260636
+1.260757
+.01
+1.280920
+1.281402
+.005
+1.296857
+1.300720
+.0025
+1.277539
+1.339355
+.001
+1.308447
+1.323901
+.0005
+1.308447
+1.323901
+The final two brackets contain the derived limiting coefficient. The wider .0025 bracket reflects
+numerical resolution under the unchanged stopping rule, not evidence that the crossing location
+jumps. No calibrated second-crossing or complete noise-map claim follows. All intermediate
+bias bounds, active queues, source snapshots and input geometry records are retained. These
+are high-precision numerical global-gap checks with declared slack, not exact interval-arithmetic
+certificates.
+Figure 8.5: Saved calibrated crossing brackets and the analytically derived limiting coefficient.
+Error bars show the actual sign-certified numerical brackets; plotted midpoints are visual loca-
+tions, not estimates with greater precision. All six bisections stopped at an ambiguous midpoint
+under the unchanged numerical loss-gap target.
+The completed two-feature result now combines global clean selection, critical reconstruction-risk
+predictions, prescribed finite frozen maps, and symmetric calibration controls. Arbitrary-load
+trained toy validation and real-representation transfer remain subsequent tests. Nothing here
+establishes universal monosemantic robustness or guarantees a venue.
+8.20
+The prescribed eight-feature clean test and its limitations
+The broader clean-training stage used eight independent Bernoulli concepts with p = .2, four
+code dimensions, encoder energy four, and importance Ii = 2−i/4 for i = 0, . . . , 7. The exist-
+ing projected Adam settings were preserved: learning rate .01, momentum parameters .9, .999,
+stabilizer 10−8, and 5,000 steps for each of seeds 0, . . . , 4. All 256 population states were used.
+Research derivations | Updated October 2026
+47
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Mono retained the four most important concepts on orthogonal unit columns and predicted prior
+means for the others. Its clean weighted MSE is 0.2514085403.
+Seed
+Final clean MSE
+Tangent gradient norm
+Q/P
+0
+.2494283
+.102105
+461784.60
+1
+.3509482
+.133606
+15.49270
+2
+.2970402
+.126647
+11.29595
+3
+.3259854
+.225744
+11.90185
+4
+.2982442
+.147117
+11.33140
+Only seed zero’s final iterate beats mono. All five fail the existing loss-stability diagnostic, which
+compares the mean losses in the last two 100-step windows at tolerance 10−5. Their encoder
+tangent gradients are materially nonzero. No result is labeled converged or globally optimal.
+Every trace and all 51 checkpoints per seed are saved; earlier lower losses are not substituted
+for the prescribed final iterates. Bias-only clean profiling does not materially fix these encoder
+results.
+All columns remain mathematically nonzero, so the support penalty is P = 0.0628521351. Seed
+zero has two column norms near 2.60 × 10−6 and 2.18 × 10−6, yielding an enormous sufficient
+bound scale through Q’s inverse norm. These columns are not retrospectively rounded to zero.
+The result exposes both optimizer stability and bound-tightness limitations. The two-feature
+global selection proof remains valid, but does not certify these larger runs. No larger-toy noisy
+calibration or nonbinary run has yet been performed.
+8.21
+A bounded repair of the larger-toy optimizer
+The eight-feature test uses independent Bernoulli inputs x, the enumerated population proba-
+bilities Px, importance weights Ii, and the objective
+L(W, β) =
+X
+x
+Px
+X
+i
+Ii [ReLU(zi(x)) −xi]2 ,
+z(x) = W ⊤Wx + β,
+∥W∥2
+F = E = 4.
+The initial fixed-step projected-Adam runs are retained without replacing their final iterates by
+earlier checkpoints. This subsection describes a single bounded optimization diagnostic applied
+to all five saved final iterates; it supplies neither a global training theorem nor an extra scientific
+setting.
+8.21.1
+Population gradients and the energy constraint
+Let X contain population states as rows, H = XW ⊤, and Z = HW + 1β⊤. Define the matrix
+Dxi = 2PxIi
+ ReLU(Zxi) −Xxi
+1{Zxi>0}.
+At nonzero preactivations, differentiation gives
+dZ = dH W + H dW + 1 dβ⊤,
+dH = X dW ⊤,
+and therefore
+∇W L = H⊤D + (DW ⊤)⊤X,
+∇βL = D⊤1.
+Both encoder appearances matter in the first expression. At exact ReLU kinks the implemen-
+tation uses the selected derivative zero. This convention does not by itself supply a complete
+nonsmooth stationarity test.
+Research derivations | Updated October 2026
+48
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+For the Frobenius sphere, a tangent displacement U satisfies ⟨U, W⟩F = 0. The orthogonal
+projection of the encoder gradient is
+T = ∇W L −⟨∇W L, W⟩F
+E
+W.
+At a smooth constrained stationary point, the Lagrange multiplier condition ∇W L = λW is
+equivalent to T = 0; the free bias also requires ∇βL = 0. Neither condition proves a global
+minimum.
+8.21.2
+Retraction and actual-loss backtracking
+For a trial step α > 0, form
+V = W −αT,
+Wnew =
+√
+E
+V
+∥V ∥F
+,
+βnew = β −α∇βL.
+Since T is tangent, ∥V ∥2
+F = E+α2∥T∥2
+F > 0. The normalization is well defined, preserves energy
+exactly in real arithmetic, and expands as Wnew = W −αT +O(α2). Away from activation kinks,
+d
+dαL(Wnew, βnew)
+
+α=0
+= −∥T∥2
+F −∥∇βL∥2
+2.
+Thus at a smooth point with a nonzero selected gradient, a sufficiently small step satisfies the
+Armijo condition
+L(Wnew, βnew) ≤L(W, β) −cα
+
+∥T∥2
+F + ∥∇βL∥2
+2
+
+,
+c = 10−4.
+The algorithm checks the actual population loss, rather than assume a step will decrease it. It
+starts each step at α = .01 and permits at most twenty halvings. A failed search stops that run
+and remains visible. At a kink, the smooth derivative argument may not apply; bounded failure
+is an unresolved outcome rather than a proof of optimality.
+8.21.3
+Why merely decaying projected Adam is inconclusive
+The existing solver forms Adam moments from the full Euclidean gradient, updates with a coor-
+dinatewise preconditioner, and then rescales to the Euclidean sphere. If a local preconditioned
+direction is written Mg, normalization removes its radial component. A fixed-point condition
+of the form PW (Mg) = 0 need not imply the necessary smooth stationarity condition PW g = 0,
+where PW is the Euclidean tangent projection. Coordinatewise preconditioning and Euclidean
+projection do not generally commute. Small learning rates can reduce movement without re-
+solving that distinction. This is a reason for the direct-gradient diagnostic; it is not a proof that
+preconditioning is the sole cause of every observed failure.
+The repair starts from every prescribed final iterate, uses at most 2,000 accepted updates per
+seed and a total wall-clock budget of 120 seconds, and stops on a selected joint gradient norm
+at most 10−5, a failed search, a nonfinite value, or a budget limit. Full trial and loss traces,
+periodic checkpoints and final iterates are retained. The minimum preactivation distance to zero
+is recorded: a small selected gradient at kinks requires a separate nonsmooth interpretation. No
+favorable seed, checkpoint or second optimizer is selected.
+Research derivations | Updated October 2026
+49
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.21.4
+Recorded repair outcomes and the stopping decision
+All five runs reached the fixed limit of 2,000 accepted updates. Every proposal satisfied the
+actual-loss Armijo test at α = .01; there were 10,000 recorded trials, no rejected backtracks and
+no nonfinite failure. Their final losses are shown against the common mono loss 0.2514085403:
+seed
+original final loss
+repaired final loss
+selected joint gradient norm
+0
+.2494283236
+.2362549117
+.001033501
+1
+.3509481697
+.2819765217
+.03570603
+2
+.2970402276
+.2600155475
+.01560052
+3
+.3259853695
+.2505002456
+.01755209
+4
+.2982442175
+.2502017777
+.01517120
+Three final dictionaries now beat mono on clean loss, compared with one before repair, but none
+reaches the predeclared gradient threshold. Only seed zero passes the loss-stability diagnostic.
+The larger-toy runs therefore remain finite-step optimization outputs, not converged or globally
+optimal training-selected representations. The actual objective decreases demonstrate that the
+original unfavorable losses were not evidence of an architectural impossibility; they do not prove
+general training success.
+The sufficient support-bound scales Q/P remain approximately
+(617.511, 12.5307, 12.3378, 11.4811, 13.0136)
+for seeds zero through four. No tiny column was thresholded to zero. The single-repair stopping
+rule now closes this optimizer arm: no second repair, favorable checkpoint selection or huge-
+noise calibration is launched. Both the original and repaired outputs are retained as limitations
+alongside the separately proved two-feature critical-boundary result.
+Research derivations | Updated October 2026
+50
+
+
 Chapter 9
 Project 2: the correct meaning of the
 covariance recursion
@@ -3156,7 +3765,7 @@ Gc = c
 ,
 c > 0.
 (9.3)
-42
+51
 
 
 Chapter 9. Project 2: the correct meaning of the covariance recursion
@@ -3206,7 +3815,7 @@ Status of this result. The covariance identities are valid and useful baselines.
 describe the specified linear processes. They do not prove that diffusion self-training
 obeys a fixed Gram-matrix map, or that monosemanticity must decay.
 Research derivations | Updated October 2026
-43
+52
 
 
 Chapter 10
@@ -3256,7 +3865,7 @@ At zero noise, the states 00, 01, 10 reproduce themselves, while 11 maps to 00. 
 inputs are independent, the joint probability p1p2 is lost immediately. Subsequent iterations
 cause no additional change. This is a clear feature-combination loss, but it is not progressive
 decay of all features and does not require changing G.
-44
+53
 
 
 Chapter 10. Project 2: an exact nonlinear generation operator
@@ -3296,7 +3905,7 @@ Figure 10.1: Exact pair-kernel calculations with a = 1, σ = 0.35 and initial ac
 0.2. Marginal frequencies can rise even though the joint state 11 is eliminated from generated
 outputs. Twenty-percent real-data mixing preserves some joint mass through replenishment.
 Research derivations | Updated October 2026
-45
+54
 
 
 Chapter 10. Project 2: an exact nonlinear generation operator
@@ -3313,7 +3922,7 @@ Before moving on. Compute the zero-noise pair distribution after one and two
 generations. Explain why covariance alone would not be the clearest account of the
 lost joint concept.
 Research derivations | Updated October 2026
-46
+55
 
 
 Chapter 11
@@ -3377,7 +3986,7 @@ If all Ii ≥Imin > 0, then P
 i ei,g ≤Rg/Imin also converts the weighted risk into a total-variation
 bound. This may be loose when importance weights span many orders of magnitude. Reporting
 per-feature and joint errors remains more informative than a single weighted average.
-47
+56
 
 
 Chapter 11. The mathematical link between the two projects
@@ -3428,7 +4037,7 @@ Before moving on. Construct a two-state process that flips both states with equa
 probability mass. Its per-sample error is one but its distribution does not change.
 Explain why this does not contradict the theorem.
 Research derivations | Updated October 2026
-48
+57
 
 
 Chapter 12
@@ -3479,7 +4088,7 @@ This is an implicit-function calculation. It is local and assumes a smooth, iden
 solutions. Symmetries, singular Hessians, ReLU boundaries and optimizer changes can invalidate
 its use unless handled by gauge fixing, regularization, smooth surrogates or a more general
 analysis.
-49
+58
 
 
 Chapter 12. What changes when the model is genuinely retrained
@@ -3521,7 +4130,7 @@ Status of this result. Equations (12.4)–(12.5) are conditional local derivatio
 Solving a global nonlinear learning recursion and proving that a particular semantic
 scalar forecasts real-model collapse remain research work.
 Research derivations | Updated October 2026
-50
+59
 
 
 Chapter 13
@@ -3572,7 +4181,7 @@ Diffusion time τ indexes noise removal within one generation of one sample. Tra
 g indexes fit–sample–refit cycles across models. A denoising step can reduce uncertainty while
 a correctly sampled full generative process preserves diversity. Confusing these clocks makes
 “denoising contracts covariance, so diffusion must collapse” an invalid argument.
-51
+60
 
 
 Chapter 13. Diffusion: the bridge that is valid, and the one to test
@@ -3624,7 +4233,7 @@ Thus the same denoiser accompanied by the correct sampling variation preserves t
 distribution. Removing sampling variance creates the collapse in Equation (13.9). This is why
 a real diffusion sampler must be modeled or held fixed, not discarded from the argument.
 Research derivations | Updated October 2026
-52
+61
 
 
 Chapter 13. Diffusion: the bridge that is valid, and the one to test
@@ -3661,7 +4270,7 @@ explains the apparent effect before attributing that effect to feature geometry.
 Before moving on. Identify the covariance term that posterior sampling restores
 in the Gaussian example. Explain why posterior means alone lose it.
 Research derivations | Updated October 2026
-53
+62
 
 
 Chapter 14
@@ -3702,7 +4311,7 @@ comparison so a method is not credited merely for dropping difficult concepts.
 Stage C: recursive training on the same toys
 For each chosen starting model, generate a fixed-size synthetic dataset and train the next model
 under a fixed budget. Compare pure replacement with a specified real-data fraction. Keep a
-54
+63
 
 
 Chapter 14. Experiments that test the derivations
@@ -3748,7 +4357,7 @@ can fail because the basis changes, even if useful computation is preserved. Wit
 specific dictionaries, distinguish actual concept changes from changed coordinate systems. Use
 direct labeled-factor behavior as a reference wherever possible.
 Research derivations | Updated October 2026
-55
+64
 
 
 Chapter 14. Experiments that test the derivations
@@ -3818,7 +4427,7 @@ periments
 Sampler truncation or evalu-
 ator drift explains the result
 Research derivations | Updated October 2026
-56
+65
 
 
 Chapter 15
@@ -3864,7 +4473,7 @@ Fix task, norm budget, corruption location and two
 primary hypotheses.
 Run a diffusion cost pilot and a focused
 related-work check in parallel with mathematical work.
-57
+66
 
 
 Chapter 15. An eight-week program that preserves both projects
@@ -3943,7 +4552,7 @@ anism that survives controls, or a targeted intervention justified by theory and
 generative loop. The combined story should demonstrate why the two results illuminate each
 other.
 Research derivations | Updated October 2026
-58
+67
 
 
 Chapter 15. An eight-week program that preserves both projects
@@ -3955,7 +4564,7 @@ The next step is to choose the primary corruption and resource convention, repro
 analytic pair in a learned toy, and execute the diffusion pilot. This continues the same two-
 project program with explicit assumptions.
 Research derivations | Updated October 2026
-59
+68
 
 
 Appendix A
@@ -4034,7 +4643,7 @@ ing is automatically im-
 provement
 No. It is a recursive process; improvement is an out-
 come to measure.
-60
+69
 
 
 Appendix B
@@ -4083,7 +4692,7 @@ independently of p1, p2. But the statistical nuisance variance in the independen
 tector is ρ2p2(1 −p2). Conditional robustness of feature 1 depends on its competitor’s activity,
 not simply its own rarity. Its unconditional contribution to total risk also depends on its own
 false-positive and false-negative mixture.
-61
+70
 
 
 Appendix B. Further derivations and worked exercises
@@ -4115,7 +4724,7 @@ This does not invalidate the exact toy algebra. It weakens the claim that the ch
 measure explains real-model collapse beyond simpler measurements. The paper should report
 and analyze that distinction rather than call the transfer confirmed.
 Research derivations | Updated October 2026
-62
+71
 
 
 Appendix C
@@ -4201,7 +4810,7 @@ A tolerance
 assertion checks numerical implementation agreement; it is not a substitute for a proof.
 The proofs explain why the formulas hold, and the checks help catch algebra, coding and
 interpretation errors.
-63
+72
 
 
 Appendix D
@@ -4249,4 +4858,4 @@ anteed conference paper” follows from the calculations delivered here.
 The completed work in this volume is the teaching and derivation foundation. The remaining
 scientific work is to characterize learned geometry, sharpen predictive claims where possible and
 validate the same mechanism in a real generative model within the agreed research program.
-64
+73

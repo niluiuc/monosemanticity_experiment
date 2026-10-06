@@ -1,0 +1,1 @@
+The first audit stopped because numpy parsed literal CSV True values as numeric NaN. This was a checker parsing error; no experimental records were changed. The corrected checker parses acceptance with csv.DictReader and independently retains the actual-loss Armijo inequality check. Results are in independent_repair_review_v2.

@@ -1,0 +1,79 @@
+{
+  "hash_checks": 6,
+  "checks": [
+    {
+      "epsilon": ".02",
+      "grid_index": 60,
+      "sigma": 0.0003887523982096424,
+      "model": "sharing",
+      "saved_risk": 0.11547111700382016,
+      "quadrature_risk": 0.11547111700382018,
+      "absolute_difference": 1.3877787807814457e-17,
+      "omitted_tail_bound": 1.2907421741416092e-32,
+      "quadrature_reported_error": 1.0511531848129568e-13,
+      "passed": true
+    },
+    {
+      "epsilon": ".02",
+      "grid_index": 60,
+      "sigma": 0.0003887523982096424,
+      "model": "mono",
+      "saved_risk": 0.11547341189078748,
+      "quadrature_risk": 0.1154734118907875,
+      "absolute_difference": 1.3877787807814457e-17,
+      "omitted_tail_bound": 1.0288575082769657e-32,
+      "quadrature_reported_error": 3.2131529480695534e-19,
+      "passed": true
+    },
+    {
+      "epsilon": ".005",
+      "grid_index": 40,
+      "sigma": 2.3595802292505905e-05,
+      "model": "sharing",
+      "saved_risk": 0.11743128328190647,
+      "quadrature_risk": 0.11743128328190647,
+      "absolute_difference": 0.0,
+      "omitted_tail_bound": 1.355251814713665e-32,
+      "quadrature_reported_error": 1.0689864435496552e-13,
+      "passed": true
+    },
+    {
+      "epsilon": ".005",
+      "grid_index": 40,
+      "sigma": 2.3595802292505905e-05,
+      "model": "mono",
+      "saved_risk": 0.11743131918946648,
+      "quadrature_risk": 0.11743131918946645,
+      "absolute_difference": 2.7755575615628914e-17,
+      "omitted_tail_bound": 1.0714774591121642e-32,
+      "quadrature_reported_error": 3.69945530303459e-15,
+      "passed": true
+    },
+    {
+      "epsilon": ".0005",
+      "grid_index": 20,
+      "sigma": 1.4321760801763134e-06,
+      "model": "sharing",
+      "saved_risk": 0.11797484672120173,
+      "quadrature_risk": 0.11797484672120173,
+      "absolute_difference": 0.0,
+      "omitted_tail_bound": 1.3747422901339982e-32,
+      "quadrature_reported_error": 1.0903171692346917e-13,
+      "passed": true
+    },
+    {
+      "epsilon": ".0005",
+      "grid_index": 20,
+      "sigma": 1.4321760801763134e-06,
+      "model": "mono",
+      "saved_risk": 0.11797484675693669,
+      "quadrature_risk": 0.11797484675693667,
+      "absolute_difference": 1.3877787807814457e-17,
+      "omitted_tail_bound": 1.0842680727750871e-32,
+      "quadrature_reported_error": 1.3673445173004968e-17,
+      "passed": true
+    }
+  ],
+  "max_difference": 2.7755575615628914e-17,
+  "scope": "Independent implementation of direct Gaussian integral, not interval-arithmetic proof or root completeness."
+}

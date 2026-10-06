@@ -1,5 +1,23 @@
 # Project 1 toy experiments: living research record
 
+## 6 October 2026 — symmetric critical calibration completed
+
+- The12 prescribed endpoint comparisons all meet the saved numerical global-loss gap targets. Sharing beats mono at every lower critical bracket; mono beats sharing at every upper bracket.
+- An independent90-digit checker verified56 hashes,48 feature ledgers and3,944 interval nodes, exterior bounds, partition coverage, weighted model gaps and all12 difference signs. Maximum recomputation discrepancy3.75e-63. This is a numerical high-precision audit, not directed-rounding certification.
+- Only the six successful brackets were bisected. All bisections stopped at an ambiguous midpoint with unchanged loss-gap targets; all histories and feature ledgers remain saved. The final two scaled brackets are[1.308447,1.323901], containing the derived calibrated coefficient1.31874985. The .0025 bracket is wider; do not label its midpoint as a precise crossing.
+- Full derivations, global strip proof, finite frozen maps, curvature bounds and calibrated brackets are in sections8.12–8.19 of the existing PDF. The companion source remains local; public upload excludes LaTeX.
+- Next prescribed broader arm is n8/m4 clean training and the fixed-geometry support-bound test; no new architecture or frequency search.
+
+## 6 October 2026 — prescribed frozen phase map completed
+
+- Question: validate the critical noise boundary for six fixed distances below the clean storage transition, using the same reconstruction outcome throughout.
+- Exact global geometry is now supplied by the finite-strip proof in joint_phase_theory_2026-10-06/global_strip_certificate.tex. Its unique cubic root was bracketed with exact Q(sqrt5) arithmetic in clean_global_certificate_v1; all six saved numeric roots lie within their exact brackets. No probability was replaced by a nearby rational.
+- Frozen run: 732 saved population MSE rows (zero plus121 positive noise levels per geometry),70-digit arithmetic, all726 adjacent intervals retained. Five of six cases have two detected sign brackets. Epsilon=.02 has no detected bracket; no global root-absence claim follows.
+- The first detected crossing divided by epsilon^(3/2) approaches the derived1.98355848 coefficient; the smallest prescribed case yields1.97880130. No fitted exponent, extra frequency, or favorable noise-point search was used.
+- Three fixed case/grid points were independently checked by direct quadrature for both comparators; maximum absolute discrepancy2.78e-17. Hashes and full output are retained.
+- The original frozen run records global certification as pending because that was its execution status. The later clean_global_certificate_v1 adds the proof without rewriting the original result.
+- Next: the12 prescribed symmetric bias-calibration comparisons, using reviewed70-digit numerical global-loss bounds and declared1e-40 slack. This is the existing plan's second policy, not a new experimental family.
+
 ## Purpose and scope
 
 This file is the shared record of why an experiment is run, what is fixed before it,
@@ -959,3 +977,16 @@ no additional noise evaluations were introduced.
 The focused new mathematical candidate is a training-selected critical boundary: for epsilon = pc-p, weak storage is O(epsilon^2), clean sharing advantage is O(epsilon^3), and the noise ordering boundary is sigma ~ epsilon^(3/2). Symmetric oracle bias calibration changes the coefficient. An arbitrary-load fixed-geometry support bound is derived separately; it is not a universal monosemanticity theorem or a solution for arbitrary-load training selection.
 
 Full derivations enter the existing companion PDF. Protocol, raw 70-digit results, novelty comparison and the exact bullet schedule are in joint_phase_theory_2026-10-06/. Four checks ran: constants approach predictions; the upper critical bracket failed at epsilon=.02, and the prescribed gate-scale brackets did not show the second crossing. No finite calibrated map or larger-toy result is claimed yet. Follow week_plan.md through 11 October; retain failures and stop additional toy families afterward.
+
+## 6 October: completed validation and evidence-based stopping decision
+
+- All six near-transition geometries now have exact global clean-selection certificates in the declared two-feature class. The frozen map contains 732 population-risk evaluations; five cases have two detected crossings, while epsilon=.02 has none on the prescribed grid (not an absence proof).
+- All 12 symmetric-calibration endpoint comparisons resolved their signs. Independent verification checked 48 bias ledgers and 3,944 branch-and-bound nodes. The six boundary bisections stopped at ambiguous midpoints under the unchanged gap target; the last two scaled brackets contain the derived limiting coefficient 1.31874985. No unique-crossing or directed-rounding certificate is claimed.
+- The broader 8-feature/4-dimension clean run retained every prescribed seed. Only one of five original dictionaries beat the monosemantic baseline; none passed the original stability check. Very loose Q/P scales made the proposed high-noise calibration uninformative.
+- A specific optimizer stationarity diagnosis justified one predeclared repair: all five seeds, tangent-gradient descent, actual-loss Armijo acceptance, at most 2,000 accepted steps per seed and 120 seconds total. All five losses improved; three beat mono. None passed the joint-gradient threshold 1e-5. This does not establish converged or global training selection.
+- Independent audits recomputed every original and repaired final loss and gradient, and checked all 10,000 saved Armijo decisions. Original outputs, repair outputs, failures and source hashes are preserved. A boolean CSV parsing error in the first repair checker is documented; the corrected independent audit is in independent_repair_review_v2.
+- The proposed Q/P and nonbinary calibration arms are STOPPED because their bound scale is too loose and the selected dictionaries are not established stationary solutions. This supersedes those prospective numerical steps; it does not turn them into completed experiments. No second optimizer repair or another toy family is authorized by this plan.
+- Completed paper material: the scoped two-feature clean-selection theorem, derived frozen/calibrated near-transition boundaries, finite population validation, and the general fixed-geometry support bound with its decoder-class limitation. Broader training-selected validation remains unresolved. Novelty is not established by successful verification alone.
+- Next bounded step: specify one small vision transfer experiment with a matched-capacity mono/shared comparison, clean training selection, a fixed corruption model and frozen-versus-calibrated decoder policies. Do not launch diffusion, LLM or further optimizer searches in parallel. A real-model protocol must be fixed before training.
+
+Evidence: joint_phase_theory_2026-10-06/{clean_global_certificate_reproduced,frozen_run_v1,calibrated_run_v1,calibrated_boundary_run_v1}; broader_toy_20261006/{clean_run_v1,repair_run_v1,independent_clean_review_v1,independent_repair_review_v2}. All mathematics and numerical limitations are included in the updated derivations PDF.

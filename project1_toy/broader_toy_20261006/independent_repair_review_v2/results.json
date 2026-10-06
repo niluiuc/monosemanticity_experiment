@@ -1,0 +1,48 @@
+{
+  "all_passed": true,
+  "hash_checks": 56,
+  "armijo_trials_checked": 10000,
+  "cases": [
+    {
+      "seed": 0,
+      "recomputed_final_loss": 0.23625491173067337,
+      "recomputed_joint_gradient": 0.0010335007297489686,
+      "gradient_threshold_pass": false,
+      "accepted_trials": 2000,
+      "monotone_loss": true
+    },
+    {
+      "seed": 1,
+      "recomputed_final_loss": 0.28197652171493925,
+      "recomputed_joint_gradient": 0.035706030241698154,
+      "gradient_threshold_pass": false,
+      "accepted_trials": 2000,
+      "monotone_loss": true
+    },
+    {
+      "seed": 2,
+      "recomputed_final_loss": 0.26001554750607003,
+      "recomputed_joint_gradient": 0.015600516574725727,
+      "gradient_threshold_pass": false,
+      "accepted_trials": 2000,
+      "monotone_loss": true
+    },
+    {
+      "seed": 3,
+      "recomputed_final_loss": 0.25050024559295025,
+      "recomputed_joint_gradient": 0.01755208802835476,
+      "gradient_threshold_pass": false,
+      "accepted_trials": 2000,
+      "monotone_loss": true
+    },
+    {
+      "seed": 4,
+      "recomputed_final_loss": 0.2502017776946578,
+      "recomputed_joint_gradient": 0.015171203492617736,
+      "gradient_threshold_pass": false,
+      "accepted_trials": 2000,
+      "monotone_loss": true
+    }
+  ],
+  "scope": "Saved-trajectory and final-gradient audit only; not convergence/global optimum certification."
+}

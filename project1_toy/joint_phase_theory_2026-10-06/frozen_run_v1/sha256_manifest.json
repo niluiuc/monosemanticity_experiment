@@ -1,0 +1,8 @@
+{
+  "all_grid_intervals.json": "44a828e35264d4a16e6243fc816ef7a9026a7121d3179b427577ae86dceeb9e1",
+  "population_map.csv": "2f3c99858b9a18ddacec13b2e27e4b2019216773e40a4e292fa2416a452c5619",
+  "results.json": "247ec444823d98900cba6eaef50608cb202e41637ded184fa713d4873c4d958b",
+  "settings.json": "dde0dae40b28558a75074211dc6d031626daccf8aa48f40204745edf308d2888",
+  "source_snapshot/frozen_map_protocol.md": "2d06f72a98282586dbe561aa60c7d0a57744f5a84cdacb2280a9dfbaf03082e5",
+  "source_snapshot/run_frozen_map.py": "9410d2e8458e84282dd95ad6516e8498c8dd19c8986e59987914b1cbc66b8788"
+}

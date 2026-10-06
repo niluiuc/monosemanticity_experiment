@@ -1,0 +1,23 @@
+{
+  "epsilon": [
+    ".02",
+    ".01",
+    ".005",
+    ".0025",
+    ".001",
+    ".0005"
+  ],
+  "noise_grid_count": 121,
+  "noise_min": "1e-7",
+  "noise_max": "2",
+  "precision_digits": 70,
+  "relative_bracket_width": "1e-5",
+  "bisection_limit": 100,
+  "importance": [
+    "1",
+    ".5"
+  ],
+  "geometry_global_certificate": "pending; local stationarity only",
+  "outcome": "weighted population reconstruction MSE",
+  "policy": "frozen clean biases"
+}

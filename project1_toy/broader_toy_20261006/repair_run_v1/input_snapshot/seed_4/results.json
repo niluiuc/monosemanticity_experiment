@@ -1,0 +1,77 @@
+{
+  "seed": 4,
+  "seconds": 0.811534299980849,
+  "diagnostics": {
+    "failure": null,
+    "final_step": 5000,
+    "final_loss": 0.298244217485678,
+    "minimum_recorded_loss": 0.2795061345057765,
+    "window_mean_loss_change": 6.739106106096182e-05,
+    "convergence_diagnostic_pass": false,
+    "final_tangent_gradient_norm": 0.14711704196572278,
+    "final_bias_gradient_norm": 2.5376845938175238e-05
+  },
+  "raw_clean_loss": 0.29824421748567803,
+  "clean_bias_profiled_loss": 0.29824421684204316,
+  "mono_clean_loss": 0.2514085403153298,
+  "raw_delta_vs_mono": 0.046835677170348256,
+  "profiled_delta_vs_mono": 0.04683567652671339,
+  "raw_individual_mse": [
+    0.06371390747542002,
+    0.06390204074555444,
+    0.0635903250653047,
+    0.06468803124977845,
+    0.06573938702082646,
+    0.057625348780914104,
+    0.05982543786411399,
+    0.06430091000477614
+  ],
+  "profiled_individual_mse": [
+    0.06371390747537903,
+    0.06390204074551561,
+    0.06359032506529028,
+    0.06468803124835289,
+    0.06573938702081633,
+    0.05762534878082951,
+    0.05982543786410935,
+    0.06430090784313074
+  ],
+  "clean_profile_bias": [
+    0.144962413268507,
+    0.1440583067132223,
+    0.14461617822084671,
+    0.14516576780706952,
+    0.14805557147600215,
+    0.13337712128724968,
+    0.13790852091717382,
+    0.14467486264592438
+  ],
+  "column_norms": [
+    0.7007391344724444,
+    0.698635031628511,
+    0.7017824487614807,
+    0.696986326569231,
+    0.6915632042194445,
+    0.7376741744704044,
+    0.7290348980615052,
+    0.6990496960042974
+  ],
+  "stored_columns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "support_penalty_P": 0.06285213507883247,
+  "bound_constant_Q": 0.7122029273791234,
+  "bound_noise_Q_over_P": 11.331403881281691,
+  "bound_noise_2Q_over_P": 22.662807762563382,
+  "encoder_energy": 4.0,
+  "history_rows": 5001,
+  "checkpoint_count": 51,
+  "interpretation": "Fixed-step local training only; loss stability is not a stationarity/global-optimality certificate"
+}

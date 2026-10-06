@@ -1,0 +1,1 @@
+The original run hashes match the exact source revisions now archived in source_snapshot/. After this run the script gained a fresh-output CLI argument and a TeX form-feed typo was repaired. Neither change alters the mathematics or raw result. clean_global_certificate_reproduced/ reruns the same six exact brackets with the final source. Original results and hashes are unchanged.
