@@ -952,3 +952,10 @@ reference warnings. Its final SHA-256 is
 c80ceee2916d4d09599f4e0ecebf5f3f93a6b8c6dceabb5b6dfe38a980aa35dd.
 Editable sources remain local. Plot-reproduction code uses only saved rows;
 no additional noise evaluations were introduced.
+
+
+## 6 October 2026 — this-week joint phase completion
+
+The focused new mathematical candidate is a training-selected critical boundary: for epsilon = pc-p, weak storage is O(epsilon^2), clean sharing advantage is O(epsilon^3), and the noise ordering boundary is sigma ~ epsilon^(3/2). Symmetric oracle bias calibration changes the coefficient. An arbitrary-load fixed-geometry support bound is derived separately; it is not a universal monosemanticity theorem or a solution for arbitrary-load training selection.
+
+Full derivations enter the existing companion PDF. Protocol, raw 70-digit results, novelty comparison and the exact bullet schedule are in joint_phase_theory_2026-10-06/. Four checks ran: constants approach predictions; the upper critical bracket failed at epsilon=.02, and the prescribed gate-scale brackets did not show the second crossing. No finite calibrated map or larger-toy result is claimed yet. Follow week_plan.md through 11 October; retain failures and stop additional toy families afterward.
