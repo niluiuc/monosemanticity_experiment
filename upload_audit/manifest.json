@@ -1,7 +1,7 @@
 {
   "branch": "nil-research",
-  "workspace_files": 1749,
-  "workspace_bytes": 304791988,
+  "workspace_files": 1754,
+  "workspace_bytes": 304808324,
   "included_pdf": "output/pdf/Superposition_Recursive_Training_Derivations.pdf",
   "pdf_sha256": "a19fe80a6860907455f21473ceca10ea7917a688ced6b50831ba34607c75fbc7",
   "exclusions_by_reason": {
@@ -4568,9 +4568,34 @@
       "sha256": "055d9fe22f58ba7c189a5a2cf355050265cdb9bc5cf06ac1846da5190e432f78"
     },
     {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/public_snapshot_audit_revision.md",
+      "bytes": 1443,
+      "sha256": "68b772b73c10f9c9e43936f52ca2a832308a3d68f9af7bb6129a2535a436eee0"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/public_snapshot_audit_v1/checker_source.py",
+      "bytes": 8723,
+      "sha256": "65c0070b999185bdcd761f889ad44effdfe536013bde1b8c2b66ffe96aa240dc"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/public_snapshot_audit_v1/endpoint_results.json",
+      "bytes": 1359,
+      "sha256": "fad56d75e00e0ca65d056c03909aaa4a54ae34605b4333820e1ec30c5f9e3245"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/public_snapshot_audit_v1/importance_results.json",
+      "bytes": 2293,
+      "sha256": "7e8c72c9947046c72e1be9ec0d6cf553803895783f63d2a359de6ec8bc2ccaa7"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/public_snapshot_audit_v1/sha256.json",
+      "bytes": 289,
+      "sha256": "f2e84358424700aa58f5d2d88abb5d2d4a851bf63bc8a50ee7d11bba940d452e"
+    },
+    {
       "path": "project1_toy/joint_phase_theory_2026-10-06/README.md",
-      "bytes": 5910,
-      "sha256": "79dc74d0148fcea155a74f66597d32f11682da7fe5ebd81481bcd8391d665fda"
+      "bytes": 6596,
+      "sha256": "960825c23015c2ae59d81f4d15d708ac58df3efb8e32a5f09006377c38b455a8"
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/reproduction_source_revision.md",
@@ -4624,8 +4649,8 @@
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/verify_new_calibration_ledgers.py",
-      "bytes": 8073,
-      "sha256": "f75aa89989ae3f65b19481006c600d5363843850f21fe73f3da63ebaad4b5269"
+      "bytes": 8723,
+      "sha256": "65c0070b999185bdcd761f889ad44effdfe536013bde1b8c2b66ffe96aa240dc"
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/verify_vision_adaptation.py",
@@ -5899,8 +5924,8 @@
     },
     {
       "path": "project1_toy/plan.md",
-      "bytes": 74907,
-      "sha256": "853c5bf2a1bf3b01debb4412197ff18f10658116ab28cd0a085b1cf7524cc25a"
+      "bytes": 75800,
+      "sha256": "9a97c574dcbf8f77124781711aa1f8f33f57fe912d05f8f542661fafb2c38ae4"
     },
     {
       "path": "project1_toy/plot_results.py",

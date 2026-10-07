@@ -1,0 +1,67 @@
+{
+  "all_passed": true,
+  "hashes_checked": 44,
+  "complete_original_manifest_verified": false,
+  "intentionally_excluded_latex_not_verified": [
+    {
+      "path": "source_snapshot/importance_interval_derivation.tex",
+      "original_sha256": "754362432cd09e7859c8f2a7e866aaa36f5d8d9c3d6b642b72cb6f3531867644",
+      "reason": "user excluded LaTeX from public upload; hash not verified"
+    }
+  ],
+  "feature_ledgers_checked": 32,
+  "nonzero_ledgers": 24,
+  "nodes_recomputed": 2684,
+  "maximum_discrepancy": "1.41730740196125633139958122411689722225092415919968965450209225758487085833898436857234532e-63",
+  "comparisons": [
+    {
+      "eta": "0.48",
+      "epsilon": ".005",
+      "sigma": "0.0002264697023226742845872731732403204970198527061728698705804971171191939",
+      "sign": "negative"
+    },
+    {
+      "eta": "0.48",
+      "epsilon": ".005",
+      "sigma": "0.0009058788092906971383490926929612819880794108246914794823219884684767757",
+      "sign": "positive"
+    },
+    {
+      "eta": "0.48",
+      "epsilon": ".001",
+      "sigma": "0.00002025606596950566850146846071962373605101139323176935810342446696635841",
+      "sign": "negative"
+    },
+    {
+      "eta": "0.48",
+      "epsilon": ".001",
+      "sigma": "0.00008102426387802267400587384287849494420404557292707743241369786786543363",
+      "sign": "positive"
+    },
+    {
+      "eta": "0.52",
+      "epsilon": ".005",
+      "sigma": "0.000240368477743342143725176384405040956248917614602957625356398386626077",
+      "sign": "negative"
+    },
+    {
+      "eta": "0.52",
+      "epsilon": ".005",
+      "sigma": "0.0009614739109733685749007055376201638249956704584118305014255935465043082",
+      "sign": "positive"
+    },
+    {
+      "eta": "0.52",
+      "epsilon": ".001",
+      "sigma": "0.00002149921023529033124224314359066975661598376752063409453294843672710989",
+      "sign": "negative"
+    },
+    {
+      "eta": "0.52",
+      "epsilon": ".001",
+      "sigma": "0.00008599684094116132496897257436267902646393507008253637813179374690843957",
+      "sign": "positive"
+    }
+  ],
+  "scope": "Reused independent 90-digit moment/derivative/curvature/partition/exterior/incumbent/gap audit. Not directed-rounding intervals or novelty certification."
+}

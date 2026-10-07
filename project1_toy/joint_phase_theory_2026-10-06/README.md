@@ -48,7 +48,7 @@ The bisection and plot scripts target the original archived endpoint comparisons
 
 Read importance_validation_protocol.md and endpoint_policy_protocol.md for the fixed questions/settings. The companion derivation PDF contains the full global-selection proofs, local limits and numerical limitations. importance_run_v1 has four frozen boundary brackets and eight calibrated endpoint comparisons; endpoint_policy_run_v1 has two fixed policy-order comparisons. All signs resolved under their declared floating-slack branch-and-bound tolerances. Independent results are in importance_independent_review_v1 and endpoint_independent_ledger_review_v1. These are scalar-Gaussian-code-noise reconstruction comparisons, not adversarial safety guarantees.
 
-Fresh-folder reproduction (NumPy, mpmath, matplotlib as required):
+Fresh-folder reproduction (NumPy, mpmath, SymPy and matplotlib as required):
 
 `powershell
 python run_importance_validation.py --review importance_validation_review.md --output importance_run_reproduced
@@ -58,6 +58,17 @@ python plot_endpoint_policy.py
 `
 
 Original archived runs are immutable. Live runners accept the requested central PDF as proof provenance when local TeX is absent; reproduction_source_revision.md documents this packaging-only revision. Read their command-line options before setting fresh output directories. No new samples or optional families are needed.
+
+The original audit manifests retain hashes of local TeX proof snapshots, which
+the public upload intentionally omits. In a public clone, use the explicit
+option below. It reports every omitted TeX hash as **not verified**, checks all
+remaining hashes and recomputes the numerical ledgers. Any other missing file
+still fails. The original unfiltered manifest is not declared fully verified.
+
+```powershell
+python verify_new_calibration_ledgers.py --run endpoint_policy_run_v1 --output endpoint_public_audit_reproduced --allow-excluded-latex
+python verify_new_calibration_ledgers.py --run importance_run_v1 --output importance_public_audit_reproduced --allow-excluded-latex
+```
 
 ## One fixed vision pilot (in progress)
 

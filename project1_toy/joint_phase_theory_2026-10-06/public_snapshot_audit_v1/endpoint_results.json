@@ -1,0 +1,31 @@
+{
+  "all_passed": true,
+  "hashes_checked": 17,
+  "complete_original_manifest_verified": false,
+  "intentionally_excluded_latex_not_verified": [
+    {
+      "path": "source_snapshot/endpoint_calibration_derivation.tex",
+      "original_sha256": "424948cbdab781886380f82c43c5fd326b77996471a5099a8a082dcda54a78cd",
+      "reason": "user excluded LaTeX from public upload; hash not verified"
+    }
+  ],
+  "feature_ledgers_checked": 8,
+  "nonzero_ledgers": 6,
+  "nodes_recomputed": 666,
+  "maximum_discrepancy": "5.36603865512278564802962558888445815558904649998174368758429796015522861719450798634513245e-64",
+  "comparisons": [
+    {
+      "eta": "0.666666666666666666666666666666666666666666666666666666666666666666666666666666666666666667",
+      "epsilon": ".005",
+      "sigma": "0.001347807857687677110203928593972804995582003921438793039547022044787827",
+      "sign": "positive"
+    },
+    {
+      "eta": "0.666666666666666666666666666666666666666666666666666666666666666666666666666666666666666667",
+      "epsilon": ".001",
+      "sigma": "0.0001205515996159203413461811024122845250929132795361733304039584809561817",
+      "sign": "positive"
+    }
+  ],
+  "scope": "Reused independent 90-digit moment/derivative/curvature/partition/exterior/incumbent/gap audit. Not directed-rounding intervals or novelty certification."
+}

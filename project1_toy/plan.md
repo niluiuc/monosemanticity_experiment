@@ -1021,3 +1021,8 @@ The professor checked all already saved noise cases, both output losses and both
 ### Final current document delivery
 
 The existing Superposition_Recursive_Training_Derivations.pdf is now98 pages, including the full continuous-target profiling/calibration derivation, allfive vision comparisons and the saved-record gate audit. Independent proof/result/decomposition reviews passed. Compilation, all-page contact inspection, full-size newpage inspection, portable compilation/text equality and sourceZIP integrity passed; no overfull/reference warnings. Final PDF SHA256 a19fe80a6860907455f21473ceca10ea7917a688ced6b50831ba34607c75fbc7. EditableTeX remains local under research_notes/volume2.tex; allLaTeX and otherPDFs remain excluded from branch publication. This supersedes earlier PDFstatus/pagecounts while retaining them historically.
+
+
+### Public no-LaTeX audit compatibility verified
+
+The strict original manifest audit in the publicclone initially stopped because the uploaded snapshot deliberately lacks its TeX proof source. The live auditor now supports an explicit --allow-excluded-latex flag: reports each omitted proof hash as unverified, sets complete_original_manifest_verified=false, and still checks allavailable hashes and every numericalledger; missing nonTeXfiles still fail. Actual publicclone checks passed17/44 availablehashes and8/32 ledgers (666/2684 nodes) for endpoint/importance respectively. Original proof snapshots, manifests and scientific outputs were not modified. Public reports and checker source are in joint_phase_theory_2026-10-06/public_snapshot_audit_v1; initialpackagingfailure and limitations are documented in public_snapshot_audit_revision.md. This is no new experiment/mathresult.
