@@ -1,0 +1,158 @@
+{
+  "commit": "39dff5bd6dea67fc3ef350bc7b2312e5fcfc1493",
+  "archive": {
+    "url": "https://raw.githubusercontent.com/ExplainableML/sae-for-vlm/39dff5bd6dea67fc3ef350bc7b2312e5fcfc1493/metric_benchmark.tar.gz",
+    "bytes": 21980821,
+    "sha256": "ef19b58be1cc9cb44b3948057e52d09907fd273c2935f9ab87a47989c100f5db"
+  },
+  "members": [
+    {
+      "name": "._metric_benchmark",
+      "bytes": 163,
+      "ignored_reason": "MacOS AppleDouble metadata, not a CSV"
+    },
+    {
+      "name": "metric_benchmark",
+      "bytes": 0
+    },
+    {
+      "name": "metric_benchmark/._pairs.csv",
+      "bytes": 163,
+      "ignored_reason": "MacOS AppleDouble metadata, not a CSV"
+    },
+    {
+      "name": "metric_benchmark/pairs.csv",
+      "bytes": 87545,
+      "column_count": 7,
+      "first_columns": [
+        "k_x",
+        "k_y",
+        "R_user",
+        "MS_x_dino",
+        "MS_y_dino",
+        "MS_x_clip",
+        "MS_y_clip"
+      ],
+      "first_pair_metadata": [
+        "0",
+        "465",
+        "k_y"
+      ]
+    },
+    {
+      "name": "metric_benchmark/._top16_images.csv",
+      "bytes": 163,
+      "ignored_reason": "MacOS AppleDouble metadata, not a CSV"
+    },
+    {
+      "name": "metric_benchmark/top16_images.csv",
+      "bytes": 110325,
+      "column_count": 17,
+      "first_columns": [
+        "k",
+        "x_1",
+        "x_2",
+        "x_3",
+        "x_4",
+        "x_5",
+        "x_6",
+        "x_7",
+        "x_8",
+        "x_9",
+        "x_10",
+        "x_11",
+        "x_12",
+        "x_13",
+        "x_14",
+        "x_15",
+        "x_16"
+      ],
+      "first_top_image_row": [
+        "0",
+        "725331",
+        "724728",
+        "725032",
+        "725109",
+        "725201",
+        "724811",
+        "725204",
+        "724868",
+        "725354",
+        "724345",
+        "724481",
+        "724274",
+        "724879",
+        "724133",
+        "724601",
+        "724506"
+      ]
+    },
+    {
+      "name": "metric_benchmark/._activations.csv",
+      "bytes": 163,
+      "ignored_reason": "MacOS AppleDouble metadata, not a CSV"
+    },
+    {
+      "name": "metric_benchmark/activations.csv",
+      "bytes": 223424019,
+      "column_count": 50001,
+      "first_columns": [
+        "k",
+        "a_1",
+        "a_2",
+        "a_3",
+        "a_4",
+        "a_5",
+        "a_6",
+        "a_7",
+        "a_8",
+        "a_9",
+        "a_10",
+        "a_11",
+        "a_12",
+        "a_13",
+        "a_14",
+        "a_15",
+        "a_16",
+        "a_17",
+        "a_18",
+        "a_19"
+      ]
+    }
+  ],
+  "sources": {
+    "README.md": {
+      "url": "https://raw.githubusercontent.com/ExplainableML/sae-for-vlm/39dff5bd6dea67fc3ef350bc7b2312e5fcfc1493/README.md",
+      "bytes": 4456,
+      "sha256": "7ca09c0c29a1dcd8924ce4ffdc579dea2b34053a8f2ff46d4dd7adc38e8343b2"
+    },
+    "save_activations.py": {
+      "url": "https://raw.githubusercontent.com/ExplainableML/sae-for-vlm/39dff5bd6dea67fc3ef350bc7b2312e5fcfc1493/save_activations.py",
+      "bytes": 4998,
+      "sha256": "a8b65f46d0178e6e154f4bd24b010c9428432abe3de92ebcf0c818dfbf1349c2"
+    },
+    "find_hai_indices.py": {
+      "url": "https://raw.githubusercontent.com/ExplainableML/sae-for-vlm/39dff5bd6dea67fc3ef350bc7b2312e5fcfc1493/find_hai_indices.py",
+      "bytes": 3578,
+      "sha256": "38c89ed483f7f733bddc53bee3dd11b6fd9126550334741d88b58497e3f001cb"
+    },
+    "visualize_neurons.py": {
+      "url": "https://raw.githubusercontent.com/ExplainableML/sae-for-vlm/39dff5bd6dea67fc3ef350bc7b2312e5fcfc1493/visualize_neurons.py",
+      "bytes": 3224,
+      "sha256": "b4f7456a5d6ee9a2619653b7a6f0facac5e581ea149eb9132b970e2595593dec"
+    }
+  },
+  "paper": {
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/89e83382abeee53b932a6df62edbf9cc-Paper-Conference.pdf",
+    "bytes": 14483579,
+    "sha256": "cf7118985d575c08fc4884a2f5d0c26a6ae48a07ccc8e6d6d528568d0bf10471"
+  },
+  "relevant_pages": [
+    10,
+    12,
+    21,
+    29
+  ],
+  "elapsed_seconds": 14.813000000081956,
+  "risk_evaluated": false
+}

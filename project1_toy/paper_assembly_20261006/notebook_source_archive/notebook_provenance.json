@@ -1,0 +1,18 @@
+[
+  {
+    "name": "exact",
+    "url": "https://raw.githubusercontent.com/wattenberg/superposition/main/Exploring_Exact_Toy_Models.ipynb",
+    "sha256": "7ac47b3a332159732e53f691c66d55ba4a03b8a252f9599d61fe0372094af229",
+    "bytes": 414311,
+    "status": "retrieved",
+    "cells": 15
+  },
+  {
+    "name": "official",
+    "url": "https://raw.githubusercontent.com/anthropics/toy-models-of-superposition/main/toy_models.ipynb",
+    "sha256": "9231576b82ada2e47fdc26de064674c1ab88cbf558569364f84fa483af2864e0",
+    "bytes": 4448596,
+    "status": "retrieved",
+    "cells": 22
+  }
+]

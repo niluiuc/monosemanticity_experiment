@@ -1,0 +1,46 @@
+{
+  "url": "https://transformer-circuits.pub/2022/toy_model/index.html",
+  "sha256": "beebc71a46a601f5362760f648821e18c9b374bf0a1af5c8b3b0fabddc25e37f",
+  "links": [
+    {
+      "text": "toy model framework Colab notebook",
+      "href": "https://colab.research.google.com/github/anthropics/toy-models-of-superposition/blob/main/toy_models.ipynb",
+      "context": "This figure and a few others can be reproduced using the toy model framework Colab notebook in our Github repo"
+    },
+    {
+      "text": "Github repo",
+      "href": "https://github.com/anthropics/toy-models-of-superposition",
+      "context": "This figure and a few others can be reproduced using the toy model framework Colab notebook in our Github repo"
+    },
+    {
+      "text": "this notebook",
+      "href": "https://github.com/wattenberg/superposition/blob/main/Exploring_Exact_Toy_Models.ipynb",
+      "context": "We can compare this to a theoretical \"toy model of the toy model\" where we can get closed form solutions for the loss of different weight configurations as a function of importance and sparsity. There are three natural ways to store 2 features in 1 dimension: W=[1,0] (ignore [0,1] , throwing away the extra feature), W=[0,1] (ignore [1,0] , throwing away the first feature to give the extra feature a dedicated dimension), and W=[1,-1] (store the features in superposition, losing the ability to represent [1,1] , the combination of both features at the same time). We call this last solution \u201cantipodal\u201d because the two basis vectors [1, 0] and [0, 1] are mapped in opposite directions.\u00a0It turns out we can analytically determine the loss for these solutions (details can be found in this notebook )."
+    },
+    {
+      "text": "this notebook",
+      "href": "https://github.com/wattenberg/superposition/blob/main/Exploring_Exact_Toy_Models.ipynb",
+      "context": "For the theoretical model, we now consider four natural solutions. We can describe solutions by asking \"what feature direction did W ignore?\" For example, W might just not represent the extra feature \u2013 we'll write this W \\perp [0, 0, 1] . Or W might ignore one of the other features, W \\perp [1, 0, 0] . But the interesting thing is that there are two ways to use superposition to make antipodal pairs. We can put the \"extra feature\" in an antipodal pair with one of the others ( W \\perp [0, 1, 1] ) or put the other two features in superposition and give the extra feature a dedicated dimension ( W \\perp [1, 1, 0] ). Details on the closed form losses for these solutions\u00a0can be found in this notebook . We do not consider a last solution of putting all the features in joint superposition, W \\perp [1, 1, 1] ."
+    },
+    {
+      "text": "Tom McGrath",
+      "href": "https://tommcgrath.github.io/",
+      "context": "Tom McGrath"
+    },
+    {
+      "text": "DeepMind",
+      "href": "https://www.deepmind.com/",
+      "context": "Tom McGrath is a research scientist at DeepMind ."
+    },
+    {
+      "text": "here",
+      "href": "https://colab.research.google.com/github/anthropics/toy-models-of-superposition/blob/main/toy_models.ipynb",
+      "context": "We provide a notebook to reproduce some of the core diagrams in this article here . (It isn't comprehensive, since we needed to rewrite code for our experiments to run outside our codebase.) We provide a separate notebook for the theoretical phase change diagrams."
+    },
+    {
+      "text": "separate notebook",
+      "href": "https://github.com/wattenberg/superposition/blob/main/Exploring_Exact_Toy_Models.ipynb",
+      "context": "We provide a notebook to reproduce some of the core diagrams in this article here . (It isn't comprehensive, since we needed to rewrite code for our experiments to run outside our codebase.) We provide a separate notebook for the theoretical phase change diagrams."
+    }
+  ]
+}

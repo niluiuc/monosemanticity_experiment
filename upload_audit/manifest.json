@@ -1,14 +1,14 @@
 {
   "branch": "nil-research",
-  "workspace_files": 1754,
-  "workspace_bytes": 304808324,
+  "workspace_files": 1779,
+  "workspace_bytes": 318074384,
   "included_pdf": "output/pdf/Superposition_Recursive_Training_Derivations.pdf",
   "pdf_sha256": "a19fe80a6860907455f21473ceca10ea7917a688ced6b50831ba34607c75fbc7",
   "exclusions_by_reason": {
     "exclude_all_other_pdfs_user_rule": 62,
-    "exclude_latex_user_rule": 50,
     "exclude_overleaf_source_zip_user_rule": 2,
     "exclude_personal_discussion_user_rule": 293,
+    "exclude_latex_user_rule": 50,
     "exclude_output_pdf_user_rule": 1,
     "exclude_personal_receipt_user_rule": 1,
     "exclude_external_webpage_embedded_secret_push_protection": 2,
@@ -21,6 +21,41 @@
       "path": "AGENTS.md",
       "bytes": 1762,
       "sha256": "f60edd553881c9fba8f9cb1cd7eac8d438e967688caa1b233fbee13c3ef3b81a"
+    },
+    {
+      "path": "output/Project1_Focused_Bridge_2026-10-06.sha256.json",
+      "bytes": 38317,
+      "sha256": "c7c15df32653d78ac95ff5a27bcede55649545b72e78290ff5a55baf4f86fc52"
+    },
+    {
+      "path": "output/Project1_Focused_Bridge_2026-10-06.zip",
+      "bytes": 6274998,
+      "sha256": "f389b7428ca9f4d04e57659d25fca720d5670bffb2e19dc7c143f4b2a1fc791c"
+    },
+    {
+      "path": "output/Project1_Frequency_Transition_Code_and_Results_2026-10-06.sha256.json",
+      "bytes": 51996,
+      "sha256": "7a88307b808d7059bf93107d744a0b5741a155d1678f01cf60967a06540949e2"
+    },
+    {
+      "path": "output/Project1_Frequency_Transition_Code_and_Results_2026-10-06.zip",
+      "bytes": 7217560,
+      "sha256": "b9de092c866757ed151f13d244890b2c33e996598c2c13c9bdd9429a0a542bcd"
+    },
+    {
+      "path": "output/Project1_Toy_Protocol_v1_Code_and_Results.sha256.json",
+      "bytes": 281,
+      "sha256": "5c483d2bae062a0166954fd6e617d8852349db3a27202b22c383487317c11480"
+    },
+    {
+      "path": "output/Project1_Toy_Protocol_v1_Code_and_Results.zip",
+      "bytes": 31103516,
+      "sha256": "8fc1809a4f90e28e01ce07d66090da395dbfeb1f7caa7a76ecaf7d1e66195bde"
+    },
+    {
+      "path": "output/overleaf/monosemanticity_notes/README.md",
+      "bytes": 822,
+      "sha256": "805d67142e0f510ddac4235658288b72d774766bfc0eb10f654a93451e29df17"
     },
     {
       "path": "output/overleaf/monosemanticity_notes/figures/conditional_distributions.png",
@@ -41,11 +76,6 @@
       "path": "output/overleaf/monosemanticity_notes/figures/paper_J.png",
       "bytes": 88212,
       "sha256": "9cd64734a21484507986178469c531ba3df6f4503e1646dceaa7797c4387e8f5"
-    },
-    {
-      "path": "output/overleaf/monosemanticity_notes/README.md",
-      "bytes": 822,
-      "sha256": "805d67142e0f510ddac4235658288b72d774766bfc0eb10f654a93451e29df17"
     },
     {
       "path": "output/overleaf/monosemanticity_notes/supplement/additional_verification.json",
@@ -71,6 +101,11 @@
       "path": "output/overleaf/monosemanticity_notes/supplement/verify_math.py",
       "bytes": 11294,
       "sha256": "d3e538a275651303d6ea22c15b4be4ab31e3bdf137e40f61f089fc3b27d06c7d"
+    },
+    {
+      "path": "output/overleaf/research_derivations/README.md",
+      "bytes": 535,
+      "sha256": "543a1f5bc622bbdf3775bf8437dbd127442571fb806f7512182238a3fa214eb9"
     },
     {
       "path": "output/overleaf/research_derivations/figures/conditional_distributions.png",
@@ -158,44 +193,14 @@
       "sha256": "2bd61ef5b7bcde76ddfe0be5380d3d457b733c7dd0bed65eff92b7cd86339c39"
     },
     {
-      "path": "output/overleaf/research_derivations/README.md",
-      "bytes": 535,
-      "sha256": "543a1f5bc622bbdf3775bf8437dbd127442571fb806f7512182238a3fa214eb9"
-    },
-    {
       "path": "output/pdf/Superposition_Recursive_Training_Derivations.pdf",
       "bytes": 1977462,
       "sha256": "a19fe80a6860907455f21473ceca10ea7917a688ced6b50831ba34607c75fbc7"
     },
     {
-      "path": "output/Project1_Focused_Bridge_2026-10-06.sha256.json",
-      "bytes": 38317,
-      "sha256": "c7c15df32653d78ac95ff5a27bcede55649545b72e78290ff5a55baf4f86fc52"
-    },
-    {
-      "path": "output/Project1_Focused_Bridge_2026-10-06.zip",
-      "bytes": 6274998,
-      "sha256": "f389b7428ca9f4d04e57659d25fca720d5670bffb2e19dc7c143f4b2a1fc791c"
-    },
-    {
-      "path": "output/Project1_Frequency_Transition_Code_and_Results_2026-10-06.sha256.json",
-      "bytes": 51996,
-      "sha256": "7a88307b808d7059bf93107d744a0b5741a155d1678f01cf60967a06540949e2"
-    },
-    {
-      "path": "output/Project1_Frequency_Transition_Code_and_Results_2026-10-06.zip",
-      "bytes": 7217560,
-      "sha256": "b9de092c866757ed151f13d244890b2c33e996598c2c13c9bdd9429a0a542bcd"
-    },
-    {
-      "path": "output/Project1_Toy_Protocol_v1_Code_and_Results.sha256.json",
-      "bytes": 281,
-      "sha256": "5c483d2bae062a0166954fd6e617d8852349db3a27202b22c383487317c11480"
-    },
-    {
-      "path": "output/Project1_Toy_Protocol_v1_Code_and_Results.zip",
-      "bytes": 31103516,
-      "sha256": "8fc1809a4f90e28e01ce07d66090da395dbfeb1f7caa7a76ecaf7d1e66195bde"
+      "path": "project1_toy/README.md",
+      "bytes": 5517,
+      "sha256": "08f83b08690b5eddaad3ee0d28e4acf421e53f5fd9cef0def3b49cc79c83fbd7"
     },
     {
       "path": "project1_toy/__pycache__/checks.cpython-312.pyc",
@@ -216,6 +221,11 @@
       "path": "project1_toy/audits/protocol_v1_2026-10-05.json",
       "bytes": 523,
       "sha256": "3d418d647fbc290ab78144ec40c5e84232b3f0e3ace9f40b45c2892613adcc49"
+    },
+    {
+      "path": "project1_toy/broader_toy_20261006/README.md",
+      "bytes": 6624,
+      "sha256": "f85c5b3b4eb2c53c99641c38b85e43a7fd7c00a64a9cf7b8d76859b8d8944dd9"
     },
     {
       "path": "project1_toy/broader_toy_20261006/clean_run_v1/environment.json",
@@ -441,11 +451,6 @@
       "path": "project1_toy/broader_toy_20261006/protocol.md",
       "bytes": 3391,
       "sha256": "ff6bc3238c43ea348b77797449c657ede73eb7e1b62065871f9087e985768d8c"
-    },
-    {
-      "path": "project1_toy/broader_toy_20261006/README.md",
-      "bytes": 6624,
-      "sha256": "f85c5b3b4eb2c53c99641c38b85e43a7fd7c00a64a9cf7b8d76859b8d8944dd9"
     },
     {
       "path": "project1_toy/broader_toy_20261006/repair_outcomes.md",
@@ -768,6 +773,11 @@
       "sha256": "eb16d0ca77d5619908247921965084d4cbaa53f5721ea4672657195da1e6ec1f"
     },
     {
+      "path": "project1_toy/focused_bridge_2026-10-06/README.md",
+      "bytes": 13109,
+      "sha256": "25fd943c1f45bd99ca66581f1d8627e6f88854eeadba8b30f03dc49015c640ff"
+    },
+    {
       "path": "project1_toy/focused_bridge_2026-10-06/followup_protocol.md",
       "bytes": 3038,
       "sha256": "5e4a408d247b95273e570ae9de2074f127adaeafecf9dd3bf22bb9bfa4bd28ac"
@@ -873,11 +883,6 @@
       "sha256": "6067e9a27d09ba56e01d086d50cc211934c6f40323cc6c4ae79289f6c78b6d82"
     },
     {
-      "path": "project1_toy/focused_bridge_2026-10-06/README.md",
-      "bytes": 13109,
-      "sha256": "25fd943c1f45bd99ca66581f1d8627e6f88854eeadba8b30f03dc49015c640ff"
-    },
-    {
       "path": "project1_toy/focused_bridge_2026-10-06/requirements.txt",
       "bytes": 160,
       "sha256": "6e34a2613367496f926ec82a1602b1e05024ca641b95b3a1a38772fba31d10f0"
@@ -923,6 +928,11 @@
       "sha256": "d2f7b34f324fb51d2b2e64a56446179b9525e1c69b7ffc116979d2b61e2cea39"
     },
     {
+      "path": "project1_toy/focused_bridge_2026-10-06/toy/README.md",
+      "bytes": 7680,
+      "sha256": "f75bb1a9e3df31e9f4bdfd3294858a4a1991b79778757c17073d4dc28a7936f0"
+    },
+    {
       "path": "project1_toy/focused_bridge_2026-10-06/toy/__pycache__/bridge_math.cpython-312.pyc",
       "bytes": 11164,
       "sha256": "85a6aa0845302d2ec9d9e2008669685ef3a6012913a24acf695db44dc7d4b560"
@@ -956,11 +966,6 @@
       "path": "project1_toy/focused_bridge_2026-10-06/toy/protocol_snapshot.md",
       "bytes": 5878,
       "sha256": "4af45102c50d162c4809764ca8ae2358280ba04d9e02aa6cf4f9f78bc1ee917f"
-    },
-    {
-      "path": "project1_toy/focused_bridge_2026-10-06/toy/README.md",
-      "bytes": 7680,
-      "sha256": "f75bb1a9e3df31e9f4bdfd3294858a4a1991b79778757c17073d4dc28a7936f0"
     },
     {
       "path": "project1_toy/focused_bridge_2026-10-06/toy/report_v1/clean_landscapes.png",
@@ -1933,6 +1938,11 @@
       "sha256": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c"
     },
     {
+      "path": "project1_toy/frequency_boundary_2026-10-06/README.md",
+      "bytes": 11381,
+      "sha256": "dca03175fb203e4ba61f10aa5b5d1a8163a47e62f63a16c0ca8dd8fccb959434"
+    },
+    {
       "path": "project1_toy/frequency_boundary_2026-10-06/math/__pycache__/certify_noise_sign.cpython-312.pyc",
       "bytes": 14412,
       "sha256": "287d4eb0b67ed27a4cb76f2da6b58cc90da97cc79aeeb7f95ca6cfd3f5518c53"
@@ -2043,11 +2053,6 @@
       "sha256": "e397d71ec10964bcdd16794e56f5ccd8468d66897a9788b28bbac98b418a23a1"
     },
     {
-      "path": "project1_toy/frequency_boundary_2026-10-06/README.md",
-      "bytes": 11381,
-      "sha256": "dca03175fb203e4ba61f10aa5b5d1a8163a47e62f63a16c0ca8dd8fccb959434"
-    },
-    {
       "path": "project1_toy/frequency_boundary_2026-10-06/report/actual_risk_difference.png",
       "bytes": 242058,
       "sha256": "a27650937fcd79358e200921fbb6fe4a94219e6184251ff9e4016fb2a06e6026"
@@ -2088,6 +2093,11 @@
       "sha256": "542195adac3b28e31bb5248e9f7788fe5dc52a6caafcb45fc5781d219fd5acac"
     },
     {
+      "path": "project1_toy/frequency_boundary_2026-10-06/toy/README.md",
+      "bytes": 6181,
+      "sha256": "648870a15118ea3b5171214b76f4f4685d7b2ea83bb92bfc47fb3d84a7bb2e1e"
+    },
+    {
       "path": "project1_toy/frequency_boundary_2026-10-06/toy/__pycache__/certificate_backend_snapshot.cpython-312.pyc",
       "bytes": 16288,
       "sha256": "bf650b6044dfe8a39d6c63354e835093f37dc71c5fe8ba01b0dc7159eb84a39b"
@@ -2106,11 +2116,6 @@
       "path": "project1_toy/frequency_boundary_2026-10-06/toy/certificate_backend_snapshot.py",
       "bytes": 8426,
       "sha256": "992fdb83dcd7ee3f934879d2876166f16bc33a746a88876874737742889f2da3"
-    },
-    {
-      "path": "project1_toy/frequency_boundary_2026-10-06/toy/README.md",
-      "bytes": 6181,
-      "sha256": "648870a15118ea3b5171214b76f4f4685d7b2ea83bb92bfc47fb3d84a7bb2e1e"
     },
     {
       "path": "project1_toy/frequency_boundary_2026-10-06/toy/results.md",
@@ -2381,6 +2386,11 @@
       "path": "project1_toy/frequency_boundary_2026-10-06/verify_results.py",
       "bytes": 10482,
       "sha256": "3745f5f6281bb428d3ab54d45df2909362242bb88c271c7a28bf930be202a5eb"
+    },
+    {
+      "path": "project1_toy/joint_phase_theory_2026-10-06/README.md",
+      "bytes": 6596,
+      "sha256": "960825c23015c2ae59d81f4d15d708ac58df3efb8e32a5f09006377c38b455a8"
     },
     {
       "path": "project1_toy/joint_phase_theory_2026-10-06/__pycache__/run_critical_calibration.cpython-312.pyc",
@@ -4593,11 +4603,6 @@
       "sha256": "f2e84358424700aa58f5d2d88abb5d2d4a851bf63bc8a50ee7d11bba940d452e"
     },
     {
-      "path": "project1_toy/joint_phase_theory_2026-10-06/README.md",
-      "bytes": 6596,
-      "sha256": "960825c23015c2ae59d81f4d15d708ac58df3efb8e32a5f09006377c38b455a8"
-    },
-    {
       "path": "project1_toy/joint_phase_theory_2026-10-06/reproduction_source_revision.md",
       "bytes": 448,
       "sha256": "f829e91e7dd9c6e01ef1d34964ec40f6a7d90528dc5a1463bd5c28ed867b0ba3"
@@ -5398,6 +5403,136 @@
       "sha256": "91e228dbad9449fabcdc0529a7cb2f3c820c1468f569401736c830965d2e8a3c"
     },
     {
+      "path": "project1_toy/paper_assembly_20261006/README.md",
+      "bytes": 3948,
+      "sha256": "7415013405bbd1c6dab233ffa726da8557d6c994370a48ffb61044332ce39da3"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/assembly_final_review.md",
+      "bytes": 5235,
+      "sha256": "5f305e8835cf4c1c12d209628bfeda5c7bf3d291f3c9a112316abb4c33e5c263"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/claim_novelty_review.md",
+      "bytes": 18981,
+      "sha256": "1ed8a91d9c84886be78d42949430475729b3ed799da2c71a78c880403446031e"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/inspect_semantic_resource.py",
+      "bytes": 3977,
+      "sha256": "111531507c321fa72d2f1e29dba5c680c5b63a1083a12528dae7e19a17200aba"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/manuscript.md",
+      "bytes": 18269,
+      "sha256": "7dae4165c717620b61e110a915efe9bb0f2a169aa781c93a08169100579134aa"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/manuscript_review.md",
+      "bytes": 5742,
+      "sha256": "948c9d12b50c0f3e6440b52f639f9c321e142874119af59510c5ba489dd01167"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_overlap_addendum.md",
+      "bytes": 10864,
+      "sha256": "b74ed40c1d3ded5e18bbb5fa1d8d349675d241bd29040853afb879f3c8bd6397"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/article_links.json",
+      "bytes": 3916,
+      "sha256": "a02ed4cb10a69537017669303117287fef778f2dead990eba2c396c612971a92"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/exact.ipynb",
+      "bytes": 414311,
+      "sha256": "7ac47b3a332159732e53f691c66d55ba4a03b8a252f9599d61fe0372094af229"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/exact_cells.txt",
+      "bytes": 12237,
+      "sha256": "ee06c1dc5e1ad327e4dd10962f90f465f2a9283d91d6c7782fc373477c2e34c7"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/mcgrath_comment.txt",
+      "bytes": 3176,
+      "sha256": "d14d7ac84d56c883784758db014a911645b4a9c4a056cfc2eab81eb5d4ee976a"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/notebook_provenance.json",
+      "bytes": 595,
+      "sha256": "418a814f120fde99eb8fbd78b7b633d3f7fa0395d52225f1321851843767fed1"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/official.ipynb",
+      "bytes": 4448596,
+      "sha256": "9231576b82ada2e47fdc26de064674c1ab88cbf558569364f84fa483af2864e0"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/official_cells.txt",
+      "bytes": 11310,
+      "sha256": "b0be04bdf2b3a6f74d73258d664ef4c1fdf524c507d439d2c1c5285cac7be252"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/notebook_source_archive/primary_article.html",
+      "bytes": 8254697,
+      "sha256": "beebc71a46a601f5362760f648821e18c9b374bf0a1af5c8b3b0fabddc25e37f"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/professor_claim_review.md",
+      "bytes": 10777,
+      "sha256": "a3c19c1e82b2afbbd933451bd11b86887711e73fc0e9841d164ab74d575733f6"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/resource_gate_failure_v1.md",
+      "bytes": 764,
+      "sha256": "cb8ab4510a30a0965eeaa227e52a30252f5cb0072f695a0bd08208db2e50902a"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/resource_gate_v1/README.md",
+      "bytes": 4534,
+      "sha256": "20a291ddc15279cc88afe6032c74ffeba693c78601000f4d7d0fc45c183b3eb4"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/resource_gate_v1/find_hai_indices_source.txt",
+      "bytes": 3652,
+      "sha256": "88fdd7d0c351816b2761f700e7a07f889d8b17a55b1134fcfee40881a34837a0"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/resource_gate_v1/resource_metadata.json",
+      "bytes": 4173,
+      "sha256": "4fe95e1d77ef599bb0047f0d22bd69758f585ce593027d1737b1a8761b98b686"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/resource_gate_v1/save_activations_source.txt",
+      "bytes": 5109,
+      "sha256": "d5532bbc8253d1390d41832adfd4dfc4af2b8e1b24a1d2286c541185c23664f2"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/resource_gate_v1/visualize_neurons_source.txt",
+      "bytes": 3306,
+      "sha256": "7d657ccf044422ca67b6b26abd1fa3521545b7786cf49c329e0c7d3d8ee73c26"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/semantic_followup_protocol.md",
+      "bytes": 6598,
+      "sha256": "bf13da8cf437a852940fc1989edb3d45267f1d337306a3a2fd49a78f1a90af0a"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/semantic_resource_decision.md",
+      "bytes": 3754,
+      "sha256": "2b503a35a610ac17836e9c2ed61af8e9be1824384b2f47d37e2374754834f7bc"
+    },
+    {
+      "path": "project1_toy/paper_assembly_20261006/semantic_resource_gate.md",
+      "bytes": 3058,
+      "sha256": "79a5c5df607077a9f1fd11d6f5bc4cf8aa988bc8f11398038c66e87d1f248035"
+    },
+    {
+      "path": "project1_toy/paper_decision_2026-10-06/README.md",
+      "bytes": 4835,
+      "sha256": "e504cff9696afd7c3b03fb42493d3cea71253ea1d8982d790aafde91153399ae"
+    },
+    {
       "path": "project1_toy/paper_decision_2026-10-06/__pycache__/bridge_math_snapshot.cpython-312.pyc",
       "bytes": 11169,
       "sha256": "f40a97ce052aebce609d1dd39d8096df719fec87aaea6dfa7e68ab2887a09606"
@@ -5476,11 +5611,6 @@
       "path": "project1_toy/paper_decision_2026-10-06/professor_next_step.md",
       "bytes": 4390,
       "sha256": "b4fdaa19f99fd34f979dd9ba4d37e311d746b2226b643f57de660625b85638d6"
-    },
-    {
-      "path": "project1_toy/paper_decision_2026-10-06/README.md",
-      "bytes": 4835,
-      "sha256": "e504cff9696afd7c3b03fb42493d3cea71253ea1d8982d790aafde91153399ae"
     },
     {
       "path": "project1_toy/paper_decision_2026-10-06/run_calibration_control.py",
@@ -5924,18 +6054,13 @@
     },
     {
       "path": "project1_toy/plan.md",
-      "bytes": 75800,
-      "sha256": "9a97c574dcbf8f77124781711aa1f8f33f57fe912d05f8f542661fafb2c38ae4"
+      "bytes": 80281,
+      "sha256": "f38c5f67e47d093545379a63440c07ae9cd3a3fdee002ece4bac0420abc5ef1f"
     },
     {
       "path": "project1_toy/plot_results.py",
       "bytes": 14146,
       "sha256": "50c64b1912781374704ed6617d0cb0e210b284a15bf076d95c08d0a46130ba4f"
-    },
-    {
-      "path": "project1_toy/README.md",
-      "bytes": 5517,
-      "sha256": "08f83b08690b5eddaad3ee0d28e4acf421e53f5fd9cef0def3b49cc79c83fbd7"
     },
     {
       "path": "project1_toy/requirements.txt",
@@ -6133,6 +6258,11 @@
       "sha256": "f4025db7b4c0ae04b29391b9b9ce96a1e3d9b7a1fe722574d5c1d541bcbd1ac9"
     },
     {
+      "path": "project1_toy/runs/protocol_v1_2026-10-05/source/README.md",
+      "bytes": 4197,
+      "sha256": "e42a4c2c54d59cdda389a883c4a2fc413f7aa02f269fb241304a1b3cd22d6c83"
+    },
+    {
       "path": "project1_toy/runs/protocol_v1_2026-10-05/source/__pycache__/toy_math.cpython-312.pyc",
       "bytes": 13956,
       "sha256": "cd0225508dbe709313a1e5ac1cedf5bdc1c7a8e1e0eee6805f69dc4565664d41"
@@ -6151,11 +6281,6 @@
       "path": "project1_toy/runs/protocol_v1_2026-10-05/source/plot_results.py",
       "bytes": 13294,
       "sha256": "3a21f2aa494d7e3c001e533afadd813faac2f9b7966e3669da93c1b5ddf1ddcb"
-    },
-    {
-      "path": "project1_toy/runs/protocol_v1_2026-10-05/source/README.md",
-      "bytes": 4197,
-      "sha256": "e42a4c2c54d59cdda389a883c4a2fc413f7aa02f269fb241304a1b3cd22d6c83"
     },
     {
       "path": "project1_toy/runs/protocol_v1_2026-10-05/source/requirements.txt",
@@ -6748,6 +6873,11 @@
       "sha256": "5736f557404fb42ea73b9ce7ebd469966318fe7004e3a9c62eadf385474ba482"
     },
     {
+      "path": "project1_toy/vision_transfer_20261006/README.md",
+      "bytes": 6395,
+      "sha256": "758d8f03d7531d55f6e5391a6907c4c98354b7b72117f6ead4e357fccb02c8be"
+    },
+    {
       "path": "project1_toy/vision_transfer_20261006/__pycache__/audit_vision_outputs.cpython-312.pyc",
       "bytes": 21900,
       "sha256": "50f4580548f369efebc18afbcbfebaf9647d0e0c1fdb41a0d0e3f94ae37186de"
@@ -6943,11 +7073,6 @@
       "sha256": "2bd61ef5b7bcde76ddfe0be5380d3d457b733c7dd0bed65eff92b7cd86339c39"
     },
     {
-      "path": "project1_toy/vision_transfer_20261006/README.md",
-      "bytes": 6395,
-      "sha256": "758d8f03d7531d55f6e5391a6907c4c98354b7b72117f6ead4e357fccb02c8be"
-    },
-    {
       "path": "project1_toy/vision_transfer_20261006/verify_saved_mechanism.py",
       "bytes": 5761,
       "sha256": "10a75909a9b3680dd34d669fcea1cd2ffb102fc51d0e435e5ad6718e88f85c1c"
@@ -7138,6 +7263,11 @@
       "sha256": "c857129b49bf6353e43e25631d6de7fd602b97e523a9b7c36833a5d2ebf1384e"
     },
     {
+      "path": "research_notes/README.md",
+      "bytes": 2241,
+      "sha256": "77b0f075057f5d1a1439c56057373b15706ebd95064b4937bec33d8a90675615"
+    },
+    {
       "path": "research_notes/additional_verification.json",
       "bytes": 4374,
       "sha256": "bb6362c9324e4987bc1ce837c8448be5b3298a92773987cdcdb9fd01236863a9"
@@ -7266,11 +7396,6 @@
       "path": "research_notes/make_shareable_notes.py",
       "bytes": 12995,
       "sha256": "baa2fe488259ce0bb8c509ea3ee1404da24f3f2170f2223400f29cd1ebf86030"
-    },
-    {
-      "path": "research_notes/README.md",
-      "bytes": 2241,
-      "sha256": "77b0f075057f5d1a1439c56057373b15706ebd95064b4937bec33d8a90675615"
     },
     {
       "path": "research_notes/relative_degradation.txt",
@@ -7883,6 +8008,16 @@
       "sha256": "7470f2049a891c9a0cfda9c3bb45152d052430f08d5db97d66df8efadd4fa4a1"
     },
     {
+      "path": "tmp/pdfs/notes_extension/Monosemanticity_Robustness_Research_Notes.txt",
+      "bytes": 64465,
+      "sha256": "d8503de61b00fdded5ec391a0bdc1750143b1ebb02f8f7401219efa90834d9c5"
+    },
+    {
+      "path": "tmp/pdfs/notes_extension/Superposition_Recursive_Training_Derivations.txt",
+      "bytes": 86782,
+      "sha256": "929b6b0c2d1a850d8e6a194cb6aeb8e796065db15a6893ca61684a6184f1fbc8"
+    },
+    {
       "path": "tmp/pdfs/notes_extension/contact_00.png",
       "bytes": 762053,
       "sha256": "03375add6ab24d4b2261a2d71d49c4964a73097367e99517b87a7bb5ffd022c2"
@@ -7906,11 +8041,6 @@
       "path": "tmp/pdfs/notes_extension/extracted_updated.txt",
       "bytes": 126939,
       "sha256": "fb4ecf5c5cef84c3af59c4137657de088881bb34830e6930e2ef9f7f36a675b2"
-    },
-    {
-      "path": "tmp/pdfs/notes_extension/Monosemanticity_Robustness_Research_Notes.txt",
-      "bytes": 64465,
-      "sha256": "d8503de61b00fdded5ec391a0bdc1750143b1ebb02f8f7401219efa90834d9c5"
     },
     {
       "path": "tmp/pdfs/notes_extension/page_01.png",
@@ -8156,11 +8286,6 @@
       "path": "tmp/pdfs/notes_extension/page_49.png",
       "bytes": 28679,
       "sha256": "fa7591e1d7843bf00612189b86805c5745c6ef4d5963063417595e9183c2139c"
-    },
-    {
-      "path": "tmp/pdfs/notes_extension/Superposition_Recursive_Training_Derivations.txt",
-      "bytes": 86782,
-      "sha256": "929b6b0c2d1a850d8e6a194cb6aeb8e796065db15a6893ca61684a6184f1fbc8"
     },
     {
       "path": "tmp/pdfs/qa/qa_report.json",
@@ -8748,6 +8873,11 @@
       "sha256": "8ee9fc92cdc9ade1ac65a5736ed07bafd4f3bf3f7045286000dfcdc18c084751"
     },
     {
+      "path": "tmp/pdfs/shareable_notes/portable_check/README.md",
+      "bytes": 1121,
+      "sha256": "5acd30c4d97f3a01e873729c8a8e761de6f28e4e74112caf9728551334dd5c62"
+    },
+    {
       "path": "tmp/pdfs/shareable_notes/portable_check/figures/conditional_distributions.png",
       "bytes": 47196,
       "sha256": "c4f88d4634ce198bba8fc0db6eb5dd7edb9a8a3e8c297d763de1d962f00f72ae"
@@ -8761,11 +8891,6 @@
       "path": "tmp/pdfs/shareable_notes/portable_check/figures/paper_J.png",
       "bytes": 88212,
       "sha256": "9cd64734a21484507986178469c531ba3df6f4503e1646dceaa7797c4387e8f5"
-    },
-    {
-      "path": "tmp/pdfs/shareable_notes/portable_check/README.md",
-      "bytes": 1121,
-      "sha256": "5acd30c4d97f3a01e873729c8a8e761de6f28e4e74112caf9728551334dd5c62"
     },
     {
       "path": "tmp/pdfs/shareable_notes/portable_check/supplement/verification_results.json",
