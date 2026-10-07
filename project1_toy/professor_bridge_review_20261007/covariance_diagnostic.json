@@ -1,0 +1,289 @@
+{
+  "scope": "Saved targets and saved clean grids only; no new fitting or noise.",
+  "cases": {
+    "hidden_channels": {
+      "input_sha256": {
+        "project1_toy\\vision_transfer_20261006\\vision_run_v1\\normalized_targets.npz": "a8d437d0f729ea0ac99dc308ede720469f8eaade40a2a79dda454a11cb17aa94",
+        "project1_toy\\vision_transfer_20261006\\vision_run_v1\\clean_selection.json": "b1567259dd1c0fcfc98fb82c91f90396faaa3cedad6b4a3b13ea92ddb9a2e24b",
+        "project1_toy\\vision_transfer_20261006\\vision_run_v1\\settings.json": "43159834ff888a90000300d3295c2a72603e37c19db7118d02e141da882dee93"
+      },
+      "splits": {
+        "train": {
+          "n": 256,
+          "means": [
+            0.5204061703732755,
+            0.6500598617544469
+          ],
+          "variances": [
+            0.7291774178374213,
+            0.5774221761357896
+          ],
+          "covariance": 0.09338142610709144,
+          "correlation": 0.14391205255427922,
+          "empirical_mono_directional_slopes": [
+            -0.12450856814278857,
+            -0.18676285221418287
+          ]
+        },
+        "calibration": {
+          "n": 256,
+          "means": [
+            0.5352820339815297,
+            0.6472552812410769
+          ],
+          "variances": [
+            0.8855206484753291,
+            0.545057287877132
+          ],
+          "covariance": 0.1476207311429777,
+          "correlation": 0.2124843409995239,
+          "empirical_mono_directional_slopes": [
+            -0.19682764152397025,
+            -0.2952414622859554
+          ]
+        },
+        "test": {
+          "n": 512,
+          "means": [
+            0.494326347122628,
+            0.6559131258269484
+          ],
+          "variances": [
+            0.8453681748800697,
+            0.555324385337376
+          ],
+          "covariance": 0.030389444864251023,
+          "correlation": 0.04435335201981259,
+          "empirical_mono_directional_slopes": [
+            -0.04051925981900136,
+            -0.060778889728502046
+          ]
+        }
+      },
+      "saved_grid_neighbours": [
+        {
+          "grid_size": 256,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 3.129320807286708,
+          "signed_angular_step": -0.012271846303084644,
+          "endpoint_loss": 0.3849481174238598,
+          "neighbour_loss": 0.386504209269416,
+          "loss_change": 0.0015560918455561623,
+          "angular_secant": -0.12680177107213475
+        },
+        {
+          "grid_size": 256,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 0.01227184630308513,
+          "signed_angular_step": 0.012271846303085088,
+          "endpoint_loss": 0.3849481174238598,
+          "neighbour_loss": 0.3834441448689719,
+          "loss_change": -0.0015039725548879335,
+          "angular_secant": -0.1225547091891007
+        },
+        {
+          "grid_size": 256,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.5585244804918115,
+          "signed_angular_step": -0.012271846303085088,
+          "endpoint_loss": 0.7291774178374213,
+          "neighbour_loss": 0.7268198896292959,
+          "loss_change": -0.0023575282081254034,
+          "angular_secant": 0.19210868111448978
+        },
+        {
+          "grid_size": 256,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.5830681730979816,
+          "signed_angular_step": 0.012271846303085088,
+          "endpoint_loss": 0.7291774178374213,
+          "neighbour_loss": 0.7314003251848016,
+          "loss_change": 0.0022229073473802874,
+          "angular_secant": 0.18113878649388385
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 3.1354567304382504,
+          "signed_angular_step": -0.00613592315154321,
+          "endpoint_loss": 0.3849481174238598,
+          "neighbour_loss": 0.3857191459908136,
+          "loss_change": 0.0007710285669537686,
+          "angular_secant": -0.1256581198804375
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 0.006135923151542565,
+          "signed_angular_step": 0.006135923151542544,
+          "endpoint_loss": 0.3849481174238598,
+          "neighbour_loss": 0.3841900708792439,
+          "loss_change": -0.0007580465446159201,
+          "angular_secant": -0.12354237918141961
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.564660403643354,
+          "signed_angular_step": -0.006135923151542544,
+          "endpoint_loss": 0.7291774178374213,
+          "neighbour_loss": 0.7280150197026677,
+          "loss_change": -0.001162398134753606,
+          "angular_secant": 0.18944144280252018
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.576932249946439,
+          "signed_angular_step": 0.006135923151542544,
+          "endpoint_loss": 0.7291774178374213,
+          "neighbour_loss": 0.7303061542754616,
+          "loss_change": 0.0011287364380403453,
+          "angular_secant": 0.18395543916754986
+        }
+      ]
+    },
+    "class_evidence": {
+      "input_sha256": {
+        "project1_toy\\head_transfer_20261007\\evaluation_run_v1\\normalized_targets.npz": "5d67d351ecd8962784c73404c97fae2a81c1c04b297962d3a85c0c93409481d3",
+        "project1_toy\\head_transfer_20261007\\evaluation_run_v1\\clean_selection.json": "401cd72fa18cd6a32eed0c6e711ac7c4561ee4b3f8922d55262e5e50d19cca1d",
+        "project1_toy\\head_transfer_20261007\\evaluation_run_v1\\settings.json": "fdd0e969851a164cbf52f564b3105c109fec1e6e438e27dfde4caa2aa5d0472b"
+      },
+      "splits": {
+        "train": {
+          "n": 256,
+          "means": [
+            0.6995924088459782,
+            0.6650443665858244
+          ],
+          "variances": [
+            0.5105704614850824,
+            0.5577159904724598
+          ],
+          "covariance": 0.16331401299655118,
+          "correlation": 0.3060476573493342,
+          "empirical_mono_directional_slopes": [
+            -0.2177520173287349,
+            -0.32662802599310237
+          ]
+        },
+        "calibration": {
+          "n": 256,
+          "means": [
+            0.8104305223205855,
+            0.5917640045573931
+          ],
+          "variances": [
+            0.6151933338295983,
+            0.4272364129964797
+          ],
+          "covariance": 0.13732076247984204,
+          "correlation": 0.26785284630016476,
+          "empirical_mono_directional_slopes": [
+            -0.1830943499731227,
+            -0.2746415249596841
+          ]
+        },
+        "test": {
+          "n": 4096,
+          "means": [
+            0.7676395101531402,
+            0.6525244430466579
+          ],
+          "variances": [
+            0.6444292910778714,
+            0.6035765374650719
+          ],
+          "covariance": 0.20266642380735359,
+          "correlation": 0.32495856888587243,
+          "empirical_mono_directional_slopes": [
+            -0.27022189840980476,
+            -0.40533284761470717
+          ]
+        }
+      },
+      "saved_grid_neighbours": [
+        {
+          "grid_size": 256,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 3.129320807286708,
+          "signed_angular_step": -0.012271846303084644,
+          "endpoint_loss": 0.37181066031497334,
+          "neighbour_loss": 0.374505618194508,
+          "loss_change": 0.002694957879534665,
+          "angular_secant": -0.2196049243916347
+        },
+        {
+          "grid_size": 256,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 0.01227184630308513,
+          "signed_angular_step": 0.012271846303085088,
+          "endpoint_loss": 0.37181066031497334,
+          "neighbour_loss": 0.36915518853390605,
+          "loss_change": -0.0026554717810672868,
+          "angular_secant": -0.2163873076213245
+        },
+        {
+          "grid_size": 256,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.5585244804918115,
+          "signed_angular_step": -0.012271846303085088,
+          "endpoint_loss": 0.5105704614850827,
+          "neighbour_loss": 0.5065384879805629,
+          "loss_change": -0.004031973504519781,
+          "angular_secant": 0.32855475899385744
+        },
+        {
+          "grid_size": 256,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.5830681730979816,
+          "signed_angular_step": 0.012271846303085088,
+          "endpoint_loss": 0.5105704614850827,
+          "neighbour_loss": 0.5145510858206259,
+          "loss_change": 0.003980624335543248,
+          "angular_secant": 0.32437045227192396
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 3.1354567304382504,
+          "signed_angular_step": -0.00613592315154321,
+          "endpoint_loss": 0.37181066031497334,
+          "neighbour_loss": 0.3731524602483935,
+          "loss_change": 0.0013417999334201514,
+          "angular_secant": -0.2186793902532308
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 0.0,
+          "neighbour_angle": 0.006135923151542565,
+          "signed_angular_step": 0.006135923151542544,
+          "endpoint_loss": 0.37181066031497334,
+          "neighbour_loss": 0.3704787631413941,
+          "loss_change": -0.0013318971735792329,
+          "angular_secant": -0.21706549131802602
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.564660403643354,
+          "signed_angular_step": -0.006135923151542544,
+          "endpoint_loss": 0.5105704614850827,
+          "neighbour_loss": 0.5085603349912518,
+          "loss_change": -0.0020101264938309216,
+          "angular_secant": 0.32759968535876866
+        },
+        {
+          "grid_size": 512,
+          "endpoint_angle": 1.5707963267948966,
+          "neighbour_angle": 1.576932249946439,
+          "signed_angular_step": 0.006135923151542544,
+          "endpoint_loss": 0.5105704614850827,
+          "neighbour_loss": 0.5125677635590252,
+          "loss_change": 0.001997302073942553,
+          "angular_secant": 0.3255096298656283
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "cases": {
+    "hidden_channels": {
+      "splits_checked": 3,
+      "saved_neighbours_checked": 8,
+      "train_covariance": 0.09338142610709144
+    },
+    "class_evidence": {
+      "splits_checked": 3,
+      "saved_neighbours_checked": 8,
+      "train_covariance": 0.16331401299655118
+    }
+  },
+  "diagnostic_sha256": "ed13fd03b837ae9faec302b8944ad07c038ee1e938b83129c00eceec9a2ea42d",
+  "scope": "Independent moment formula and exact archived-grid lookup only; no new inference, fitting, corruption, population inference or mathematical proof certification."
+}

@@ -1,6 +1,6 @@
 # When does feature sharing stop paying? Training-selected robustness boundaries in a nonlinear bottleneck
 
-Working manuscript skeleton, 6 October 2026. This assembles existing reviewed results; it does not report a new experiment or extend any theorem. Numbers below refer to immutable archived runs. The full derivations remain in `output/pdf/Superposition_Recursive_Training_Derivations.pdf` (101 pages). Submission length, author list and venue formatting are intentionally undecided.
+Working manuscript skeleton, 6 October 2026. This assembles existing reviewed results; it does not report a new experiment or extend any theorem. Numbers below refer to immutable archived runs. The full derivations remain in `output/pdf/Superposition_Recursive_Training_Derivations.pdf` (104 pages). Submission length, author list and venue formatting are intentionally undecided.
 
 ## Abstract — working draft
 
@@ -119,6 +119,14 @@ Held-out sharing-minus-mono clean risk was −.071055530 with interval[−.08898
 Calibration favored sharing relatively at .05/.10, was unresolved at .20, and favored mono relatively at .40: policy contrast .000617314, interval[.000346820,.000899737]. Neither policy changed the winner. All numerical calibration gaps resolved. Independent audit verified provenance, fixed association/gates,896 calibration nodes, Gaussian losses and all paired bootstrap summaries; maximum risk discrepancy4.44e−15. Raw outputs and all settings remain in `../head_transfer_20261007/`.
 
 This supplies a resolved sharing-favored operational slice, supporting a conditional tradeoff rather than an assertion that mono always wins under noise. It does not refute Zhang et al., whose task and noise model differ, reproduce the Bernoulli critical exponent, validate hidden-feature monosemanticity or show a full-model robustness intervention. Stop this fixed pair/grid rather than extending noise to hunt for a reversal.
+
+### Applicability diagnosis: why an importance scan would not test the critical law
+
+Two independent mathematical and empirical AI reviewers checked the missing prerequisite before any further fitting. For nonnegative square-integrable coordinates with positive means in the declared energy-one tied-ReLU class, the feasible path `w(theta)=(sqrt(1-theta^2),theta)`, `b=(0,E X2)` has clean risk `eta Var(X2) - 2 eta Cov(X1,X2) theta + o(abs(theta))`. The retained-coordinate error is only quadratic. Nonzero covariance permits strict improvement by a sign-matched weak column arbitrarily close to mono; profiling biases can only improve that feasible candidate. Exchanging coordinates excludes both mono orientations. This is a standard covariance-prediction mechanism, not a proposed major originality claim.
+
+The saved hidden/head TRAIN covariances are .0933814261/.1633140130. Their existing clean angular neighbors corroborate local same-sign improvement. Neither unchanged empirical training pair can possess the exact positive-importance retention onset required by the Bernoulli critical law. This is an empirical-objective statement, not population inference or proof that a noisy crossing is impossible. An importance sweep on these arrays cannot resolve the missing mechanism; numerical snapping of a weak column to zero would not establish a true transition. The full proof, saved-data script and independent six-split/sixteen-neighbor check are in `../professor_bridge_review_20261007/` and the companion volume, Section 8.29.
+
+The reviewers also rejected widening noise to obtain an eventual calibrated crossing as central validation: the existing arbitrary-load support bound predicts that crossing because mono's omitted constant bypasses code noise. Even full-support orthogonal codes have that limit. It would not validate the selected critical geometry, exponent or semantic mechanism. A full correlated-Bernoulli extension needs new competing-branch/global-selection work and does not itself bridge the continuous real pairs. No new fitting, extraction or noise case was run during this audit.
 
 ## 7. Figure and evidence plan
 

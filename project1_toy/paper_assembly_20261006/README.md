@@ -27,7 +27,7 @@ Start with [manuscript.md](manuscript.md). This is the working paper skeleton ar
 
 The root environment uses Python with PyMuPDF. Run `python inspect_semantic_resource.py`; this reads the pinned official archive's metadata and primary paper. It does not fit features, select a robustness pair or compute risk. It writes `resource_gate_v1/resource_metadata.json`; downloads are outside the workspace in the user's `.cache/monosemanticity_semantic_resource_20261006` directory. The first parsing failure is preserved in `resource_gate_failure_v1.md`.
 
-Existing numerical reproduction instructions remain in the individual run folders; do not overwrite immutable output directories. The derivation volume is `../../output/pdf/Superposition_Recursive_Training_Derivations.pdf`. Its 101-page update adds the completed class-evidence experiment, full settings, actual results and limitations; no new theorem is claimed. Public publication continues to exclude LaTeX, other PDFs and personal archives.
+Existing numerical reproduction instructions remain in the individual run folders; do not overwrite immutable output directories. The derivation volume is `../../output/pdf/Superposition_Recursive_Training_Derivations.pdf`. Its 104-page update adds the completed class-evidence experiment, full settings, actual results and limitations; no new theorem is claimed. Public publication continues to exclude LaTeX, other PDFs and personal archives.
 
 ## Completed fixed class-evidence follow-up
 
