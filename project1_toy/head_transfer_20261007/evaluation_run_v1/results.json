@@ -1,0 +1,369 @@
+{
+  "cases": [
+    {
+      "multiplier": 0,
+      "sigma": 0.0,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.029303245627392248,
+            0.04088892776294865
+          ],
+          "frozen_bias": [
+            -0.029303245627392248,
+            0.04088892776294865
+          ],
+          "resolved": true,
+          "total_gap": 0.0
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.0,
+            0.5917640045573931
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.5917640045573931
+          ],
+          "resolved": true,
+          "total_gap": 0.0
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.3337900488779134,
+        "sharing_calibrated": 0.3337900488779134,
+        "mono_frozen": 0.40484557890032147,
+        "mono_calibrated": 0.40484557890032147
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": -0.07105553002240801,
+          "interval95": [
+            -0.08898894293531313,
+            -0.05201580432262767
+          ]
+        },
+        "delta_calibrated": {
+          "mean": -0.07105553002240801,
+          "interval95": [
+            -0.08898894293531313,
+            -0.05201580432262767
+          ]
+        },
+        "policy_contrast": {
+          "mean": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.05,
+      "sigma": 0.036542551429079605,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.029725168342398915,
+            0.04087571554619566
+          ],
+          "frozen_bias": [
+            -0.029303245627392248,
+            0.04088892776294865
+          ],
+          "resolved": true,
+          "total_gap": 4.259854736547256e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.0034320099230115593,
+            0.5917640045573931
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.5917640045573931
+          ],
+          "resolved": true,
+          "total_gap": 3.1120358069810714e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.3348988562857972,
+        "sharing_calibrated": 0.3348649806468355,
+        "mono_frozen": 0.4060321218309021,
+        "mono_calibrated": 0.4060197832338799
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": -0.07113326554510493,
+          "interval95": [
+            -0.0890695231209272,
+            -0.05208918574117384
+          ]
+        },
+        "delta_calibrated": {
+          "mean": -0.07115480258704439,
+          "interval95": [
+            -0.0890889578022325,
+            -0.05210768621565856
+          ]
+        },
+        "policy_contrast": {
+          "mean": -2.153704193945881e-05,
+          "interval95": [
+            -3.0466599838799575e-05,
+            -1.2963592412302336e-05
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 3.387563896169926e-05,
+          "interval95": [
+            2.5459591686311598e-05,
+            4.2917251954751566e-05
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 1.2338597022238605e-05,
+          "interval95": [
+            1.1122782532178758e-05,
+            1.3711298661690248e-05
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.1,
+      "sigma": 0.07308510285815921,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.031204653394761583,
+            0.04051141151877296
+          ],
+          "frozen_bias": [
+            -0.029303245627392248,
+            0.04088892776294865
+          ],
+          "resolved": true,
+          "total_gap": 4.324861098877382e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.007469662566530759,
+            0.5917640045573931
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.5917640045573931
+          ],
+          "resolved": true,
+          "total_gap": 4.1825321046851105e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.33822680471876704,
+        "sharing_calibrated": 0.33809566071828295,
+        "mono_frozen": 0.4095306701741843,
+        "mono_calibrated": 0.40946816859846613
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": -0.07130386545541723,
+          "interval95": [
+            -0.08925473007874073,
+            -0.052246847386728835
+          ]
+        },
+        "delta_calibrated": {
+          "mean": -0.0713725078801831,
+          "interval95": [
+            -0.08931704073637325,
+            -0.05230341171629892
+          ]
+        },
+        "policy_contrast": {
+          "mean": -6.864242476587159e-05,
+          "interval95": [
+            -0.00010171437682325963,
+            -3.686659612573126e-05
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.0001311440004840904,
+          "interval95": [
+            9.960519867443548e-05,
+            0.0001644764560950872
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 6.250157571822014e-05,
+          "interval95": [
+            5.6997622492360816e-05,
+            6.844544823547543e-05
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.2,
+      "sigma": 0.14617020571631842,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.036898061887104476,
+            0.037810696111876464
+          ],
+          "frozen_bias": [
+            -0.029303245627392248,
+            0.04088892776294865
+          ],
+          "resolved": true,
+          "total_gap": 6.489389332842155e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.01798884894779052,
+            0.5917640045573931
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.5917640045573931
+          ],
+          "resolved": true,
+          "total_gap": 5.148101964516649e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.3512643876648709,
+        "sharing_calibrated": 0.3508123051097026,
+        "mono_frozen": 0.4231176198745926,
+        "mono_calibrated": 0.42274541118177855
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": -0.0718532322097217,
+          "interval95": [
+            -0.08988550253739173,
+            -0.05274580628540337
+          ]
+        },
+        "delta_calibrated": {
+          "mean": -0.071933106072076,
+          "interval95": [
+            -0.08995778380238442,
+            -0.0527847887062471
+          ]
+        },
+        "policy_contrast": {
+          "mean": -7.987386235429237e-05,
+          "interval95": [
+            -0.00017421530367839924,
+            1.3799915592001206e-05
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.0004520825551683268,
+          "interval95": [
+            0.0003594807505864175,
+            0.0005479446004534652
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.00037220869281403575,
+          "interval95": [
+            0.00034452766925977186,
+            0.00040269605080829504
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.4,
+      "sigma": 0.29234041143263684,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.05953845753073757,
+            0.02435331451302374
+          ],
+          "frozen_bias": [
+            -0.029303245627392248,
+            0.04088892776294865
+          ],
+          "resolved": true,
+          "total_gap": 7.219474285058425e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.05333007594667228,
+            0.5917640045573931
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.5917640045573931
+          ],
+          "resolved": true,
+          "total_gap": 5.7899213812273587e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.40045977645802655,
+        "sharing_calibrated": 0.39822329082667585,
+        "mono_frozen": 0.4743459662360799,
+        "mono_calibrated": 0.47149216629386204
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": -0.07388618977805333,
+          "interval95": [
+            -0.09205598573964233,
+            -0.05483629735446772
+          ]
+        },
+        "delta_calibrated": {
+          "mean": -0.0732688754671862,
+          "interval95": [
+            -0.09160314565598802,
+            -0.05388519686819121
+          ]
+        },
+        "policy_contrast": {
+          "mean": 0.0006173143108671388,
+          "interval95": [
+            0.0003468202935045116,
+            0.0008997371503332132
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.002236485631350737,
+          "interval95": [
+            0.0019432398869561225,
+            0.0025317138491497437
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.002853799942217876,
+          "interval95": [
+            0.0026793338411823264,
+            0.003040818094290826
+          ]
+        }
+      }
+    }
+  ]
+}

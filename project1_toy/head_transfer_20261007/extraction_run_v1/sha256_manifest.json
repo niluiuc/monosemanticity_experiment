@@ -1,0 +1,11 @@
+{
+  "categories.json": "91a3a6afaeb2a047fc854406fad4a8513ba0719421d50ce8786816954ecf72d2",
+  "image_indices.npy": "2aeaeb0cea59a1d64444f3b9f11568817bfca5299a373130b5d1a0155b23b4be",
+  "labels.npy": "55c1901e5bcfbeee6fa64e3e2acf0537a99761671b2dae99232a115bd7683db8",
+  "provenance.json": "d5cb03326cbae543c86fc41adbf6173e1f4d223013098814f2018336c5f87620",
+  "raw_logits.npy": "6a756fdf7952120f928e05f001b25201792776cc7fe20a8ff8f08ed7dee5ac6d",
+  "targets.npz": "e0a984aab4c811d692754a5d09dc4e70aeaf90305a5774e255336154f1e80861",
+  "source_snapshot/extract_heads.py": "a94df7093258acd6bdd6421579e95414e400208c827642f696b32050529b5ec9",
+  "source_snapshot/head_transfer_design_review.md": "31cda56acf7e82a16ac5761afe5735ccf585b17ae4240f58b2088774caf0f77d",
+  "source_snapshot/head_transfer_protocol.md": "5db32d5f31200bc05471127a59f464320592708bbd218482222616b595505409"
+}

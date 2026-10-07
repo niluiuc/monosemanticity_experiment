@@ -1,0 +1,39 @@
+{
+  "ids": [
+    281,
+    207
+  ],
+  "names": [
+    "tabby",
+    "golden retriever"
+  ],
+  "rms": [
+    2.3272077352495355,
+    2.551605823171754
+  ],
+  "zero_fractions": [
+    0.17578125,
+    0.22265625
+  ],
+  "coactivation": 0.640625,
+  "sigma_reference": 0.730851028581592,
+  "importance": [
+    1.0,
+    0.6666666666666666
+  ],
+  "multipliers": [
+    0,
+    0.05,
+    0.1,
+    0.2,
+    0.4
+  ],
+  "seed": 20261007,
+  "test_images": 4096,
+  "primary": "delta_calibrated_at_multiplier_.4",
+  "bootstrap_replicates": 2000,
+  "calibration_gap": 1e-07,
+  "slack": 1e-12,
+  "expansions": 20000,
+  "seconds": 300
+}

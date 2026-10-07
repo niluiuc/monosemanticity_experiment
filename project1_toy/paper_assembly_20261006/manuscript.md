@@ -1,10 +1,10 @@
 # When does feature sharing stop paying? Training-selected robustness boundaries in a nonlinear bottleneck
 
-Working manuscript skeleton, 6 October 2026. This assembles existing reviewed results; it does not report a new experiment or extend any theorem. Numbers below refer to immutable archived runs. The full derivations remain in `output/pdf/Superposition_Recursive_Training_Derivations.pdf` (98 pages). Submission length, author list and venue formatting are intentionally undecided.
+Working manuscript skeleton, 6 October 2026. This assembles existing reviewed results; it does not report a new experiment or extend any theorem. Numbers below refer to immutable archived runs. The full derivations remain in `output/pdf/Superposition_Recursive_Training_Derivations.pdf` (101 pages). Submission length, author list and venue formatting are intentionally undecided.
 
 ## Abstract — working draft
 
-Packing features into a low-dimensional representation can improve clean reconstruction while changing its sensitivity to corruption. We ask where a clean-trained sharing representation ceases to outperform coordinate-retaining monosemantic reconstruction. In an energy-constrained, two-feature tied-ReLU bottleneck, we globally characterize clean storage selection on a declared importance-frequency domain. Near its storage transition, the selected weak feature has quadratic energy and the clean sharing advantage vanishes cubically in distance to the transition. Combining this selection result with exact Gaussian code-corruption risk yields a local noise boundary proportional to that distance raised to the power three halves. Symmetric population bias calibration changes the derived coefficient; at a singular importance endpoint, the same encoders have opposite frozen and calibrated risk orderings. Prespecified finite population checks and independent numerical audits validate the scoped predictions. A frozen ResNet activation pilot finds a differential calibration benefit, but its held-out representation orderings remain unresolved and its channels lack validated semantic associations. The results characterize a specific reconstruction tradeoff, not universal monosemantic robustness or adversarial safety.
+Packing features into a low-dimensional representation can improve clean reconstruction while changing its sensitivity to corruption. We ask where a clean-trained sharing representation ceases to outperform coordinate-retaining monosemantic reconstruction. In an energy-constrained, two-feature tied-ReLU bottleneck, we globally characterize clean storage selection on a declared importance-frequency domain. Near its storage transition, the selected weak feature has quadratic energy and the clean sharing advantage vanishes cubically in distance to the transition. Combining this selection result with exact Gaussian code-corruption risk yields a local noise boundary proportional to that distance raised to the power three halves. Symmetric population bias calibration changes the derived coefficient; at a singular importance endpoint, the same encoders have opposite frozen and calibrated risk orderings. Prespecified finite population checks and independent numerical audits validate the scoped predictions. A frozen ResNet hidden-channel pilot has unresolved representation orderings; a separate prespecified class-mapped evidence test resolves a sharing advantage across its entire fixed noise grid, without a reversal. These operational tests do not validate hidden-feature monosemanticity or the real-model critical law. The results characterize a specific reconstruction tradeoff, not universal monosemantic robustness or adversarial safety.
 
 ## 1. Introduction: the project question
 
@@ -19,7 +19,7 @@ Proposed contributions, subject to the precise prior-work comparison:
 1. A global clean-selection result, including competing signs, feature assignments and bias activation regions, on an explicit two-feature parameter domain.
 2. A derived near-transition mono-versus-sharing risk law, including its importance-dependent coefficients under two symmetric decoder policies.
 3. A singular endpoint showing opposite risk orderings under those policies with encoder, task and noise held fixed.
-4. Prespecified population validation and a transparently limited real-activation pilot. A further semantic-linked test is pending resource eligibility, not a completed contribution.
+4. Prespecified population validation and two transparently limited real-activation tests: the earlier unresolved hidden-channel pilot and the completed fixed class-evidence follow-up. A stronger hidden-semantic-feature phase demonstration remains unestablished.
 
 Do not claim “the first robustness phase diagram,” a general literature superset, or a universal critical exponent. Broad clean/noisy tradeoffs are already established.
 
@@ -108,7 +108,17 @@ The paired contrast between calibrated and frozen risk differences was positive 
 
 A saved-record decomposition found that images with target0 equal to zero contributed 68.7% of the largest contrast. Mono's gate was exactly at zero there, while sharing gate distances varied. Calibration harmed held-out positive-target images in both models. These observations support a gate association, not causal identification or subgroup significance. The two channels have no independently established concept labels; calling this semantic monosemanticity transfer would be unsupported.
 
-The follow-up is limited to one independently documented semantic-linked pair from a published resource, subject to the prospective gate in `semantic_resource_gate.md`. The checked Pach et al. resource failed the necessary concept/provenance mapping gate, as recorded in `semantic_resource_decision.md`; no follow-up risk experiment was run. A conditional fixed numerical protocol exists, but the required feature artifact remains unavailable.
+The checked Pach et al. SAE resource failed the necessary concept/provenance mapping gate, as recorded in `semantic_resource_decision.md`; no risk experiment was run from that archive. Rather than guessing names for its opaque features, a separately reviewed narrower follow-up used two officially class-mapped outputs of the cached ResNet. This closes an operational labeling gap, not the stronger requirement for validated hidden monosemantic features.
+
+### Fixed class-evidence follow-up: a resolved sharing-favored slice
+
+Before scores were inspected, official indices281(tabby)/207(golden retriever), zero-threshold logit rectification, seed20261007 splits256/256/4096, and the same five noise multipliers were fixed. No SAE was trained or class/threshold scanned. Class supervision supplies an intended evidence association, not ground-truth concept identity; raw-logit zero is checkpoint-gauge dependent. CIFAR cat/dog labels do not certify those subclasses. Training-only association gates passed (AUROC .904952/.808194), and the clean sharing gate passed with training gain .071075658. Same-sign weights(.83541738,.54961605) differ from the Bernoulli critical branch.
+
+Held-out sharing-minus-mono clean risk was −.071055530 with interval[−.08898894,−.05201580]. Every frozen and calibrated difference interval remained belowzero at the five prescribed noise levels. The primary calibrated difference at multiplier .4 was −.073268875, interval[−.09160315,−.05388520]; calibrated risks were .398223291 sharing and .471492166 mono. **No ordering reversal or real critical boundary was observed.** Both absolute risks rose with noise while the sharing advantage slightly grew. Total encoder/decoder energy is matched, but importance-weighted output sensitivity need not match; this redistribution belongs to the specified decoder/noise model rather than being isolated as semantic geometry alone.
+
+Calibration favored sharing relatively at .05/.10, was unresolved at .20, and favored mono relatively at .40: policy contrast .000617314, interval[.000346820,.000899737]. Neither policy changed the winner. All numerical calibration gaps resolved. Independent audit verified provenance, fixed association/gates,896 calibration nodes, Gaussian losses and all paired bootstrap summaries; maximum risk discrepancy4.44e−15. Raw outputs and all settings remain in `../head_transfer_20261007/`.
+
+This supplies a resolved sharing-favored operational slice, supporting a conditional tradeoff rather than an assertion that mono always wins under noise. It does not refute Zhang et al., whose task and noise model differ, reproduce the Bernoulli critical exponent, validate hidden-feature monosemanticity or show a full-model robustness intervention. Stop this fixed pair/grid rather than extending noise to hunt for a reversal.
 
 ## 7. Figure and evidence plan
 
@@ -116,6 +126,7 @@ The follow-up is limited to one independently documented semantic-linked pair fr
 2. Importance-family boundary: `importance_policy_phase.png`; label analytic limits versus finite frozen points. Do not imply a complete finite calibrated map.
 3. Endpoint policy contrast: `endpoint_policy_contrast.png`; same encoder/task/noise, two decoder policies, finite enclosures and asymptotic interpretation.
 4. Vision pilot: `vision_policy_risk.png` and `vision_policy_contrast.png`; display unresolved representation-ordering intervals alongside the positive paired contrast.
+5. Class-evidence transfer: `head_transfer_20261007/plots_v2/head_risk.png` and `head_policy_contrast.png`; display all sharing-favored intervals and the changing calibration contrast, without implying a real phase crossing.
 
 Full derivations, Gaussian-moment calculations, bias profiling and calibration localization go in the mathematical appendix. Reproduction scripts, exact settings, ledgers, bootstrap seeds, hashes and all failed checks remain available in the repository. Standard Gaussian identities and optimization machinery are supporting methods, not separate originality claims.
 
@@ -123,7 +134,7 @@ Full derivations, Gaussian-moment calculations, bias profiling and calibration l
 
 The theory solves a declared two-feature class, not arbitrary load, unknown semantic bases, adaptive representation learning under noise or recursive training. The broader eight-feature arm failed its prescribed stationarity gate after one bounded repair; it supplies no global learned phase evidence and should be reported as unresolved supplementary work. Further optional toy repairs are stopped.
 
-The strongest current paper material is the globally selected local boundary plus policy-dependent coefficients and endpoint contrast. Its exact novelty is plausible within inspected sources; its general significance remains a reviewer question. The existing real pilot is a limited mechanism check. A semantic-linked follow-up may strengthen or weaken the empirical story; retain either outcome. Do not imply that proof correctness, a positive toy reversal or combining two directions guarantees ICML main-track or spotlight acceptance.
+The strongest current paper material is the globally selected local boundary plus policy-dependent coefficients and endpoint contrast. Its exact novelty is plausible within inspected sources; its general significance remains a reviewer question. The earlier real pilot remains limited and unresolved; the completed class-evidence follow-up resolves a held-out sharing advantage, but lacks a phase crossing and validated hidden-feature semantics. These outcomes are complementary scoped evidence, not validation of a universal critical law. Do not imply that proof correctness, a positive toy reversal or combining two directions guarantees ICML main-track or spotlight acceptance.
 
 ## Assembly checklist
 
@@ -136,4 +147,5 @@ The strongest current paper material is the globally selected local boundary plu
 - [ ] Obtain one eligible externally documented semantic feature artifact; do not replace this prerequisite with unlabeled-channel scanning.
 - [ ] If eligible, freeze and review one numerical protocol before fitting or noisy risk.
 - [ ] Complete that one test and make a claim-strength decision from its actual evidence.
+- [x] Complete and independently audit the separate professor-approved class-evidence operational follow-up; sharing wins all fixed levels, no reversal. Preserve the stronger hidden-feature requirement as unmet rather than checking it off.
 - [ ] Convert the assembled manuscript to the chosen venue format after claims and evidence are fixed.

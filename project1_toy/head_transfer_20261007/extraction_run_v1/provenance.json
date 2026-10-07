@@ -1,0 +1,30 @@
+{
+  "status": "complete",
+  "checkpoint_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+  "checkpoint_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+  "dataset_archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+  "ids": [
+    281,
+    207
+  ],
+  "names": [
+    "tabby",
+    "golden retriever"
+  ],
+  "seed": 20261007,
+  "feature_definition": "rectify fixed class logits at zero; not concept absence",
+  "split_sizes": [
+    256,
+    256,
+    4096
+  ],
+  "transform": "ImageClassification(\n    crop_size=[224]\n    resize_size=[256]\n    mean=[0.485, 0.456, 0.406]\n    std=[0.229, 0.224, 0.225]\n    interpolation=InterpolationMode.BILINEAR\n)",
+  "torch": "2.14.1+cpu",
+  "torchvision": "0.29.1+cpu",
+  "numpy": "2.3.0",
+  "batch_size": 32,
+  "threads": 4,
+  "max_seconds": 1200,
+  "elapsed_seconds": 304.4529999999795,
+  "images_completed": 4608
+}

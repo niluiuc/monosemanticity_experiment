@@ -1,0 +1,16 @@
+{
+  "train_auc": [
+    0.9049522540528536,
+    0.8081939799331104
+  ],
+  "threshold": 0.65,
+  "target_names": [
+    "tabby",
+    "golden retriever"
+  ],
+  "cifar_associations": [
+    "cat",
+    "dog"
+  ],
+  "passed": true
+}

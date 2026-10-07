@@ -1,0 +1,37 @@
+{
+  "scope": "saved-artifact audit; no new image extraction, training or noise cases",
+  "extraction_manifest_files": 9,
+  "ids": [
+    281,
+    207
+  ],
+  "names": [
+    "tabby",
+    "golden retriever"
+  ],
+  "train_auc": [
+    0.9049522540528536,
+    0.8081939799331104
+  ],
+  "fixed_indices_and_raw_head_targets_verified": true,
+  "genuine_source_file_hashes_verified": true,
+  "feature_inference_limit": "Archived source/provenance and complete head outputs checked; no forward inference duplicated.",
+  "evaluation_manifest_files": 38,
+  "stopping_decision": {
+    "stop": "five_fixed_levels_completed",
+    "all_calibration_resolved": true
+  },
+  "train_rms": [
+    2.3272077352495355,
+    2.551605823171754
+  ],
+  "train_zero_fractions": [
+    0.17578125,
+    0.22265625
+  ],
+  "noise_reference": 0.730851028581592,
+  "evaluation_cases": 5,
+  "calibration_nodes_reviewed": 896,
+  "max_per_image_risk_discrepancy": 4.440892098500626e-15,
+  "passed": true
+}
