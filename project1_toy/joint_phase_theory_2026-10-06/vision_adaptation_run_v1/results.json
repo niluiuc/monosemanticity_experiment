@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "clean_beta": 0.44999999999999996,
+  "clean_loss": 0.0016666666666666696,
+  "gaussian_checks": [
+    {
+      "beta": 0.3,
+      "formula": 0.03170167065967306,
+      "quadrature_mean": 0.031701670659673005,
+      "absolute_difference": 5.551115123125783e-17,
+      "quadrature_errors": [
+        8.967391302377032e-14,
+        2.1774620733566848e-13,
+        5.141009652801437e-13
+      ],
+      "derivative": -0.19893949379426157,
+      "finite_difference": -0.19893949390267784,
+      "gradient_error": 1.0841627595681302e-10
+    },
+    {
+      "beta": 0.45,
+      "formula": 0.017231601865099793,
+      "quadrature_mean": 0.017231601865099828,
+      "absolute_difference": 3.469446951953614e-17,
+      "quadrature_errors": [
+        8.574974492412485e-13,
+        9.43036332014378e-14,
+        4.929090062165034e-13
+      ],
+      "derivative": 0.00833512892580284,
+      "finite_difference": 0.008335128970707317,
+      "gradient_error": 4.490447770566508e-11
+    },
+    {
+      "beta": 0.6,
+      "formula": 0.035416666050248576,
+      "quadrature_mean": 0.0354166660502486,
+      "absolute_difference": 2.7755575615628914e-17,
+      "quadrature_errors": [
+        1.4618387119506158e-13,
+        8.850934906406818e-13,
+        4.238856958964031e-13
+      ],
+      "derivative": 0.23989425138896028,
+      "finite_difference": 0.23989425149140153,
+      "gradient_error": 1.0244124992730974e-10
+    }
+  ],
+  "calibration_gap": 3.3678104818801735e-09,
+  "independent_minimum": 0.017207427253240464,
+  "independent_beta": 0.444195187008665,
+  "limitations": "Numerical adaptation agreement; not directed-rounding proof or a real vision result."
+}

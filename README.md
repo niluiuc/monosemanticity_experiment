@@ -9,6 +9,9 @@ findings, and unresolved questions are distinguished in the linked records.
 ## Start here
 
 - [Living research plan and experiment log](project1_toy/plan.md)
+- [Critical-boundary theory and fixed validations](project1_toy/joint_phase_theory_2026-10-06/README.md)
+- [Learned-vision pilot: complete settings, mixed findings and reproduction](project1_toy/vision_transfer_20261006/README.md)
+- [Current professor assessment](project1_toy/joint_phase_theory_2026-10-06/professor_vision_post_pilot_decision.md)
 - [Latest decision and calibration-control overview](project1_toy/paper_decision_2026-10-06/README.md)
 - [Calibration-control results and limitations](project1_toy/paper_decision_2026-10-06/calibration_results.md)
 - [Senior research assessment](project1_toy/paper_decision_2026-10-06/professor_decision.md)
@@ -16,6 +19,14 @@ findings, and unresolved questions are distinguished in the linked records.
 - [Full mathematical derivations (PDF)](output/pdf/Superposition_Recursive_Training_Derivations.pdf)
 
 ## Reproduce and inspect
+
+The latest controlled results establish a decoder-policy-dependent robustness
+boundary in the declared two-feature class, including an endpoint where frozen
+and calibrated decoders have opposite mono/sharing orderings. The fixed vision
+pilot supports a paired policy effect, but does not resolve a held-out risk
+ordering or demonstrate a real-model phase-boundary reversal. Broader toy
+optimization failures remain preserved. These distinctions are part of the
+research record, not omitted unfavorable outcomes.
 
 Use Python 3.12. Each experiment directory documents its settings, stopping
 criteria, dependencies, and immutable recorded run. Run reproductions in a

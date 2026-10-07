@@ -1,0 +1,21 @@
+{
+  "scope": "saved-artifact audit; no new image extraction, training or noise cases",
+  "extraction_manifest_files": 8,
+  "channels": [
+    0,
+    1
+  ],
+  "train_rms": [
+    2.1767477054811923,
+    2.406063048768256
+  ],
+  "train_zero_fractions": [
+    0.48828125,
+    0.30859375
+  ],
+  "noise_reference": 0.8082696313648098,
+  "fixed_indices_and_raw_normalized_arrays_verified": true,
+  "genuine_source_file_hashes_verified": true,
+  "feature_inference_limit": "Archived source/provenance checked; forward inference was not duplicated.",
+  "passed": true
+}

@@ -1,0 +1,11 @@
+{
+  "kind": "saved_noisy_risk_comparison",
+  "channels": [
+    0,
+    1
+  ],
+  "unresolved_case_indices": [],
+  "evidence": "Held-out conditional Gaussian MSE, paired bootstrap over test images only; not a population proof.",
+  "plot": "vision_policy_risk.png",
+  "source_run": "D:\\Study\\PHD UIUC\\LLM project\\algoverse\\project1_toy\\vision_transfer_20261006\\vision_run_v1"
+}

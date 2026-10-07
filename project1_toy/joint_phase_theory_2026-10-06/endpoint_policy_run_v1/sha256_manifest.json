@@ -1,0 +1,20 @@
+{
+  "results.json": "abb9293a8098b152c37f955c0f9b4f7487d6147dbcd3e77edf40fd5113e0effb",
+  "settings.json": "3dfe5a8c65e6e71651450d57c324263c08025126e5270e33e633cb94fc36dce2",
+  "timing.json": "e8bbc6ce7f9d9d3770cb7ceb2a8719a4053e472b2e0d50ca9f502dec31319269",
+  "epsilon_.001/mono_feature_0.json": "06f02098aacb217644101bef12905301693186c0f0e9428676e0bd83409a76a4",
+  "epsilon_.001/mono_feature_1.json": "85be2994c25ce4937cbddfc18b5da203c70d637e795203f90cb8b394f79e7ac8",
+  "epsilon_.001/sharing_feature_0.json": "d2577ba570947586d497209bb3257e8579e5fbd739a25224bf204cff7a070e59",
+  "epsilon_.001/sharing_feature_1.json": "62d6bff18d547124d41a8cc0207d43e0826f4e57bec365fd3c655ec89c21b6c1",
+  "epsilon_.005/mono_feature_0.json": "ed99892e997b614152bc6c5ba90ec167e7a204115bcc91582dc6a15b860d8c10",
+  "epsilon_.005/mono_feature_1.json": "366df471f02fc138b59cc47ae5b33ee16b581b4d6b3d788d55e7ac412a29295f",
+  "epsilon_.005/sharing_feature_0.json": "921c810e919dc639b30824e0549b1624a4d387da06a6934d79670f55961805af",
+  "epsilon_.005/sharing_feature_1.json": "f0b6c1057cf8ad9707e17ba9fe1e1e4cf61cc860da3abb327368c244df8a6277",
+  "source_snapshot/endpoint_calibration_derivation.tex": "424948cbdab781886380f82c43c5fd326b77996471a5099a8a082dcda54a78cd",
+  "source_snapshot/endpoint_policy_protocol.md": "eb86ff60726bdd9c83bcffb2de56821fce618d0fcf23a3589005ef369a8b19a9",
+  "source_snapshot/endpoint_professor_review.md": "955d9fabf383db3c0399dd7109d47b34db6deaa0ef23d9dc970e103b08ea37f6",
+  "source_snapshot/run_critical_calibration.py": "773b417c8b43d2fc397b63e20a27d4203be4b0874aa1f0f4d7f6d87e86bd1be7",
+  "source_snapshot/run_endpoint_policy.py": "479bc68260fb70111c606469e3a03396840a35e9d3f034af69afc7ff1ff3043f",
+  "source_snapshot/run_frozen_map.py": "9410d2e8458e84282dd95ad6516e8498c8dd19c8986e59987914b1cbc66b8788",
+  "source_snapshot/run_importance_validation.py": "b3b0de2cb3c9f02a9f5121511f4510508e7a3f85c4be932ac6fc33c2f0c96257"
+}

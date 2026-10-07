@@ -1,0 +1,45 @@
+{
+  "symbolic_checks": {
+    "independent_strong_state_loss": true,
+    "independent_weak_all_state_loss": true,
+    "independent_weak_three_state_loss": true,
+    "independent_same_sign_state_losses": true,
+    "all_active_weighted_excess": true,
+    "three_active_weighted_excess": true,
+    "stationarity_from_state_losses": true,
+    "three_branch_derivative_regroup": true,
+    "pointwise_sign_sector_comparison": true,
+    "endpoint_both_sign_excess": true
+  },
+  "four_saved_case_root_checks": [
+    {
+      "eta": "12/25",
+      "epsilon": "1/200",
+      "all_exact_coefficients_and_bracket_signs": true,
+      "numeric_p_error": "4.879957123408305549894649255939816102879008428977883206162370287901131943768070814355307024248235568e-71",
+      "numeric_k_midpoint_error": "1.893318831789160517037332791453318713947793149346160004995543163007383845434616971862827700488227446e-73"
+    },
+    {
+      "eta": "12/25",
+      "epsilon": "1/1000",
+      "all_exact_coefficients_and_bracket_signs": true,
+      "numeric_p_error": "5.12004287659169445010535074405998620440712256275207844334077542852501773877636835245203160413992151e-71",
+      "numeric_k_midpoint_error": "5.409374667348168461507440276011828455818064503116415228649188914557095859464595092055047166686008527e-74"
+    },
+    {
+      "eta": "13/25",
+      "epsilon": "1/200",
+      "all_exact_coefficients_and_bracket_signs": true,
+      "numeric_p_error": "3.574843074641160234661092395340108009009971387163303554627416972835985662103866739455587894823092693e-71",
+      "numeric_k_midpoint_error": "1.549676701903569801083384863351696380968763979945653992331705556117440096766390004239201745188433202e-73"
+    },
+    {
+      "eta": "13/25",
+      "epsilon": "1/1000",
+      "all_exact_coefficients_and_bracket_signs": true,
+      "numeric_p_error": "3.574843074641160234661092395340108009009971387163303554627416972835985662103866739455587894823092693e-71",
+      "numeric_k_midpoint_error": "3.393305758706473416504416050801497855716981802412049397368514505310120611827794517212165389084735947e-73"
+    }
+  ],
+  "scope": "Independent four-state algebra plus exact rational root-enclosure audit of the four already executed cases; no new experiments or global-proof substitute."
+}

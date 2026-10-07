@@ -1,0 +1,810 @@
+{
+  "scope": "Descriptive saved-record decomposition, no new training/noise/bootstrap",
+  "gates": {
+    "sharing": {
+      "target0_zero": {
+        "output_0": {
+          "signed_mean": {
+            "count": 271,
+            "mean": -0.03979298585665102,
+            "minimum": -0.1782367817346469,
+            "quantiles": [
+              -0.1782367817346469,
+              -0.08631229824895874,
+              0.04223340082541095
+            ],
+            "maximum": 0.6733154942303323,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 0.3247232472324723
+          },
+          "absolute_gate_distance": {
+            "count": 271,
+            "mean": 0.14032558210578236,
+            "minimum": 0.0010190119302675438,
+            "quantiles": [
+              0.06917031838874191,
+              0.16482873062495407,
+              0.1782367817346469
+            ],
+            "maximum": 0.6733154942303323,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        },
+        "output_1": {
+          "signed_mean": {
+            "count": 271,
+            "mean": 0.5108856800983588,
+            "minimum": 0.4746528932634346,
+            "quantiles": [
+              0.4746528932634346,
+              0.4987108887404051,
+              0.5323531974012601
+            ],
+            "maximum": 0.6975167052396963,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          },
+          "absolute_gate_distance": {
+            "count": 271,
+            "mean": 0.5108856800983588,
+            "minimum": 0.4746528932634346,
+            "quantiles": [
+              0.4746528932634346,
+              0.4987108887404051,
+              0.5323531974012601
+            ],
+            "maximum": 0.6975167052396963,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        }
+      },
+      "target0_positive": {
+        "output_0": {
+          "signed_mean": {
+            "count": 241,
+            "mean": 0.9902666242683821,
+            "minimum": -0.14359112163681764,
+            "quantiles": [
+              0.28407453662817206,
+              0.7149067185783369,
+              1.2297061541320886
+            ],
+            "maximum": 6.911988834378175,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 0.9377593360995851
+          },
+          "absolute_gate_distance": {
+            "count": 241,
+            "mean": 0.9962762080114775,
+            "minimum": 0.0004836473311972955,
+            "quantiles": [
+              0.28407453662817206,
+              0.7149067185783369,
+              1.2297061541320886
+            ],
+            "maximum": 6.911988834378175,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        },
+        "output_1": {
+          "signed_mean": {
+            "count": 241,
+            "mean": 0.7804674988012751,
+            "minimum": 0.48372017438729326,
+            "quantiles": [
+              0.5956465957502872,
+              0.7084017431458569,
+              0.8431323613932507
+            ],
+            "maximum": 2.3302696923472137,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          },
+          "absolute_gate_distance": {
+            "count": 241,
+            "mean": 0.7804674988012751,
+            "minimum": 0.48372017438729326,
+            "quantiles": [
+              0.5956465957502872,
+              0.7084017431458569,
+              0.8431323613932507
+            ],
+            "maximum": 2.3302696923472137,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        }
+      }
+    },
+    "mono": {
+      "target0_zero": {
+        "output_0": {
+          "signed_mean": {
+            "count": 271,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "quantiles": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "maximum": 0.0,
+            "exactly_zero_fraction": 1.0,
+            "positive_fraction": 0.0
+          },
+          "absolute_gate_distance": {
+            "count": 271,
+            "mean": 0.0,
+            "minimum": 0.0,
+            "quantiles": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "maximum": 0.0,
+            "exactly_zero_fraction": 1.0,
+            "positive_fraction": 0.0
+          }
+        },
+        "output_1": {
+          "signed_mean": {
+            "count": 271,
+            "mean": 0.6472552812410772,
+            "minimum": 0.6472552812410772,
+            "quantiles": [
+              0.6472552812410772,
+              0.6472552812410772,
+              0.6472552812410772
+            ],
+            "maximum": 0.6472552812410772,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          },
+          "absolute_gate_distance": {
+            "count": 271,
+            "mean": 0.6472552812410772,
+            "minimum": 0.6472552812410772,
+            "quantiles": [
+              0.6472552812410772,
+              0.6472552812410772,
+              0.6472552812410772
+            ],
+            "maximum": 0.6472552812410772,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        }
+      },
+      "target0_positive": {
+        "output_0": {
+          "signed_mean": {
+            "count": 241,
+            "mean": 1.0501870943020148,
+            "minimum": 0.006338820661099872,
+            "quantiles": [
+              0.3499104799497314,
+              0.6984954859238927,
+              1.3456444222067037
+            ],
+            "maximum": 7.57586794845509,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          },
+          "absolute_gate_distance": {
+            "count": 241,
+            "mean": 1.0501870943020148,
+            "minimum": 0.006338820661099872,
+            "quantiles": [
+              0.3499104799497314,
+              0.6984954859238927,
+              1.3456444222067037
+            ],
+            "maximum": 7.57586794845509,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        },
+        "output_1": {
+          "signed_mean": {
+            "count": 241,
+            "mean": 0.6472552812410771,
+            "minimum": 0.6472552812410772,
+            "quantiles": [
+              0.6472552812410772,
+              0.6472552812410772,
+              0.6472552812410772
+            ],
+            "maximum": 0.6472552812410772,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          },
+          "absolute_gate_distance": {
+            "count": 241,
+            "mean": 0.6472552812410771,
+            "minimum": 0.6472552812410772,
+            "quantiles": [
+              0.6472552812410772,
+              0.6472552812410772,
+              0.6472552812410772
+            ],
+            "maximum": 0.6472552812410772,
+            "exactly_zero_fraction": 0.0,
+            "positive_fraction": 1.0
+          }
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "sigma": 0.0,
+      "multiplier": 0,
+      "primary_groups": {
+        "target0_zero": {
+          "sharing": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0,
+            "weighted_contribution": 0.0
+          },
+          "mono": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0,
+            "weighted_contribution": 0.0
+          },
+          "contrast": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0,
+            "weighted_contribution": 0.0
+          }
+        },
+        "target0_positive": {
+          "sharing": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 0.0,
+            "weighted_contribution": 0.0
+          },
+          "mono": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 0.0,
+            "weighted_contribution": 0.0
+          },
+          "contrast": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 0.0,
+            "weighted_contribution": 0.0
+          }
+        }
+      },
+      "per_output_own_target_groups": {
+        "output_0": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          }
+        },
+        "output_1": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          }
+        }
+      },
+      "global_contrast": 0.0,
+      "global_improvements": {
+        "sharing": 0.0,
+        "mono": 0.0
+      }
+    },
+    {
+      "sigma": 0.04041348156824049,
+      "multiplier": 0.05,
+      "primary_groups": {
+        "target0_zero": {
+          "sharing": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0001529300904944837,
+            "weighted_contribution": 8.094541899219743e-05
+          },
+          "mono": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.00031350346203637414,
+            "weighted_contribution": 0.00016593640275753397
+          },
+          "contrast": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.00016057337154189044,
+            "weighted_contribution": 8.499098376533654e-05
+          }
+        },
+        "target0_positive": {
+          "sharing": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.00015002969006803896,
+            "weighted_contribution": -7.06194439578074e-05
+          },
+          "mono": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.00012238008974356894,
+            "weighted_contribution": -5.760469068007835e-05
+          },
+          "contrast": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 2.7649600324470008e-05,
+            "weighted_contribution": 1.3014753277729046e-05
+          }
+        }
+      },
+      "per_output_own_target_groups": {
+        "output_0": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.0001529300904944837,
+              "weighted_contribution": 8.094541899219743e-05
+            },
+            "mono": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.00031350346203637414,
+              "weighted_contribution": 0.00016593640275753397
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.00015002969006803896,
+              "weighted_contribution": -7.06194439578074e-05
+            },
+            "mono": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.00012238008974356894,
+              "weighted_contribution": -5.760469068007835e-05
+            }
+          }
+        },
+        "output_1": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          }
+        }
+      },
+      "global_contrast": 9.800573704306557e-05,
+      "global_improvements": {
+        "sharing": 1.032597503439004e-05,
+        "mono": 0.00010833171207745561
+      }
+    },
+    {
+      "sigma": 0.08082696313648098,
+      "multiplier": 0.1,
+      "primary_groups": {
+        "target0_zero": {
+          "sharing": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0007136481764477233,
+            "weighted_contribution": 0.00037773174964322853
+          },
+          "mono": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0013192129367609455,
+            "weighted_contribution": 0.0006982552848871411
+          },
+          "contrast": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0006055647603132224,
+            "weighted_contribution": 0.00032052353524391263
+          }
+        },
+        "target0_positive": {
+          "sharing": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.0006595188142494266,
+            "weighted_contribution": -0.0003104375668634996
+          },
+          "mono": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.0004918300647270686,
+            "weighted_contribution": -0.00023150594843598346
+          },
+          "contrast": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 0.00016768874952235795,
+            "weighted_contribution": 7.893161842751614e-05
+          }
+        }
+      },
+      "per_output_own_target_groups": {
+        "output_0": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.0007136481764477233,
+              "weighted_contribution": 0.00037773174964322853
+            },
+            "mono": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.0013192129367609455,
+              "weighted_contribution": 0.0006982552848871411
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.0006595188142494266,
+              "weighted_contribution": -0.0003104375668634996
+            },
+            "mono": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.0004918300647270686,
+              "weighted_contribution": -0.00023150594843598346
+            }
+          }
+        },
+        "output_1": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          }
+        }
+      },
+      "global_contrast": 0.0003994551536714287,
+      "global_improvements": {
+        "sharing": 6.729418277972893e-05,
+        "mono": 0.00046674933645115765
+      }
+    },
+    {
+      "sigma": 0.16165392627296196,
+      "multiplier": 0.2,
+      "primary_groups": {
+        "target0_zero": {
+          "sharing": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0035782612178097057,
+            "weighted_contribution": 0.0018939624805203717
+          },
+          "mono": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.00580941074187395,
+            "weighted_contribution": 0.0030749029512653135
+          },
+          "contrast": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.0022311495240642434,
+            "weighted_contribution": 0.0011809404707449414
+          }
+        },
+        "target0_positive": {
+          "sharing": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.002685222843313293,
+            "weighted_contribution": -0.0012639427836689523
+          },
+          "mono": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.0017997839637285125,
+            "weighted_contribution": -0.0008471639360518975
+          },
+          "contrast": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 0.0008854388795847801,
+            "weighted_contribution": 0.0004167788476170547
+          }
+        }
+      },
+      "per_output_own_target_groups": {
+        "output_0": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.0035782612178097057,
+              "weighted_contribution": 0.0018939624805203717
+            },
+            "mono": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.00580941074187395,
+              "weighted_contribution": 0.0030749029512653135
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.002685222843313293,
+              "weighted_contribution": -0.0012639427836689523
+            },
+            "mono": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.0017997839637285125,
+              "weighted_contribution": -0.0008471639360518975
+            }
+          }
+        },
+        "output_1": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            },
+            "mono": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          }
+        }
+      },
+      "global_contrast": 0.0015977193183619963,
+      "global_improvements": {
+        "sharing": 0.0006300196968514192,
+        "mono": 0.0022277390152134154
+      }
+    },
+    {
+      "sigma": 0.3233078525459239,
+      "multiplier": 0.4,
+      "primary_groups": {
+        "target0_zero": {
+          "sharing": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.019373375940301113,
+            "weighted_contribution": 0.010254267343401565
+          },
+          "mono": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.027089004568996048,
+            "weighted_contribution": 0.01433812546523033
+          },
+          "contrast": {
+            "count": 271,
+            "fraction": 0.529296875,
+            "mean": 0.007715628628694949,
+            "weighted_contribution": 0.004083858121828772
+          }
+        },
+        "target0_positive": {
+          "sharing": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.008421760175680217,
+            "weighted_contribution": -0.0039641488326932275
+          },
+          "mono": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": -0.004464504609246718,
+            "weighted_contribution": -0.002101456271149334
+          },
+          "contrast": {
+            "count": 241,
+            "fraction": 0.470703125,
+            "mean": 0.0039572555664335015,
+            "weighted_contribution": 0.0018626925615438943
+          }
+        }
+      },
+      "per_output_own_target_groups": {
+        "output_0": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.019373376453080154,
+              "weighted_contribution": 0.010254267614813909
+            },
+            "mono": {
+              "count": 271,
+              "fraction": 0.529296875,
+              "mean": 0.027089004568996048,
+              "weighted_contribution": 0.01433812546523033
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.008421760388700301,
+              "weighted_contribution": -0.003964148932962447
+            },
+            "mono": {
+              "count": 241,
+              "fraction": 0.470703125,
+              "mean": -0.004464504609246718,
+              "weighted_contribution": -0.002101456271149334
+            }
+          }
+        },
+        "output_1": {
+          "own_target_zero": {
+            "sharing": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 5.658474372463153e-09,
+              "weighted_contribution": 1.7793249491534525e-09
+            },
+            "mono": {
+              "count": 161,
+              "fraction": 0.314453125,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          },
+          "own_target_positive": {
+            "sharing": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": -2.8451272203845456e-09,
+              "weighted_contribution": -1.9504680749120616e-09
+            },
+            "mono": {
+              "count": 351,
+              "fraction": 0.685546875,
+              "mean": 0.0,
+              "weighted_contribution": 0.0
+            }
+          }
+        }
+      },
+      "global_contrast": 0.005946550683372666,
+      "global_improvements": {
+        "sharing": 0.006290118510708336,
+        "mono": 0.012236669194081
+      }
+    }
+  ],
+  "max_saved_loss_discrepancy": 0.0,
+  "limit": "Zero/positive groups are observational; this does not isolate causal gate effects or establish a heldout reversal."
+}

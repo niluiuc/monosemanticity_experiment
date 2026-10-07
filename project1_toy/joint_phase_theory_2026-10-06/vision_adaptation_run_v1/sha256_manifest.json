@@ -1,0 +1,10 @@
+{
+  "calibration_ledger.json": "365ebbaa9316e8dc57c42fa27dafb4c7853c9866202cba24e41743508cf53fff",
+  "clean_profile.json": "7aa96aa510708c5b31388d38265b83b0ee8d2d03fe1cec925dccbe7d57118511",
+  "independent_grid.npz": "54c10cfb5854acc6175b5e68ed85759138258b9e9fd8f25e9a548f686693d738",
+  "results.json": "07e22cd28e7e3d426a407c23368830fed6c432391f76a2a2ab8c68919a7488e0",
+  "settings.json": "426fba293243f590993b354246d8f928dd7ceabf4d3b29d99191470c060b0221",
+  "verify_vision_adaptation.py": "86b6d82ff6900614314724a3c8188c5e9a5b2db89e3971467991da5d59779531",
+  "vision_transfer.py": "61213e0151eec6043b3fcd44a61ddc804646fe495c676d391ec59a3135866fd3",
+  "vision_transfer_protocol.md": "edf1828866ce3542f5f347c4b01d8790672189a3a9a9e6914ace9c09ff1b4549"
+}

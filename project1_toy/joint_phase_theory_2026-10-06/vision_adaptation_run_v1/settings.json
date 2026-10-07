@@ -1,0 +1,17 @@
+{
+  "offset": [
+    -0.6,
+    0.2,
+    1.1
+  ],
+  "target": [
+    0.0,
+    0.7,
+    1.5
+  ],
+  "sd": 0.15,
+  "numerical_scope": "One fixed implementation-adaptation case; no image outcomes.",
+  "calibration_tolerance": 1e-08,
+  "independent_grid": 4097,
+  "gradient_step": 1e-06
+}

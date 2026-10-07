@@ -43,3 +43,24 @@ python plot_calibrated_boundaries.py
 ```
 
 The bisection and plot scripts target the original archived endpoint comparisons. Original run folders refuse overwrite. The full weekly schedule remains in week_plan.md; larger-toy and nonbinary tests are separate subsequent records.
+
+## Importance family and singular endpoint (completed)
+
+Read importance_validation_protocol.md and endpoint_policy_protocol.md for the fixed questions/settings. The companion derivation PDF contains the full global-selection proofs, local limits and numerical limitations. importance_run_v1 has four frozen boundary brackets and eight calibrated endpoint comparisons; endpoint_policy_run_v1 has two fixed policy-order comparisons. All signs resolved under their declared floating-slack branch-and-bound tolerances. Independent results are in importance_independent_review_v1 and endpoint_independent_ledger_review_v1. These are scalar-Gaussian-code-noise reconstruction comparisons, not adversarial safety guarantees.
+
+Fresh-folder reproduction (NumPy, mpmath, matplotlib as required):
+
+`powershell
+python run_importance_validation.py --review importance_validation_review.md --output importance_run_reproduced
+python run_endpoint_policy.py --review endpoint_professor_review.md --output endpoint_policy_run_reproduced
+python plot_importance_validation.py
+python plot_endpoint_policy.py
+`
+
+Original archived runs are immutable. Live runners accept the requested central PDF as proof provenance when local TeX is absent; reproduction_source_revision.md documents this packaging-only revision. Read their command-line options before setting fresh output directories. No new samples or optional families are needed.
+
+## One fixed vision pilot (in progress)
+
+Read vision_transfer_protocol.md, professor_vision_transfer_decision.md and vision_transfer_independent_review.md before execution. The extractor is ../vision_transfer_20261006/vision_extract.py. It loads official pretrained frozen weights and CIFAR10 data into a cache outside the repository, saves raw central-cell layer4 features, and fixes the lowest-index eligible channel pair before seeing risk outcomes. This pilot is operational channel retention/sharing; semantic concepts and Bernoulli critical exponents are not established for those channels.
+
+The downstream command accepts the saved vision_activations.npz, a reviewed protocol implementation and a fresh output folder. It stops before noise if the clean sharing advantage or prescribed optimization checks fail. Both policies use zero-noise calibration-split biases as their common baseline. All five fixed noise levels, bounds, unresolved flags, per-image expected losses and bootstrap draws are retained if the gate passes. No favorable pair search or noise-grid extension is permitted.

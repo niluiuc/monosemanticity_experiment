@@ -1,0 +1,8 @@
+{
+  "input_hashes.json": "a135604841e1db1db5d28e8c0a6f25c0372512b96a5383a2bc26c0e3b24ce278",
+  "raw_arrays.npz": "534c40328e8a1d751c49746b7fe704d7ceb3b721bbd93e44c0f19ee15be2a7e2",
+  "results.json": "2965c9fcf8e151a557e0a24aef1f853bfd8f3813428147cf0d8f1377c9f31a02",
+  "source_snapshot/audit_saved_mechanism.py": "af02044ea25e08032298c2a295ef4c585ed9bffff1e5e499d772ec8e7c4bca1d",
+  "source_snapshot/mechanism_audit_protocol.md": "b57e85e1858f94509f170f59d489b1a0c8eba005909dc2ad43843c5158e03274",
+  "source_snapshot/vision_transfer.py": "b39cc473b86c736938d737a2d4e2caf49ee12fe2cf57bc62b661afaf5bcd8151"
+}

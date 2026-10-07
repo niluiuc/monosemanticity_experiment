@@ -1,0 +1,268 @@
+{
+  "protocol": "fixed frozen extraction; no training, class selection or risk outcomes",
+  "seed": 20261006,
+  "device": "cpu",
+  "batch_size": 32,
+  "threads": 4,
+  "split_sizes": {
+    "train": 256,
+    "calibration": 256,
+    "test": 512
+  },
+  "checkpoint": "IMAGENET1K_V1",
+  "checkpoint_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+  "dataset_url": "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz",
+  "dataset_archive_md5": "c58f30108f718f92721af3b95e74349a",
+  "transform_repr": "ImageClassification(\n    crop_size=[224]\n    resize_size=[256]\n    mean=[0.485, 0.456, 0.406]\n    std=[0.229, 0.224, 0.225]\n    interpolation=InterpolationMode.BILINEAR\n)",
+  "transform_fields": {
+    "crop_size": [
+      224
+    ],
+    "resize_size": [
+      256
+    ],
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "antialias": true
+  },
+  "feature_location": "post-ReLU layer4 output; spatial cell [height//2,width//2]",
+  "channel_rule": "first two by index with train variance>0 and train mean!=0",
+  "normalization": "divide by channel train RMS; no centering",
+  "max_seconds": 600,
+  "python": "3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]",
+  "torch": "2.14.1+cpu",
+  "torchvision": "0.29.1+cpu",
+  "numpy": "2.3.0",
+  "source_sha256": "b677dab4db1327ae7eb763c52d65360701bf98811232835453e2d146883d9b5a",
+  "cache": "C:\\Users\\indra\\.cache\\monosemanticity_vision_20261006",
+  "status": "extraction_complete",
+  "channels": [
+    0,
+    1
+  ],
+  "train_rms": [
+    2.1767477054811923,
+    2.406063048768256
+  ],
+  "train_zero_fractions": [
+    0.48828125,
+    0.30859375
+  ],
+  "normalized_pair_noise_reference_sqrt_mean_variance": 0.8082696313648098,
+  "train_coactivation_fraction": 0.37109375,
+  "train_state_fractions_00_01_10_11": [
+    0.16796875,
+    0.3203125,
+    0.140625,
+    0.37109375
+  ],
+  "noise_reference": "sigma is scalar bottleneck-code SD after train-RMS feature normalization; energy=1",
+  "layer4_spatial_coordinates_per_batch": [
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ],
+    [
+      7,
+      7,
+      3,
+      3
+    ]
+  ],
+  "dataset_archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+  "checkpoint_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+  "both_selected_channels_have_exact_zero_mass": true,
+  "downstream_execution": "none; professor review required",
+  "elapsed_seconds_at_activation_save": 229.18800000008196,
+  "elapsed_seconds": 229.20300000021234
+}

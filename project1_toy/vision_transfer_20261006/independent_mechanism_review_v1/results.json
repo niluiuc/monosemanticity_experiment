@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "scope": "Independent saved-input/formula/count/decomposition audit; no new fit/noise/bootstrap.",
+  "manifest_files_checked": 6,
+  "cases_checked": 5,
+  "max_output_improvement_discrepancy": 0.0,
+  "zero_target_count": 271,
+  "positive_target_count": 241,
+  "largest_noise_primary_groups": {
+    "target0_zero": {
+      "sharing": {
+        "count": 271,
+        "fraction": 0.529296875,
+        "mean": 0.019373375940301113,
+        "weighted_contribution": 0.010254267343401565
+      },
+      "mono": {
+        "count": 271,
+        "fraction": 0.529296875,
+        "mean": 0.027089004568996048,
+        "weighted_contribution": 0.01433812546523033
+      },
+      "contrast": {
+        "count": 271,
+        "fraction": 0.529296875,
+        "mean": 0.007715628628694949,
+        "weighted_contribution": 0.004083858121828772
+      }
+    },
+    "target0_positive": {
+      "sharing": {
+        "count": 241,
+        "fraction": 0.470703125,
+        "mean": -0.008421760175680217,
+        "weighted_contribution": -0.0039641488326932275
+      },
+      "mono": {
+        "count": 241,
+        "fraction": 0.470703125,
+        "mean": -0.004464504609246718,
+        "weighted_contribution": -0.002101456271149334
+      },
+      "contrast": {
+        "count": 241,
+        "fraction": 0.470703125,
+        "mean": 0.0039572555664335015,
+        "weighted_contribution": 0.0018626925615438943
+      }
+    }
+  },
+  "limit": "Observational partition; no causal intervention or resolved risk-ordering reversal."
+}

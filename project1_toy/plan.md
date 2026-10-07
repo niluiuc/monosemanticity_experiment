@@ -990,3 +990,34 @@ Full derivations enter the existing companion PDF. Protocol, raw 70-digit result
 - Next bounded step: specify one small vision transfer experiment with a matched-capacity mono/shared comparison, clean training selection, a fixed corruption model and frozen-versus-calibrated decoder policies. Do not launch diffusion, LLM or further optimizer searches in parallel. A real-model protocol must be fixed before training.
 
 Evidence: joint_phase_theory_2026-10-06/{clean_global_certificate_reproduced,frozen_run_v1,calibrated_run_v1,calibrated_boundary_run_v1}; broader_toy_20261006/{clean_run_v1,repair_run_v1,independent_clean_review_v1,independent_repair_review_v2}. All mathematics and numerical limitations are included in the updated derivations PDF.
+
+
+## 6 October — importance-family theorem, endpoint contrast, and fixed vision pilot
+
+- The global clean-selection proof now covers importance eta in [0.48,0.52] and p in [0.35,0.42]. The training-selected local boundary retains exponent 3/2 with derived importance-dependent coefficients. This is a declared two-feature family, not arbitrary-load training selection.
+- Four fixed importance cases passed exact clean root enclosures and frozen crossing bisections. All eight calibrated endpoint signs resolved at the prescribed gap. Independent review checked 32 calibration ledgers, 2684 nodes and 45 hashes.
+- At eta=2/3 and p just below 1/2, the frozen leading noise coefficient vanishes while the calibrated coefficient remains positive. The full endpoint clean-selection proof and policy limits establish a qualitative decoder-policy contrast. Both predeclared finite tests showed sharing beating mono with frozen biases and mono beating sharing with calibrated biases. Independent audit checked all eight ledgers and 666 nodes. This is a reconstruction result under scalar Gaussian code noise, not adversarial or general AI safety.
+- Full assumptions, proofs and finite results are integrated into the existing 92-page derivation PDF. Current PDF SHA256: 25b225cb7673f6c905f77bf43e69c97fa20d414ec0e81eae91d144807a57b442. This entry supersedes earlier page-count/hash status, preserving historical entries.
+- Further optional toy families remain stopped. The fixed vision protocol has professor and independent implementation review. One official frozen ResNet18 checkpoint on 1024 seeded CIFAR10 training images, center-cell layer4 post-ReLU activations, first two eligible channels, 256/256/512 disjoint splits, task importance (1,2/3), train-RMS normalization and five fixed noise levels. Continuous-target implementation check passed; this is not real-vision evidence.
+- Actual extraction has started under a 660-second outer limit. Dependencies, weights and dataset cache are outside the workspace. No channel replacement or noise expansion is allowed. Sharing must pass the clean-selection gate before noisy comparisons. Outcomes and unresolved calibration are to be appended unchanged after completion.
+- Research novelty is distinct from proof/code verification. The new controlled results sharpen the hypothesis; neither a main-track venue nor learned semantic monosemanticity is established by these tests.
+
+
+## 6 October — fixed real-vision pilot completed; no ordering reversal
+
+- Genuine frozen ResNet18 extraction completed on1024 predetermined CIFAR10 images in229.203 seconds including acquisition. Channels0/1, zero fractions.48828125/.30859375, coactivation.37109375, training noise reference.8082696313648098. Independent raw-array/split/official-file-hash audit passed.
+- Continuous clean selection passed the fixed gates: training sharing gain.01788302194236413, identical refined losses at256/512 angular resolutions, both refinements successful. Geometry selection remains numerical, not globally certified.
+- All five fixed noise cases completed with resolved calibration gaps. Held-out sharing-minus-mono means are positive under both policies; every representation-risk95% paired interval includeszero. No held-out ordering reversal, robust phase boundary or semantic monosemanticity transfer is established.
+- Positive-noise policy contrasts all have positive conditional paired-bootstrap intervals. Largest contrast.005946550683372661 with interval[.003553610227093272,.008243150734607126]. This is evidence of decoder-policy dependence for this operational channel pair, not a universal result.
+- Independent audit checked35 evaluation artifacts,978 calibration nodes, all per-image losses and bootstrap summaries; max per-image discrepancy5.329070518200751e-15. Saved raw results remain immutable. No second pair/noise-grid/checkpoint search follows this pilot.
+- Evidence: vision_transfer_20261006/{extraction_run_v1,vision_run_v1,independent_evaluation_audit_v1,plots_v1}; settings/reproduction/mixed-result account in its README.md. Continuous-target full derivation approved by professor and independent reviewer for integration into the existing PDF.
+
+
+### Completed saved-record mechanism audit (no further experiment)
+
+The professor checked all already saved noise cases, both output losses and both target0-zero/positive image groups. Their per-output sums match archived aggregate per-image losses exactly. Mono sits at the zero gate on271/512 zero-target images; sharing gate distances are displaced and heterogeneous. At the largest noise, zero-target images contribute.0040838581 (68.7%) to totalcontrast.0059465507; positive-target images contribute.0018626926. Calibration harms positive-target heldoutimages in both models (meanbenefits mono-.0044645, sharing-.0084218). This unfavorable finding is retained, not hidden. The grouping supports gate association, not causal isolation; no subgroup CIs/new significance tests or ordering reversal. Stop this pair/grid and the mechanism audit. Rawrecords/protocol/source/hashes: vision_transfer_20261006/mechanism_audit_v1 and mechanism_audit_summary.md.
+
+
+### Final current document delivery
+
+The existing Superposition_Recursive_Training_Derivations.pdf is now98 pages, including the full continuous-target profiling/calibration derivation, allfive vision comparisons and the saved-record gate audit. Independent proof/result/decomposition reviews passed. Compilation, all-page contact inspection, full-size newpage inspection, portable compilation/text equality and sourceZIP integrity passed; no overfull/reference warnings. Final PDF SHA256 a19fe80a6860907455f21473ceca10ea7917a688ced6b50831ba34607c75fbc7. EditableTeX remains local under research_notes/volume2.tex; allLaTeX and otherPDFs remain excluded from branch publication. This supersedes earlier PDFstatus/pagecounts while retaining them historically.

@@ -1,0 +1,20 @@
+{
+  "etas": [
+    ".48",
+    ".52"
+  ],
+  "epsilons": [
+    ".005",
+    ".001"
+  ],
+  "digits": 70,
+  "slack": "1.0e-40",
+  "calibration_expansion_limit": 100000,
+  "multipliers": [
+    ".5",
+    "2"
+  ],
+  "root_bisections": 200,
+  "frozen_crossing_relative_width": "1e-5",
+  "stationarity_identity": true
+}

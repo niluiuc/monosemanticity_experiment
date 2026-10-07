@@ -1,0 +1,7 @@
+# Saved-record mechanism audit
+
+6 October2026. Save before this analysis. Question: is the already observed decoder-policy contrast associated with target-zero support and different clean gate placement, rather than only an unexplained aggregate bias effect? Connection: Project1's endpoint mechanism distinguishes mono's zero gate from sharing's displaced gates. This is a descriptive finite learned-activation audit, not a new causal intervention or Bernoulli exponent test.
+
+Use only archived normalized heldout targets, selected encoders, primary zero-noise calibration biases, noisy calibration biases, per-image conditional losses, and the five already prescribed sigmas. Primary grouping is retained target0 exactly zero versus positive. Preserve both groups, counts, means and population-weighted contributions. Also report each output's own zero/positive groups for calibration benefit; keep these as diagnostic decompositions rather than new primary claims. Record clean pre-ReLU gate distances and signs for both outputs in both primary groups. No new training, images, pair, noise values, selection or bootstrap.
+
+Verify reconstructed per-output losses sum to saved per-image totals within1e-12. Save raw contribution/gate arrays and all group statistics. Stop after the exact five saved cases and this identity check; no search for more favorable subgroups. An association with zero support supports mechanism plausibility but does not isolate a causal gate effect or resolve risk-ordering uncertainty.

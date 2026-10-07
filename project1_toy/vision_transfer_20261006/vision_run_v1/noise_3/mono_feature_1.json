@@ -1,0 +1,36 @@
+{
+  "beta": 0.6472552812410772,
+  "lower": 0.545057287877132,
+  "upper": 0.545057287877132,
+  "gap": 0.0,
+  "resolved": true,
+  "nodes": [],
+  "active_heap": [],
+  "expansions": 0,
+  "stop": "exact_clean_profile",
+  "profile": {
+    "beta": 0.6472552812410772,
+    "loss": 0.545057287877132,
+    "candidates": [
+      {
+        "beta": -1.0,
+        "loss": 0.9639966869715975,
+        "kind": "all_off"
+      },
+      {
+        "beta": 0.6472552812410772,
+        "loss": 0.545057287877132,
+        "kind": "interval_vertex",
+        "active": 256,
+        "lower": -0.0,
+        "upper": null
+      },
+      {
+        "beta": -0.0,
+        "loss": 0.9639966869715975,
+        "kind": "kink",
+        "active": 256
+      }
+    ]
+  }
+}

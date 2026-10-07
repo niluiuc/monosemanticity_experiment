@@ -1,0 +1,39 @@
+{
+  "channels": [
+    0,
+    1
+  ],
+  "rms": [
+    2.1767477054811923,
+    2.406063048768256
+  ],
+  "zero_fractions": [
+    0.48828125,
+    0.30859375
+  ],
+  "coactivation": 0.37109375,
+  "importance": [
+    1.0,
+    0.6666666666666666
+  ],
+  "sigma_reference": 0.8082696313648098,
+  "multipliers": [
+    0,
+    0.05,
+    0.1,
+    0.2,
+    0.4
+  ],
+  "seed": 20261006,
+  "grids": [
+    256,
+    512
+  ],
+  "loss_resolution_tolerance": 1e-06,
+  "mixed_energy_threshold": 1e-08,
+  "calibration_gap": 1e-07,
+  "calibration_slack": 1e-12,
+  "maximum_expansions": 20000,
+  "shared_calibration_seconds": 300,
+  "bootstrap_replicates": 2000
+}

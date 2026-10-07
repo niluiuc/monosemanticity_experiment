@@ -1,0 +1,17 @@
+{
+  "all_passed": true,
+  "checks": {
+    "profiled_all_active_difference": true,
+    "profiled_three_active_difference": true,
+    "stationarity_cubic": true,
+    "critical_slope_discriminant": true,
+    "endpoint_opposite_clean_identity": true,
+    "endpoint_opposite_gain": true,
+    "endpoint_same_sign_gain": true,
+    "opposite_gain_factor_27": true,
+    "endpoint_frozen_coefficient_zero": true
+  },
+  "endpoint_clean_gain": "-16/81",
+  "same_sign_gain": "-16/2187",
+  "scope": "Symbolic branch identities and endpoint leading terms only; not an independent global proof or novelty audit."
+}

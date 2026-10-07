@@ -348,163 +348,219 @@ Contents
 49
 8.21.4 Recorded repair outcomes and the stopping decision . . . . . . . . . . . . . . . . .
 50
-9
-Project 2: the correct meaning of the covariance recursion
-51
-9.1
-A fixed linear map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-51
-9.2
-Why rank deficiency does not imply gradual decay . . . . . . . . . . . . . . . . . . . . . .
-51
-9.3
-The same margin can mean shrinkage, stability or growth . . . . . . . . . . . . . . . . . .
-51
-9.4
-Adaptive maps and injected variation
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-52
-9.5
-Finite-sample shrinkage is estimator-specific . . . . . . . . . . . . . . . . . . . . . . . . . .
-52
-10 Project 2: an exact nonlinear generation operator
+8.22 The critical law persists over an interval of feature importances . . . . . . . . . . . . . . .
+50
+8.22.1 Uniform clean critical expansion
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
 53
-10.1 Define the transition before discussing collapse
-. . . . . . . . . . . . . . . . . . . . . . . .
+8.22.2 Gaussian population risks and the frozen-bias law
+. . . . . . . . . . . . . . . . . .
 53
-10.2 The pair kernel in closed form . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-53
-10.3 An explicit order parameter for a defined loss . . . . . . . . . . . . . . . . . . . . . . . . .
+8.22.3 Global bias localization under calibration
+. . . . . . . . . . . . . . . . . . . . . . .
 54
-10.4 What the eigenvalues mean here
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.22.4 Mono calibration and the uniform calibrated law . . . . . . . . . . . . . . . . . . .
 54
-10.5 A monosemantic comparator
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.22.5 What boundary is proved . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 55
-11 The mathematical link between the two projects
+8.23 Fixed finite validation of the importance-family law . . . . . . . . . . . . . . . . . . . . . .
+55
+8.24 A singular endpoint separates frozen and calibrated robustness . . . . . . . . . . . . . . .
 56
-11.1 Use the generation mechanism as a coupling . . . . . . . . . . . . . . . . . . . . . . . . . .
-56
-11.2 Importance-weighted version
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-56
-11.3 A replenishment bound
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-57
+8.24.1 Global clean selection, including competing sign sectors
+. . . . . . . . . . . . . . .
+58
+8.24.2 The two clean critical branches . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+59
+8.24.3 Frozen risk at the singular endpoint
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+59
+8.24.4 Symmetric global bias calibration . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+60
+8.24.5 Prospective finite validation and stopping scope . . . . . . . . . . . . . . . . . . . .
+60
+8.25 The two prescribed endpoint-policy comparisons
+. . . . . . . . . . . . . . . . . . . . . . .
+61
+8.26 Continuous-target profiling for the learned-vision pilot . . . . . . . . . . . . . . . . . . . .
+61
+8.26.1 Complete clean bias profiling . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+63
+8.26.2 Gaussian conditional moments for continuous targets . . . . . . . . . . . . . . . . .
+63
+8.26.3 Finite interval and exterior bounds . . . . . . . . . . . . . . . . . . . . . . . . . . .
+64
 Research derivations | Updated October 2026
 iv
 
 
 Contents
+8.26.4 Numerical tolerances, matched policies and scope . . . . . . . . . . . . . . . . . . .
+64
+8.27 A fixed learned-vision check of decoder-policy dependence . . . . . . . . . . . . . . . . . .
+65
+8.27.1 Inputs, selected geometry and evaluation settings . . . . . . . . . . . . . . . . . . .
+65
+8.27.2 All prescribed held-out comparisons
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+66
+8.27.3 Audit, relevance and stopping decision . . . . . . . . . . . . . . . . . . . . . . . . .
+66
+8.27.4 Saved-record gate and contribution audit
+. . . . . . . . . . . . . . . . . . . . . . .
+68
+9
+Project 2: the correct meaning of the covariance recursion
+69
+9.1
+A fixed linear map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+69
+9.2
+Why rank deficiency does not imply gradual decay . . . . . . . . . . . . . . . . . . . . . .
+69
+9.3
+The same margin can mean shrinkage, stability or growth . . . . . . . . . . . . . . . . . .
+69
+9.4
+Adaptive maps and injected variation
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+70
+9.5
+Finite-sample shrinkage is estimator-specific . . . . . . . . . . . . . . . . . . . . . . . . . .
+70
+10 Project 2: an exact nonlinear generation operator
+71
+10.1 Define the transition before discussing collapse
+. . . . . . . . . . . . . . . . . . . . . . . .
+71
+10.2 The pair kernel in closed form . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+71
+10.3 An explicit order parameter for a defined loss . . . . . . . . . . . . . . . . . . . . . . . . .
+72
+10.4 What the eigenvalues mean here
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+72
+10.5 A monosemantic comparator
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+73
+11 The mathematical link between the two projects
+74
+11.1 Use the generation mechanism as a coupling . . . . . . . . . . . . . . . . . . . . . . . . . .
+74
+11.2 Importance-weighted version
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+74
+11.3 A replenishment bound
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+75
 11.4 When the bound is informative . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-57
+75
 11.5 Where monosemanticity enters the actual research claim . . . . . . . . . . . . . . . . . . .
-57
+75
 12 What changes when the model is genuinely retrained
-58
+76
 12.1 Training is part of the dynamics
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-58
+76
 12.2 Deriving the response of the learned parameters . . . . . . . . . . . . . . . . . . . . . . . .
-58
+76
 12.3 The local generation Jacobian . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-59
+77
 12.4 A tractable staged experiment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-59
+77
 12.5 Order parameters worth testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-59
+77
 13 Diffusion: the bridge that is valid, and the one to test
-60
+78
 13.1 A diffusion model in five equations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-60
+78
 13.2 Two clocks, two different processes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-60
+78
 13.3 A Gaussian denoiser that can be solved completely . . . . . . . . . . . . . . . . . . . . . .
-61
+79
 13.4 Posterior sampling changes the answer completely
 . . . . . . . . . . . . . . . . . . . . . .
-61
+79
 13.5 Where a representation-level contribution can enter . . . . . . . . . . . . . . . . . . . . . .
-62
+80
 13.6 Existing work the new claim must distinguish itself from . . . . . . . . . . . . . . . . . . .
-62
+80
 14 Experiments that test the derivations
-63
-14.1 Stage A: exact identities and finite-state calculations . . . . . . . . . . . . . . . . . . . . .
-63
-14.2 Stage B: learn the geometry in controlled toys . . . . . . . . . . . . . . . . . . . . . . . . .
-63
-14.3 Stage C: recursive training on the same toys . . . . . . . . . . . . . . . . . . . . . . . . . .
-63
-14.4 Stage D: one controlled image generator . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-64
-14.5 Stage E: a small natural-image diffusion demonstration . . . . . . . . . . . . . . . . . . . .
-64
-14.6 How to measure geometry consistently . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-64
-14.7 Interventions that support a mechanism . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-65
-14.8 Evaluation and uncertainty
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-65
-14.9 A compact evidence table . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-65
-15 An eight-week program that preserves both projects
-66
-15.1 Status of this execution outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-66
-15.2 One integrated paper structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-66
-15.3 Weekly deliverables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-66
-15.4 What to reduce if the compute budget is tight
-. . . . . . . . . . . . . . . . . . . . . . . .
-67
-15.5 What would make the paper substantive . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-67
-A Formula ledger: retain, qualify or replace
-69
-B Further derivations and worked exercises
-70
-B.1
-Gaussian ReLU moments for continuous reconstruction
-. . . . . . . . . . . . . . . . . . .
-70
-B.2
-Mixture covariance includes a mean term
-. . . . . . . . . . . . . . . . . . . . . . . . . . .
-70
-B.3
-Exercise 1: an exact adversarial perturbation . . . . . . . . . . . . . . . . . . . . . . . . .
-70
-B.4
-Exercise 2: rare feature versus common nuisance
-. . . . . . . . . . . . . . . . . . . . . . .
-70
-B.5
-Exercise 3: why a largest overlap and a sum differ
-. . . . . . . . . . . . . . . . . . . . . .
-71
+81
 Research derivations | Updated October 2026
 v
 
 
 Contents
+14.1 Stage A: exact identities and finite-state calculations . . . . . . . . . . . . . . . . . . . . .
+81
+14.2 Stage B: learn the geometry in controlled toys . . . . . . . . . . . . . . . . . . . . . . . . .
+81
+14.3 Stage C: recursive training on the same toys . . . . . . . . . . . . . . . . . . . . . . . . . .
+81
+14.4 Stage D: one controlled image generator . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+82
+14.5 Stage E: a small natural-image diffusion demonstration . . . . . . . . . . . . . . . . . . . .
+82
+14.6 How to measure geometry consistently . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+82
+14.7 Interventions that support a mechanism . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+83
+14.8 Evaluation and uncertainty
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+83
+14.9 A compact evidence table . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+83
+15 An eight-week program that preserves both projects
+84
+15.1 Status of this execution outline . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+84
+15.2 One integrated paper structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+84
+15.3 Weekly deliverables . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+84
+15.4 What to reduce if the compute budget is tight
+. . . . . . . . . . . . . . . . . . . . . . . .
+85
+15.5 What would make the paper substantive . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+85
+A Formula ledger: retain, qualify or replace
+87
+B Further derivations and worked exercises
+88
+B.1
+Gaussian ReLU moments for continuous reconstruction
+. . . . . . . . . . . . . . . . . . .
+88
+B.2
+Mixture covariance includes a mean term
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+88
+B.3
+Exercise 1: an exact adversarial perturbation . . . . . . . . . . . . . . . . . . . . . . . . .
+88
+B.4
+Exercise 2: rare feature versus common nuisance
+. . . . . . . . . . . . . . . . . . . . . . .
+88
+B.5
+Exercise 3: why a largest overlap and a sum differ
+. . . . . . . . . . . . . . . . . . . . . .
+89
 B.6
 Exercise 4: solve the mixed fixed kernel
 . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-71
+89
 B.7
 Exercise 5: covariance does not identify concepts . . . . . . . . . . . . . . . . . . . . . . .
-71
+89
 B.8
 Exercise 6: a sharply stated falsification . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-71
+89
 C Numerical verification record
-72
+90
 D Primary references and claim boundaries
-73
+91
 Research derivations | Updated October 2026
 vi
 
@@ -3714,8 +3770,1119 @@ for seeds zero through four. No tiny column was thresholded to zero. The single-
 rule now closes this optimizer arm: no second repair, favorable checkpoint selection or huge-
 noise calibration is launched. Both the original and repaired outputs are retained as limitations
 alongside the separately proved two-feature critical-boundary result.
+8.22
+The critical law persists over an interval of feature impor-
+tances
+Fix two independent Bernoulli features with common activation probability p, one code dimen-
+sion, encoder energy one, tied ReLU reconstruction, and positive importance weights (1, η).
+Clean training minimizes
+L0(W, β; p, η) = E
+h
+(ReLU((W ⊤WX)1 + β1) −X1)2 + η(ReLU((W ⊤WX)2 + β2) −X2)2i
+.
+The importance interval and probability rectangle in this section are fixed:
+η ∈[12/25, 13/25],
+p ∈[7/20, 21/50].
+No claim about arbitrary importance ratios, loads or neural architectures is inferred from this
+rectangle. Set q = 1 −p, D = 1 −p + p2 and
+pc(η) = 1 + η −
+p
+1 + 2η −3η2
+2η
+=
+2η
+1 + η +
+p
+1 + 2η −3η2 .
+This is the root of p = ηD lying in the rectangle. Indeed p−ηD < 0 at p = .36 for every allowed
+η, and p −ηD > 0 at p = .4 for every allowed η; hence pc(η) ∈(.36, .4).
+Theorem 8.3 (Global clean storage transition on the declared rectangle). For p ≥pc(η) in
+the rectangle, the unique global clean geometry retains the important concept alone, up to global
 Research derivations | Updated October 2026
 50
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+encoder sign. Its loss is ηpq and its biases are (0, p). For p < pc(η), the unique global geometry,
+up to global sign, is
+W∗= (√a, −√c),
+a = (1 + k2
+∗)−1,
+c = k2
+∗(1 + k2
+∗)−1,
+r = k∗(1 + k2
+∗)−1,
+where k∗is the unique root in (0, 1/8) of
+Jp,η(k) = A + 3pqk + (2 −3p −ηD)k2 −pqk3 = 0,
+A = p −ηD.
+(8.72)
+The globally optimal clean biases are
+β1 = p(c + pr)
+D
+,
+β2 = p(a + r).
+Proof. Let a ≥1/2 be the stronger column’s squared norm, c = 1−a, r = √ac, and k =
+p
+c/a ∈
+[0, 1]. The earlier finite activation-interval bias proof covers all vertices, interval boundaries and
+the all-off plateau. Positive importance weights do not change a fixed feature’s optimal bias;
+they weight its minimized loss. We cover both sign sectors and both assignments of the two
+importances.
+Same signs.
+The globally profiled losses are S+ = pqc(1 + 2qr)/(2 −p) and W+ = pqa,
+with S+ ≤W+. Since η < 1, assigning importance one to the stronger column is the better
+assignment. Even that assignment has excess
+S+ + ηW+ −ηpq = pqc
+1 + 2qr
+2 −p
+−η
+
+> 0,
+because 1/(2 −p) ≥20/33 > 13/25 ≥η. The opposite mono orientation has loss pq > ηpq.
+Opposite signs:
+complete weak-bias coverage.
+The strong feature has exact globally
+profiled loss
+S−= pqc −pq
+D (qr −pc)2.
+The two-active weak-bias candidate requires p ≤k −k2 ≤1/4, and is therefore impossible on
+this rectangle. The all-active weak branch has loss W4 = pqa for k ≤p/q. For k ≥p/q, the
+three-active candidate has loss
+W3 = pqa −pq
+D (qr −pa)2.
+Its lower feasibility condition is automatic, since
+pa + Dc −qr = a{p −(k −k2)} + p(r −qc) > 0.
+Here p > 1/4 and r ≥c. The one-active candidate lies beyond its interval. Target-one kinks
+have downward derivative jumps and cannot be minima; target-zero kink minima are included
+by adjacent interval vertices. The all-off loss p is exceeded downward by the feasible zero-bias
+loss pqa2 + p2 < p for a mixed geometry. Thus the two remaining branches exhaust weak-bias
+global minima. Moreover
+W4 ≥pqc ≥S−,
+W3 −S−= pq(a −c)
+D
+(q + 2pqr) ≥0.
+The importance-one strong assignment is therefore no worse than its swap, in both branches.
+Research derivations | Updated October 2026
+51
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Excluding the three-active weak branch.
+Its weighted excess is
+∆3 =
+pq
+D(1 + k2)2 Np,η(k),
+where direct substitution gives
+N = (q −ηD)k4 + 2pqk3 + {p(1 + η) −2ηD}k2 + 2ηpqk −ηp2.
+On the entire rectangle,
+pq ≥91/400,
+D ≤309/400,
+A ≥−517/10000,
+q −ηD ≥1783/10000 > 0.
+Regroup the derivative as
+N′ = 4(q −ηD)k3 + 2pk{3qk −(1 −η)} + 4Ak + 2ηpq.
+For k ≥p/q, 3qk ≥3p ≥21/20 > 1 −η. The first two terms are nonnegative, and k ≤1 gives
+N′ ≥−4 517
+10000 + 212
+25
+91
+400 =
+29
+2500 > 0.
+At k = p/q, this branch matches the all-active loss difference
+∆A = pqc
+D {A + (1 −2p)c + 2pqr}.
+At the matching boundary, r = pq/(1 −2pq) ≥91/218, and 1 −2p > 0. Thus its bracket is at
+least
+−517
+10000 + 2 91
+400
+91
+218 = 9417
+68125 > 0.
+Strict increase then excludes every three-active weak geometry.
+Global minimum in the remaining branch.
+In the all-active weak branch define E =
+q −ηD. Algebra gives
+∆A = pq
+D
+k2(A + 2pqk + Ek2)
+(1 + k2)2
+,
+∂k∆A = 2pq
+D
+kJp,η(k)
+(1 + k2)3 .
+(8.73)
+Since 2E −A = 2 −3p −ηD ≥3383/10000 > 0,
+J′
+p,η(k) = 3pq(1 −k2) + 2(2 −3p −ηD)k > 0
+(0 ≤k ≤1).
+For A < 0, J(0) < 0, whereas
+J(1/8) ≥−517
+10000 + 3
+8
+91
+400 −
+1
+512
+1
+4 =
+42399
+1280000 > 0.
+The unique root lies in (0, 1/8), strictly below p/q ≥7/13 > 1/8.
+The loss decreases then
+increases, with a negative minimum below mono. All competing branches have been excluded,
+and the strong/weak losses are strictly ordered at this root, so the geometry is unique up to
+global sign. If A ≥0, every term in the bracket of ∆A is nonnegative and the positive overlap
+term makes the excess strictly positive at every mixed geometry. This includes equality A = 0
+and proves unique mono at the transition. The displayed biases are the strictly interior quadratic
+minima for p < pc.
+Research derivations | Updated October 2026
+52
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.22.1
+Uniform clean critical expansion
+Put ϵ = pc(η) −p > 0 and let
+p0 = pc(η),
+q0 = 1 −p0,
+D0 = 1 −p0 + p2
+0,
+sη =
+q
+1 + 2η −3η2.
+The slope at the critical point is ∂p(p −ηD)|p0 = 1 + η −2ηp0 = sη, so exactly
+A(p0 −ϵ) = −sηϵ −ηϵ2.
+The monotone cubic at (k, ϵ) = (0, 0) has ∂kJ = 3p0q0 > 0. These derivatives stay bounded
+away from zero over the compact importance interval. The implicit-function expansion, with
+uniform remainder, yields
+k∗= Kηϵ + O(ϵ2),
+Kη =
+sη
+3p0q0
+.
+(8.74)
+Substituting k∗into the exact global branch gives
+∆0 = p0q0
+D0
+h
+−sηK2
+η + 2p0q0K3
+η
+i
+ϵ3 + O(ϵ4)
+= −Cηϵ3 + O(ϵ4),
+Cη =
+s3
+η
+27D0p0q0
+> 0.
+The weak column energy is c∗= K2
+ηϵ2 + O(ϵ3). This is a proved parameter-family law, not a
+fitted exponent. The finite rectangle supplies global selection, so the implicit stationary solution
+is not mistaken for an unverified branch minimum.
+8.22.2
+Gaussian population risks and the frozen-bias law
+The corruption is independent code noise h + σZ, Z ∼N(0, 1). For output i, the conditional
+mean and standard deviation are
+µi(X) = (W ⊤WX)i + βi,
+si = σ|wi|.
+For s > 0, Gaussian integration gives
+M1(µ, s) = µΦ(µ/s) + sϕ(µ/s),
+M2(µ, s) = (µ2 + s2)Φ(µ/s) + µsϕ(µ/s).
+Thus the exact population risk is
+R =
+X
+X
+PX
+X
+i
+Ii{M2(µi, si) −2XiM1(µi, si) + X2
+i },
+(I1, I2) = (1, η).
+At zero standard deviation use the corresponding deterministic ReLU moments. All risk com-
+parisons below use this same weighted MSE.
+For
+clean-selected
+sharing,
+the
+strong
+feature’s
+offsets
+are
+0, −r, a, a −r
+on
+states
+(0, 0), (0, 1), (1, 0), (1, 1).
+Its bias is β1 = p(c + pr)/D.
+As ϵ →0, the first mean is
+t0k + O(k2) and the second is −(1 −t0)k + O(k2), where t0 = p2
+0/D0 = ηp0 ∈(0, 1). The other
+two means remain near one. The strong output is therefore clean-active in three states, with
+total probability D, and their distances from zero are uniformly at least a constant times k.
+The weak output bias p(a + r) places every mean uniformly away from zero; it is all-active.
+At σ = tϵ3/2, for bounded t ≥0, σ/k = O(√ϵ).
+Gaussian gate corrections are bounded
+by polynomial factors times exp(−d/ϵ), uniformly in the importance interval and bounded t.
+Strong active-state variance contributes Daσ2; weak variance contributes ηcσ2.
+Mono with
+Research derivations | Updated October 2026
+53
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+clean bias zero has important-output variance coefficient p+q/2 (the zero state contributes half
+a Gaussian second moment), plus the unchanged omitted-feature loss ηpq. It follows that the
+frozen difference obeys
+∆fr = −Cηϵ3 + Bfr(η)σ2 + o(ϵ3),
+Bfr = D0 −1 + p0
+2
+= q0(1 −2p0)
+2
+> 0.
+(8.75)
+The remainder is uniform for bounded t and for the declared importance interval. The coefficient
+is not an attacker margin or a universal monosemanticity metric; it is a population variance
+coefficient for this decoder and corruption.
+8.22.3
+Global bias localization under calibration
+Both models now receive free population bias minimization at each noise level, with their en-
+coders fixed. The following argument ensures that a local bias expansion describes the global
+infimum.
+Positive large biases have uniformly coercive squared loss; far-left biases have loss approaching p,
+which is separated from the relevant minima by a positive amount on the compact probability
+interval. Thus global bias minimizers can be localized to a common compact set. ReLU is
+Lipschitz, and coupling clean and noisy scores gives uniform convergence of their objectives
+there as k, σ →0. The limiting strong-feature optimum is bias zero, uniquely; the weak-feature
+optimum is bias p0, uniquely. Consequently global minimizers are in neighborhoods of these
+biases.
+In a small fixed neighborhood of the strong clean bias, target-one states have mean bounded
+away from zero. Their squared-error losses have curvature 2p and their Gaussian gate errors
+are exponentially small. Target-zero terms are squared ReLUs, whose derivative is globally two-
+Lipschitz and whose noise-induced objective change is at most the score variance. Therefore
+|fσ −f0| ≤Lσ2 plus exponentially small terms, uniformly in that neighborhood. The clean
+objective is strongly convex there, with f0(β) −f0(β∗) ≥p(β −β∗)2. Comparing a global noisy
+minimizer with the clean bias gives |βσ −β∗| = O(σ) = o(k).
+The clean strong bias has a uniform positive distance proportional to k from both nearby target-
+zero activation boundaries. Localization therefore places the global noisy minimizer in the same
+active branch. In that branch the clean derivative is 2D(β −β∗), while the noise correction to it
+is exponentially small because each gate is many Gaussian standard deviations away. The noisy
+curvature stays bounded away from zero. The optimal bias displacement and its improvement
+over the frozen clean bias are therefore exponentially small, not order σ2.
+For the weak output, all conditional means remain bounded away from zero near its globally
+localized bias p0. The linear-quadratic variance is independent of its bias; gate corrections and
+bias changes are again exponentially small. The positive importance factor η does not change the
+scalar minimizing bias and is bounded above and below uniformly. Thus calibration of sharing
+leaves its leading noise coefficient D0 unchanged. These localization steps exclude a distant
+competing bias minimum rather than assume local root finding establishes a global optimum.
+8.22.4
+Mono calibration and the uniform calibrated law
+For the retained mono feature, the clean bias loss in a fixed neighborhood of zero is pβ2 +
+q ReLU(β)2 ≥pβ2. The same variance bound gives βσ = O(σ) for its global noisy optimum.
+Write β = σz with bounded z. The target-one gate correction is exponentially small, while the
+target-zero moment is exact:
+fσ(σz) = σ2{p(1 + z2) + qM2(z, 1)} + exponentially small terms.
+Research derivations | Updated October 2026
+54
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Define
+v(p) = min
+z∈R{p(1 + z2) + qM2(z, 1)}.
+Differentiating the bracket yields the root equation
+pz + q{zΦ(z) + ϕ(z)} = 0,
+whose derivative is p + qΦ(z) > 0. Its unique root is negative, since the left side is positive at
+zero and negative as z →−∞. It stays uniformly bounded on the compact probability interval.
+At z = 0 the bracket is p + q/2, and its positive derivative there means a small negative bias
+strictly improves it, so v(p) < p + q/2.
+The dropped mono output remains an exact prior-mean predictor with loss ηpq at every noise
+level. Combining global sharing localization and global mono calibration gives
+∆cal = −Cηϵ3 + Bcal(η)σ2 + o(ϵ3),
+Bcal = D0 −v(p0) > Bfr > 0,
+(8.76)
+uniformly over the same family and bounded σ/ϵ3/2.
+Calibrating both models changes the
+coefficient rather than eliminating the critical tradeoff. The ratio η affects the clean birth slope
+and gain; the leading noisy coefficient depends on its selected critical probability through D0
+and the mono bias problem.
+8.22.5
+What boundary is proved
+For either policy j ∈{fr, cal}, define κj(η) =
+q
+Cη/Bj(η). The coefficients are positive and
+continuous on the closed importance interval. Uniform expansions give opposite risk signs at
+any fixed multipliers below and above one times κjϵ3/2 for sufficiently small ϵ. Risk is continuous
+in noise: coupling X, Z and using ReLU Lipschitzness gives continuity for fixed biases, and the
+localized compact minimization gives continuity of the calibrated minimum. The intermediate
+value theorem therefore provides at least one crossing with
+σ∗,j/ϵ3/2 −→κj(η).
+The limit and sign statement are uniform over the declared importance interval. No unique
+global crossing count is asserted.
+A finite validation uses predetermined noise brackets and
+must preserve failed brackets; the asymptotic theorem does not promise every finite bracket
+succeeds.
+The coefficient distinction predicts an earlier mono-favored critical crossing under symmetric cal-
+ibration, since κcal < κfr. This prediction is proved inside the controlled model and importance
+rectangle, not transferred automatically to arbitrary-load training or vision networks.
+8.23
+Fixed finite validation of the importance-family law
+The question was fixed before execution: does the proved critical storage and corrupted-MSE
+law survive changes in relative feature importance, under the identical resource constraint and
+decoder classes? Only four additional geometries were permitted: η = .48, .52 at ϵ = .005, .001.
+The original η = .5 records remain unchanged. Every new probability is p = pc(η) −ϵ in the
+proved rectangle. No fitted exponent, extra geometry or stochastic training optimizer enters
+this validation.
+The globally selected cubic root was bracketed with 200 bisections in the exact quadratic field
+whose radicand is 1 + 2η −3η2. Rational-pair arithmetic preserved the exact probability, all
+coefficients, and opposite endpoint signs. The Gaussian risk was evaluated at 70 decimal digits.
+Research derivations | Updated October 2026
+55
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Frozen-bias brackets began at one half and twice the derived coefficient times ϵ3/2; only successful
+brackets were bisected, stopping at relative width 10−5 or 100 iterations.
+All four brackets
+succeeded. The following values summarize the preserved records:
+η
+ϵ
+k∗/ϵ
+Kη
+−∆0/ϵ3
+Cη
+.48
+.005
+1.616475
+1.613807
+.296776
+.296493
+.48
+.001
+1.614353
+1.613807
+.296562
+.296493
+.52
+.005
+1.548666
+1.545309
+.278139
+.277290
+.52
+.001
+1.545991
+1.545309
+.277470
+.277290
+These are finite numerical comparisons to derived constants; convergence of a theorem is not
+inferred by fitting four points. The frozen crossing brackets, after division by ϵ3/2, are
+η
+ϵ
+lower
+upper
+κfr(η)
+.48
+.005
+1.862749
+1.862760
+1.888010
+.48
+.001
+1.879613
+1.879623
+1.888010
+.52
+.005
+2.063543
+2.063555
+2.097025
+.52
+.001
+2.086005
+2.086017
+2.097025
+The finite boundaries approach the analytic values from below in these prescribed cases. This
+does not prove monotone convergence or a complete positive-noise root count.
+For calibration, both models received independent population bias minimization at half and
+twice their analytically derived calibrated critical coefficient. The predeclared total weighted
+model-gap target was
+min{10−10, Cηϵ3/100}.
+Each output’s target was this value divided by 1+η, using the existing interval-specific curvature
+bound, 70-digit arithmetic, numerical slack 10−40 and at most 100,000 interval expansions. All
+eight comparisons met their targets. Sharing won at every lower endpoint, and mono won at
+every upper endpoint. No additional calibrated bisection was performed.
+The reused independent 90-digit audit checked 45 archived hashes, all 32 scalar bias ledgers, 2,684
+interval nodes, tree partitions, active and pruned leaves, exterior bounds, feasible incumbents,
+weighted gaps and difference signs. Its maximum recomputation discrepancy was below 1.42 ×
+10−63. These are high-precision numerical-gap checks with declared slack, not directed-rounding
+interval certificates. The full global mathematical selection proof and its independent review
+are separate from this numerical agreement.
+The records and reproduction scripts are in the joint-phase experiment directory. Source snap-
+shots precede the calculations; fresh output directories are required. Successful validation sup-
+ports the mechanism and implementation within this model. It does not establish publication
+novelty or replace the still-needed vision transfer.
+8.24
+A singular endpoint separates frozen and calibrated ro-
+bustness
+This result addresses a specific limit of the critical noise boundary: the frozen-bias coefficient
+vanishes at importance η = 2/3. It does not replace the corruption model or claim a universal
+robustness law. Let X1, X2 be independent Bernoulli(p) variables, let W ∈R1×2 satisfy ∥W∥2 =
+1, and reconstruct with ReLU(W ⊤WX + β). Loss is population squared error with weights
+(1, 2/3) and free clean-training biases.
+At test time add independent σZ, Z ∼N(0, 1), to
+the scalar code. In the frozen policy keep both models’ clean biases. In the calibrated policy
+minimize each model’s population risk over both biases, keeping each encoder fixed. Define
+∆= Rsharing −Rmono.
+Research derivations | Updated October 2026
+56
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Figure 8.6: Derived importance-dependent critical coefficients in the proved two-feature family.
+The horizontal axis is relative importance η; the vertical axis is crossing noise divided by ϵ3/2.
+Curves are the analytic frozen and calibrated limits. The shaded region predicts different policy
+orderings asymptotically. Symbols and error bars are all saved finite frozen brackets at the two
+declared distances, including the unchanged η = .5 control. This is not an empirical calibrated
+crossing map or a proof about arbitrary neural networks.
+Research derivations | Updated October 2026
+57
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.24.1
+Global clean selection, including competing sign sectors
+Put q = 1 −p, D = 1 −p + p2, ϵ = 1/2 −p, and
+a = (1 + k2)−1,
+c = k2(1 + k2)−1,
+r = k(1 + k2)−1,
+0 ≤k ≤1.
+The earlier complete activation-interval bias profiling applies unchanged: positive importance
+weights do not alter a scalar bias minimizer. For same signs the strong and weak profiled losses
+are
+S+ = pqc(1 + 2qr)
+2 −p
+,
+W+ = pqa.
+For opposite signs the strong loss is
+S−= pqc −pq
+D (qr −pc)2.
+For p > 1/4, the two-active weak vertex is infeasible because it requires p ≤k −k2 ≤1/4.
+The one-active vertex is beyond its interval; the all-off plateau is worse than a feasible zero-bias
+predictor. Target-one kinks have downward derivative jumps and cannot minimize; target-zero
+kinks are included in adjacent interval closures. The remaining weak minima are
+W4 = pqa (k ≤p/q),
+W3 = pqa −pq
+D (qr −pa)2 (k ≥p/q).
+The lower feasibility condition for W3 is automatic since pa+Dc−qr = a{p−(k−k2)}+p(r−qc) >
+0. Both sign sectors have strong loss no larger than weak loss: S+ ≤pqc ≤W+, S−≤pqc ≤W4,
+and W3 −S−= pq(a−c)(q +2pqr)/D ≥0. Thus assigning the larger importance to the stronger
+column is optimal; this covers the swapped-importance sector rather than discarding it. The
+reversed mono orientation costs pq, versus 2pq/3 for retaining the important feature.
+At p = 1/2 the all-active opposite branch covers every k ≤1. Both mixed sign sectors have
+excess cr/6 > 0 over important mono. Consequently mono is the unique clean geometry up to
+global encoder sign. Global biases are (0, 1/2). Continuity and compactness also imply that any
+globally minimizing geometries converge to this mono geometry as p ↑1/2; a remote geometry
+cannot supply a hidden critical branch.
+For the finite checks we can strengthen localization to the entire strip 99/200 ≤p < 1/2, or
+0 < ϵ ≤1/200. In the all-active opposite branch the exact excess is
+F−(k) = pq
+D
+k2(A + 2pqk + Ek2)
+(1 + k2)2
+,
+A = −ϵ −2
+3ϵ2,
+E = ϵ −2
+3ϵ2.
+(8.77)
+Its derivative has the sign of
+J(k) = A + 3pqk + (2E −A)k2 −pqk3.
+Here J′ = 3pq(1−k2)+2(3ϵ−2ϵ2/3)k > 0 on [0, 1], J(0) < 0, and J(1/8) > −.0051+3(.2499)/8−
+.25/512 > 0. There is a unique minimum k∗∈(0, 1/8), inside k < p/q.
+The three-active opposite region is excluded globally. Its excess is pqN/[D(1 + k2)2], with
+N = Ek4 + 2pqk3 + {5p/3 −4D/3}k2 + 4pqk/3 −2p2/3.
+For k ≥p/q, rewrite its derivative as
+N′ = 4Ek3 + 2pk(3qk −1/3) + 4Ak + 4pq/3 > 0,
+using E ≥0, 3qk ≥3p > 1/3, A ≥−.0051 and pq > .2499. At the matching point k = p/q,
+A + (1 −2p)c + 2pqr > −.0051 + 2(.2499)(.49) > 0.
+Research derivations | Updated October 2026
+58
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Thus this entire competing activation region has positive excess.
+Same-sign excess is exactly
+F+(k) =
+2pqc
+3/2 + ϵ(qr −ϵ/3).
+(8.78)
+If it is negative, r < ϵ/(3q) ≤2ϵ/3. Since r ≥k/2, initially k < 4ϵ/3 ≤1/150; substitution in
+k = r(1 + k2) sharpens this to k < (167/250)ϵ. Hence, using pq ≤1/4,
+F+(k) ≥−ϵ
+9k2 > −.05ϵ3.
+Meanwhile the feasible opposite geometry k = ϵ has
+F−(ϵ) = pq
+D
+ϵ3[−1 + 2pq + ϵ(E −2/3)]
+(1 + ϵ2)2
+< −.16ϵ3,
+since the square bracket is at most −1/2 and its positive prefactor exceeds .32. The opposite
+minimum therefore beats every same-sign geometry throughout the declared strip. Mono has
+zero excess. This proves global selection, not merely a favorable stationary root. Its biases are
+β1 = p(c + pr)/D,
+β2 = p(a + r).
+8.24.2
+The two clean critical branches
+The implicit-function theorem applied to J gives
+k∗= 4
+3ϵ + O(ϵ2),
+F−(k∗) = −16
+81ϵ3 + O(ϵ4).
+For comparison, substituting k = uϵ into the same-sign branch gives
+F+(uϵ) = ϵ3
+ 
+−u2
+9 + u3
+6
+!
++ O(ϵ4).
+Its local minimum has k = 4ϵ/9 + O(ϵ2) and gain 16ϵ3/2187 + O(ϵ4): the opposite gain is 27
+times larger. This branch comparison alone is not a global proof; the preceding sign, orientation
+and activation-region exclusions supply that proof.
+8.24.3
+Frozen risk at the singular endpoint
+Fix finite t ≥0 and set σ = tϵ3/2. The selected strong feature’s four clean means have signs
+positive, negative, positive, positive, and the nearest distances to zero are constant multiples of
+k∗. Its clean active probability is D. The weak feature’s means remain bounded away from zero
+and positive. Since σ/k∗= O(√ϵ), Gaussian gate corrections are smaller than every algebraic
+power of ϵ for bounded t. Using Gaussian ReLU first and second moments, the sharing variance
+coefficient is Da+(2/3)c. Frozen mono’s coefficient is (1+p)/2; its omitted output has constant
+loss 2pq/3. At the endpoint D0 = 3/4 = (1 + p0)/2, so
+∆fr(tϵ3/2)
+ϵ3
+−→−16
+81.
+(8.79)
+The difference of variance coefficients is O(ϵ), and multiplying it by σ2 contributes only O(ϵ4)
+on this scale. This says sharing wins at every fixed finite scaled noise for sufficiently small ϵ.
+It proves neither all-noise ordering nor a different frozen crossing exponent; a larger noise scale
+changes the gate analysis.
+Research derivations | Updated October 2026
+59
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.24.4
+Symmetric global bias calibration
+For completeness, the leading calibration argument requires global rather than local minimiza-
+tion. For each scalar output the objective is coercive on the right, while on the far left it tends to
+p, separated from its clean minimum. Global minimizers therefore lie in a common compact set.
+ReLU Lipschitzness and Gaussian integrability give uniform convergence there as (k, σ) →0, so
+global strong and weak biases approach their unique limiting values zero and 1/2.
+Near the strong optimum, target-one scores remain uniformly positive and give clean curvature
+at least 2p. Target-zero squared ReLU has two-Lipschitz derivative; independent centered noise
+changes its expected loss by at most its variance.
+Target-one gate errors are exponentially
+small. Comparison with the clean bias and strong convexity consequently localizes the optimal
+displacement to O(σ) = o(k∗). The clean strong bias lies a distance proportional to k∗from
+both nearby target-zero gates. The global noisy optimum is thus in the same activation region,
+where the clean derivative is 2D(β −β∗) and its Gaussian correction is exponentially small. Its
+bias improvement does not change the leading D0σ2 coefficient. The weak means are bounded
+away from zero; their quadratic variance is bias independent, and calibration changes their risk
+only exponentially at this scale.
+For mono, localization and the inequality f0(β) −f0(0) ≥pβ2 give β = O(σ). Writing β = σz
+yields the global coefficient
+v(p) = min
+z {p(1 + z2) + q[(z2 + 1)Φ(z) + zϕ(z)]}.
+Its derivative vanishes exactly when pz + q[zΦ(z) + ϕ(z)] = 0, a strictly increasing function
+with derivative p + qΦ(z) > 0. Thus its root is unique and negative. At p = 1/2 it satisfies
+z + zΦ(z) + ϕ(z) = 0. The derivative at zero is positive, so a negative bias strictly improves on
+v(1/2) < 3/4. The omitted output stays at its prior mean. Consequently
+∆cal(tϵ3/2)
+ϵ3
+−→−16
+81 + [3/4 −v(1/2)]t2.
+(8.80)
+Numerically v(1/2) ≃.6956312935673, so the positive coefficient is .05436870643268 and
+tc =
+q
+(16/81)/(3/4 −v(1/2)) ≃1.9060881518.
+The positivity and formulas are analytic; these decimals are numerical evaluations, not exact
+constants. For fixed t > tc, sufficiently near the clean endpoint, the identical encoder and noise
+favor sharing with frozen biases but favor mono with symmetric population bias calibration.
+This establishes evaluation-policy dependence of a representation-risk ordering under a fully
+specified task. It does not establish a universal failure of monosemanticity or a result about
+adversarial attacks.
+8.24.5
+Prospective finite validation and stopping scope
+The numerical protocol fixes ϵ = .005, .001 and t = 2tc before comparison. Both probabilities
+lie within the proved global strip. Use exact rational cubic brackets with 200 bisections and the
+existing 70-digit global-gap bias profiler; preserve all ledgers, unresolved comparisons and source
+hashes. Stop after those two cases. Finite population calculations are numerical evidence under
+the declared slack, not directed-rounding interval proofs. No novelty or conference-acceptance
+claim follows from the analytic identities alone.
+Research derivations | Updated October 2026
+60
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.25
+The two prescribed endpoint-policy comparisons
+The paper-critical gap was the singularity of the frozen variance coefficient, not the search
+for another favorable toy. The endpoint proof predicts opposite policy orderings at identical
+geometry and noise. Before execution, the protocol fixed exactly two distances ϵ = .005, .001
+and the same scaled-noise multiplier t = 2tc. Both probabilities lie in the proved global-selection
+strip. No additional importance ratio, noise point, tolerance adjustment or optimizer was used.
+For each case, 200 rational bisections bracketed the monotone clean cubic with exact endpoint
+signs. The clean-selected encoder and biases were then held fixed for the frozen test. Both
+encoders remained fixed for the calibrated test, with both models receiving independent popu-
+lation bias minimization. The predeclared 70-digit profiler used numerical slack 10−40, at most
+100,000 expansions per output, and total weighted gap
+min{10−10, (16/81)ϵ3/100}.
+Every retained calibration ledger met its assigned gap target. The observed raw differences are
+ϵ
+σ
+∆fr
+∆cal lower
+∆cal upper
+.005
+.001347807858
+−2.760446858 × 10−8
+7.342184482 × 10−8
+7.352032194 × 10−8
+.001
+.000120551600
+−1.906926819 × 10−10
+6.020884857 × 10−10
+6.040952719 × 10−10
+For both prescribed cases the frozen difference is negative, favoring sharing, while the calibrated
+difference is positive, favoring mono. These are comparisons at the same encoder, feature dis-
+tribution and noise within each row. Calibration can lower both models’ absolute risks while
+changing their relative ordering; a positive calibrated difference does not mean that calibrating
+sharing made its risk worse.
+An independent 90-digit implementation audited 18 archived hashes, all eight bias ledgers and
+666 interval nodes, including global-domain partition coverage, exterior bounds, feasible in-
+cumbents, weighted model gaps and the difference signs. Frozen risks were separately recom-
+puted using the independent Gaussian moment formulas. The maximum discrepancy was below
+5.37 × 10−64. These numerical bounds use declared slack and are not directed-rounding interval
+certificates. Independent mathematical review separately checked the full global selection and
+calibration proof.
+This strengthens the interpretation of Project 1: representation geometry and the permitted
+decoder adaptation jointly determine a robustness ordering.
+The result neither disputes all
+monosemanticity benefits nor establishes an adversarial guarantee. It remains a controlled two-
+feature mechanism. Real learned-representation evidence and a precise novelty comparison are
+separate paper requirements; no acceptance or spotlight claim follows from these checks.
+8.26
+Continuous-target profiling for the learned-vision pilot
+This section supplies the implementation adaptation required to evaluate the same reconstruc-
+tion mechanism on saved learned activations. It adds no new architecture or empirical result.
+Fix N observations x(j) ∈[0, ∞)2, finite and normalized using training-only RMS factors, an
+encoder w ∈R2 with ∥w∥2 = 1, and positive feature importances (1, 2/3). For output i let
+oj = wi(w⊤x(j)),
+yj = x(j)
+i
+≥0,
+Fi(β, s) = 1
+N
+N
+X
+j=1
+EZ[(ReLU(oj + β + sZ) −yj)2].
+The output standard deviation induced by scalar code noise is s = σ|wi|. Each feature’s positive
+importance multiplies its objective and does not change its minimizing bias. All results below
+are conditional on this finite activation dataset. Empirical optimality is distinct from optimality
+over the unknown image population.
+Research derivations | Updated October 2026
+61
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Figure 8.7: All two predeclared endpoint comparisons.
+The horizontal axis is distance ϵ =
+1/2−p below the storage transition; the vertical axis is the sharing-minus-mono MSE difference
+divided by ϵ3. Negative values favor sharing and positive values favor mono. Within each case
+geometry and noise are identical across policies. Calibrated error bars are saved numerical loss-
+gap brackets, not sampling confidence intervals. The dashed limits are −16/81 and 16/27 at
+t = 2tc. Finite values do not demonstrate monotone convergence to those limits.
+Research derivations | Updated October 2026
+62
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+8.26.1
+Complete clean bias profiling
+At s = 0, sort the thresholds tj = −oj and group equal thresholds. For an open interval between
+consecutive distinct thresholds, the active set A = {j : oj + β > 0} is constant. The objective
+there is
+Fi(β, 0) = 1
+N
+
+X
+j∈A
+(oj + β −yj)2 +
+X
+j /∈A
+y2
+j
+
+.
+(8.81)
+With nA = |A| > 0, its unconstrained quadratic vertex is
+βA =
+P
+j∈A(yj −oj)
+nA
+.
+On the interval closure, clip this vertex to its lower and upper endpoints. In the last interval
+there is no upper clipping.
+Enumerate every distinct threshold as a boundary candidate as
+well. At any boundary the newly activating outputs equal zero, so both neighboring quadratic
+expressions give the same objective value. Derivative continuity is not assumed: an activating
+observation with target yj > 0 causes a downward derivative jump of 2yj/N. Retaining the
+boundary candidates covers these nonconvex kinks without treating the entire bias objective as
+convex.
+Below the smallest threshold all outputs are off, with loss N−1 P
+j y2
+j independent of bias. Re-
+tain this plateau explicitly, using any finite representative below that threshold. The union of
+the plateau, all interval closures and the last half-line is the whole real line. Each nonempty
+active interval is a coercive quadratic on its closure; its clipped vertex attains its minimum.
+Comparing the finite candidate list therefore yields the global empirical clean bias minimum in
+exact arithmetic. Grouping equal thresholds avoids omitting or double-counting an activation
+change; evaluating every candidate with the direct ReLU loss also avoids selecting solely from
+cancellation-prone prefix sums.
+The code uses prefix sums of oj −yj, (oj −yj)2 and y2
+j to construct these candidates. Floating-
+point evaluation is a numerical implementation of the exact finite enumeration, not a directed-
+rounding certificate. This scalar completeness does not certify the encoder angle: the prescribed
+256/512 grids and one best-cell refinement at each resolution give a bounded numerical resolution
+check, not a theorem of global empirical encoder selection.
+8.26.2
+Gaussian conditional moments for continuous targets
+For s > 0 and µ = oj + β, define z = µ/s. Gaussian integration gives
+M1(µ, s) = E[ReLU(µ + sZ)] = µΦ(z) + sϕ(z),
+M2(µ, s) = E[ReLU(µ + sZ)2] = (µ2 + s2)Φ(z) + µsϕ(z).
+Indeed, integration on Z > −µ/s uses E[Z1Z>−z] = ϕ(z) and E[Z21Z>−z] = Φ(z) −zϕ(z).
+Hence
+Fi(β, s) = 1
+N
+X
+j
+{M2(oj + β, s) −2yjM1(oj + β, s) + y2
+j }.
+(8.82)
+The formula holds for continuous nonnegative yj; replacing targets with Bernoulli values is
+unnecessary and would change the task. At s = 0 use the deterministic clean profile above.
+Differentiating the Gaussian integrals gives
+F ′
+i(β, s) = 2
+N
+X
+j
+{(oj + β −yj)Φ((oj + β)/s) + sϕ((oj + β)/s)},
+F ′′
+i (β, s) = 2
+N
+X
+j
+
+Φ((oj + β)/s) −yj
+s ϕ((oj + β)/s)
+
+.
+Research derivations | Updated October 2026
+63
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+The second derivative can be negative. A local stationary bias or a bounded numerical opti-
+mizer therefore supplies an incumbent only; global calibration requires objective bounds over all
+remaining biases.
+8.26.3
+Finite interval and exterior bounds
+Let ymax = maxj yj. For
+β ≥u = ymax −min
+j
+oj,
+every conditional mean satisfies oj + β ≥ymax ≥yj. Each term in F ′
+i is nonnegative; thus the
+entire right half-line has lower bound Fi(u, s). This uses the actual continuous target maximum,
+not the binary constant one.
+Choose the finite left endpoint ℓ= −maxj oj −12s −1. For every β ≤ℓ, monotonicity of M1 in
+its mean and yj ≥0 imply
+Fi(β, s) ≥1
+N
+X
+j
+{y2
+j −2yjM1(oj + β, s)}
+≥1
+N
+X
+j
+{y2
+j −2yjM1(oj + ℓ, s)}.
+The first step drops nonnegative second moments. This is a valid left-exterior lower bound, not
+an assertion that the Gaussian tail is exactly zero. Together with the right bound, it reduces
+certification of a global empirical bias gap to the compact interval [ℓ, u].
+For any subinterval [a, b] define
+dj = dist(0, [oj + a, oj + b]),
+Ha,b = 2
+
+1 + 1
+N
+X
+j
+yj
+s ϕ(dj/s)
+
+.
+The Gaussian density is even and decreases with absolute argument, so ϕ((oj + β)/s) ≤ϕ(dj/s)
+for β ∈[a, b]. The displayed second derivative and 0 ≤Φ ≤1 then give |F ′′
+i (β, s)| ≤Ha,b. At
+midpoint m = (a + b)/2 and radius r = (b −a)/2, Taylor’s theorem consequently supplies
+Fi(β, s) ≥Fi(m, s) −|F ′
+i(m, s)|r −1
+2Ha,br2
+(β ∈[a, b]).
+(8.83)
+The maximum of this bound and zero is also valid, since squared-error risk is nonnegative.
+Midpoint evaluation or any other feasible bias provides an upper bound on the global minimum.
+Split the lowest-bound interval, retain both children, and discard an interval only when its lower
+bound is no smaller than the current incumbent upper bound. The minimum over retained
+interval bounds and both exterior bounds is a global lower bound in exact arithmetic. The
+incumbent minus that minimum is an explicit empirical optimality gap. The interval tree and
+active heap must remain archived so this logic can be checked.
+8.26.4
+Numerical tolerances, matched policies and scope
+The implemented branch-and-bound subtracts numerical slack 10−12 from lower bounds and
+adds it to feasible upper bounds. Gaussian tail moments occasionally have tiny negative roundoff
+values; values within the declared slack are clipped to zero, whereas more negative values raise
+an error. This preserves physical nonnegativity but is not directed rounding, and the slack is
+not a formal machine-arithmetic error proof. Accordingly, report a floating-point numerical gap
+check, not an interval-arithmetic theorem.
+Research derivations | Updated October 2026
+64
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Feature gaps are targeted at 10−7/(1 + 2/3); their importance-weighted sum is at most 10−7
+per model when every output resolves. Stop after 20000 expansions per output or the shared
+300-second budget, preserving unresolved gaps. Do not treat these empirical calibration bounds
+as uncertainty intervals for the held-out image population.
+Both primary frozen policies use biases minimized on the calibration split at zero noise. Noisy
+policies reoptimize biases on that same split with encoders fixed.
+Thus their fitted models
+coincide at zero noise; ordinary training/calibration mismatch cannot itself create the baseline
+policy contrast. The test split evaluates conditional Gaussian losses without fitting, and paired
+image resampling quantifies only finite test-sample variability conditional on the fitted models.
+Continuous activations do not inherit the Bernoulli clean cubic, critical probability, global stor-
+age transition or ϵ3/2 law. Their support, coactivation, amplitudes and selected gate distances
+differ. The pilot tests only whether decoder calibration changes a learned-feature reconstruction-
+risk comparison under the specified corruption. A resolved result would be evidence of that
+mechanism outside Bernoulli inputs; it would not make two arbitrary channels semantic con-
+cepts or establish universal monosemanticity robustness.
+8.27
+A fixed learned-vision check of decoder-policy dependence
+The continuous-target pilot was completed using genuine frozen ImageNet-pretrained ResNet18
+weights (IMAGENET1K_V1) and CIFAR-10 images.
+This is an activation reconstruction task,
+not image generation, image-input corruption, adversarial evaluation or proof that the chosen
+channels are semantic concepts. All choices below were fixed before feature-risk outcomes; no
+pair or noise-grid replacement was made.
+8.27.1
+Inputs, selected geometry and evaluation settings
+NumPy seed 20261006 shuffled the 50000 CIFAR-10 training indices. The first 256 supplied
+training targets, the next 256 calibration targets, and the next 512 held-out test targets. The
+official checkpoint transforms resize to 256, center crop to 224 and apply ImageNet normalization.
+Inference used the post-ReLU layer4 output at the predetermined central spatial cell, before
+average pooling. The first two channels by index with nonzero training mean and variance were
+channels 0 and 1. Class labels were not used to fit or select the reconstruction targets.
+The training RMS factors were 2.1767477055 and 2.4060630488; division without centering pre-
+served nonnegativity and exact zeros. Training zero fractions were .48828125 and .30859375,
+with coactivation .37109375. The encoder had one dimension and energy one, tied ReLU decod-
+ing, free biases and importance weights (1, 2/3). The two predeclared angle resolutions, 256 and
+512, followed by one bounded best-cell refinement each, selected the same numerical solution:
+wsharing = (.9674172554, .2531873890),
+Lsharing,train = .3670650955.
+The train-selected mono comparator retained channel 0, with Lmono,train = .3849481174. The
+empirical clean gain .0178830219 passed the prescribed gate; the resolution-loss difference was
+zero. This is numerical clean selection, not a globally certified encoder optimum. Both exact-
+zero support and a distinctly mixed numerical solution were present, so the predefined noisy
+evaluation proceeded.
+Both encoders were frozen. Their primary frozen biases were fitted on the calibration split at
+zero noise; noisy calibration reoptimized biases on that same split for both models. The primary
+policies therefore coincided at zero noise. The common code-noise reference was
+sref =
+q
+1
+2{Vartrain(x1) + Vartrain(x2)} = .8082696314.
+Research derivations | Updated October 2026
+65
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+The five prescribed noise multipliers were 0, .05, .1, .2, .4, applied to this reference, with identical
+absolute scalar Gaussian code noise for both encoders. Held-out risks were deterministic con-
+ditional Gaussian expectations averaged over test images. Calibration targeted total weighted
+empirical objective gap 10−7 per model, floating slack 10−12, at most 20000 expansions per
+output and a shared 300-second budget.
+Every saved calibration profile resolved within its
+target.
+8.27.2
+All prescribed held-out comparisons
+Define ∆j = Rsharing,j −Rmono,j for policy j ∈{fr, cal}, and T = ∆cal −∆fr. Positive ∆favors
+mono; positive T means calibration shifts the relative comparison toward mono.
+The table
+reports means and 95% paired image-bootstrap percentile intervals using 2000 resamples and
+fixed seed 20261006. Intervals are pointwise, conditional on the fitted models, and do not include
+training/calibration uncertainty or give simultaneous coverage over all noise levels. Entries are
+rounded only for display; full precision and per-image losses remain in the archived outputs.
+σ
+∆fr
+∆cal
+T
+.00000
+.009029
+.009029
+.000000
+[−.015775, .037170]
+[−.015775, .037170]
+[.000000, .000000]
+.04041
+.008768
+.008866
+.000098
+[−.016023, .036947]
+[−.015941, .037035]
+[.000054, .000140]
+.08083
+.008118
+.008518
+.000399
+[−.016766, .036377]
+[−.016426, .036760]
+[.000208, .000577]
+.16165
+.006141
+.007739
+.001598
+[−.018991, .034632]
+[−.017634, .036274]
+[.000843, .002319]
+.32331
+.001454
+.007401
+.005947
+[−.023961, .030110]
+[−.019016, .037169]
+[.003554, .008243]
+The learned sharing model’s training advantage did not establish a held-out clean advantage: the
+primary zero-noise sharing risk was .3792952475 versus mono .3702662291. At every prescribed
+level both policy difference means were positive, but every individual difference interval included
+zero. Thus this pilot supplies neither a resolved held-out mono/share winner nor a held-out
+ordering reversal or crossing. These unfavorable and inconclusive facts are retained explicitly.
+By contrast, T was positive at each positive-noise level, with its pointwise intervals excluding
+zero. At the largest prescribed noise,
+T = .0059465507,
+95% interval [.0035536102, .0082431507].
+This supports decoder-policy dependence of the relative risk comparison on the fixed learned-
+feature example. It does not show that the full asymptotic Bernoulli endpoint ordering transfers.
+The exact decomposition
+T = (Rmono,fr −Rmono,cal) −(Rsharing,fr −Rsharing,cal)
+identifies differential calibration benefit. At this noise the held-out benefits were .0122366692
+for mono and .0062901185 for sharing. Their difference equals the reported contrast. This is an
+operational explanation of the observed contrast; attributing it causally to a specific gate subset
+requires checking the saved per-image and gate records rather than assuming the Bernoulli
+explanation automatically.
+8.27.3
+Audit, relevance and stopping decision
+An independent saved-artifact audit verified the extraction provenance and indices, normalized
+arrays, checkpoint/data hashes, bootstrap and five evaluation cases, and 978 calibration nodes.
+Research derivations | Updated October 2026
+66
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Figure 8.8: Held-out sharing-minus-mono reconstruction MSE against absolute Gaussian code-
+noise standard deviation, with conditional paired-image bootstrap intervals. These are oper-
+ational learned activation channels, not validated semantic concepts. The two policy curves
+have positive point estimates but their individual risk-difference intervals cross zero throughout.
+Their paired contrast is more precisely estimated than either difference alone.
+Figure 8.9: Paired policy contrast from the same saved five cases, without additional evalua-
+tion. Its pointwise conditional bootstrap intervals exclude zero at positive noise. The contrast
+measures differential calibration benefit; it does not resolve either individual mono/share risk
+ordering or demonstrate a reversal.
+Research derivations | Updated October 2026
+67
+
+
+Chapter 8. Project 1: robustness of the clean-selected representation
+Recomputed per-image Gaussian losses agreed within 5.33 × 10−15. The independent audit did
+not duplicate the ResNet forward inference. Numerical slack and floating arithmetic are not
+directed-rounding certification.
+The empirical contribution is narrow but relevant: real learned nonnegative activations show
+a measurable relative-risk policy effect with the encoder and corruption held fixed. The effect
+coexists with an unresolved held-out risk ordering and a failed transfer of the training clean
+advantage. Arbitrary channels remain an unresolved link to semantic monosemanticity, and no
+real-model critical exponent, all-noise boundary or adversarial claim follows.
+Stop the fixed pilot after these five levels.
+Do not replace the channel pair, increase noise
+until a crossing appears, or retune selection. The saved-record mechanism check below uses
+only the existing inputs and outputs; it cannot turn this inconclusive ordering into a resolved
+reversal. Stronger semantic or full-model claims require separate evidence and remain outside
+this completed pilot.
+8.27.4
+Saved-record gate and contribution audit
+The predeclared diagnostic partition was target channel 0 exactly zero versus positive. All 512
+test images and all five saved noise levels were retained; no new fit, corruption value or bootstrap
+was generated. There were 271 zero-target and 241 positive-target images. For the zero group,
+mono’s clean output-0 means were exactly at zero. Sharing’s median absolute distance from
+that gate was .16482873, with minimum .00101901; 32.47% of those means were positive despite
+zero target. This supports the presence of the proposed gate-placement distinction, but sharing
+distances are heterogeneous rather than uniformly separated.
+For each fixed policy contrast, the group contribution is the sum of its per-image contrasts
+divided by 512, not by the group size. Thus the two contributions add to the original overall
+mean. Their complete decomposition is
+Noise multiplier
+Target 0 zero
+Target 0 positive
+0
+.000000000
+.000000000
+.05
+.000084991
+.000013015
+.10
+.000320524
+.000078932
+.20
+.001180940
+.000416779
+.40
+.004083858
+.001862693
+At the largest noise the zero group contributes approximately 68.7% of the aggregate contrast.
+Its mean calibration benefits were .0270890 for mono and .0193734 for sharing. The positive
+group had negative benefits, −.0044645 for mono and −.0084218 for sharing: calibration in-
+creased this group’s held-out conditional error while improving aggregate risk.
+Sharing was
+harmed more on that group, so it too contributes positively to the mono-favoring policy con-
+trast. No unfavorable subgroup effect has been discarded.
+Per-output recomputation matched the saved per-image total losses exactly in floating arith-
+metic. Output 0 supplies the contrast; output 1’s aggregate calibration benefit was zero for
+mono and of order 10−10 for sharing, not a separate robust effect. The records support a gate-
+related explanation observationally, but do not isolate its causal role: amplitudes, target-zero
+status and coactivation differ jointly. No subgroup significance test or new confidence interval
+was computed. The original unresolved risk ordering remains unchanged. This completes the
+fixed pilot’s mechanism audit; stop without new pairs or noise searches.
+Research derivations | Updated October 2026
+68
 
 
 Chapter 9
@@ -3765,7 +4932,7 @@ Gc = c
 ,
 c > 0.
 (9.3)
-51
+69
 
 
 Chapter 9. Project 2: the correct meaning of the covariance recursion
@@ -3815,7 +4982,7 @@ Status of this result. The covariance identities are valid and useful baselines.
 describe the specified linear processes. They do not prove that diffusion self-training
 obeys a fixed Gram-matrix map, or that monosemanticity must decay.
 Research derivations | Updated October 2026
-52
+70
 
 
 Chapter 10
@@ -3865,7 +5032,7 @@ At zero noise, the states 00, 01, 10 reproduce themselves, while 11 maps to 00. 
 inputs are independent, the joint probability p1p2 is lost immediately. Subsequent iterations
 cause no additional change. This is a clear feature-combination loss, but it is not progressive
 decay of all features and does not require changing G.
-53
+71
 
 
 Chapter 10. Project 2: an exact nonlinear generation operator
@@ -3905,7 +5072,7 @@ Figure 10.1: Exact pair-kernel calculations with a = 1, σ = 0.35 and initial ac
 0.2. Marginal frequencies can rise even though the joint state 11 is eliminated from generated
 outputs. Twenty-percent real-data mixing preserves some joint mass through replenishment.
 Research derivations | Updated October 2026
-54
+72
 
 
 Chapter 10. Project 2: an exact nonlinear generation operator
@@ -3922,7 +5089,7 @@ Before moving on. Compute the zero-noise pair distribution after one and two
 generations. Explain why covariance alone would not be the clearest account of the
 lost joint concept.
 Research derivations | Updated October 2026
-55
+73
 
 
 Chapter 11
@@ -3986,7 +5153,7 @@ If all Ii ≥Imin > 0, then P
 i ei,g ≤Rg/Imin also converts the weighted risk into a total-variation
 bound. This may be loose when importance weights span many orders of magnitude. Reporting
 per-feature and joint errors remains more informative than a single weighted average.
-56
+74
 
 
 Chapter 11. The mathematical link between the two projects
@@ -4037,7 +5204,7 @@ Before moving on. Construct a two-state process that flips both states with equa
 probability mass. Its per-sample error is one but its distribution does not change.
 Explain why this does not contradict the theorem.
 Research derivations | Updated October 2026
-57
+75
 
 
 Chapter 12
@@ -4088,7 +5255,7 @@ This is an implicit-function calculation. It is local and assumes a smooth, iden
 solutions. Symmetries, singular Hessians, ReLU boundaries and optimizer changes can invalidate
 its use unless handled by gauge fixing, regularization, smooth surrogates or a more general
 analysis.
-58
+76
 
 
 Chapter 12. What changes when the model is genuinely retrained
@@ -4130,7 +5297,7 @@ Status of this result. Equations (12.4)–(12.5) are conditional local derivatio
 Solving a global nonlinear learning recursion and proving that a particular semantic
 scalar forecasts real-model collapse remain research work.
 Research derivations | Updated October 2026
-59
+77
 
 
 Chapter 13
@@ -4181,7 +5348,7 @@ Diffusion time τ indexes noise removal within one generation of one sample. Tra
 g indexes fit–sample–refit cycles across models. A denoising step can reduce uncertainty while
 a correctly sampled full generative process preserves diversity. Confusing these clocks makes
 “denoising contracts covariance, so diffusion must collapse” an invalid argument.
-60
+78
 
 
 Chapter 13. Diffusion: the bridge that is valid, and the one to test
@@ -4233,7 +5400,7 @@ Thus the same denoiser accompanied by the correct sampling variation preserves t
 distribution. Removing sampling variance creates the collapse in Equation (13.9). This is why
 a real diffusion sampler must be modeled or held fixed, not discarded from the argument.
 Research derivations | Updated October 2026
-61
+79
 
 
 Chapter 13. Diffusion: the bridge that is valid, and the one to test
@@ -4270,7 +5437,7 @@ explains the apparent effect before attributing that effect to feature geometry.
 Before moving on. Identify the covariance term that posterior sampling restores
 in the Gaussian example. Explain why posterior means alone lose it.
 Research derivations | Updated October 2026
-62
+80
 
 
 Chapter 14
@@ -4311,7 +5478,7 @@ comparison so a method is not credited merely for dropping difficult concepts.
 Stage C: recursive training on the same toys
 For each chosen starting model, generate a fixed-size synthetic dataset and train the next model
 under a fixed budget. Compare pure replacement with a specified real-data fraction. Keep a
-63
+81
 
 
 Chapter 14. Experiments that test the derivations
@@ -4357,7 +5524,7 @@ can fail because the basis changes, even if useful computation is preserved. Wit
 specific dictionaries, distinguish actual concept changes from changed coordinate systems. Use
 direct labeled-factor behavior as a reference wherever possible.
 Research derivations | Updated October 2026
-64
+82
 
 
 Chapter 14. Experiments that test the derivations
@@ -4427,7 +5594,7 @@ periments
 Sampler truncation or evalu-
 ator drift explains the result
 Research derivations | Updated October 2026
-65
+83
 
 
 Chapter 15
@@ -4473,7 +5640,7 @@ Fix task, norm budget, corruption location and two
 primary hypotheses.
 Run a diffusion cost pilot and a focused
 related-work check in parallel with mathematical work.
-66
+84
 
 
 Chapter 15. An eight-week program that preserves both projects
@@ -4552,7 +5719,7 @@ anism that survives controls, or a targeted intervention justified by theory and
 generative loop. The combined story should demonstrate why the two results illuminate each
 other.
 Research derivations | Updated October 2026
-67
+85
 
 
 Chapter 15. An eight-week program that preserves both projects
@@ -4564,7 +5731,7 @@ The next step is to choose the primary corruption and resource convention, repro
 analytic pair in a learned toy, and execute the diffusion pilot. This continues the same two-
 project program with explicit assumptions.
 Research derivations | Updated October 2026
-68
+86
 
 
 Appendix A
@@ -4643,7 +5810,7 @@ ing is automatically im-
 provement
 No. It is a recursive process; improvement is an out-
 come to measure.
-69
+87
 
 
 Appendix B
@@ -4692,7 +5859,7 @@ independently of p1, p2. But the statistical nuisance variance in the independen
 tector is ρ2p2(1 −p2). Conditional robustness of feature 1 depends on its competitor’s activity,
 not simply its own rarity. Its unconditional contribution to total risk also depends on its own
 false-positive and false-negative mixture.
-70
+88
 
 
 Appendix B. Further derivations and worked exercises
@@ -4724,7 +5891,7 @@ This does not invalidate the exact toy algebra. It weakens the claim that the ch
 measure explains real-model collapse beyond simpler measurements. The paper should report
 and analyze that distinction rather than call the transfer confirmed.
 Research derivations | Updated October 2026
-71
+89
 
 
 Appendix C
@@ -4810,7 +5977,7 @@ A tolerance
 assertion checks numerical implementation agreement; it is not a substitute for a proof.
 The proofs explain why the formulas hold, and the checks help catch algebra, coding and
 interpretation errors.
-72
+90
 
 
 Appendix D
@@ -4858,4 +6025,4 @@ anteed conference paper” follows from the calculations delivered here.
 The completed work in this volume is the teaching and derivation foundation. The remaining
 scientific work is to characterize learned geometry, sharpen predictive claims where possible and
 validate the same mechanism in a real generative model within the agreed research program.
-73
+91

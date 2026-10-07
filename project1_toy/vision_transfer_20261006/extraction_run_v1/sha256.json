@@ -1,0 +1,10 @@
+{
+  "features_raw.npy": "500469e4e31ffc422239b8462167828b5c789861719906526440b226be97521d",
+  "image_indices.npy": "98233cef5555f4beef894d08dc1c4389510a74583cde7ab1f0c4dd4b1dd0a327",
+  "labels_for_audit_only.npy": "aa573d8912ac26cf6f37dc851237eba492c31f5af17e06ec8fcf515fdd600abf",
+  "provenance.json": "ba26bce69d653cce48f133d9256628ab884a175f579ddba014bd45672ad13083",
+  "selected_features.npz": "1e0893667e2c6fe299e8f73cbbb98e7908ab16f6ceecb82b6c64be1f2c613b19",
+  "source_snapshot\\vision_extract.py": "b677dab4db1327ae7eb763c52d65360701bf98811232835453e2d146883d9b5a",
+  "source_snapshot\\vision_transfer_protocol.md": "edf1828866ce3542f5f347c4b01d8790672189a3a9a9e6914ace9c09ff1b4549",
+  "vision_activations.npz": "d2829aa41f2b010f5b47b3d326a684ad72f43f9131ca3d77e1e924c163552d7c"
+}

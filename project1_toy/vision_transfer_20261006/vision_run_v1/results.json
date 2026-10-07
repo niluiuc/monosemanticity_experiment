@@ -1,0 +1,379 @@
+{
+  "cases": [
+    {
+      "multiplier": 0,
+      "sigma": 0.0,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.1782367817346469,
+            0.4746528932634346
+          ],
+          "frozen_bias": [
+            -0.1782367817346469,
+            0.4746528932634346
+          ],
+          "resolved": true,
+          "total_gap": 0.0
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.0,
+            0.6472552812410772
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.6472552812410772
+          ],
+          "resolved": true,
+          "total_gap": 0.0
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.3792952474915784,
+        "sharing_calibrated": 0.3792952474915784,
+        "sharing_training_bias_secondary": 0.37915935580580806,
+        "mono_frozen": 0.3702662290734994,
+        "mono_calibrated": 0.3702662290734994,
+        "mono_training_bias_secondary": 0.3702390973584523
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": 0.009029018418079036,
+          "interval95": [
+            -0.015774569470647332,
+            0.03717005826727063
+          ]
+        },
+        "delta_calibrated": {
+          "mean": 0.009029018418079036,
+          "interval95": [
+            -0.015774569470647332,
+            0.03717005826727063
+          ]
+        },
+        "policy_contrast": {
+          "mean": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.0,
+          "interval95": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.05,
+      "sigma": 0.04041348156824049,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.17972417188415374,
+            0.4746528932634346
+          ],
+          "frozen_bias": [
+            -0.1782367817346469,
+            0.4746528932634346
+          ],
+          "resolved": true,
+          "total_gap": 5.469294459455505e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.011673986403854936,
+            0.6472552812410772
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.6472552812410772
+          ],
+          "resolved": true,
+          "total_gap": 5.575419080106406e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.38022525859088824,
+        "sharing_calibrated": 0.3802149326158539,
+        "sharing_training_bias_secondary": 0.38008766558869456,
+        "mono_frozen": 0.37145696150803964,
+        "mono_calibrated": 0.37134862979596217,
+        "mono_training_bias_secondary": 0.37142982979299255
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": 0.008768297082848615,
+          "interval95": [
+            -0.01602332657913006,
+            0.03694680641153954
+          ]
+        },
+        "delta_calibrated": {
+          "mean": 0.008866302819891673,
+          "interval95": [
+            -0.01594060207902089,
+            0.0370347549178225
+          ]
+        },
+        "policy_contrast": {
+          "mean": 9.800573704305739e-05,
+          "interval95": [
+            5.392407080353001e-05,
+            0.0001395713410878844
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 1.0325975034389398e-05,
+          "interval95": [
+            -3.351428410399641e-05,
+            5.5408757436043304e-05
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.00010833171207744676,
+          "interval95": [
+            8.91799960151482e-05,
+            0.00012752863706149228
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.1,
+      "sigma": 0.08082696313648098,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.18477698057024564,
+            0.4746528932634346
+          ],
+          "frozen_bias": [
+            -0.1782367817346469,
+            0.4746528932634346
+          ],
+          "resolved": true,
+          "total_gap": 6.85835090189398e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.024855966221942558,
+            0.6472552812410772
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.6472552812410772
+          ],
+          "resolved": true,
+          "total_gap": 1.2128540621478279e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.38311070646569706,
+        "sharing_calibrated": 0.38304341228291733,
+        "sharing_training_bias_secondary": 0.38296172443765597,
+        "mono_frozen": 0.3749925390568799,
+        "mono_calibrated": 0.3745257897204287,
+        "mono_training_bias_secondary": 0.3749654073418328
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": 0.008118167408817137,
+          "interval95": [
+            -0.016765899667930326,
+            0.036376675002232656
+          ]
+        },
+        "delta_calibrated": {
+          "mean": 0.00851762256248857,
+          "interval95": [
+            -0.016426352013500144,
+            0.0367601677579101
+          ]
+        },
+        "policy_contrast": {
+          "mean": 0.0003994551536714307,
+          "interval95": [
+            0.0002075710917054413,
+            0.0005773057744071625
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 6.729418277972682e-05,
+          "interval95": [
+            -0.00012837269680046823,
+            0.000263482586453621
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.0004667493364511576,
+          "interval95": [
+            0.00038407324304127484,
+            0.0005461954881695343
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.2,
+      "sigma": 0.16165392627296196,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.2050153517160939,
+            0.4746528932634346
+          ],
+          "frozen_bias": [
+            -0.1782367817346469,
+            0.4746528932634346
+          ],
+          "resolved": true,
+          "total_gap": 3.321425550798877e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.05613472640997175,
+            0.6472552812410772
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.6472552812410772
+          ],
+          "resolved": true,
+          "total_gap": 4.0615029679724746e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.39490660126514626,
+        "sharing_calibrated": 0.39427658156829487,
+        "sharing_training_bias_secondary": 0.394712026674198,
+        "mono_frozen": 0.38876563273241627,
+        "mono_calibrated": 0.38653789371720276,
+        "mono_training_bias_secondary": 0.3887385010173691
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": 0.006140968532730058,
+          "interval95": [
+            -0.018991047246317148,
+            0.034631692782695296
+          ]
+        },
+        "delta_calibrated": {
+          "mean": 0.0077386878510920555,
+          "interval95": [
+            -0.01763448225521712,
+            0.03627367310602232
+          ]
+        },
+        "policy_contrast": {
+          "mean": 0.001597719318361994,
+          "interval95": [
+            0.0008426051378993209,
+            0.002319026259025788
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.0006300196968514264,
+          "interval95": [
+            -0.00018642570074066348,
+            0.0014249017610952395
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.00222773901521342,
+          "interval95": [
+            0.0018572610554068991,
+            0.0025916267834838447
+          ]
+        }
+      }
+    },
+    {
+      "multiplier": 0.4,
+      "sigma": 0.3233078525459239,
+      "profiles": {
+        "sharing": {
+          "calibrated_bias": [
+            -0.27286475788198816,
+            0.4746528861853387
+          ],
+          "frozen_bias": [
+            -0.1782367817346469,
+            0.4746528932634346
+          ],
+          "resolved": true,
+          "total_gap": 4.159723178872217e-08
+        },
+        "mono": {
+          "calibrated_bias": [
+            -0.1375878586978096,
+            0.6472552812410772
+          ],
+          "frozen_bias": [
+            -0.0,
+            0.6472552812410772
+          ],
+          "resolved": true,
+          "total_gap": 4.734264091171836e-08
+        }
+      },
+      "risks": {
+        "sharing_frozen": 0.4425275542787152,
+        "sharing_calibrated": 0.43623743576800683,
+        "sharing_training_bias_secondary": 0.44218634091992853,
+        "mono_frozen": 0.44107322003782934,
+        "mono_calibrated": 0.4288365508437483,
+        "mono_training_bias_secondary": 0.44104608832278225
+      },
+      "comparisons": {
+        "delta_frozen": {
+          "mean": 0.0014543342408858445,
+          "interval95": [
+            -0.023961386827869285,
+            0.030109763425016516
+          ]
+        },
+        "delta_calibrated": {
+          "mean": 0.007400884924258506,
+          "interval95": [
+            -0.01901608509491701,
+            0.037169379282463985
+          ]
+        },
+        "policy_contrast": {
+          "mean": 0.005946550683372661,
+          "interval95": [
+            0.003553610227093272,
+            0.008243150734607126
+          ]
+        },
+        "sharing_calibration_improvement": {
+          "mean": 0.006290118510708339,
+          "interval95": [
+            0.0032492189449042385,
+            0.009142923682797392
+          ]
+        },
+        "mono_calibration_improvement": {
+          "mean": 0.012236669194080998,
+          "interval95": [
+            0.010561633950830485,
+            0.013884620379875414
+          ]
+        }
+      }
+    }
+  ]
+}

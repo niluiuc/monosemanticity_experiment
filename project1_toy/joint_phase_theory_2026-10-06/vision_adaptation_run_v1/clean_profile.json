@@ -1,0 +1,53 @@
+{
+  "beta": 0.44999999999999996,
+  "loss": 0.0016666666666666696,
+  "candidates": [
+    {
+      "beta": -2.1,
+      "loss": 0.9133333333333332,
+      "kind": "all_off"
+    },
+    {
+      "beta": -0.2,
+      "loss": 0.28333333333333327,
+      "kind": "interval_vertex",
+      "active": 1,
+      "lower": -1.1,
+      "upper": -0.2
+    },
+    {
+      "beta": -1.1,
+      "loss": 0.9133333333333332,
+      "kind": "kink",
+      "active": 1
+    },
+    {
+      "beta": 0.44999999999999996,
+      "loss": 0.0016666666666666696,
+      "kind": "interval_vertex",
+      "active": 2,
+      "lower": -0.2,
+      "upper": 0.6
+    },
+    {
+      "beta": -0.2,
+      "loss": 0.28333333333333327,
+      "kind": "kink",
+      "active": 2
+    },
+    {
+      "beta": 0.6,
+      "loss": 0.016666666666666694,
+      "kind": "interval_vertex",
+      "active": 3,
+      "lower": 0.6,
+      "upper": null
+    },
+    {
+      "beta": 0.6,
+      "loss": 0.016666666666666694,
+      "kind": "kink",
+      "active": 3
+    }
+  ]
+}

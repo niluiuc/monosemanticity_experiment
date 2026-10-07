@@ -1,0 +1,10 @@
+{
+  "beta": "0.499",
+  "lower": "0.249999",
+  "upper": "0.249999",
+  "gap": "0.0",
+  "resolved": true,
+  "nodes": [],
+  "active_heap": [],
+  "expansions": 0
+}
