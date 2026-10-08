@@ -1,5 +1,7 @@
 # Research workflow
 
+- Store every new download, cache, temporary file and output for this work under `D:/Study/PHD UIUC/LLM project/algoverse`. Do not create new research storage on C:. Existing installed runtimes may be read and executed; route child-process caches and temporary directories to the workspace on D:.
+
 - Time is a binding constraint. Do not conduct speculative, unguided, or broad exploratory work unless it is necessary to resolve a specific blocker or test a central research claim.
 - Before an experiment, state the question, its connection to the Project 1 derivations, the smallest useful test, and the criterion for stopping or extending it.
 - Prefer the existing mathematical assumptions, code, and experimental infrastructure. Expand scope only when evidence from a focused test justifies it.

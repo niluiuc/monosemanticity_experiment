@@ -1,0 +1,1062 @@
+[
+  {
+    "path": "prepare_visual_data.py",
+    "bytes": 841,
+    "sha256": "234b133a2659810496ccc580c055a6f2966efbf0d0fadcdfd2ddfaaac6ecd288"
+  },
+  {
+    "path": "README.md",
+    "bytes": 4200,
+    "sha256": "5919997cc91df1ac3682dd9bf43f1a8a88d15a17e85ca28a82a20cbe4c1b245d"
+  },
+  {
+    "path": "run_with_workspace_storage.ps1",
+    "bytes": 1100,
+    "sha256": "66454a17c58e8c21f9919a8296ce84cf5cf985080a3d337ca065df43ece75f5f"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/fixed_geometry.py",
+    "bytes": 2341,
+    "sha256": "cc0be9bc1e452802a3a5f16906640146fe558d8b74b03ee75425fe419e8d6c50"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/FIXED_GEOMETRY_PROTOCOL.md",
+    "bytes": 1109,
+    "sha256": "77a0b875a652b7d72cc4de66360a96c59a554998f62594e4cd4854dce32bfe80"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/PROTOCOL.md",
+    "bytes": 2823,
+    "sha256": "d13d0e67d79d64386d99b8a9f5a0b46e6876c27d88a5315dcc5fe0e669658404"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/README.md",
+    "bytes": 4132,
+    "sha256": "8c9fbf90f5de677e35e67d811281d2aa12538e97467208a599855c118388bc36"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run.py",
+    "bytes": 5372,
+    "sha256": "4fc83be752d36a69b215f4edbd33d4d6e83b0424d2afe7a5b0cf449cf1bfc912"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/verify.py",
+    "bytes": 3702,
+    "sha256": "2cde184dac1708b43bbd34a74092202b1984e3e93c78325c1bed06b1187b11ff"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/diagnose_saved.py",
+    "bytes": 853,
+    "sha256": "7f9db10e7d647bf7fbd200dddfbf0cacd2b2af100de15e223af5b725176fceab"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/PROTOCOL.md",
+    "bytes": 2223,
+    "sha256": "76eba78ac2ba1e8b538554df0ac5804bf01a030b0ac546c018b90cfd7a7d2bf2"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/README.md",
+    "bytes": 2630,
+    "sha256": "dd3d63cf9e6ac357cadcc18dfe835d1ec311a4b1300a0640e8d53317be14c2e9"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run.py",
+    "bytes": 4529,
+    "sha256": "c6404b2ff4ad3dbb0e78bd41c9c7667e229837130b32c44e24a43051cf26d618"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/verify.py",
+    "bytes": 3103,
+    "sha256": "356877141ba2650889e027c100a374c8f4a771048fe1c12d2f4ed834247ac9c1"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/PROTOCOL.md",
+    "bytes": 2684,
+    "sha256": "10db45508b7e910e7cc0067abe309c431ece59ae05ecf6ee08d0833d3e0f3958"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/README.md",
+    "bytes": 1848,
+    "sha256": "65717a86797639ea5242412086be8f8056392c1d87425269e18c87988e723cbd"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/REVIEW.md",
+    "bytes": 2688,
+    "sha256": "c87872c00906b4572a5a621c32bf1094fbaf01ade18ac753d9314b6d5b818fc6"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run.py",
+    "bytes": 4442,
+    "sha256": "2df12e021e03869ac734a44e2c958426eeb09768383bcee2ee394b384be09a1e"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/verify.py",
+    "bytes": 2772,
+    "sha256": "0d9f2ff68e06a71385c64afac78cf4dd7e27f1cad5e198f6be15cae497a4e7fc"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/PROTOCOL.md",
+    "bytes": 4970,
+    "sha256": "5d28026f6e45610362b0a78a2467ddd1772c05c51b1c463373824ee517cbffaa"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/README.md",
+    "bytes": 3843,
+    "sha256": "26ff4e2d11ab9d090c949467bc3fcd16059b0e4ab0a44044bd79380699a1937d"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run.py",
+    "bytes": 9696,
+    "sha256": "daaaccf6a55a2567e97b107f8282df628b2ccbcf64731b1d01e3e945ebc967a4"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/TRAINING_DIAGNOSTIC.json",
+    "bytes": 799,
+    "sha256": "b6b184fdeabae5887dad22827f7414cca66781bb21e59e06e7bcb0199a133b13"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/verify.py",
+    "bytes": 3883,
+    "sha256": "a0957ba6d36743404c05cb3a641e81c2f676d02ad514dbb4aff08dafb708f278"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.02.npz",
+    "bytes": 313341,
+    "sha256": "1a03c23dad5eaf1320d4b73ad4973b18f380c16de791b506f4a30089bf4409d4"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.04.npz",
+    "bytes": 316843,
+    "sha256": "e6ea1bd0801196f3dff0c6164c6001ab01338a4fa99856976c0fb06d25b76910"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.06.npz",
+    "bytes": 319309,
+    "sha256": "cce6eade9b7cad653980b1770ca28189a55f250c83f91ffb9b4814ecb22325e8"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.08.npz",
+    "bytes": 321452,
+    "sha256": "1bceaaf6158f1d3a0c56ea75048ac6b52f96bcddd29e7c21d0b4576b3f28bb2e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.10.npz",
+    "bytes": 323193,
+    "sha256": "ae939bc0f56582d26912e239ca9932272d12d8a86205ded249985cfb1d2b844e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.12.npz",
+    "bytes": 324668,
+    "sha256": "0874c5dab914e06013195df550b4293456139a6fcb3596d82cd45ebb18771905"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.14.npz",
+    "bytes": 326011,
+    "sha256": "17a268f1932153a998ee1e3f5c3f57a2a4e97ef94bb3f319bab222fef8d02496"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.16.npz",
+    "bytes": 327364,
+    "sha256": "ccb649964c5b30781e04b6df6b1f09ba822b2c9a4c78de7e123afa50bf2ea4b0"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.18.npz",
+    "bytes": 328447,
+    "sha256": "e5646cabce56d307a694ea3ea833af23ebdd597048b0a2897f87d71b7039ec6e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.20.npz",
+    "bytes": 329557,
+    "sha256": "acc8c5cf2e1d3877e2bd69ffb7760950bd872e4faa363e68a89ffa0e2bc58e8f"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.22.npz",
+    "bytes": 330437,
+    "sha256": "b71eff872d452397b037cb19f62e33cfa93198613054e6e975b9b5d82a6a743a"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.24.npz",
+    "bytes": 331674,
+    "sha256": "790c5a34c8d54a7f5fc1f8ed38b70c117d1d632e805c7ee8cda2353a4717402d"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.26.npz",
+    "bytes": 332505,
+    "sha256": "5971015d46078f570b59c5e3d367b0a67a58f1a7ba00fd9d83d6e1c39fe1e86f"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.28.npz",
+    "bytes": 333507,
+    "sha256": "fd3e8252473a82b60259adf3d70faeacfd8324dd9ec7ef976a93d551079a9c2e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.30.npz",
+    "bytes": 334195,
+    "sha256": "0d877ff0af6019f6df9791a1221751c4e46557b2e3930a2ff67a3568f64390cf"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.32.npz",
+    "bytes": 334855,
+    "sha256": "b44a9886e4d6a59eb0cbba7af9dbc45af27b2bf571ac195b4e1d76c2bf24f7be"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.34.npz",
+    "bytes": 335284,
+    "sha256": "a68cfbf614b2f3c4e7e5dcb821782f253d77e5966921ef0782881c68ed8b22a6"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.36.npz",
+    "bytes": 335907,
+    "sha256": "011512ad296ca8f85197a66b5bc3c7d152c4f3da4370c520c49c66c73116698d"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.38.npz",
+    "bytes": 336290,
+    "sha256": "d4e4bbdd212846c5e219ee6aebbc8fe57c6c414555d8b797e405379255b89810"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.40.npz",
+    "bytes": 336816,
+    "sha256": "c5f2e4b13c3b425937d94f4b3644112a2a8ad969e6055e4c2891554ee10d18bf"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.42.npz",
+    "bytes": 337095,
+    "sha256": "b7d39e985f70d5a3080907c4508e8740d27e35c7298c6add4874ccd265fa5664"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.44.npz",
+    "bytes": 337584,
+    "sha256": "bbbd4ee421e4d14d4b54fd900dc2f7d6b2fb23650227c6f04ae1cf3367bfb1c5"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.46.npz",
+    "bytes": 337605,
+    "sha256": "dcb7270e5850e243cb68b3b0341a4ab9c07fcccc2828d187305337b733093d7f"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.48.npz",
+    "bytes": 337743,
+    "sha256": "84b327d0c7012d476fa22f8bae57f69a1504480da339d9a16d8d47fb513f1048"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.50.npz",
+    "bytes": 337889,
+    "sha256": "35f58a53dbe3c81cb9db6dcdb3c98cf50ad0ab2a9692e242aed30c916e76a6f9"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.52.npz",
+    "bytes": 337870,
+    "sha256": "daca10aaabbe13dafa9331ec0d6d6afaa53dc8070aa5729eb3cd9c1e1ed351cc"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.54.npz",
+    "bytes": 337938,
+    "sha256": "a3e7b0adfe0004c62abcc70b2ef23df146ba1dc1ee19b916168cbec8dbf8ad1c"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.56.npz",
+    "bytes": 337656,
+    "sha256": "d28b96a155960e0db627af855993f4ed262d4d33ae2bfb4ccdd6f0c68bac1aa4"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.58.npz",
+    "bytes": 337668,
+    "sha256": "1e83f12ac3d41e49822cfe61ddfdf77438ff46c2bc6b10e134e3d00d7d9ec9f8"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.60.npz",
+    "bytes": 337593,
+    "sha256": "e9c66f645f85bc690ef2a60734a702a16541cd9f52b5d8ec70ae7157c2ead98e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.62.npz",
+    "bytes": 337421,
+    "sha256": "e01efe2fe52042e475eccc630544d7109fab455fba9b13ccaf76c839aa5bf06e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.64.npz",
+    "bytes": 336980,
+    "sha256": "d2ce0b0896ef075d556900fb1f9162700965861aed7771784d9fbea40a71213c"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.66.npz",
+    "bytes": 336684,
+    "sha256": "9114dcd72fe4fc0940e941b2f8d4c89505f7cdd48053fdc8a9a7dfde10ccd537"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.68.npz",
+    "bytes": 336351,
+    "sha256": "9eaec7a0aca6726e0284f41af00f16e2a949bb6a7c66f29b7e0d3f474be9848a"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.70.npz",
+    "bytes": 335871,
+    "sha256": "fd435235452343aef26a96e33d762afd6b529ec0eedd812761ef1e570708bcf9"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.72.npz",
+    "bytes": 335316,
+    "sha256": "0b98f4d921f7aac3e1394b447f417c99334f5b52347bbb77d1db3b7f64349552"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.74.npz",
+    "bytes": 334596,
+    "sha256": "bc93b448105aee1f717009d4fb19d590f1bdbcb9b0f784bce8fa41f0beb9ed3e"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.76.npz",
+    "bytes": 333985,
+    "sha256": "dc9a51355a89964d874731d8944846e9465f188754d3bb5c4182359f32a26b51"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.78.npz",
+    "bytes": 333211,
+    "sha256": "cd444f619e15a3953a1bc45318030e90ac3bf8556cc8f9bd75ccf2dfa9400344"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/draws_p0.80.npz",
+    "bytes": 331996,
+    "sha256": "1b186771119a62e16473c9850f5c0dae819613a664885f238d6d0517d2d15b6f"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/fixed_pentagon_heatmap.npz",
+    "bytes": 47375,
+    "sha256": "7d9d2a68f152e1e12fedca6769f31149eed7e107a6812067295d46875eb572bf"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/fixed_pentagon_heatmap.png",
+    "bytes": 81415,
+    "sha256": "f4c986fca28edc90ac5abfa95d3b9043f1aa8afb8a62212a21ea123d3533c785"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/fixed_pentagon_results.json",
+    "bytes": 411,
+    "sha256": "e0d879dea84fd6e2dd0b9c8ee3f8c4ad1ecd907cb7aadad9b4b3553ba7f6a03b"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/heatmap_values.npz",
+    "bytes": 215588,
+    "sha256": "dce83c2920403ee3e324e989fc3ab3539a90bf735338eca7bfc67df0d44df122"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/model_seed0.npz",
+    "bytes": 6120,
+    "sha256": "08f04c1bc9dcad551754cae04e0c9f8e0f918af71f7a2724e7ad37716e526160"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/model_seed1.npz",
+    "bytes": 2940,
+    "sha256": "8915585e0b104a38fcda7e1897597e5ce0413a7641d029dda00aff901bd0a50b"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/model_seed2.npz",
+    "bytes": 4894,
+    "sha256": "ae9601c09298220e6f8321f7cb8249805a2d29e325c864a429768d89e5b02032"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/original_simulation_heatmap.png",
+    "bytes": 127728,
+    "sha256": "e0e09fd4757b0f7acd18bbedc1d8cf2820c88c5c53dd8de22d78fbe2b68d8a8a"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/PROTOCOL.md",
+    "bytes": 2823,
+    "sha256": "d13d0e67d79d64386d99b8a9f5a0b46e6876c27d88a5315dcc5fe0e669658404"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/repaired_learning_heatmap.png",
+    "bytes": 169598,
+    "sha256": "63df1cf90718a8abea6be6929ffa29084af8c27d575f3e81211ea841b9e3aaf2"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/results.json",
+    "bytes": 2144,
+    "sha256": "774ccbc8fab54bf782baded5a02f479984e83a24e316fec0221098b4342d3802"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/run_snapshot.py",
+    "bytes": 5372,
+    "sha256": "4fc83be752d36a69b215f4edbd33d4d6e83b0424d2afe7a5b0cf449cf1bfc912"
+  },
+  {
+    "path": "project1_toy/detection_repair_20261008/run_v1/verification.json",
+    "bytes": 548,
+    "sha256": "81da2ed4045a5eea2b0124d36525c44966837afecb847e27970ca879d3df2842"
+  },
+  {
+    "path": "project1_toy/focused_bridge_2026-10-06/toy/bridge_math.py",
+    "bytes": 6987,
+    "sha256": "f605b2a2c1ffb3f345f7199014403e3710ef24820901e75d1f011a3f2af4ecbd"
+  },
+  {
+    "path": "project1_toy/focused_bridge_2026-10-06/toy/toy_math_snapshot.py",
+    "bytes": 8295,
+    "sha256": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/independent_verification.json",
+    "bytes": 2989,
+    "sha256": "5c2a90d2c938ff64cecf9151f61f63b140be4f4d2458c854e5b35fb2a77974b9"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/learned_boundary.png",
+    "bytes": 138209,
+    "sha256": "da5f0a49630a69e197b50c705aa93a13e171e30cffbf6922cf6eab09ff170b05"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/results.json",
+    "bytes": 28460,
+    "sha256": "bcce5f52d81ce37374e1f66ea7735a6b5f500fab646ef9da11f03a7051972533"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/risk_map.csv",
+    "bytes": 202149,
+    "sha256": "1945ad00d8edd25752b952efe1355f16fddc80f8abed8d26e429869f5b01f6c4"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/saved_trajectory_diagnostic.json",
+    "bytes": 1193,
+    "sha256": "566b47dcde50fc22aa51f5983e1b89c895ac9610766b86a8cfe107587178e88b"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/settings.json",
+    "bytes": 2298,
+    "sha256": "942a12172c3da95490052f375ef5c9c68c5fb940cf93fe9081075ba9e1754f51"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/simulation.npz",
+    "bytes": 3291771,
+    "sha256": "2dfcd9345c0f25ce2df447aadd6e0f0641756c7946e5428a7ebd3cd15c509d90"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "b0cef3bb39d3fff73ea2d0b052e44ad1d364ded1b1d7e767cfacaf9f252060fc"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed0/summary.json",
+    "bytes": 1635,
+    "sha256": "3abeab16d63827aa585cf3fb90baecbd002c60527b4ee01a28d77a0a95287280"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed0/training.npz",
+    "bytes": 138404,
+    "sha256": "e969136359ff225ac42be3538dee4d8a6293609d16fe1a697058a19d78d348e0"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "643c031c9e44465b25c36081b1ea6677e4135f57fd2fdbced2aa830e2084ed7e"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed1/summary.json",
+    "bytes": 1620,
+    "sha256": "66e0d677f22256b8945823067abf49f356d817fb35ea27b79555bf1424d9dd51"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed1/training.npz",
+    "bytes": 138101,
+    "sha256": "5e52285edaaeb1478a8e89e2edb3c0042758700aa4bdbbc9b3093d39ce6e635e"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "9963b719e74a64ffcb5cd2263dd74496f37edda62229ceb61e350ea2798bb388"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed2/summary.json",
+    "bytes": 1630,
+    "sha256": "ca4636c990ddaa0f4e435c0e53c71424f0c255d0b1b46fdb1e369645e0bb21e1"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.10_seed2/training.npz",
+    "bytes": 135572,
+    "sha256": "a94e6852995c87a650b3520625a31af7d555f844b85daed7d404db0796a32c41"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "2d2d2ff0847a7e7e2d52901cb379b7ff01c7b4841154d59544c0b587b9f7fd3c"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed0/summary.json",
+    "bytes": 1625,
+    "sha256": "c126cd2194c75be80bd1fb9c546ab23b58343f7ee898a8cd87c4d5a31a22e452"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed0/training.npz",
+    "bytes": 136881,
+    "sha256": "1cf74c33ea8afe65a3fd81f87e27618e20d82faac87a1548d09b8ddfe1f5fd9d"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "42b39943ca30d69c107c79af9bf2fa5ff7080f72a3522122a2dc4f7e204c4111"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed1/summary.json",
+    "bytes": 1591,
+    "sha256": "c36b9a3ff7b0bd7d65840409ac7778db0533fe315e1387d48b944dc327d25397"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed1/training.npz",
+    "bytes": 137189,
+    "sha256": "394478e594f0ed9a632a8100f15a317f00180c33dd6510a1d4b00f44ccdcbb5e"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "753a71540614a2a70296bb0ddd78ce740c2757331795d4e34e48b69f1c68ccfa"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed2/summary.json",
+    "bytes": 1623,
+    "sha256": "e0f712db25232f8470080b8c18e3c507f80b03f540aed5b59ece594bd6ecfa0d"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.20_seed2/training.npz",
+    "bytes": 136957,
+    "sha256": "2b0f027e549b0736d0e6247982b8eadb35badbe499e17f6941257094268d75fe"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "8a9effe4b5ec762270b1d38ae14f9a024e7ac07f2b8462801780a77be8202036"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed0/summary.json",
+    "bytes": 1595,
+    "sha256": "7121a17c426f49a08788f546d9a734fbb28494c891c72d77c2d9e27b86918dbb"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed0/training.npz",
+    "bytes": 135459,
+    "sha256": "a5b39df07448008b1261fecea41e6644c39402749f905de7743a0874a781905f"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "78d7e4445f3ff5ef684bc390b54298641f9a2faccb97239ca68ff9658bebdb40"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed1/summary.json",
+    "bytes": 1601,
+    "sha256": "e087d5ee91084680540a73da449c6bff3db77929283b74fa67df7e8bf9b56df3"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed1/training.npz",
+    "bytes": 136573,
+    "sha256": "0b4699167fed70e37f521f9aabe6dcf8c7a1cc33cddcc34ef9c58e82d1c2a75c"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "8676c3e67d9918d4cf2ef4a694804fbbf8cd1e34ee1a72b5733520246d79f103"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed2/summary.json",
+    "bytes": 1593,
+    "sha256": "69bd991a7b81c284aa1f8edf6bcc0276a2925e58f1144bd02b1f02bf064011e9"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.35_seed2/training.npz",
+    "bytes": 136125,
+    "sha256": "0579bdd016331c229afbc5f14546d424a5f7ebb856189979e2115587f6cdfdb3"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "a62b564f9ad718f74c0ebe330f44a6787dbbf2d10267e83a8dcbfc7b15eb19a1"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed0/summary.json",
+    "bytes": 1599,
+    "sha256": "ca3533bf913fe2429d7db9f5847519a9736f6e4633f52027fdd1a1129a142e57"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed0/training.npz",
+    "bytes": 135332,
+    "sha256": "5f133d7ceab03b0d5c344a265eddda26b11727a74f0d5dc23bc10e607654d8ae"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "d0743cfedb0ec93424f86e7603c22e43c9e54a44a2a5f28f5a0c4edbca31db88"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed1/summary.json",
+    "bytes": 1503,
+    "sha256": "b22631217b6d6e55b4de23abd49bd564cf10ca208d6b222d1d4629ded8817ab4"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed1/training.npz",
+    "bytes": 135851,
+    "sha256": "260e856ab67c0141c4f99b16b1290f1e01c441250457c77089c1aa37d8a070e1"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "1dd67e9c3915aaa6db62e628d3aba5a9ae7859e6ee49638a680af0c6f78d9656"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed2/summary.json",
+    "bytes": 1502,
+    "sha256": "3aec2a1a02d98148c2acff0447f1be3357617a32ed51ee06e8f285c74d12b36a"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.50_seed2/training.npz",
+    "bytes": 135148,
+    "sha256": "a7eb52615a3cad7aba7d5dd72d52d1019dc6407a7521b591da9c996a7b59938f"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "1f16e38f4c050842a05aec8503ef53166a1069fa7bfd60756097db4884f995aa"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed0/summary.json",
+    "bytes": 1556,
+    "sha256": "796ce4ce1fe77ba62938e66aef1df1a8d65d3cfd1e14534ec12db88cb4b7edd8"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed0/training.npz",
+    "bytes": 134050,
+    "sha256": "12734f9eaa5114a825ebe54f7e725b558a61633925b8269f34c9a0732ba5bcb2"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "3fcb289fff5bfede42decff14d54e505866b8965c7a658ea1f48b300481ed0d8"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed1/summary.json",
+    "bytes": 1569,
+    "sha256": "1747bc6bcd3943abc633e6d4d9f11befad6922023cb3da65fe0dc73506c2fada"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed1/training.npz",
+    "bytes": 134693,
+    "sha256": "61b751a9ce1179319f6c647c0f3edcb589a799d907c2e1452d05716ad0823c77"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "75f8266b2fbf06ac5eb23b44fc68f6de9c228d84496a41b2dbea6ccafac77cd4"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed2/summary.json",
+    "bytes": 1528,
+    "sha256": "ec214ec1d3cd4d8dd9773fb1ee8d34cc5086315b1c725435a4b6d2530f6dfe78"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/p0.70_seed2/training.npz",
+    "bytes": 133514,
+    "sha256": "d55898878d90152f6028913476b3bcc52ca61f74f30b09f94924d5a6119be3e2"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/source_snapshot/bridge_math.py",
+    "bytes": 6987,
+    "sha256": "f605b2a2c1ffb3f345f7199014403e3710ef24820901e75d1f011a3f2af4ecbd"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/source_snapshot/PROTOCOL.md",
+    "bytes": 2223,
+    "sha256": "76eba78ac2ba1e8b538554df0ac5804bf01a030b0ac546c018b90cfd7a7d2bf2"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/source_snapshot/run.py",
+    "bytes": 4529,
+    "sha256": "c6404b2ff4ad3dbb0e78bd41c9c7667e229837130b32c44e24a43051cf26d618"
+  },
+  {
+    "path": "project1_toy/learned_five_concepts_20261008/run_v1/source_snapshot/toy_math_snapshot.py",
+    "bytes": 8295,
+    "sha256": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/independent_verification.json",
+    "bytes": 2454,
+    "sha256": "2b52bc512c6ad420df8ec08ef635382be9f3336c9b975d2f42f51959bdc82f63"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/learned_boundary.png",
+    "bytes": 144592,
+    "sha256": "6da84562baffb472ec8b6a3d3252a3a14076bad4bccf7f0d2ad43b5d64a2e994"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/results.json",
+    "bytes": 23146,
+    "sha256": "b0b0e45ca44cf8a285515e41c6b2c8e02318c0cf3a8a3a1039c4ee5357fb550d"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/risk_map.csv",
+    "bytes": 203184,
+    "sha256": "932dfae6c88759adc23439060edc052d90a45114e60d8a7e72b75273bdacbfc3"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/settings.json",
+    "bytes": 2298,
+    "sha256": "a4899afa0cf536588a0bb67894fcde0ac4f235dece5cce675fd272544ffbeefc"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/simulation.npz",
+    "bytes": 3248287,
+    "sha256": "c8a7d8e22b1ed5035e7cfb405c5cca5c46d92f78c1ae391a1d7e235ef3e97e96"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "9afe4efeca29841f06bb5e0616437918d91d2896963327e401e3396c97dd35c4"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed0/summary.json",
+    "bytes": 1322,
+    "sha256": "791222d2eb726b680568f5db460c27e5fdb778767ebe993743b5687255b9714f"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed0/training.npz",
+    "bytes": 131668,
+    "sha256": "45cd88030b3ea9b1291cc85aaa08216d0cba6d454f983198d7f4c58df839bbd4"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "b9136d3d07331a154f615281dfdbd55bd32dcde8794d88105d3cc216aa5febb3"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed1/summary.json",
+    "bytes": 1321,
+    "sha256": "5ed6bacffd54ff92eebf21d0d164e570b22994fe8534176f40fbe356db649a82"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed1/training.npz",
+    "bytes": 133048,
+    "sha256": "584ee46577c0216ef8d12a3946d074672e7c8d4a120a23a49ace590212122d11"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "676217612975bdc92b9fbe1eeca4a5bf57108213f994b68e293af3699daad981"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed2/summary.json",
+    "bytes": 1291,
+    "sha256": "806f50bf505c304fde0d9cc80317ff44204361ff66b725b782efc3b662bc15d4"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.10_seed2/training.npz",
+    "bytes": 136637,
+    "sha256": "1206397912d0d0d99b6490e20479a7a937f84a0be2bad0f0de0772ea2706a7c9"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "ad9bbf6b4e58f2544a97a9242a3739dc29debb7d76e5b7e934924a1794002ad1"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed0/summary.json",
+    "bytes": 1314,
+    "sha256": "c3ace8e706dbd117e0e59531b5da806ed53156237b8acdd4a2d290c1caa5f4b3"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed0/training.npz",
+    "bytes": 129833,
+    "sha256": "9a6f007ebb4044b52789e81668aa71114dbcc954007d328be795f98117e87818"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "c509d1df5f93488a6f5d08a8661fa5abf5fc07e6b9bf672c431df0a469915ad9"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed1/summary.json",
+    "bytes": 1312,
+    "sha256": "677e1872afcce66e497eff910f7421e2538c9101f8f330464a63dd9e9be4de51"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed1/training.npz",
+    "bytes": 133296,
+    "sha256": "9ba6c9cd2ca351e52e3aaedf058f42ccebf60fba4f2f919f2b283d323305f098"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "31a52e4f6bdc66c21fe7ab3544604d360520965ba60a035c0b90825c20a8a134"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed2/summary.json",
+    "bytes": 1290,
+    "sha256": "37e7a1b0569b5198a7b0fcbd845096e541ac2efcf28573f8491a463415633a21"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.20_seed2/training.npz",
+    "bytes": 135565,
+    "sha256": "f40712d2ddf22f632945327e851f2e27deb9aa583b8354110f595dac899e37b4"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "13a53b8c5a63d8eeebb032d3dd57b032bbb150407d810a7a6c9c940e5d234f8b"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed0/summary.json",
+    "bytes": 1290,
+    "sha256": "daafd47e0cfdbddcc6c22f52d3d709c6f8d3eab125b99d692b620da25bdf8d2c"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed0/training.npz",
+    "bytes": 135656,
+    "sha256": "87c004b974eb9cdc315877cae8fdadc2a63ca3d6c345f9c1452c215244c6b4aa"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "7a4e682451ee5ee1f1c8f747414f86a2b2cc1dd63d3ae25f795a921e41ee976b"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed1/summary.json",
+    "bytes": 1276,
+    "sha256": "a4c693f19e9e18655fc846693ca3f2a61d9125c82bea0f99249105c8a875b3b0"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed1/training.npz",
+    "bytes": 130469,
+    "sha256": "4adaf22b70980d2b21c8f7700b16f4e69b120041f98da7bdacc8f875202e8a97"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "fb7490cf3619759d7efa1d531ed6da029cdbc4d95f917e81fbd63d241dd5ffb5"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed2/summary.json",
+    "bytes": 1274,
+    "sha256": "096d5520dc52862f99b6d8d4491f13556e591b5b27d79c4d1bebb5c6221740ef"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.35_seed2/training.npz",
+    "bytes": 133524,
+    "sha256": "2f0d2d89709ae3804da3da142290916a38afc89b9e883f67d1d94de138e749fc"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "ff6627b9e25c955f9410aa8ae9de64290c5c45ba0c4379d46ccfa7546df3753d"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed0/summary.json",
+    "bytes": 1297,
+    "sha256": "3bdfc4210e0e191f00b79e2e4463d8487bca437d3e20e36363333b606cb7febc"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed0/training.npz",
+    "bytes": 134889,
+    "sha256": "9132dedc82dc2b4b8973eff8cfdaa795540899a575c3473c40f89931831d319e"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "348ab60805fcea772a39edd4dac0734265c7943a140e3b0ca08aaa44e737c090"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed1/summary.json",
+    "bytes": 1294,
+    "sha256": "af8836cff82ef2277fb19d13cf579243de9115af5b5a265731d75379a8ec6c82"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed1/training.npz",
+    "bytes": 134735,
+    "sha256": "6f790d721ba9dbee038e2a2202fb0850663e7dba57c3866ea71b3d811918fb68"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "28e7101277016b2f660ad3a49afb87b910be659994dfe8a1250249eacb3113d9"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed2/summary.json",
+    "bytes": 1206,
+    "sha256": "a5b674bd24bfb72170c598db080645aa4d3b398340dfb4243769314f35f4effa"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.50_seed2/training.npz",
+    "bytes": 134690,
+    "sha256": "ebbfeba9b5446423587a8e8df50dc9a3359213469936dafe265f39e4ba7c65a7"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed0/risks.npz",
+    "bytes": 7268,
+    "sha256": "da11046b54a6797e350829a9432a3a6333be0b9bc7f6e69c9ee0de367b1f46dc"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed0/summary.json",
+    "bytes": 1215,
+    "sha256": "1eb72bedac83cac1d45aec793808d5635729d80738815affe8ecee5e54e3d52c"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed0/training.npz",
+    "bytes": 133240,
+    "sha256": "93ea87d9bc8fc21eaf1661bb0517b3ef7503314abcec9f77da8dda87b65f0b5c"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed1/risks.npz",
+    "bytes": 7268,
+    "sha256": "c0fd7f69bb9615a3a147e19471ef7dcd83dad1a8ab1abe33e8cca5285337eccb"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed1/summary.json",
+    "bytes": 1202,
+    "sha256": "126de4a1d9acfe67df5d4e3ad3ea42e20128842eb06f5a5f9d0b8dfec8fedafb"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed1/training.npz",
+    "bytes": 132190,
+    "sha256": "e9212d0dff612ae226a048d58b127a72f2f4bb95d7955dacb23ac78c60897183"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed2/risks.npz",
+    "bytes": 7268,
+    "sha256": "64c2b4cf3b0047e4ddd35a7b5ce5473ea4aed6c54cf15923c972409f9a527623"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed2/summary.json",
+    "bytes": 1236,
+    "sha256": "e95e93d166d3d1541adcecb588743c9247b0df05702a666fa81c706b0fa05408"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/p0.70_seed2/training.npz",
+    "bytes": 132231,
+    "sha256": "7d0b1729d7eed45699902e44d2801d35b9df9ba488357d8a5f3429cb7a51358b"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/source_snapshot/bridge_math.py",
+    "bytes": 6987,
+    "sha256": "f605b2a2c1ffb3f345f7199014403e3710ef24820901e75d1f011a3f2af4ecbd"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/source_snapshot/PROTOCOL.md",
+    "bytes": 2684,
+    "sha256": "10db45508b7e910e7cc0067abe309c431ece59ae05ecf6ee08d0833d3e0f3958"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/source_snapshot/run.py",
+    "bytes": 4442,
+    "sha256": "2df12e021e03869ac734a44e2c958426eeb09768383bcee2ee394b384be09a1e"
+  },
+  {
+    "path": "project1_toy/learned_four_concepts_20261008/run_v1/source_snapshot/toy_math_snapshot.py",
+    "bytes": 8295,
+    "sha256": "0aae1d58676430dcfa50401f808b01026ae881dd71e90641783234b106b3ed2c"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/development_images.npz",
+    "bytes": 595681,
+    "sha256": "23e05f03cb8a4d1f2101ed7a9b8340e9a19bc4a49e74949e1a4869ad85efa9b5"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/frozen_prediction_hashes.json",
+    "bytes": 595,
+    "sha256": "373c0cc6e610314bf928211ec110d1a20a8cdd90008d99c2c8c8c51c98d310f2"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/independent_verification.json",
+    "bytes": 1717,
+    "sha256": "dea0563e3867c6262445d5a649ecd26b9b1aa763cbc23c9a9a4f7060c6606889"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/mono_calibration.npz",
+    "bytes": 9118,
+    "sha256": "b41d28335bded957aff9c97016cab71ae430fe0661f6a3605a1dbe6722b2873f"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/mono_history.json",
+    "bytes": 9785,
+    "sha256": "9b884ac5990fcea7908c155a56ec82b05411a7e4d1c3022232b6d1efbf865a57"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/mono_model.pt",
+    "bytes": 142135,
+    "sha256": "fbad83d2f9ec732e5022704a4ac561104c1dbbf57b4709bf2726f87d7b5f7585"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/mono_test_codes.npz",
+    "bytes": 34909,
+    "sha256": "1ba36bf41800dc96f3e2cc8e6cbc105b64c3bb4437ba39ac2ced74613f9de14a"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/prediction.json",
+    "bytes": 329,
+    "sha256": "4f1d102bc48e805f26a61f32b2bf4d3239aa358b82d3012b3b16a567858be2f1"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/prediction.npz",
+    "bytes": 29579,
+    "sha256": "6f698307e9480b8cb734f10d7a6e9534e198ae78d220bcc671c61c66e18025c2"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/PROTOCOL.md",
+    "bytes": 4970,
+    "sha256": "5d28026f6e45610362b0a78a2467ddd1772c05c51b1c463373824ee517cbffaa"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/result.json",
+    "bytes": 1070,
+    "sha256": "c9a5c4fde91fdb0e2b3aa31ca72d1abf8adfd7abafd749450ea0d7551f74ed36"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/sha256.json",
+    "bytes": 1858,
+    "sha256": "018d33bc2bba9010c69386e5cd8be4fb9fe6715fff3d918946a1e583b1fc265d"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/sharing_calibration.npz",
+    "bytes": 9663,
+    "sha256": "65d64b4c445d2d174d39a37c2c6ea0257a4e9149b8b2b27481a94e98e2350754"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/sharing_history.json",
+    "bytes": 9778,
+    "sha256": "bd3655b114e1953f05e24c3478c758c815588b6dc2cf6156e582e56a37ff3ee0"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/sharing_model.pt",
+    "bytes": 142177,
+    "sha256": "57a40a346c46aa67f6bbd7a0a5d1ff01369604da65d7c86c49abc7bed933e0cc"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/sharing_test_codes.npz",
+    "bytes": 36363,
+    "sha256": "d5527524c77189915cd4317294df5d12cd327326394c5cffe10bd184248f5eb2"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/source_snapshot.py",
+    "bytes": 9696,
+    "sha256": "daaaccf6a55a2567e97b107f8282df628b2ccbcf64731b1d01e3e945ebc967a4"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/split_ids.npz",
+    "bytes": 1330,
+    "sha256": "c91d3c3dcf2623dd437ecb36db2ad9b29f864b805bdc60fe3defaaf38f01a805"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/test_images.npz",
+    "bytes": 794511,
+    "sha256": "3f0080494b0c38260adf8d7e60a637c4f819e621781d6c3a4d0c91fa67b276b9"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/test_noise.npz",
+    "bytes": 1007573,
+    "sha256": "410629d6aeda547d62c24c084765876f0c6774cf2055d47338426ac5a9af0550"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/test_results.npz",
+    "bytes": 311746,
+    "sha256": "a0aa687d7ab4e9df87fc16cc6b274bafbf2c5ce230a5e3bcfd7f6b6950c4439e"
+  },
+  {
+    "path": "project1_toy/visual_detection_boundary_20261008/run_v1/visual_boundary_heatmap.png",
+    "bytes": 107245,
+    "sha256": "24c9811a1d9ce320557e44bed53e5e52170d0ce978eb0ff48415d0f89c8508a8"
+  }
+]

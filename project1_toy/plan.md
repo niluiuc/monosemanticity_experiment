@@ -1168,3 +1168,30 @@ Extraction started under1,200seconds with raw logits/source/provenance preservat
 - No new forwards. Replacing the zero-noise derivative with the saved actual logit change at sigma .04, scaled linearly on the existing grid, predicts no ordering reversal. This post-outcome candidate fails its declared qualitative screen; no anchor or exponent search follows.
 - Individual responses at the anchor agree by construction, not as evidence of a predictive law. Population prediction still uses the registered clean-baseline/increment construction.
 - The approximation, its affine-ray assumption, failed points and stopping decision are added to Section 8.37. Original frozen prediction and native outcomes remain unchanged.
+
+
+## 2026-10-08: fixed same-network semantic-sharing comparison
+
+The registered clean-to-corrupted reversal criterion fails. This run does not establish the requested mono-versus-sharing boundary.
+
+The exact restricted toy boundary remains as derived in the volume. Real operational subset results, including failures, are in real_projected_ncl_20261008/outputs/within_network_v1/. Class purity is a proxy, not semantic ground truth. This completed protocol does not justify an additional setting search.
+
+
+## 2026-10-08: return to the lecture detection boundary, n=4/m=2
+
+Ran the fixed five-frequency/three-seed learned geometry test, preserving the lecture detection risk, energy control, code noise and omitted-concept costs. At p=.20 seeds 0/1 approach antipodal pair blocks and cross at .279937/.279916, versus analytic pair .279939; seed2 has no clean advantage and is loss-unstable. Seven of 15 pass loss stability, eight fail; all retained. Three fresh simulation checks pass. Independent state-loop risks agree to 1.56e-15. This validates a learned four-concept occurrence of the pair mechanism, not an arbitrary-load law or new native-model result. PDF section8.42 and learned_four_concepts_20261008 retain every result. Stop this run without retries.
+
+
+## 2026-10-08: five concepts/two dimensions, registered load check
+
+Same lecture detection risk and energy2; 15 trainings, all retained. Only p=.10 seeds pass loss stability and these sacrifice one concept; near-zero roots range from 3.15e-7 to 6.72e-5, associated with tiny columns. p=.20 has numerical finite crossings in two unstable final encoders, not a reliable learned boundary. Independent full risk and simulation verification completed. No real-model or publication novelty claim. Stop the registered test; the blocker is reliable geometry selection, not risk computation. Full setup and derivations added to Section8.43.
+
+
+## 2026-10-08: direct fixed-geometry boundary and detection repair
+
+Checked original plotting code: colours and contour were both analytic, not an experiment. Direct n5/m2 energy2 regular-pentagon extension uses the same midpoint risk: p=.2 clean .40352 versus mono .6, numerical root .17108537. Independent simulated heatmap colours agree with exact contour. Separately repair the three saved p=.2 encoders by training detection at fixed noise .02 and fitting/fixing score thresholds and constant-output options. All pass the registered projected-gradient check, with roots .202698/.185423/.184090 and clean risks .28/.32/.32 versus .6. Local small-noise plateaus are not global optima. Two seeds use a constant output. Heatmaps sweep evaluation frequency only, not retraining. All 14400 formula values independently verified. No novelty/native-transfer claim. Full assumptions and derivations in section8.44; bounded tests complete.
+
+
+## 2026-10-08: controlled visual bottleneck detection boundary
+
+Exact toy formula already exists. New bounded CNN pair learns the imposed n5/m2 mono/pentagon code directly from semi-synthetic images, keeping fixed midpoint heads and Gaussian bottleneck noise. All new data/cache/tmp on D:. Train/cal/test backgrounds64/32/128, official test split held out;80epochs, same initialisation, no retry. Ideal prediction .17108537; calibration-only .16849808, hashes frozen before test. Held-out clean errors sharing .39495/mono .6; reversal bin .15-.175, both predictions inside; registered transfer criterion passes. Independent output/hash/split checks pass. Bootstrap whole backgrounds gives clean gap interval[-.207669,-.201681]; all root midpoints same bin, not zero uncertainty. This is controlled learned visual encoding of imposed codes, not natural monosemanticity, pixel-noise or diffusion transfer. No novelty claim. Full assumptions/derivation/results in Section8.45 and saved run folder. Bounded test complete.

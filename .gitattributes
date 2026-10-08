@@ -1,2 +1,5 @@
 # Preserve archived experiment bytes and SHA-256 manifests on every platform.
 * -text
+*.pdf binary
+*.npz binary
+*.pt binary

@@ -1,0 +1,32 @@
+[
+  {
+    "seed": 0,
+    "loss_last500_min": 0.4241616206294738,
+    "loss_last500_max": 0.4290283606818798,
+    "loss_last500_first100_mean": 0.4284514941012371,
+    "loss_last500_last100_mean": 0.42455127273892596,
+    "last_checkpoint_encoder_change": 0.014470314246571471,
+    "last_checkpoint_gram_change": 0.015823724974671438,
+    "final_tangent_gradient": 0.09814839485711309
+  },
+  {
+    "seed": 1,
+    "loss_last500_min": 0.4122501058258723,
+    "loss_last500_max": 0.4175219848981823,
+    "loss_last500_first100_mean": 0.41231967768098576,
+    "loss_last500_last100_mean": 0.4148840015842525,
+    "last_checkpoint_encoder_change": 0.15029531055777712,
+    "last_checkpoint_gram_change": 0.20444940955711038,
+    "final_tangent_gradient": 0.03782766478849052
+  },
+  {
+    "seed": 2,
+    "loss_last500_min": 0.42008921794086385,
+    "loss_last500_max": 0.42328388788560756,
+    "loss_last500_first100_mean": 0.4228749479623606,
+    "loss_last500_last100_mean": 0.4203219504845286,
+    "last_checkpoint_encoder_change": 0.011984359518604151,
+    "last_checkpoint_gram_change": 0.014005700438585475,
+    "final_tangent_gradient": 0.06322924569193027
+  }
+]

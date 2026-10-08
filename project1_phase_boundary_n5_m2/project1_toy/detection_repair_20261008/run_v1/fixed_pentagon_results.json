@@ -1,0 +1,12 @@
+{
+  "energy": 2.0,
+  "clean_shared_risk_p02": 0.40352000000000016,
+  "clean_mono_risk_p02": 0.6000000000000001,
+  "numerical_roots_p02": [
+    0.1710853664554401
+  ],
+  "max_abs_mc_error": 0.02470013835647622,
+  "max_standardized_error": 3.208851352515148,
+  "fraction_within_3se": 0.9920833333333333,
+  "scope": "Fixed pentagon and lecture midpoint detectors, not learned optimum or native model."
+}

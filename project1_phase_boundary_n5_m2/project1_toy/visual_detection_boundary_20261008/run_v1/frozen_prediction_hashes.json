@@ -1,0 +1,11 @@
+{
+  "hashes": {
+    "run.py": "daaaccf6a55a2567e97b107f8282df628b2ccbcf64731b1d01e3e945ebc967a4",
+    "PROTOCOL.md": "5d28026f6e45610362b0a78a2467ddd1772c05c51b1c463373824ee517cbffaa",
+    "prediction.npz": "6f698307e9480b8cb734f10d7a6e9534e198ae78d220bcc671c61c66e18025c2",
+    "prediction.json": "4f1d102bc48e805f26a61f32b2bf4d3239aa358b82d3012b3b16a567858be2f1",
+    "sharing_model.pt": "57a40a346c46aa67f6bbd7a0a5d1ff01369604da65d7c86c49abc7bed933e0cc",
+    "mono_model.pt": "fbad83d2f9ec732e5022704a4ac561104c1dbbf57b4709bf2726f87d7b5f7585"
+  },
+  "time_ns": 1791485642287677400
+}

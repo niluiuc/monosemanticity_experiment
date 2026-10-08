@@ -1,0 +1,84 @@
+{
+  "records": [
+    {
+      "seed": 0,
+      "success": true,
+      "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+      "iterations": 38,
+      "training_risk": 0.2800000005574008,
+      "projected_gradient_max": 5.5511150952327654e-08,
+      "settled": true,
+      "modes": [
+        0,
+        2,
+        2,
+        2,
+        2
+      ],
+      "column_norms": [
+        0.011352366528170945,
+        0.8076430786724822,
+        0.4592019430668664,
+        0.9379319027321332,
+        0.5069527616726626
+      ],
+      "clean_risk": 0.2800000000000001,
+      "mono_clean_risk": 0.6
+    },
+    {
+      "seed": 1,
+      "success": true,
+      "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+      "iterations": 11,
+      "training_risk": 0.3200000004286125,
+      "projected_gradient_max": 7.216449663861938e-08,
+      "settled": true,
+      "modes": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "column_norms": [
+        0.6546744122210738,
+        0.6594173217134822,
+        0.26960696969218456,
+        0.7413354772717254,
+        0.7171499158745749
+      ],
+      "clean_risk": 0.3200000000000002,
+      "mono_clean_risk": 0.6
+    },
+    {
+      "seed": 2,
+      "success": true,
+      "message": "CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL",
+      "iterations": 28,
+      "training_risk": 0.3200000005201332,
+      "projected_gradient_max": 4.996003641176272e-08,
+      "settled": true,
+      "modes": [
+        2,
+        0,
+        2,
+        2,
+        2
+      ],
+      "column_norms": [
+        0.6330278640585612,
+        0.0003313339254512936,
+        0.5827339872799272,
+        0.6804116251045775,
+        0.892601105777195
+      ],
+      "clean_risk": 0.32000000000000006,
+      "mono_clean_risk": 0.6
+    }
+  ],
+  "max_abs_simulation_error": 0.02881554087131355,
+  "max_standardized_error": 3.522654131531989,
+  "fraction_within_3se": 0.9994166666666666,
+  "cell_count": 12000,
+  "notes": "Correlated cells share draws; no simultaneous inference/global optimality/novelty claim."
+}

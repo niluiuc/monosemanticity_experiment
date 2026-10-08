@@ -1,0 +1,11 @@
+# Registered five-concept detection comparison
+
+Question: at n=5,m=2, does clean-learned sharing have a detection advantage over mono that reverses under code noise? This extends the lecture boundary while keeping its target and energy budget. Odd load cannot be entirely composed of two complete pairs, but the optimiser may omit the fifth concept; that outcome must be reported rather than called a new storage mechanism.
+
+Independent Bernoulli concepts; equal importance; encoder energy 2. Frequencies .10,.20,.35,.50,.70, seeds 0,1,2. Exact 32-state clean tied-ReLU reconstruction MSE, free training biases, existing projected Adam, 5000 steps, learning rate .01, beta .9/.999, epsilon 1e-8. Save all final encoders, biases, traces, checkpoints and diagnostics. Stability check is the unchanged last-two-window loss check, not proof of global optimality.
+
+Evaluation: frozen matched midpoint detectors, predict b_i=1 if w_i^T(Wb+noise)>G_ii/2, Gaussian code noise sigma 0:.01:1.50. Reconstruction biases do not change these detectors. All five concepts count; zero columns predict absence, with error p. Nonzero small columns are not discarded. Mono has two orthogonal unit columns and three zero columns. Fixed control has two orthogonal antipodal pairs, each column norm 1/sqrt(2), and a zero fifth column. Its risk is twice the lecture pair risk plus p. This is a control, not a novel result. At p>.5 absence is worse than the best constant-prior decision; no Bayes-optimal comparison is claimed.
+
+Retain all grid points and adjacent sign brackets; root refinement only within detected brackets. No global root-count claim. Independent recomputation uses a separate state loop. Three fresh simulation checks: p=.20 seed0 sigma 0,.30,.60, 200000 states, seed20261026; agreement within six empirical standard errors plus 1e-4.
+
+Stopping: these 15 trainings and checks only. Report clean gaps, reversals, training failures and whether the fifth concept is retained or sacrificed. No extra seeds, steps, loads, decoder tuning or real-model experiment. A numerical crossover alone is not proof of novelty or real-model transfer. Add results and full risk assumptions to the existing derivation PDF and source.

@@ -1,0 +1,13 @@
+# Learned four-concept detection boundary
+
+Question: does the lecture's sharing-minus-mono detection-risk boundary survive learning four directions in two dimensions?
+
+Fixed conditions: independent Bernoulli concepts, equal importance, n=4, m=2, total encoder energy 2. Frequencies [.10,.20,.35,.50,.70], seeds [0,1,2]. Use the existing projected Adam trainer for 5000 clean exact-population tied-ReLU squared-reconstruction steps, free training biases, learning rate .01 and unchanged Adam settings. Save all final iterates, traces and checkpoints, not best seeds or checkpoints. Optimizer convergence is numerical, not global certification.
+
+Evaluation is the lecture's matched midpoint detector: z_i=w_i^T(Wb+xi), predict presence if z_i>G_ii/2. Training reconstruction biases are saved but not included in this specified detector. Thus reconstruction selects geometry while detection evaluates it; neither optimal detection training nor optimal thresholds are claimed. Mono has two orthogonal unit columns and two exactly zero columns, and predicts absence for omitted concepts. Sum errors over all four targets. Equal-frequency/equal-importance mono allocations are equivalent. The fixed pair control uses two orthogonal antipodal pairs with each column norm 1/sqrt(2), energy 2. This control must reproduce twice the lecture's equal-energy pair risk, not be advertised as new.
+
+Code noise is isotropic Gaussian, sigma grid 0 to 1.50 at .01 increments; no pixel noise or reconstruction-risk substitution. Enumerate all 16 states to calculate exact conditional Gaussian detection risk for each final geometry. At zero noise use deterministic strict decisions. Keep all raw points, geometry and diagnostics. Report every adjacent sign bracket, not a unique root or a permanent mono advantage. If columns shrink but remain nonzero, do not discard them using a tuned threshold.
+
+Independent simulation check: p=.20, seed=0, sigma in [0,.30,.60], 200000 independent states/noise draws, fixed seed 20261026. Recompute weighted detection errors directly from corrupted codes. Require predicted error within six empirical standard errors plus 1e-4; retain failure if not. Formula verification and output recomputation are separate from proof of optimizer optimality.
+
+Stopping: exactly these 15 trainings and three simulation checks. No seed selection, additional steps, calibrated thresholds, other loads or real models in this run. This is the requested learned extension of the pictured detection comparison, not a claim of publication novelty. Save results, interpret failures, add the complete empirical setup and risk formula reference to the existing derivation volume, and stop.

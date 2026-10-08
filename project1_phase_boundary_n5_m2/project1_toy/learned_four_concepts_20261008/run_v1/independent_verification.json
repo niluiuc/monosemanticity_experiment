@@ -1,0 +1,123 @@
+{
+  "all_saved_risks_verified": true,
+  "max_risk_discrepancy": 1.5543122344752192e-15,
+  "checks": [
+    {
+      "p": 0.1,
+      "seed": 0,
+      "numerical_roots": [
+        0.21584380351560334
+      ],
+      "loss_stability": true
+    },
+    {
+      "p": 0.1,
+      "seed": 1,
+      "numerical_roots": [
+        0.21584435606553007
+      ],
+      "loss_stability": true
+    },
+    {
+      "p": 0.1,
+      "seed": 2,
+      "numerical_roots": [
+        0.12667604592233628
+      ],
+      "loss_stability": false
+    },
+    {
+      "p": 0.2,
+      "seed": 0,
+      "numerical_roots": [
+        0.27993714008326087
+      ],
+      "loss_stability": true
+    },
+    {
+      "p": 0.2,
+      "seed": 1,
+      "numerical_roots": [
+        0.27991571717121905
+      ],
+      "loss_stability": true
+    },
+    {
+      "p": 0.2,
+      "seed": 2,
+      "numerical_roots": [
+        0.10225137981481057
+      ],
+      "loss_stability": false
+    },
+    {
+      "p": 0.35,
+      "seed": 0,
+      "numerical_roots": [
+        0.4433176259642068
+      ],
+      "loss_stability": false
+    },
+    {
+      "p": 0.35,
+      "seed": 1,
+      "numerical_roots": [
+        0.5484353275702802
+      ],
+      "loss_stability": true
+    },
+    {
+      "p": 0.35,
+      "seed": 2,
+      "numerical_roots": [
+        0.547721757521954
+      ],
+      "loss_stability": true
+    },
+    {
+      "p": 0.5,
+      "seed": 0,
+      "numerical_roots": [
+        0.09418916724947672,
+        0.3950447520030632
+      ],
+      "loss_stability": false
+    },
+    {
+      "p": 0.5,
+      "seed": 1,
+      "numerical_roots": [
+        0.054769559241618936,
+        0.3981693222383216
+      ],
+      "loss_stability": false
+    },
+    {
+      "p": 0.5,
+      "seed": 2,
+      "numerical_roots": [],
+      "loss_stability": false
+    },
+    {
+      "p": 0.7,
+      "seed": 0,
+      "numerical_roots": [],
+      "loss_stability": false
+    },
+    {
+      "p": 0.7,
+      "seed": 1,
+      "numerical_roots": [],
+      "loss_stability": false
+    },
+    {
+      "p": 0.7,
+      "seed": 2,
+      "numerical_roots": [],
+      "loss_stability": true
+    }
+  ],
+  "fixed_pair_identity_verified": true,
+  "simulation_recomputed": true,
+  "limitation": "Roots concern fixed numerical final encoders, not globally optimal geometries. Grid does not certify absence of other roots."
+}

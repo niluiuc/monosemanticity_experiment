@@ -1,0 +1,15 @@
+{
+  "ideal_roots": [
+    0.17108536645544026
+  ],
+  "calibration_roots": [
+    0.16849807768747224
+  ],
+  "calibration_clean_gap": -0.20632000000000017,
+  "training_complete": true,
+  "calibration_code_rms": {
+    "sharing": 0.09573767097773199,
+    "mono": 0.10268077737038599
+  },
+  "prerequisites_passed": true
+}

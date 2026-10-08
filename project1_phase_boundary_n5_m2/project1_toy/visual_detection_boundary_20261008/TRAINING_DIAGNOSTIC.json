@@ -1,0 +1,17 @@
+{
+  "diagnostics": {
+    "sharing": {
+      "last10_mean": 0.0005306410705088638,
+      "previous10_mean": 0.0005099268515550648,
+      "absolute_change": 2.0714218953799012e-05
+    },
+    "mono": {
+      "last10_mean": 0.00022076121413192596,
+      "previous10_mean": 0.0002622004528348043,
+      "absolute_change": 4.143923870287834e-05
+    }
+  },
+  "status": "Post-run descriptive diagnostic, not a preregistered convergence gate",
+  "protocol_deviation": "Final-window loss change was promised in the prospective prediction record but was omitted there. Frozen predictions remain unchanged; reported separately from saved histories.",
+  "interpretation": "80-epoch completion is not a stationarity or convergence certificate. This does not change the registered crossing test."
+}

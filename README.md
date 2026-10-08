@@ -81,3 +81,8 @@ conversion disabled, so recorded SHA-256 hashes survive cloning.
 
 See [the publication snapshot manifest](upload_audit/manifest.json) for exact
 included paths, file sizes, hashes and exclusion counts.
+
+
+## Completed n5/m2 boundary and controlled visual test
+
+See [project1_phase_boundary_n5_m2](project1_phase_boundary_n5_m2/README.md) for the exact fixed-pentagon phase diagram, detection-trained comparisons and the prospectively verified image-CNN boundary, with raw outputs, model checkpoints, protocols and independent verifiers. The larger completed dimensions are n=5,m=2. The visual geometry is imposed via supervised code targets, and corruption is at the bottleneck; natural-feature or pixel-noise transfer is not claimed.

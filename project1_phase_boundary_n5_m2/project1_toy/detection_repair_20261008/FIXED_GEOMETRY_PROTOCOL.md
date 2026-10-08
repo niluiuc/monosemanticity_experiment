@@ -1,0 +1,5 @@
+# Direct extension of the pictured calculation
+
+Before evaluating this geometry: extend n2/m1 to n5/m2 with a stated fixed regular-pentagon dictionary. Directions have angles 2*pi*i/5, column norms sqrt(2/5), total energy2. Mono stores two unit orthogonal columns and predicts absence for the other3, exactly the lecture convention. Shared detection uses matched midpoint thresholds G_ii/2. No learning and no threshold fitting. All5 errors counted.
+
+Use the already registered frequency/noise grid and saved independent draws. Compute exact 32-state Gaussian risk for the stated codes, then simulate each grid cell using those raw states/noise. Heatmap colours are simulated risk gaps; black contour is analytical zero gap, computed without simulation. Save risk arrays, standard errors and the dictionary. This is a conditional fixed-geometry extension, not a proof that training chooses a pentagon or that it is globally optimal. No real-model or novelty claim. At p>.5 absence is a convention, not the best constant prior prediction. Stop after this one geometry; do not search for more favorable shapes.

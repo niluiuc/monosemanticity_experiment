@@ -1,0 +1,26 @@
+{
+  "all_14400_analytic_grid_values_verified": true,
+  "max_formula_discrepancy": 2.6645352591003757e-15,
+  "learned_roots_p02": [
+    {
+      "seed": 0,
+      "roots": [
+        0.20269778738703326
+      ]
+    },
+    {
+      "seed": 1,
+      "roots": [
+        0.18542321123989872
+      ]
+    },
+    {
+      "seed": 2,
+      "roots": [
+        0.18409016604584477
+      ]
+    }
+  ],
+  "simulation_checkpoints_replayed": 45,
+  "scope": "Conditional risk verification, not global optimality or novel predictive-law proof."
+}

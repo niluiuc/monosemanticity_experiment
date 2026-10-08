@@ -1,0 +1,38 @@
+{
+  "status": "complete",
+  "clean_gap_p02": -0.20505000000000012,
+  "observed_crossing_brackets_p02": [
+    [
+      0.15000000000000002,
+      0.17500000000000002
+    ]
+  ],
+  "calibration_prediction_error": 0.005998077687472209,
+  "ideal_prediction_error": 0.008585366455440224,
+  "quantitative_transfer_passed": true,
+  "clean_gap_interval": [
+    -0.20766875000000015,
+    -0.20168125000000015
+  ],
+  "bootstrap_resolved_count": 256,
+  "bootstrap_crossing_interval": [
+    0.16250000000000003,
+    0.16250000000000003
+  ],
+  "prediction": {
+    "ideal_roots": [
+      0.17108536645544026
+    ],
+    "calibration_roots": [
+      0.16849807768747224
+    ],
+    "calibration_clean_gap": -0.20632000000000017,
+    "training_complete": true,
+    "calibration_code_rms": {
+      "sharing": 0.09573767097773199,
+      "mono": 0.10268077737038599
+    },
+    "prerequisites_passed": true
+  },
+  "scope": "Controlled semi-synthetic visual bottleneck; imposed code targets and code noise, not natural monosemanticity or pixel corruption."
+}
