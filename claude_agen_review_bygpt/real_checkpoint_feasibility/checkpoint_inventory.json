@@ -1,0 +1,1155 @@
+{
+  "question": "Are the two official CIFAR100 checkpoints present and loadable, and what evaluation architecture do they contain?",
+  "connection_to_project1": "Prerequisite for testing mono-versus-sharing classification robustness in the actual network; no compressor or corruption test here.",
+  "stopping_rule": "Inspect the two listed checkpoints and pinned source only. No image evaluation, replacement dataset, checkpoint search, or retraining.",
+  "repository": "https://github.com/PKU-ML/non_neg",
+  "commit": "880b3ceace102d1b04132ca371eb773faffdf54e",
+  "checkpoints": [
+    {
+      "method": "CL",
+      "drive_id": "146YDJ8C0P4DCBYOiC-8qPrM6A0r2hcbE",
+      "name": "cifar100-simclr-e200-3a7937mb-ep=199.ckpt",
+      "bytes": 102467009,
+      "sha256": "3c063c14b9dfc870ff7cdcebb81b7e92a2da3f4aa0095da65b7fd0560276fcaa",
+      "load_mode": "weights_only=True",
+      "keys": [
+        "epoch",
+        "global_step",
+        "pytorch-lightning_version",
+        "state_dict",
+        "loops",
+        "callbacks",
+        "optimizer_states",
+        "lr_schedulers",
+        "NativeMixedPrecisionPlugin"
+      ],
+      "epoch": 199,
+      "global_step": 39000,
+      "hyper_parameters": {},
+      "state_keys": [
+        "backbone.conv1.weight",
+        "backbone.bn1.weight",
+        "backbone.bn1.bias",
+        "backbone.bn1.running_mean",
+        "backbone.bn1.running_var",
+        "backbone.bn1.num_batches_tracked",
+        "backbone.layer1.0.conv1.weight",
+        "backbone.layer1.0.bn1.weight",
+        "backbone.layer1.0.bn1.bias",
+        "backbone.layer1.0.bn1.running_mean",
+        "backbone.layer1.0.bn1.running_var",
+        "backbone.layer1.0.bn1.num_batches_tracked",
+        "backbone.layer1.0.conv2.weight",
+        "backbone.layer1.0.bn2.weight",
+        "backbone.layer1.0.bn2.bias",
+        "backbone.layer1.0.bn2.running_mean",
+        "backbone.layer1.0.bn2.running_var",
+        "backbone.layer1.0.bn2.num_batches_tracked",
+        "backbone.layer1.1.conv1.weight",
+        "backbone.layer1.1.bn1.weight",
+        "backbone.layer1.1.bn1.bias",
+        "backbone.layer1.1.bn1.running_mean",
+        "backbone.layer1.1.bn1.running_var",
+        "backbone.layer1.1.bn1.num_batches_tracked",
+        "backbone.layer1.1.conv2.weight",
+        "backbone.layer1.1.bn2.weight",
+        "backbone.layer1.1.bn2.bias",
+        "backbone.layer1.1.bn2.running_mean",
+        "backbone.layer1.1.bn2.running_var",
+        "backbone.layer1.1.bn2.num_batches_tracked",
+        "backbone.layer2.0.conv1.weight",
+        "backbone.layer2.0.bn1.weight",
+        "backbone.layer2.0.bn1.bias",
+        "backbone.layer2.0.bn1.running_mean",
+        "backbone.layer2.0.bn1.running_var",
+        "backbone.layer2.0.bn1.num_batches_tracked",
+        "backbone.layer2.0.conv2.weight",
+        "backbone.layer2.0.bn2.weight",
+        "backbone.layer2.0.bn2.bias",
+        "backbone.layer2.0.bn2.running_mean",
+        "backbone.layer2.0.bn2.running_var",
+        "backbone.layer2.0.bn2.num_batches_tracked",
+        "backbone.layer2.0.downsample.0.weight",
+        "backbone.layer2.0.downsample.1.weight",
+        "backbone.layer2.0.downsample.1.bias",
+        "backbone.layer2.0.downsample.1.running_mean",
+        "backbone.layer2.0.downsample.1.running_var",
+        "backbone.layer2.0.downsample.1.num_batches_tracked",
+        "backbone.layer2.1.conv1.weight",
+        "backbone.layer2.1.bn1.weight",
+        "backbone.layer2.1.bn1.bias",
+        "backbone.layer2.1.bn1.running_mean",
+        "backbone.layer2.1.bn1.running_var",
+        "backbone.layer2.1.bn1.num_batches_tracked",
+        "backbone.layer2.1.conv2.weight",
+        "backbone.layer2.1.bn2.weight",
+        "backbone.layer2.1.bn2.bias",
+        "backbone.layer2.1.bn2.running_mean",
+        "backbone.layer2.1.bn2.running_var",
+        "backbone.layer2.1.bn2.num_batches_tracked",
+        "backbone.layer3.0.conv1.weight",
+        "backbone.layer3.0.bn1.weight",
+        "backbone.layer3.0.bn1.bias",
+        "backbone.layer3.0.bn1.running_mean",
+        "backbone.layer3.0.bn1.running_var",
+        "backbone.layer3.0.bn1.num_batches_tracked",
+        "backbone.layer3.0.conv2.weight",
+        "backbone.layer3.0.bn2.weight",
+        "backbone.layer3.0.bn2.bias",
+        "backbone.layer3.0.bn2.running_mean",
+        "backbone.layer3.0.bn2.running_var",
+        "backbone.layer3.0.bn2.num_batches_tracked",
+        "backbone.layer3.0.downsample.0.weight",
+        "backbone.layer3.0.downsample.1.weight",
+        "backbone.layer3.0.downsample.1.bias",
+        "backbone.layer3.0.downsample.1.running_mean",
+        "backbone.layer3.0.downsample.1.running_var",
+        "backbone.layer3.0.downsample.1.num_batches_tracked",
+        "backbone.layer3.1.conv1.weight",
+        "backbone.layer3.1.bn1.weight",
+        "backbone.layer3.1.bn1.bias",
+        "backbone.layer3.1.bn1.running_mean",
+        "backbone.layer3.1.bn1.running_var",
+        "backbone.layer3.1.bn1.num_batches_tracked",
+        "backbone.layer3.1.conv2.weight",
+        "backbone.layer3.1.bn2.weight",
+        "backbone.layer3.1.bn2.bias",
+        "backbone.layer3.1.bn2.running_mean",
+        "backbone.layer3.1.bn2.running_var",
+        "backbone.layer3.1.bn2.num_batches_tracked",
+        "backbone.layer4.0.conv1.weight",
+        "backbone.layer4.0.bn1.weight",
+        "backbone.layer4.0.bn1.bias",
+        "backbone.layer4.0.bn1.running_mean",
+        "backbone.layer4.0.bn1.running_var",
+        "backbone.layer4.0.bn1.num_batches_tracked",
+        "backbone.layer4.0.conv2.weight",
+        "backbone.layer4.0.bn2.weight",
+        "backbone.layer4.0.bn2.bias",
+        "backbone.layer4.0.bn2.running_mean",
+        "backbone.layer4.0.bn2.running_var",
+        "backbone.layer4.0.bn2.num_batches_tracked",
+        "backbone.layer4.0.downsample.0.weight",
+        "backbone.layer4.0.downsample.1.weight",
+        "backbone.layer4.0.downsample.1.bias",
+        "backbone.layer4.0.downsample.1.running_mean",
+        "backbone.layer4.0.downsample.1.running_var",
+        "backbone.layer4.0.downsample.1.num_batches_tracked",
+        "backbone.layer4.1.conv1.weight",
+        "backbone.layer4.1.bn1.weight",
+        "backbone.layer4.1.bn1.bias",
+        "backbone.layer4.1.bn1.running_mean",
+        "backbone.layer4.1.bn1.running_var",
+        "backbone.layer4.1.bn1.num_batches_tracked",
+        "backbone.layer4.1.conv2.weight",
+        "backbone.layer4.1.bn2.weight",
+        "backbone.layer4.1.bn2.bias",
+        "backbone.layer4.1.bn2.running_mean",
+        "backbone.layer4.1.bn2.running_var",
+        "backbone.layer4.1.bn2.num_batches_tracked",
+        "classifier.weight",
+        "classifier.bias",
+        "projector.0.weight",
+        "projector.0.bias",
+        "projector.2.weight",
+        "projector.2.bias"
+      ],
+      "state_shapes": {
+        "backbone.conv1.weight": [
+          64,
+          3,
+          3,
+          3
+        ],
+        "backbone.bn1.weight": [
+          64
+        ],
+        "backbone.bn1.bias": [
+          64
+        ],
+        "backbone.bn1.running_mean": [
+          64
+        ],
+        "backbone.bn1.running_var": [
+          64
+        ],
+        "backbone.bn1.num_batches_tracked": [],
+        "backbone.layer1.0.conv1.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.0.bn1.weight": [
+          64
+        ],
+        "backbone.layer1.0.bn1.bias": [
+          64
+        ],
+        "backbone.layer1.0.bn1.running_mean": [
+          64
+        ],
+        "backbone.layer1.0.bn1.running_var": [
+          64
+        ],
+        "backbone.layer1.0.bn1.num_batches_tracked": [],
+        "backbone.layer1.0.conv2.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.0.bn2.weight": [
+          64
+        ],
+        "backbone.layer1.0.bn2.bias": [
+          64
+        ],
+        "backbone.layer1.0.bn2.running_mean": [
+          64
+        ],
+        "backbone.layer1.0.bn2.running_var": [
+          64
+        ],
+        "backbone.layer1.0.bn2.num_batches_tracked": [],
+        "backbone.layer1.1.conv1.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.1.bn1.weight": [
+          64
+        ],
+        "backbone.layer1.1.bn1.bias": [
+          64
+        ],
+        "backbone.layer1.1.bn1.running_mean": [
+          64
+        ],
+        "backbone.layer1.1.bn1.running_var": [
+          64
+        ],
+        "backbone.layer1.1.bn1.num_batches_tracked": [],
+        "backbone.layer1.1.conv2.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.1.bn2.weight": [
+          64
+        ],
+        "backbone.layer1.1.bn2.bias": [
+          64
+        ],
+        "backbone.layer1.1.bn2.running_mean": [
+          64
+        ],
+        "backbone.layer1.1.bn2.running_var": [
+          64
+        ],
+        "backbone.layer1.1.bn2.num_batches_tracked": [],
+        "backbone.layer2.0.conv1.weight": [
+          128,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer2.0.bn1.weight": [
+          128
+        ],
+        "backbone.layer2.0.bn1.bias": [
+          128
+        ],
+        "backbone.layer2.0.bn1.running_mean": [
+          128
+        ],
+        "backbone.layer2.0.bn1.running_var": [
+          128
+        ],
+        "backbone.layer2.0.bn1.num_batches_tracked": [],
+        "backbone.layer2.0.conv2.weight": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer2.0.bn2.weight": [
+          128
+        ],
+        "backbone.layer2.0.bn2.bias": [
+          128
+        ],
+        "backbone.layer2.0.bn2.running_mean": [
+          128
+        ],
+        "backbone.layer2.0.bn2.running_var": [
+          128
+        ],
+        "backbone.layer2.0.bn2.num_batches_tracked": [],
+        "backbone.layer2.0.downsample.0.weight": [
+          128,
+          64,
+          1,
+          1
+        ],
+        "backbone.layer2.0.downsample.1.weight": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.bias": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.running_mean": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.running_var": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.num_batches_tracked": [],
+        "backbone.layer2.1.conv1.weight": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer2.1.bn1.weight": [
+          128
+        ],
+        "backbone.layer2.1.bn1.bias": [
+          128
+        ],
+        "backbone.layer2.1.bn1.running_mean": [
+          128
+        ],
+        "backbone.layer2.1.bn1.running_var": [
+          128
+        ],
+        "backbone.layer2.1.bn1.num_batches_tracked": [],
+        "backbone.layer2.1.conv2.weight": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer2.1.bn2.weight": [
+          128
+        ],
+        "backbone.layer2.1.bn2.bias": [
+          128
+        ],
+        "backbone.layer2.1.bn2.running_mean": [
+          128
+        ],
+        "backbone.layer2.1.bn2.running_var": [
+          128
+        ],
+        "backbone.layer2.1.bn2.num_batches_tracked": [],
+        "backbone.layer3.0.conv1.weight": [
+          256,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer3.0.bn1.weight": [
+          256
+        ],
+        "backbone.layer3.0.bn1.bias": [
+          256
+        ],
+        "backbone.layer3.0.bn1.running_mean": [
+          256
+        ],
+        "backbone.layer3.0.bn1.running_var": [
+          256
+        ],
+        "backbone.layer3.0.bn1.num_batches_tracked": [],
+        "backbone.layer3.0.conv2.weight": [
+          256,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer3.0.bn2.weight": [
+          256
+        ],
+        "backbone.layer3.0.bn2.bias": [
+          256
+        ],
+        "backbone.layer3.0.bn2.running_mean": [
+          256
+        ],
+        "backbone.layer3.0.bn2.running_var": [
+          256
+        ],
+        "backbone.layer3.0.bn2.num_batches_tracked": [],
+        "backbone.layer3.0.downsample.0.weight": [
+          256,
+          128,
+          1,
+          1
+        ],
+        "backbone.layer3.0.downsample.1.weight": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.bias": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.running_mean": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.running_var": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.num_batches_tracked": [],
+        "backbone.layer3.1.conv1.weight": [
+          256,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer3.1.bn1.weight": [
+          256
+        ],
+        "backbone.layer3.1.bn1.bias": [
+          256
+        ],
+        "backbone.layer3.1.bn1.running_mean": [
+          256
+        ],
+        "backbone.layer3.1.bn1.running_var": [
+          256
+        ],
+        "backbone.layer3.1.bn1.num_batches_tracked": [],
+        "backbone.layer3.1.conv2.weight": [
+          256,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer3.1.bn2.weight": [
+          256
+        ],
+        "backbone.layer3.1.bn2.bias": [
+          256
+        ],
+        "backbone.layer3.1.bn2.running_mean": [
+          256
+        ],
+        "backbone.layer3.1.bn2.running_var": [
+          256
+        ],
+        "backbone.layer3.1.bn2.num_batches_tracked": [],
+        "backbone.layer4.0.conv1.weight": [
+          512,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer4.0.bn1.weight": [
+          512
+        ],
+        "backbone.layer4.0.bn1.bias": [
+          512
+        ],
+        "backbone.layer4.0.bn1.running_mean": [
+          512
+        ],
+        "backbone.layer4.0.bn1.running_var": [
+          512
+        ],
+        "backbone.layer4.0.bn1.num_batches_tracked": [],
+        "backbone.layer4.0.conv2.weight": [
+          512,
+          512,
+          3,
+          3
+        ],
+        "backbone.layer4.0.bn2.weight": [
+          512
+        ],
+        "backbone.layer4.0.bn2.bias": [
+          512
+        ],
+        "backbone.layer4.0.bn2.running_mean": [
+          512
+        ],
+        "backbone.layer4.0.bn2.running_var": [
+          512
+        ],
+        "backbone.layer4.0.bn2.num_batches_tracked": [],
+        "backbone.layer4.0.downsample.0.weight": [
+          512,
+          256,
+          1,
+          1
+        ],
+        "backbone.layer4.0.downsample.1.weight": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.bias": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.running_mean": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.running_var": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.num_batches_tracked": [],
+        "backbone.layer4.1.conv1.weight": [
+          512,
+          512,
+          3,
+          3
+        ],
+        "backbone.layer4.1.bn1.weight": [
+          512
+        ],
+        "backbone.layer4.1.bn1.bias": [
+          512
+        ],
+        "backbone.layer4.1.bn1.running_mean": [
+          512
+        ],
+        "backbone.layer4.1.bn1.running_var": [
+          512
+        ],
+        "backbone.layer4.1.bn1.num_batches_tracked": [],
+        "backbone.layer4.1.conv2.weight": [
+          512,
+          512,
+          3,
+          3
+        ],
+        "backbone.layer4.1.bn2.weight": [
+          512
+        ],
+        "backbone.layer4.1.bn2.bias": [
+          512
+        ],
+        "backbone.layer4.1.bn2.running_mean": [
+          512
+        ],
+        "backbone.layer4.1.bn2.running_var": [
+          512
+        ],
+        "backbone.layer4.1.bn2.num_batches_tracked": [],
+        "classifier.weight": [
+          100,
+          512
+        ],
+        "classifier.bias": [
+          100
+        ],
+        "projector.0.weight": [
+          2048,
+          512
+        ],
+        "projector.0.bias": [
+          2048
+        ],
+        "projector.2.weight": [
+          256,
+          2048
+        ],
+        "projector.2.bias": [
+          256
+        ]
+      },
+      "state_tensor_elements": 12804920
+    },
+    {
+      "method": "NCL",
+      "drive_id": "1b0k2rBs2EYvbq9q0shNY7LrtqRKzwtia",
+      "name": "cifar100-simclr-e200-gelu_relu-jt2gegkm-ep=199.ckpt",
+      "bytes": 102467009,
+      "sha256": "f3c72e63d2a4971dc3ca8fa685e55890dc903bd9c64b52675ab80cb6d05e37ea",
+      "load_mode": "weights_only=True",
+      "keys": [
+        "epoch",
+        "global_step",
+        "pytorch-lightning_version",
+        "state_dict",
+        "loops",
+        "callbacks",
+        "optimizer_states",
+        "lr_schedulers",
+        "NativeMixedPrecisionPlugin"
+      ],
+      "epoch": 199,
+      "global_step": 39000,
+      "hyper_parameters": {},
+      "state_keys": [
+        "backbone.conv1.weight",
+        "backbone.bn1.weight",
+        "backbone.bn1.bias",
+        "backbone.bn1.running_mean",
+        "backbone.bn1.running_var",
+        "backbone.bn1.num_batches_tracked",
+        "backbone.layer1.0.conv1.weight",
+        "backbone.layer1.0.bn1.weight",
+        "backbone.layer1.0.bn1.bias",
+        "backbone.layer1.0.bn1.running_mean",
+        "backbone.layer1.0.bn1.running_var",
+        "backbone.layer1.0.bn1.num_batches_tracked",
+        "backbone.layer1.0.conv2.weight",
+        "backbone.layer1.0.bn2.weight",
+        "backbone.layer1.0.bn2.bias",
+        "backbone.layer1.0.bn2.running_mean",
+        "backbone.layer1.0.bn2.running_var",
+        "backbone.layer1.0.bn2.num_batches_tracked",
+        "backbone.layer1.1.conv1.weight",
+        "backbone.layer1.1.bn1.weight",
+        "backbone.layer1.1.bn1.bias",
+        "backbone.layer1.1.bn1.running_mean",
+        "backbone.layer1.1.bn1.running_var",
+        "backbone.layer1.1.bn1.num_batches_tracked",
+        "backbone.layer1.1.conv2.weight",
+        "backbone.layer1.1.bn2.weight",
+        "backbone.layer1.1.bn2.bias",
+        "backbone.layer1.1.bn2.running_mean",
+        "backbone.layer1.1.bn2.running_var",
+        "backbone.layer1.1.bn2.num_batches_tracked",
+        "backbone.layer2.0.conv1.weight",
+        "backbone.layer2.0.bn1.weight",
+        "backbone.layer2.0.bn1.bias",
+        "backbone.layer2.0.bn1.running_mean",
+        "backbone.layer2.0.bn1.running_var",
+        "backbone.layer2.0.bn1.num_batches_tracked",
+        "backbone.layer2.0.conv2.weight",
+        "backbone.layer2.0.bn2.weight",
+        "backbone.layer2.0.bn2.bias",
+        "backbone.layer2.0.bn2.running_mean",
+        "backbone.layer2.0.bn2.running_var",
+        "backbone.layer2.0.bn2.num_batches_tracked",
+        "backbone.layer2.0.downsample.0.weight",
+        "backbone.layer2.0.downsample.1.weight",
+        "backbone.layer2.0.downsample.1.bias",
+        "backbone.layer2.0.downsample.1.running_mean",
+        "backbone.layer2.0.downsample.1.running_var",
+        "backbone.layer2.0.downsample.1.num_batches_tracked",
+        "backbone.layer2.1.conv1.weight",
+        "backbone.layer2.1.bn1.weight",
+        "backbone.layer2.1.bn1.bias",
+        "backbone.layer2.1.bn1.running_mean",
+        "backbone.layer2.1.bn1.running_var",
+        "backbone.layer2.1.bn1.num_batches_tracked",
+        "backbone.layer2.1.conv2.weight",
+        "backbone.layer2.1.bn2.weight",
+        "backbone.layer2.1.bn2.bias",
+        "backbone.layer2.1.bn2.running_mean",
+        "backbone.layer2.1.bn2.running_var",
+        "backbone.layer2.1.bn2.num_batches_tracked",
+        "backbone.layer3.0.conv1.weight",
+        "backbone.layer3.0.bn1.weight",
+        "backbone.layer3.0.bn1.bias",
+        "backbone.layer3.0.bn1.running_mean",
+        "backbone.layer3.0.bn1.running_var",
+        "backbone.layer3.0.bn1.num_batches_tracked",
+        "backbone.layer3.0.conv2.weight",
+        "backbone.layer3.0.bn2.weight",
+        "backbone.layer3.0.bn2.bias",
+        "backbone.layer3.0.bn2.running_mean",
+        "backbone.layer3.0.bn2.running_var",
+        "backbone.layer3.0.bn2.num_batches_tracked",
+        "backbone.layer3.0.downsample.0.weight",
+        "backbone.layer3.0.downsample.1.weight",
+        "backbone.layer3.0.downsample.1.bias",
+        "backbone.layer3.0.downsample.1.running_mean",
+        "backbone.layer3.0.downsample.1.running_var",
+        "backbone.layer3.0.downsample.1.num_batches_tracked",
+        "backbone.layer3.1.conv1.weight",
+        "backbone.layer3.1.bn1.weight",
+        "backbone.layer3.1.bn1.bias",
+        "backbone.layer3.1.bn1.running_mean",
+        "backbone.layer3.1.bn1.running_var",
+        "backbone.layer3.1.bn1.num_batches_tracked",
+        "backbone.layer3.1.conv2.weight",
+        "backbone.layer3.1.bn2.weight",
+        "backbone.layer3.1.bn2.bias",
+        "backbone.layer3.1.bn2.running_mean",
+        "backbone.layer3.1.bn2.running_var",
+        "backbone.layer3.1.bn2.num_batches_tracked",
+        "backbone.layer4.0.conv1.weight",
+        "backbone.layer4.0.bn1.weight",
+        "backbone.layer4.0.bn1.bias",
+        "backbone.layer4.0.bn1.running_mean",
+        "backbone.layer4.0.bn1.running_var",
+        "backbone.layer4.0.bn1.num_batches_tracked",
+        "backbone.layer4.0.conv2.weight",
+        "backbone.layer4.0.bn2.weight",
+        "backbone.layer4.0.bn2.bias",
+        "backbone.layer4.0.bn2.running_mean",
+        "backbone.layer4.0.bn2.running_var",
+        "backbone.layer4.0.bn2.num_batches_tracked",
+        "backbone.layer4.0.downsample.0.weight",
+        "backbone.layer4.0.downsample.1.weight",
+        "backbone.layer4.0.downsample.1.bias",
+        "backbone.layer4.0.downsample.1.running_mean",
+        "backbone.layer4.0.downsample.1.running_var",
+        "backbone.layer4.0.downsample.1.num_batches_tracked",
+        "backbone.layer4.1.conv1.weight",
+        "backbone.layer4.1.bn1.weight",
+        "backbone.layer4.1.bn1.bias",
+        "backbone.layer4.1.bn1.running_mean",
+        "backbone.layer4.1.bn1.running_var",
+        "backbone.layer4.1.bn1.num_batches_tracked",
+        "backbone.layer4.1.conv2.weight",
+        "backbone.layer4.1.bn2.weight",
+        "backbone.layer4.1.bn2.bias",
+        "backbone.layer4.1.bn2.running_mean",
+        "backbone.layer4.1.bn2.running_var",
+        "backbone.layer4.1.bn2.num_batches_tracked",
+        "classifier.weight",
+        "classifier.bias",
+        "projector.0.weight",
+        "projector.0.bias",
+        "projector.2.weight",
+        "projector.2.bias"
+      ],
+      "state_shapes": {
+        "backbone.conv1.weight": [
+          64,
+          3,
+          3,
+          3
+        ],
+        "backbone.bn1.weight": [
+          64
+        ],
+        "backbone.bn1.bias": [
+          64
+        ],
+        "backbone.bn1.running_mean": [
+          64
+        ],
+        "backbone.bn1.running_var": [
+          64
+        ],
+        "backbone.bn1.num_batches_tracked": [],
+        "backbone.layer1.0.conv1.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.0.bn1.weight": [
+          64
+        ],
+        "backbone.layer1.0.bn1.bias": [
+          64
+        ],
+        "backbone.layer1.0.bn1.running_mean": [
+          64
+        ],
+        "backbone.layer1.0.bn1.running_var": [
+          64
+        ],
+        "backbone.layer1.0.bn1.num_batches_tracked": [],
+        "backbone.layer1.0.conv2.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.0.bn2.weight": [
+          64
+        ],
+        "backbone.layer1.0.bn2.bias": [
+          64
+        ],
+        "backbone.layer1.0.bn2.running_mean": [
+          64
+        ],
+        "backbone.layer1.0.bn2.running_var": [
+          64
+        ],
+        "backbone.layer1.0.bn2.num_batches_tracked": [],
+        "backbone.layer1.1.conv1.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.1.bn1.weight": [
+          64
+        ],
+        "backbone.layer1.1.bn1.bias": [
+          64
+        ],
+        "backbone.layer1.1.bn1.running_mean": [
+          64
+        ],
+        "backbone.layer1.1.bn1.running_var": [
+          64
+        ],
+        "backbone.layer1.1.bn1.num_batches_tracked": [],
+        "backbone.layer1.1.conv2.weight": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer1.1.bn2.weight": [
+          64
+        ],
+        "backbone.layer1.1.bn2.bias": [
+          64
+        ],
+        "backbone.layer1.1.bn2.running_mean": [
+          64
+        ],
+        "backbone.layer1.1.bn2.running_var": [
+          64
+        ],
+        "backbone.layer1.1.bn2.num_batches_tracked": [],
+        "backbone.layer2.0.conv1.weight": [
+          128,
+          64,
+          3,
+          3
+        ],
+        "backbone.layer2.0.bn1.weight": [
+          128
+        ],
+        "backbone.layer2.0.bn1.bias": [
+          128
+        ],
+        "backbone.layer2.0.bn1.running_mean": [
+          128
+        ],
+        "backbone.layer2.0.bn1.running_var": [
+          128
+        ],
+        "backbone.layer2.0.bn1.num_batches_tracked": [],
+        "backbone.layer2.0.conv2.weight": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer2.0.bn2.weight": [
+          128
+        ],
+        "backbone.layer2.0.bn2.bias": [
+          128
+        ],
+        "backbone.layer2.0.bn2.running_mean": [
+          128
+        ],
+        "backbone.layer2.0.bn2.running_var": [
+          128
+        ],
+        "backbone.layer2.0.bn2.num_batches_tracked": [],
+        "backbone.layer2.0.downsample.0.weight": [
+          128,
+          64,
+          1,
+          1
+        ],
+        "backbone.layer2.0.downsample.1.weight": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.bias": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.running_mean": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.running_var": [
+          128
+        ],
+        "backbone.layer2.0.downsample.1.num_batches_tracked": [],
+        "backbone.layer2.1.conv1.weight": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer2.1.bn1.weight": [
+          128
+        ],
+        "backbone.layer2.1.bn1.bias": [
+          128
+        ],
+        "backbone.layer2.1.bn1.running_mean": [
+          128
+        ],
+        "backbone.layer2.1.bn1.running_var": [
+          128
+        ],
+        "backbone.layer2.1.bn1.num_batches_tracked": [],
+        "backbone.layer2.1.conv2.weight": [
+          128,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer2.1.bn2.weight": [
+          128
+        ],
+        "backbone.layer2.1.bn2.bias": [
+          128
+        ],
+        "backbone.layer2.1.bn2.running_mean": [
+          128
+        ],
+        "backbone.layer2.1.bn2.running_var": [
+          128
+        ],
+        "backbone.layer2.1.bn2.num_batches_tracked": [],
+        "backbone.layer3.0.conv1.weight": [
+          256,
+          128,
+          3,
+          3
+        ],
+        "backbone.layer3.0.bn1.weight": [
+          256
+        ],
+        "backbone.layer3.0.bn1.bias": [
+          256
+        ],
+        "backbone.layer3.0.bn1.running_mean": [
+          256
+        ],
+        "backbone.layer3.0.bn1.running_var": [
+          256
+        ],
+        "backbone.layer3.0.bn1.num_batches_tracked": [],
+        "backbone.layer3.0.conv2.weight": [
+          256,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer3.0.bn2.weight": [
+          256
+        ],
+        "backbone.layer3.0.bn2.bias": [
+          256
+        ],
+        "backbone.layer3.0.bn2.running_mean": [
+          256
+        ],
+        "backbone.layer3.0.bn2.running_var": [
+          256
+        ],
+        "backbone.layer3.0.bn2.num_batches_tracked": [],
+        "backbone.layer3.0.downsample.0.weight": [
+          256,
+          128,
+          1,
+          1
+        ],
+        "backbone.layer3.0.downsample.1.weight": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.bias": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.running_mean": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.running_var": [
+          256
+        ],
+        "backbone.layer3.0.downsample.1.num_batches_tracked": [],
+        "backbone.layer3.1.conv1.weight": [
+          256,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer3.1.bn1.weight": [
+          256
+        ],
+        "backbone.layer3.1.bn1.bias": [
+          256
+        ],
+        "backbone.layer3.1.bn1.running_mean": [
+          256
+        ],
+        "backbone.layer3.1.bn1.running_var": [
+          256
+        ],
+        "backbone.layer3.1.bn1.num_batches_tracked": [],
+        "backbone.layer3.1.conv2.weight": [
+          256,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer3.1.bn2.weight": [
+          256
+        ],
+        "backbone.layer3.1.bn2.bias": [
+          256
+        ],
+        "backbone.layer3.1.bn2.running_mean": [
+          256
+        ],
+        "backbone.layer3.1.bn2.running_var": [
+          256
+        ],
+        "backbone.layer3.1.bn2.num_batches_tracked": [],
+        "backbone.layer4.0.conv1.weight": [
+          512,
+          256,
+          3,
+          3
+        ],
+        "backbone.layer4.0.bn1.weight": [
+          512
+        ],
+        "backbone.layer4.0.bn1.bias": [
+          512
+        ],
+        "backbone.layer4.0.bn1.running_mean": [
+          512
+        ],
+        "backbone.layer4.0.bn1.running_var": [
+          512
+        ],
+        "backbone.layer4.0.bn1.num_batches_tracked": [],
+        "backbone.layer4.0.conv2.weight": [
+          512,
+          512,
+          3,
+          3
+        ],
+        "backbone.layer4.0.bn2.weight": [
+          512
+        ],
+        "backbone.layer4.0.bn2.bias": [
+          512
+        ],
+        "backbone.layer4.0.bn2.running_mean": [
+          512
+        ],
+        "backbone.layer4.0.bn2.running_var": [
+          512
+        ],
+        "backbone.layer4.0.bn2.num_batches_tracked": [],
+        "backbone.layer4.0.downsample.0.weight": [
+          512,
+          256,
+          1,
+          1
+        ],
+        "backbone.layer4.0.downsample.1.weight": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.bias": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.running_mean": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.running_var": [
+          512
+        ],
+        "backbone.layer4.0.downsample.1.num_batches_tracked": [],
+        "backbone.layer4.1.conv1.weight": [
+          512,
+          512,
+          3,
+          3
+        ],
+        "backbone.layer4.1.bn1.weight": [
+          512
+        ],
+        "backbone.layer4.1.bn1.bias": [
+          512
+        ],
+        "backbone.layer4.1.bn1.running_mean": [
+          512
+        ],
+        "backbone.layer4.1.bn1.running_var": [
+          512
+        ],
+        "backbone.layer4.1.bn1.num_batches_tracked": [],
+        "backbone.layer4.1.conv2.weight": [
+          512,
+          512,
+          3,
+          3
+        ],
+        "backbone.layer4.1.bn2.weight": [
+          512
+        ],
+        "backbone.layer4.1.bn2.bias": [
+          512
+        ],
+        "backbone.layer4.1.bn2.running_mean": [
+          512
+        ],
+        "backbone.layer4.1.bn2.running_var": [
+          512
+        ],
+        "backbone.layer4.1.bn2.num_batches_tracked": [],
+        "classifier.weight": [
+          100,
+          512
+        ],
+        "classifier.bias": [
+          100
+        ],
+        "projector.0.weight": [
+          2048,
+          512
+        ],
+        "projector.0.bias": [
+          2048
+        ],
+        "projector.2.weight": [
+          256,
+          2048
+        ],
+        "projector.2.bias": [
+          256
+        ]
+      },
+      "state_tensor_elements": 12804920
+    }
+  ],
+  "sources": [
+    {
+      "path": "main_eval.py",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/main_eval.py",
+      "sha256": "b1e9b9163af9f79c5a0d5a68da9e90465fb69c57628f750a622a07482858a057"
+    },
+    {
+      "path": "main_linear.py",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/main_linear.py",
+      "sha256": "e3f768c4d7240209bab1a8b374b4a520a6c1ced38691e09bf6b8c1bbac38d09e"
+    },
+    {
+      "path": "solo/methods/simclr.py",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/solo/methods/simclr.py",
+      "sha256": "e50cd54832ebd1fbea3c1cea84a980bd2eec0682e9ffeb31e36e491ed4aca50c"
+    },
+    {
+      "path": "solo/methods/base.py",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/solo/methods/base.py",
+      "sha256": "8bc4448c07bde36ba4eb2bc367bca6b26638eca634445559f4a2f2aed2e658d9"
+    },
+    {
+      "path": "scripts/pretrain/cifar/ncl.yaml",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/scripts/pretrain/cifar/ncl.yaml",
+      "sha256": "326a65af3388eff19c0ae6d6d7e306a95031320c44b195c0057021d8b7c27bd2"
+    },
+    {
+      "path": "scripts/pretrain/cifar/simclr.yaml",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/scripts/pretrain/cifar/simclr.yaml",
+      "sha256": "a3a570cce9cab422d9eb098762d462a46506bc3356164f7589f25f612a10a3d9"
+    },
+    {
+      "path": "scripts/linear/cifar/simclr.yaml",
+      "url": "https://raw.githubusercontent.com/PKU-ML/non_neg/880b3ceace102d1b04132ca371eb773faffdf54e/scripts/linear/cifar/simclr.yaml",
+      "sha256": "663f47d691d3f13404b758202522117610b9c2ebd03334c754da2a98316950e6"
+    }
+  ],
+  "images_evaluated": 0
+}

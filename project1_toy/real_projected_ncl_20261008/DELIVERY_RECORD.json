@@ -1,0 +1,14 @@
+{
+  "timestamp_utc": "2026-10-08T07:52:41.184756+00:00",
+  "pages": 121,
+  "pdf_sha256": "b95b71f078173c8bb73565fd601762ebec3befabdfef71e77165e3b5e0ce2c3b",
+  "source_sha256": "725808ae8f36489f2af068df2a379c9058f939eae49104a2294c4c3c774e9aba",
+  "native_reversal_observed": true,
+  "predictive_claim_passed": false,
+  "visual_qa_pages": [
+    96,
+    97,
+    98,
+    99
+  ]
+}

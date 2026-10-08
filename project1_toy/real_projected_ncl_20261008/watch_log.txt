@@ -1,0 +1,263 @@
+2026-10-08T07:17:00.517020+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL validation directions 240 500
+CL validation directions 320 500
+CL validation directions 400 500
+CL validation directions 480 500
+
+2026-10-08T07:17:32.864354+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL validation directions 400 500
+CL validation directions 480 500
+NCL validation directions 0 500
+NCL validation directions 80 500
+
+2026-10-08T07:18:05.503609+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL validation directions 0 500
+NCL validation directions 80 500
+NCL validation directions 160 500
+NCL validation directions 240 500
+
+2026-10-08T07:18:37.885956+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL validation directions 160 500
+NCL validation directions 240 500
+NCL validation directions 320 500
+NCL validation directions 400 500
+
+2026-10-08T07:19:10.499633+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+  "limitations": "One fixed checkpoint pair. Linearization is an approximation; bootstrap uncertainty is conditional on fitted models. No test data used."
+}
+Prediction claim STOPPED: prerequisites failed. Run only the predeclared native phenomenon test.
+CL TEST 0 10000
+
+2026-10-08T07:19:42.895202+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+Prediction claim STOPPED: prerequisites failed. Run only the predeclared native phenomenon test.
+CL TEST 0 10000
+CL TEST 640 10000
+CL TEST 1280 10000
+
+2026-10-08T07:20:15.701037+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 640 10000
+CL TEST 1280 10000
+CL TEST 1920 10000
+CL TEST 2560 10000
+
+2026-10-08T07:20:48.282420+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 1920 10000
+CL TEST 2560 10000
+CL TEST 3200 10000
+CL TEST 3840 10000
+
+2026-10-08T07:21:21.012475+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 3200 10000
+CL TEST 3840 10000
+CL TEST 4480 10000
+CL TEST 5120 10000
+
+2026-10-08T07:21:53.651301+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 4480 10000
+CL TEST 5120 10000
+CL TEST 5760 10000
+CL TEST 6400 10000
+
+2026-10-08T07:22:26.744361+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 5760 10000
+CL TEST 6400 10000
+CL TEST 7040 10000
+CL TEST 7680 10000
+
+2026-10-08T07:22:59.117191+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 7040 10000
+CL TEST 7680 10000
+CL TEST 8320 10000
+CL TEST 8960 10000
+
+2026-10-08T07:23:31.834434+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 8320 10000
+CL TEST 8960 10000
+CL TEST 9600 10000
+NCL TEST 0 10000
+
+2026-10-08T07:24:04.077522+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+CL TEST 9600 10000
+NCL TEST 0 10000
+NCL TEST 640 10000
+NCL TEST 1280 10000
+
+2026-10-08T07:24:36.825078+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL TEST 640 10000
+NCL TEST 1280 10000
+NCL TEST 1920 10000
+NCL TEST 2560 10000
+
+2026-10-08T07:25:09.505577+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL TEST 1920 10000
+NCL TEST 2560 10000
+NCL TEST 3200 10000
+NCL TEST 3840 10000
+
+2026-10-08T07:25:44.182910+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL TEST 3200 10000
+NCL TEST 3840 10000
+NCL TEST 4480 10000
+NCL TEST 5120 10000
+
+2026-10-08T07:26:16.777576+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL TEST 4480 10000
+NCL TEST 5120 10000
+NCL TEST 5760 10000
+NCL TEST 6400 10000
+
+2026-10-08T07:26:49.518521+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL TEST 5120 10000
+NCL TEST 5760 10000
+NCL TEST 6400 10000
+NCL TEST 7040 10000
+
+2026-10-08T07:27:22.240648+00:00
+11212391 RUNNING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+NCL TEST 6400 10000
+NCL TEST 7040 10000
+NCL TEST 7680 10000
+NCL TEST 8320 10000
+
+2026-10-08T07:27:55.188991+00:00
+11212391 COMPLETING ccc0444
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+  "prediction_prerequisites_passed": false,
+  "test_images_evaluated": 10000,
+  "limitations": "Single checkpoint/probe pair; conditional image bootstrap. Gaussian unclipped input noise only. This does not isolate monosemanticity causally or validate a universal phase diagram."
+}
+
+2026-10-08T07:28:27.769474+00:00
+0	/scratch/idas3/ncl_projected_20261008_v1/data
+26050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}
+  "prediction_prerequisites_passed": false,
+  "test_images_evaluated": 10000,
+  "limitations": "Single checkpoint/probe pair; conditional image bootstrap. Gaussian unclipped input noise only. This does not isolate monosemanticity causally or validate a universal phase diagram."
+}
+

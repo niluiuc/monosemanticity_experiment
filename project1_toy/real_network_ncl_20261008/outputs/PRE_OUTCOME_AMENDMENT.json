@@ -1,0 +1,11 @@
+{
+  "amendment_utc": "2026-10-08T06:47:51.631372+00:00",
+  "scientific_images_scored": 0,
+  "original_sha256": {
+    "PROTOCOL.md": "0b7561ff95396f03250dad91de5e8eb676ac6c1027ae77823ca398f6c2feead3",
+    "run_prediction.py": "3a4a5f820b81b695695b582844cf59668f2f1a9d8681932b9fd72a175704b55f",
+    "run_test.py": "fe5f7630324cb5f0d2b445526f719add9e7ae08ad1ed05dd9531d9e5fef6c4b2",
+    "run_conditional.py": "9ce4d459413aba7d5da83372df78302362e1c9785062ba373b1795583508f5a9"
+  },
+  "reason": "Measure the fixed native corruption curve after clean prerequisites pass, even if the affine prediction fails. Failed prediction gates still reject the predictive claim. No scientific settings or grid expansion."
+}

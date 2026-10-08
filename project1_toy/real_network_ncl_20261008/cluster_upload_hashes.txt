@@ -1,0 +1,4 @@
+0b7561ff95396f03250dad91de5e8eb676ac6c1027ae77823ca398f6c2feead3  PROTOCOL.md
+29d47033cba2053d5b3698a2a8259f173d0a36454885adeae76759b5d827dfc7  run_clean_gate.py
+3c063c14b9dfc870ff7cdcebb81b7e92a2da3f4aa0095da65b7fd0560276fcaa  checkpoints/cifar100-simclr-e200-3a7937mb-ep=199.ckpt
+f3c72e63d2a4971dc3ca8fa685e55890dc903bd9c64b52675ab80cb6d05e37ea  checkpoints/cifar100-simclr-e200-gelu_relu-jt2gegkm-ep=199.ckpt

@@ -1,0 +1,7 @@
+{
+  "protocol_registration_utc": "2026-10-08T07:13:48.213406+00:00",
+  "projected_features_computed": 0,
+  "test_images_scored": 0,
+  "prior_backbone_result": "Both prerequisites failed; retained",
+  "source_justification": "Anchor linear forward explicitly uses projector and NCL ReLU; predecessor main_eval scores z."
+}

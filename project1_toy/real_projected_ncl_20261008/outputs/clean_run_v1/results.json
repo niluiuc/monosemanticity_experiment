@@ -1,0 +1,31 @@
+{
+  "models": {
+    "CL": {
+      "validation_error": 0.4429999887943268,
+      "semantic_consistency": 0.010001187212765217,
+      "active_dimensions": 256,
+      "raw_sparsity_below_point01": 0.02515312470495701
+    },
+    "NCL": {
+      "validation_error": 0.46480000019073486,
+      "semantic_consistency": 0.11470436304807663,
+      "active_dimensions": 232,
+      "raw_sparsity_below_point01": 0.9377429485321045
+    }
+  },
+  "delta_error": 0.02180001139640808,
+  "delta_consistency": 0.10470317583531141,
+  "error_difference_ci95": [
+    0.010999999940395355,
+    0.033399999141693115
+  ],
+  "consistency_difference_ci95": [
+    0.10165863074362277,
+    0.10849025119096041
+  ],
+  "clean_gates_passed": true,
+  "decision": "PASS to conditional prediction stage",
+  "elapsed_seconds": 5.134026050567627,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}

@@ -1,0 +1,14 @@
+{
+  "start_utc": "2026-10-08T06:56:14.997568+00:00",
+  "seed": 20261008,
+  "device": "cpu",
+  "gpu": null,
+  "torch": "2.6.0+cu124",
+  "script_sha256": "29d47033cba2053d5b3698a2a8259f173d0a36454885adeae76759b5d827dfc7",
+  "protocol_sha256": "3dec0c821af18b9db307925daea3636e2ac82736244ac0aa76d6d9461534c42e",
+  "checkpoint_sha256": {
+    "CL": "3c063c14b9dfc870ff7cdcebb81b7e92a2da3f4aa0095da65b7fd0560276fcaa",
+    "NCL": "f3c72e63d2a4971dc3ca8fa685e55890dc903bd9c64b52675ab80cb6d05e37ea"
+  },
+  "images_evaluated": "TRAIN only; no TEST"
+}

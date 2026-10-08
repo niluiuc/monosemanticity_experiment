@@ -1,0 +1,15 @@
+{
+  "CL": {
+    "numpy_float64_semantic_consistency": 0.016018860270607012,
+    "reported_difference": 2.2851182751582044e-10,
+    "feature_cache_sha256": "1edb49e638381b45a0a5b26fad97e0fb121a62426e7db5ab82771eeb8ebbff7f",
+    "validation_images": 5000
+  },
+  "NCL": {
+    "numpy_float64_semantic_consistency": 0.016002429728328542,
+    "reported_difference": 7.909472382605642e-11,
+    "feature_cache_sha256": "3defe60eecf0b8455993d5e2aefa955ef3dd0d2b2e06551b802fc31765e08f07",
+    "validation_images": 5000
+  },
+  "scope": "Independent NumPy calculation from cached validation features. No checkpoints or TEST images loaded. Float64 normalization may differ from the original float32 rounding."
+}

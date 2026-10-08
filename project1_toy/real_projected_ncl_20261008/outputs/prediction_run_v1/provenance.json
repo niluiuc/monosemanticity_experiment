@@ -1,0 +1,10 @@
+{
+  "start_utc": "2026-10-08T07:15:17.628078+00:00",
+  "script_sha256": "345587880bfb1013a4076b50a09cd1abbe645985f144a388a8b79f459d240b31",
+  "protocol_sha256": "0d9e8931103e27f095f44528b5b300ae92adfa3e38a6a5b0d8248e2e4801f8e4",
+  "clean_results_sha256": "faa2a8efc378f920cbfaac4206bdb24b61b990c7ebc10835fb227b97e2e0c8b4",
+  "test_images_evaluated": 0,
+  "directions_per_image": 32,
+  "seed": 20261010,
+  "relative_residual_definition": "RMS centered logit residual / RMS centered true logit increment, aggregated over images, directions and classes; no division per image."
+}

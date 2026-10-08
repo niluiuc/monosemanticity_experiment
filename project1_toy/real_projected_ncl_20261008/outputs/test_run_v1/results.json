@@ -1,0 +1,71 @@
+{
+  "sigma_grid": [
+    0.0,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12,
+    0.2,
+    0.3
+  ],
+  "CL_error": [
+    0.4513,
+    0.454866666666667,
+    0.46986666666666754,
+    0.5530666666666669,
+    0.7657666666666676,
+    0.8825000000000018,
+    0.9538333333333335,
+    0.9745999999999991
+  ],
+  "NCL_error": [
+    0.4678,
+    0.47,
+    0.4911666666666663,
+    0.5802333333333336,
+    0.7646000000000028,
+    0.8702666666666687,
+    0.947333333333333,
+    0.9780666666666652
+  ],
+  "delta_NCL_minus_CL": [
+    0.0165,
+    0.015133333333333334,
+    0.021299999999999975,
+    0.027166666666666606,
+    -0.0011666666666666702,
+    -0.012233333333333339,
+    -0.006500000000000006,
+    0.003466666666666668
+  ],
+  "simultaneous_lower": [
+    0.0048246875,
+    0.004232499999999994,
+    0.01066416666666668,
+    0.017741562499999985,
+    -0.008991770833333327,
+    -0.018684375000000034,
+    -0.010850208333333305,
+    0.00037489583333333824
+  ],
+  "simultaneous_upper": [
+    0.0276,
+    0.02561729166666662,
+    0.030525104166666667,
+    0.03705062500000002,
+    0.006617291666666667,
+    -0.006074895833333309,
+    -0.0021164583333333474,
+    0.006633333333333338
+  ],
+  "observed_crossing": 0.07835294117647058,
+  "observed_crossing_grid_index": 4,
+  "resolved_reversal": true,
+  "crossing_bracket_compatible_with_prediction": false,
+  "crossing_factor_tolerance_passed": false,
+  "predictive_success": false,
+  "prediction_prerequisites_passed": false,
+  "test_images_evaluated": 10000,
+  "limitations": "Single checkpoint/probe pair; conditional image bootstrap. Gaussian unclipped input noise only. This does not isolate monosemanticity causally or validate a universal phase diagram."
+}

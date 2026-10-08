@@ -1,0 +1,10 @@
+{
+  "fit_validation_disjoint": true,
+  "CL_validation_error": 0.443,
+  "NCL_validation_error": 0.4648,
+  "delta_error": 0.0218,
+  "clean_gates_passed": true,
+  "scope": "Error decisions, split integrity and interval/gate recomputation from saved arrays. Does not independently establish bootstrap assumptions or representation causality.",
+  "prediction_curve_verified": true,
+  "test_curve_and_reversal_decision_verified": true
+}

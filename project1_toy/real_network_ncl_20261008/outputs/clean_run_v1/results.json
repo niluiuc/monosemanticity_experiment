@@ -1,0 +1,31 @@
+{
+  "models": {
+    "CL": {
+      "validation_error": 0.41200000047683716,
+      "semantic_consistency": 0.016018860042095184,
+      "active_dimensions": 512,
+      "raw_sparsity_below_point01": 0.41303515434265137
+    },
+    "NCL": {
+      "validation_error": 0.40639999508857727,
+      "semantic_consistency": 0.016002429649233818,
+      "active_dimensions": 512,
+      "raw_sparsity_below_point01": 0.398814857006073
+    }
+  },
+  "delta_error": -0.005600005388259888,
+  "delta_consistency": -1.6430392861366272e-05,
+  "error_difference_ci95": [
+    -0.017400000244379044,
+    0.007000000216066837
+  ],
+  "consistency_difference_ci95": [
+    -0.00010438975878059864,
+    0.00011487971059978015
+  ],
+  "clean_gates_passed": false,
+  "decision": "STOP fixed checkpoint pair: clean prerequisites failed",
+  "elapsed_seconds": 134.00481057167053,
+  "test_images_evaluated": 0,
+  "limitations": "One checkpoint and one probe per condition; intervals are conditional paired image bootstraps, not training-seed or causal uncertainty."
+}

@@ -1,0 +1,11 @@
+{
+  "check": "Dummy inputs only: torchvision checkpoint loading and torch.func.jvp compatibility",
+  "torch": "2.14.1+cpu",
+  "shape": [
+    2,
+    512
+  ],
+  "finite": true,
+  "scientific_images_scored": 0,
+  "limitation": "Local CPU smoke check, not an equivalence check against the cluster GPU runtime or evidence about robustness."
+}

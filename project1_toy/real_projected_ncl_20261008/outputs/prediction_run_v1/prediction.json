@@ -1,0 +1,78 @@
+{
+  "methods": {
+    "CL": {
+      "affine_error_curve": [
+        0.454,
+        0.455125,
+        0.4599375,
+        0.4839375,
+        0.5514375,
+        0.6175625,
+        0.710125,
+        0.7723125
+      ],
+      "actual_validation_errors": {
+        "0.01": 0.4550625,
+        "0.04": 0.5444375
+      },
+      "mean_error_discrepancies": {
+        "0.01": 6.250000000002087e-05,
+        "0.04": 0.0605
+      },
+      "relative_rms_logit_residual": 1.1428341327444347,
+      "linearization_gate_passed": false
+    },
+    "NCL": {
+      "affine_error_curve": [
+        0.452,
+        0.461875,
+        0.4684375,
+        0.4913125,
+        0.5679375,
+        0.6384375,
+        0.7390625,
+        0.8089375
+      ],
+      "actual_validation_errors": {
+        "0.01": 0.4591875,
+        "0.04": 0.56675
+      },
+      "mean_error_discrepancies": {
+        "0.01": 0.002687499999999954,
+        "0.04": 0.07543749999999999
+      },
+      "relative_rms_logit_residual": 1.105299945733518,
+      "linearization_gate_passed": false
+    }
+  },
+  "sigma_grid": [
+    0.0,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12,
+    0.2,
+    0.3
+  ],
+  "delta_error_prediction": [
+    0.02180001139640808,
+    0.030550011396408082,
+    0.03230001139640808,
+    0.031175011396408082,
+    0.040300011396408084,
+    0.04467501139640808,
+    0.05273751139640808,
+    0.06042501139640808
+  ],
+  "predicted_crossing": null,
+  "crossing_grid_index": null,
+  "crossing_ci95": null,
+  "bootstrap_crossings_found": 9,
+  "prediction_precision_passed": false,
+  "all_linearization_gates_passed": false,
+  "prediction_gates_passed": false,
+  "decision": "Predictive claim rejected; native phenomenon test remains eligible under pre-outcome amendment",
+  "test_images_evaluated": 0,
+  "limitations": "One fixed checkpoint pair. Linearization is an approximation; bootstrap uncertainty is conditional on fitted models. No test data used."
+}

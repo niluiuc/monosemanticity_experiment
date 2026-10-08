@@ -1,0 +1,9 @@
+{
+  "start_utc": "2026-10-08T07:18:51.221991+00:00",
+  "script_sha256": "590fb1bc27e2bd6f7070095f54cc7d9d9175df2549cd63ec425983a7eb40c658",
+  "protocol_sha256": "0d9e8931103e27f095f44528b5b300ae92adfa3e38a6a5b0d8248e2e4801f8e4",
+  "prediction_sha256": "c643b6e46cd7f170937cd95b0bac89d7c303463a3392e3c20d3c0443664eec00",
+  "prediction_frozen_utc": "2026-10-08T07:18:47.885846+00:00",
+  "seed": 20261012,
+  "directions_per_image": 3
+}

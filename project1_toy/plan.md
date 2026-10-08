@@ -1,6 +1,6 @@
 # Project 1 toy experiments: living research record
 
-## 7 October — calibration-aware prediction and completion of the interrupted learned-image fixture
+## 7 October â€” calibration-aware prediction and completion of the interrupted learned-image fixture
 
 - The Project 1 question is unchanged: when does sharing's clean advantage reverse under corruption? No new ResNet pair search or final-evaluation use occurred. The separate Claude repair_v3 crossing pilot remains inconclusive.
 - Derived the conditional finite-sample coefficient for CAL-fitted biases evaluated on independent P images. Regular sharing outputs retain their open-gate coefficient; mono's kink coefficient uses the CAL-selected bias scale and P activation fraction. This corrects the earlier overbroad envelope-theorem objection. No novelty claim is made for Gaussian moments or the local-policy repair.
@@ -11,15 +11,15 @@
 - Full assumptions, coefficient derivation, existing coupling proof and the mixed controlled-image result are integrated into the existing derivations PDF and editable source, Sections 8.31--8.33. Original Claude files and experiment archives remain unchanged. New completion records, raw test images/scores, code, predictions, failure and plots: claude_agen_review_bygpt/controlled_image_completion_v1/.
 - Stopping decision: stop these fixtures; no repair/retraining/pair search to manufacture a pass. The evidence supports the conditional local law and a controlled learned-image reversal with an applicability failure. It is not a completed main-track contribution. The next paper-critical issue is a quantitative finite-noise boundary with gate-change control and an independently justified transfer domain; more sign observations alone do not resolve it.
 
-## 6 October 2026 — symmetric critical calibration completed
+## 6 October 2026 â€” symmetric critical calibration completed
 
 - The12 prescribed endpoint comparisons all meet the saved numerical global-loss gap targets. Sharing beats mono at every lower critical bracket; mono beats sharing at every upper bracket.
 - An independent90-digit checker verified56 hashes,48 feature ledgers and3,944 interval nodes, exterior bounds, partition coverage, weighted model gaps and all12 difference signs. Maximum recomputation discrepancy3.75e-63. This is a numerical high-precision audit, not directed-rounding certification.
 - Only the six successful brackets were bisected. All bisections stopped at an ambiguous midpoint with unchanged loss-gap targets; all histories and feature ledgers remain saved. The final two scaled brackets are[1.308447,1.323901], containing the derived calibrated coefficient1.31874985. The .0025 bracket is wider; do not label its midpoint as a precise crossing.
-- Full derivations, global strip proof, finite frozen maps, curvature bounds and calibrated brackets are in sections8.12–8.19 of the existing PDF. The companion source remains local; public upload excludes LaTeX.
+- Full derivations, global strip proof, finite frozen maps, curvature bounds and calibrated brackets are in sections8.12â€“8.19 of the existing PDF. The companion source remains local; public upload excludes LaTeX.
 - Next prescribed broader arm is n8/m4 clean training and the fixed-geometry support-bound test; no new architecture or frequency search.
 
-## 6 October 2026 — prescribed frozen phase map completed
+## 6 October 2026 â€” prescribed frozen phase map completed
 
 - Question: validate the critical noise boundary for six fixed distances below the clean storage transition, using the same reconstruction outcome throughout.
 - Exact global geometry is now supplied by the finite-strip proof in joint_phase_theory_2026-10-06/global_strip_certificate.tex. Its unique cubic root was bracketed with exact Q(sqrt5) arithmetic in clean_global_certificate_v1; all six saved numeric roots lie within their exact brackets. No probability was replaced by a nearby rational.
@@ -41,7 +41,7 @@ replace the original output. The present experiment tests Project 1 only.
 the smallest useful test, and a stopping criterion. No language model, diffusion
 model, recursive training, symbolic regression, or large parameter search in this run.
 
-## Broader organizing research question — explicitly adopted 6 October 2026
+## Broader organizing research question â€” explicitly adopted 6 October 2026
 
 **Can we derive a joint feature-storage and robustness phase diagram that
 recovers compatible known clean-storage phases at zero noise and extends them
@@ -87,7 +87,7 @@ arbitrary-load theory remains a stretch target until tractability is shown.
 This scope statement adds no new theorem or experiment; every subsequent
 derivation must also enter the existing companion derivation PDF.
 
-## Current Project 1 question and contribution target — 6 October 2026
+## Current Project 1 question and contribution target â€” 6 October 2026
 
 This section states the current paper-level target. The protocols and dated
 entries below remain historical records; their outputs and unfavorable findings
@@ -174,7 +174,7 @@ costly? The research notes derive exact risks for specified small geometries and
 general upper bound conditional on a dictionary. They do **not** yet characterize
 the geometry selected by nonlinear training for arbitrary sparsity and load.
 
-The references for this implementation are Sections 13–18 of
+The references for this implementation are Sections 13â€“18 of
 `../output/overleaf/monosemanticity_notes/main.tex`, especially the exact pair risks,
 the finite-state detection risk, and the independent-feature interference bound.
 Existing independent numerical checks are in `../research_notes/verify_additional.py`.
@@ -327,7 +327,7 @@ decay and a single real-model transfer are later decisions. Project 2 is not run
 Pending execution. Append measured outcomes and limitations here after reading the
 generated artifacts; do not replace the protocol above with retrospective hypotheses.
 
-### 2026-10-05 — Protocol v1 completed and audited
+### 2026-10-05 â€” Protocol v1 completed and audited
 
 The text above was recorded before execution and is retained as the protocol.
 This entry was appended after examining the saved outputs. Full measurements:
@@ -358,7 +358,7 @@ implementation, not independent confirmation of novelty or a real-model result.
 
 **Clean reconstruction:** every learned final iterate had lower clean population
 reconstruction MSE than the restricted mono baseline. Example ranges across all
-three seeds are 0.109217–0.109264 versus 0.190000 at p=0.05, and 0.979962–0.981213
+three seeds are 0.109217â€“0.109264 versus 0.190000 at p=0.05, and 0.979962â€“0.981213
 versus 1.000000 at p=0.50. The advantage is small in the latter regime. These are
 sum-of-feature squared errors, distinct from presence-detection errors.
 
@@ -428,7 +428,7 @@ a real-model validation, or a guarantee of conference acceptance. Detector-depen
 results, the dense-input outcome, loose bounds, and optimization limitations are
 part of the result, not material to suppress.
 
-### Next focused plan — proposed, not executed
+### Next focused plan â€” proposed, not executed
 
 1. Inspect and resolve optimizer stability with a separately logged, fixed protocol
    applied to all original settings. A smaller or scheduled learning rate is a
@@ -441,7 +441,7 @@ part of the result, not material to suppress.
 3. Use the resulting mechanism to select one small real-model demonstration.
    Diffusion, LLMs and recursive training remain unexecuted in this initial stage.
 
-### 2026-10-05 — Direct related-work check: Toy Models of Superposition
+### 2026-10-05 â€” Direct related-work check: Toy Models of Superposition
 
 Read [Elhage et al. (2022), Toy Models of Superposition](https://transformer-circuits.pub/2022/toy_model/index.html).
 This is the source of the tied encoder/ReLU-decoder family already used in the
@@ -471,7 +471,7 @@ assumptions, and show more than known feature packing. Such novelty remains
 unverified. The reading does not justify new training runs or rebuilding the model;
 the next focused task remains checking optimizer stability before extending load.
 
-### 2026-10-06 — Broader novelty audit and focused derivation–training bridge
+### 2026-10-06 â€” Broader novelty audit and focused derivationâ€“training bridge
 
 The user authorized updates to this living record after the literature audit.
 The separate audit is [novelty_audit.md](literature_review/novelty_audit.md), with
@@ -508,7 +508,7 @@ diagnostics are not global-optimality proofs. Record failures and unfavorable
 outcomes; do not automatically search optimizer settings, add loads or introduce
 real models. At this point this entry records the protocol, not a result.
 
-### 2026-10-06 — Focused bridge outcomes and independent reviews
+### 2026-10-06 â€” Focused bridge outcomes and independent reviews
 
 The two student streams completed the fixed protocol. The available tools limited
 the team to four total agent threads, so review roles were reused: the math stream
@@ -558,7 +558,7 @@ case. The model/objective/energy/noise values remain fixed. No broad solver sear
 load sweep or pretrained model is authorized by this follow-up. At this entry's
 creation, its follow-up outcomes are not yet known.
 
-### 2026-10-06 — Bounded solver follow-up completed and independently checked
+### 2026-10-06 â€” Bounded solver follow-up completed and independently checked
 
 The prespecified two-case angle diagnostic is complete. Its
 [report](focused_bridge_2026-10-06/toy/angle_diagnostic_results.md),
@@ -609,7 +609,7 @@ explains the motivation, formulas, settings, results, evidence and reproduction
 commands. The mathematical certificate has its own independent review and
 status; it must not be inferred from this numerical solver outcome alone.
 
-### 2026-10-06 — One-case global geometry certificate passed independent review
+### 2026-10-06 â€” One-case global geometry certificate passed independent review
 
 The bounded mathematical follow-up is complete:
 [certificate and derivation](focused_bridge_2026-10-06/math/low_p_certificate.md),
@@ -667,7 +667,7 @@ Do not begin a new optimizer search, load sweep or pretrained-model run merely
 because the current tests are complete. Preserve the intended mathematics ->
 controlled toy -> real-model research structure and the time constraint.
 
-### 2026-10-06 — Frequency extension authorized and protocol recorded
+### 2026-10-06 â€” Frequency extension authorized and protocol recorded
 
 After the teacher recommendation, the user asked to keep working. The next
 bounded question holds importance [1,.5], load two concepts / one dimension,
@@ -689,7 +689,7 @@ The user also requested that plots be displayed directly in chat. The standing
 workflow now requires inline plots, explanations and bullet-point reports of
 what was done and found, including uncertainty and unfavorable outcomes.
 
-### 2026-10-06 — Global clean frequency transition proved and reviewed
+### 2026-10-06 â€” Global clean frequency transition proved and reviewed
 
 Stage A is complete: [derivation](frequency_boundary_2026-10-06/math/derivation.md)
 and [independent review](frequency_boundary_2026-10-06/math/teacher_review.md).
@@ -724,7 +724,7 @@ The clean storage transition is not automatically the noisy robustness boundary.
 The independent review passed before the fixed Stage B numerical execution was
 dispatched. At this entry's creation, those new numerical results are not known.
 
-### 2026-10-06 — Finite frequency verification and independent review completed
+### 2026-10-06 â€” Finite frequency verification and independent review completed
 
 The fixed [five-case report](frequency_boundary_2026-10-06/toy/results.md)
 and [raw archive](frequency_boundary_2026-10-06/toy/run_v1/) are complete.
@@ -983,7 +983,7 @@ Editable sources remain local. Plot-reproduction code uses only saved rows;
 no additional noise evaluations were introduced.
 
 
-## 6 October 2026 — this-week joint phase completion
+## 6 October 2026 â€” this-week joint phase completion
 
 The focused new mathematical candidate is a training-selected critical boundary: for epsilon = pc-p, weak storage is O(epsilon^2), clean sharing advantage is O(epsilon^3), and the noise ordering boundary is sigma ~ epsilon^(3/2). Symmetric oracle bias calibration changes the coefficient. An arbitrary-load fixed-geometry support bound is derived separately; it is not a universal monosemanticity theorem or a solution for arbitrary-load training selection.
 
@@ -1003,7 +1003,7 @@ Full derivations enter the existing companion PDF. Protocol, raw 70-digit result
 Evidence: joint_phase_theory_2026-10-06/{clean_global_certificate_reproduced,frozen_run_v1,calibrated_run_v1,calibrated_boundary_run_v1}; broader_toy_20261006/{clean_run_v1,repair_run_v1,independent_clean_review_v1,independent_repair_review_v2}. All mathematics and numerical limitations are included in the updated derivations PDF.
 
 
-## 6 October — importance-family theorem, endpoint contrast, and fixed vision pilot
+## 6 October â€” importance-family theorem, endpoint contrast, and fixed vision pilot
 
 - The global clean-selection proof now covers importance eta in [0.48,0.52] and p in [0.35,0.42]. The training-selected local boundary retains exponent 3/2 with derived importance-dependent coefficients. This is a declared two-feature family, not arbitrary-load training selection.
 - Four fixed importance cases passed exact clean root enclosures and frozen crossing bisections. All eight calibrated endpoint signs resolved at the prescribed gap. Independent review checked 32 calibration ledgers, 2684 nodes and 45 hashes.
@@ -1014,7 +1014,7 @@ Evidence: joint_phase_theory_2026-10-06/{clean_global_certificate_reproduced,fro
 - Research novelty is distinct from proof/code verification. The new controlled results sharpen the hypothesis; neither a main-track venue nor learned semantic monosemanticity is established by these tests.
 
 
-## 6 October — fixed real-vision pilot completed; no ordering reversal
+## 6 October â€” fixed real-vision pilot completed; no ordering reversal
 
 - Genuine frozen ResNet18 extraction completed on1024 predetermined CIFAR10 images in229.203 seconds including acquisition. Channels0/1, zero fractions.48828125/.30859375, coactivation.37109375, training noise reference.8082696313648098. Independent raw-array/split/official-file-hash audit passed.
 - Continuous clean selection passed the fixed gates: training sharing gain.01788302194236413, identical refined losses at256/512 angular resolutions, both refinements successful. Geometry selection remains numerical, not globally certified.
@@ -1038,7 +1038,7 @@ The existing Superposition_Recursive_Training_Derivations.pdf is now98 pages, in
 
 The strict original manifest audit in the publicclone initially stopped because the uploaded snapshot deliberately lacks its TeX proof source. The live auditor now supports an explicit --allow-excluded-latex flag: reports each omitted proof hash as unverified, sets complete_original_manifest_verified=false, and still checks allavailable hashes and every numericalledger; missing nonTeXfiles still fail. Actual publicclone checks passed17/44 availablehashes and8/32 ledgers (666/2684 nodes) for endpoint/importance respectively. Original proof snapshots, manifests and scientific outputs were not modified. Public reports and checker source are in joint_phase_theory_2026-10-06/public_snapshot_audit_v1; initialpackagingfailure and limitations are documented in public_snapshot_audit_revision.md. This is no new experiment/mathresult.
 
-## 6 October — paper assembly, exact-claim review and semantic resource gate
+## 6 October â€” paper assembly, exact-claim review and semantic resource gate
 
 - The original question remains: for clean-trained representations, where does monosemantic retention beat sharing in corrupted reconstruction risk, as a function of frequency, importance, compression and noise? The current proved answer covers the specified two-feature/one-code-dimensional family. Decoder policy is a required coordinate of that phase comparison, not a replacement question. Arbitrary-load selection and recursive training remain outside current completed claims.
 - `paper_assembly_20261006/manuscript.md` assembles the working abstract, model/comparator, global clean-selection theorem, exact critical coefficients, endpoint contrast, existing toy validation, mixed real-vision results, figure plan and limitations. Professor review found it faithful and requested three clarifications; numerical-bound qualification, calibration-split zero-noise baseline and explicit central coefficients have been added. This is a manuscript skeleton, not a submission-ready paper.
@@ -1054,7 +1054,7 @@ Evidence and reproduction: `paper_assembly_20261006/` contains manuscript, profe
 
 The bounded novelty follow-up inspected the exact Wattenberg notebook, official Anthropic framework notebook and McGrath's primary article comment as source text, without executing downloaded code. Clean candidate risks, omitted-feature mean biases, risk-difference phase plots and continuous clean transitions are prior work; none is advertised as our discovery. No matching global energy-one Bernoulli selected Gaussian-code/calibration boundary was identified in these sources. McGrath's comment contains no external notebook link, so his undisclosed full derivation remains unavailable for equation-level comparison. This closes the available linked-source audit, not all possible literature overlap. `notebook_overlap_addendum.md` preserves exact cell references, URLs/hashes and assumption differences; the manuscript related-work section is updated accordingly.
 
-## 6 October — bounded class-evidence transfer started
+## 6 October â€” bounded class-evidence transfer started
 
 The missing hidden/SAE feature export is not being replaced by guessed concept labels. A professor-reviewed narrower operational test reuses the cached official ResNet18 class head: fixed official indices281(tabby) and207(golden retriever), rectified raw logits at the predeclared zero threshold. Official category mapping was verified before score inference. Class-supervised evidence coordinates provide independently named associations, not validated monosemantic hidden features, concept-presence ground truth or gauge-invariant classifier robustness. The stronger hidden-feature empirical gap remains.
 
@@ -1063,7 +1063,7 @@ Question: does clean scalar sharing of these named evidence coordinates keep its
 Extraction started under1,200seconds with raw logits/source/provenance preservation. Before fitting/noise, independent adapter review and TRAIN-ONLY cat/dog association AUROC>.65 for both fixed scores are required, followed by original clean-sharing/zero/support/resolution gates. Gate failure stops the pair with no replacement IDs or thresholds. No new math or empirical win is claimed at this active-run checkpoint; actual outputs and failures will be appended after the fixed run.
 
 
-## 6 October local / 7 October UTC — fixed class-evidence transfer completed and stopped
+## 6 October local / 7 October UTC â€” fixed class-evidence transfer completed and stopped
 
 - The predeclared head test completed on 4,608 seeded CIFAR images in 304.453 seconds. Official class indices remained 281 (tabby) and 207 (golden retriever); raw logits, labels, indices and source hashes are saved. Training-only broad cat/dog AUROCs .9049522541 and .8081939799 passed the .65 gate. These are class-evidence associations, not ground-truth concept presence or hidden-feature monosemanticity. Zero rectification is checkpoint-logit-gauge dependent.
 - Existing clean-selection gates passed. Sharing weights (.8354173789,.5496160505) have the same sign; training gain was .07107565834. The finite clean search is not a global certificate and this pair is not the opposite-sign Bernoulli critical branch.
@@ -1074,7 +1074,7 @@ Extraction started under1,200seconds with raw logits/source/provenance preservat
 - Updated existing derivation volume: 101 pages, new Section 8.28 includes complete methods, outcomes, plots, audit and limitations. Compilation/layout checks, all-page contact inspection, full-size new-page inspection, portable compilation/page-text agreement and ZIP integrity passed. PDF SHA256: 48be78af936fd56642d64b00d2778bdfd0756d7541c4eb972d982abc38096fe8. Local editable source updated; no new theorem is asserted. Publication must remain nil-research only, with all LaTeX and all other PDFs excluded.
 
 
-## 7 October — two independent reviewers: applicability obstruction, no new real-model success
+## 7 October â€” two independent reviewers: applicability obstruction, no new real-model success
 
 - Two independent AI reviewers (mathematical and empirical roles, not human professors) cross-critiqued assumptions, constructive proof and experimental relevance. Full records are professor_bridge_review_20261007/. They rejected an immediate importance sweep before its storage-transition prerequisite was checked.
 - The bounded saved-record diagnostic computed moments for the two existing real pairs and read only existing neighboring angular-grid losses. No new extraction, fitting, importance or noise sweep, resource search, or symbolic fitting occurred. The independent checker verified six splits and sixteen neighbors via a different moment formula and exact record lookup.
@@ -1085,7 +1085,7 @@ Extraction started under1,200seconds with raw logits/source/provenance preservat
 - Complete applicability proof, elementary frozen high-noise L2 scaling, existing calibrated-limit interpretation, diagnostic and stopping decision are integrated in Section 8.29 of the existing derivation PDF and local editable TeX. Final PDF:104 pages; SHA256 caf0779cd3fed7c4f663820ef6c44c492336ebc6e07ebd167416e0d3cfd81b95. Proof review passed; compilation/reference/layout, all-page contact inspection, full-size new-page inspection, portable page-text agreement and ZIP integrity passed.
 - Actual research status: scoped controlled critical theorem and matching toy checks remain supported; larger learned-toy extension failed stationarity; native real critical boundary/exponent and hidden monosemanticity remain unestablished. Another experiment needs a mathematically justified prediction for its actual distribution/comparator, not a manufactured reversal. This audit sharpens the failure diagnosis; it is not a new main-track success. Public branch remains nil-research; no LaTeX or other PDFs may be uploaded.
 
-## 7 October — prospective GO for one controlled learned-image comparison
+## 7 October â€” prospective GO for one controlled learned-image comparison
 
 - Question: does the existing finite clean/noisy mono-sharing comparison remain predictable after a learned visual front end replaces ideal feature inputs? This is controlled visual validation, not native ResNet/diffusion transfer or a test of the critical 3/2 exponent. The native-model gap remains.
 - Use the existing globally solved independent fair-bit fixture: p=.5, equal importance, energy-one scalar encoder and tied ReLU decoder, noise standard deviations 0 and .30 ONLY. Archived ideal clean difference is -.003574434901; calibrated noisy difference is +.005425102707. These motivate the fixture but will not substitute for predictions at actual fitted parameters.
@@ -1093,3 +1093,38 @@ Extraction started under1,200seconds with raw logits/source/provenance preservat
 - Fit the clean compressor on the first64 training-background quartets (256 observations, selected before training), encode learned scores r, reconstruct true planted X. Both mono orientations compete on training loss. Compare256/512 angular searches with exact empirical bias profiles; record the ideal-optimum coupling bound on optimization excess rather than claim finite-grid globality.
 - Uniform fixed-target risk-root error is at most delta=||r-X||_L2 for equal importance and energy one. Require train/calibration/test recovery <=5e-4, compressor optimization-excess upper bound <=1.5e-3, resolved numerical fitting/calibration and realized-parameter ideal sign enclosures. Save actual weights, biases and negative-clean/positive-noisy predictions BEFORE held-out inference. Any failed gate stops this single experiment, retaining unfavorable outputs.
 - Smallest test: one generator, one model, one seed, two noise points. Source and prospective mathematical/empirical reviews are in professor_bridge_review_20261007/. No new experiment result is asserted by this entry. Reviewers remain assigned through execution and independent outcome review; completed bounded design assignments do not mean the project is done.
+
+## 2026-10-08: bounded native CL/NCL classifier test submitted
+
+- Question: does CL's clean classification advantage over a more class-consistent NCL backbone reverse under Gaussian input corruption, and can validation-only decision margins predict the crossing? This addresses the native-classifier gap left by two-feature compressors on real activations. It does not validate the toy critical exponent or isolate monosemanticity causally.
+- Frozen settings and stopping criteria: `real_network_ncl_20261008/PROTOCOL.md`. One official CIFAR-100 checkpoint pair; identical clean linear probes; seeded 45000/5000 FIT/VALIDATION split; TEST untouched until clean and prediction gates pass. No checkpoint, feature-head, pair or corruption-grid hunting after failure.
+- Cluster scratch: `/scratch/idas3/ncl_native_20261008_v1`. Checkpoints are hash-verified. CIFAR-100 downloads directly to scratch. Slurm clean job 11211651 and dependent conditional job 11211781 are submitted. Last observation: both queued; no images scored and no scientific outcome available. Resource request was shortened to one hour and broadened to any GPU while pending; scientific settings are unchanged.
+- The classification margin/Jacobian derivation and approximation-error bound are integrated into Section 8.34 of the existing PDF and editable source. They are conditional standard calculations, not novel experimental evidence. PDF compilation and visual checks passed.
+- Automatic thread follow-up `finish-bounded-ncl-cluster-test` checks every ten minutes, repairs only specific infrastructure blockers, retrieves and verifies saved outputs, reports failures, and stops at a scientific gate or completed bounded run. It expires by 13:00 UTC on 8 October 2026. Further details and append-only execution record: `real_network_ncl_20261008/RUN_STATUS.md`.
+
+### Native test execution update and pre-outcome amendment, 8 October 2026
+
+- GPU scheduling blocked the initial clean submission. Pending job 11211651 was cancelled. CPU replacement 11212068 started downloading a redundant archive but produced only provenance, no features/probes/results. That download-only attempt was preserved and replaced with CPU job **11212169**, running on Physics allocation and waiting for the already-running MD5-verified prefetch. Conditional job **11211781** now depends on 11212169. Detailed immutable chronology is in real_network_ncl_20261008/RUN_STATUS.md.
+- At **06:47:51 UTC**, before any scientific image scoring and before clean_run_v1 existed, the protocol was amended to separate two questions: whether the native corruption ordering reverses, and whether the affine margin approximation predicts it. Clean prerequisites still must pass. If prediction gates fail, the predictive claim is rejected, but the already-fixed native TEST curve is evaluated to answer the central phenomenon question. There are no changes to models, probes, splits, noise grid, sample sizes or success thresholds, and no postfailure hunting.
+- Original protocol/code are preserved on scratch, original protocol is also saved locally, and PRE_OUTCOME_AMENDMENT.json records timestamp and original hashes. The clean script is unchanged. No scientific outcomes were available when this decision was made. This is a design correction, not a positive research result.
+
+## Source-justified projected-representation follow-up, 8 October 2026
+
+- The backbone experiment failed both prerequisites and remains failed. Independent error/split/interval checks and cached-feature consistency checks reproduce its results. Section 8.35 and the saved plot now document that failure; no corrupted TEST images were evaluated for it.
+- A concrete experimental-choice error was identified in the anchor's actual released source (commit d8519e994d8e0ccc98ad6d55978c58d70c72421e): its linear classifier consumes the projector output, with ReLU for NCL. The predecessor's default bare-backbone probing path did not reproduce that representation choice.
+- The smallest source-justified resolution is one separate projected-feature comparison, registered before projected features were computed. It retains the same checkpoints, splits, fixed probe procedure, noise grid and stopping rules. It is an adaptive follow-up after a failed backbone experiment, not a retrospective success of the original protocol. No further head/layer/checkpoint search follows failure here.
+- Native projected clean prerequisites pass: CL error 0.443000 versus NCL 0.464800; paired difference +0.021800, interval [0.011000,0.033400]. Class consistency 0.010001187 versus 0.114704363; difference +0.104703176, interval [0.101658631,0.108490251]. This establishes the starting contrast only.
+- The validation affine predictor failed: at sigma=.04, error discrepancies are 0.060500 (CL) and 0.0754375 (NCL), and relative centered-logit RMS residuals are 1.142834 and 1.105300. It predicts no crossing and cannot support a predictive claim. The failed prediction was frozen and hashed before the independently specified native TEST curve began. That run is in progress; no reversal conclusion is available yet.
+- Files: real_projected_ncl_20261008. Scratch: /scratch/idas3/ncl_projected_20261008_v1. Clean CPU job 11212390 completed; conditional CPU job 11212391 is running on Physics. These are computationally actual native networks with their original projector; no toy compressor or synthetic feature replacement.
+
+
+## Completed native outcome and independent checks, 8 October 2026
+
+- Both jobs completed. The native corruption computation took 12 minutes 45 seconds on Physics CPU resources. The SSH connection remains open; no original user job was changed.
+- The affine prediction failed and was frozen before TEST scoring. It predicts no crossing. Its frozen hash is c643b6e46cd7f170937cd95b0bac89d7c303463a3392e3c20d3c0443664eec00. This failure is not repaired by the subsequent observation.
+- On the official 10,000-image TEST set, CL wins clean: NCL-minus-CL error +0.016500, simultaneous conditional interval [0.0048246875,0.027600]. At sigma .12, NCL wins: difference -0.0122333333, interval [-0.018684375,-0.00607489583]. At sigma .20 it also wins: -0.006500, interval [-0.0108502083,-0.00211645833]. This establishes the native ordering reversal at evaluated noise levels for this checkpoint/probe pair.
+- The .08 difference is unresolved. The first point-estimate crossing lies between .04 and .08; linear interpolation .078352941176 is descriptive, not a successful forecast or a crossing confidence interval. At .30 CL regains a small advantage; both accuracies are below 3%, near 1% chance. There is no evidence for a unique permanent phase transition.
+- Independent NumPy checks reproduce saved errors, paired-image simultaneous bands, decisions, prediction curve and hash. Cached-feature class consistency was separately recomputed. Complete scientific arrays and logs are in outputs; large training caches and checkpoints remain on scratch.
+- The earlier reconstruction theorem has a different loss, noise location and representation. Its numerical boundary and critical exponent are not validated here. Existing monosemanticity papers already show robustness gains: this one comparison is not publication novelty by itself, a causal monosemanticity intervention, or a completed ICML contribution.
+- Sections 8.35 and 8.36 retain the failed backbone prerequisites, successful native ordering reversal and failed prediction. Current derivation PDF and editable source compiled successfully; new pages 96--99 were visually checked without overflow.
+- The remaining paper-critical gap is a finite-noise explanatory/predictive mechanism, with independent replication. One post-outcome, validation-only gate diagnostic is registered separately: at the already failed sigma .04, compare full affine logits with affine backbone plus exact nonlinear projector. If the latter fails existing thresholds, stop projection-only repairs. No new TEST evidence or retrospective prediction success is claimed.

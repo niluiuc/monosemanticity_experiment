@@ -1,0 +1,17 @@
+{
+  "start_utc": "2026-10-08T07:14:54.741109+00:00",
+  "seed": 20261008,
+  "device": "cpu",
+  "gpu": null,
+  "torch": "2.6.0+cu124",
+  "script_sha256": "614a328c1231ed3cf953468cb02d729c23a31d081f04957c31442f487700ad5e",
+  "protocol_sha256": "0d9e8931103e27f095f44528b5b300ae92adfa3e38a6a5b0d8248e2e4801f8e4",
+  "checkpoint_sha256": {
+    "CL": "3c063c14b9dfc870ff7cdcebb81b7e92a2da3f4aa0095da65b7fd0560276fcaa",
+    "NCL": "f3c72e63d2a4971dc3ca8fa685e55890dc903bd9c64b52675ab80cb6d05e37ea"
+  },
+  "images_evaluated": "TRAIN only; no TEST",
+  "representation": "Frozen native projector; CL signed output; NCL ReLU output",
+  "parent_clean_result_sha256": "a7f26eef06b0ee26fd19cf60468268e7ea7c57e42f455e944d9958174910938f",
+  "anchor_source_commit": "d8519e994d8e0ccc98ad6d55978c58d70c72421e"
+}
