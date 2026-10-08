@@ -1,0 +1,13 @@
+{
+ "p": 0.38,
+ "c": 0.0,
+ "best": 0.11779999781707369,
+ "n_surviving": 361653,
+ "surviving_range": [
+  -0.021452107726265608,
+  0.006286329967794806
+ ],
+ "certified_side": "contains/straddles 0",
+ "iterations": 12,
+ "secs": 4.276181221008301
+}

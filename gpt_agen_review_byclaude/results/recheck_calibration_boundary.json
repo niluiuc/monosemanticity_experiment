@@ -1,0 +1,176 @@
+{
+ "700_890": {
+  "B_original": 0.04845446753105909,
+  "B_calibration_corrected": 0.04781216328502291,
+  "z_cal": -0.3433515992743298,
+  "p_cal": 0.421875,
+  "p_pred": 0.4564732142857143,
+  "delta0": -0.015071044889636469,
+  "quotients": [
+   {
+    "sigma": 1e-05,
+    "quotient": 0.43874256658305016,
+    "bias_mono_over_sigma": -0.34350760177325035
+   },
+   {
+    "sigma": 3e-05,
+    "quotient": -0.1433351277175316,
+    "bias_mono_over_sigma": -0.34350675911909667
+   },
+   {
+    "sigma": 0.0001,
+    "quotient": 0.09395886308577461,
+    "bias_mono_over_sigma": -0.34335312668858825
+   },
+   {
+    "sigma": 0.0003,
+    "quotient": 0.06211726740618096,
+    "bias_mono_over_sigma": -0.343351805658481
+   },
+   {
+    "sigma": 0.001,
+    "quotient": 0.05996629399811215,
+    "bias_mono_over_sigma": -0.3433472022850272
+   },
+   {
+    "sigma": 0.003,
+    "quotient": 0.05358112478453309,
+    "bias_mono_over_sigma": -0.34335165401018236
+   },
+   {
+    "sigma": 0.01,
+    "quotient": 0.045170496893627565,
+    "bias_mono_over_sigma": -0.34389826073050567
+   },
+   {
+    "sigma": 0.03,
+    "quotient": 0.048455917332076145,
+    "bias_mono_over_sigma": -0.34907579596596733
+   },
+   {
+    "sigma": 0.1,
+    "quotient": 0.06256773109533374,
+    "bias_mono_over_sigma": -0.36462447051485536
+   }
+  ],
+  "frac_P_within_1em3_of_gate": 0.002232142857142857,
+  "frac_P_within_1em2_of_gate": 0.012276785714285714,
+  "min_gate_distance": 0.0002074786908074222
+ },
+ "471_649": {
+  "B_original": -0.09146475524045244,
+  "B_calibration_corrected": -0.09164964582034246,
+  "z_cal": -0.5254521414960552,
+  "p_cal": 0.265625,
+  "p_pred": 0.27901785714285715,
+  "delta0": -0.06234746395316818,
+  "quotients": [
+   {
+    "sigma": 1e-05,
+    "quotient": -0.45268511161822284,
+    "bias_mono_over_sigma": -0.5252924974378212
+   },
+   {
+    "sigma": 3e-05,
+    "quotient": -0.23464474190820145,
+    "bias_mono_over_sigma": -0.5255140284417814
+   },
+   {
+    "sigma": 0.0001,
+    "quotient": -0.09165008058031887,
+    "bias_mono_over_sigma": -0.5254727022524107
+   },
+   {
+    "sigma": 0.0003,
+    "quotient": -0.09240795196942111,
+    "bias_mono_over_sigma": -0.5254577708558033
+   },
+   {
+    "sigma": 0.001,
+    "quotient": -0.09243660026997391,
+    "bias_mono_over_sigma": -0.5254521071821391
+   },
+   {
+    "sigma": 0.003,
+    "quotient": -0.2968944089496192,
+    "bias_mono_over_sigma": -0.5254504716560758
+   },
+   {
+    "sigma": 0.01,
+    "quotient": -0.08515650985835288,
+    "bias_mono_over_sigma": -0.5269074303292296
+   },
+   {
+    "sigma": 0.03,
+    "quotient": -0.10453063372307177,
+    "bias_mono_over_sigma": -0.5390089998194534
+   },
+   {
+    "sigma": 0.1,
+    "quotient": -0.09859986033402614,
+    "bias_mono_over_sigma": -0.5830009780469911
+   }
+  ],
+  "frac_P_within_1em3_of_gate": 0.0011160714285714285,
+  "frac_P_within_1em2_of_gate": 0.0033482142857142855,
+  "min_gate_distance": 0.0007227874346739938
+ },
+ "417_919": {
+  "B_original": -0.14433105104189226,
+  "B_calibration_corrected": -0.1468659330448655,
+  "z_cal": -0.5553064399187763,
+  "p_cal": 0.24609375,
+  "p_pred": 0.29464285714285715,
+  "delta0": -0.07809287967007214,
+  "quotients": [
+   {
+    "sigma": 1e-05,
+    "quotient": -2.799653009422087,
+    "bias_mono_over_sigma": -0.5556044368698261
+   },
+   {
+    "sigma": 3e-05,
+    "quotient": -0.11585891197047399,
+    "bias_mono_over_sigma": -0.5554047662393552
+   },
+   {
+    "sigma": 0.0001,
+    "quotient": -0.14965415157108808,
+    "bias_mono_over_sigma": -0.5552636016927466
+   },
+   {
+    "sigma": 0.0003,
+    "quotient": -0.14363169696817046,
+    "bias_mono_over_sigma": -0.5553102146889891
+   },
+   {
+    "sigma": 0.001,
+    "quotient": -0.14683815728611105,
+    "bias_mono_over_sigma": -0.5553083572114563
+   },
+   {
+    "sigma": 0.003,
+    "quotient": -0.14698638386989593,
+    "bias_mono_over_sigma": -0.5553065363903427
+   },
+   {
+    "sigma": 0.01,
+    "quotient": -0.15242894304171029,
+    "bias_mono_over_sigma": -0.5554210523877051
+   },
+   {
+    "sigma": 0.03,
+    "quotient": -0.14092047789672954,
+    "bias_mono_over_sigma": -0.5609993813701801
+   },
+   {
+    "sigma": 0.1,
+    "quotient": -0.12769850884422337,
+    "bias_mono_over_sigma": -0.5879209751442313
+   }
+  ],
+  "frac_P_within_1em3_of_gate": 0.0,
+  "frac_P_within_1em2_of_gate": 0.006696428571428571,
+  "min_gate_distance": 0.00412132175907054
+ }
+}

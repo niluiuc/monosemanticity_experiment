@@ -1,0 +1,37 @@
+{
+ "layer4": {
+  "P2_diff": 0.44776119402985076,
+  "P2_cluster_bootstrap_CI95": [
+   0.26784274193548385,
+   0.625
+  ],
+  "P2_fisher_p": 2.267118040801206e-08,
+  "coexist_asym_weakcorr": 0.39237547203740336,
+  "coexist_asym_cluster_bootstrap_CI95": [
+   0.22988505747126436,
+   0.5504926108374384
+  ],
+  "n_boot": [
+   2000,
+   2000
+  ]
+ },
+ "logits": {
+  "P2_diff": 0.49999999999999994,
+  "P2_cluster_bootstrap_CI95": [
+   0.2692099567099567,
+   0.7105042016806717
+  ],
+  "P2_fisher_p": 2.4125422361133945e-06,
+  "coexist_asym_weakcorr": 0.6922077922077923,
+  "coexist_asym_cluster_bootstrap_CI95": [
+   0.43333333333333335,
+   0.9285714285714286
+  ],
+  "n_boot": [
+   2000,
+   2000
+  ]
+ },
+ "triples_T3_fisher_p": 2.5700323350190232e-11
+}

@@ -1,0 +1,9 @@
+{
+  "config.json": "a96d79e2a25ae0b5bf359e58d952aaee65b1cbacdd45f3e90eb32986461ebc8e",
+  "provenance.json": "d5ab12a410b736d148864898dfd3f9f128ef2761506398669212f9fe195a2802",
+  "recovery_gate.json": "1d63c9756053c5e7ccbbcdea7a56d774dd5e676ceec670618ea0100303d0b15e",
+  "source_snapshot.py": "41e3e048f790e455053e31b0a0a43e34caa48a9c02770f2d35a958cfe9355687",
+  "split_background_ids.npz": "fb924c3bedd96106403984a770213860ded23e604889e1706de756341f77bab4",
+  "test_images.npz": "34e14520a92ade30b24b1eb528b172e54cbce5a14f88a17ad12879828705fb41",
+  "test_scores.npz": "3e7b7bef00eda2371147700fd832be90e47e4411d758cef55ccf0c131db1cd55"
+}

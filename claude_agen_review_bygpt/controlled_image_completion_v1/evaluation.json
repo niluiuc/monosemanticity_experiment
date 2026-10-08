@@ -1,0 +1,43 @@
+{
+  "test_recovery_rms": 0.0012041684578257997,
+  "recovery_passes": false,
+  "rows": [
+    {
+      "sigma": 0.0,
+      "observed_risks": {
+        "share": 0.2464278881338775,
+        "mono": 0.25000008121781564
+      },
+      "observed_difference": -0.0035721930839381164,
+      "predicted_interval": [
+        -0.004570847597245964,
+        -0.0025780222045319323
+      ],
+      "actual_recovery_interval": [
+        -0.005974132380749592,
+        -0.0011747374210283323
+      ],
+      "prediction_contains_observation": true,
+      "actual_bound_contains_observation": true
+    },
+    {
+      "sigma": 0.3,
+      "observed_risks": {
+        "share": 0.31793345200202794,
+        "mono": 0.31250762228055895
+      },
+      "observed_difference": 0.005425829721468965,
+      "predicted_interval": [
+        0.004302107539607747,
+        0.006547857541111757
+      ],
+      "actual_recovery_interval": [
+        0.002720721224386158,
+        0.008129243856333401
+      ],
+      "prediction_contains_observation": true,
+      "actual_bound_contains_observation": true
+    }
+  ],
+  "passed": false
+}

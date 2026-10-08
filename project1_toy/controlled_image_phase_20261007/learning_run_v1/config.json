@@ -1,0 +1,23 @@
+{
+  "seed": 20261008,
+  "train_backgrounds": 256,
+  "calibration_backgrounds": 64,
+  "test_backgrounds": 256,
+  "max_epochs": 80,
+  "train_seconds": 180,
+  "batch_size": 128,
+  "learning_rate": 0.005,
+  "recovery_rms_gate": 0.0005,
+  "threads": 4,
+  "factor_probability": 0.5,
+  "importance": [
+    1.0,
+    1.0
+  ],
+  "prescribed_sigmas": [
+    0.0,
+    0.3
+  ],
+  "no_thresholding": true,
+  "model": "conv3x8_k5_s2_p2_relu_conv8x16_k3_s2_p1_relu_flat_linear1024x32_relu_linear32x2"
+}

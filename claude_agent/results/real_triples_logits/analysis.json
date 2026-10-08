@@ -1,0 +1,68 @@
+{
+ "[-0.2,-0.05)": {
+  "n": 20,
+  "store2": 11,
+  "store3": 17,
+  "sign3_matches_c13": 17,
+  "dominant_is_1": 20
+ },
+ "[-0.05,-0.01)": {
+  "n": 20,
+  "store2": 10,
+  "store3": 14,
+  "sign3_matches_c13": 14,
+  "dominant_is_1": 19
+ },
+ "[-0.01,0.01)": {
+  "n": 20,
+  "store2": 10,
+  "store3": 10,
+  "sign3_matches_c13": 7,
+  "dominant_is_1": 19
+ },
+ "[0.01,0.05)": {
+  "n": 20,
+  "store2": 15,
+  "store3": 8,
+  "sign3_matches_c13": 4,
+  "dominant_is_1": 19
+ },
+ "[0.05,0.15)": {
+  "n": 20,
+  "store2": 18,
+  "store3": 20,
+  "sign3_matches_c13": 18,
+  "dominant_is_1": 18
+ },
+ "[0.15,0.6)": {
+  "n": 20,
+  "store2": 18,
+  "store3": 20,
+  "sign3_matches_c13": 20,
+  "dominant_is_1": 18
+ },
+ "T1_sign_rule_|c13|>=0.05": [
+  55,
+  57
+ ],
+ "T2_store2_strong_vs_zero": [
+  [
+   29,
+   40
+  ],
+  [
+   10,
+   20
+  ]
+ ],
+ "T3_store3_strong_vs_zero": [
+  [
+   57,
+   60
+  ],
+  [
+   10,
+   20
+  ]
+ ]
+}

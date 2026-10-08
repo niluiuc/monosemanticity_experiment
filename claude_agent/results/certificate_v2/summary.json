@@ -1,0 +1,13 @@
+{
+ "n": 64,
+ "sides": {
+  "opposite (theta<0)": 32,
+  "same-sign (theta>0)": 28,
+  "contains/straddles 0": 4
+ },
+ "max_secs": 5.181555986404419,
+ "agrees_with_solver_sweep": [
+  48,
+  49
+ ]
+}

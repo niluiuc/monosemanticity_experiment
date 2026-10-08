@@ -1,0 +1,321 @@
+{
+  "noise_resolution": [
+    {
+      "sigma": 0.001,
+      "independent_eps_root": 0.008457112793593683,
+      "eps": 0.008457112793593683,
+      "theta": -0.01334436261609412,
+      "gain_independent": -1.249000902703301e-16,
+      "gain_55digit": "-0.0000000000000001207035682546783673962411052309886198492859960561814461",
+      "original_loss_minus_independent": -4.163336342344337e-17,
+      "original_mono_minus_independent": -1.3877787807814457e-17,
+      "original_biases": [
+        0.0025159216355779336,
+        0.37842603742290165
+      ],
+      "independent_biases": [
+        0.002515921380642953,
+        0.3784260374229001
+      ],
+      "original_gain_at_same_theta": -9.71445146547012e-17
+    },
+    {
+      "sigma": 0.001,
+      "independent_eps_root": 0.008457112793593683,
+      "eps": 0.008357112793593684,
+      "theta": -0.013179843502753065,
+      "gain_independent": -5.949886236478186e-09,
+      "gain_55digit": "-0.00000000594988629012893096830192014843683291902795483477015476",
+      "original_loss_minus_independent": -1.3877787807814457e-17,
+      "original_mono_minus_independent": -1.3877787807814457e-17,
+      "original_biases": [
+        0.002485137685647687,
+        0.3784675398510488
+      ],
+      "independent_biases": [
+        0.0024851336875136984,
+        0.3784675398510389
+      ],
+      "original_gain_at_same_theta": -5.949886236478186e-09
+    },
+    {
+      "sigma": 0.001,
+      "independent_eps_root": 0.008457112793593683,
+      "eps": 0.008557112793593682,
+      "theta": -0.013508271565219948,
+      "gain_independent": 6.100530219876887e-09,
+      "gain_55digit": "0.000000006100530174802580793752919823437631858616885860516236778",
+      "original_loss_minus_independent": -2.7755575615628914e-17,
+      "original_mono_minus_independent": -5.551115123125783e-17,
+      "original_biases": [
+        0.0025465699488915333,
+        0.37838426062643526
+      ],
+      "independent_biases": [
+        0.002546572662722924,
+        0.37838426062642877
+      ],
+      "original_gain_at_same_theta": 6.100530192121312e-09
+    },
+    {
+      "sigma": 0.003,
+      "independent_eps_root": 0.017781006480572594,
+      "eps": 0.017781006480572594,
+      "theta": -0.02750612868475421,
+      "gain_independent": -4.912736883966318e-15,
+      "gain_55digit": "-0.000000000000004978903011189898626851829844648053652811094354649357901",
+      "original_loss_minus_independent": -1.3877787807814457e-17,
+      "original_mono_minus_independent": -2.7755575615628914e-17,
+      "original_biases": [
+        0.005074113562356214,
+        0.3739218042905607
+      ],
+      "independent_biases": [
+        0.005074112451982199,
+        0.37392180429056254
+      ],
+      "original_gain_at_same_theta": -4.926614671774132e-15
+    },
+    {
+      "sigma": 0.003,
+      "independent_eps_root": 0.017781006480572594,
+      "eps": 0.017681006480572595,
+      "theta": -0.027320338233128138,
+      "gain_independent": -2.4857567948455284e-08,
+      "gain_55digit": "-0.00000002485756800561601255198848177415202804320395692374479327",
+      "original_loss_minus_independent": 0.0,
+      "original_mono_minus_independent": -1.3877787807814457e-17,
+      "original_biases": [
+        0.0050393016360611945,
+        0.3739606077316058
+      ],
+      "independent_biases": [
+        0.005039301177444371,
+        0.3739606077316081
+      ],
+      "original_gain_at_same_theta": -2.485756796233307e-08
+    },
+    {
+      "sigma": 0.003,
+      "independent_eps_root": 0.017781006480572594,
+      "eps": 0.017881006480572594,
+      "theta": -0.02769098640858888,
+      "gain_independent": 2.5202874662233476e-08,
+      "gain_55digit": "0.0000000252028746531376860198956107559678265836941616825880919",
+      "original_loss_minus_independent": 0.0,
+      "original_mono_minus_independent": 1.3877787807814457e-17,
+      "original_biases": [
+        0.0051087051779974,
+        0.37388261903089015
+      ],
+      "independent_biases": [
+        0.005108706092220284,
+        0.37388261903089787
+      ],
+      "original_gain_at_same_theta": 2.5202874676111264e-08
+    }
+  ],
+  "real_loss_spotchecks": [
+    {
+      "dataset": "real",
+      "channels": [
+        50,
+        125
+      ],
+      "sigma": 0.005,
+      "theta": -0.759164289688284,
+      "saved_loss": 0.2677583773466003,
+      "independent_loss": 0.2677583773466003,
+      "difference": 0.0,
+      "nearby_min_minus_selected": 6.178649731292118e-07
+    },
+    {
+      "dataset": "real",
+      "channels": [
+        50,
+        125
+      ],
+      "sigma": 0.4,
+      "theta": -0.8344865078057793,
+      "saved_loss": 0.35852971570988235,
+      "independent_loss": 0.35852971570988235,
+      "difference": 0.0,
+      "nearby_min_minus_selected": 5.49248585723916e-07
+    },
+    {
+      "dataset": "real",
+      "channels": [
+        2,
+        323
+      ],
+      "sigma": 0.005,
+      "theta": -0.0005472285576191807,
+      "saved_loss": 0.35223435964431477,
+      "independent_loss": 0.3522343596443147,
+      "difference": -5.551115123125783e-17,
+      "nearby_min_minus_selected": 1.2144925565227283e-07
+    },
+    {
+      "dataset": "real",
+      "channels": [
+        2,
+        323
+      ],
+      "sigma": 0.4,
+      "theta": 0.004109353881107589,
+      "saved_loss": 0.45419860359870545,
+      "independent_loss": 0.4541986035987054,
+      "difference": -5.551115123125783e-17,
+      "nearby_min_minus_selected": 1.4279561433294674e-07
+    },
+    {
+      "dataset": "real",
+      "channels": [
+        14,
+        430
+      ],
+      "sigma": 0.005,
+      "theta": 0.35900900405094466,
+      "saved_loss": 0.2875137549458578,
+      "independent_loss": 0.2875137549458578,
+      "difference": 0.0,
+      "nearby_min_minus_selected": 3.6249421947465166e-07
+    },
+    {
+      "dataset": "real",
+      "channels": [
+        14,
+        430
+      ],
+      "sigma": 0.4,
+      "theta": 0.35825750146871965,
+      "saved_loss": 0.37128120381886015,
+      "independent_loss": 0.37128120381886015,
+      "difference": 0.0,
+      "nearby_min_minus_selected": 4.2170581687761555e-07
+    },
+    {
+      "dataset": "real_triples",
+      "channels": [
+        16,
+        47,
+        486
+      ],
+      "saved_loss": 0.6541856011548006,
+      "independent_loss": 0.6541856011548007,
+      "difference": 1.1102230246251565e-16
+    },
+    {
+      "dataset": "real_triples",
+      "channels": [
+        339,
+        174,
+        321
+      ],
+      "saved_loss": 0.612503781789258,
+      "independent_loss": 0.6125037817892581,
+      "difference": 1.1102230246251565e-16
+    },
+    {
+      "dataset": "real_logits",
+      "channels": [
+        274,
+        510
+      ],
+      "sigma": 0.005,
+      "theta": -0.7003461522811338,
+      "saved_loss": 0.13716717020627736,
+      "independent_loss": 0.1371671702062774,
+      "difference": 2.7755575615628914e-17,
+      "nearby_min_minus_selected": 5.588923736588036e-07
+    },
+    {
+      "dataset": "real_logits",
+      "channels": [
+        274,
+        510
+      ],
+      "sigma": 0.4,
+      "theta": -0.74574638261374,
+      "saved_loss": 0.23167135808186937,
+      "independent_loss": 0.23167135808186937,
+      "difference": 0.0,
+      "nearby_min_minus_selected": 5.065258413816665e-07
+    },
+    {
+      "dataset": "real_logits",
+      "channels": [
+        18,
+        345
+      ],
+      "sigma": 0.005,
+      "theta": -0.0012567072997992361,
+      "saved_loss": 0.21067427050038914,
+      "independent_loss": 0.2106742705003891,
+      "difference": -5.551115123125783e-17,
+      "nearby_min_minus_selected": 1.6415931250457483e-07
+    },
+    {
+      "dataset": "real_logits",
+      "channels": [
+        18,
+        345
+      ],
+      "sigma": 0.4,
+      "theta": 0.006596009008607651,
+      "saved_loss": 0.2521493239191615,
+      "independent_loss": 0.25214932391916156,
+      "difference": 5.551115123125783e-17,
+      "nearby_min_minus_selected": 3.776279607903277e-07
+    },
+    {
+      "dataset": "real_logits",
+      "channels": [
+        795,
+        882
+      ],
+      "sigma": 0.005,
+      "theta": 0.7523047865717614,
+      "saved_loss": 0.25826922048241385,
+      "independent_loss": 0.25826922048241385,
+      "difference": 0.0,
+      "nearby_min_minus_selected": 2.572877022544162e-07
+    },
+    {
+      "dataset": "real_logits",
+      "channels": [
+        795,
+        882
+      ],
+      "sigma": 0.4,
+      "theta": 0.8387285082311158,
+      "saved_loss": 0.34675706747735874,
+      "independent_loss": 0.3467570674773588,
+      "difference": 5.551115123125783e-17,
+      "nearby_min_minus_selected": 2.0410201473364253e-07
+    },
+    {
+      "dataset": "real_triples_logits",
+      "channels": [
+        40,
+        850,
+        524
+      ],
+      "saved_loss": 0.5440153443150375,
+      "independent_loss": 0.5440153443150375,
+      "difference": 0.0
+    },
+    {
+      "dataset": "real_triples_logits",
+      "channels": [
+        749,
+        687,
+        677
+      ],
+      "saved_loss": 0.5768818637837316,
+      "independent_loss": 0.5768818637837316,
+      "difference": 0.0
+    }
+  ],
+  "scope": "Refitted biases at saved encoder directions plus two neighboring directions for six pairs. No full encoder retraining or native network intervention."
+}

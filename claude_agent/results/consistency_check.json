@@ -1,0 +1,112 @@
+{
+ "pairs_sign_layer4": [
+  [
+   37,
+   37
+  ],
+  [
+   17,
+   17
+  ]
+ ],
+ "pairs_sign_logits": [
+  [
+   49,
+   49
+  ],
+  [
+   26,
+   26
+  ]
+ ],
+ "bistable_layer4_low_high": [
+  [
+   36,
+   67
+  ],
+  [
+   6,
+   67
+  ]
+ ],
+ "bistable_logits_low_high": [
+  [
+   23,
+   40
+  ],
+  [
+   3,
+   40
+  ]
+ ],
+ "coexist_posthoc": {
+  "layer4": {
+   "pos": 43,
+   "neg": 5,
+   "zero": 1
+  },
+  "logits": {
+   "pos": 24,
+   "neg": 6,
+   "zero": 0
+  }
+ },
+ "triples": {
+  "T1_sign_rule_|c13|>=0.05": [
+   60,
+   60
+  ],
+  "T2_store2_strong_vs_zero": [
+   [
+    17,
+    40
+   ],
+   [
+    7,
+    20
+   ]
+  ],
+  "T3_store3_strong_vs_zero": [
+   [
+    60,
+    60
+   ],
+   [
+    6,
+    20
+   ]
+  ]
+ },
+ "mc_max_z": 1.508280316270669,
+ "analytic_A": {
+  "B_independent": 0.14589803375031546,
+  "B_from_K_C": 0.1458980337503155,
+  "critical_response_coeff_c<0": 0.7344008870614411,
+  "same_sign_response_coeff": 4.23606797749979,
+  "c_star_coeff_eps2": 0.8664195268554274,
+  "max_abs_diff": 3.3119808800810796e-17
+ },
+ "gate_lemma_all_positive": true,
+ "transition_bisection": [
+  [
+   0.421875,
+   0.4225
+  ],
+  0.42264973081037427
+ ],
+ "bisection_eta0.3": [
+  [
+   0.26557561429465726,
+   0.26620061429465725
+  ],
+  0.26620061429465725
+ ],
+ "bisection_eta0.7_same_sign": [
+  [
+   0.645625,
+   0.64625
+  ],
+  0.6470588235294116
+ ],
+ "bicritical": true
+}

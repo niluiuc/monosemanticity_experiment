@@ -1,0 +1,562 @@
+[
+  {
+    "epoch": 1,
+    "examples": 1024,
+    "mean_bce": 0.6037114262580872,
+    "elapsed_seconds": 0.34300000010989606,
+    "completed": true
+  },
+  {
+    "epoch": 2,
+    "examples": 1024,
+    "mean_bce": 0.16278160130605102,
+    "elapsed_seconds": 0.5309999999590218,
+    "completed": true
+  },
+  {
+    "epoch": 3,
+    "examples": 1024,
+    "mean_bce": 0.021635090466588736,
+    "elapsed_seconds": 0.625,
+    "completed": true
+  },
+  {
+    "epoch": 4,
+    "examples": 1024,
+    "mean_bce": 0.011876673150254646,
+    "elapsed_seconds": 0.7180000001098961,
+    "completed": true
+  },
+  {
+    "epoch": 5,
+    "examples": 1024,
+    "mean_bce": 0.004706039540906204,
+    "elapsed_seconds": 0.8279999999795109,
+    "completed": true
+  },
+  {
+    "epoch": 6,
+    "examples": 1024,
+    "mean_bce": 0.0019277793944638688,
+    "elapsed_seconds": 0.921000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 7,
+    "examples": 1024,
+    "mean_bce": 0.001353527220203432,
+    "elapsed_seconds": 1.0,
+    "completed": true
+  },
+  {
+    "epoch": 8,
+    "examples": 1024,
+    "mean_bce": 0.0013931623484495503,
+    "elapsed_seconds": 1.1089999999385327,
+    "completed": true
+  },
+  {
+    "epoch": 9,
+    "examples": 1024,
+    "mean_bce": 0.0002979693936140393,
+    "elapsed_seconds": 1.202999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 10,
+    "examples": 1024,
+    "mean_bce": 0.0001025939357077732,
+    "elapsed_seconds": 1.296000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 11,
+    "examples": 1024,
+    "mean_bce": 0.0001833062012224218,
+    "elapsed_seconds": 1.4059999999590218,
+    "completed": true
+  },
+  {
+    "epoch": 12,
+    "examples": 1024,
+    "mean_bce": 0.00020332513747689518,
+    "elapsed_seconds": 1.5,
+    "completed": true
+  },
+  {
+    "epoch": 13,
+    "examples": 1024,
+    "mean_bce": 0.00011238896740906057,
+    "elapsed_seconds": 1.6089999999385327,
+    "completed": true
+  },
+  {
+    "epoch": 14,
+    "examples": 1024,
+    "mean_bce": 1.9420463956976164e-05,
+    "elapsed_seconds": 1.702999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 15,
+    "examples": 1024,
+    "mean_bce": 3.885294287897523e-05,
+    "elapsed_seconds": 1.796000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 16,
+    "examples": 1024,
+    "mean_bce": 2.2366904374848673e-05,
+    "elapsed_seconds": 1.8899999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 17,
+    "examples": 1024,
+    "mean_bce": 1.8759225866915585e-05,
+    "elapsed_seconds": 2.0,
+    "completed": true
+  },
+  {
+    "epoch": 18,
+    "examples": 1024,
+    "mean_bce": 1.860771976680553e-05,
+    "elapsed_seconds": 2.093000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 19,
+    "examples": 1024,
+    "mean_bce": 1.7177458801143075e-05,
+    "elapsed_seconds": 2.202999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 20,
+    "examples": 1024,
+    "mean_bce": 1.5426860329625924e-05,
+    "elapsed_seconds": 2.296000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 21,
+    "examples": 1024,
+    "mean_bce": 1.4791857523732688e-05,
+    "elapsed_seconds": 2.3899999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 22,
+    "examples": 1024,
+    "mean_bce": 1.4529631499726747e-05,
+    "elapsed_seconds": 2.5149999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 23,
+    "examples": 1024,
+    "mean_bce": 1.423486381213479e-05,
+    "elapsed_seconds": 2.6089999999385327,
+    "completed": true
+  },
+  {
+    "epoch": 24,
+    "examples": 1024,
+    "mean_bce": 1.3879835904617721e-05,
+    "elapsed_seconds": 2.702999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 25,
+    "examples": 1024,
+    "mean_bce": 1.3553642418173695e-05,
+    "elapsed_seconds": 2.8119999999180436,
+    "completed": true
+  },
+  {
+    "epoch": 26,
+    "examples": 1024,
+    "mean_bce": 1.320857492714822e-05,
+    "elapsed_seconds": 2.921000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 27,
+    "examples": 1024,
+    "mean_bce": 1.2897629886765571e-05,
+    "elapsed_seconds": 3.030999999959022,
+    "completed": true
+  },
+  {
+    "epoch": 28,
+    "examples": 1024,
+    "mean_bce": 1.2700733336146186e-05,
+    "elapsed_seconds": 3.125,
+    "completed": true
+  },
+  {
+    "epoch": 29,
+    "examples": 1024,
+    "mean_bce": 1.2324797296514589e-05,
+    "elapsed_seconds": 3.218000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 30,
+    "examples": 1024,
+    "mean_bce": 1.2389870562401484e-05,
+    "elapsed_seconds": 3.296000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 31,
+    "examples": 1024,
+    "mean_bce": 1.1735663292711251e-05,
+    "elapsed_seconds": 3.405999999959022,
+    "completed": true
+  },
+  {
+    "epoch": 32,
+    "examples": 1024,
+    "mean_bce": 1.1579810518469458e-05,
+    "elapsed_seconds": 3.5149999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 33,
+    "examples": 1024,
+    "mean_bce": 1.1334061497336734e-05,
+    "elapsed_seconds": 3.6089999999385327,
+    "completed": true
+  },
+  {
+    "epoch": 34,
+    "examples": 1024,
+    "mean_bce": 1.1072867152961408e-05,
+    "elapsed_seconds": 3.718000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 35,
+    "examples": 1024,
+    "mean_bce": 1.0864562682399992e-05,
+    "elapsed_seconds": 3.8119999999180436,
+    "completed": true
+  },
+  {
+    "epoch": 36,
+    "examples": 1024,
+    "mean_bce": 1.0784412438624713e-05,
+    "elapsed_seconds": 3.905999999959022,
+    "completed": true
+  },
+  {
+    "epoch": 37,
+    "examples": 1024,
+    "mean_bce": 1.0330726496476927e-05,
+    "elapsed_seconds": 4.0,
+    "completed": true
+  },
+  {
+    "epoch": 38,
+    "examples": 1024,
+    "mean_bce": 1.012894674090603e-05,
+    "elapsed_seconds": 4.093000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 39,
+    "examples": 1024,
+    "mean_bce": 9.959002028381292e-06,
+    "elapsed_seconds": 4.186999999918044,
+    "completed": true
+  },
+  {
+    "epoch": 40,
+    "examples": 1024,
+    "mean_bce": 9.976445880965912e-06,
+    "elapsed_seconds": 4.296000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 41,
+    "examples": 1024,
+    "mean_bce": 9.647906153986696e-06,
+    "elapsed_seconds": 4.3899999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 42,
+    "examples": 1024,
+    "mean_bce": 9.32389366425923e-06,
+    "elapsed_seconds": 4.5,
+    "completed": true
+  },
+  {
+    "epoch": 43,
+    "examples": 1024,
+    "mean_bce": 9.11378361934112e-06,
+    "elapsed_seconds": 4.608999999938533,
+    "completed": true
+  },
+  {
+    "epoch": 44,
+    "examples": 1024,
+    "mean_bce": 8.950156171749768e-06,
+    "elapsed_seconds": 4.718000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 45,
+    "examples": 1024,
+    "mean_bce": 8.751803662221391e-06,
+    "elapsed_seconds": 4.827999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 46,
+    "examples": 1024,
+    "mean_bce": 8.566940962850822e-06,
+    "elapsed_seconds": 4.936999999918044,
+    "completed": true
+  },
+  {
+    "epoch": 47,
+    "examples": 1024,
+    "mean_bce": 8.49490754717408e-06,
+    "elapsed_seconds": 5.046000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 48,
+    "examples": 1024,
+    "mean_bce": 8.294354358895362e-06,
+    "elapsed_seconds": 5.155999999959022,
+    "completed": true
+  },
+  {
+    "epoch": 49,
+    "examples": 1024,
+    "mean_bce": 8.137635333582693e-06,
+    "elapsed_seconds": 5.2649999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 50,
+    "examples": 1024,
+    "mean_bce": 8.042636864047381e-06,
+    "elapsed_seconds": 5.3899999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 51,
+    "examples": 1024,
+    "mean_bce": 7.816647041636315e-06,
+    "elapsed_seconds": 5.483999999938533,
+    "completed": true
+  },
+  {
+    "epoch": 52,
+    "examples": 1024,
+    "mean_bce": 7.717941727491962e-06,
+    "elapsed_seconds": 5.593000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 53,
+    "examples": 1024,
+    "mean_bce": 7.517811184243328e-06,
+    "elapsed_seconds": 5.671000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 54,
+    "examples": 1024,
+    "mean_bce": 7.391234333908869e-06,
+    "elapsed_seconds": 5.7649999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 55,
+    "examples": 1024,
+    "mean_bce": 7.258578321511777e-06,
+    "elapsed_seconds": 5.875,
+    "completed": true
+  },
+  {
+    "epoch": 56,
+    "examples": 1024,
+    "mean_bce": 7.15746011792362e-06,
+    "elapsed_seconds": 6.0,
+    "completed": true
+  },
+  {
+    "epoch": 57,
+    "examples": 1024,
+    "mean_bce": 7.019325202861637e-06,
+    "elapsed_seconds": 6.1399999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 58,
+    "examples": 1024,
+    "mean_bce": 6.877856506548596e-06,
+    "elapsed_seconds": 6.233999999938533,
+    "completed": true
+  },
+  {
+    "epoch": 59,
+    "examples": 1024,
+    "mean_bce": 6.7584100804651825e-06,
+    "elapsed_seconds": 6.343000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 60,
+    "examples": 1024,
+    "mean_bce": 6.652446174371107e-06,
+    "elapsed_seconds": 6.436999999918044,
+    "completed": true
+  },
+  {
+    "epoch": 61,
+    "examples": 1024,
+    "mean_bce": 6.500189911662346e-06,
+    "elapsed_seconds": 6.530999999959022,
+    "completed": true
+  },
+  {
+    "epoch": 62,
+    "examples": 1024,
+    "mean_bce": 6.402740041266952e-06,
+    "elapsed_seconds": 6.6399999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 63,
+    "examples": 1024,
+    "mean_bce": 6.3498794276029e-06,
+    "elapsed_seconds": 6.718000000109896,
+    "completed": true
+  },
+  {
+    "epoch": 64,
+    "examples": 1024,
+    "mean_bce": 6.197596320589582e-06,
+    "elapsed_seconds": 6.811999999918044,
+    "completed": true
+  },
+  {
+    "epoch": 65,
+    "examples": 1024,
+    "mean_bce": 6.136908609732927e-06,
+    "elapsed_seconds": 6.921000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 66,
+    "examples": 1024,
+    "mean_bce": 6.011327229771268e-06,
+    "elapsed_seconds": 7.0149999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 67,
+    "examples": 1024,
+    "mean_bce": 5.9191681103243354e-06,
+    "elapsed_seconds": 7.108999999938533,
+    "completed": true
+  },
+  {
+    "epoch": 68,
+    "examples": 1024,
+    "mean_bce": 5.811206747807773e-06,
+    "elapsed_seconds": 7.202999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 69,
+    "examples": 1024,
+    "mean_bce": 5.698750811689024e-06,
+    "elapsed_seconds": 7.296000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 70,
+    "examples": 1024,
+    "mean_bce": 5.6951439546537586e-06,
+    "elapsed_seconds": 7.3899999998975545,
+    "completed": true
+  },
+  {
+    "epoch": 71,
+    "examples": 1024,
+    "mean_bce": 5.52041361601141e-06,
+    "elapsed_seconds": 7.483999999938533,
+    "completed": true
+  },
+  {
+    "epoch": 72,
+    "examples": 1024,
+    "mean_bce": 5.433830992274125e-06,
+    "elapsed_seconds": 7.577999999979511,
+    "completed": true
+  },
+  {
+    "epoch": 73,
+    "examples": 1024,
+    "mean_bce": 5.350232981982117e-06,
+    "elapsed_seconds": 7.686999999918044,
+    "completed": true
+  },
+  {
+    "epoch": 74,
+    "examples": 1024,
+    "mean_bce": 5.264576532937326e-06,
+    "elapsed_seconds": 7.796000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 75,
+    "examples": 1024,
+    "mean_bce": 5.196350883807099e-06,
+    "elapsed_seconds": 7.905999999959022,
+    "completed": true
+  },
+  {
+    "epoch": 76,
+    "examples": 1024,
+    "mean_bce": 5.1593370784530634e-06,
+    "elapsed_seconds": 8.014999999897555,
+    "completed": true
+  },
+  {
+    "epoch": 77,
+    "examples": 1024,
+    "mean_bce": 5.055025752653819e-06,
+    "elapsed_seconds": 8.171000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 78,
+    "examples": 1024,
+    "mean_bce": 4.974742225272166e-06,
+    "elapsed_seconds": 8.296000000089407,
+    "completed": true
+  },
+  {
+    "epoch": 79,
+    "examples": 1024,
+    "mean_bce": 4.9199397693655555e-06,
+    "elapsed_seconds": 8.436999999918044,
+    "completed": true
+  },
+  {
+    "epoch": 80,
+    "examples": 1024,
+    "mean_bce": 4.83244089366508e-06,
+    "elapsed_seconds": 8.561999999918044,
+    "completed": true
+  }
+]

@@ -1,0 +1,45 @@
+{
+ "prediction_sha_matches_provenance": true,
+ "model_sha_matches": true,
+ "script_sha_current_matches_prediction": true,
+ "test_inference_file_hashes_match": true,
+ "mtime_prediction": 1791427314.8339565,
+ "mtime_test_scores": 1791427343.0789497,
+ "prediction_written_before_test_scores": true,
+ "split_files_identical": true,
+ "test_backgrounds_disjoint": true,
+ "test_backgrounds_are_declared_test_split": true,
+ "labels_balanced_tile": true,
+ "test_recovery_rms": 0.0012041684578257997,
+ "rows": [
+  {
+   "sigma": 0.0,
+   "observed_diff_recomputed": -0.003572193083938133,
+   "observed_diff_gpt": -0.0035721930839381164,
+   "abs_err": 1.6479873021779667e-17,
+   "ideal_reference_diff": -0.003574434900889073,
+   "ideal_reference_gpt": -0.0035744349008890453,
+   "actual_delta_bound": [
+    -0.005974132380749703,
+    -0.0011747374210284434
+   ],
+   "inside_predicted": true,
+   "observed_minus_ideal": 2.241816950940105e-06
+  },
+  {
+   "sigma": 0.3,
+   "observed_diff_recomputed": 0.005425829721468969,
+   "observed_diff_gpt": 0.005425829721468965,
+   "abs_err": 3.469446951953614e-18,
+   "ideal_reference_diff": 0.005424982540359835,
+   "ideal_reference_gpt": 0.005424982540359835,
+   "actual_delta_bound": [
+    0.002720721224386158,
+    0.008129243856333401
+   ],
+   "inside_predicted": true,
+   "observed_minus_ideal": 8.471811091337669e-07
+  }
+ ],
+ "note": "Coupling bound: x -> tied-ReLU reconstruction is 1-Lipschitz in L2 for energy-one w and equal importances, so |sqrt R(r) - sqrt R(X)| <= RMS||r-X||."
+}

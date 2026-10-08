@@ -1,0 +1,13 @@
+{
+  "torch": "2.14.1+cpu",
+  "torchvision": "0.29.1+cpu",
+  "numpy": "2.3.0",
+  "source_sha256": "41e3e048f790e455053e31b0a0a43e34caa48a9c02770f2d35a958cfe9355687",
+  "cifar_archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+  "dataset_class_labels_used": false,
+  "controlled_semisynthetic": true,
+  "status": "complete",
+  "stage": "train",
+  "model_sha256": "81c5d085ee8399b0a7399e3736910ccbec657be705c1c4bc987ba5c1bf6b8e8f",
+  "test_images_not_constructed": true
+}

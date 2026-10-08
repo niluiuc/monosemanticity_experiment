@@ -1,0 +1,12 @@
+{
+  "pdf_pages": 116,
+  "pdf_sha256": "955a9aaedbd01740f42677ccbe1eac43bda5d20da4e74d4f848d69762601b136",
+  "new_sections": [
+    "8.31",
+    "8.32",
+    "8.33"
+  ],
+  "no_Claude_source_changes": true,
+  "no_ResNet_E_evaluation": true,
+  "controlled_fixture_protocol_passed": false
+}

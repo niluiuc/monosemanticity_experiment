@@ -1,0 +1,5 @@
+{
+ "identity": "B_frozen = kappa_plus * D (2-p) / (2 p q) on eta = p/D",
+ "ratio": "(p - 2)*(p**2 - p + 1)/(2*p*(p - 1))",
+ "verified": true
+}

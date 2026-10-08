@@ -1,0 +1,20 @@
+{
+ "note": "State at the stop decision. Final-evaluation rows E (1792 images) were never loaded by any script in this folder; rt_evaluate.py was intentionally not written because the precision gate failed.",
+ "sha256": {
+  "PREDICTION_STATEMENT.md": "6dfae7c239383557c72c944e3d80ed8ff446aca6a5fea6a85975cb34bcb22a7e",
+  "PROTOCOL_FROZEN.md": "fa48337030ba3366e98a9f40b2100e6388d1c90f76fe22dc9c8d037dc7ccefff",
+  "STATUS.md": "c0d6ab9286217e7c662eb5bef29f7fbf0f41cad79d1d82b1b0950c62cb7c9853",
+  "independent_check/indep_stop_check.py": "386ebec12dcbec66f324a926f839680b1b7811a01102f035819bb392865886f2",
+  "results/calib_417_919.json": "68771383260f1f71ac4ce836cc6248adff2526c6afb6a082a52390885dff16c3",
+  "results/calib_471_649.json": "89ffc4cc50e850978af0ecacc7fd45b38563230907b8414d01efe2f0b905e903",
+  "results/calib_700_890.json": "a240c497bef132ea57cf900c8b54342afc16adea383598c8ba5e69cf91f71e90",
+  "results/pipeline_check_281_207.json": "580c0e109087976dc41d9de739063b448e943ab75a0002d1f133b576c891bcbd",
+  "results/predictions.json": "a9320159b01d653d50a193baf3085e06235b86f67259571e384f22b7318c8d98",
+  "results/selection.json": "e1f5f65b10bff459a26508228ad40cc6be778254cf40e32316e31a81027fa599",
+  "results/selection_partial.json": "fc8f3f817f0d91e761fb172bb6155f1757e555cde08d3954fdd15c29f9e40a34",
+  "rt_core.py": "c674d470d60f2da97cbdbdf9415054306c9b541e69eab08a42800db2cfa9bc62",
+  "rt_pipeline_check.py": "0422de6d71dc06f19505e450df45c69ca101c04655c3320db19a6d5f8f1af379",
+  "rt_predict.py": "4135d425c32bb492d959aace60902eb9382947a76975a2658a3388fce3ac7f22",
+  "rt_select.py": "718474ba1145027ac6ee2b120d628f02e79a43331f30b577ef26d8330463ba9e"
+ }
+}

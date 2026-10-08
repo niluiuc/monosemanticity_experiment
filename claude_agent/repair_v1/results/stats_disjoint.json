@@ -1,0 +1,132 @@
+{
+ "layer4": {
+  "n_pairs": 200,
+  "disjoint_subset_size": {
+   "min": 103,
+   "median": 110.0,
+   "max": 116
+  },
+  "P2_bistability_low_vs_high": {
+   "primary_seed0": 1.5015248848401435e-05,
+   "median": 1.130278700360701e-05,
+   "p90": 0.0001798808124838523,
+   "frac_below_0p05": 1.0,
+   "n_orders": 1000
+  },
+  "P2_counts_seed0": [
+   27,
+   47,
+   4,
+   35
+  ],
+  "posthoc_asymmetry_weakcorr": {
+   "primary_seed0": 3.344173360125313e-05,
+   "median": 5.759822882697615e-05,
+   "p90": 0.00042495091611235194,
+   "frac_below_0p05": 1.0,
+   "n_orders": 1000
+  },
+  "asym_counts_seed0": [
+   26,
+   50,
+   4,
+   38
+  ],
+  "sign_rule_all_orders_exact": true
+ },
+ "logits": {
+  "n_pairs": 120,
+  "disjoint_subset_size": {
+   "min": 96,
+   "median": 97.0,
+   "max": 97
+  },
+  "P2_bistability_low_vs_high": {
+   "primary_seed0": 8.283153928353893e-05,
+   "median": 2.7996012156231e-05,
+   "p90": 0.00016599161152033382,
+   "frac_below_0p05": 1.0,
+   "n_orders": 1000
+  },
+  "P2_counts_seed0": [
+   18,
+   32,
+   3,
+   31
+  ],
+  "posthoc_asymmetry_weakcorr": {
+   "primary_seed0": 3.1329374918402745e-05,
+   "median": 2.1669067583323312e-05,
+   "p90": 6.212565669130697e-05,
+   "frac_below_0p05": 1.0,
+   "n_orders": 1000
+  },
+  "asym_counts_seed0": [
+   14,
+   17,
+   6,
+   31
+  ],
+  "sign_rule_all_orders_exact": true
+ },
+ "triples_layer4": {
+  "n": 120,
+  "disjoint_subset_size": {
+   "min": 57,
+   "median": 63.0,
+   "max": 67
+  },
+  "T3": {
+   "primary_seed0": 2.551067264500776e-07,
+   "median": 1.1777612113851125e-05,
+   "p90": 0.00020549827995270872,
+   "frac_below_0p05": 1.0,
+   "n_orders": 1000
+  },
+  "T4": {
+   "primary_seed0": 0.19710144927536227,
+   "median": 0.039677902983991875,
+   "p90": 0.13954958004868537,
+   "frac_below_0p05": 0.578,
+   "n_orders": 1000
+  },
+  "T5": {
+   "primary_seed0": 0.11290783519885686,
+   "median": 0.034889259347463675,
+   "p90": 0.1191950464396285,
+   "frac_below_0p05": 0.636,
+   "n_orders": 1000
+  },
+  "note": "T4/T5 were registered in advance only for logits; for layer4 they are post hoc"
+ },
+ "triples_logits": {
+  "n": 120,
+  "disjoint_subset_size": {
+   "min": 67,
+   "median": 73.0,
+   "max": 78
+  },
+  "T3": {
+   "primary_seed0": 0.00183807035669479,
+   "median": 0.006064837034774642,
+   "p90": 0.03924015231374911,
+   "frac_below_0p05": 0.929,
+   "n_orders": 1000
+  },
+  "T4": {
+   "primary_seed0": 0.019047223578402016,
+   "median": 0.003510741466915682,
+   "p90": 0.02898704656918979,
+   "frac_below_0p05": 0.951,
+   "n_orders": 1000
+  },
+  "T5": {
+   "primary_seed0": 0.13043478260869565,
+   "median": 0.12788081483733657,
+   "p90": 0.35844155844155845,
+   "frac_below_0p05": 0.192,
+   "n_orders": 1000
+  },
+  "note": "T4/T5 were registered in advance only for logits; for layer4 they are post hoc"
+ }
+}

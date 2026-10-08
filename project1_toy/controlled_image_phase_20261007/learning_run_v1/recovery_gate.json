@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "values": {
+    "train": {
+      "rms": 0.00010210584616453048,
+      "coordinate_mse": [
+        1.0221746796597182e-08,
+        2.038570243775804e-10
+      ],
+      "maximum_absolute_error": 0.0026430313817719406
+    },
+    "calibration": {
+      "rms": 0.00020773116057421582,
+      "coordinate_mse": [
+        2.993417383492556e-09,
+        4.015881769001805e-08
+      ],
+      "maximum_absolute_error": 0.002372610583145418
+    }
+  },
+  "threshold": 0.0005,
+  "completed_epochs": 80,
+  "timed_out": false,
+  "training_elapsed_seconds": 8.625
+}

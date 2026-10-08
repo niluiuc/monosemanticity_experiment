@@ -1,0 +1,20 @@
+[
+ {
+  "sigma": 0.001,
+  "eps_scaling_with_amplitude": 0.008459499805793911,
+  "eps_fixed_measured": 0.008444682770048107,
+  "rel_err": -0.0017515262232946638
+ },
+ {
+  "sigma": 0.003,
+  "eps_scaling_with_amplitude": 0.017813767837576332,
+  "eps_fixed_measured": 0.017795374737853697,
+  "rel_err": -0.001032521580518031
+ },
+ {
+  "sigma": 0.01,
+  "eps_scaling_with_amplitude": 0.04051618287004649,
+  "eps_fixed_measured": 0.04022198947500324,
+  "rel_err": -0.007261133063469094
+ }
+]

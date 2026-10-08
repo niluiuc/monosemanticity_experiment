@@ -1,0 +1,9 @@
+{
+  "verified": true,
+  "max_risk_difference_error": 1.6479873021779667e-17,
+  "test_recovery_rms": 0.0012041684578257997,
+  "protocol_passed": false,
+  "test_backgrounds_disjoint": true,
+  "actual_signs_match_predictions": true,
+  "qualification": "Recovery gate failed. Neither this verification nor actual-error bounds changes that verdict."
+}

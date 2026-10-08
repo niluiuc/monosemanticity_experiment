@@ -1,0 +1,38 @@
+[
+ {
+  "sigma": 0.001,
+  "eps_leading": 0.008315564147061508,
+  "eps_scaling_function": 0.008457074722824814,
+  "eps_fixed_measured": 0.008444682770048107,
+  "eps_fixed_bracket": [
+   0.008430877634257088,
+   0.008458487905839127
+  ],
+  "rel_err_leading": 0.015527343749999867,
+  "rel_err_scaling": -0.0014652764913217764
+ },
+ {
+  "sigma": 0.003,
+  "eps_leading": 0.01729707046185305,
+  "eps_scaling_function": 0.01774264221735637,
+  "eps_fixed_measured": 0.017795374737853697,
+  "eps_fixed_bracket": [
+   0.017766658898219764,
+   0.017824090577487635
+  ],
+  "rel_err_leading": 0.028808593749999778,
+  "rel_err_scaling": 0.0029720782198801032
+ },
+ {
+  "sigma": 0.01,
+  "eps_leading": 0.03859742969019146,
+  "eps_scaling_function": 0.039328572555942964,
+  "eps_fixed_measured": 0.04022198947500324,
+  "eps_fixed_bracket": [
+   0.04015791171086913,
+   0.040286067239137344
+  ],
+  "rel_err_leading": 0.04208984375000013,
+  "rel_err_scaling": 0.02271673902706306
+ }
+]

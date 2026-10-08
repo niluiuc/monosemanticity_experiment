@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "rms": 0.0012041684578257997,
+  "threshold": 0.0005,
+  "no_thresholding": true,
+  "outcome_exclusion": false
+}

@@ -1,0 +1,387 @@
+n rows 340
+max (v2 - mine) over all rows: 6.939e-17 at p=0.3726500113 c=-0.002 s=0.001
+
+== sigma=0.001 c=-0.002  (21 p-values)
+p=0.36365 best_t=-0.05101 v2-mine=+4.2e-17 | t*=-0.05101 gain=+2.14e-05 oneside=29.794 basin=61.53 curv=105.603 belowF0=1.6271 nv2=1799
+p=0.36465 best_t=-0.04989 v2-mine=+1.4e-17 | t*=-0.04989 gain=+2.05e-05 oneside=30.487 basin=62.92 curv=108.504 belowF0=1.6313 nv2=1799
+p=0.36565 best_t=-0.04878 v2-mine=+1.4e-17 | t*=-0.04878 gain=+1.97e-05 oneside=31.202 basin=64.34 curv=111.478 belowF0=1.6356 nv2=1799
+p=0.36665 best_t=-0.04769 v2-mine=+1.4e-17 | t*=-0.04769 gain=+1.89e-05 oneside=31.939 basin=65.82 curv=114.540 belowF0=1.6400 nv2=1799
+p=0.36765 best_t=-0.04661 v2-mine=+4.2e-17 | t*=-0.04661 gain=+1.81e-05 oneside=32.699 basin=67.33 curv=117.677 belowF0=1.6445 nv2=1799
+p=0.36865 best_t=-0.04555 v2-mine=+1.4e-17 | t*=-0.04555 gain=+1.74e-05 oneside=33.482 basin=68.90 curv=120.898 belowF0=1.6491 nv2=1799
+p=0.36965 best_t=-0.04451 v2-mine=+1.4e-17 | t*=-0.04451 gain=+1.67e-05 oneside=34.288 basin=70.51 curv=124.202 belowF0=1.6538 nv2=1799
+p=0.37065 best_t=-0.04349 v2-mine=+4.2e-17 | t*=-0.04349 gain=+1.61e-05 oneside=35.119 basin=72.17 curv=127.582 belowF0=1.6586 nv2=1799
+p=0.37165 best_t=-0.04248 v2-mine=+2.8e-17 | t*=-0.04248 gain=+1.54e-05 oneside=35.975 basin=73.88 curv=131.041 belowF0=1.6635 nv2=1799
+p=0.37265 best_t=-0.04149 v2-mine=+6.9e-17 | t*=-0.04149 gain=+1.48e-05 oneside=36.856 basin=75.64 curv=134.581 belowF0=1.6685 nv2=1799
+p=0.37365 best_t=-0.04052 v2-mine=+2.8e-17 | t*=-0.04052 gain=+1.43e-05 oneside=37.762 basin=77.45 curv=138.188 belowF0=1.6735 nv2=1799
+p=0.37465 best_t=-0.03957 v2-mine=+2.8e-17 | t*=-0.03957 gain=+1.37e-05 oneside=38.695 basin=79.32 curv=141.891 belowF0=1.6786 nv2=1799
+p=0.37565 best_t=-0.03864 v2-mine=+1.4e-17 | t*=-0.03864 gain=+1.32e-05 oneside=39.653 basin=81.23 curv=145.640 belowF0=1.6838 nv2=1799
+p=0.37665 best_t=-0.03772 v2-mine=+0.0e+00 | t*=-0.03772 gain=+1.27e-05 oneside=40.638 basin=83.20 curv=149.478 belowF0=1.6891 nv2=1799
+p=0.37765 best_t=-0.03683 v2-mine=+1.4e-17 | t*=-0.03683 gain=+1.22e-05 oneside=41.650 basin=85.22 curv=153.381 belowF0=1.6944 nv2=1799
+p=0.37865 best_t=-0.03595 v2-mine=+2.8e-17 | t*=-0.03595 gain=+1.18e-05 oneside=42.689 basin=87.30 curv=157.350 belowF0=1.6997 nv2=1799
+p=0.37965 best_t=-0.03510 v2-mine=+2.8e-17 | t*=-0.03510 gain=+1.13e-05 oneside=43.755 basin=89.43 curv=161.366 belowF0=1.7051 nv2=1799
+p=0.38065 best_t=-0.03426 v2-mine=+1.4e-17 | t*=-0.03426 gain=+1.09e-05 oneside=44.849 basin=91.61 curv=165.460 belowF0=1.7105 nv2=1799
+p=0.38165 best_t=-0.03344 v2-mine=+2.8e-17 | t*=-0.03344 gain=+1.05e-05 oneside=45.969 basin=93.85 curv=169.599 belowF0=1.7160 nv2=1799
+p=0.38265 best_t=-0.03265 v2-mine=+4.2e-17 | t*=-0.03265 gain=+1.02e-05 oneside=47.117 basin=96.15 curv=173.792 belowF0=1.7214 nv2=1799
+p=0.38365 best_t=-0.03187 v2-mine=+2.8e-17 | t*=-0.03187 gain=+9.81e-06 oneside=48.292 basin=98.49 curv=178.049 belowF0=1.7269 nv2=1799
+
+== sigma=0.001 c=-0.0001  (11 p-values)
+p=0.36365 best_t=-0.03089 v2-mine=+4.2e-17 | t*=-0.03089 gain=+2.30e-06 oneside=49.856 basin=99.00 curv=260.926 belowF0=1.5046 nv2=1799
+p=0.36565 best_t=-0.02788 v2-mine=+2.8e-17 | t*=-0.02788 gain=+1.70e-06 oneside=0.943 basin=56.28 curv=1.157 belowF0=1.5047 nv2=576 || t*=-0.00095 gain=+8.69e-09 oneside=0.675 basin=99.00 curv=0.500 belowF0=44.0345 nv2=1223
+p=0.36765 best_t=-0.02492 v2-mine=+1.4e-17 | t*=-0.02492 gain=+1.23e-06 oneside=0.927 basin=62.95 curv=1.152 belowF0=1.5038 nv2=568 || t*=-0.00086 gain=+8.31e-09 oneside=1.110 basin=99.00 curv=0.883 belowF0=43.3614 nv2=1231
+p=0.36965 best_t=-0.02202 v2-mine=+4.2e-17 | t*=-0.02202 gain=+8.51e-07 oneside=0.907 basin=71.24 curv=1.141 belowF0=1.5011 nv2=561 || t*=-0.00080 gain=+7.99e-09 oneside=1.537 basin=99.00 curv=1.245 belowF0=41.0976 nv2=1238
+p=0.37165 best_t=-0.01920 v2-mine=+4.2e-17 | t*=-0.01920 gain=+5.61e-07 oneside=0.882 basin=81.70 curv=1.122 belowF0=1.4946 nv2=554 || t*=-0.00076 gain=+7.71e-09 oneside=1.990 basin=99.00 curv=1.608 belowF0=37.8468 nv2=1245
+p=0.37365 best_t=-0.01648 v2-mine=+4.2e-17 | t*=-0.01648 gain=+3.44e-07 oneside=0.847 basin=95.17 curv=1.084 belowF0=1.2982 nv2=547 || t*=-0.00072 gain=+7.47e-09 oneside=2.495 basin=99.00 curv=2.155 belowF0=2.7901 nv2=1252
+p=0.37565 best_t=-0.01389 v2-mine=+1.4e-17 | t*=-0.01389 gain=+1.88e-07 oneside=0.797 basin=99.00 curv=1.020 belowF0=1.1742 nv2=540 || t*=-0.00069 gain=+7.25e-09 oneside=3.087 basin=99.00 curv=2.479 belowF0=2.5303 nv2=1259
+p=0.37765 best_t=-0.01143 v2-mine=+1.4e-17 | t*=-0.01143 gain=+7.92e-08 oneside=0.721 basin=99.00 curv=0.909 belowF0=0.9627 nv2=532 || t*=-0.00066 gain=+7.05e-09 oneside=3.829 basin=99.00 curv=3.215 belowF0=2.4125 nv2=1267
+p=0.37965 best_t=-0.00903 v2-mine=+4.2e-17 | t*=-0.00903 gain=+8.77e-09 oneside=0.584 basin=99.00 curv=0.714 belowF0=0.4253 nv2=522 || t*=-0.00064 gain=+6.86e-09 oneside=4.894 basin=99.00 curv=3.465 belowF0=2.3395 nv2=1277
+p=0.38165 best_t=-0.00061 v2-mine=+2.8e-17 | t*=-0.00061 gain=+6.69e-09 oneside=2554.823 basin=99.00 curv=6734.006 belowF0=2.2884 nv2=1799
+p=0.38365 best_t=-0.00059 v2-mine=+1.4e-17 | t*=-0.00059 gain=+6.54e-09 oneside=2639.526 basin=99.00 curv=6977.288 belowF0=2.2502 nv2=1799
+
+== sigma=0.001 c=0  (21 p-values)
+p=0.36365 best_t=-0.02910 v2-mine=+4.2e-17 | t*=-0.02910 gain=+1.59e-06 oneside=0.899 basin=53.88 curv=1.101 belowF0=1.2957 nv2=538
+p=0.36465 best_t=-0.02750 v2-mine=+1.4e-17 | t*=-0.02750 gain=+1.31e-06 oneside=0.890 basin=57.00 curv=1.095 belowF0=1.2726 nv2=536
+p=0.36565 best_t=-0.02591 v2-mine=+4.2e-17 | t*=-0.02591 gain=+1.07e-06 oneside=0.879 basin=60.51 curv=1.085 belowF0=1.2450 nv2=533
+p=0.36665 best_t=-0.02431 v2-mine=+2.8e-17 | t*=-0.02431 gain=+8.54e-07 oneside=0.866 basin=64.48 curv=1.074 belowF0=1.2113 nv2=531
+p=0.36765 best_t=-0.02272 v2-mine=+5.6e-17 | t*=-0.02272 gain=+6.65e-07 oneside=0.851 basin=69.00 curv=1.060 belowF0=1.1697 nv2=528
+p=0.36865 best_t=-0.02112 v2-mine=+1.4e-17 | t*=-0.02112 gain=+5.00e-07 oneside=0.833 basin=74.19 curv=1.042 belowF0=1.1170 nv2=526
+p=0.36965 best_t=-0.01953 v2-mine=+1.4e-17 | t*=-0.01953 gain=+3.59e-07 oneside=0.811 basin=80.24 curv=1.018 belowF0=1.0484 nv2=523
+p=0.37065 best_t=-0.01794 v2-mine=+6.9e-17 | t*=-0.01794 gain=+2.40e-07 oneside=0.783 basin=87.35 curv=0.986 belowF0=0.9552 nv2=520
+p=0.37165 best_t=-0.01634 v2-mine=+0.0e+00 | t*=-0.01634 gain=+1.40e-07 oneside=0.749 basin=95.87 curv=0.944 belowF0=0.8205 nv2=516
+p=0.37265 best_t=-0.01474 v2-mine=+4.2e-17 | t*=-0.01474 gain=+5.75e-08 oneside=0.703 basin=99.00 curv=0.883 belowF0=0.5990 nv2=512
+p=0.37365 best_t=+0.00000 v2-mine=-1.4e-17 | t*=-0.01311 gain=-8.35e-09 oneside=0.640 basin=99.00 curv=0.799 belowF0=- nv2=507
+p=0.37465 best_t=+0.00000 v2-mine=+0.0e+00 | t*=-0.01141 gain=-5.92e-08 oneside=0.546 basin=99.00 curv=0.669 belowF0=- nv2=501
+p=0.37565 best_t=+0.00000 v2-mine=-2.8e-17 | t*=-0.00944 gain=-9.61e-08 oneside=0.366 basin=99.00 curv=0.433 belowF0=- nv2=492
+p=0.37665 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.37765 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.37865 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.37965 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.38065 best_t=+0.00000 v2-mine=-1.4e-17 | 
+p=0.38165 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.38265 best_t=+0.00000 v2-mine=+2.8e-17 | 
+p=0.38365 best_t=+0.00000 v2-mine=+0.0e+00 | 
+
+== sigma=0.001 c=0.0001  (11 p-values)
+p=0.36365 best_t=-0.02706 v2-mine=+1.4e-17 | t*=-0.02706 gain=+9.24e-07 oneside=0.843 basin=57.88 curv=1.024 belowF0=1.0975 nv2=514 || t*=+0.00051 gain=+6.18e-09 oneside=9.317 basin=99.00 curv=6.692 belowF0=1.9395 nv2=1285
+p=0.36565 best_t=-0.02358 v2-mine=+1.4e-17 | t*=-0.02358 gain=+4.85e-07 oneside=0.804 basin=66.43 curv=0.983 belowF0=0.9592 nv2=509 || t*=+0.00050 gain=+6.09e-09 oneside=10.201 basin=99.00 curv=7.449 belowF0=1.9416 nv2=1290
+p=0.36765 best_t=-0.01997 v2-mine=+1.4e-17 | t*=-0.01997 gain=+1.60e-07 oneside=0.742 basin=78.39 curv=0.913 belowF0=0.6875 nv2=502 || t*=+0.00050 gain=+6.01e-09 oneside=11.376 basin=99.00 curv=7.579 belowF0=1.9438 nv2=1297
+p=0.36965 best_t=+0.00049 v2-mine=+4.2e-17 | t*=-0.01614 gain=-6.39e-08 oneside=0.632 basin=96.98 curv=0.776 belowF0=- nv2=493 || t*=+0.00049 gain=+5.93e-09 oneside=13.135 basin=99.00 curv=8.029 belowF0=1.9460 nv2=1306
+p=0.37165 best_t=+0.00048 v2-mine=+1.4e-17 | t*=-0.01136 gain=-1.97e-07 oneside=0.318 basin=99.00 curv=0.376 belowF0=- nv2=476 || t*=+0.00048 gain=+5.86e-09 oneside=17.069 basin=99.00 curv=8.655 belowF0=1.9480 nv2=1323
+p=0.37365 best_t=+0.00048 v2-mine=+1.4e-17 | t*=+0.00048 gain=+5.78e-09 oneside=3298.980 basin=99.00 curv=7830.942 belowF0=1.9500 nv2=1799
+p=0.37565 best_t=+0.00047 v2-mine=+2.8e-17 | t*=+0.00047 gain=+5.71e-09 oneside=3342.858 basin=99.00 curv=6713.198 belowF0=1.9518 nv2=1799
+p=0.37765 best_t=+0.00046 v2-mine=+2.8e-17 | t*=+0.00046 gain=+5.64e-09 oneside=3386.841 basin=99.00 curv=6720.256 belowF0=1.9536 nv2=1799
+p=0.37965 best_t=+0.00046 v2-mine=+1.4e-17 | t*=+0.00046 gain=+5.57e-09 oneside=3431.211 basin=99.00 curv=6319.096 belowF0=1.9555 nv2=1799
+p=0.38165 best_t=+0.00045 v2-mine=+2.8e-17 | t*=+0.00045 gain=+5.50e-09 oneside=3475.515 basin=99.00 curv=7233.483 belowF0=1.9572 nv2=1799
+p=0.38365 best_t=+0.00045 v2-mine=+1.4e-17 | t*=+0.00045 gain=+5.44e-09 oneside=3519.915 basin=99.00 curv=7536.332 belowF0=1.9588 nv2=1799
+
+== sigma=0.001 c=0.002  (21 p-values)
+p=0.36365 best_t=+0.00833 v2-mine=+4.2e-17 | t*=+0.00833 gain=+1.97e-06 oneside=187.642 basin=99.00 curv=471.130 belowF0=1.9497 nv2=1799
+p=0.36465 best_t=+0.00830 v2-mine=+1.4e-17 | t*=+0.00830 gain=+1.96e-06 oneside=188.171 basin=99.00 curv=471.720 belowF0=1.9498 nv2=1799
+p=0.36565 best_t=+0.00828 v2-mine=+2.8e-17 | t*=+0.00828 gain=+1.96e-06 oneside=188.701 basin=99.00 curv=472.941 belowF0=1.9500 nv2=1799
+p=0.36665 best_t=+0.00826 v2-mine=+1.4e-17 | t*=+0.00826 gain=+1.96e-06 oneside=189.231 basin=99.00 curv=473.769 belowF0=1.9502 nv2=1799
+p=0.36765 best_t=+0.00823 v2-mine=+1.4e-17 | t*=+0.00823 gain=+1.95e-06 oneside=189.763 basin=99.00 curv=474.358 belowF0=1.9504 nv2=1799
+p=0.36865 best_t=+0.00821 v2-mine=+4.2e-17 | t*=+0.00821 gain=+1.95e-06 oneside=190.296 basin=99.00 curv=475.106 belowF0=1.9506 nv2=1799
+p=0.36965 best_t=+0.00819 v2-mine=+2.8e-17 | t*=+0.00819 gain=+1.94e-06 oneside=190.830 basin=99.00 curv=475.854 belowF0=1.9508 nv2=1799
+p=0.37065 best_t=+0.00817 v2-mine=-1.4e-17 | t*=+0.00817 gain=+1.94e-06 oneside=191.364 basin=99.00 curv=476.924 belowF0=1.9509 nv2=1799
+p=0.37165 best_t=+0.00814 v2-mine=+2.8e-17 | t*=+0.00814 gain=+1.94e-06 oneside=191.900 basin=99.00 curv=477.672 belowF0=1.9511 nv2=1799
+p=0.37265 best_t=+0.00812 v2-mine=+2.8e-17 | t*=+0.00812 gain=+1.93e-06 oneside=192.436 basin=99.00 curv=478.014 belowF0=1.9513 nv2=1799
+p=0.37365 best_t=+0.00810 v2-mine=+1.4e-17 | t*=+0.00810 gain=+1.93e-06 oneside=192.974 basin=99.00 curv=479.005 belowF0=1.9515 nv2=1799
+p=0.37465 best_t=+0.00808 v2-mine=+0.0e+00 | t*=+0.00808 gain=+1.92e-06 oneside=193.512 basin=99.00 curv=479.834 belowF0=1.9516 nv2=1799
+p=0.37565 best_t=+0.00805 v2-mine=+1.4e-17 | t*=+0.00805 gain=+1.92e-06 oneside=194.052 basin=99.00 curv=480.500 belowF0=1.9518 nv2=1799
+p=0.37665 best_t=+0.00803 v2-mine=+2.8e-17 | t*=+0.00803 gain=+1.92e-06 oneside=194.592 basin=99.00 curv=481.329 belowF0=1.9520 nv2=1799
+p=0.37765 best_t=+0.00801 v2-mine=-1.4e-17 | t*=+0.00801 gain=+1.91e-06 oneside=195.133 basin=99.00 curv=482.324 belowF0=1.9521 nv2=1799
+p=0.37865 best_t=+0.00799 v2-mine=+0.0e+00 | t*=+0.00799 gain=+1.91e-06 oneside=195.676 basin=99.00 curv=483.322 belowF0=1.9523 nv2=1799
+p=0.37965 best_t=+0.00796 v2-mine=+2.8e-17 | t*=+0.00796 gain=+1.90e-06 oneside=196.220 basin=99.00 curv=483.653 belowF0=1.9525 nv2=1799
+p=0.38065 best_t=+0.00794 v2-mine=-2.8e-17 | t*=+0.00794 gain=+1.90e-06 oneside=196.764 basin=99.00 curv=484.987 belowF0=1.9526 nv2=1799
+p=0.38165 best_t=+0.00792 v2-mine=+2.8e-17 | t*=+0.00792 gain=+1.90e-06 oneside=197.309 basin=99.00 curv=485.483 belowF0=1.9528 nv2=1799
+p=0.38265 best_t=+0.00790 v2-mine=+4.2e-17 | t*=+0.00790 gain=+1.89e-06 oneside=197.855 basin=99.00 curv=485.810 belowF0=1.9530 nv2=1799
+p=0.38365 best_t=+0.00788 v2-mine=+1.4e-17 | t*=+0.00788 gain=+1.89e-06 oneside=198.403 basin=99.00 curv=487.064 belowF0=1.9531 nv2=1799
+
+== sigma=0.003 c=-0.002  (21 p-values)
+p=0.35467 best_t=-0.06173 v2-mine=+0.0e+00 | t*=-0.06173 gain=+2.95e-05 oneside=24.446 basin=50.85 curv=83.041 belowF0=1.5806 nv2=1799
+p=0.35567 best_t=-0.06049 v2-mine=+1.4e-17 | t*=-0.06049 gain=+2.82e-05 oneside=24.970 basin=51.89 curv=85.257 belowF0=1.5832 nv2=1799
+p=0.35667 best_t=-0.05925 v2-mine=+1.4e-17 | t*=-0.05925 gain=+2.70e-05 oneside=25.510 basin=52.97 curv=87.542 belowF0=1.5860 nv2=1799
+p=0.35767 best_t=-0.05803 v2-mine=+0.0e+00 | t*=-0.05803 gain=+2.59e-05 oneside=26.067 basin=54.08 curv=89.905 belowF0=1.5888 nv2=1799
+p=0.35867 best_t=-0.05683 v2-mine=+2.8e-17 | t*=-0.05683 gain=+2.48e-05 oneside=26.642 basin=55.23 curv=92.340 belowF0=1.5917 nv2=1799
+p=0.35967 best_t=-0.05563 v2-mine=+2.8e-17 | t*=-0.05563 gain=+2.37e-05 oneside=27.235 basin=56.42 curv=94.846 belowF0=1.5947 nv2=1799
+p=0.36067 best_t=-0.05445 v2-mine=+2.8e-17 | t*=-0.05445 gain=+2.27e-05 oneside=27.848 basin=57.64 curv=97.435 belowF0=1.5978 nv2=1799
+p=0.36167 best_t=-0.05328 v2-mine=+1.4e-17 | t*=-0.05328 gain=+2.17e-05 oneside=28.479 basin=58.90 curv=100.100 belowF0=1.6009 nv2=1799
+p=0.36267 best_t=-0.05213 v2-mine=+0.0e+00 | t*=-0.05213 gain=+2.08e-05 oneside=29.131 basin=60.21 curv=102.843 belowF0=1.6041 nv2=1799
+p=0.36367 best_t=-0.05099 v2-mine=+5.6e-17 | t*=-0.05099 gain=+1.99e-05 oneside=29.804 basin=61.55 curv=105.668 belowF0=1.6074 nv2=1799
+p=0.36467 best_t=-0.04987 v2-mine=+0.0e+00 | t*=-0.04987 gain=+1.90e-05 oneside=30.497 basin=62.94 curv=108.581 belowF0=1.6107 nv2=1799
+p=0.36567 best_t=-0.04876 v2-mine=+2.8e-17 | t*=-0.04876 gain=+1.82e-05 oneside=31.213 basin=64.37 curv=111.569 belowF0=1.6141 nv2=1799
+p=0.36667 best_t=-0.04767 v2-mine=+1.4e-17 | t*=-0.04767 gain=+1.74e-05 oneside=31.951 basin=65.84 curv=114.649 belowF0=1.6176 nv2=1799
+p=0.36767 best_t=-0.04660 v2-mine=+2.8e-17 | t*=-0.04660 gain=+1.67e-05 oneside=32.711 basin=67.36 curv=117.809 belowF0=1.6211 nv2=1799
+p=0.36867 best_t=-0.04554 v2-mine=+4.2e-17 | t*=-0.04554 gain=+1.60e-05 oneside=33.496 basin=68.93 curv=121.061 belowF0=1.6248 nv2=1799
+p=0.36967 best_t=-0.04449 v2-mine=+2.8e-17 | t*=-0.04449 gain=+1.53e-05 oneside=34.304 basin=70.54 curv=124.398 belowF0=1.6284 nv2=1799
+p=0.37067 best_t=-0.04347 v2-mine=+2.8e-17 | t*=-0.04347 gain=+1.46e-05 oneside=35.137 basin=72.21 curv=127.820 belowF0=1.6322 nv2=1799
+p=0.37167 best_t=-0.04246 v2-mine=+2.8e-17 | t*=-0.04246 gain=+1.40e-05 oneside=35.996 basin=73.92 curv=131.335 belowF0=1.6360 nv2=1799
+p=0.37267 best_t=-0.04147 v2-mine=+4.2e-17 | t*=-0.04147 gain=+1.34e-05 oneside=36.880 basin=75.69 curv=134.922 belowF0=1.6399 nv2=1799
+p=0.37367 best_t=-0.04049 v2-mine=+4.2e-17 | t*=-0.04049 gain=+1.29e-05 oneside=37.790 basin=77.51 curv=138.614 belowF0=1.6438 nv2=1799
+p=0.37467 best_t=-0.03954 v2-mine=-1.4e-17 | t*=-0.03954 gain=+1.23e-05 oneside=38.727 basin=79.38 curv=142.392 belowF0=1.6478 nv2=1799
+
+== sigma=0.003 c=-0.001  (11 p-values)
+p=0.35467 best_t=-0.05389 v2-mine=+4.2e-17 | t*=-0.05389 gain=+1.57e-05 oneside=28.150 basin=58.30 curv=106.187 belowF0=1.5415 nv2=1799
+p=0.35667 best_t=-0.05120 v2-mine=+0.0e+00 | t*=-0.05120 gain=+1.38e-05 oneside=29.678 basin=61.36 curv=113.803 belowF0=1.5449 nv2=1799
+p=0.35867 best_t=-0.04857 v2-mine=+1.4e-17 | t*=-0.04857 gain=+1.22e-05 oneside=31.342 basin=64.68 curv=122.161 belowF0=1.5486 nv2=1799
+p=0.36067 best_t=-0.04598 v2-mine=+4.2e-17 | t*=-0.04598 gain=+1.07e-05 oneside=33.159 basin=68.32 curv=131.354 belowF0=1.5525 nv2=1799
+p=0.36267 best_t=-0.04346 v2-mine=+2.8e-17 | t*=-0.04346 gain=+9.33e-06 oneside=35.145 basin=72.29 curv=141.497 belowF0=1.5566 nv2=1799
+p=0.36467 best_t=-0.04099 v2-mine=+2.8e-17 | t*=-0.04099 gain=+8.13e-06 oneside=37.318 basin=76.64 curv=152.672 belowF0=1.5609 nv2=1799
+p=0.36667 best_t=-0.03859 v2-mine=+0.0e+00 | t*=-0.03859 gain=+7.07e-06 oneside=39.701 basin=81.40 curv=165.018 belowF0=1.5654 nv2=1799
+p=0.36867 best_t=-0.03626 v2-mine=+0.0e+00 | t*=-0.03626 gain=+6.13e-06 oneside=42.316 basin=86.63 curv=178.677 belowF0=1.5703 nv2=1799
+p=0.37067 best_t=-0.03401 v2-mine=+4.2e-17 | t*=-0.03401 gain=+5.31e-06 oneside=45.192 basin=92.38 curv=193.850 belowF0=1.5756 nv2=1799
+p=0.37267 best_t=-0.03182 v2-mine=+2.8e-17 | t*=-0.03182 gain=+4.59e-06 oneside=48.358 basin=98.72 curv=210.692 belowF0=1.5814 nv2=1799
+p=0.37467 best_t=-0.02972 v2-mine=+1.4e-17 | t*=-0.02972 gain=+3.96e-06 oneside=51.852 basin=99.00 curv=229.584 belowF0=1.5878 nv2=1799
+
+== sigma=0.003 c=-0.0003  (11 p-values)
+p=0.35467 best_t=-0.04703 v2-mine=+2.8e-17 | t*=-0.04703 gain=+7.31e-06 oneside=32.398 basin=66.80 curv=137.375 belowF0=1.4793 nv2=1799
+p=0.35667 best_t=-0.04405 v2-mine=+1.4e-17 | t*=-0.04405 gain=+5.92e-06 oneside=34.661 basin=71.32 curv=151.192 belowF0=1.4748 nv2=1799
+p=0.35867 best_t=-0.04109 v2-mine=+1.4e-17 | t*=-0.04109 gain=+4.70e-06 oneside=37.230 basin=76.46 curv=167.385 belowF0=1.4687 nv2=1799
+p=0.36067 best_t=-0.03815 v2-mine=+4.2e-17 | t*=-0.03815 gain=+3.65e-06 oneside=40.173 basin=82.35 curv=186.657 belowF0=1.4607 nv2=1799
+p=0.36267 best_t=-0.03524 v2-mine=+1.4e-17 | t*=-0.03524 gain=+2.75e-06 oneside=0.865 basin=44.45 curv=1.010 belowF0=1.4499 nv2=507 || t*=-0.00295 gain=+7.94e-08 oneside=0.605 basin=99.00 curv=0.633 belowF0=17.2935 nv2=1292
+p=0.36467 best_t=-0.03233 v2-mine=+5.6e-17 | t*=-0.03233 gain=+1.99e-06 oneside=0.830 basin=48.41 curv=0.975 belowF0=1.4354 nv2=498 || t*=-0.00265 gain=+7.57e-08 oneside=1.071 basin=99.00 curv=1.100 belowF0=17.4843 nv2=1301
+p=0.36667 best_t=-0.02943 v2-mine=+1.4e-17 | t*=-0.02943 gain=+1.35e-06 oneside=0.789 basin=53.16 curv=0.929 belowF0=1.4152 nv2=490 || t*=-0.00246 gain=+7.27e-08 oneside=1.529 basin=99.00 curv=1.566 belowF0=16.9343 nv2=1309
+p=0.36867 best_t=-0.02650 v2-mine=+1.4e-17 | t*=-0.02650 gain=+8.35e-07 oneside=0.736 basin=59.00 curv=0.867 belowF0=1.3858 nv2=482 || t*=-0.00231 gain=+7.02e-08 oneside=2.027 basin=99.00 curv=2.017 belowF0=15.8823 nv2=1317
+p=0.37067 best_t=-0.02349 v2-mine=+1.4e-17 | t*=-0.02349 gain=+4.23e-07 oneside=0.663 basin=66.54 curv=0.780 belowF0=0.9280 nv2=474 || t*=-0.00219 gain=+6.79e-08 oneside=2.609 basin=99.00 curv=2.477 belowF0=2.8143 nv2=1325
+p=0.37267 best_t=-0.02023 v2-mine=+2.8e-17 | t*=-0.02023 gain=+1.10e-07 oneside=0.548 basin=77.21 curv=0.642 belowF0=0.5678 nv2=465 || t*=-0.00209 gain=+6.58e-08 oneside=3.363 basin=99.00 curv=3.109 belowF0=2.5430 nv2=1334
+p=0.37467 best_t=-0.00201 v2-mine=+2.8e-17 | t*=-0.01596 gain=-1.06e-07 oneside=0.284 basin=97.72 curv=0.329 belowF0=- nv2=451 || t*=-0.00201 gain=+6.40e-08 oneside=4.690 basin=99.00 curv=3.649 belowF0=2.4210 nv2=1348
+
+== sigma=0.003 c=-0.0001  (11 p-values)
+p=0.35467 best_t=-0.04471 v2-mine=+1.4e-17 | t*=-0.04471 gain=+5.14e-06 oneside=0.859 basin=34.99 curv=1.029 belowF0=1.2280 nv2=489 || t*=-0.00072 gain=+7.95e-09 oneside=7.726 basin=99.00 curv=6.677 belowF0=2.1106 nv2=1310
+p=0.35667 best_t=-0.04157 v2-mine=+4.2e-17 | t*=-0.04157 gain=+3.89e-06 oneside=0.838 basin=37.62 curv=1.006 belowF0=1.1782 nv2=485 || t*=-0.00070 gain=+7.75e-09 oneside=8.626 basin=99.00 curv=7.536 belowF0=2.0998 nv2=1314
+p=0.35867 best_t=-0.03843 v2-mine=+2.8e-17 | t*=-0.03843 gain=+2.82e-06 oneside=0.812 basin=40.68 curv=0.975 belowF0=1.1139 nv2=480 || t*=-0.00068 gain=+7.56e-09 oneside=9.632 basin=99.00 curv=10.605 belowF0=2.0907 nv2=1319
+p=0.36067 best_t=-0.03528 v2-mine=+1.4e-17 | t*=-0.03528 gain=+1.91e-06 oneside=0.780 basin=44.30 curv=0.936 belowF0=1.0278 nv2=476 || t*=-0.00066 gain=+7.38e-09 oneside=10.776 basin=99.00 curv=9.999 belowF0=2.0828 nv2=1323
+p=0.36267 best_t=-0.03209 v2-mine=+0.0e+00 | t*=-0.03209 gain=+1.16e-06 oneside=0.738 basin=48.68 curv=0.885 belowF0=0.9055 nv2=471 || t*=-0.00064 gain=+7.21e-09 oneside=12.109 basin=99.00 curv=10.074 belowF0=2.0758 nv2=1328
+p=0.36467 best_t=-0.02883 v2-mine=+1.4e-17 | t*=-0.02883 gain=+5.38e-07 oneside=0.681 basin=54.17 curv=0.814 belowF0=0.7118 nv2=465 || t*=-0.00062 gain=+7.06e-09 oneside=13.723 basin=99.00 curv=10.973 belowF0=2.0699 nv2=1334
+p=0.36667 best_t=-0.02538 v2-mine=+1.4e-17 | t*=-0.02538 gain=+5.11e-08 oneside=0.597 basin=61.48 curv=0.710 belowF0=0.2591 nv2=458 || t*=-0.00061 gain=+6.91e-09 oneside=15.803 basin=99.00 curv=12.950 belowF0=2.0644 nv2=1341
+p=0.36867 best_t=-0.00059 v2-mine=+1.4e-17 | t*=-0.02144 gain=-3.12e-07 oneside=0.448 basin=72.70 curv=0.528 belowF0=- nv2=449 || t*=-0.00059 gain=+6.76e-09 oneside=18.917 basin=99.00 curv=12.747 belowF0=2.0596 nv2=1350
+p=0.37067 best_t=-0.00058 v2-mine=+4.2e-17 | t*=-0.00058 gain=+6.63e-09 oneside=2708.013 basin=99.00 curv=6930.003 belowF0=2.0553 nv2=1799
+p=0.37267 best_t=-0.00057 v2-mine=+0.0e+00 | t*=-0.00057 gain=+6.50e-09 oneside=2771.768 basin=99.00 curv=6702.381 belowF0=2.0515 nv2=1799
+p=0.37467 best_t=-0.00055 v2-mine=+1.4e-17 | t*=-0.00055 gain=+6.38e-09 oneside=2834.704 basin=99.00 curv=7835.149 belowF0=2.0479 nv2=1799
+
+== sigma=0.003 c=0  (21 p-values)
+p=0.35467 best_t=-0.04345 v2-mine=+2.8e-17 | t*=-0.04345 gain=+4.10e-06 oneside=0.828 basin=35.98 curv=0.995 belowF0=1.1275 nv2=478
+p=0.35567 best_t=-0.04184 v2-mine=+0.0e+00 | t*=-0.04184 gain=+3.49e-06 oneside=0.815 basin=37.36 curv=0.980 belowF0=1.0947 nv2=476
+p=0.35667 best_t=-0.04022 v2-mine=+2.8e-17 | t*=-0.04022 gain=+2.93e-06 oneside=0.802 basin=38.86 curv=0.964 belowF0=1.0568 nv2=474
+p=0.35767 best_t=-0.03859 v2-mine=+4.2e-17 | t*=-0.03859 gain=+2.41e-06 oneside=0.786 basin=40.49 curv=0.946 belowF0=1.0127 nv2=472
+p=0.35867 best_t=-0.03695 v2-mine=+4.2e-17 | t*=-0.03695 gain=+1.93e-06 oneside=0.769 basin=42.28 curv=0.925 belowF0=0.9606 nv2=470
+p=0.35967 best_t=-0.03530 v2-mine=+4.2e-17 | t*=-0.03530 gain=+1.50e-06 oneside=0.749 basin=44.24 curv=0.900 belowF0=0.8979 nv2=467
+p=0.36067 best_t=-0.03364 v2-mine=+4.2e-17 | t*=-0.03364 gain=+1.10e-06 oneside=0.726 basin=46.42 curv=0.872 belowF0=0.8204 nv2=465
+p=0.36167 best_t=-0.03195 v2-mine=+1.4e-17 | t*=-0.03195 gain=+7.41e-07 oneside=0.700 basin=48.86 curv=0.839 belowF0=0.7208 nv2=462
+p=0.36267 best_t=-0.03023 v2-mine=+1.4e-17 | t*=-0.03023 gain=+4.20e-07 oneside=0.668 basin=51.63 curv=0.799 belowF0=0.5832 nv2=459
+p=0.36367 best_t=-0.02845 v2-mine=+1.4e-17 | t*=-0.02845 gain=+1.34e-07 oneside=0.629 basin=54.84 curv=0.751 belowF0=0.3565 nv2=456
+p=0.36467 best_t=+0.00000 v2-mine=+0.0e+00 | t*=-0.02660 gain=-1.17e-07 oneside=0.581 basin=58.64 curv=0.691 belowF0=- nv2=453
+p=0.36567 best_t=+0.00000 v2-mine=+2.8e-17 | t*=-0.02461 gain=-3.33e-07 oneside=0.517 basin=63.34 curv=0.612 belowF0=- nv2=449
+p=0.36667 best_t=+0.00000 v2-mine=-2.8e-17 | t*=-0.02237 gain=-5.15e-07 oneside=0.422 basin=69.64 curv=0.497 belowF0=- nv2=443
+p=0.36767 best_t=+0.00000 v2-mine=+0.0e+00 | t*=-0.01936 gain=-6.59e-07 oneside=0.239 basin=80.37 curv=0.277 belowF0=- nv2=435
+p=0.36867 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.36967 best_t=+0.00000 v2-mine=+2.8e-17 | 
+p=0.37067 best_t=+0.00000 v2-mine=+2.8e-17 | 
+p=0.37167 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.37267 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.37367 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.37467 best_t=+0.00000 v2-mine=-1.4e-17 | 
+
+== sigma=0.003 c=0.0001  (11 p-values)
+p=0.35467 best_t=-0.04212 v2-mine=+2.8e-17 | t*=-0.04212 gain=+3.10e-06 oneside=0.795 basin=37.09 curv=0.956 belowF0=1.0151 nv2=469 || t*=+0.00059 gain=+6.99e-09 oneside=15.569 basin=99.00 curv=14.992 belowF0=1.9572 nv2=1330
+p=0.35667 best_t=-0.03876 v2-mine=+0.0e+00 | t*=-0.03876 gain=+2.00e-06 oneside=0.762 basin=40.29 curv=0.917 belowF0=0.9113 nv2=465 || t*=+0.00058 gain=+6.86e-09 oneside=16.841 basin=99.00 curv=13.224 belowF0=1.9592 nv2=1334
+p=0.35867 best_t=-0.03533 v2-mine=+4.2e-17 | t*=-0.03533 gain=+1.08e-06 oneside=0.720 basin=44.18 curv=0.864 belowF0=0.7571 nv2=460 || t*=+0.00057 gain=+6.75e-09 oneside=18.347 basin=99.00 curv=15.913 belowF0=1.9610 nv2=1339
+p=0.36067 best_t=-0.03179 v2-mine=+2.8e-17 | t*=-0.03179 gain=+3.28e-07 oneside=0.661 basin=49.07 curv=0.791 belowF0=0.4790 nv2=455 || t*=+0.00056 gain=+6.63e-09 oneside=20.208 basin=99.00 curv=17.484 belowF0=1.9628 nv2=1344
+p=0.36267 best_t=+0.00055 v2-mine=+0.0e+00 | t*=-0.02801 gain=-2.68e-07 oneside=0.574 basin=55.66 curv=0.683 belowF0=- nv2=448 || t*=+0.00055 gain=+6.52e-09 oneside=22.677 basin=99.00 curv=19.367 belowF0=1.9645 nv2=1351
+p=0.36467 best_t=+0.00054 v2-mine=+2.8e-17 | t*=-0.02357 gain=-7.11e-07 oneside=0.413 basin=66.07 curv=0.486 belowF0=- nv2=439 || t*=+0.00054 gain=+6.42e-09 oneside=26.568 basin=99.00 curv=18.357 belowF0=1.9662 nv2=1360
+p=0.36667 best_t=+0.00053 v2-mine=+2.8e-17 | t*=+0.00053 gain=+6.32e-09 oneside=2950.984 basin=99.00 curv=6467.809 belowF0=1.9677 nv2=1799
+p=0.36867 best_t=+0.00052 v2-mine=+1.4e-17 | t*=+0.00052 gain=+6.22e-09 oneside=3001.643 basin=99.00 curv=6687.533 belowF0=1.9692 nv2=1799
+p=0.37067 best_t=+0.00051 v2-mine=+1.4e-17 | t*=+0.00051 gain=+6.12e-09 oneside=3052.508 basin=99.00 curv=6695.019 belowF0=1.9707 nv2=1799
+p=0.37267 best_t=+0.00051 v2-mine=+2.8e-17 | t*=+0.00051 gain=+6.03e-09 oneside=3103.286 basin=99.00 curv=6937.623 belowF0=1.9720 nv2=1799
+p=0.37467 best_t=+0.00050 v2-mine=+1.4e-17 | t*=+0.00050 gain=+5.94e-09 oneside=3154.062 basin=99.00 curv=7835.149 belowF0=1.9733 nv2=1799
+
+== sigma=0.003 c=0.0003  (11 p-values)
+p=0.35467 best_t=-0.03914 v2-mine=+0.0e+00 | t*=-0.03914 gain=+1.18e-06 oneside=0.717 basin=39.85 curv=0.859 belowF0=0.6868 nv2=453 || t*=+0.00159 gain=+5.79e-08 oneside=7.963 basin=99.00 curv=7.807 belowF0=1.9288 nv2=1346
+p=0.35667 best_t=-0.03540 v2-mine=+4.2e-17 | t*=-0.03540 gain=+2.52e-07 oneside=0.661 basin=44.04 curv=0.791 belowF0=0.3615 nv2=448 || t*=+0.00157 gain=+5.71e-08 oneside=8.642 basin=99.00 curv=8.085 belowF0=1.9312 nv2=1351
+p=0.35867 best_t=+0.00155 v2-mine=+2.8e-17 | t*=-0.03140 gain=-4.94e-07 oneside=0.579 basin=49.61 curv=0.689 belowF0=- nv2=442 || t*=+0.00155 gain=+5.63e-08 oneside=9.538 basin=99.00 curv=8.365 belowF0=1.9336 nv2=1357
+p=0.36067 best_t=+0.00153 v2-mine=+4.2e-17 | t*=-0.02677 gain=-1.06e-06 oneside=0.435 basin=58.12 curv=0.513 belowF0=- nv2=433 || t*=+0.00153 gain=+5.55e-08 oneside=10.912 basin=99.00 curv=8.950 belowF0=1.9359 nv2=1366
+p=0.36267 best_t=+0.00151 v2-mine=-1.4e-17 | t*=+0.00151 gain=+5.48e-08 oneside=1042.117 basin=99.00 curv=2735.946 belowF0=1.9381 nv2=1799
+p=0.36467 best_t=+0.00149 v2-mine=+0.0e+00 | t*=+0.00149 gain=+5.41e-08 oneside=1056.473 basin=99.00 curv=2694.141 belowF0=1.9404 nv2=1799
+p=0.36667 best_t=+0.00147 v2-mine=+1.4e-17 | t*=+0.00147 gain=+5.34e-08 oneside=1070.840 basin=99.00 curv=2857.001 belowF0=1.9425 nv2=1799
+p=0.36867 best_t=+0.00145 v2-mine=+1.4e-17 | t*=+0.00145 gain=+5.27e-08 oneside=1085.283 basin=99.00 curv=2792.945 belowF0=1.9445 nv2=1799
+p=0.37067 best_t=+0.00143 v2-mine=+1.4e-17 | t*=+0.00143 gain=+5.20e-08 oneside=1099.781 basin=99.00 curv=2846.154 belowF0=1.9465 nv2=1799
+p=0.37267 best_t=+0.00141 v2-mine=+1.4e-17 | t*=+0.00141 gain=+5.14e-08 oneside=1114.346 basin=99.00 curv=2902.217 belowF0=1.9485 nv2=1799
+p=0.37467 best_t=+0.00139 v2-mine=+2.8e-17 | t*=+0.00139 gain=+5.08e-08 oneside=1128.968 basin=99.00 curv=2869.702 belowF0=1.9505 nv2=1799
+
+== sigma=0.003 c=0.001  (11 p-values)
+p=0.35467 best_t=+0.00443 v2-mine=+1.4e-17 | t*=+0.00443 gain=+5.49e-07 oneside=353.341 basin=99.00 curv=878.386 belowF0=1.9651 nv2=1799
+p=0.35667 best_t=+0.00440 v2-mine=+1.4e-17 | t*=+0.00440 gain=+5.45e-07 oneside=356.377 basin=99.00 curv=883.116 belowF0=1.9660 nv2=1799
+p=0.35867 best_t=+0.00436 v2-mine=+2.8e-17 | t*=+0.00436 gain=+5.40e-07 oneside=359.437 basin=99.00 curv=889.471 belowF0=1.9671 nv2=1799
+p=0.36067 best_t=+0.00432 v2-mine=+2.8e-17 | t*=+0.00432 gain=+5.36e-07 oneside=362.514 basin=99.00 curv=892.154 belowF0=1.9680 nv2=1799
+p=0.36267 best_t=+0.00428 v2-mine=+4.2e-17 | t*=+0.00428 gain=+5.31e-07 oneside=365.615 basin=99.00 curv=899.166 belowF0=1.9691 nv2=1799
+p=0.36467 best_t=+0.00425 v2-mine=+2.8e-17 | t*=+0.00425 gain=+5.27e-07 oneside=368.738 basin=99.00 curv=904.628 belowF0=1.9701 nv2=1799
+p=0.36667 best_t=+0.00421 v2-mine=+0.0e+00 | t*=+0.00421 gain=+5.22e-07 oneside=371.874 basin=99.00 curv=910.713 belowF0=1.9711 nv2=1799
+p=0.36867 best_t=+0.00418 v2-mine=+0.0e+00 | t*=+0.00418 gain=+5.18e-07 oneside=375.034 basin=99.00 curv=919.763 belowF0=1.9721 nv2=1799
+p=0.37067 best_t=+0.00414 v2-mine=+1.4e-17 | t*=+0.00414 gain=+5.14e-07 oneside=378.214 basin=99.00 curv=921.956 belowF0=1.9731 nv2=1799
+p=0.37267 best_t=+0.00411 v2-mine=+0.0e+00 | t*=+0.00411 gain=+5.10e-07 oneside=381.413 basin=99.00 curv=928.266 belowF0=1.9741 nv2=1799
+p=0.37467 best_t=+0.00407 v2-mine=+2.8e-17 | t*=+0.00407 gain=+5.05e-07 oneside=384.631 basin=99.00 curv=932.253 belowF0=1.9751 nv2=1799
+
+== sigma=0.003 c=0.002  (21 p-values)
+p=0.35467 best_t=+0.00829 v2-mine=+1.4e-17 | t*=+0.00829 gain=+2.01e-06 oneside=188.493 basin=99.00 curv=477.774 belowF0=1.9912 nv2=1799
+p=0.35567 best_t=+0.00826 v2-mine=+4.2e-17 | t*=+0.00826 gain=+2.00e-06 oneside=189.107 basin=99.00 curv=478.739 belowF0=1.9915 nv2=1799
+p=0.35667 best_t=+0.00824 v2-mine=+2.8e-17 | t*=+0.00824 gain=+2.00e-06 oneside=189.723 basin=99.00 curv=479.873 belowF0=1.9918 nv2=1799
+p=0.35767 best_t=+0.00821 v2-mine=+1.4e-17 | t*=+0.00821 gain=+1.99e-06 oneside=190.340 basin=99.00 curv=480.842 belowF0=1.9922 nv2=1799
+p=0.35867 best_t=+0.00818 v2-mine=+1.4e-17 | t*=+0.00818 gain=+1.98e-06 oneside=190.960 basin=99.00 curv=481.896 belowF0=1.9925 nv2=1799
+p=0.35967 best_t=+0.00816 v2-mine=+4.2e-17 | t*=+0.00816 gain=+1.98e-06 oneside=191.581 basin=99.00 curv=482.868 belowF0=1.9928 nv2=1799
+p=0.36067 best_t=+0.00813 v2-mine=+1.4e-17 | t*=+0.00813 gain=+1.97e-06 oneside=192.205 basin=99.00 curv=484.012 belowF0=1.9931 nv2=1799
+p=0.36167 best_t=+0.00810 v2-mine=+2.8e-17 | t*=+0.00810 gain=+1.97e-06 oneside=192.830 basin=99.00 curv=485.073 belowF0=1.9934 nv2=1799
+p=0.36267 best_t=+0.00808 v2-mine=+4.2e-17 | t*=+0.00808 gain=+1.96e-06 oneside=193.457 basin=99.00 curv=486.223 belowF0=1.9938 nv2=1799
+p=0.36367 best_t=+0.00805 v2-mine=+2.8e-17 | t*=+0.00805 gain=+1.96e-06 oneside=194.086 basin=99.00 curv=487.030 belowF0=1.9941 nv2=1799
+p=0.36467 best_t=+0.00803 v2-mine=+0.0e+00 | t*=+0.00803 gain=+1.95e-06 oneside=194.716 basin=99.00 curv=488.446 belowF0=1.9944 nv2=1799
+p=0.36567 best_t=+0.00800 v2-mine=+0.0e+00 | t*=+0.00800 gain=+1.95e-06 oneside=195.349 basin=99.00 curv=489.342 belowF0=1.9948 nv2=1799
+p=0.36667 best_t=+0.00797 v2-mine=+1.4e-17 | t*=+0.00797 gain=+1.94e-06 oneside=195.984 basin=99.00 curv=490.239 belowF0=1.9951 nv2=1799
+p=0.36767 best_t=+0.00795 v2-mine=-1.4e-17 | t*=+0.00795 gain=+1.93e-06 oneside=196.620 basin=99.00 curv=491.491 belowF0=1.9954 nv2=1799
+p=0.36867 best_t=+0.00792 v2-mine=+0.0e+00 | t*=+0.00792 gain=+1.93e-06 oneside=197.259 basin=99.00 curv=492.392 belowF0=1.9957 nv2=1799
+p=0.36967 best_t=+0.00790 v2-mine=+4.2e-17 | t*=+0.00790 gain=+1.92e-06 oneside=197.899 basin=99.00 curv=493.650 belowF0=1.9961 nv2=1799
+p=0.37067 best_t=+0.00787 v2-mine=+2.8e-17 | t*=+0.00787 gain=+1.92e-06 oneside=198.541 basin=99.00 curv=494.464 belowF0=1.9964 nv2=1799
+p=0.37167 best_t=+0.00785 v2-mine=-1.4e-17 | t*=+0.00785 gain=+1.91e-06 oneside=199.185 basin=99.00 curv=495.820 belowF0=1.9967 nv2=1799
+p=0.37267 best_t=+0.00782 v2-mine=+2.8e-17 | t*=+0.00782 gain=+1.91e-06 oneside=199.831 basin=99.00 curv=496.818 belowF0=1.9971 nv2=1799
+p=0.37367 best_t=+0.00780 v2-mine=+2.8e-17 | t*=+0.00780 gain=+1.90e-06 oneside=200.479 basin=99.00 curv=497.726 belowF0=1.9974 nv2=1799
+p=0.37467 best_t=+0.00777 v2-mine=+2.8e-17 | t*=+0.00777 gain=+1.90e-06 oneside=201.129 basin=99.00 curv=498.910 belowF0=1.9977 nv2=1799
+
+== sigma=0.01 c=-0.002  (21 p-values)
+p=0.33337 best_t=-0.08950 v2-mine=+2.8e-17 | t*=-0.08950 gain=+5.12e-05 oneside=16.550 basin=35.07 curv=51.765 belowF0=1.4800 nv2=1799
+p=0.33437 best_t=-0.08802 v2-mine=+1.4e-17 | t*=-0.08802 gain=+4.87e-05 oneside=16.847 basin=35.66 curv=53.113 belowF0=1.4798 nv2=1799
+p=0.33537 best_t=-0.08653 v2-mine=+5.6e-17 | t*=-0.08653 gain=+4.63e-05 oneside=17.153 basin=36.27 curv=54.520 belowF0=1.4797 nv2=1799
+p=0.33637 best_t=-0.08504 v2-mine=+2.8e-17 | t*=-0.08504 gain=+4.40e-05 oneside=17.470 basin=36.91 curv=55.993 belowF0=1.4795 nv2=1799
+p=0.33737 best_t=-0.08356 v2-mine=+1.4e-17 | t*=-0.08356 gain=+4.17e-05 oneside=17.799 basin=37.56 curv=57.534 belowF0=1.4794 nv2=1799
+p=0.33837 best_t=-0.08208 v2-mine=+5.6e-17 | t*=-0.08208 gain=+3.96e-05 oneside=18.139 basin=38.24 curv=59.149 belowF0=1.4793 nv2=1799
+p=0.33937 best_t=-0.08059 v2-mine=+1.4e-17 | t*=-0.08059 gain=+3.75e-05 oneside=18.491 basin=38.95 curv=60.844 belowF0=1.4792 nv2=1799
+p=0.34037 best_t=-0.07911 v2-mine=+0.0e+00 | t*=-0.07911 gain=+3.54e-05 oneside=18.857 basin=39.68 curv=62.625 belowF0=1.4792 nv2=1799
+p=0.34137 best_t=-0.07762 v2-mine=+1.4e-17 | t*=-0.07762 gain=+3.35e-05 oneside=19.236 basin=40.44 curv=64.497 belowF0=1.4791 nv2=1799
+p=0.34237 best_t=-0.07614 v2-mine=+0.0e+00 | t*=-0.07614 gain=+3.16e-05 oneside=19.631 basin=41.22 curv=66.468 belowF0=1.4792 nv2=1799
+p=0.34337 best_t=-0.07465 v2-mine=+1.4e-17 | t*=-0.07465 gain=+2.98e-05 oneside=20.041 basin=42.04 curv=68.550 belowF0=1.4792 nv2=1799
+p=0.34437 best_t=-0.07317 v2-mine=+5.6e-17 | t*=-0.07317 gain=+2.81e-05 oneside=20.468 basin=42.90 curv=70.746 belowF0=1.4793 nv2=1799
+p=0.34537 best_t=-0.07168 v2-mine=+2.8e-17 | t*=-0.07168 gain=+2.64e-05 oneside=20.914 basin=43.79 curv=73.071 belowF0=1.4795 nv2=1799
+p=0.34637 best_t=-0.07019 v2-mine=+1.4e-17 | t*=-0.07019 gain=+2.48e-05 oneside=21.378 basin=44.72 curv=75.536 belowF0=1.4798 nv2=1799
+p=0.34737 best_t=-0.06870 v2-mine=+2.8e-17 | t*=-0.06870 gain=+2.33e-05 oneside=21.863 basin=45.69 curv=78.152 belowF0=1.4801 nv2=1799
+p=0.34837 best_t=-0.06721 v2-mine=+0.0e+00 | t*=-0.06721 gain=+2.18e-05 oneside=22.371 basin=46.70 curv=80.939 belowF0=1.4806 nv2=1799
+p=0.34937 best_t=-0.06572 v2-mine=+1.4e-17 | t*=-0.06572 gain=+2.04e-05 oneside=22.903 basin=47.76 curv=83.908 belowF0=1.4812 nv2=1799
+p=0.35037 best_t=-0.06422 v2-mine=+2.8e-17 | t*=-0.06422 gain=+1.91e-05 oneside=23.460 basin=48.88 curv=87.083 belowF0=1.4819 nv2=1799
+p=0.35137 best_t=-0.06272 v2-mine=+2.8e-17 | t*=-0.06272 gain=+1.78e-05 oneside=24.046 basin=50.05 curv=90.488 belowF0=1.4828 nv2=1799
+p=0.35237 best_t=-0.06121 v2-mine=+6.9e-17 | t*=-0.06121 gain=+1.66e-05 oneside=24.663 basin=51.28 curv=94.152 belowF0=1.4839 nv2=1799
+p=0.35337 best_t=-0.05969 v2-mine=+1.4e-17 | t*=-0.05969 gain=+1.55e-05 oneside=25.314 basin=52.58 curv=98.097 belowF0=1.4853 nv2=1799
+
+== sigma=0.01 c=0  (21 p-values)
+p=0.33337 best_t=-0.07521 v2-mine=+4.2e-17 | t*=-0.07521 gain=+1.23e-05 oneside=0.748 basin=20.64 curv=0.841 belowF0=0.9283 nv2=419
+p=0.33437 best_t=-0.07335 v2-mine=+1.4e-17 | t*=-0.07335 gain=+1.05e-05 oneside=0.734 basin=21.15 curv=0.825 belowF0=0.8903 nv2=417
+p=0.33537 best_t=-0.07147 v2-mine=+4.2e-17 | t*=-0.07147 gain=+8.85e-06 oneside=0.718 basin=21.70 curv=0.809 belowF0=0.8474 nv2=415
+p=0.33637 best_t=-0.06956 v2-mine=+4.2e-17 | t*=-0.06956 gain=+7.28e-06 oneside=0.701 basin=22.28 curv=0.790 belowF0=0.7983 nv2=413
+p=0.33737 best_t=-0.06761 v2-mine=+2.8e-17 | t*=-0.06761 gain=+5.79e-06 oneside=0.682 basin=22.92 curv=0.770 belowF0=0.7411 nv2=411
+p=0.33837 best_t=-0.06561 v2-mine=+1.4e-17 | t*=-0.06561 gain=+4.39e-06 oneside=0.661 basin=23.60 curv=0.747 belowF0=0.6730 nv2=409
+p=0.33937 best_t=-0.06355 v2-mine=+4.2e-17 | t*=-0.06355 gain=+3.08e-06 oneside=0.638 basin=24.35 curv=0.721 belowF0=0.5888 nv2=407
+p=0.34037 best_t=-0.06143 v2-mine=+1.4e-17 | t*=-0.06143 gain=+1.85e-06 oneside=0.611 basin=25.18 curv=0.692 belowF0=0.4781 nv2=404
+p=0.34137 best_t=-0.05922 v2-mine=-2.8e-17 | t*=-0.05922 gain=+7.01e-07 oneside=0.580 basin=26.10 curv=0.657 belowF0=0.3100 nv2=402
+p=0.34237 best_t=+0.00000 v2-mine=-1.4e-17 | t*=-0.05690 gain=-3.57e-07 oneside=0.544 basin=27.15 curv=0.617 belowF0=- nv2=399
+p=0.34337 best_t=+0.00000 v2-mine=-1.4e-17 | t*=-0.05441 gain=-1.33e-06 oneside=0.500 basin=28.37 curv=0.568 belowF0=- nv2=396
+p=0.34437 best_t=+0.00000 v2-mine=+1.4e-17 | t*=-0.05169 gain=-2.21e-06 oneside=0.445 basin=29.83 curv=0.506 belowF0=- nv2=393
+p=0.34537 best_t=+0.00000 v2-mine=+1.4e-17 | t*=-0.04856 gain=-2.99e-06 oneside=0.370 basin=31.71 curv=0.422 belowF0=- nv2=389
+p=0.34637 best_t=+0.00000 v2-mine=+2.8e-17 | t*=-0.04450 gain=-3.67e-06 oneside=0.248 basin=34.54 curv=0.284 belowF0=- nv2=383
+p=0.34737 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.34837 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.34937 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.35037 best_t=+0.00000 v2-mine=+2.8e-17 | 
+p=0.35137 best_t=+0.00000 v2-mine=-1.4e-17 | 
+p=0.35237 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.35337 best_t=+0.00000 v2-mine=+0.0e+00 | 
+
+== sigma=0.01 c=0.002  (21 p-values)
+p=0.33337 best_t=+0.00990 v2-mine=+1.4e-17 | t*=+0.00990 gain=+2.46e-06 oneside=157.739 basin=99.00 curv=395.070 belowF0=1.8951 nv2=1799
+p=0.33437 best_t=+0.00985 v2-mine=+4.2e-17 | t*=+0.00985 gain=+2.45e-06 oneside=158.551 basin=99.00 curv=396.721 belowF0=1.8963 nv2=1799
+p=0.33537 best_t=+0.00979 v2-mine=+1.4e-17 | t*=+0.00979 gain=+2.43e-06 oneside=159.367 basin=99.00 curv=398.534 belowF0=1.8974 nv2=1799
+p=0.33637 best_t=+0.00975 v2-mine=+2.8e-17 | t*=+0.00975 gain=+2.42e-06 oneside=160.187 basin=99.00 curv=399.967 belowF0=1.8986 nv2=1799
+p=0.33737 best_t=+0.00970 v2-mine=+2.8e-17 | t*=+0.00970 gain=+2.41e-06 oneside=161.009 basin=99.00 curv=401.760 belowF0=1.8997 nv2=1799
+p=0.33837 best_t=+0.00965 v2-mine=+1.4e-17 | t*=+0.00965 gain=+2.40e-06 oneside=161.835 basin=99.00 curv=403.673 belowF0=1.9008 nv2=1799
+p=0.33937 best_t=+0.00960 v2-mine=+2.8e-17 | t*=+0.00960 gain=+2.38e-06 oneside=162.663 basin=99.00 curv=405.194 belowF0=1.9020 nv2=1799
+p=0.34037 best_t=+0.00955 v2-mine=-1.4e-17 | t*=+0.00955 gain=+2.37e-06 oneside=163.495 basin=99.00 curv=406.933 belowF0=1.9031 nv2=1799
+p=0.34137 best_t=+0.00950 v2-mine=+2.8e-17 | t*=+0.00950 gain=+2.36e-06 oneside=164.330 basin=99.00 curv=408.636 belowF0=1.9042 nv2=1799
+p=0.34237 best_t=+0.00945 v2-mine=+2.8e-17 | t*=+0.00945 gain=+2.35e-06 oneside=165.168 basin=99.00 curv=410.247 belowF0=1.9053 nv2=1799
+p=0.34337 best_t=+0.00941 v2-mine=+0.0e+00 | t*=+0.00941 gain=+2.34e-06 oneside=166.009 basin=99.00 curv=412.086 belowF0=1.9064 nv2=1799
+p=0.34437 best_t=+0.00936 v2-mine=+2.8e-17 | t*=+0.00936 gain=+2.32e-06 oneside=166.853 basin=99.00 curv=413.617 belowF0=1.9075 nv2=1799
+p=0.34537 best_t=+0.00931 v2-mine=+2.8e-17 | t*=+0.00931 gain=+2.31e-06 oneside=167.700 basin=99.00 curv=415.488 belowF0=1.9086 nv2=1799
+p=0.34637 best_t=+0.00926 v2-mine=+1.4e-17 | t*=+0.00926 gain=+2.30e-06 oneside=168.550 basin=99.00 curv=416.988 belowF0=1.9098 nv2=1799
+p=0.34737 best_t=+0.00922 v2-mine=+1.4e-17 | t*=+0.00922 gain=+2.29e-06 oneside=169.403 basin=99.00 curv=418.780 belowF0=1.9108 nv2=1799
+p=0.34837 best_t=+0.00917 v2-mine=+2.8e-17 | t*=+0.00917 gain=+2.28e-06 oneside=170.259 basin=99.00 curv=420.417 belowF0=1.9119 nv2=1799
+p=0.34937 best_t=+0.00913 v2-mine=-1.4e-17 | t*=+0.00913 gain=+2.27e-06 oneside=171.117 basin=99.00 curv=422.297 belowF0=1.9130 nv2=1799
+p=0.35037 best_t=+0.00908 v2-mine=+1.4e-17 | t*=+0.00908 gain=+2.26e-06 oneside=171.979 basin=99.00 curv=423.847 belowF0=1.9141 nv2=1799
+p=0.35137 best_t=+0.00904 v2-mine=+2.8e-17 | t*=+0.00904 gain=+2.24e-06 oneside=172.844 basin=99.00 curv=425.467 belowF0=1.9152 nv2=1799
+p=0.35237 best_t=+0.00899 v2-mine=+1.4e-17 | t*=+0.00899 gain=+2.23e-06 oneside=173.711 basin=99.00 curv=427.277 belowF0=1.9162 nv2=1799
+p=0.35337 best_t=+0.00895 v2-mine=+1.4e-17 | t*=+0.00895 gain=+2.22e-06 oneside=174.581 basin=99.00 curv=428.864 belowF0=1.9173 nv2=1799
+
+== sigma=0.03 c=-0.002  (21 p-values)
+p=0.29168 best_t=-0.13623 v2-mine=+1.4e-17 | t*=-0.13623 gain=+8.32e-05 oneside=10.530 basin=23.06 curv=32.629 belowF0=1.3917 nv2=1799
+p=0.29268 best_t=-0.13425 v2-mine=+0.0e+00 | t*=-0.13425 gain=+7.82e-05 oneside=10.701 basin=23.40 curv=33.569 belowF0=1.3899 nv2=1799
+p=0.29368 best_t=-0.13224 v2-mine=+1.4e-17 | t*=-0.13224 gain=+7.33e-05 oneside=10.879 basin=23.76 curv=34.570 belowF0=1.3880 nv2=1799
+p=0.29468 best_t=-0.13020 v2-mine=+2.8e-17 | t*=-0.13020 gain=+6.85e-05 oneside=11.064 basin=24.13 curv=35.638 belowF0=1.3861 nv2=1799
+p=0.29568 best_t=-0.12814 v2-mine=+2.8e-17 | t*=-0.12814 gain=+6.39e-05 oneside=11.258 basin=24.52 curv=36.781 belowF0=1.3840 nv2=1799
+p=0.29668 best_t=-0.12606 v2-mine=+2.8e-17 | t*=-0.12606 gain=+5.94e-05 oneside=11.461 basin=24.92 curv=38.009 belowF0=1.3819 nv2=1799
+p=0.29768 best_t=-0.12394 v2-mine=+2.8e-17 | t*=-0.12394 gain=+5.51e-05 oneside=11.674 basin=25.35 curv=39.332 belowF0=1.3797 nv2=1799
+p=0.29868 best_t=-0.12178 v2-mine=+1.4e-17 | t*=-0.12178 gain=+5.09e-05 oneside=11.898 basin=25.80 curv=40.764 belowF0=1.3774 nv2=1799
+p=0.29968 best_t=-0.11959 v2-mine=+4.2e-17 | t*=-0.11959 gain=+4.68e-05 oneside=12.135 basin=26.27 curv=42.319 belowF0=1.3750 nv2=1799
+p=0.30068 best_t=-0.11736 v2-mine=+4.2e-17 | t*=-0.11736 gain=+4.29e-05 oneside=12.385 basin=26.77 curv=44.019 belowF0=1.3725 nv2=1799
+p=0.30168 best_t=-0.11508 v2-mine=+2.8e-17 | t*=-0.11508 gain=+3.91e-05 oneside=12.650 basin=27.30 curv=45.886 belowF0=1.3699 nv2=1799
+p=0.30268 best_t=-0.11274 v2-mine=+2.8e-17 | t*=-0.11274 gain=+3.55e-05 oneside=12.932 basin=27.86 curv=47.950 belowF0=1.3672 nv2=1799
+p=0.30368 best_t=-0.11035 v2-mine=+2.8e-17 | t*=-0.11035 gain=+3.20e-05 oneside=13.234 basin=28.47 curv=50.249 belowF0=1.3644 nv2=1799
+p=0.30468 best_t=-0.10789 v2-mine=+2.8e-17 | t*=-0.10789 gain=+2.87e-05 oneside=13.559 basin=29.12 curv=52.831 belowF0=1.3614 nv2=1799
+p=0.30568 best_t=-0.10535 v2-mine=-1.4e-17 | t*=-0.10535 gain=+2.56e-05 oneside=13.910 basin=29.82 curv=55.763 belowF0=1.3584 nv2=1799
+p=0.30668 best_t=-0.10272 v2-mine=-2.8e-17 | t*=-0.10272 gain=+2.25e-05 oneside=14.292 basin=30.58 curv=59.130 belowF0=1.3554 nv2=1799
+p=0.30768 best_t=-0.09998 v2-mine=+2.8e-17 | t*=-0.09998 gain=+1.97e-05 oneside=14.711 basin=31.42 curv=63.058 belowF0=1.3523 nv2=1799
+p=0.30868 best_t=-0.09710 v2-mine=+2.8e-17 | t*=-0.09710 gain=+1.70e-05 oneside=15.177 basin=32.35 curv=67.726 belowF0=1.3493 nv2=1799
+p=0.30968 best_t=-0.09406 v2-mine=+2.8e-17 | t*=-0.09406 gain=+1.45e-05 oneside=15.700 basin=33.40 curv=73.405 belowF0=1.3465 nv2=1799
+p=0.31068 best_t=-0.09080 v2-mine=+2.8e-17 | t*=-0.09080 gain=+1.21e-05 oneside=16.299 basin=34.60 curv=80.542 belowF0=1.3442 nv2=1799
+p=0.31168 best_t=-0.08726 v2-mine=-1.4e-17 | t*=-0.08726 gain=+9.90e-06 oneside=17.002 basin=36.00 curv=89.929 belowF0=1.3431 nv2=1799
+
+== sigma=0.03 c=0  (21 p-values)
+p=0.29168 best_t=-0.12262 v2-mine=+0.0e+00 | t*=-0.12262 gain=+2.39e-05 oneside=0.684 basin=12.49 curv=0.713 belowF0=0.7628 nv2=373 || t*=-0.00000 gain=-1.30e-14 oneside=0.000 basin=99.00 curv=0.000 belowF0=- nv2=526 || t*=-0.00000 gain=-1.16e-14 oneside=0.000 basin=0.06 curv=0.000 belowF0=- nv2=0
+p=0.29268 best_t=-0.12015 v2-mine=+1.4e-17 | t*=-0.12015 gain=+1.98e-05 oneside=0.665 basin=12.74 curv=0.696 belowF0=0.7153 nv2=371 || t*=+0.00000 gain=-1.18e-14 oneside=0.001 basin=99.00 curv=0.000 belowF0=- nv2=899
+p=0.29368 best_t=-0.11760 v2-mine=+1.4e-17 | t*=-0.11760 gain=+1.58e-05 oneside=0.646 basin=13.00 curv=0.678 belowF0=0.6607 nv2=369 || t*=+0.00000 gain=-1.35e-14 oneside=0.001 basin=99.00 curv=0.001 belowF0=- nv2=899
+p=0.29468 best_t=-0.11495 v2-mine=+4.2e-17 | t*=-0.11495 gain=+1.21e-05 oneside=0.624 basin=13.29 curv=0.657 belowF0=0.5963 nv2=367
+p=0.29568 best_t=-0.11221 v2-mine=+4.2e-17 | t*=-0.11221 gain=+8.49e-06 oneside=0.600 basin=13.60 curv=0.634 belowF0=0.5178 nv2=364
+p=0.29668 best_t=-0.10933 v2-mine=+0.0e+00 | t*=-0.10933 gain=+5.08e-06 oneside=0.573 basin=13.94 curv=0.608 belowF0=0.4156 nv2=362
+p=0.29768 best_t=-0.10629 v2-mine=+1.4e-17 | t*=-0.10629 gain=+1.84e-06 oneside=0.542 basin=14.32 curv=0.578 belowF0=0.2606 nv2=359
+p=0.29868 best_t=+0.00000 v2-mine=+0.0e+00 | t*=-0.10305 gain=-1.21e-06 oneside=0.507 basin=14.75 curv=0.543 belowF0=- nv2=356 || t*=-0.00000 gain=-1.32e-14 oneside=0.000 basin=2.00 curv=0.000 belowF0=- nv2=1 || t*=+0.00000 gain=-1.32e-14 oneside=0.000 basin=2.00 curv=0.000 belowF0=- nv2=1
+p=0.29968 best_t=+0.00000 v2-mine=-1.4e-17 | t*=-0.09952 gain=-4.06e-06 oneside=0.464 basin=15.25 curv=0.501 belowF0=- nv2=353 || t*=-0.00000 gain=-1.34e-14 oneside=0.001 basin=99.00 curv=0.000 belowF0=- nv2=546
+p=0.30068 best_t=+0.00000 v2-mine=-1.4e-17 | t*=-0.09559 gain=-6.71e-06 oneside=0.412 basin=15.85 curv=0.448 belowF0=- nv2=350
+p=0.30168 best_t=+0.00000 v2-mine=+1.4e-17 | t*=-0.09098 gain=-9.13e-06 oneside=0.343 basin=16.61 curv=0.377 belowF0=- nv2=346
+p=0.30268 best_t=+0.00000 v2-mine=+0.0e+00 | t*=-0.08490 gain=-1.13e-05 oneside=0.237 basin=17.74 curv=0.264 belowF0=- nv2=341
+p=0.30368 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.30468 best_t=+0.00000 v2-mine=+0.0e+00 | t*=-0.00000 gain=-1.46e-14 oneside=0.000 basin=99.00 curv=0.000 belowF0=- nv2=899 || t*=+0.00000 gain=-1.64e-14 oneside=0.001 basin=99.00 curv=0.000 belowF0=- nv2=899
+p=0.30568 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.30668 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.30768 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.30868 best_t=+0.00000 v2-mine=+2.8e-17 | 
+p=0.30968 best_t=+0.00000 v2-mine=+1.4e-17 | 
+p=0.31068 best_t=+0.00000 v2-mine=+0.0e+00 | 
+p=0.31168 best_t=+0.00000 v2-mine=+1.4e-17 | 
+
+== sigma=0.03 c=0.002  (21 p-values)
+p=0.29168 best_t=+0.01328 v2-mine=+2.8e-17 | t*=-0.09839 gain=-2.72e-05 oneside=0.279 basin=15.24 curv=0.313 belowF0=- nv2=335 || t*=+0.01328 gain=+3.15e-06 oneside=6.342 basin=99.00 curv=5.818 belowF0=1.8645 nv2=1464
+p=0.29268 best_t=+0.01318 v2-mine=+0.0e+00 | t*=-0.09106 gain=-2.97e-05 oneside=0.154 basin=16.40 curv=0.175 belowF0=- nv2=330 || t*=+0.01318 gain=+3.12e-06 oneside=6.849 basin=99.00 curv=5.986 belowF0=1.8665 nv2=1469
+p=0.29368 best_t=+0.01307 v2-mine=+2.8e-17 | t*=+0.01307 gain=+3.09e-06 oneside=119.181 basin=99.00 curv=337.256 belowF0=1.8685 nv2=1799
+p=0.29468 best_t=+0.01296 v2-mine=+2.8e-17 | t*=+0.01296 gain=+3.07e-06 oneside=120.158 basin=99.00 curv=339.408 belowF0=1.8705 nv2=1799
+p=0.29568 best_t=+0.01286 v2-mine=+0.0e+00 | t*=+0.01286 gain=+3.04e-06 oneside=121.141 basin=99.00 curv=341.790 belowF0=1.8724 nv2=1799
+p=0.29668 best_t=+0.01276 v2-mine=+2.8e-17 | t*=+0.01276 gain=+3.02e-06 oneside=122.127 basin=99.00 curv=343.771 belowF0=1.8744 nv2=1799
+p=0.29768 best_t=+0.01266 v2-mine=+1.4e-17 | t*=+0.01266 gain=+3.00e-06 oneside=123.117 basin=99.00 curv=345.984 belowF0=1.8763 nv2=1799
+p=0.29868 best_t=+0.01256 v2-mine=+2.8e-17 | t*=+0.01256 gain=+2.97e-06 oneside=124.112 basin=99.00 curv=348.090 belowF0=1.8782 nv2=1799
+p=0.29968 best_t=+0.01246 v2-mine=+1.4e-17 | t*=+0.01246 gain=+2.95e-06 oneside=125.110 basin=99.00 curv=350.260 belowF0=1.8800 nv2=1799
+p=0.30068 best_t=+0.01236 v2-mine=+0.0e+00 | t*=+0.01236 gain=+2.93e-06 oneside=126.113 basin=99.00 curv=352.569 belowF0=1.8819 nv2=1799
+p=0.30168 best_t=+0.01226 v2-mine=+1.4e-17 | t*=+0.01226 gain=+2.91e-06 oneside=127.119 basin=99.00 curv=354.583 belowF0=1.8837 nv2=1799
+p=0.30268 best_t=+0.01216 v2-mine=+1.4e-17 | t*=+0.01216 gain=+2.88e-06 oneside=128.129 basin=99.00 curv=356.921 belowF0=1.8855 nv2=1799
+p=0.30368 best_t=+0.01207 v2-mine=+0.0e+00 | t*=+0.01207 gain=+2.86e-06 oneside=129.143 basin=99.00 curv=358.991 belowF0=1.8873 nv2=1799
+p=0.30468 best_t=+0.01198 v2-mine=+2.8e-17 | t*=+0.01198 gain=+2.84e-06 oneside=130.160 basin=99.00 curv=360.972 belowF0=1.8891 nv2=1799
+p=0.30568 best_t=+0.01188 v2-mine=+4.2e-17 | t*=+0.01188 gain=+2.82e-06 oneside=131.181 basin=99.00 curv=363.094 belowF0=1.8908 nv2=1799
+p=0.30668 best_t=+0.01179 v2-mine=+0.0e+00 | t*=+0.01179 gain=+2.80e-06 oneside=132.205 basin=99.00 curv=365.324 belowF0=1.8925 nv2=1799
+p=0.30768 best_t=+0.01170 v2-mine=+1.4e-17 | t*=+0.01170 gain=+2.78e-06 oneside=133.234 basin=99.00 curv=367.383 belowF0=1.8942 nv2=1799
+p=0.30868 best_t=+0.01161 v2-mine=+2.8e-17 | t*=+0.01161 gain=+2.76e-06 oneside=134.265 basin=99.00 curv=369.427 belowF0=1.8959 nv2=1799
+p=0.30968 best_t=+0.01152 v2-mine=+2.8e-17 | t*=+0.01152 gain=+2.74e-06 oneside=135.299 basin=99.00 curv=371.621 belowF0=1.8975 nv2=1799
+p=0.31068 best_t=+0.01144 v2-mine=+0.0e+00 | t*=+0.01144 gain=+2.72e-06 oneside=136.337 basin=99.00 curv=373.718 belowF0=1.8992 nv2=1799
+p=0.31168 best_t=+0.01135 v2-mine=+5.6e-17 | t*=+0.01135 gain=+2.70e-06 oneside=137.377 basin=99.00 curv=375.670 belowF0=1.9008 nv2=1799
+
+GLOBAL sharing wells (best and below mono): n = 292
+min one-sided basin / |t*|   = 0.5421  at sigma=0.03 c=0 p=0.29768 t*=-0.10629 gain=1.84e-06
+min curvature width / |t*|   = 0.5781  at sigma=0.03 c=0 p=0.29768 t*=-0.10629 gain=1.84e-06
+min {F<F0} width / |t*|      = 0.2591  at sigma=0.003 c=-0.0001 p=0.36667 t*=-0.02538 gain=5.11e-08

@@ -1,0 +1,68 @@
+{
+ "sigma": 0.002,
+ "p_window": [
+  0.3687658759753506,
+  0.40376587597535063
+ ],
+ "tests": [
+  {
+   "c": -0.00035,
+   "bistable": true,
+   "bistable_p": [
+    0.3827658759753506,
+    0.3837658759753506
+   ],
+   "example_minima": [
+    -0.011189998704741829,
+    -0.0033901164602157456
+   ]
+  },
+  {
+   "c": -0.0004,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.00045,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.0005,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.000375,
+   "bistable": true,
+   "bistable_p": [
+    0.3847658759753506
+   ],
+   "example_minima": [
+    -0.009682055354768036,
+    -0.003918114223552383
+   ]
+  },
+  {
+   "c": -0.0003625,
+   "bistable": true,
+   "bistable_p": [
+    0.3837658759753506,
+    0.3847658759753506
+   ],
+   "example_minima": [
+    -0.010408755299222526,
+    -0.003644566300984298
+   ]
+  },
+  {
+   "c": -0.0003875,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  }
+ ]
+}

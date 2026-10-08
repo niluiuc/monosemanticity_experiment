@@ -1,0 +1,13 @@
+{
+  "calibration_images.npz": "082ecd0f81d1fe51b7e049c14dee9b3ed973d73f76556f1f3612ad246c5fc317",
+  "calibration_scores.npz": "e19b206124d6620f280bb8444581bfe005a9784d502a5bc80bdf99e1bbc35244",
+  "config.json": "a96d79e2a25ae0b5bf359e58d952aaee65b1cbacdd45f3e90eb32986461ebc8e",
+  "model.pt": "81c5d085ee8399b0a7399e3736910ccbec657be705c1c4bc987ba5c1bf6b8e8f",
+  "provenance.json": "e4a165f5cbf30f6fcb4ace233ad246e98095d4c8901aa888487cc2722289d15c",
+  "recovery_gate.json": "b643c25f4f22ccae2cbe40b9b463b47c078d1565f387166c1b586fd22285d79f",
+  "source_snapshot.py": "41e3e048f790e455053e31b0a0a43e34caa48a9c02770f2d35a958cfe9355687",
+  "split_background_ids.npz": "fb924c3bedd96106403984a770213860ded23e604889e1706de756341f77bab4",
+  "training_history.json": "181a1a92e7fa4e15b7b9f5b8599611cff192675b170efb48ab4b9abe73f64b10",
+  "train_images.npz": "69af244044c8633f8aa36125e143df346361834ca93c97f3ef77a9396eb827c2",
+  "train_scores.npz": "b54cc84ec2116af4e8c89a9df0e85408e6b5d233c201ca920f4873a5aba6bd44"
+}

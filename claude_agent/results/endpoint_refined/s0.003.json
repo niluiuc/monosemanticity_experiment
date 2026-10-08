@@ -1,0 +1,74 @@
+{
+ "sigma": 0.003,
+ "p_window": [
+  0.36466894078825207,
+  0.3996689407882521
+ ],
+ "tests": [
+  {
+   "c": -0.0005,
+   "bistable": true,
+   "bistable_p": [
+    0.3796689407882521,
+    0.3806689407882521
+   ],
+   "example_minima": [
+    -0.014947032753968787,
+    -0.004868226825776026
+   ]
+  },
+  {
+   "c": -0.00055,
+   "bistable": true,
+   "bistable_p": [
+    0.3826689407882521
+   ],
+   "example_minima": [
+    -0.011602341788059299,
+    -0.005426473186344521
+   ]
+  },
+  {
+   "c": -0.0006,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.00065,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.0007,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.0008,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.000575,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.0005625,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  },
+  {
+   "c": -0.0005875,
+   "bistable": false,
+   "bistable_p": [],
+   "example_minima": null
+  }
+ ]
+}

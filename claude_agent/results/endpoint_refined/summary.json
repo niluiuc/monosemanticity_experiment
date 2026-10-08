@@ -1,0 +1,34 @@
+{
+ "note": "|c_e| estimates: midpoint of (most negative bistable c, next non-bistable c). Detection near the endpoint is limited by the p grid (0.001): some non-monotone detections occurred (sigma=.01,.02,.03), so treat as +-5%.",
+ "sigma": [
+  0.002,
+  0.003,
+  0.005,
+  0.01,
+  0.02,
+  0.03
+ ],
+ "abs_c_e": [
+  0.00038124999999999997,
+  0.00055625,
+  0.0008625,
+  0.0013800000000000002,
+  0.002125,
+  0.002325
+ ],
+ "abs_c_e_over_sigma": [
+  0.190625,
+  0.18541666666666667,
+  0.1725,
+  0.138,
+  0.10625000000000001,
+  0.0775
+ ],
+ "local_loglog_slopes": [
+  0.9316769754157379,
+  0.8586439188218847,
+  0.6780719051126377,
+  0.6227945742468952,
+  0.22183964751646276
+ ]
+}

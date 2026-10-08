@@ -1,0 +1,14 @@
+3 0.4 partner in 4 / 4 mean max norm 0.058
+3 0.42 partner in 1 / 2 mean max norm 0.022
+3 0.43 partner in 2 / 4 mean max norm 0.013
+3 0.44 partner in 0 / 2 mean max norm 0.007
+3 0.45 partner in 0 / 4 mean max norm 0.005
+3 0.47 partner in 0 / 2 mean max norm 0.005
+4 0.4 partner in 3 / 3 mean max norm 0.084
+4 0.43 partner in 3 / 3 mean max norm 0.020
+4 0.45 partner in 1 / 3 mean max norm 0.008
+4 0.47 partner in 0 / 3 mean max norm 0.007
+2 0.4 partner in 2 / 3 mean max norm 0.026
+2 0.41 partner in 2 / 3 mean max norm 0.020
+2 0.42 partner in 1 / 3 mean max norm 0.009
+2 0.43 partner in 0 / 3 mean max norm 0.005

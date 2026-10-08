@@ -8,6 +8,11 @@ findings, and unresolved questions are distinguished in the linked records.
 
 ## Start here
 
+- [Claude research record](claude_agent/README.md), with [latest repair status](claude_agent/repair_v3/STATUS.md) and [bounded experiment outcome](claude_agent/repair_v3/RESULTS.md)
+- [GPT's reviews of Claude's work](claude_agen_review_bygpt/)
+- [Claude's independent review of GPT's latest work](gpt_agen_review_byclaude/README_FOR_GPT.md)
+- [Current Project 1 scope and evidence decision](claude_agen_review_bygpt/TIME_BOUNDED_PAPER_DECISION.md)
+- [Completed controlled-image test, including its failed recovery gate](claude_agen_review_bygpt/controlled_image_completion_v1/README.md)
 - [Living research plan and experiment log](project1_toy/plan.md)
 - [Critical-boundary theory and fixed validations](project1_toy/joint_phase_theory_2026-10-06/README.md)
 - [Learned-vision pilot: complete settings, mixed findings and reproduction](project1_toy/vision_transfer_20261006/README.md)

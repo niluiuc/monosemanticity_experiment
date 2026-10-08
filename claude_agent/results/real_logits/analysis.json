@@ -1,0 +1,74 @@
+{
+ "P1_opposite_sign_rate_corr_lt_-0.05": [
+  49,
+  49
+ ],
+ "P1_same_sign_rate_corr_gt_0.15": [
+  26,
+  26
+ ],
+ "P1_middle_sparse_vs_dense": {
+  "median_pbar": 0.3955078125,
+  "sparse_same_sign_rate": [
+   1,
+   22
+  ],
+  "dense_same_sign_rate": [
+   8,
+   23
+  ],
+  "sparse_mean_corr": 0.025810322626675552,
+  "dense_mean_corr": 0.015682957007306216
+ },
+ "P1_logistic_middle": {
+  "beta": [
+   -154.07107964391338,
+   2304.930596798195,
+   530.5713651017342
+  ],
+  "se": [
+   2827.7542738604625,
+   42342.204795995356,
+   9861.498428348965
+  ],
+  "note": "same-sign ~ b0 + b1*corr + b2*(pbar-mean). Prediction: b2 > 0 (denser pairs switch at lower corr)."
+ },
+ "P2_bistable_rate_low_absCorr_tercile": [
+  23,
+  40
+ ],
+ "P2_bistable_rate_high_absCorr_tercile": [
+  3,
+  40
+ ],
+ "P2_bistable_rate_mid_tercile": [
+  7,
+  40
+ ],
+ "descriptive_max_theta_jump_median_low_vs_high": [
+  0.05514096745647115,
+  0.02423248573634247
+ ],
+ "P3_median_abs_tan_by_sigma": {
+  "0.005": 0.5793967481574431,
+  "0.05": 0.5814218965688756,
+  "0.1": 0.5835795610675061,
+  "0.15": 0.5818817867276358,
+  "0.2": 0.5830070466287223,
+  "0.3": 0.5729912825853308,
+  "0.4": 0.5601799963361624,
+  "0.6": 0.5492516809798078
+ },
+ "P3_median_weak_strong_ratio_by_sigma": {
+  "0.005": 0.5497529309644708,
+  "0.05": 0.5490162128346647,
+  "0.1": 0.5469415450620452,
+  "0.15": 0.5455232237107299,
+  "0.2": 0.5461005988916654,
+  "0.3": 0.5528758391318753,
+  "0.4": 0.511369905964232,
+  "0.6": 0.4485444413439679
+ },
+ "P3_fraction_pairs_ratio_decreased_0.005_to_0.6": 0.7166666666666667,
+ "descriptive_min_ratio_clean": 0.0012567079613778121
+}

@@ -1,0 +1,234 @@
+{
+  "signs": {
+    "correct_A": {
+      "repaired": 0.3454915028125263,
+      "independent": 0.3454915028125263
+    },
+    "correct_K": {
+      "repaired": 1.578689325833263,
+      "independent": 1.5786893258332633
+    },
+    "correct_C": {
+      "repaired": 0.2870182161602875,
+      "independent": 0.28701821616028755
+    }
+  },
+  "optimizer_checks": [
+    {
+      "case": "original_counterexample",
+      "p": 0.3641344889933496,
+      "c": 0,
+      "sigma": 0.003,
+      "eta": 0.5,
+      "t_star": -0.027599565066934735,
+      "F_star": 0.11577551477116665,
+      "F_mono": 0.1157755274593992,
+      "t_neg": -0.027599565066934735,
+      "F_neg": 0.11577551477116665,
+      "t_pos": 0.0,
+      "F_pos": 0.1157755274593992,
+      "n_local_minima": [
+        2,
+        1
+      ],
+      "sharing_gain": 1.2688232547963807e-08
+    },
+    {
+      "case": "below_independent_epsilon_crossing",
+      "p": 0.3642350047695325,
+      "c": 0,
+      "sigma": 0.003,
+      "eta": 0.5,
+      "t_star": 0.0,
+      "F_star": 0.11578917985768405,
+      "F_mono": 0.11578917985768405,
+      "t_neg": -0.0,
+      "F_neg": 0.11578917985768405,
+      "t_pos": 0.0,
+      "F_pos": 0.11578917985768405,
+      "n_local_minima": [
+        2,
+        1
+      ],
+      "sharing_gain": 0.0
+    },
+    {
+      "case": "above_independent_epsilon_crossing",
+      "p": 0.36413500476953253,
+      "c": 0,
+      "sigma": 0.003,
+      "eta": 0.5,
+      "t_star": -0.02759860236031349,
+      "F_star": 0.11577558498144505,
+      "F_mono": 0.11577559753968268,
+      "t_neg": -0.02759860236031349,
+      "F_neg": 0.11577558498144505,
+      "t_pos": 0.0,
+      "F_pos": 0.11577559753968268,
+      "n_local_minima": [
+        2,
+        1
+      ],
+      "sharing_gain": 1.2558237630355684e-08
+    }
+  ],
+  "repaired_transition_comparisons": [
+    {
+      "eta": 0.48,
+      "sigma": 0.003,
+      "bracket": [
+        0.01810318623193948,
+        0.018103186259858906
+      ]
+    },
+    {
+      "eta": 0.5,
+      "sigma": 0.001,
+      "bracket": [
+        0.008457112784891191,
+        0.008457112798056794
+      ],
+      "independent_root": 0.008457112793593683,
+      "midpoint_difference": -2.119689840318628e-12
+    },
+    {
+      "eta": 0.5,
+      "sigma": 0.003,
+      "bracket": [
+        0.01778100649368109,
+        0.017781006521066647
+      ],
+      "independent_root": 0.017781006480572594,
+      "midpoint_difference": 2.6801273006471504e-11
+    },
+    {
+      "eta": 0.5,
+      "sigma": 0.01,
+      "bracket": [
+        0.039946332125057084,
+        0.0399463321861664
+      ]
+    },
+    {
+      "eta": 0.52,
+      "sigma": 0.003,
+      "bracket": [
+        0.01744527809895398,
+        0.017445278125786504
+      ]
+    },
+    {
+      "eta": 0.6666666666666666,
+      "sigma": 0.003,
+      "bracket": [
+        0.01416646446128025,
+        0.01416646448270264
+      ]
+    }
+  ],
+  "disjoint_seed0_recomputed": {
+    "layer4": {
+      "size": 114,
+      "P2": {
+        "counts": [
+          27,
+          47,
+          4,
+          35
+        ],
+        "one_sided_fisher": 1.5015248848401435e-05
+      },
+      "asymmetry": {
+        "counts": [
+          26,
+          50,
+          4,
+          38
+        ],
+        "one_sided_fisher": 3.344173360125313e-05
+      }
+    },
+    "logits": {
+      "size": 97,
+      "P2": {
+        "counts": [
+          18,
+          32,
+          3,
+          31
+        ],
+        "one_sided_fisher": 8.283153928353893e-05
+      },
+      "asymmetry": {
+        "counts": [
+          14,
+          17,
+          6,
+          31
+        ],
+        "one_sided_fisher": 3.1329374918402745e-05
+      }
+    },
+    "triples_layer4": {
+      "size": 62,
+      "T3": {
+        "counts": [
+          28,
+          28,
+          3,
+          13
+        ],
+        "one_sided_fisher": 2.551067264500776e-07
+      },
+      "T4": {
+        "counts": [
+          9,
+          19,
+          2,
+          9
+        ],
+        "one_sided_fisher": 0.19710144927536227
+      },
+      "T5": {
+        "counts": [
+          7,
+          12,
+          2,
+          9
+        ],
+        "one_sided_fisher": 0.11290783519885686
+      }
+    },
+    "triples_logits": {
+      "size": 72,
+      "T3": {
+        "counts": [
+          33,
+          35,
+          6,
+          12
+        ],
+        "one_sided_fisher": 0.00183807035669479
+      },
+      "T4": {
+        "counts": [
+          19,
+          23,
+          5,
+          12
+        ],
+        "one_sided_fisher": 0.019047223578402016
+      },
+      "T5": {
+        "counts": [
+          12,
+          14,
+          7,
+          12
+        ],
+        "one_sided_fisher": 0.13043478260869565
+      }
+    }
+  },
+  "scope": "Seed-0 arithmetic and channel disjointness verified. Fisher independence/exchangeability is NOT established by disjointness. No proof that finite angular grid finds every possible well."
+}

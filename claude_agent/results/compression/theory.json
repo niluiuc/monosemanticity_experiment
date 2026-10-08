@@ -1,0 +1,10 @@
+{
+ "kappa_fixed": "p*(p - 1)*(eta*p**2 - eta*p + eta - p)/(p**2 - p + 1)",
+ "kappa_eff": "p*(p - 1)*(eta*p**2 - 2*eta*p + 2*eta + p**2 - 2*p)/(p**2 - 2*p + 2)",
+ "roots": {
+  "0.5": {
+   "p_c_fixed_norm": 0.38196601125010515,
+   "p_c_shared_energy": 0.4226497308103742
+  }
+ }
+}

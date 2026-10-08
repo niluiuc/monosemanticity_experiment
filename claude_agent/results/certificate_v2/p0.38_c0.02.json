@@ -1,0 +1,13 @@
+{
+ "p": 0.38,
+ "c": 0.02,
+ "best": 0.1176488913564273,
+ "n_surviving": 122419,
+ "surviving_range": [
+  0.05232745943251256,
+  0.06171687913612124
+ ],
+ "certified_side": "same-sign (theta>0)",
+ "iterations": 12,
+ "secs": 1.6996796131134033
+}
