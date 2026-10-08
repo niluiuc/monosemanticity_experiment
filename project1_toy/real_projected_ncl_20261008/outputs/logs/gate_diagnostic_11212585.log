@@ -1,0 +1,50 @@
+CL 0 500
+CL 80 500
+CL 160 500
+CL 240 500
+CL 320 500
+CL 400 500
+CL 480 500
+NCL 0 500
+NCL 80 500
+NCL 160 500
+NCL 240 500
+NCL 320 500
+NCL 400 500
+NCL 480 500
+{
+  "CL": {
+    "actual_error": 0.5444375,
+    "comparisons": {
+      "full_affine_logits": {
+        "error": 0.4839375,
+        "error_discrepancy": 0.0605,
+        "relative_rms": 1.1428341313169057,
+        "gate_passed": false
+      },
+      "backbone_affine_logits": {
+        "error": 0.4845,
+        "error_discrepancy": 0.05993750000000003,
+        "relative_rms": 1.1458804605363246,
+        "gate_passed": false
+      }
+    }
+  },
+  "NCL": {
+    "actual_error": 0.56675,
+    "comparisons": {
+      "full_affine_logits": {
+        "error": 0.4913125,
+        "error_discrepancy": 0.07543749999999999,
+        "relative_rms": 1.1052999649134407,
+        "gate_passed": false
+      },
+      "backbone_affine_logits": {
+        "error": 0.48375,
+        "error_discrepancy": 0.08299999999999996,
+        "relative_rms": 0.9604057694426468,
+        "gate_passed": false
+      }
+    }
+  }
+}

@@ -16,7 +16,7 @@ paragraph='''
 - The remaining paper-critical gap is a finite-noise explanatory/predictive mechanism, with independent replication. One post-outcome, validation-only gate diagnostic is registered separately: at the already failed sigma .04, compare full affine logits with affine backbone plus exact nonlinear projector. If the latter fails existing thresholds, stop projection-only repairs. No new TEST evidence or retrospective prediction success is claimed.
 '''
 for p in (base/'RUN_STATUS.md',workspace/'project1_toy/plan.md'):
-    text=p.read_text()
+    text=p.read_text(encoding="utf-8")
     if '## Completed native outcome and independent checks, 8 October 2026' not in text:
         p.write_text(text+paragraph,encoding='utf-8')
 pdf=workspace/'output/pdf/Superposition_Recursive_Training_Derivations.pdf'

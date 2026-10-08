@@ -1,0 +1,45 @@
+{
+  "rows": [
+    {
+      "method": "CL",
+      "approximation": "full_affine_logits",
+      "total_residual_energy": 3.541549438955783,
+      "empirical_direction_mean_energy": 2.535816383814819,
+      "centered_residual_energy": 1.0057330551409638,
+      "empirical_mean_energy_fraction": 0.7160189141853398,
+      "relative_rms": 1.1428341310588757
+    },
+    {
+      "method": "CL",
+      "approximation": "backbone_affine_logits",
+      "total_residual_energy": 3.5604552529978823,
+      "empirical_direction_mean_energy": 2.548403887514555,
+      "centered_residual_energy": 1.012051365483327,
+      "empirical_mean_energy_fraction": 0.7157522581891218,
+      "relative_rms": 1.1458804602993131
+    },
+    {
+      "method": "NCL",
+      "approximation": "full_affine_logits",
+      "total_residual_energy": 15.4381537706234,
+      "empirical_direction_mean_energy": 10.474739430821023,
+      "centered_residual_energy": 4.963414339802376,
+      "empirical_mean_energy_fraction": 0.678496897132412,
+      "relative_rms": 1.1052999635581053
+    },
+    {
+      "method": "NCL",
+      "approximation": "backbone_affine_logits",
+      "total_residual_energy": 11.65586674133597,
+      "empirical_direction_mean_energy": 6.9818965019587935,
+      "centered_residual_energy": 4.673970239377177,
+      "empirical_mean_energy_fraction": 0.5990027731870367,
+      "relative_rms": 0.9604057716359632
+    }
+  ],
+  "directions_per_image": 32,
+  "sigma": 0.04,
+  "status": "Post-outcome descriptive decomposition of saved validation logits",
+  "identity": "mean ||r||^2 = mean ||direction_mean(r)||^2 + mean ||r-direction_mean(r)||^2",
+  "limitations": "Exact finite-sample identity. The direction mean contains sampling variation; it is not an unbiased estimate of population drift energy. No causal attribution or crossing prediction follows."
+}

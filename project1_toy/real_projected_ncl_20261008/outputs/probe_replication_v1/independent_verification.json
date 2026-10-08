@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "probe_stability_gate_passed": true,
+  "checks": [
+    "validation argmax/errors",
+    "TEST differences",
+    "all 2000 paired bootstrap draws",
+    "simultaneous bands",
+    "stopping decision"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "timestamp_utc": "2026-10-08T08:36:46.451540+00:00",
+  "sigma_grid": [
+    0.0,
+    0.01,
+    0.02,
+    0.04,
+    0.08,
+    0.12,
+    0.2,
+    0.3
+  ],
+  "anchor_sigma": 0.04,
+  "methods": {
+    "CL": {
+      "subset_clean_error": 0.454,
+      "error_curve": [
+        0.454,
+        0.456875,
+        0.4644375,
+        0.5444375,
+        0.7126875,
+        0.8175625,
+        0.8965625,
+        0.931875
+      ]
+    },
+    "NCL": {
+      "subset_clean_error": 0.452,
+      "error_curve": [
+        0.452,
+        0.451625,
+        0.463375,
+        0.56675,
+        0.7481875,
+        0.833625,
+        0.91725,
+        0.95475
+      ]
+    }
+  },
+  "delta_NCL_minus_CL": [
+    0.02180001139640808,
+    0.018550011396408106,
+    0.02273751139640806,
+    0.04611251139640804,
+    0.05930001139640806,
+    0.03986251139640806,
+    0.04448751139640805,
+    0.04667501139640812
+  ],
+  "first_crossing": null,
+  "first_crossing_bracket": null,
+  "screen_passed": false,
+  "decision": "Reject this simple finite-response scaling path",
+  "status": "Post-outcome candidate screen using saved validation responses; original frozen prediction unchanged",
+  "limitations": "Agreement at .04 is by construction; this is not a novel theorem, prospective prediction or proof of generalization. No crossing confidence interval is provided."
+}

@@ -1,3 +1,9 @@
+## Latest native-model results — 8 October 2026
+
+The complete frozen CL/NCL CIFAR-100 classifiers exhibit a resolved clean-to-corrupted ordering reversal, reproduced by two additional probe seeds. The quantitative affine predictor fails; a projector-gate repair and a finite-response scaling screen also fail. The original toy boundary has **not** been quantitatively validated on these classifiers.
+
+Start with [native experiment README](project1_toy/real_projected_ncl_20261008/README.md), [supported paper claims and remaining gap](project1_toy/real_projected_ncl_20261008/PAPER_CLAIMS.md), and [append-only run record](project1_toy/real_projected_ncl_20261008/RUN_STATUS.md). Protocols, probes, raw arrays, independent checks and plots are in that folder. The approved derivations PDF is updated through Section 8.40; local editable LaTeX is excluded from this public branch as requested. Earlier Claude/GPT records remain historical evidence and must not be read as later native results.
+
 # monosemanticity_experiment
 Research paper on monosemanticity
 

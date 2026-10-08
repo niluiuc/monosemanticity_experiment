@@ -1,0 +1,10 @@
+{
+  "start_utc": "2026-10-08T07:52:33.649666+00:00",
+  "script_sha256": "110c48c2f5f5125d7d43fed0e003c279f061c1dbdfa2bc3f1672f2b5d21e42cd",
+  "protocol_sha256": "04c066dba37eccf7cd7275c49d55b1415b937309d2e704f0606e935426b6e07d",
+  "test_images_evaluated": 0,
+  "post_outcome_diagnostic": true,
+  "sigma": 0.04,
+  "directions": 32,
+  "seed": 20261010
+}

@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "method": "CL",
+      "approximation": "full_affine_logits",
+      "error": 0.4839375,
+      "error_discrepancy": 0.0605,
+      "relative_rms": 1.1428341310588757,
+      "gate_passed": false
+    },
+    {
+      "method": "CL",
+      "approximation": "backbone_affine_logits",
+      "error": 0.4845,
+      "error_discrepancy": 0.05993750000000003,
+      "relative_rms": 1.1458804602993131,
+      "gate_passed": false
+    },
+    {
+      "method": "NCL",
+      "approximation": "full_affine_logits",
+      "error": 0.4913125,
+      "error_discrepancy": 0.07543749999999999,
+      "relative_rms": 1.1052999635581053,
+      "gate_passed": false
+    },
+    {
+      "method": "NCL",
+      "approximation": "backbone_affine_logits",
+      "error": 0.48375,
+      "error_discrepancy": 0.08299999999999996,
+      "relative_rms": 0.9604057716359632,
+      "gate_passed": false
+    }
+  ],
+  "passed": true
+}

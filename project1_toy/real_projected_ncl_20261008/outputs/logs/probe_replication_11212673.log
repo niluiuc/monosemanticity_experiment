@@ -1,0 +1,120 @@
+probe {'epoch': 0, 'fit_loss': 2.020182866774665, 'fit_accuracy': 0.4861333333333333}
+probe {'epoch': 10, 'fit_loss': 1.6438201997333102, 'fit_accuracy': 0.5432888888888889}
+probe {'epoch': 20, 'fit_loss': 1.6043164713541667, 'fit_accuracy': 0.5523333333333333}
+probe {'epoch': 30, 'fit_loss': 1.5611044574949478, 'fit_accuracy': 0.5639111111111111}
+probe {'epoch': 40, 'fit_loss': 1.5258331500371298, 'fit_accuracy': 0.5738888888888889}
+probe {'epoch': 0, 'fit_loss': 2.0152822602801854, 'fit_accuracy': 0.48304444444444444}
+probe {'epoch': 10, 'fit_loss': 1.6406381997850206, 'fit_accuracy': 0.5451777777777778}
+probe {'epoch': 20, 'fit_loss': 1.6075193397310046, 'fit_accuracy': 0.5510666666666667}
+probe {'epoch': 30, 'fit_loss': 1.5613348229938082, 'fit_accuracy': 0.5639777777777778}
+probe {'epoch': 40, 'fit_loss': 1.5260126790152655, 'fit_accuracy': 0.5742222222222222}
+CL replication TEST 0 10000
+CL replication TEST 640 10000
+CL replication TEST 1280 10000
+CL replication TEST 1920 10000
+CL replication TEST 2560 10000
+CL replication TEST 3200 10000
+CL replication TEST 3840 10000
+CL replication TEST 4480 10000
+CL replication TEST 5120 10000
+CL replication TEST 5760 10000
+CL replication TEST 6400 10000
+CL replication TEST 7040 10000
+CL replication TEST 7680 10000
+CL replication TEST 8320 10000
+CL replication TEST 8960 10000
+CL replication TEST 9600 10000
+probe {'epoch': 0, 'fit_loss': 2.249747579744127, 'fit_accuracy': 0.43293333333333334}
+probe {'epoch': 10, 'fit_loss': 1.422387936782837, 'fit_accuracy': 0.5839111111111112}
+probe {'epoch': 20, 'fit_loss': 1.3740071077134874, 'fit_accuracy': 0.5950888888888889}
+probe {'epoch': 30, 'fit_loss': 1.338187262386746, 'fit_accuracy': 0.6015111111111111}
+probe {'epoch': 40, 'fit_loss': 1.3100243250528971, 'fit_accuracy': 0.6104444444444445}
+probe {'epoch': 0, 'fit_loss': 2.2472736780802407, 'fit_accuracy': 0.43035555555555555}
+probe {'epoch': 10, 'fit_loss': 1.4225543819003634, 'fit_accuracy': 0.585}
+probe {'epoch': 20, 'fit_loss': 1.3770299093034533, 'fit_accuracy': 0.5960222222222222}
+probe {'epoch': 30, 'fit_loss': 1.3380168425665961, 'fit_accuracy': 0.603}
+probe {'epoch': 40, 'fit_loss': 1.3102615813997056, 'fit_accuracy': 0.6103333333333333}
+NCL replication TEST 0 10000
+NCL replication TEST 640 10000
+NCL replication TEST 1280 10000
+NCL replication TEST 1920 10000
+NCL replication TEST 2560 10000
+NCL replication TEST 3200 10000
+NCL replication TEST 3840 10000
+NCL replication TEST 4480 10000
+NCL replication TEST 5120 10000
+NCL replication TEST 5760 10000
+NCL replication TEST 6400 10000
+NCL replication TEST 7040 10000
+NCL replication TEST 7680 10000
+NCL replication TEST 8320 10000
+NCL replication TEST 8960 10000
+NCL replication TEST 9600 10000
+{
+  "seeds": [
+    20261018,
+    20261019
+  ],
+  "sigma_grid": [
+    0.0,
+    0.12
+  ],
+  "validation_errors": {
+    "20261018_CL": 0.44200000166893005,
+    "20261019_CL": 0.44359999895095825,
+    "20261018_NCL": 0.46399998664855957,
+    "20261019_NCL": 0.4636000096797943
+  },
+  "CL_errors": [
+    [
+      0.4512,
+      0.8830666666666682
+    ],
+    [
+      0.4523,
+      0.8827333333333347
+    ]
+  ],
+  "NCL_errors": [
+    [
+      0.4674,
+      0.8711333333333334
+    ],
+    [
+      0.4674,
+      0.8711666666666668
+    ]
+  ],
+  "delta_NCL_minus_CL": [
+    [
+      0.0162,
+      -0.011933333333333346
+    ],
+    [
+      0.0151,
+      -0.011566666666666671
+    ]
+  ],
+  "simultaneous_lower": [
+    [
+      0.0065,
+      -0.017866666666666614
+    ],
+    [
+      0.00509875,
+      -0.017533749999999983
+    ]
+  ],
+  "simultaneous_upper": [
+    [
+      0.0267,
+      -0.006683124999999977
+    ],
+    [
+      0.026150625000000014,
+      -0.006131249999999943
+    ]
+  ],
+  "probe_stability_gate_passed": true,
+  "limitations": "Post-outcome reliability check on reused TEST images and the same backbone checkpoints. Conditional image uncertainty only. No prospective boundary prediction or causal isolation."
+}

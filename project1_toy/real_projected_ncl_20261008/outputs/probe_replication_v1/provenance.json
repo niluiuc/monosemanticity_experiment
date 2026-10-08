@@ -1,0 +1,16 @@
+{
+  "start_utc": "2026-10-08T08:04:50.676991+00:00",
+  "post_outcome_followup": true,
+  "script_sha256": "d4eb80dd1916cb710494c3a86af9deae77b4ce296bb7dc25d1abfe52f8c8811d",
+  "protocol_sha256": "edfcf1c232b61e170b51aa6d32fd276a4e4e8496d7118d5d831abf2fea046849",
+  "seeds": [
+    20261018,
+    20261019
+  ],
+  "noise_seed": 20261020,
+  "sigma_grid": [
+    0.0,
+    0.12
+  ],
+  "test_images_previously_seen": true
+}

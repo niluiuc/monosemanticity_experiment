@@ -1,0 +1,36 @@
+{
+  "rows": [
+    {
+      "method": "CL",
+      "quantity": "actual_increment",
+      "total_energy": 2.7116079863090823,
+      "common_class_shift_energy": 0.4278947719091321,
+      "common_fraction": 0.1578011180338656
+    },
+    {
+      "method": "CL",
+      "quantity": "affine_residual",
+      "total_energy": 3.541549438955783,
+      "common_class_shift_energy": 0.4283535201447591,
+      "common_fraction": 0.12095087970056914
+    },
+    {
+      "method": "NCL",
+      "quantity": "actual_increment",
+      "total_energy": 12.636740027988324,
+      "common_class_shift_energy": 0.6253921982528862,
+      "common_fraction": 0.04948999479832173
+    },
+    {
+      "method": "NCL",
+      "quantity": "affine_residual",
+      "total_energy": 15.4381537706234,
+      "common_class_shift_energy": 0.6148699270591191,
+      "common_fraction": 0.03982794420853151
+    }
+  ],
+  "threshold": 0.25,
+  "global_bias_control_warranted": false,
+  "status": "Post-outcome descriptive prerequisite at sigma .04; no new forwards",
+  "limitations": "A large common class shift warrants a control but does not prove bias calibration improves error or changes model ordering."
+}

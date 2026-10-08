@@ -1,0 +1,68 @@
+{
+  "seeds": [
+    20261018,
+    20261019
+  ],
+  "sigma_grid": [
+    0.0,
+    0.12
+  ],
+  "validation_errors": {
+    "20261018_CL": 0.44200000166893005,
+    "20261019_CL": 0.44359999895095825,
+    "20261018_NCL": 0.46399998664855957,
+    "20261019_NCL": 0.4636000096797943
+  },
+  "CL_errors": [
+    [
+      0.4512,
+      0.8830666666666682
+    ],
+    [
+      0.4523,
+      0.8827333333333347
+    ]
+  ],
+  "NCL_errors": [
+    [
+      0.4674,
+      0.8711333333333334
+    ],
+    [
+      0.4674,
+      0.8711666666666668
+    ]
+  ],
+  "delta_NCL_minus_CL": [
+    [
+      0.0162,
+      -0.011933333333333346
+    ],
+    [
+      0.0151,
+      -0.011566666666666671
+    ]
+  ],
+  "simultaneous_lower": [
+    [
+      0.0065,
+      -0.017866666666666614
+    ],
+    [
+      0.00509875,
+      -0.017533749999999983
+    ]
+  ],
+  "simultaneous_upper": [
+    [
+      0.0267,
+      -0.006683124999999977
+    ],
+    [
+      0.026150625000000014,
+      -0.006131249999999943
+    ]
+  ],
+  "probe_stability_gate_passed": true,
+  "limitations": "Post-outcome reliability check on reused TEST images and the same backbone checkpoints. Conditional image uncertainty only. No prospective boundary prediction or causal isolation."
+}

@@ -1,0 +1,28 @@
+{
+  "methods": {
+    "CL": {
+      "original_purity": 0.010001187884527571,
+      "matched_purity": 0.06608258928571428,
+      "nondead_dimensions": 256,
+      "cutoff_tied_coordinates": 0,
+      "zero_cutoff_coordinates": 0
+    },
+    "NCL": {
+      "original_purity": 0.11470435680173206,
+      "matched_purity": 0.0895935960591133,
+      "nondead_dimensions": 232,
+      "cutoff_tied_coordinates": 127,
+      "zero_cutoff_coordinates": 127
+    }
+  },
+  "NCL_original_prevalence": 0.07004655172413793,
+  "k": 350,
+  "matched_prevalence": 0.07,
+  "matched_difference": 0.023511006773399012,
+  "conditional_ci95": [
+    0.02009443630444921,
+    0.025871701118836885
+  ],
+  "contrast_survives_control": true,
+  "limitations": "Post-outcome descriptive proxy check. Bootstrap conditions on rank selections and k. This is not ground-truth monosemanticity, causal attribution, or a replacement of registered gates."
+}

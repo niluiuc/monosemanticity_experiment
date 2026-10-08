@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "equal per-coordinate activation count",
+    "majority-class purity via independent bincount",
+    "all bootstrap draws",
+    "conditional intervals"
+  ],
+  "limitations": "Selection ranks are not regenerated here; full feature cache remains on cluster."
+}

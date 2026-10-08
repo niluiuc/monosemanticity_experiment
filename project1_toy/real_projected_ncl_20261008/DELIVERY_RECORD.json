@@ -1,14 +1,28 @@
 {
-  "timestamp_utc": "2026-10-08T07:52:41.184756+00:00",
-  "pages": 121,
-  "pdf_sha256": "b95b71f078173c8bb73565fd601762ebec3befabdfef71e77165e3b5e0ce2c3b",
-  "source_sha256": "725808ae8f36489f2af068df2a379c9058f939eae49104a2294c4c3c774e9aba",
+  "timestamp_utc": "2026-10-08T08:41:35.832082+00:00",
+  "pages": 127,
+  "pdf_sha256": "60da989abe8c77d3bed80a3a250108ca5e04328fecb3d590bc095269463ef9f7",
+  "source_sha256": "11c7c9c5003cffc7b57f0ee062b6663d811afe14c3822c9a22862b74a77ce602",
   "native_reversal_observed": true,
   "predictive_claim_passed": false,
+  "additional_probe_stability_passed": true,
+  "prevalence_rank_control_positive": true,
+  "positive_firing_rates_fully_matched": false,
   "visual_qa_pages": [
     96,
     97,
     98,
-    99
+    99,
+    100,
+    101,
+    102,
+    103
+  ],
+  "scientific_jobs_completed": [
+    11212390,
+    11212391,
+    11212585,
+    11212673,
+    11212722
   ]
 }
